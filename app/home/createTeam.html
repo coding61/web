@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>首页</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/createTeam.css" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/320) + 'px';  
+        </script>  
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<span>创建团队</span>
+		</div>
+
+		<div class="main-view">
+			<div class="menu">
+				<div class="avatar">
+					<span>头像</span>
+					<span class="select">选择<br/>头像</span>
+				</div>
+				<div class="name">
+					<span>名称</span>
+					<input autofocus="true" type="text" placeholder="请输入你的团队名称" />
+				</div>
+				<div class="intro">
+					<span>团队介绍</span>
+					<textarea placeholder="请介绍一下你的团队"></textarea>
+				</div>
+			</div>
+			<div class="create"><span>创建团队</span></div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/createTeam.js");
+	</script>
+
+</html>
+

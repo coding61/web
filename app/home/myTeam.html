@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>首页</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/myTeam.css" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/320) + 'px';  
+        </script>  
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<span>我的团队</span>
+			<span class="quit">解散</span>
+			<!-- <img src="" alt=""> -->
+		</div>
+
+		<div class="main-view">
+
+			<!-- <div class="team">
+				<img class="edit-icon" src="../../statics/images/edit.png" alt="" />
+				<img class="end-icon" src="../../statics/images/end.png" alt="">
+				<div class="avatar">
+					<img src="../../statics/images/11.jpg" alt="" />
+					<span>百变小樱</span>
+					<input type="text" value='百变小樱' />
+				</div>
+
+				<div class="intro">
+					<span class="text">团队介绍:我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.</span>
+					<textarea>团队介绍:我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.</textarea>
+				</div>
+			</div>
+			<div class="members-view">
+				<span>团队成员</span>
+				<div class="members">
+					<div class="member">
+						<div class="avatar">
+							<img src="../../statics/images/11.jpg" alt="" />
+						</div>
+						<span class="name">张小美</span>
+						<span class="position">队长</span>
+					</div>
+					<div class="member">
+						<img class="delete-icon" src="../../statics/images/delete.png" alt="" /> 
+						<div class="avatar">
+							<img src="../../statics/images/11.jpg" alt="" />
+						</div>
+						<span class="name">张一美</span>
+					</div>
+					<div class="member">
+						<img class="delete-icon" src="../../statics/images/delete.png" alt="" />
+						<div class="avatar">
+							<img src="../../statics/images/11.jpg" alt="" />
+						</div>
+						<span class="name">张二美</span>
+					</div>
+					<div class="member">
+						<img class="delete-icon" src="../../statics/images/delete.png" alt="" />
+						<div class="default-avatar">
+							<img src="../../statics/images/default-avatar.png" alt="" />
+						</div>
+						<span class="name">待加入</span>
+					</div>
+				</div>
+			</div>
+			<div class="share"><span>邀请好友加入</span></div>
+			<div class="unjoin"><span>申请加入</span></div>
+			<div class="join"><span>申请加入</span></div> -->
+		</div>
+		
+		<script type="text/hmtl" id="main-view-template">
+			<div class="team">
+				{{if leader == true}}
+				<img class="edit-icon" src="../../statics/images/edit.png" alt="" />
+				<img class="end-icon" src="../../statics/images/end.png" alt="">
+				{{/if}}
+				<div class="avatar">
+					<img src="../../statics/images/11.jpg" alt="" />
+					<span>{{team.name}}</span>
+					{{if leader == true}}
+						<input type="text" value='{{team.name}}' />
+					{{/if}}
+				</div>
+
+				<div class="intro">
+					<span class="text">团队介绍:{{team.intro}}</span>
+					{{if leader == true}}
+						<textarea>团队介绍:{{team.intro}}</textarea>
+					{{/if}}
+				</div>
+			</div>
+			<div class="members-view">
+				<span>团队成员</span>
+				<div class="members">
+					{{each members}}
+					<div class="member">
+						{{if $value}}
+							{{if $value.leader == false}}
+								<img class="delete-icon" src="../../statics/images/delete.png" alt="" />
+							{{/if}}
+							<div class="avatar">
+								<img src="{{$value.avatar_url}}" alt="" />
+							</div>
+							<span class="name">{{$value.name}}</span>
+							{{if $value.leader == true}}
+								<span class="position">队长</span>
+							{{/if}}
+						{{else}}
+							<div class="default-avatar">
+								<img src="../../statics/images/default-avatar.png" alt="" />
+							</div>
+							<span class="name">待加入</span>
+						{{/if}}
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			{{if inTeam == true}}
+				<div class="share"><span>邀请好友加入</span></div>
+			{{else if isManyuan == true}}
+				<div class="unjoin"><span>申请加入</span></div>
+			{{else}}
+				<div class="join"><span>申请加入</span></div>
+			{{/if}}
+
+		</script>
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/myTeam.js");
+	</script>
+
+</html>
+
