@@ -22,7 +22,7 @@
 		<!-- 导航栏 -->
 		<div class="header">
 			<span>我的团队</span>
-			<span class="quit">解散</span>
+			<span class="quit leader">解散</span>
 			<!-- <img src="" alt=""> -->
 		</div>
 
@@ -83,21 +83,21 @@
 		<script type="text/hmtl" id="main-view-template">
 			<div class="team">
 				{{if leader == true}}
-				<img class="edit-icon" src="../../statics/images/edit.png" alt="" />
-				<img class="end-icon" src="../../statics/images/end.png" alt="">
+				<img class="edit-icon leader" src="../../statics/images/edit.png" alt="" />
+				<img class="end-icon leader editing" src="../../statics/images/end.png" alt="">
 				{{/if}}
 				<div class="avatar">
 					<img src="../../statics/images/11.jpg" alt="" />
 					<span>{{team.name}}</span>
 					{{if leader == true}}
-						<input type="text" value='{{team.name}}' />
+						<input class="leader editing" type="text" value='{{team.name}}' />
 					{{/if}}
 				</div>
 
 				<div class="intro">
 					<span class="text">团队介绍:{{team.intro}}</span>
 					{{if leader == true}}
-						<textarea>团队介绍:{{team.intro}}</textarea>
+						<textarea class="leader editing">团队介绍:{{team.intro}}</textarea>
 					{{/if}}
 				</div>
 			</div>
@@ -108,7 +108,7 @@
 					<div class="member">
 						{{if $value}}
 							{{if $value.leader == false}}
-								<img class="delete-icon" src="../../statics/images/delete.png" alt="" />
+								<img class="delete-icon leader" src="../../statics/images/delete.png" alt="" />
 							{{/if}}
 							<div class="avatar">
 								<img src="{{$value.avatar_url}}" alt="" />

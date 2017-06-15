@@ -10,6 +10,7 @@ define(function(require, exports, module) {
             Page.load();
         },
         load:function(){
+            // 1.组长
             var dic = {
                 leader:true,   //当前用户是组长吗
                 inTeam:true,  //当前用户是否在团队里,
@@ -37,7 +38,8 @@ define(function(require, exports, module) {
                 }],
                 
             }
-
+            
+            // 2.未满员,不在团里
             var dic1 = {
                 leader:false,   //当前用户是组长吗
                 inTeam:false,  //当前用户是否在团队里,
@@ -58,15 +60,12 @@ define(function(require, exports, module) {
                     name:'张二美',
                     avatar_url:'../../statics/images/11.jpg',
                     leader:false,     //此用户是组长吗
-                },{
-                    name:'待加入',
-                    avatar_url:'../../statics/images/default-avatar.png',
-                    leader:false,     //此用户是组长吗
-                }],
+                },null],
                 
             }
-
-            var dic1 = {
+            
+            // 3.满员
+            var dic2 = {
                 leader:false,   //当前用户是组长吗
                 inTeam:false,  //当前用户是否在团队里,
                 isManyuan:true,  //团队是否满员
@@ -93,9 +92,41 @@ define(function(require, exports, module) {
                 }],
                 
             }
+            
+            // 4.不是组长, 在团里
+            var dic3 = {
+                leader:false,   //当前用户是组长吗
+                inTeam:true,  //当前用户是否在团队里,
+                isManyuan:false,  //团队是否满员
+                team:{
+                    name:'百变小樱',
+                    intro:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
+                },
+                members:[{    //团队成员,共4个
+                    name:'张小美',
+                    avatar_url:'../../statics/images/11.jpg',
+                    leader:true,     //此用户是组长吗
+                },{
+                    name:'张一美',
+                    avatar_url:'../../statics/images/11.jpg',
+                    leader:false,     //此用户是组长吗
+                },{
+                    name:'张二美',
+                    avatar_url:'../../statics/images/11.jpg',
+                    leader:false,     //此用户是组长吗
+                },null],
+            }
 
             var html = ArtTemplate("main-view-template", dic);
             $(".main-view").html(html);
+
+            if (dic.inTeam == true && dic.leader == true) {
+                $(".leader").show();
+
+                $(".leader.editing").hide();  //关闭点编辑出来的元素
+            }else{
+                $(".leader").hide();
+            }
 
             Page.clickEvent();
 
