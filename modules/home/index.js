@@ -24,7 +24,7 @@ define(function(require, exports, module) {
 
             $(".create").click(function(){
                 Common.isLogin(function(token){
-                    if (token == "null") {
+                    if (token != "null") {
                         //进到创建页面
                         location.href = "createTeam.html";
                     }else{
@@ -50,7 +50,7 @@ define(function(require, exports, module) {
             
             $(".my").click(function(){
                 Common.isLogin(function(token){
-                    if (token == "null") {
+                    if (token != "null") {
                         //进到创建页面
                         location.href = "myTeam.html";
                     }else{
