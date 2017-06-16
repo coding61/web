@@ -12,13 +12,24 @@ define(function(require, exports, module) {
         clickEvent:function(){
             
             $(".create").click(function(){
-                //进到创建页面
-                location.href = "createTeam.html";
+                // 先微信授权登录
+                // 微信网页授权
+            var appId = 'wx58e15a667d09d70f',
+                redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
+                scope = 'snsapi_userinfo';
 
+            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+            redirectUri = encodeURIComponent(redirectUri);
+
+            location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+encodeURI(redirectUri)+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
+                //进到创建页面
+                // location.href = "createTeam.html";
             })
             $(".join").click(function(){
                 // 随机匹配进入我的团队页
+                $(".wait-loading").show();
             })
+            
             $(".my").click(function(){
                 // 我的团队页面
                 location.href = "myTeam.html";

@@ -25,8 +25,8 @@
 			<span class="quit leader">解散</span>
 			<!-- <img src="" alt=""> -->
 		</div>
-
-		<div class="main-view">
+		
+		<div class="body-view">
 
 			<!-- <div class="team">
 				<img class="edit-icon" src="../../statics/images/edit.png" alt="" />
@@ -81,58 +81,60 @@
 		</div>
 		
 		<script type="text/hmtl" id="main-view-template">
-			<div class="team">
-				{{if leader == true}}
-				<img class="edit-icon leader" src="../../statics/images/edit.png" alt="" />
-				<img class="end-icon leader editing" src="../../statics/images/end.png" alt="">
-				{{/if}}
-				<div class="avatar">
-					<img src="../../statics/images/11.jpg" alt="" />
-					<span>{{team.name}}</span>
+			<div class="main-view">
+				<div class="team">
 					{{if leader == true}}
-						<input class="leader editing" type="text" value='{{team.name}}' />
+					<img class="edit-icon leader" src="../../statics/images/edit.png" alt="" />
+					<img class="end-icon leader editing" src="../../statics/images/end.png" alt="">
 					{{/if}}
-				</div>
-
-				<div class="intro">
-					<span class="text">团队介绍:{{team.intro}}</span>
-					{{if leader == true}}
-						<textarea class="leader editing">团队介绍:{{team.intro}}</textarea>
-					{{/if}}
-				</div>
-			</div>
-			<div class="members-view">
-				<span>团队成员</span>
-				<div class="members">
-					{{each members}}
-					<div class="member">
-						{{if $value}}
-							{{if $value.leader == false}}
-								<img class="delete-icon leader" src="../../statics/images/delete.png" alt="" />
-							{{/if}}
-							<div class="avatar">
-								<img src="{{$value.avatar_url}}" alt="" />
-							</div>
-							<span class="name">{{$value.name}}</span>
-							{{if $value.leader == true}}
-								<span class="position">队长</span>
-							{{/if}}
-						{{else}}
-							<div class="default-avatar">
-								<img src="../../statics/images/default-avatar.png" alt="" />
-							</div>
-							<span class="name">待加入</span>
+					<div class="avatar">
+						<img src="../../statics/images/11.jpg" alt="" />
+						<span>{{team.name}}</span>
+						{{if leader == true}}
+							<input class="leader editing" type="text" value='{{team.name}}' />
 						{{/if}}
 					</div>
-					{{/each}}
+
+					<div class="intro">
+						<span class="text">团队介绍:{{team.intro}}</span>
+						{{if leader == true}}
+							<textarea class="leader editing">团队介绍:{{team.intro}}</textarea>
+						{{/if}}
+					</div>
+				</div>
+				<div class="members-view">
+					<span>团队成员</span>
+					<div class="members">
+						{{each members}}
+						<div class="member">
+							{{if $value}}
+								{{if $value.leader == false}}
+									<img class="delete-icon leader" src="../../statics/images/delete.png" alt="" />
+								{{/if}}
+								<div class="avatar">
+									<img src="{{$value.avatar_url}}" alt="" />
+								</div>
+								<span class="name">{{$value.name}}</span>
+								{{if $value.leader == true}}
+									<span class="position">队长</span>
+								{{/if}}
+							{{else}}
+								<div class="default-avatar">
+									<img src="../../statics/images/default-avatar.png" alt="" />
+								</div>
+								<span class="name">待加入</span>
+							{{/if}}
+						</div>
+						{{/each}}
+					</div>
 				</div>
 			</div>
 			{{if inTeam == true}}
-				<div class="share"><span>邀请好友加入</span></div>
+				<div class="share action"><span>邀请好友加入</span></div>
 			{{else if isManyuan == true}}
-				<div class="unjoin"><span>申请加入</span></div>
+				<div class="unjoin action"><span>申请加入</span></div>
 			{{else}}
-				<div class="join"><span>申请加入</span></div>
+				<div class="join action"><span>申请加入</span></div>
 			{{/if}}
 
 		</script>

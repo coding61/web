@@ -118,7 +118,7 @@ define(function(require, exports, module) {
             }
 
             var html = ArtTemplate("main-view-template", dic);
-            $(".main-view").html(html);
+            $(".body-view").html(html);
 
             if (dic.inTeam == true && dic.leader == true) {
                 $(".leader").show();
@@ -140,12 +140,6 @@ define(function(require, exports, module) {
 
             $(".btn-wx-auth").click(function(){
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+encodeURI(redirectUri)+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
-            })
-
-            $(".share").click(function(){
-                Common.confirm("您确定要加入此战队吗?", function(){
-                    console.log('111');
-                })
             })
 
             // textarea编辑框高度自适应
@@ -205,11 +199,35 @@ define(function(require, exports, module) {
             
             // 删除成员按钮点击
             $(".delete-icon").click(function(){
-                $(this).parents('.member').children('.avatar').attr({src:'../../statics/images/11.jpg'});
+                $(this).parents('.member').children('.avatar').children('img').attr({src:'../../statics/images/default-avatar.png'});
+                $(this).parents('.member').children('.avatar').removeClass('avatar').addClass('default-avatar');
                 $(this).parents('.member').children('.name').html('待加入')
+                $(this).parents('.member').children('.delete-icon').remove();
+
             })
+
             
-            
+            // 底部按钮点击
+            $(".action").click(function(){
+                if ($(this).hasClass('share')) {
+                    // 邀请分享
+                    Common.confirm("您确定要加入此战队吗?", function(){
+                        console.log('111');
+                    })
+                }else if ($(this).hasClass('join')) {
+                    // 申请加入
+                    var parent =  $(".default-avatar").eq(0).parent();
+                    parent.children('.default-avatar').children('img').attr({src:'../../statics/images/11.jpg'});
+                    parent.children('.default-avatar').removeClass("default-avatar").addClass('avatar');
+                    parent.children('.name').html("张三美");
+
+                    // 当前用户加入后, 变邀请
+                    $(this).children('span').html('邀请好友加入');
+                    $(this).removeClass('join').addClass('share');
+                }else if ($(this).hasClass('unjoin')) {
+                    // 不能加入
+                }
+            })
         }
     };
 
