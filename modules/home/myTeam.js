@@ -368,6 +368,24 @@ define(function(require, exports, module) {
                         dic['inTeam'] = inTeam;
                         dic['isManyuan'] = isManyuan;
 
+                        
+                        // 将队长放到最前面
+                        var number = null,
+                            targent = null;
+                        for (var i = 0; i < dic.group_member.length; i++) {
+                            if(dic.group_member[i].leader == true){
+                                number = i;
+                                targent = dic.group_member[i];
+                                break;
+                            }
+                        }
+                        if (number != null && targent != null) {
+                            dic.group_member.splice(number,1);
+                            dic.group_member.unshift(targent);  //将全部相册放到第一位
+                        }else{
+                        }
+                        
+                        console.log(dic);
                         var html = ArtTemplate("main-view-template", dic);
                         $(".body-view").html(html);
 
