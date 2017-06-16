@@ -22,7 +22,7 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             
-            Page.token = "361e62b004a69a4610acf9f3a5b6f95eaabca3b8";
+            Page.token = "361e62b004a69a4610acf9f3a5b6f95eaabca3b9";
 
             $(".create").click(function(){
                 if (Page.token) {
