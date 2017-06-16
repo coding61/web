@@ -17,6 +17,8 @@ define(function(require, exports, module) {
             //     });
             // }
 
+            alert(Page.code);
+
             $.ajax({
                 type:'post',
                 url:Common.domain + "/userinfo/code_login/",
@@ -33,7 +35,6 @@ define(function(require, exports, module) {
                     }
                 },
                 error:function(xhr, textStatus){
-                    Common.loadComplete();
                     if (textStatus == "timeout") {
                         Common.showToast("服务器开小差了");
                     }
