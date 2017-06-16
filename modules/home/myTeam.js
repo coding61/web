@@ -282,7 +282,7 @@ define(function(require, exports, module) {
         pk:null,
         currentUser:null,  //当前用户的 pk
         data:null, //小组数据
-        code:getQueryString("code"),
+        code:Common.getQueryString('code'),
         init:function(){
             if (Team.code) {
                 Team.getToken();
