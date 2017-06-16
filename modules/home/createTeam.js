@@ -11,6 +11,15 @@ define(function(require, exports, module) {
         load:function(){
 
             alert(Page.code);
+            
+            var token = '361e62b004a69a4610acf9f3a5b6f95eaabca3b8';
+            if(window.localStorage){
+                localStorage.token = token;
+            }else{
+                $.cookie("token", token, {
+                    path: "/"
+                });
+            }
 
             $.ajax({
                 type:'post',
@@ -40,9 +49,8 @@ define(function(require, exports, module) {
             Common.isLogin(function(token){
                 if (token == "null") {
                     Common.dialog('请先授权登录');
-                    // return;
+                    return;
                 }
-                token = "361e62b004a69a4610acf9f3a5b6f95eaabca3b8";
                 $.ajax({
                     type:"post",
                     url:Common.domain + "/userinfo/group_create/",
@@ -56,6 +64,7 @@ define(function(require, exports, module) {
                     dataType:"json",
                     success:function(json){
                         console.log(json);
+                        Common.showToast("创建成功");
                     },
                     err:function(xhr, textStatus){
                         if (textStatus == "timeout") {

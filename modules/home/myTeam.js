@@ -7,7 +7,8 @@ define(function(require, exports, module) {
         intro:null,
         init:function(){
 
-            Page.load();
+            // Page.load();
+            Team.init();
         },
         load:function(){
             // 1.组长
@@ -379,7 +380,7 @@ define(function(require, exports, module) {
                         }
 
                         Page.clickEvent();
-            
+
                     },
                         
                     error:function(xhr, textStatus){
