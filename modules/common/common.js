@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 
 	exports.domain = "/";
 	// exports.domain = "https://childhood.haorenao.cn/";
-	exports.domain = "/program_girl/";
+	exports.domain = "/program_girl";
 
 	exports.isWeixin = function() {
 		var ua = navigator.userAgent.toLowerCase();
