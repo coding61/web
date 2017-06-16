@@ -5,22 +5,14 @@ define(function(require, exports, module) {
     var Page = {
         code:Common.getQueryString('code'),
         init:function(){
-            Page.load();   //登录,根据 code 获取 token
+            if (Page.code) {
+                Page.load();   //登录,根据 code 获取 token
+            }
             Page.clickEvent();
         },
         load:function(){
 
             alert(Page.code);
-            
-            var token = '361e62b004a69a4610acf9f3a5b6f95eaabca3b8';
-            if(window.localStorage){
-                localStorage.token = token;
-            }else{
-                $.cookie("token", token, {
-                    path: "/"
-                });
-            }
-
             $.ajax({
                 type:'post',
                 url:Common.domain + "/userinfo/code_login/",

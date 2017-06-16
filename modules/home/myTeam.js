@@ -282,8 +282,40 @@ define(function(require, exports, module) {
         pk:null,
         currentUser:null,  //当前用户的 pk
         data:null, //小组数据
+        code:getQueryString("code"),
         init:function(){
-            Team.loadInfo();
+            if (Team.code) {
+                Team.getToken();
+            }else{
+                Team.loadInfo();
+            }
+        },
+        getToken:function(){
+            $.ajax({
+                type:'post',
+                url:Common.domain + "/userinfo/code_login/",
+                data:{
+                    code:Team.code
+                },
+                success:function(json){
+                    if(window.localStorage){
+                        localStorage.token = json.token;
+                    }else{
+                        $.cookie("token", json.token, {
+                            path: "/"
+                        });
+                    }
+                    
+                    Team.loadInfo();
+                },
+                error:function(xhr, textStatus){
+                    if (textStatus == "timeout") {
+                        Common.showToast("服务器开小差了");
+                    }
+                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                    console.log(textStatus);
+                }
+            })
         },
         loadInfo:function(){
             Common.isLogin(function(token){
