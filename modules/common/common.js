@@ -8,6 +8,8 @@ define(function(require, exports, module) {
 	// exports.domain = "https://childhood.haorenao.cn/";
 	exports.domain = "/program_girl";
 
+	// exports.domain = "https://app.bcjiaoyu.com/program_girl"
+
 	exports.isWeixin = function() {
 		var ua = navigator.userAgent.toLowerCase();
 		if (ua.match(/MicroMessenger/i) == "micromessenger") {
