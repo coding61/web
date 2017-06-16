@@ -6,6 +6,7 @@ define(function(require, exports, module) {
 
 	exports.domain = "/";
 	// exports.domain = "https://childhood.haorenao.cn/";
+	exports.domain = "/program_girl/";
 
 	exports.isWeixin = function() {
 		var ua = navigator.userAgent.toLowerCase();
@@ -315,7 +316,7 @@ define(function(require, exports, module) {
 			return false;
 		}
 	}
-
+	
 	exports.showToast = function(text, bot, fx) {
 		showToastControler.queue.push(text);
 		var bottom = bot ? bot + "px" : "40px";
@@ -595,7 +596,49 @@ define(function(require, exports, module) {
 			webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
 		};
 	}();
+	
+	exports.isLogin = function(fx, type) {
+		if (exports.isApp()) {
+			AppBridge.getValue("login_token", function(key, token) {
+				if (!token.match(/[0-9a-z]{40}/g)) {
+					if (type == "notLogin") {
+						
+					} else {
+						if (fx) {
+							fx("null");
+						}
+					}
+				} else {
+					if (fx) {
+						fx(token);
+					}
 
+				}
+			});
+		} else {
+			
+			if(window.localStorage){
+				var token = localStorage.token?localStorage.token:"";
+			}else{
+			 	var token = $.cookie("token")?$.cookie("token"):"";
+			}
+			if (!token.match(/[0-9a-z]{40}/g)) {
+				if (type == "notLogin") {
+					
+				} else {
+					if (fx) {
+						fx("null");
+					}
+				}
+			} else {
+				if (fx) {
+					fx(token);
+				}
+
+			}
+		}
+
+	};
 	exports.adapteWX = function(obj){
 		if (navigator.userAgent == 'GoldRN') {
 			$('header').hide();

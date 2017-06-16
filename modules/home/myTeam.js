@@ -15,25 +15,35 @@ define(function(require, exports, module) {
                 leader:true,   //当前用户是组长吗
                 inTeam:true,  //当前用户是否在团队里,
                 isManyuan:true,  //团队是否满员
-                team:{
-                    name:'百变小樱',
-                    intro:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                },
-                members:[{    //团队成员,共4个
-                    name:'张小美',
-                    avatar_url:'../../statics/images/11.jpg',
+                name:'百变小樱',
+                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
+                group_member:[{    //团队成员,共4个
+                    pk:1,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:true,     //此用户是组长吗
                 },{
-                    name:'张一美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:2,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },{
-                    name:'张二美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:3,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },{
-                    name:'张三美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:4,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 }],
                 
@@ -44,21 +54,28 @@ define(function(require, exports, module) {
                 leader:false,   //当前用户是组长吗
                 inTeam:false,  //当前用户是否在团队里,
                 isManyuan:false,  //团队是否满员
-                team:{
-                    name:'百变小樱',
-                    intro:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                },
-                members:[{    //团队成员,共4个
-                    name:'张小美',
-                    avatar_url:'../../statics/images/11.jpg',
+                name:'百变小樱',
+                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
+                group_member:[{    //团队成员,共4个
+                    pk:1,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:true,     //此用户是组长吗
                 },{
-                    name:'张一美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:2,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },{
-                    name:'张二美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:3,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },null],
                 
@@ -69,25 +86,33 @@ define(function(require, exports, module) {
                 leader:false,   //当前用户是组长吗
                 inTeam:false,  //当前用户是否在团队里,
                 isManyuan:true,  //团队是否满员
-                team:{
-                    name:'百变小樱',
-                    intro:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                },
-                members:[{    //团队成员,共4个
-                    name:'张小美',
-                    avatar_url:'../../statics/images/11.jpg',
+                name:'百变小樱',
+                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
+                group_member:[{    //团队成员,共4个
+                    pk:1,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:true,     //此用户是组长吗
                 },{
-                    name:'张一美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:2,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },{
-                    name:'张二美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:3,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },{
+                    pk:4,
                     name:'张三美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    avatar:'../../statics/images/11.jpg',
                     leader:false,     //此用户是组长吗
                 }],
                 
@@ -98,21 +123,28 @@ define(function(require, exports, module) {
                 leader:false,   //当前用户是组长吗
                 inTeam:true,  //当前用户是否在团队里,
                 isManyuan:false,  //团队是否满员
-                team:{
-                    name:'百变小樱',
-                    intro:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                },
-                members:[{    //团队成员,共4个
-                    name:'张小美',
-                    avatar_url:'../../statics/images/11.jpg',
+                name:'百变小樱',
+                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
+                group_member:[{    //团队成员,共4个
+                    pk:1,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:true,     //此用户是组长吗
                 },{
-                    name:'张一美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:2,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },{
-                    name:'张二美',
-                    avatar_url:'../../statics/images/11.jpg',
+                    pk:3,
+                    owner:{
+                        name:'张小美',
+                        avatar:'../../statics/images/11.jpg',
+                    },
                     leader:false,     //此用户是组长吗
                 },null],
             }
@@ -150,7 +182,8 @@ define(function(require, exports, module) {
 
             // 解散点击
             $(".header .quit").click(function(){
-
+                // 解散团队
+                Team.destoryTeam();
             })
             
             // 编辑按钮点击
@@ -195,14 +228,15 @@ define(function(require, exports, module) {
                 $(".main-view .team .avatar span").html(Page.name);
                 $(".main-view .team .intro span.text").html(Page.intro);
 
+                // 修改战队信息
+                Team.updateTeam(Page.name, Page.intro);
+
             })
             
             // 删除成员按钮点击
             $(".delete-icon").click(function(){
-                $(this).parents('.member').children('.avatar').children('img').attr({src:'../../statics/images/default-avatar.png'});
-                $(this).parents('.member').children('.avatar').removeClass('avatar').addClass('default-avatar');
-                $(this).parents('.member').children('.name').html('待加入')
-                $(this).parents('.member').children('.delete-icon').remove();
+                // 删除小组成员
+                Team.removeTeamMember($(this), $(this).parents('.member').attr("data-pk"));
 
             })
 
@@ -211,25 +245,306 @@ define(function(require, exports, module) {
             $(".action").click(function(){
                 if ($(this).hasClass('share')) {
                     // 邀请分享
-                    Common.confirm("您确定要加入此战队吗?", function(){
-                        console.log('111');
-                    })
+                    $(".shadow-view").show();
+
                 }else if ($(this).hasClass('join')) {
                     // 申请加入
-                    var parent =  $(".default-avatar").eq(0).parent();
-                    parent.children('.default-avatar').children('img').attr({src:'../../statics/images/11.jpg'});
-                    parent.children('.default-avatar').removeClass("default-avatar").addClass('avatar');
-                    parent.children('.name').html("张三美");
+                    Common.confirm("您确定要加入此战队吗?", function(){
 
-                    // 当前用户加入后, 变邀请
-                    $(this).children('span').html('邀请好友加入');
-                    $(this).removeClass('join').addClass('share');
+                        // 加入团队
+                        Team.joinTeam($(this));
+
+                        /*
+                        var parent =  $(".default-avatar").eq(0).parent();
+                        parent.children('.default-avatar').children('img').attr({src:'../../statics/images/11.jpg'});
+                        parent.children('.default-avatar').removeClass("default-avatar").addClass('avatar');
+                        parent.children('.name').html("张三美");
+
+                        // 当前用户加入后, 变邀请
+                        $(this).children('span').html('邀请好友加入');
+                        $(this).removeClass('join').addClass('share');
+                        */
+
+                    })
+                    
                 }else if ($(this).hasClass('unjoin')) {
                     // 不能加入
+                    
+                    Common.dialog('网络失败');
+                    
                 }
             })
         }
     };
+
+    var Team = {
+        pk:null,
+        currentUser:null,  //当前用户的 pk
+        data:null, //小组数据
+        init:function(){
+            Team.loadInfo();
+        },
+        loadInfo:function(){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    Common.dialog('请先授权');
+                    return;
+                }
+                $.ajax({
+                    type:'get',
+                    url: Common.domain + "/userinfo/whoami/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                        Team.currentUser = json.pk;
+
+                        Team.load();
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.showToast("服务器开小差了");
+                            return;
+                        }
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        load:function(){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    Common.dialog('请先授权');
+                    return;
+                }
+                $.ajax({
+                    type:'get',
+                    url: Common.domain + "/userinfo/mygroup/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                        console.log(json);
+
+                        Team.pk = json.pk;
+                        
+                        // leader:true,   //当前用户是组长吗
+                        // inTeam:true,  //当前用户是否在团队里,
+                        // isManyuan:true,  //团队是否满员
+                        var leader=false,
+                            inTeam=false, 
+                            isManyuan=false;
+                        if (json.member_number == 4) {
+                            isManyuan = true;
+                        }else{
+                            isManyuan = false;
+                        }
+                        
+                        var members = json.group_member;
+                        for (var i = 0; i < members.length; i++) {
+                            if (members[i].owner.pk == Team.currentUser){
+                                inTeam = true;
+                                break;
+                            }
+                        }
+                        for (var i = 0; i < members.length; i++) {
+                            if(members[i].leader=true){
+                                if (members[i].owner.pk == Team.currentUser) {
+                                    //当前用户是组长
+                                    leader = true;
+                                }else{
+                                    leader = false;
+                                }
+
+                                break;
+                            }
+                        }
+
+                        var dic = json;
+
+                        dic['leader'] = leader;
+                        dic['inTeam'] = inTeam;
+                        dic['isManyuan'] = isManyuan;
+
+                        var html = ArtTemplate("main-view-template", dic);
+                        $(".body-view").html(html);
+
+                        if (dic.inTeam == true && dic.leader == true) {
+                            $(".leader").show();
+
+                            $(".leader.editing").hide();  //关闭点编辑出来的元素
+                        }else{
+                            $(".leader").hide();
+                        }
+
+                        Page.clickEvent();
+            
+                    },
+                        
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.showToast("服务器开小差了");
+                            return;
+                        }
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        updateTeam:function(name, intro){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    Common.dialog("请先授权");
+                    return;
+                }
+                $.ajax({
+                    type:"put",
+                    url:Common.domain + "/userinfo/groups/"+Team.pk+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        name:name,
+                        announcement:intro
+                    },
+                    dataType:"json",
+                    success:function(json){
+                        Common.showToast('修改成功');
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.showToast("服务器开小差了");
+                            return;
+                        }
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        destoryTeam:function(){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    Common.dialog("请先授权");
+                    return;
+                }
+                $.ajax({
+                    type:"delete",
+                    url:Common.domain + "/userinfo/groups/"+Team.pk+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                        $(".body-view").html(null)
+                        $(".quit").remove();
+
+                        Common.dialog('没有团队');
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.showToast("服务器开小差了");
+                            return;
+                        }
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        joinKnownTeam:function(this_){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    Common.dialog("请先授权");
+                    return;
+                }
+                $.ajax({
+                    type:"get",
+                    url:Common.domain + "/userinfo/join_group/"+Team.pk+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                        Common.showToast('加入成功');
+
+                        var parent =  $(".default-avatar").eq(0).parent();
+                        parent.children('.default-avatar').children('img').attr({src:'../../statics/images/11.jpg'});
+                        parent.children('.default-avatar').removeClass("default-avatar").addClass('avatar');
+                        parent.children('.name').html("张三美");
+
+                        // 当前用户加入后, 变邀请
+                        this_.children('span').html('邀请好友加入');
+                        this_.removeClass('join').addClass('share');
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.showToast("服务器开小差了");
+                            return;
+                        }
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        joinUnknownTeam:function(){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    Common.dialog("请先授权");
+                    return;
+                }
+                $.ajax({
+                    type:"get",
+                    url:Common.domain + "/userinfo/random_join_group/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                       
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.showToast("服务器开小差了");
+                            return;
+                        }
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        removeTeamMember:function(this_, pk){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    Common.dialog("请先授权");
+                    return;
+                }
+                $.ajax({
+                    type:"get",
+                    url:Common.domain + "/userinfo/delete_groupmember/"+pk+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+
+                        this_.parents('.member').children('.avatar').children('img').attr({src:'../../statics/images/default-avatar.png'});
+                        this_.parents('.member').children('.avatar').removeClass('avatar').addClass('default-avatar');
+                        this_.parents('.member').children('.name').html('待加入')
+                        this_.parents('.member').children('.delete-icon').remove();
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.showToast("服务器开小差了");
+                            return;
+                        }
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        console.log(textStatus);
+                    }
+                })
+            })
+        }
+    }
 
     Page.init();
 

@@ -6,7 +6,7 @@
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="0" />
-		<title>首页</title>
+		<title>我的团队</title>
 
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
 		<link type="text/css" rel="stylesheet" href="../../statics/css/home/myTeam.css" />
@@ -24,6 +24,10 @@
 			<span>我的团队</span>
 			<span class="quit leader">解散</span>
 			<!-- <img src="" alt=""> -->
+		</div>
+
+		<div class="shadow-view">
+			<img src="../../statics/images/share.png" alt="">
 		</div>
 		
 		<div class="body-view">
@@ -89,42 +93,44 @@
 					{{/if}}
 					<div class="avatar">
 						<img src="../../statics/images/11.jpg" alt="" />
-						<span>{{team.name}}</span>
+						<span>{{name}}</span>
 						{{if leader == true}}
-							<input class="leader editing" type="text" value='{{team.name}}' />
+							<input class="leader editing" type="text" value='{{name}}' />
 						{{/if}}
 					</div>
 
 					<div class="intro">
-						<span class="text">团队介绍:{{team.intro}}</span>
+						<span class="text">团队介绍:{{announcement}}</span>
 						{{if leader == true}}
-							<textarea class="leader editing">团队介绍:{{team.intro}}</textarea>
+							<textarea class="leader editing">团队介绍:{{announcement}}</textarea>
 						{{/if}}
 					</div>
 				</div>
 				<div class="members-view">
 					<span>团队成员</span>
 					<div class="members">
-						{{each members}}
-						<div class="member">
+						{{each group_member}}
 							{{if $value}}
-								{{if $value.leader == false}}
-									<img class="delete-icon leader" src="../../statics/images/delete.png" alt="" />
-								{{/if}}
-								<div class="avatar">
-									<img src="{{$value.avatar_url}}" alt="" />
+								<div class="member" data-pk="{{$value.pk}}">
+									{{if $value.leader == false}}
+										<img class="delete-icon leader" src="../../statics/images/delete.png" alt="" />
+									{{/if}}
+									<div class="avatar">
+										<img src="{{$value.owner.avatar}}" alt="" />
+									</div>
+									<span class="name">{{$value.owner.name}}</span>
+									{{if $value.leader == true}}
+										<span class="position">队长</span>
+									{{/if}}
 								</div>
-								<span class="name">{{$value.name}}</span>
-								{{if $value.leader == true}}
-									<span class="position">队长</span>
-								{{/if}}
 							{{else}}
-								<div class="default-avatar">
-									<img src="../../statics/images/default-avatar.png" alt="" />
-								</div>
-								<span class="name">待加入</span>
+									<div class="member" data-pk="-1">
+										<div class="default-avatar">
+											<img src="../../statics/images/default-avatar.png" alt="" />
+										</div>
+										<span class="name">待加入</span>
+									</div>
 							{{/if}}
-						</div>
 						{{/each}}
 					</div>
 				</div>
