@@ -102,7 +102,7 @@ define(function(require, exports, module) {
                 },
                 error:function(xhr, textStatus){
                     if (textStatus == "timeout") {
-                        Common.showToast("服务器开小差了");
+                        Common.dialog("服务器开小差了");
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -113,7 +113,7 @@ define(function(require, exports, module) {
                         Common.authWXLogin(redirectUri);
                         return;
                     }else{
-                        Common.showToast('服务器繁忙');
+                        Common.dialog('服务器繁忙');
                         return;
                     }
                     console.log(textStatus);
@@ -141,11 +141,12 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         $(".wait-loading").hide();
-
+        
+        
                         if (xhr.status == 401) {
                             // token 失效, 重新授权
                             // 先微信授权登录
@@ -157,7 +158,7 @@ define(function(require, exports, module) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            Common.showToast("服务器繁忙");
+                            Common.dialog("服务器繁忙");
                             return;
                         }
                         console.log(textStatus);

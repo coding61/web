@@ -207,7 +207,7 @@ define(function(require, exports, module) {
                 },
                 error:function(xhr, textStatus){
                     if (textStatus == "timeout") {
-                        Common.showToast("服务器开小差了");
+                        Common.dialog("服务器开小差了");
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -222,7 +222,7 @@ define(function(require, exports, module) {
                         Common.authWXLogin(redirectUri);
                         return;
                     }else{
-                        Common.showToast('服务器繁忙');
+                        Common.dialog('服务器繁忙');
                         return;
                     }
                     console.log(textStatus);
@@ -259,7 +259,7 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -275,7 +275,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
@@ -299,11 +299,11 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.showToast("此团队已解散");
+                            Common.dialog("此团队已解散");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -314,7 +314,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
@@ -342,11 +342,11 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.showToast("您没有团队");
+                            Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -357,7 +357,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
@@ -476,15 +476,15 @@ define(function(require, exports, module) {
                     },
                     dataType:"json",
                     success:function(json){
-                        Common.showToast('修改成功');
+                        Common.dialog('修改成功');
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.showToast("您没有团队");
+                            Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -499,7 +499,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
@@ -529,15 +529,15 @@ define(function(require, exports, module) {
                         $(".body-view").html(null)
                         $(".quit").remove();
 
-                        Common.showToast('您没有团队');
+                        Common.dialog('您没有团队');
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.showToast("您没有团队");
+                            Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -552,7 +552,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
@@ -579,7 +579,7 @@ define(function(require, exports, module) {
                         Authorization:"Token " + token
                     },
                     success:function(json){
-                        Common.showToast('加入成功');
+                        Common.dialog('加入成功');
                         // this_.removeClass('join').addClass('unjoin');
 
                         Team.adjustData(json);
@@ -598,11 +598,11 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.showToast("您没有团队");
+                            Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -617,7 +617,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
@@ -678,11 +678,11 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.showToast("找不到该成员");
+                            Common.dialog("找不到该成员");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -697,7 +697,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);

@@ -30,7 +30,7 @@ define(function(require, exports, module) {
                 },
                 error:function(xhr, textStatus){
                     if (textStatus == "timeout") {
-                        Common.showToast("服务器开小差了");
+                        Common.dialog("服务器开小差了");
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -40,7 +40,7 @@ define(function(require, exports, module) {
                         Common.authWXLogin(redirectUri);
                         return;
                     }else{
-                        Common.showToast('服务器繁忙');
+                        Common.dialog('服务器繁忙');
                         return;
                     }
                     console.log(textStatus);
@@ -67,13 +67,13 @@ define(function(require, exports, module) {
                     dataType:"json",
                     success:function(json){
                         console.log(json);
-                        Common.showToast("创建成功");
+                        Common.dialog("创建成功");
 
                         location.href = "myTeam.html";
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
+                            Common.dialog("服务器开小差了");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -84,7 +84,7 @@ define(function(require, exports, module) {
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
-                            Common.showToast('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
