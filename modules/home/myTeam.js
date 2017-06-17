@@ -527,7 +527,7 @@ define(function(require, exports, module) {
                 $(".leader").hide();
             }
 
-            if (Team.pk) {
+            if (Common.getQueryString("pk")) {
                 if (dic.inTeam == true) {
                     $(".join").hide();
                 }
