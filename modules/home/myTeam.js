@@ -439,6 +439,10 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
+                        if (xhr.status == 404) {
+                            Common.showToast("您没有团队");
+                            return;
+                        }
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         console.log(textStatus);
                     }
@@ -572,7 +576,7 @@ define(function(require, exports, module) {
                         $(".body-view").html(null)
                         $(".quit").remove();
 
-                        Common.dialog('没有团队');
+                        Common.showToast('您没有团队');
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {

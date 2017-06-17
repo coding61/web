@@ -26,6 +26,8 @@ body{
     font-size: 0.16rem;
     letter-spacing: 0.01rem;
     line-height: 0.50rem;
+
+    display: none;
 }
 .header img{
 	position: absolute;
