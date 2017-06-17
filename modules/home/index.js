@@ -100,7 +100,18 @@ define(function(require, exports, module) {
                     if (textStatus == "timeout") {
                         Common.showToast("服务器开小差了");
                     }
-                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                    if (xhr.status == 400) {
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        return;
+                    }else if (xhr.status == 401) {
+                        var redirectUri = null;
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        Common.authWXLogin(redirectUri);
+                        return;
+                    }else{
+                        Common.showToast('服务器繁忙');
+                        return;
+                    }
                     console.log(textStatus);
                 }
             })
@@ -140,12 +151,18 @@ define(function(require, exports, module) {
                         }else if (xhr.status == 400) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
+                        }else{
+                            Common.showToast("服务器繁忙");
+                            return;
                         }
                         console.log(textStatus);
                     }
                 })
             })
         },
+        errorMessage:function(xhr){
+
+        }
         
     }
     Page.init();
