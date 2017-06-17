@@ -250,7 +250,7 @@ define(function(require, exports, module) {
                     if (url.indexOf("pk") != -1) {
                         
                     }else{
-                        location.href = url + "?pk=" + Team.pk;
+                        location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
 
                 }else if ($(this).hasClass('join')) {
@@ -263,7 +263,7 @@ define(function(require, exports, module) {
                             redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
                             scope = 'snsapi_userinfo';
 
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team.pk;
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team;
                         redirectUri = encodeURIComponent(redirectUri);
 
                         location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
