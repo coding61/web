@@ -124,7 +124,7 @@ define(function(require, exports, module) {
                     return;
                 }
                 $.ajax({
-                    type:"put",
+                    type:"get",
                     url:Common.domain + "/userinfo/random_join_group/",
                     headers:{
                         Authorization:"Token " + token

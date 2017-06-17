@@ -563,7 +563,7 @@ define(function(require, exports, module) {
                     return;
                 }
                 $.ajax({
-                    type:"put",
+                    type:"get",
                     url:Common.domain + "/userinfo/join_group/"+Team.pk+"/",
                     headers:{
                         Authorization:"Token " + token
