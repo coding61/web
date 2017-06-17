@@ -96,7 +96,7 @@ define(function(require, exports, module) {
                         });
                     }
                     $(".shadow-view").show();
-                    
+
                     // 分享点击取消
                     $(".shadow-view").click(function(){
                         $(this).hide();
@@ -108,6 +108,7 @@ define(function(require, exports, module) {
                     }else{
                         var newUrl = url.split('?')[0] + "?pk=" + Team.pk;
                         history.pushState({}, null, newUrl);
+                        Common.dialog(window.location.href);
                         // location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
 
