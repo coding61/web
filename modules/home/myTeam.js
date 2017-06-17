@@ -204,7 +204,7 @@ define(function(require, exports, module) {
                     if (textStatus == "timeout") {
                         Common.showToast("服务器开小差了");
                     }
-                    if (xhr.status == 400) {
+                    if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else if (xhr.status == 401) {
@@ -257,7 +257,7 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        if (xhr.status == 400) {
+                        if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
@@ -295,7 +295,7 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        if (xhr.status == 400) {
+                        if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
@@ -338,7 +338,7 @@ define(function(require, exports, module) {
                         if (xhr.status == 404) {
                             Common.showToast("您没有团队");
                             return;
-                        }else if (xhr.status == 400) {
+                        }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
@@ -476,7 +476,7 @@ define(function(require, exports, module) {
                         if (xhr.status == 404) {
                             Common.showToast("您没有团队");
                             return;
-                        }else if (xhr.status == 400) {
+                        }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
@@ -529,7 +529,7 @@ define(function(require, exports, module) {
                         if (xhr.status == 404) {
                             Common.showToast("您没有团队");
                             return;
-                        }else if (xhr.status == 400) {
+                        }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
@@ -594,7 +594,7 @@ define(function(require, exports, module) {
                         if (xhr.status == 404) {
                             Common.showToast("您没有团队");
                             return;
-                        }else if (xhr.status == 400) {
+                        }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
@@ -674,7 +674,7 @@ define(function(require, exports, module) {
                         if (xhr.status == 404) {
                             Common.showToast("找不到该成员");
                             return;
-                        }else if (xhr.status == 400) {
+                        }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {

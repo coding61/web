@@ -32,7 +32,7 @@ define(function(require, exports, module) {
                     if (textStatus == "timeout") {
                         Common.showToast("服务器开小差了");
                     }
-                    if (xhr.status == 400) {
+                    if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else if (xhr.status == 401) {
@@ -76,7 +76,7 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        if (xhr.status == 400) {
+                        if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
