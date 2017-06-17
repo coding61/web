@@ -97,9 +97,22 @@ define(function(require, exports, module) {
              $('.intro textarea').on('input', function(){
                 this.style.height = 'auto';
                 this.style.height = this.scrollHeight + "px"
+
             })
 
 
+            $("textarea").focus(function(){
+                $(".create").hide();
+            }).blur(function(){
+                $(".create").show();
+            })
+
+            $("input").focus(function(){
+                $(".create").hide();
+            }).blur(function(){
+                $(".create").show();
+            })
+            
             $(".create").click(function(){
                 Page.createTeam();
             })
