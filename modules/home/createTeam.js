@@ -105,12 +105,16 @@ define(function(require, exports, module) {
                 $(".create").hide();
             }).blur(function(){
                 $(".create").show();
+            }).click(function(){
+                $(".create").hide();
             })
 
             $("input").focus(function(){
                 $(".create").hide();
             }).blur(function(){
                 $(".create").show();
+            }).click(function(){
+                $(".create").hide();
             })
             
             $(".create").click(function(){
