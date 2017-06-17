@@ -107,19 +107,19 @@ define(function(require, exports, module) {
                 }else if ($(this).hasClass('join')) {
                     var this_ = $(this);
                     // 申请加入
-                    if (Team.pk && !Team.code) {
-                        // 分享进来的页面, 点加入要先授权
-                        // 微信网页授权
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team.pk;
-                        Common.authWXLogin(redirectUri);
+                    // if (Team.pk && !Team.code) {
+                    //     // 分享进来的页面, 点加入要先授权
+                    //     // 微信网页授权
+                    //     var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team.pk;
+                    //     Common.authWXLogin(redirectUri);
 
-                    }else{
+                    // }else{
                         Common.confirm("您确定要加入此战队吗?", function(){
 
                             // 加入团队
                             Team.joinKnownTeam(this_);
                         })
-                    }
+                    // }
                     
                     
                 }else if ($(this).hasClass('unjoin')) {
@@ -155,7 +155,12 @@ define(function(require, exports, module) {
                 // 从分享进来,加载 team 信息
                 Common.isLogin(function(token){
                     if (token == "null") {
-                        Team.loadShareTeam();   //用户还不曾加入
+                        // 分享进来的页面
+                        // 微信网页授权
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team.pk;
+                        Common.authWXLogin(redirectUri);
+
+                        // Team.loadShareTeam();   //用户还不曾加入
                     }else{
                         Team.loadInfo();   //用户已经加入, 再次从分享进来
                     }
@@ -288,6 +293,8 @@ define(function(require, exports, module) {
                     type:"get",
                     url:Common.domain + "/userinfo/group_detail/"+Team.pk+"/",
                     success:function(json){
+                        // Team.joinKnownTeam($(".join"));
+
                         Team.adjustData(json);
                     },
                     error:function(xhr, textStatus){
