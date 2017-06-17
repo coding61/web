@@ -27,7 +27,7 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             
-            var token = "361e62b004a69a4610acf9f3a5b6f95eaabca3b9";
+            var token = "361e62b004a69a4610acf9f3a5b6f95eaabca3b8";
             if(window.localStorage){
                 localStorage.token = token
             }else{
