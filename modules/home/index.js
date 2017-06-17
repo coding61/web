@@ -29,7 +29,7 @@ define(function(require, exports, module) {
             
             var token = null;
             if(window.localStorage){
-                localStorage.token = token
+                localStorage.clear();
             }else{
                 $.cookie("token", token, {
                     path: "/"
