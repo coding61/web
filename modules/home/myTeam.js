@@ -375,7 +375,7 @@ define(function(require, exports, module) {
                 }
                 $.ajax({
                     type:"get",
-                    url:Common.domain + "/userinfo/groups/"+Team.pk+"/",
+                    url:Common.domain + "/userinfo/group_detail/"+Team.pk+"/",
                     success:function(json){
                         Team.adjustData(json);
                     },
