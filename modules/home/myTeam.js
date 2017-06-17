@@ -237,6 +237,13 @@ define(function(require, exports, module) {
             $(".action").click(function(){
                 if ($(this).hasClass('share')) {
                     // 邀请分享
+                    if(window.localStorage){
+                        localStorage.share = true
+                    }else{
+                        $.cookie("share", true, {
+                            path: "/"
+                        });
+                    }
                     $(".shadow-view").show();
 
                     var url = window.location.href;
@@ -294,6 +301,13 @@ define(function(require, exports, module) {
         data:null, //小组数据
         code:Common.getQueryString('code'),
         init:function(){
+            var share = null;
+            if(window.localStorage){
+                share = localStorage.share
+            }else{
+                share = $.cookie("share");
+            }
+
             if (Team.code && !Team.pk) {
                 // 上一页进来的
                 Team.getToken();
@@ -303,6 +317,19 @@ define(function(require, exports, module) {
             }else if(Team.pk && Team.code){
                 // 分享进来的先授权,在加载team信息
                 Team.getToken();
+            }else if (share == true && Team.pk){
+                //点了分享改变的页面地址导致的刷新
+                Team.loadInfo();
+                $(".shadow-view").show();
+
+                if(window.localStorage){
+                    localStorage.share = false
+                }else{
+                    $.cookie("share", false, {
+                        path: "/"
+                    });
+                }
+
             }else{
                 Team.loadInfo();
             }
