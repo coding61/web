@@ -527,6 +527,13 @@ define(function(require, exports, module) {
                 $(".leader").hide();
             }
 
+            if (Team.pk) {
+                $(".share").hide();
+            }
+            if (dic.inTeam == true) {
+                $(".join").hide();
+            }
+
             Page.clickEvent();
         },
         updateTeam:function(name, intro){
