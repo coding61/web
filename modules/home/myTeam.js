@@ -255,36 +255,24 @@ define(function(require, exports, module) {
 
                 }else if ($(this).hasClass('join')) {
                     // 申请加入
-                    if (Team.pk && !Team.code) {
-                        // 分享进来的页面, 点加入要先授权
-                        // 微信网页授权
-                        var appId = 'wx58e15a667d09d70f',
-                            redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
-                            scope = 'snsapi_userinfo';
+                    // if (Team.pk && !Team.code) {
+                    //     // 分享进来的页面, 点加入要先授权
+                    //     // 微信网页授权
+                    //     var appId = 'wx58e15a667d09d70f',
+                    //         redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
+                    //         scope = 'snsapi_userinfo';
 
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
-                        redirectUri = encodeURIComponent(redirectUri);
+                    //     redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    //     redirectUri = encodeURIComponent(redirectUri);
 
-                        location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
-                    }else{
+                    //     location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
+                    // }else{
                         Common.confirm("您确定要加入此战队吗?", function(){
 
                             // 加入团队
                             Team.joinTeam($(this));
-
-                            /*
-                            var parent =  $(".default-avatar").eq(0).parent();
-                            parent.children('.default-avatar').children('img').attr({src:'../../statics/images/11.jpg'});
-                            parent.children('.default-avatar').removeClass("default-avatar").addClass('avatar');
-                            parent.children('.name').html("张三美");
-
-                            // 当前用户加入后, 变邀请
-                            $(this).children('span').html('邀请好友加入');
-                            $(this).removeClass('join').addClass('share');
-                            */
-
                         })
-                    }
+                    // }
                     
                     
                 }else if ($(this).hasClass('unjoin')) {
