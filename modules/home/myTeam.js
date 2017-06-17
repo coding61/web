@@ -528,10 +528,10 @@ define(function(require, exports, module) {
             }
 
             if (Team.pk) {
+                if (dic.inTeam == true) {
+                    $(".join").hide();
+                }
                 $(".share").hide();
-            }
-            if (dic.inTeam == true) {
-                $(".join").hide();
             }
 
             Page.clickEvent();
