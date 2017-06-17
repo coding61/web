@@ -256,24 +256,24 @@ define(function(require, exports, module) {
                 }else if ($(this).hasClass('join')) {
                     var this_ = $(this);
                     // 申请加入
-                    // if (Team.pk && !Team.code) {
-                    //     // 分享进来的页面, 点加入要先授权
-                    //     // 微信网页授权
-                    //     var appId = 'wx58e15a667d09d70f',
-                    //         redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
-                    //         scope = 'snsapi_userinfo';
+                    if (Team.pk && !Team.code) {
+                        // 分享进来的页面, 点加入要先授权
+                        // 微信网页授权
+                        var appId = 'wx58e15a667d09d70f',
+                            redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
+                            scope = 'snsapi_userinfo';
 
-                    //     redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
-                    //     redirectUri = encodeURIComponent(redirectUri);
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                        redirectUri = encodeURIComponent(redirectUri);
 
-                    //     location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
-                    // }else{
+                        location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
+                    }else{
                         Common.confirm("您确定要加入此战队吗?", function(){
 
                             // 加入团队
                             Team.joinKnownTeam(this_);
                         })
-                    // }
+                    }
                     
                     
                 }else if ($(this).hasClass('unjoin')) {
@@ -385,10 +385,10 @@ define(function(require, exports, module) {
         },
         loadShareTeam:function(){
             Common.isLogin(function(token){
-                if (token == "null") {
-                    Common.dialog('请先授权');
-                    return;
-                }
+                // if (token == "null") {
+                //     Common.dialog('请先授权');
+                //     return;
+                // }
                 $.ajax({
                     type:"get",
                     url:Common.domain + "/userinfo/group_detail/"+Team.pk+"/",
