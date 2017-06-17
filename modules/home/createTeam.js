@@ -93,6 +93,12 @@ define(function(require, exports, module) {
             })
         },
         clickEvent:function(){
+            // textarea编辑框高度自适应
+             $('.intro textarea').on('input', function(){
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + "px"
+            })
+
 
             $(".create").click(function(){
                 Page.createTeam();
