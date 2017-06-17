@@ -41,7 +41,7 @@ define(function(require, exports, module) {
                 
 
                 // textarea 布置
-                var str1 = $('.main-view .team .intro textarea').html();
+                var str1 = $('.main-view .team .intro span').html();
                 $('.main-view .team .intro textarea').html(str1);
 
                 var scrollHeight = $('.main-view .team .intro textarea')[0].scrollHeight;
@@ -227,7 +227,13 @@ define(function(require, exports, module) {
         loadInfo:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    Common.dialog('请先授权');
+                    var redirectUri = null;
+                    if (Common.getQueryString("pk")) {
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                    }else{
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    }
+                    Common.authWXLogin(redirectUri);
                     return;
                 }
                 $.ajax({
@@ -256,8 +262,8 @@ define(function(require, exports, module) {
                             return;
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
-                            if (Team.pk) {
-                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk;
+                            if (Common.getQueryString("pk")) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
                             }else{
                                 redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                             }
@@ -309,7 +315,9 @@ define(function(require, exports, module) {
         load:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    Common.dialog('请先授权');
+                    var redirectUri = null;
+                    redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    Common.authWXLogin(redirectUri);
                     return;
                 }
                 $.ajax({
@@ -437,7 +445,13 @@ define(function(require, exports, module) {
         updateTeam:function(name, intro){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    Common.dialog("请先授权");
+                    var redirectUri = null;
+                    if (Common.getQueryString("pk")) {
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                    }else{
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    }
+                    Common.authWXLogin(redirectUri);
                     return;
                 }
                 $.ajax({
@@ -486,7 +500,13 @@ define(function(require, exports, module) {
         destoryTeam:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    Common.dialog("请先授权");
+                    var redirectUri = null;
+                    if (Common.getQueryString("pk")) {
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                    }else{
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    }
+                    Common.authWXLogin(redirectUri);
                     return;
                 }
                 $.ajax({
@@ -533,7 +553,13 @@ define(function(require, exports, module) {
         joinKnownTeam:function(this_){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    Common.dialog("请先授权");
+                    var redirectUri = null;
+                    if (Common.getQueryString("pk")) {
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                    }else{
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    }
+                    Common.authWXLogin(redirectUri);
                     return;
                 }
                 $.ajax({
@@ -618,7 +644,13 @@ define(function(require, exports, module) {
         removeTeamMember:function(this_, pk){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    Common.dialog("请先授权");
+                    var redirectUri = null;
+                    if (Common.getQueryString("pk")) {
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                    }else{
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    }
+                    Common.authWXLogin(redirectUri);
                     return;
                 }
                 $.ajax({

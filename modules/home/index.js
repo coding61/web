@@ -119,7 +119,8 @@ define(function(require, exports, module) {
         joinUnknownTeam:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    Common.dialog("请先授权");
+                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';
+                    Common.authWXLogin(redirectUri);
                     return;
                 }
                 $.ajax({
