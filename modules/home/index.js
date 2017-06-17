@@ -52,13 +52,18 @@ define(function(require, exports, module) {
                 
                     
             $(".join").click(function(){
-                // 随机匹配进入我的团队页
-                $(".wait-loading").show();
-
-                // 先微信授权登录
-                // 微信网页授权
-                var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
-                Page.authLogin(redirectUri);
+                Common.isLogin(function(token){
+                    if (token != 'null') {
+                        // 随机匹配进入我的团队页
+                        $(".wait-loading").show();
+                        Team.joinUnknownTeam();
+                    }else{
+                         // 先微信授权登录
+                        // 微信网页授权
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        Page.authLogin(redirectUri);
+                    }
+                })
             })
             
             $(".my").click(function(){
@@ -125,14 +130,18 @@ define(function(require, exports, module) {
                         Authorization:"Token " + token
                     },
                     success:function(json){
+                        $(".wait-loading").hide();
 
-                       location.href = "myTeam.html";
+                        location.href = "myTeam.html";
+                       
+
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             Common.showToast("服务器开小差了");
                             return;
                         }
+                        $(".wait-loading").hide();
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         console.log(textStatus);
                     }
