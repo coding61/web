@@ -175,7 +175,10 @@ define(function(require, exports, module) {
             // 解散点击
             $(".header .quit").click(function(){
                 // 解散团队
-                Team.destoryTeam();
+                Common.confirm("您真的确定要解散团队吗?", function(){
+                    Team.destoryTeam();
+                })
+                
             })
             
             // 编辑按钮点击
@@ -228,7 +231,10 @@ define(function(require, exports, module) {
             // 删除成员按钮点击
             $(".delete-icon").click(function(){
                 // 删除小组成员
-                Team.removeTeamMember($(this), $(this).parents('.member').attr("data-pk"));
+                var this_ = $(this);
+                Common.confirm("您真的确定要删除该队员?", function(){
+                    Team.removeTeamMember(this_, this_.parents('.member').attr("data-pk"));
+                })
 
             })
 
