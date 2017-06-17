@@ -95,7 +95,7 @@ define(function(require, exports, module) {
                             path: "/"
                         });
                     }
-                    $(".shadow-view").show();
+                    // $(".shadow-view").show();
 
                     var url = window.location.href;
                     if (url.indexOf("pk") != -1) {
@@ -142,6 +142,8 @@ define(function(require, exports, module) {
             }else{
                 share = $.cookie("share");
             }
+
+            $(".shadow-view").hide();
             
             if (Team.code && !Team.pk) {
                 // 上一页进来的, 未授权
@@ -544,7 +546,9 @@ define(function(require, exports, module) {
                         Common.showToast('加入成功');
                         // this_.removeClass('join').addClass('unjoin');
 
-                        
+                        Team.adjustData(json);
+
+                        /*
                         var parent =  $(".default-avatar").eq(0).parent();
                         parent.children('.default-avatar').children('img').attr({src:'../../statics/images/11.jpg'});
                         parent.children('.default-avatar').removeClass("default-avatar").addClass('avatar');
@@ -553,6 +557,7 @@ define(function(require, exports, module) {
                         // 当前用户加入后, 变邀请
                         this_.children('span').html('邀请好友加入');
                         this_.removeClass('join').addClass('share');
+                        */
                         
                     },
                     error:function(xhr, textStatus){
