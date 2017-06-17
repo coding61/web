@@ -27,14 +27,14 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             
-            var token = null;
-            if(window.localStorage){
-                localStorage.clear();
-            }else{
-                $.cookie("token", token, {
-                    path: "/"
-                });
-            }
+            // var token = null;
+            // if(window.localStorage){
+            //     localStorage.clear();
+            // }else{
+            //     $.cookie("token", token, {
+            //         path: "/"
+            //     });
+            // }
 
             $(".create").click(function(){
                 Common.isLogin(function(token){
