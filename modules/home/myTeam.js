@@ -254,6 +254,7 @@ define(function(require, exports, module) {
                     }
 
                 }else if ($(this).hasClass('join')) {
+                    var this_ = $(this);
                     // 申请加入
                     // if (Team.pk && !Team.code) {
                     //     // 分享进来的页面, 点加入要先授权
@@ -270,7 +271,7 @@ define(function(require, exports, module) {
                         Common.confirm("您确定要加入此战队吗?", function(){
 
                             // 加入团队
-                            Team.joinTeam($(this));
+                            Team.joinKnownTeam(this_);
                         })
                     // }
                     
