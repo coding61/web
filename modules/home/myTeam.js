@@ -488,9 +488,17 @@ define(function(require, exports, module) {
             }
             if (number != null && targent != null) {
                 dic.group_member.splice(number,1);
-                dic.group_member.unshift(targent);  //将全部相册放到第一位
+                dic.group_member.unshift(targent);  //将队长放到第一位
             }else{
             }
+            
+            var array = [null, null, null, null];
+            for (var i = 0; i < dic.group_member.length; i++) {
+                array[i] = dic.group_member[i];
+            }
+
+            dic.group_member = array;
+            
             
             console.log(dic);
             var html = ArtTemplate("main-view-template", dic);
