@@ -457,7 +457,7 @@ define(function(require, exports, module) {
                 }
             }
             for (var i = 0; i < members.length; i++) {
-                if(members[i].leader=true){
+                if(members[i].leader==true){
                     if (members[i].owner.pk == Team.currentUser) {
                         //当前用户是组长
                         leader = true;
