@@ -64,6 +64,7 @@ body{
     border: none;
     font-size: 0.13rem;
     color: #787878;
+    width: 60%;
 }
 .main-view .menu .intro{
 	display: flex;
