@@ -68,8 +68,10 @@ define(function(require, exports, module) {
                     success:function(json){
                         console.log(json);
                         Common.showToast("创建成功");
+
+                        location.href = "myTeam.html";
                     },
-                    err:function(xhr, textStatus){
+                    error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             Common.showToast("服务器开小差了");
                             return;
