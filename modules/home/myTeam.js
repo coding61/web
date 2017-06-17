@@ -311,13 +311,13 @@ define(function(require, exports, module) {
             if (Team.code && !Team.pk) {
                 // 上一页进来的
                 Team.getToken();
-            }else if(Team.pk && !Team.code){
+            }else if(Team.pk && !Team.code && share != 'true'){
                 // 从分享进来,加载 team 信息
                 Team.loadShareTeam();
             }else if(Team.pk && Team.code){
                 // 分享进来的先授权,在加载team信息
                 Team.getToken();
-            }else if (share == true && Team.pk){
+            }else if (share == 'true' && Team.pk){
                 //点了分享改变的页面地址导致的刷新
                 Team.loadInfo();
                 $(".shadow-view").show();
