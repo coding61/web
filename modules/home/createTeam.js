@@ -12,7 +12,7 @@ define(function(require, exports, module) {
         },
         load:function(){
 
-            alert(Page.code);
+            // alert(Page.code);
             $.ajax({
                 type:'post',
                 url:Common.domain + "/userinfo/code_login/",
@@ -32,7 +32,14 @@ define(function(require, exports, module) {
                     if (textStatus == "timeout") {
                         Common.showToast("服务器开小差了");
                     }
-                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                    if (xhr.status == 400) {
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        return;
+                    }else if (xhr.status == 401) {
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';
+                        Common.authWXLogin(redirectUri);
+                        return;
+                    }
                     console.log(textStatus);
                 }
             })
@@ -63,7 +70,14 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }
                         console.log(textStatus);
                     }
                 })

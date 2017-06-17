@@ -7,162 +7,7 @@ define(function(require, exports, module) {
         intro:null,
         init:function(){
 
-            // Page.load();
             Team.init();
-        },
-        load:function(){
-            // 1.组长
-            var dic = {
-                leader:true,   //当前用户是组长吗
-                inTeam:true,  //当前用户是否在团队里,
-                isManyuan:true,  //团队是否满员
-                name:'百变小樱',
-                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                group_member:[{    //团队成员,共4个
-                    pk:1,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:true,     //此用户是组长吗
-                },{
-                    pk:2,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },{
-                    pk:3,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },{
-                    pk:4,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                }],
-                
-            }
-            
-            // 2.未满员,不在团里
-            var dic1 = {
-                leader:false,   //当前用户是组长吗
-                inTeam:false,  //当前用户是否在团队里,
-                isManyuan:false,  //团队是否满员
-                name:'百变小樱',
-                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                group_member:[{    //团队成员,共4个
-                    pk:1,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:true,     //此用户是组长吗
-                },{
-                    pk:2,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },{
-                    pk:3,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },null],
-                
-            }
-            
-            // 3.满员
-            var dic2 = {
-                leader:false,   //当前用户是组长吗
-                inTeam:false,  //当前用户是否在团队里,
-                isManyuan:true,  //团队是否满员
-                name:'百变小樱',
-                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                group_member:[{    //团队成员,共4个
-                    pk:1,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:true,     //此用户是组长吗
-                },{
-                    pk:2,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },{
-                    pk:3,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },{
-                    pk:4,
-                    name:'张三美',
-                    avatar:'../../statics/images/11.jpg',
-                    leader:false,     //此用户是组长吗
-                }],
-                
-            }
-            
-            // 4.不是组长, 在团里
-            var dic3 = {
-                leader:false,   //当前用户是组长吗
-                inTeam:true,  //当前用户是否在团队里,
-                isManyuan:false,  //团队是否满员
-                name:'百变小樱',
-                announcement:'我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.我们是一直很强的队伍.',
-                group_member:[{    //团队成员,共4个
-                    pk:1,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:true,     //此用户是组长吗
-                },{
-                    pk:2,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },{
-                    pk:3,
-                    owner:{
-                        name:'张小美',
-                        avatar:'../../statics/images/11.jpg',
-                    },
-                    leader:false,     //此用户是组长吗
-                },null],
-            }
-
-            var html = ArtTemplate("main-view-template", dic);
-            $(".body-view").html(html);
-
-            if (dic.inTeam == true && dic.leader == true) {
-                $(".leader").show();
-
-                $(".leader.editing").hide();  //关闭点编辑出来的元素
-            }else{
-                $(".leader").hide();
-            }
-
-            Page.clickEvent();
-
         },
         clickEvent:function(){
 
@@ -265,14 +110,9 @@ define(function(require, exports, module) {
                     if (Team.pk && !Team.code) {
                         // 分享进来的页面, 点加入要先授权
                         // 微信网页授权
-                        var appId = 'wx58e15a667d09d70f',
-                            redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
-                            scope = 'snsapi_userinfo';
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team.pk;
+                        Common.authWXLogin(redirectUri);
 
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team;
-                        redirectUri = encodeURIComponent(redirectUri);
-
-                        location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
                     }else{
                         Common.confirm("您确定要加入此战队吗?", function(){
 
@@ -362,7 +202,22 @@ define(function(require, exports, module) {
                     if (textStatus == "timeout") {
                         Common.showToast("服务器开小差了");
                     }
-                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                    if (xhr.status == 400) {
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        return;
+                    }else if (xhr.status == 401) {
+                        var redirectUri = null;
+                        if (Team.pk) {
+                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk;
+                        }else{
+                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                        }
+                        Common.authWXLogin(redirectUri);
+                        return;
+                    }else{
+                        Common.showToast('服务器繁忙');
+                        return;
+                    }
                     console.log(textStatus);
                 }
             })
@@ -394,7 +249,22 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            if (Team.pk) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk;
+                            }else{
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            }
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.showToast('服务器繁忙');
+                            return;
+                        }
                         console.log(textStatus);
                     }
                 })
@@ -417,7 +287,18 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk;
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.showToast('服务器繁忙');
+                            return;
+                        }
                         console.log(textStatus);
                     }
                 })
@@ -439,7 +320,6 @@ define(function(require, exports, module) {
                         // console.log(json);
                         Team.adjustData(json);
                     },
-                        
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             Common.showToast("服务器开小差了");
@@ -448,8 +328,18 @@ define(function(require, exports, module) {
                         if (xhr.status == 404) {
                             Common.showToast("您没有团队");
                             return;
+                        }else if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.showToast('服务器繁忙');
+                            return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         console.log(textStatus);
                     }
                 })
@@ -567,7 +457,25 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        if (xhr.status == 404) {
+                            Common.showToast("您没有团队");
+                            return;
+                        }else if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            if (Common.getQueryString("pk")) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                            }else{
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            }
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.showToast('服务器繁忙');
+                            return;
+                        }
                         console.log(textStatus);
                     }
                 })
@@ -596,7 +504,25 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        if (xhr.status == 404) {
+                            Common.showToast("您没有团队");
+                            return;
+                        }else if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            if (Common.getQueryString("pk")) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                            }else{
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            }
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.showToast('服务器繁忙');
+                            return;
+                        }
                         console.log(textStatus);
                     }
                 })
@@ -634,7 +560,25 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        if (xhr.status == 404) {
+                            Common.showToast("您没有团队");
+                            return;
+                        }else if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            if (Common.getQueryString("pk")) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                            }else{
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            }
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.showToast('服务器繁忙');
+                            return;
+                        }
                         console.log(textStatus);
                     }
                 })
@@ -690,7 +634,25 @@ define(function(require, exports, module) {
                             Common.showToast("服务器开小差了");
                             return;
                         }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        if (xhr.status == 404) {
+                            Common.showToast("找不到该成员");
+                            return;
+                        }else if (xhr.status == 400) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            if (Common.getQueryString("pk")) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                            }else{
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            }
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.showToast('服务器繁忙');
+                            return;
+                        }
                         console.log(textStatus);
                     }
                 })
