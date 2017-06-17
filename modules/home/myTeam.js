@@ -95,13 +95,20 @@ define(function(require, exports, module) {
                             path: "/"
                         });
                     }
-                    // $(".shadow-view").show();
+                    $(".shadow-view").show();
+                    
+                    // 分享点击取消
+                    $(".shadow-view").click(function(){
+                        $(this).hide();
+                    })
 
                     var url = window.location.href;
                     if (url.indexOf("pk") != -1) {
-                        $(".shadow-view").show();
+                        // $(".shadow-view").show();
                     }else{
-                        location.href = url.split('?')[0] + "?pk=" + Team.pk;
+                        var newUrl = url.split('?')[0] + "?pk=" + Team.pk;
+                        history.pushState({}, null, newUrl);
+                        // location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
 
                 }else if ($(this).hasClass('join')) {
@@ -126,6 +133,11 @@ define(function(require, exports, module) {
                     // 不能加入
                                         
                 }
+            })
+
+            // 分享点击取消
+            $(".shadow-view").click(function(){
+                $(this).hide();
             })
         }
     };
