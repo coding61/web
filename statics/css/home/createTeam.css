@@ -7,6 +7,8 @@ body{
 	background-color:#f2f1f1;
 
 	font-size: 0.15rem;
+    position: relative;
+    min-height:100%;
 }
 .header{
 	background: #ff6b95;
@@ -84,7 +86,7 @@ body{
     color: #787878;
 }
 
-.main-view .create{
+.create{
 	width: 90%;
     height: 0.45rem;
     border-radius: 0.15rem;
@@ -96,10 +98,10 @@ body{
     position: absolute;
     bottom: 10%;
     margin-left: 5%;
-    position: fixed;
+    /*position: fixed;
     display: block;
     text-align: center;
-    line-height: 0.45rem;
+    line-height: 0.45rem;*/
 }
 
 
