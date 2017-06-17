@@ -98,10 +98,11 @@ body{
     position: absolute;
     bottom: 10%;
     margin-left: 5%;
-    /*position: fixed;
+    position: fixed;
     display: block;
     text-align: center;
-    line-height: 0.45rem;*/
+    line-height: 0.45rem;
+    bottom: 0.20rem;
 }
 
 
