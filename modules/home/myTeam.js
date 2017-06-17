@@ -296,18 +296,29 @@ define(function(require, exports, module) {
             }else{
                 share = $.cookie("share");
             }
-
+            
             if (Team.code && !Team.pk) {
-                // 上一页进来的
+                // 上一页进来的, 未授权
                 Team.getToken();
+            } else if(!Team.code && !Team.pk){
+                // 上一页进来, 已授权
+                Team.loadInfo();
             }else if(Team.pk && !Team.code && share != 'true'){
                 // 从分享进来,加载 team 信息
-                Team.loadShareTeam();
+                Common.isLogin(function(token){
+                    if (token == "null") {
+                        Team.loadShareTeam();   //用户还不曾加入
+                    }else{
+                        Team.loadInfo();   //用户已经加入, 再次从分享进来
+                    }
+                })
+                
             }else if(Team.pk && Team.code){
-                // 分享进来的先授权,在加载team信息
+                // 分享进来, 点击加入,先授权,在加载team信息
                 Team.getToken();
             }else if (share == 'true' && Team.pk){
                 //点了分享改变的页面地址导致的刷新
+                // 用户在分享页面点了邀请分享按钮
                 Team.loadInfo();
                 $(".shadow-view").show();
 
@@ -365,7 +376,7 @@ define(function(require, exports, module) {
                     success:function(json){
                         Team.currentUser = json.pk;
                         
-                        if (Team.pk && Team.code) {
+                        if (Team.pk) {
                             Team.loadShareTeam();   
                         }else{
                             Team.load();
