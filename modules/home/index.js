@@ -119,7 +119,7 @@ define(function(require, exports, module) {
                     return;
                 }
                 $.ajax({
-                    type:"get",
+                    type:"put",
                     url:Common.domain + "/userinfo/random_join_group/",
                     headers:{
                         Authorization:"Token " + token
