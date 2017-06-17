@@ -99,7 +99,7 @@ define(function(require, exports, module) {
 
                     var url = window.location.href;
                     if (url.indexOf("pk") != -1) {
-                        
+                        $(".shadow-view").show();
                     }else{
                         location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }

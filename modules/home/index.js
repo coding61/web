@@ -40,6 +40,9 @@ define(function(require, exports, module) {
                 
                     
             $(".join").click(function(){
+                Common.dialog("自由组队暂未开放,请6月25号再来");
+                return;
+                /*
                 Common.isLogin(function(token){
                     if (token != 'null') {
                         // 随机匹配进入我的团队页
@@ -52,6 +55,7 @@ define(function(require, exports, module) {
                         Common.authWXLogin(redirectUri);
                     }
                 })
+                */
             })
             
             $(".my").click(function(){
