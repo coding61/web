@@ -97,6 +97,9 @@ body{
     bottom: 10%;
     margin-left: 5%;
     position: fixed;
+    display: block;
+    text-align: center;
+    line-height: 0.45rem;
 }
 
 
