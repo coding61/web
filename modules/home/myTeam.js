@@ -533,12 +533,12 @@ define(function(require, exports, module) {
                 $(".leader").hide();
             }
 
-            if (Common.getQueryString("pk")) {
-                if (dic.inTeam == true) {
-                    $(".join").hide();
-                }
-                $(".share").hide();
-            }
+            // if (Common.getQueryString("pk")) {
+            //     if (dic.inTeam == true) {
+            //         $(".join").hide();
+            //     }
+            //     $(".share").hide();
+            // }
 
             Page.clickEvent();
         },
@@ -616,9 +616,9 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         Common.showToast('加入成功');
-                        this_.removeClass('join').addClass('unjoin');
+                        // this_.removeClass('join').addClass('unjoin');
 
-                        /*
+                        
                         var parent =  $(".default-avatar").eq(0).parent();
                         parent.children('.default-avatar').children('img').attr({src:'../../statics/images/11.jpg'});
                         parent.children('.default-avatar').removeClass("default-avatar").addClass('avatar');
@@ -627,7 +627,7 @@ define(function(require, exports, module) {
                         // 当前用户加入后, 变邀请
                         this_.children('span').html('邀请好友加入');
                         this_.removeClass('join').addClass('share');
-                        */
+                        
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
