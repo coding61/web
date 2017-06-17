@@ -96,6 +96,7 @@ body{
     position: absolute;
     bottom: 10%;
     margin-left: 5%;
+    position: fixed;
 }
 
 
