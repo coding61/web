@@ -2,11 +2,14 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
 
+    var WXConfig = require('common/WXJSSDK.js');
+
     var Page = {
         name:null,
         intro:null,
         init:function(){
-
+            WXConfig.wx();
+            
             Team.init();
         },
         clickEvent:function(){
