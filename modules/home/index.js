@@ -176,6 +176,7 @@ define(function(require, exports, module) {
                         location.href = "myTeam.html?pk=" + json.pk;
                     },
                     error:function(xhr, textStatus){
+                        $(".wait-loading").hide();
                         if (textStatus == "timeout") {
                             Common.dialog("服务器开小差了");
                             return;
@@ -220,13 +221,13 @@ define(function(require, exports, module) {
                        
                     },
                     error:function(xhr, textStatus){
+                        $(".wait-loading").hide();
+                        
                         if (textStatus == "timeout") {
                             Common.dialog("服务器开小差了");
                             return;
                         }
-                        $(".wait-loading").hide();
-        
-        
+                        
                         if (xhr.status == 401) {
                             // token 失效, 重新授权
                             // 先微信授权登录
