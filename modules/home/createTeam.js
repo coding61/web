@@ -122,6 +122,14 @@ define(function(require, exports, module) {
             })
             
             $(".create").click(function(){
+                if ($(".name input").val() == "") {
+                    Common.dialog("请输入团队名称");
+                    return;
+                }
+                if ($(".intro textarea").val() == "") {
+                    Common.dialog("请输入团队介绍");
+                    return;
+                }
                 Page.createTeam();
             })
         }
