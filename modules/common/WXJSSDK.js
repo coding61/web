@@ -1,4 +1,5 @@
 define(function(require, exports, module) {	
+	var sha1 = require("common/sha1.js");
 	// exports.config = function(){
 	// 	wx.config({
 	// 	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -20,6 +21,9 @@ define(function(require, exports, module) {
 	//     curl_close($ch);  
 	//     return $res;  
 	// }
+
+	var timestamp = new Date().getTime();
+	var noncestr = exports.getRandomString(32);
 	
 	exports.wx = function(){
 		var sign;
@@ -27,11 +31,11 @@ define(function(require, exports, module) {
 			console.log(data);
 		      sign = data.sign;
 		      wx.config({
-		          debug: false,
+		          debug: true,
 		          appId: 'wx58e15a667d09d70f',
-		          timestamp: sign.timestamp,
-		          nonceStr: sign.nonceStr,
-		          signature: sign.signature,
+		          timestamp: timestamp,
+		          nonceStr: noncestr,
+		          signature: data,
 		          jsApiList: [
 		              // 所有要调用的 API 都要加到这个列表中
 		              'onMenuShareTimeline',
@@ -40,11 +44,64 @@ define(function(require, exports, module) {
 		          ]
 		      });
 		}
-		var str = "http://test.weixin.bigertech.com/api/sign?appId=wx58e15a667d09d70f&callback=jsonpCallback&url=";
-		var href = encodeURIComponent(window.location.href);
-		var script_elem = document.createElement("script");
-		script_elem.src = str + href;
-		document.body.appendChild(script_elem);
+		exports.getToken('https://www.cxy61.com/cxyteam/app/home/myTeam.html', function(data){
+			jsonpCallback(data);
+		});
+	}
+	exports.getToken = function(url, fx){
+
+		$.ajax({
+			type:'get',
+			url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx58e15a667d09d70f&secret=APPSECRET',
+			success:function(json){
+				console.log(json);
+				exports.getTicket(json.access_token, url, fx);
+			},
+			error:function(xhr, textStatus){
+
+			}
+		})
+	}
+	exports.getTicket = function(access_token, url, fx){
+		$.ajax({
+			type:'get',
+			url:'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+access_token+'&type=jsapi',
+			success:function(json){
+				exports.getSign(json.ticket, url, fx);
+			},
+			error:function(xhr, textStatus){
+
+			}
+		})
+	}
+	exports.getSign = function(ticket, url, fx){
+		// var noncestr = Wm3WZYTPz0wzccnW;
+		var jsapi_ticket = ticket;
+		// var timestamp = 1414587457;
+		var url = url;
+
+		var string = 'jsapi_ticket='+jsapi_ticket+'&noncestr='+noncestr+'&timestamp='+timestamp+'&url=' + url;
+		
+		var sha = hex_sha1(string);
+
+		fx(sha);
+
+	}
+
+	exports.getRandomString = function(len){
+	　　len = len || 32;
+	　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+	　　var maxPos = $chars.length;
+	　　var pwd = '';
+	　　for (i = 0; i < len; i++) {
+	　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+	　　}
+	　　return pwd;
+	}
+	exports.testSign = function(){
+		var str = exports.getRandomString(10);
+		var newStr = hex_sha1(str);
+		console.log(newStr);
 	}
 	
 });
