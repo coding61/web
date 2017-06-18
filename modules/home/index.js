@@ -59,6 +59,11 @@ define(function(require, exports, module) {
             })
             
             $(".my").click(function(){
+                // 打开加载动画
+                $(".wait-loading").show();
+                $(".wait-loading span").hide();
+
+                // 存储是否点了我的团队按钮
                 if(window.localStorage){
                     localStorage.myTeam = true
                 }else{
@@ -166,6 +171,8 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         // console.log(json);
+                        // 隐藏动画,并跳转
+                        $(".wait-loading").hide();
                         location.href = "myTeam.html?pk=" + json.pk;
                     },
                     error:function(xhr, textStatus){

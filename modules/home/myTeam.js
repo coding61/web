@@ -470,13 +470,6 @@ define(function(require, exports, module) {
                 $(".leader").hide();
             }
 
-            // if (Common.getQueryString("pk")) {
-            //     if (dic.inTeam == true) {
-            //         $(".join").hide();
-            //     }
-            //     $(".share").hide();
-            // }
-
             Page.clickEvent();
         },
         updateTeam:function(name, intro){
