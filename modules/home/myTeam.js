@@ -108,8 +108,9 @@ define(function(require, exports, module) {
                     }else{
                         var newUrl = url.split('?')[0] + "?pk=" + Team.pk;
                         // history.pushState({}, null, newUrl);
-                        window.location.replace(newUrl);
-                        // Common.dialog(window.location.href);
+                        history.replaceState({pk:Team.pk}, null, newUrl);
+                        // window.location.replace(newUrl);
+                        Common.dialog(window.location.href);
                         // location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
 
@@ -150,6 +151,8 @@ define(function(require, exports, module) {
         data:null, //小组数据
         code:Common.getQueryString('code'),
         init:function(){
+
+            Common.dialog(JSON.stringify(history.state));
             var share = null;
             if(window.localStorage){
                 share = localStorage.share
