@@ -77,7 +77,11 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            if (JSON.parse(xhr.responseText).name[0]) {
+                                Common.dialog('你已存在团队, 请勿重复创建');
+                            }else{
+                                Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            }
                             return;
                         }else if (xhr.status == 401) {
                             var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';

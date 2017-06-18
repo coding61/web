@@ -109,7 +109,7 @@ define(function(require, exports, module) {
                         var newUrl = url.split('?')[0] + "?pk=" + Team.pk;
                         // history.pushState({}, null, newUrl);
                         window.location.replace(newUrl);
-                        Common.dialog(window.location.href);
+                        // Common.dialog(window.location.href);
                         // location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
 
