@@ -158,8 +158,10 @@ define(function(require, exports, module) {
         data:null, //小组数据
         code:Common.getQueryString('code'),
         init:function(){
+            
+            // 打开加载动画
+            $(".wait-loading").show();
 
-            // Common.dialog(JSON.stringify(location));
             var share = null;
             if(window.localStorage){
                 share = localStorage.share
@@ -233,6 +235,8 @@ define(function(require, exports, module) {
                     Team.loadInfo();
                 },
                 error:function(xhr, textStatus){
+                    $(".wait-loading").hide();
+
                     if (textStatus == "timeout") {
                         Common.dialog("服务器开小差了");
                     }
@@ -285,6 +289,8 @@ define(function(require, exports, module) {
                         
                     },
                     error:function(xhr, textStatus){
+                        $(".wait-loading").hide();
+
                         if (textStatus == "timeout") {
                             Common.dialog("服务器开小差了");
                             return;
@@ -325,6 +331,8 @@ define(function(require, exports, module) {
                         Team.adjustData(json);
                     },
                     error:function(xhr, textStatus){
+                        $(".wait-loading").hide();
+
                         if (textStatus == "timeout") {
                             Common.dialog("服务器开小差了");
                             return;
@@ -368,6 +376,8 @@ define(function(require, exports, module) {
                         Team.adjustData(json);
                     },
                     error:function(xhr, textStatus){
+                        $(".wait-loading").hide();
+
                         if (textStatus == "timeout") {
                             Common.dialog("服务器开小差了");
                             return;
@@ -393,6 +403,9 @@ define(function(require, exports, module) {
             })
         },
         adjustData:function(json){
+
+            $(".wait-loading").hide();
+
             Team.pk = json.pk;
                         
             // leader:true,   //当前用户是组长吗
@@ -459,6 +472,7 @@ define(function(require, exports, module) {
             
             
             console.log(dic);
+
             var html = ArtTemplate("main-view-template", dic);
             $(".body-view").html(html);
 
