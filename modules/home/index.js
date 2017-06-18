@@ -209,7 +209,7 @@ define(function(require, exports, module) {
                     success:function(json){
                         $(".wait-loading").hide();
 
-                        location.href = "myTeam.html";
+                        location.href = "myTeam.html?pk=" + json.pk;
                        
                     },
                     error:function(xhr, textStatus){

@@ -69,7 +69,7 @@ define(function(require, exports, module) {
                         console.log(json);
                         Common.dialog("创建成功");
 
-                        location.href = "myTeam.html";
+                        location.href = "myTeam.html?pk=" + json.pk;
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
