@@ -22,10 +22,12 @@ define(function(require, exports, module) {
 	//     return $res;  
 	// }
 
-	var timestamp = new Date().getTime();
-	var noncestr = exports.getRandomString(32);
+	exports.timestamp = new Date().getTime();
 	
 	exports.wx = function(){
+		var noncestr = exports.getRandomString();
+		console.log(noncestr + "---111");
+		console.log(exports.timestamp + "---222");
 		var sign;
 		function jsonpCallback(data) {
 			console.log(data);
@@ -33,8 +35,8 @@ define(function(require, exports, module) {
 		      wx.config({
 		          debug: true,
 		          appId: 'wx58e15a667d09d70f',
-		          timestamp: timestamp,
-		          nonceStr: noncestr,
+		          timestamp: exports.timestamp,
+		          nonceStr: exports.noncestr,
 		          signature: data,
 		          jsApiList: [
 		              // 所有要调用的 API 都要加到这个列表中
@@ -44,11 +46,11 @@ define(function(require, exports, module) {
 		          ]
 		      });
 		}
-		exports.getToken('https://www.cxy61.com/cxyteam/app/home/myTeam.html', function(data){
-			jsonpCallback(data);
-		});
+		exports.getToken(noncestr,'https://www.cxy61.com/cxyteam/app/home/myTeam.html', null);
 	}
-	exports.getToken = function(url, fx){
+	exports.getToken = function(noncestr, url, fx){
+		console.log(noncestr+ "---111");
+		console.log(exports.timestamp + "---222");
 
 		$.ajax({
 			type:'get',
@@ -75,9 +77,10 @@ define(function(require, exports, module) {
 		})
 	}
 	exports.getSign = function(ticket, url, fx){
-		// var noncestr = Wm3WZYTPz0wzccnW;
+		console.log(exports.noncestr + "222");
+		var noncestr = exports.noncestr;
 		var jsapi_ticket = ticket;
-		// var timestamp = 1414587457;
+		var timestamp = exports.timestamp;
 		var url = url;
 
 		var string = 'jsapi_ticket='+jsapi_ticket+'&noncestr='+noncestr+'&timestamp='+timestamp+'&url=' + url;

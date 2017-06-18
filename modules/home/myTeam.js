@@ -8,7 +8,6 @@ define(function(require, exports, module) {
         name:null,
         intro:null,
         init:function(){
-            WXConfig.testSign();
             
             // WXConfig.wx();
 
@@ -113,9 +112,9 @@ define(function(require, exports, module) {
                     }else{
                         var newUrl = url.split('?')[0] + "?pk=" + Team.pk;
                         // history.pushState({pk:Team.pk}, null, newUrl);
-                        history.replaceState({pk:Team.pk}, null, '?pk=' + Team.pk);
-                        // window.location.replace(newUrl);
-                        Common.dialog(window.location.href);
+                        // history.replaceState({pk:Team.pk}, null, '?pk=' + Team.pk);
+                        window.location.replace(newUrl);
+                        // Common.dialog(window.location.href);
                         // location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
 
