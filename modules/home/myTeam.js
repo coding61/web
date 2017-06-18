@@ -186,8 +186,8 @@ define(function(require, exports, module) {
             }else if (share == 'true' && Team.pk){
                 //点了分享改变的页面地址导致的刷新
                 // 用户在分享页面点了邀请分享按钮
-                // Team.loadInfo();
-                // $(".shadow-view").show();
+                Team.loadInfo();
+                $(".shadow-view").show();
 
                 if(window.localStorage){
                     localStorage.share = false
