@@ -107,9 +107,8 @@ define(function(require, exports, module) {
                         // $(".shadow-view").show();
                     }else{
                         var newUrl = url.split('?')[0] + "?pk=" + Team.pk;
-                        // history.pushState({}, null, newUrl);
-                        history.replaceState({pk:Team.pk}, null, newUrl);
-                        localtion.hash = newUrl;
+                        // history.pushState({pk:Team.pk}, null, newUrl);
+                        history.replaceState({pk:Team.pk}, null, '?pk=' + Team.pk);
                         // window.location.replace(newUrl);
                         Common.dialog(window.location.href);
                         // location.href = url.split('?')[0] + "?pk=" + Team.pk;
