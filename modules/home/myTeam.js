@@ -401,7 +401,7 @@ define(function(require, exports, module) {
             var leader=false,
                 inTeam=false, 
                 isManyuan=false;
-            if (json.member_number == 4) {
+            if (json.group_member.length == 4) {
                 isManyuan = true;
             }else{
                 isManyuan = false;
