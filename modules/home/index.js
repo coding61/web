@@ -40,7 +40,6 @@ define(function(require, exports, module) {
                 
                     
             $(".join").click(function(){
-                Team.me = false;
                 Common.dialog("自由组队暂未开放,请6月25号再来");
                 return;
                 /*
@@ -60,8 +59,14 @@ define(function(require, exports, module) {
             })
             
             $(".my").click(function(){
+                if(window.localStorage){
+                    localStorage.myTeam = true
+                }else{
+                    $.cookie("myTeam", true, {
+                        path: "/"
+                    });
+                }
                 Common.isLogin(function(token){
-                    Team.me = true;
                     if (token != "null") {
                         //获取我的团队信息 pk, 进到我的团队页
                         Team.load();
@@ -78,19 +83,18 @@ define(function(require, exports, module) {
     };
     
     var Team = {
-        me:false,
+        myTeam:null,  //是否点了我的团队
         code:Common.getQueryString('code'),
         init:function(){
+            
+            if(window.localStorage){
+                Team.myTeam = localStorage.myTeam
+            }else{
+                Team.myTeam = $.cookie("myTeam");
+            }
 
             if (Team.code) {
-                if (Team.me == true) {
-                    // 点击我的团队授权
-                    Team.getToken();
-                }else{
-                    // 点随机
-                    $(".wait-loading").show();
-                    Team.getToken();
-                }
+                Team.getToken();
             }
         },
         getToken:function(){
@@ -108,11 +112,20 @@ define(function(require, exports, module) {
                             path: "/"
                         });
                     }
-                    if (Team.me == true) {
+
+                    if (Team.myTeam == 'true') {
                         // 我的团队
                         Team.load();
+                        if(window.localStorage){
+                            localStorage.myTeam = false;
+                        }else{
+                            $.cookie("myTeam", false, {
+                                path: "/"
+                            });
+                        }
                     }else{
                         // 随机
+                        $(".wait-loading").show();
                         Team.joinUnknownTeam();
                     }
                     

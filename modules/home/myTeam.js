@@ -89,6 +89,8 @@ define(function(require, exports, module) {
             $(".action").click(function(){
                 if ($(this).hasClass('share')) {
                     // 邀请分享
+
+                    /*
                     if(window.localStorage){
                         localStorage.share = true
                     }else{
@@ -96,13 +98,15 @@ define(function(require, exports, module) {
                             path: "/"
                         });
                     }
+                    */
                     $(".shadow-view").show();
 
                     // 分享点击取消
                     $(".shadow-view").click(function(){
                         $(this).hide();
                     })
-
+                    
+                    /*
                     var url = window.location.href;
                     if (url.indexOf("pk") != -1) {
                         // $(".shadow-view").show();
@@ -115,6 +119,7 @@ define(function(require, exports, module) {
                         // Common.dialog(window.location.href);
                         // location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
+                    */
 
                 }else if ($(this).hasClass('join')) {
                     var this_ = $(this);
@@ -189,8 +194,10 @@ define(function(require, exports, module) {
                 // 分享进来, 点击加入,先授权,在加载team信息
                 Team.getToken();
             }else if (share == 'true' && Team.pk){
+                /*
                 //点了分享改变的页面地址导致的刷新
                 // 用户在分享页面点了邀请分享按钮
+
                 Team.loadInfo();
                 $(".shadow-view").show();
 
@@ -202,6 +209,7 @@ define(function(require, exports, module) {
                     });
                 }
 
+                */
             }else{
                 Team.loadInfo();
             }
@@ -612,7 +620,7 @@ define(function(require, exports, module) {
                         // 当前用户加入后, 变邀请
                         this_.children('span').html('邀请好友加入');
                         this_.removeClass('join').addClass('share');
-                        */
+                        
                         
                     },
                     error:function(xhr, textStatus){
