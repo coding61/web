@@ -54,7 +54,7 @@ define(function(require, exports, module) {
 
 		$.ajax({
 			type:'get',
-			url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx58e15a667d09d70f&secret=APPSECRET',
+			url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx58e15a667d09d70f&secret=e0cd4e176818bc6ecd1040c38a9405c4',
 			success:function(json){
 				console.log(json);
 				exports.getTicket(json.access_token, url, fx);
