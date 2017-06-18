@@ -620,7 +620,7 @@ define(function(require, exports, module) {
                         // 当前用户加入后, 变邀请
                         this_.children('span').html('邀请好友加入');
                         this_.removeClass('join').addClass('share');
-                        
+                        */
                         
                     },
                     error:function(xhr, textStatus){
