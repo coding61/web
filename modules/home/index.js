@@ -40,6 +40,7 @@ define(function(require, exports, module) {
                 
                     
             $(".join").click(function(){
+                Team.me = false;
                 Common.dialog("自由组队暂未开放,请6月25号再来");
                 return;
                 /*
@@ -60,13 +61,15 @@ define(function(require, exports, module) {
             
             $(".my").click(function(){
                 Common.isLogin(function(token){
+                    Team.me = true;
                     if (token != "null") {
-                        //进到创建页面
-                        location.href = "myTeam.html";
+                        //获取我的团队信息 pk, 进到我的团队页
+                        Team.load();
+
                     }else{
                         // 先微信授权登录
                         // 微信网页授权
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
                         Common.authWXLogin(redirectUri);
                     }
                 })                
@@ -75,12 +78,19 @@ define(function(require, exports, module) {
     };
     
     var Team = {
+        me:false,
         code:Common.getQueryString('code'),
         init:function(){
 
             if (Team.code) {
-                $(".wait-loading").show();
-                Team.getToken();
+                if (Team.me == true) {
+                    // 点击我的团队授权
+                    Team.getToken();
+                }else{
+                    // 点随机
+                    $(".wait-loading").show();
+                    Team.getToken();
+                }
             }
         },
         getToken:function(){
@@ -98,7 +108,14 @@ define(function(require, exports, module) {
                             path: "/"
                         });
                     }
-                    Team.joinUnknownTeam();
+                    if (Team.me == true) {
+                        // 我的团队
+                        Team.load();
+                    }else{
+                        // 随机
+                        Team.joinUnknownTeam();
+                    }
+                    
                 },
                 error:function(xhr, textStatus){
                     if (textStatus == "timeout") {
@@ -118,6 +135,49 @@ define(function(require, exports, module) {
                     }
                     console.log(textStatus);
                 }
+            })
+        },
+        load:function(){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    var redirectUri = null;
+                    redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                    Common.authWXLogin(redirectUri);
+                    return;
+                }
+                $.ajax({
+                    type:'get',
+                    url: Common.domain + "/userinfo/mygroup/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                        // console.log(json);
+                        location.href = "myTeam.html?pk=" + json.pk;
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("服务器开小差了");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
             })
         },
         joinUnknownTeam:function(){

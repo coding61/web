@@ -8,9 +8,6 @@ define(function(require, exports, module) {
         name:null,
         intro:null,
         init:function(){
-
-            // WXConfig.wx();
-
             Team.init();
         },
         clickEvent:function(){
