@@ -8,7 +8,7 @@ define(function(require, exports, module) {
         name:null,
         intro:null,
         init:function(){
-            
+
             // WXConfig.wx();
 
             Team.init();
@@ -111,9 +111,10 @@ define(function(require, exports, module) {
                         // $(".shadow-view").show();
                     }else{
                         var newUrl = url.split('?')[0] + "?pk=" + Team.pk;
-                        // history.pushState({pk:Team.pk}, null, newUrl);
+                        newUrl = url.split('?')[0] + "#pk=" + Team.pk;
+                        history.pushState({pk:Team.pk}, null, newUrl);
                         // history.replaceState({pk:Team.pk}, null, '?pk=' + Team.pk);
-                        window.location.replace(newUrl);
+                        // window.location.replace(newUrl);
                         // Common.dialog(window.location.href);
                         // location.href = url.split('?')[0] + "?pk=" + Team.pk;
                     }
