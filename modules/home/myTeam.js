@@ -156,7 +156,7 @@ define(function(require, exports, module) {
         code:Common.getQueryString('code'),
         init:function(){
 
-            Common.dialog(JSON.stringify(location));
+            // Common.dialog(JSON.stringify(location));
             var share = null;
             if(window.localStorage){
                 share = localStorage.share
