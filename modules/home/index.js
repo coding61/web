@@ -173,7 +173,7 @@ define(function(require, exports, module) {
                         // console.log(json);
                         // 隐藏动画,并跳转
                         $(".wait-loading").hide();
-                        location.href = "myTeam.html?pk=" + json.pk;
+                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + json.name;
                     },
                     error:function(xhr, textStatus){
                         $(".wait-loading").hide();

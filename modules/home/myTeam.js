@@ -89,16 +89,6 @@ define(function(require, exports, module) {
             $(".action").click(function(){
                 if ($(this).hasClass('share')) {
                     // 邀请分享
-
-                    /*
-                    if(window.localStorage){
-                        localStorage.share = true
-                    }else{
-                        $.cookie("share", true, {
-                            path: "/"
-                        });
-                    }
-                    */
                     $(".shadow-view").show();
 
                     // 分享点击取消
@@ -154,36 +144,29 @@ define(function(require, exports, module) {
 
     var Team = {
         pk:Common.getQueryString("pk"),
+        name:Common.getQueryString("name"),
         currentUser:null,  //当前用户的 pk
         data:null, //小组数据
         code:Common.getQueryString('code'),
         init:function(){
             
+            $("title").html(Team.name);
+
             // 打开加载动画
-            $(".wait-loading").show();
-
-            var share = null;
-            if(window.localStorage){
-                share = localStorage.share
-            }else{
-                share = $.cookie("share");
-            }
-
-            $(".shadow-view").hide();
-            
+            $(".wait-loading").show();            
             if (Team.code && !Team.pk) {
                 // 上一页进来的, 未授权
                 Team.getToken();
             } else if(!Team.code && !Team.pk){
                 // 上一页进来, 已授权
                 Team.loadInfo();
-            }else if(Team.pk && !Team.code && share != 'true'){
+            }else if(Team.pk && !Team.code){
                 // 从分享进来,加载 team 信息
                 Common.isLogin(function(token){
                     if (token == "null") {
                         // 分享进来的页面
                         // 微信网页授权
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team.pk;
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+Team.pk + "&name=" +Team.name;
                         Common.authWXLogin(redirectUri);
 
                         // Team.loadShareTeam();   //用户还不曾加入
@@ -195,23 +178,6 @@ define(function(require, exports, module) {
             }else if(Team.pk && Team.code){
                 // 分享进来, 点击加入,先授权,在加载team信息
                 Team.getToken();
-            }else if (share == 'true' && Team.pk){
-                /*
-                //点了分享改变的页面地址导致的刷新
-                // 用户在分享页面点了邀请分享按钮
-
-                Team.loadInfo();
-                $(".shadow-view").show();
-
-                if(window.localStorage){
-                    localStorage.share = false
-                }else{
-                    $.cookie("share", false, {
-                        path: "/"
-                    });
-                }
-
-                */
             }else{
                 Team.loadInfo();
             }
@@ -246,7 +212,7 @@ define(function(require, exports, module) {
                     }else if (xhr.status == 401) {
                         var redirectUri = null;
                         if (Team.pk) {
-                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk;
+                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk + "&name=" + Team.name;
                         }else{
                             redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                         }
@@ -265,7 +231,7 @@ define(function(require, exports, module) {
                 if (token == "null") {
                     var redirectUri = null;
                     if (Common.getQueryString("pk")) {
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" + Team.name;
                     }else{
                         redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                     }
@@ -301,7 +267,7 @@ define(function(require, exports, module) {
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
                             if (Common.getQueryString("pk")) {
-                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                             }else{
                                 redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                             }
@@ -345,7 +311,7 @@ define(function(require, exports, module) {
                             return;
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
-                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk;
+                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Team.pk + "&name=" +Team.name;
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
@@ -491,7 +457,7 @@ define(function(require, exports, module) {
                 if (token == "null") {
                     var redirectUri = null;
                     if (Common.getQueryString("pk")) {
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                     }else{
                         redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                     }
@@ -526,7 +492,7 @@ define(function(require, exports, module) {
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
                             if (Common.getQueryString("pk")) {
-                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                             }else{
                                 redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                             }
@@ -546,7 +512,7 @@ define(function(require, exports, module) {
                 if (token == "null") {
                     var redirectUri = null;
                     if (Common.getQueryString("pk")) {
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                     }else{
                         redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                     }
@@ -579,7 +545,7 @@ define(function(require, exports, module) {
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
                             if (Common.getQueryString("pk")) {
-                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                             }else{
                                 redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                             }
@@ -599,7 +565,7 @@ define(function(require, exports, module) {
                 if (token == "null") {
                     var redirectUri = null;
                     if (Common.getQueryString("pk")) {
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                     }else{
                         redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                     }
@@ -644,7 +610,7 @@ define(function(require, exports, module) {
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
                             if (Common.getQueryString("pk")) {
-                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                             }else{
                                 redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                             }
@@ -659,38 +625,12 @@ define(function(require, exports, module) {
                 })
             })
         },
-        joinUnknownTeam:function(){
-            Common.isLogin(function(token){
-                if (token == "null") {
-                    Common.dialog("请先授权");
-                    return;
-                }
-                $.ajax({
-                    type:"put",
-                    url:Common.domain + "/userinfo/random_join_group/",
-                    headers:{
-                        Authorization:"Token " + token
-                    },
-                    success:function(json){
-                       
-                    },
-                    error:function(xhr, textStatus){
-                        if (textStatus == "timeout") {
-                            Common.showToast("服务器开小差了");
-                            return;
-                        }
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                        console.log(textStatus);
-                    }
-                })
-            })
-        },
         removeTeamMember:function(this_, pk){
             Common.isLogin(function(token){
                 if (token == "null") {
                     var redirectUri = null;
                     if (Common.getQueryString("pk")) {
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                     }else{
                         redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                     }
@@ -727,7 +667,7 @@ define(function(require, exports, module) {
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
                             if (Common.getQueryString("pk")) {
-                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk");
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
                             }else{
                                 redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
                             }
