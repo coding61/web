@@ -156,13 +156,15 @@ define(function(require, exports, module) {
             // 打开加载动画
             $(".wait-loading").show();
 
-            setTimeout(function(){
-                if (!Team.data) {
-                    // 6秒之后还没有数据, 弹出请求超时
-                    Common.dialog('请求超时');
-                    return;
-                }
-            }, 6000);            
+            // setTimeout(function(){
+            //     if (!Team.data) {
+            //         // 6秒之后还没有数据, 弹出请求超时
+            //         Common.dialog('请求超时');
+            //         $(".wait-loading").hide();
+            //         return;
+            //     }
+            // }, 6000);      
+
             if (Team.code && !Team.pk) {
                 // 上一页进来的, 未授权
                 Team.getToken();
@@ -198,6 +200,7 @@ define(function(require, exports, module) {
                 data:{
                     code:Team.code
                 },
+                timeout:6000,
                 success:function(json){
                     if(window.localStorage){
                         localStorage.token = json.token;
@@ -213,7 +216,8 @@ define(function(require, exports, module) {
                     $(".wait-loading").hide();
 
                     if (textStatus == "timeout") {
-                        Common.dialog("服务器开小差了");
+                        Common.dialog("请求超时");
+                        return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -253,6 +257,7 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
+                    timeout:6000,
                     success:function(json){
                         Team.currentUser = json.pk;
                         
@@ -267,7 +272,7 @@ define(function(require, exports, module) {
                         $(".wait-loading").hide();
 
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -300,6 +305,7 @@ define(function(require, exports, module) {
                 $.ajax({
                     type:"get",
                     url:Common.domain + "/userinfo/group_detail/"+Team.pk+"/",
+                    timeout:6000,
                     success:function(json){
                         // Team.joinKnownTeam($(".join"));
                         Team.data = json;
@@ -309,7 +315,7 @@ define(function(require, exports, module) {
                         $(".wait-loading").hide();
 
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
@@ -346,6 +352,7 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
+                    timeout:6000,
                     success:function(json){
                         // console.log(json);
                         Team.data = json;
@@ -355,7 +362,7 @@ define(function(require, exports, module) {
                         $(".wait-loading").hide();
 
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
