@@ -109,6 +109,7 @@ define(function(require, exports, module) {
                 data:{
                     code:Team.code
                 },
+                timeout:6000,
                 success:function(json){
                     if(window.localStorage){
                         localStorage.token = json.token;
@@ -136,8 +137,11 @@ define(function(require, exports, module) {
                     
                 },
                 error:function(xhr, textStatus){
+                    (".wait-loading").hide();
+
                     if (textStatus == "timeout") {
-                        Common.dialog("服务器开小差了");
+                        Common.dialog("请求超时");
+                        return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -169,16 +173,17 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
+                    timeout:6000,
                     success:function(json){
                         // console.log(json);
                         // 隐藏动画,并跳转
                         $(".wait-loading").hide();
-                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + json.name;
+                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
                     },
                     error:function(xhr, textStatus){
                         $(".wait-loading").hide();
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
@@ -214,17 +219,18 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
+                    timeout:6000,
                     success:function(json){
                         $(".wait-loading").hide();
 
-                        location.href = "myTeam.html?pk=" + json.pk;
+                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
                        
                     },
                     error:function(xhr, textStatus){
                         $(".wait-loading").hide();
                         
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         

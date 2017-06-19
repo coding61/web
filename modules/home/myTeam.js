@@ -144,7 +144,7 @@ define(function(require, exports, module) {
 
     var Team = {
         pk:Common.getQueryString("pk"),
-        name:Common.getQueryString("name"),
+        name:decodeURIComponent(Common.getQueryString("name")),
         currentUser:null,  //当前用户的 pk
         data:null, //小组数据
         code:Common.getQueryString('code'),
@@ -492,12 +492,13 @@ define(function(require, exports, module) {
                         announcement:intro
                     },
                     dataType:"json",
+                    timeout:6000,
                     success:function(json){
                         Common.dialog('修改成功');
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
@@ -542,6 +543,7 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
+                    timeout:6000,
                     success:function(json){
                         $(".body-view").html(null)
                         $(".quit").remove();
@@ -550,7 +552,7 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
@@ -595,6 +597,7 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
+                    timeout:6000,
                     success:function(json){
                         Common.dialog('加入成功');
                         // this_.removeClass('join').addClass('unjoin');
@@ -615,7 +618,7 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
@@ -660,6 +663,7 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
+                    timeout:6000,
                     success:function(json){
 
                         this_.parents('.member').children('.avatar').children('img').attr({src:'../../statics/images/default-avatar.png'});
@@ -672,7 +676,7 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {

@@ -19,6 +19,7 @@ define(function(require, exports, module) {
                 data:{
                     code:Page.code
                 },
+                timeout:6000,
                 success:function(json){
                     if(window.localStorage){
                         localStorage.token = json.token;
@@ -30,7 +31,8 @@ define(function(require, exports, module) {
                 },
                 error:function(xhr, textStatus){
                     if (textStatus == "timeout") {
-                        Common.dialog("服务器开小差了");
+                        Common.dialog("请求超时");
+                        return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -65,15 +67,16 @@ define(function(require, exports, module) {
                         announcement:$(".intro textarea").val()
                     },
                     dataType:"json",
+                    timeout:6000,
                     success:function(json){
                         console.log(json);
                         Common.dialog("创建成功");
 
-                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + json.name;
+                        location.href = "myTeam.html?pk=" + json.pk + "&name=" +  encodeURIComponent(json.name);
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("服务器开小差了");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -128,6 +131,14 @@ define(function(require, exports, module) {
                 }
                 if ($(".intro textarea").val() == "") {
                     Common.dialog("请输入团队介绍");
+                    return;
+                }
+                if ($(".name input").val().length > 10) {
+                    Common.dialog("请输入少于10字符的团队名称");
+                    return;
+                }
+                if ($(".intro textarea").val().length > 50) {
+                    Common.dialog("请输入少于50字符的团队介绍");
                     return;
                 }
                 Page.createTeam();
