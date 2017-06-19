@@ -56,6 +56,16 @@ define(function(require, exports, module) {
                 Page.name = $(".main-view .team .avatar input").val();
                 Page.intro = $(".main-view .team .intro textarea").val();
 
+                if (Page.name.length > 10) {
+                    Common.dialog('团队名称请控制在10字符以内');
+                    return;
+                }
+
+                if (Page.intro.length > 50) {
+                    Common.dialog('团队介绍请控制在50字符以内');
+                    return;
+                }
+
 
                 $(this).hide();
                 $(".main-view .team .avatar input").hide();
@@ -65,7 +75,6 @@ define(function(require, exports, module) {
                 $(".main-view .team .avatar span").show();
                 $(".main-view .team .intro span.text").show();
 
-                
                 $(".main-view .team .avatar span").html(Page.name);
                 $(".main-view .team .intro span.text").html(Page.intro);
 
