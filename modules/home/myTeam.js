@@ -151,9 +151,18 @@ define(function(require, exports, module) {
         init:function(){
             
             $("title").html(Team.name);
+            $(".header .title").html(Team.name);
 
             // 打开加载动画
-            $(".wait-loading").show();            
+            $(".wait-loading").show();
+
+            setTimeout(function(){
+                if (!Team.data) {
+                    // 6秒之后还没有数据, 弹出请求超时
+                    Common.dialog('请求超时');
+                    return;
+                }
+            }, 6000);            
             if (Team.code && !Team.pk) {
                 // 上一页进来的, 未授权
                 Team.getToken();
@@ -293,7 +302,7 @@ define(function(require, exports, module) {
                     url:Common.domain + "/userinfo/group_detail/"+Team.pk+"/",
                     success:function(json){
                         // Team.joinKnownTeam($(".join"));
-
+                        Team.data = json;
                         Team.adjustData(json);
                     },
                     error:function(xhr, textStatus){
@@ -339,6 +348,7 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         // console.log(json);
+                        Team.data = json;
                         Team.adjustData(json);
                     },
                     error:function(xhr, textStatus){
