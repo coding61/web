@@ -81,7 +81,7 @@ define(function(require, exports, module) {
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
                             if (JSON.parse(xhr.responseText).name) {
-                                Common.dialog('你已存在团队, 请勿重复创建');
+                                Common.dialog('团队名称已被占用');
                             }else{
                                 Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             }

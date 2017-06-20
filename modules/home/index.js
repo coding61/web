@@ -131,8 +131,8 @@ define(function(require, exports, module) {
                         }
                     }else{
                         // 随机
-                        $(".wait-loading").show();
-                        Team.joinUnknownTeam();
+                        // $(".wait-loading").show();
+                        // Team.joinUnknownTeam();
                     }
                     
                 },
