@@ -514,7 +514,11 @@ define(function(require, exports, module) {
                             Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            if (JSON.parse(xhr.responseText).name) {
+                                Common.dialog('团队名称已被占用');
+                            }else{
+                                Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            }
                             return;
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
