@@ -148,6 +148,16 @@ define(function(require, exports, module) {
             $(".shadow-view").click(function(){
                 $(this).hide();
             })
+
+            // 点赞
+            $(".zan").click(function(){
+                if ($(this).hasClass('unselect')) {
+                    // 点赞
+                    Team.zanTeam($(this));
+                }else if ($(this).hasClass('select')) {
+                    // 不能取消赞
+                }
+            })
         }
     };
 
@@ -157,6 +167,7 @@ define(function(require, exports, module) {
         currentUser:null,  //当前用户的 pk
         data:null, //小组数据
         code:Common.getQueryString('code'),
+        flag:Common.getQueryString("flag"),
         init:function(){
             
             $("title").html(Team.name);
@@ -314,6 +325,9 @@ define(function(require, exports, module) {
                 $.ajax({
                     type:"get",
                     url:Common.domain + "/userinfo/group_detail/"+Team.pk+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
                     timeout:6000,
                     success:function(json){
                         // Team.joinKnownTeam($(".join"));
@@ -474,6 +488,14 @@ define(function(require, exports, module) {
                 $(".leader.editing").hide();  //关闭点编辑出来的元素
             }else{
                 $(".leader").hide();
+            }
+
+            // 从点赞列表进来，取消原有一切权限，team 信息只读
+            if (Team.flag == "list") {
+                $(".leader").hide();
+                $(".action").hide();
+            }else{
+                $(".zan-view").hide();
             }
 
             Page.clickEvent();
@@ -714,6 +736,61 @@ define(function(require, exports, module) {
                         console.log(textStatus);
                     }
                 })
+            })
+        },
+        zanTeam:function(this_){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    var redirectUri = null;
+                    if (Common.getQueryString("pk")) {
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name + "&flag=" + Common.getQueryString("flag");
+                    }else{
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    }
+                    Common.authWXLogin(redirectUri);
+                    return;
+                }
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/groups/likes/"+Team.pk+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        Common.dialog('点赞成功');
+
+                        var number = this_.parent().children('span').html();
+                        this_.parent().children('span').html(parseInt(number) + 1);
+                        this_.removeClass("unselect").addClass("select");
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            if (Common.getQueryString("pk")) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name + "&flag=" + Common.getQueryString("flag");
+                            }else{
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            }
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                });
             })
         }
     }
