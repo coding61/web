@@ -80,6 +80,10 @@ define(function(require, exports, module) {
 	                if (xhr.status == 400 || xhr.status == 403) {
 	                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
 	                    return;
+	                }else if(xhr.status == 401){
+	                	// 微信网页授权
+						var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+						Common.authWXLogin(redirectUri);
 	                } else {
 	                    Common.dialog('服务器繁忙');
 	                    return;
@@ -164,6 +168,10 @@ define(function(require, exports, module) {
 	                if (xhr.status == 400 || xhr.status == 403) {
 	                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
 	                    return;
+	                }else if(xhr.status == 401){
+	                	// 微信网页授权
+						var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+						Common.authWXLogin(redirectUri);
 	                } else {
 	                    Common.dialog('服务器繁忙');
 	                    return;
@@ -243,7 +251,11 @@ define(function(require, exports, module) {
                 if (xhr.status == 400 || xhr.status == 403) {
                     Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                     return;
-                } else {
+                }else if(xhr.status == 401){
+                	// 微信网页授权
+					var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+					Common.authWXLogin(redirectUri);
+	            }else {
                     Common.dialog('服务器繁忙');
                     return;
                 }
