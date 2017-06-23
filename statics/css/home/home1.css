@@ -1,0 +1,232 @@
+html{
+	height: 100%;
+}
+body{
+	width: 100%;
+	height: 100%;
+	background:white;
+}
+/*顶部状态*/
+.header{
+	background: rgb(250, 80, 131);
+	height: 40px;
+	width: 100%;
+	overflow: hidden;
+	font-size: 12px;
+	color: white;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+
+}
+.header .left-view{
+	display: flex;
+	flex: 1;
+}
+.header .left-view>span{
+	padding: 5px 10px;
+	background-color: rgba(0,0,0,0.4);
+	border-radius: 20px;
+	margin-left: 30%;
+}
+.header .right-view{
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+}
+.header .right-view>span{
+	padding: 5px 10px;
+	background-color: rgba(0,0,0,0.4);
+	border-radius: 20px;
+	margin-right: 5%;
+}
+.header .right-view .icon1,
+.header .right-view .icon2,
+.header .right-view .icon3{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-right: 6%
+}
+
+.header .right-view .icon1>img,
+.header .right-view .icon2>img,
+.header .right-view .icon3>img{
+	height: 15px;
+	margin-right: 5px;
+}
+
+/*主要界面*/
+.main-view{
+	margin:1% 2%;
+	height: 100%;
+	/*background: red;*/
+}
+.main-view .left-view{
+	width: 40%;
+	height: 100%;
+
+	/*display: flex;
+	flex-direction: row;
+	justify-content: space-between;*/
+
+	display: inline-block;
+	float: left;
+}
+/*目录区*/
+.main-view .left-view ul{
+	width: 30%;
+	height: 100%;
+	background-color: rgb(229, 230, 231);
+	border: solid 1px rgb(205, 206, 207);
+	border-radius: 5px;
+
+	overflow: auto;
+
+	display: inline-block;
+	float: left;
+}
+.main-view .left-view ul li{
+	width: 60%;
+	/*height: 40px;*/
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+.main-view .left-view ul li.readed{
+	color: rgb(250, 80, 131);
+}
+.main-view .left-view ul li.reading{
+	color: white;
+	background-color: rgb(250, 80, 131);
+	border-radius: 20px;
+}
+.main-view .left-view ul li.unread{
+	color: rgb(135,136,137);
+}
+.main-view .left-view ul li img{
+	margin-right: 10px;
+	width: 15px;
+}
+
+/*会话区*/
+.main-view .left-view .chat{
+	width: 66%;
+	height: 100%;
+	margin-right: 2%;
+	background-color: rgb(229, 230, 231);
+	border: solid 1px rgb(205, 206, 207);
+	border-radius: 5px;
+
+	/*display: flex;
+	flex-direction: column;*/
+	
+	display: inline-block;
+	float: right;
+	justify-content: center;
+    display: inline-flex;
+
+}
+.main-view .left-view .chat .message.text,
+.main-view .left-view .chat .message.link{
+	display: inline-flex;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 20px;
+	overflow: hidden;
+
+	align-items: center;  
+}
+.main-view .left-view .chat .message.link{
+	margin-right: 15px;
+}
+.main-view .left-view .chat .text .content,
+.main-view .left-view .chat .message .link-text{
+	background-color: white;
+	padding: 10px 15px;
+
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	line-height: 1.5em;
+	color: rgb(58, 59, 60);
+	/*font-family: serif;*/
+}
+.main-view .left-view .chat .message .arrow{
+	height: 15px;
+	margin-left: 15px;
+}
+.main-view .left-view .chat .btn-wx-auth{
+	display: inline-block;
+	background: rgb(250, 80, 131);
+	color: white;
+
+	height: 30px;
+	line-height: 30px;
+	border-radius: 5px;
+	border-bottom-right-radius: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
+
+	position: fixed;
+	bottom: 20px;
+	display: inline-flex;
+	align-self: center;
+}
+.main-view .left-view .chat .help{	
+	height: 30px;
+    position: fixed;
+    display: inline-block;
+    bottom: 20px;
+    margin-left: 10%;
+}
+
+/*练习区*/
+.main-view .right-view{
+	width: calc(60% - 2px);
+	height: 100%;
+	background-color: rgb(229, 230, 231);
+	border: solid 1px rgb(205, 206, 207);
+	border-radius: 5px;
+	
+	/*display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;*/
+
+	display: inline-block;
+	float: right;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+}
+.main-view .right-view img{
+	width: 50px;
+
+	/*height: 50px;
+	margin-left: calc(50% - 25px);
+	margin-top: 50%;*/
+}
+.main-view .right-view iframe{
+	display: none;
+}
+
+
+
+
+
+

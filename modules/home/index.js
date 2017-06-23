@@ -40,14 +40,24 @@ define(function(require, exports, module) {
                 
                     
             $(".join").click(function(){
-                Common.dialog("自由组队暂未开放,请6月25号再来");
-                return;
-                /*
+                // Common.dialog("自由组队暂未开放,请6月25号再来");
+                // return;
+                
+                // 存储是否点了随机按钮
+                if(window.localStorage){
+                    localStorage.joinTeam = true
+                }else{
+                    $.cookie("joinTeam", true, {
+                        path: "/"
+                    });
+                }
+                
                 Common.isLogin(function(token){
                     if (token != 'null') {
                         // 随机匹配进入我的团队页
                         $(".wait-loading").show();
-                        Team.joinUnknownTeam();
+                        Team.joinRandomTeam();
+                        // Team.joinUnknownTeam();
                     }else{
                          // 先微信授权登录
                         // 微信网页授权
@@ -55,7 +65,7 @@ define(function(require, exports, module) {
                         Common.authWXLogin(redirectUri);
                     }
                 })
-                */
+                
             })
             
             $(".my").click(function(){
@@ -89,6 +99,7 @@ define(function(require, exports, module) {
     
     var Team = {
         myTeam:null,  //是否点了我的团队
+        joinTeam:null, //是否点了随机按钮
         code:Common.getQueryString('code'),
         init:function(){
             
@@ -97,6 +108,13 @@ define(function(require, exports, module) {
             }else{
                 Team.myTeam = $.cookie("myTeam");
             }
+
+            if(window.localStorage){
+                Team.joinTeam = localStorage.joinTeam
+            }else{
+                Team.joinTeam = $.cookie("joinTeam");
+            }
+
 
             if (Team.code) {
                 Team.getToken();
@@ -122,21 +140,22 @@ define(function(require, exports, module) {
                     if (Team.myTeam == 'true') {
                         // 我的团队
                         Team.load();
-                        if(window.localStorage){
-                            localStorage.myTeam = false;
-                        }else{
-                            $.cookie("myTeam", false, {
-                                path: "/"
-                            });
-                        }
-                    }else{
+                    }else if(Team.joinTeam == 'true'){
                         // 随机
-                        // $(".wait-loading").show();
+                        $(".wait-loading").show();
+                        Team.joinRandomTeam();
                         // Team.joinUnknownTeam();
                     }
                     
                 },
                 error:function(xhr, textStatus){
+                    if (Team.myTeam == 'true') {
+                         Team.storeMyTeam();
+                    }
+                    if (Team.joinTeam == 'true') {
+                        // 随机组队
+                        Team.storeJoinTeam();
+                    }
                     (".wait-loading").hide();
 
                     if (textStatus == "timeout") {
@@ -177,10 +196,12 @@ define(function(require, exports, module) {
                     success:function(json){
                         // console.log(json);
                         // 隐藏动画,并跳转
+                        Team.storeMyTeam();
                         $(".wait-loading").hide();
                         location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
                     },
                     error:function(xhr, textStatus){
+                        Team.storeMyTeam();
                         $(".wait-loading").hide();
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
@@ -209,7 +230,7 @@ define(function(require, exports, module) {
         joinUnknownTeam:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';
+                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
                     Common.authWXLogin(redirectUri);
                     return;
                 }
@@ -221,12 +242,14 @@ define(function(require, exports, module) {
                     },
                     timeout:6000,
                     success:function(json){
+                        Team.storeJoinTeam();
                         $(".wait-loading").hide();
 
                         location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
                        
                     },
                     error:function(xhr, textStatus){
+                        Team.storeJoinTeam();
                         $(".wait-loading").hide();
                         
                         if (textStatus == "timeout") {
@@ -252,6 +275,75 @@ define(function(require, exports, module) {
                     }
                 })
             })
+        },
+        joinRandomTeam:function(){
+            // 加入随机队列
+             Common.isLogin(function(token){
+                if (token == "null") {
+                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                    Common.authWXLogin(redirectUri);
+                    return;
+                }
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/rabdom_member/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        Team.storeJoinTeam();
+                        $(".wait-loading").hide();
+                        Common.dialog("随机组队登记成功，请后天来查看组队结果");
+                        // location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
+                       
+                    },
+                    error:function(xhr, textStatus){
+                        Team.storeJoinTeam();
+                        $(".wait-loading").hide();
+                        
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        
+                        if (xhr.status == 401) {
+                            // token 失效, 重新授权
+                            // 先微信授权登录
+                            // 微信网页授权
+                            var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                            Page.authLogin(redirectUri);
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog("服务器繁忙");
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        storeMyTeam:function(){
+            // 我的团队
+            if(window.localStorage){
+                localStorage.myTeam = false;
+            }else{
+                $.cookie("myTeam", false, {
+                    path: "/"
+                });
+            }
+        },
+        storeJoinTeam:function(){
+            if(window.localStorage){
+                localStorage.joinTeam = false;
+            }else{
+                $.cookie("joinTeam", false, {
+                    path: "/"
+                });
+            }
         },
         errorMessage:function(xhr){
 

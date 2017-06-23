@@ -42,6 +42,12 @@
 		<script type="text/hmtl" id="main-view-template">
 			<div class="main-view">
 				<div class="team">
+					<div class="zan-view">
+						<span>{{likes}}</span>
+						<i class="zan{{if islike}} select{{else}} unselect{{/if}}"></i>
+						<!-- <img class="zan select" src="../../statics/images/zan-select.png" alt="">
+						<img class="zan unselect" src="../../statics/images/zan-unselect.png"> -->
+					</div>
 					{{if leader == true}}
 					<img class="edit-icon leader" src="../../statics/images/edit.png" alt="" />
 					<img class="end-icon leader editing" src="../../statics/images/end.png" alt="">
