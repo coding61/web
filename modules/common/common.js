@@ -9,7 +9,23 @@ define(function(require, exports, module) {
 	exports.domain = "/program_girl";
 
 	// exports.domain = "https://app.bcjiaoyu.com/program_girl"
+	exports.authWXSiteLogin = function(url){
+		// 微信网站登录
+		var appId = 'wx54e11ffd1df6b8c3',
+			scope = 'snsapi_login',
+			redirectUri = url;
+		redirectUri = encodeURIComponent(redirectUri);
 
+		href = "https://open.weixin.qq.com/connect/qrconnect?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect";
+		location.href = href;
+
+		// appId = "wx58e15a667d09d70f";
+		// scope = "snsapi_userinfo";
+		// href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
+		// location.href = href;
+		
+		// return href;
+	}
 	exports.authWXLogin = function(url){
 		// 先微信授权登录
         // 微信网页授权

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>课程列表</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/courseList.css" />
+	</head>
+
+	<body>
+		<div class="courses">
+            <div class="course">
+                <h3>HTML5</h3>
+                <img src="../../statics/images/course/c2.png" />
+                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
+            </div>
+            <div class="course">
+            	<h3>CSS</h3>
+                <img src="../../statics/images/course/c4.png" />
+                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
+            </div>
+            <div class="course">
+            	<h3>JavaScript</h3>
+                <img src="../../statics/images/course/c3.png" />
+                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
+            </div>
+            <div class="course">
+            	<h3>Python</h3>
+                <img src="../../statics/images/course/c1.png" />
+                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
+            </div>
+            <div class="course">
+            	<h3>JavaScript</h3>
+                <img src="../../statics/images/course/c3.png" />
+                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
+            </div>
+        </div>
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/courseList.js");
+	</script>
+
+</html>
+

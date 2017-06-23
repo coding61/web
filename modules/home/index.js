@@ -42,6 +42,7 @@ define(function(require, exports, module) {
             $(".join").click(function(){
                 Common.dialog("自由组队暂未开放,请6月25号再来");
                 return;
+                Common.dialog("随机组队登记成功，请明天来查看组队结果");
                 /*
                 Common.isLogin(function(token){
                     if (token != 'null') {
@@ -137,6 +138,16 @@ define(function(require, exports, module) {
                     
                 },
                 error:function(xhr, textStatus){
+                    if (Team.myTeam == 'true') {
+                        // 我的团队
+                        if(window.localStorage){
+                            localStorage.myTeam = false;
+                        }else{
+                            $.cookie("myTeam", false, {
+                                path: "/"
+                            });
+                        }
+                    }
                     (".wait-loading").hide();
 
                     if (textStatus == "timeout") {

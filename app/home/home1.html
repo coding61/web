@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>首页</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/home1.css" />
+	</head>
+
+	<body>
+	<!-- 头部信息 -->
+		<div class="header">
+			<div class="left-view">
+				<span> 今天打卡了10次,太厉害了</span>
+			</div>
+			<div class="right-view">
+				<span> 获取了2颗钻石</span>
+
+				<div class="icon1">
+					<img src="../../statics/images/icon1.png" alt="" />
+					<span>x3</span>
+				</div>
+				<div class="icon2">
+					<img src="../../statics/images/icon2.png" alt="" />
+					<span>x236</span>
+				</div>
+				<div class="icon3">
+					<img src="../../statics/images/icon3.png" alt="" />
+					<span>x20</span>
+				</div>
+				<img src="" alt="">
+
+			</div>
+		</div>
+
+		<div class="main-view">
+			<div class="left-view">
+				<!-- 目录 -->
+				<ul class="menu">
+					<li class="readed">
+						<img src="../../statics/images/radio-pink.png" alt="" />
+						<span>编程一</span>
+					</li>
+					<li class="readed">
+						<img src="../../statics/images/radio-pink.png" alt="" />
+						<span>编程二</span>
+					</li>
+					<li class="readed">
+						<img src="../../statics/images/radio-pink.png" alt="" />
+						<span>编程三</span>
+					</li>
+					<li class="readed">
+						<img src="../../statics/images/radio-pink.png" alt="" />
+						<span>编程四</span>
+					</li>
+					<li class="reading">
+						<img src="../../statics/images/radio-white.png" alt="" />
+						<span>编程五</span>
+					</li>
+					<li class="unread">
+						<img src="../../statics/images/radio-gray.png" alt="" />
+						<span>编程六</span>
+					</li>
+					<li class="unread">
+						<img src="../../statics/images/radio-gray.png" alt="" />
+						<span>编程七</span>
+					</li>
+					<li class="unread">
+						<img src="../../statics/images/radio-gray.png" alt="" />
+						<span>编程八</span>
+					</li>
+					<li class="unread">
+						<img src="../../statics/images/radio-gray.png" alt="" />
+						<span>编程九</span>
+					</li>
+					<li class="unread">
+						<img src="../../statics/images/radio-gray.png" alt="" />
+						<span>编程十</span>
+					</li>
+					<li class="unread">
+						<img src="../../statics/images/radio-gray.png" alt="" />
+						<span>编程十一</span>
+					</li>
+					<li class="unread">
+						<img src="../../statics/images/radio-gray.png" alt="" />
+						<span>编程十二</span>
+					</li>
+				</ul>
+				<!-- 会话区 -->
+				<div class="chat">
+					<!-- 消息区 -->
+					<div>
+						<div class="message text">
+							<span class="content">您好, 欢迎进入程序媛课堂</span>
+						</div>
+						<div class="message text">
+							<span class="content">您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂</span>
+						</div>
+						<div class="message text">
+							<span class="content">请授权微信登录</span>
+						</div>
+						<div class="message link">
+							<div class="link-text">
+								<span class="link-content">您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂<br/></span>
+								<span style="color: rgb(84, 180,225);">www.bcjiaoyu.com</span>
+							</div>
+							<img class="arrow" src="../../statics/images/arrow.png" alt="">
+						</div>
+					</div>
+					<!-- 按钮区 -->
+					<span class="btn-wx-auth">点击微信登录</span>
+					
+					<!-- 悬浮帮助按钮 -->
+					<img class="help" src="../../statics/images/help2.png" alt="">
+
+				</div>
+			</div>
+			<!-- 练习区 -->
+			<div class="right-view">
+				<img src="../../statics/images/icon.png" alt="">
+				<!-- <iframe class="web-page" src="http://free.bcjiaoyu.com" frameborder="0"></iframe> -->
+			</div>
+		</div>
+      <!-- <div class="btn-red" style="font-size: 0.16rem; width: 1rem; height:0.40rem; background: red;"></div>
+      <div class="btn-blue" style="font-size: 0.16rem; width: 1rem; height:0.40rem; background: blue;"></div>
+
+      <div style="width: 3rem; height: 4rem;">
+      	<iframe class="web-page" src="https://www.baidu.com" frameborder="0" style="width:3rem; height: 4rem"></iframe>
+      </div> -->
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/home.js");
+	</script>
+
+</html>
+

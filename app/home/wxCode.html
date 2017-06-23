@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    </head>
+    <style type="text/css">
+        @CHARSET "utf-8";  
+        .impowerBox .qrcode { width: 180px; margin-top: 15px; border: 1px solid #E2E2E2; height: 80px;} 
+    </style>
+    <body>
+        <span id="login_container"></span>
+        <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+        <script>
+            var obj = new WxLogin({
+              id: "login_container",
+              appid: "wx54e11ffd1df6b8c3",
+              scope: "snsapi_login",
+              redirect_uri: encodeURIComponent("https://www.cxy61.com/cxyteam/app/home/home.html"),
+              state: "STATE",
+              style: "black",
+              href: ""});
+        </script>
+    </body>
+</html>

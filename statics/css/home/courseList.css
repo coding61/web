@@ -1,0 +1,70 @@
+html{
+	height: 100%;
+}
+body{
+	width: 100%;
+	height: 100%;
+  background: rgb(229, 230, 231);
+}
+.courses{
+    width: 100%;
+    /*height: 100%;*/
+    /*background: rgb(229, 230, 231);*/
+    display: flex;
+    flex-wrap: wrap;
+    width: 98%;
+    padding-left: 2%;
+    padding-top: 2%;
+    padding-left: 4%;
+    width: 96%;
+    padding-top: 4%;
+    /*min-height: 100%;*/
+}
+.course{
+	width: calc(92% / 4);
+    background: white;
+    margin-right: 2%;
+    margin-bottom: 2%;
+
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    /*height: 150px;*/
+    padding: 10px;
+    width: calc(92% / 4 - 20px);
+    margin-right: 4%;
+    margin-bottom: 4%;
+    width: calc(84% / 4 - 20px);
+    height: 154px;
+}
+.course.select{
+    background: #6bcdff;
+    color: white;
+}
+.course h3{
+	font-size: 15px;
+    margin-bottom: 10px;
+    height: 20px;
+    line-height: 20px;
+}
+.course img{
+	height: 60px;
+	margin-bottom: 10px;
+}
+.course .desc{
+   height: 50px;
+
+   display: -webkit-box;
+   display: -moz-box;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   word-break: break-all;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 3;
+   text-align: justify;
+}
+
+
+
+
+
