@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>排行榜</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/teamList.css" />
+		<script>
+			localStorage.token = '361e62b004a69a4610acf9f3a5b6f95eaabca3b2';
+		</script>
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<div class="input-div"><img src="../../statics/images/team-search.png" alt=""><input class="search-team" type="text" placeholder="请输入您要搜索的团队"></div><span class="search-btn">搜索</span>
+		</div>
+
+		<div class="main-view">
+			<ul class="team-list">
+				<!-- <li>
+					<div class="team-ranking">
+						<img src="../../statics/images/team-fir.png" alt="">
+						<p>1</p>
+					</div>
+					<div class="team-detail">
+						<p>CodeinDalao</p>
+						<pre>
+							阿里山扩大了开始的拉开门的阿拉山口没打了没打了看什么阿里山扩大马铃薯
+						</pre>
+					</div>
+					<div class="team-zan">
+						<p>1234</p>
+						<img src="../../statics/images/team-zan-p.png" alt="">
+					</div>
+				</li>
+				<li>
+					<div class="team-ranking">
+						<img src="../../statics/images/team-sec.png" alt="">
+						<p>2</p>
+					</div>
+					<div class="team-detail">
+						<p>CodeinDalao</p>
+						<pre>
+							阿里山扩大了开始的拉开门的阿拉山口没打了没打了看什么阿里山扩大马铃薯
+						</pre>
+					</div>
+					<div class="team-zan">
+						<p>1100</p>
+						<img src="../../statics/images/team-zan-p.png" alt="">
+					</div>
+				</li>
+				<li>
+					<div class="team-ranking">
+						<img src="../../statics/images/team-thi.png" alt="">
+						<p>3</p>
+					</div>
+					<div class="team-detail">
+						<p>CodeinDalao</p>
+						<pre>
+							阿里山扩大了开始的拉没打了看什么阿里山扩大马铃薯
+						</pre>
+					</div>
+					<div class="team-zan">
+						<p>988</p>
+						<img src="../../statics/images/team-zan-p.png" alt="">
+					</div>
+				</li>
+				<li>
+					<div class="team-ranking">
+						<p>4</p>
+					</div>
+					<div class="team-detail">
+						<p>CodeinDalao</p>
+						<pre>
+							阿里开门的阿拉山口没打了没打了看什么阿里山扩大马铃薯
+						</pre>
+					</div>
+					<div class="team-zan">
+						<p>980</p>
+						<img src="../../statics/images/team-zan-w.png" alt="">
+					</div>
+				</li> -->
+			</ul>
+			<script type="text/hmtl" id="team-list-1-template">
+				{{each results}}
+				<li>
+					<div class="team-ranking">
+						{{if $index == 0}}
+						<img src="../../statics/images/team-fir.png" alt="">
+						{{else if $index == 1}}
+						<img src="../../statics/images/team-sec.png" alt="">
+						{{else if $index == 2}}
+						<img src="../../statics/images/team-thi.png" alt="">
+						{{/if}}
+						<p>{{$index + 1}}</p>
+					</div>
+					<div class="team-detail" data-pk="{{$value.pk}}" data-name="{{$value.name}}">
+						<p>{{$value.name}}</p>
+						<pre>
+							{{$value.announcement}}
+						</pre>
+					</div>
+					<div class="team-zan" data-pk="{{$value.pk}}" data-page="{{pages}}">
+						<p>{{$value.likes}}</p>
+						{{if $value.islike}}
+						<img src="../../statics/images/team-zan-p.png" alt="">
+						{{else}}
+						<img src="../../statics/images/team-zan-w.png" alt="">
+						{{/if}}
+					</div>
+				</li>
+				{{/each}}
+			</script>
+			<script type="text/hmtl" id="team-list-2-template">
+				{{each results}}
+				<li data-pk="{{$value.pk}}" data-name="{{$value.name}}">
+					<div class="team-ranking">
+						<p>{{(pages - 1) * 10 + $index + 1}}</p>
+					</div>
+					<div class="team-detail">
+						<p>{{$value.name}}</p>
+						<pre>
+							{{$value.announcement}}
+						</pre>
+					</div>
+					<div class="team-zan" data-pk="{{$value.pk}}" data-page="{{pages}}">
+						<p>{{$value.likes}}</p>
+						{{if $value.islike}}
+						<img src="../../statics/images/team-zan-p.png" alt="">
+						{{else}}
+						<img src="../../statics/images/team-zan-w.png" alt="">
+						{{/if}}
+					</div>
+				</li>
+				{{/each}}
+			</script>
+			<div class="team-search" style="display: none;">
+			</div>
+			<script type="text/html" id="search-template">
+				{{each}}
+				<div class="search-div" data-pk="{{$value.pk}}" data-name="{{$value.name}}">
+					<div class="team-search-name">
+						{{$value.name}}
+					</div><div class="team-search-detail">
+						<pre>
+							{{$value.announcement}}
+						</pre>
+					</div>
+				</div>
+				{{/each}}
+			</script>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/teamList.js");
+	</script>
+
+</html>
+
