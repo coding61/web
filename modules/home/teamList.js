@@ -27,7 +27,7 @@ define(function(require, exports, module) {
 					//团队中心
 					$('.team-list').on('click', 'li .team-detail', function(){
 						var this_ = $(this);
-						location.href = '/app/home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
+						location.href = '/cxyteam/app/home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
 					})
 					
 					//点赞
@@ -99,7 +99,7 @@ define(function(require, exports, module) {
 			//myTeam
 			$('.team-search').on('click', '.search-div', function(){
 				var this_ = $(this);
-				location.href = '/app/home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
+				location.href = '/cxyteam/app/home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
 			});
 
 			//搜索
