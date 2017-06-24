@@ -262,7 +262,7 @@ define(function(require, exports, module) {
                             // 先微信授权登录
                             // 微信网页授权
                             var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
-                            Page.authLogin(redirectUri);
+                            Common.authWXLogin(redirectUri);
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -312,7 +312,7 @@ define(function(require, exports, module) {
                             // 先微信授权登录
                             // 微信网页授权
                             var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
-                            Page.authLogin(redirectUri);
+                            Common.authWXLogin(redirectUri);
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
