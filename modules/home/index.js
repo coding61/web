@@ -40,10 +40,10 @@ define(function(require, exports, module) {
                 
                     
             $(".join").click(function(){
-                Common.dialog("自由组队暂未开放,请6月25号再来");
-                return;
+                // Common.dialog("自由组队暂未开放,请6月25号再来");
+                // return;
                 
-                /*
+                
                 // 存储是否点了随机按钮
                 if(window.localStorage){
                     localStorage.joinTeam = true
@@ -66,7 +66,7 @@ define(function(require, exports, module) {
                         Common.authWXLogin(redirectUri);
                     }
                 })
-                */
+                
                 
             })
             
@@ -143,12 +143,12 @@ define(function(require, exports, module) {
                         // 我的团队
                         Team.load();
                     }else if(Team.joinTeam == 'true'){
-                        /*
+                        
                         // 随机
                         $(".wait-loading").show();
                         Team.joinRandomTeam();
                         // Team.joinUnknownTeam();
-                        */
+                        
                     }
                     
                 },
