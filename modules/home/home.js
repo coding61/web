@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
+    var Utils = require('common/utils.js');
     
     // ----------------------------------1.默认数据
     var Default = {
@@ -93,12 +94,13 @@ define(function(require, exports, module) {
             }, 800)
             
 
-            // 存储数据
+            // 1.存储数据(默认数据)
             var array = [];
             if (localStorage.chatData) {
                 array = JSON.parse(localStorage.chatData);
             }
-            item['question'] = true;
+            item['question'] = true;  //当前消息是否是机器回复
+            item['line'] = false;
             array.push(item)
             localStorage.chatData = JSON.stringify(array);
                         
@@ -174,37 +176,50 @@ define(function(require, exports, module) {
             
             var answerHtml = null;
             var questionHtml = null;
+            var lineHtml = null;
 
-            if (!item.question) {
-                answerHtml = '<div class="answer"> \
-                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                              </div>';
+            if (item.line == true) {
+                // 加载节分割线
+                lineHtml = '<div class="sep-line"> \
+                                <i class="line"></i>\
+                                <span class="title">'+item.message+'</span>\
+                            </div>';
             }else{
-                if (item.link) {
-                    // 带链接的
-                    questionHtml = '<div class="message link"> \
-                                        <div class="link-text"> \
-                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                            <span style="color: rgb(84, 180,225);">'+item.link+'</span>\
-                                        </div>\
-                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                    </div>';
-                }else if(item.img){
-                    // 图片
-                    questionHtml = '<div class="message img">\
-                                        <img src="'+item.img+'" alt="">\
-                                    </div>';
+                // 加载消息
+                if (!item.question) {
+                    // 加载人为回复
+                    answerHtml = '<div class="answer"> \
+                                    <span class="content">'+Util.formatString(item.message)+'</span> \
+                                  </div>';
                 }else{
-                    // 文本
-                    questionHtml = '<div class="message text"> \
-                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                    </div>';
+                    // 加载机器回复
+                    if (item.link) {
+                        // 带链接的
+                        questionHtml = '<div class="message link"> \
+                                            <div class="link-text"> \
+                                                <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                                <span style="color: rgb(84, 180,225);">'+item.link+'</span>\
+                                            </div>\
+                                            <img class="arrow" src="../../statics/images/arrow.png" alt="">\
+                                        </div>';
+                    }else if(item.img){
+                        // 图片
+                        questionHtml = '<div class="message img">\
+                                            <img src="'+item.img+'" alt="">\
+                                        </div>';
+                    }else{
+                        // 文本
+                        questionHtml = '<div class="message text"> \
+                                            <span class="content">'+Util.formatString(item.message)+'</span> \
+                                        </div>';
+                    }
                 }
             }
 
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
             $(answerHtml).appendTo(".messages");
+            $(lineHtml).appendTo(".messages");
 
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 800);
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
@@ -285,12 +300,13 @@ define(function(require, exports, module) {
             
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
-            // 存储数据
+            // 2.存储数据(当前消息是否是机器消息)
             var array = [];
             if (localStorage.chatData) {
                 array = JSON.parse(localStorage.chatData);
             }
-            item['question'] = true
+            item['question'] = true;   //当前消息是否是机器消息
+            item['line'] = false;
             array.push(item)
             localStorage.chatData = JSON.stringify(array);
                         
@@ -390,7 +406,8 @@ define(function(require, exports, module) {
                             Page.index = 0;
                             Page.data = json.first;
                             Page.pagenum ++;
-
+                            
+                            Page.loadSepLine(Page.pagenum - 1);
                             Page.loadMessageWithData(actionText, Page.data, Page.index, false);
                         }else{
                             Common.dialog('暂无数据');
@@ -402,7 +419,8 @@ define(function(require, exports, module) {
                             Page.index = 0;
                             Page.data = json.second;
                             Page.pagenum ++;
-
+                            
+                            Page.loadSepLine(Page.pagenum - 1);
                             Page.loadMessageWithData(actionText, Page.data, Page.index, false);
                         }else{
                             Common.dialog('暂无数据');
@@ -414,7 +432,8 @@ define(function(require, exports, module) {
                             Page.index = 0;
                             Page.data = json.third;
                             Page.pagenum ++;
-
+                            
+                            Page.loadSepLine(Page.pagenum - 1);
                             Page.loadMessageWithData(actionText, Page.data, Page.index, false);
                         }else{
                             Common.dialog('暂无数据');
@@ -430,7 +449,7 @@ define(function(require, exports, module) {
         },
         loadMessageWithData:function(actionText, arr, i, opt){
             // 存储人工提问
-            // 存储数据
+            // 3.存储数据(人工回复)
             var array = [];
             if (localStorage.chatData) {
                 array = JSON.parse(localStorage.chatData);
@@ -438,7 +457,8 @@ define(function(require, exports, module) {
             var item = {
                 message:actionText
             }
-            item['question'] = false;
+            item['question'] = false;  //当前消息是否是机器消息
+            item['line'] = false;
             array.push(item)
             localStorage.chatData = JSON.stringify(array);
             
@@ -507,6 +527,39 @@ define(function(require, exports, module) {
                 }
                 
             }
+        },
+        loadSepLine:function(number){
+            $(".loading-chat").remove();
+
+            // 加载节分割线
+            var lineHtml = '<div class="sep-line"> \
+                                <i class="line"></i>\
+                                <span class="title">第'+Utils.numberToChinese(number)+'节</span>\
+                            </div>';
+            $(lineHtml).appendTo(".messages");
+
+            // 4.存储数据(节数据)
+            var array = [];
+            if (localStorage.chatData) {
+                array = JSON.parse(localStorage.chatData);
+            }
+            var msg = "第" + Utils.numberToChinese(number) + "节";
+            var item = {
+                message:msg
+            }
+            item['question'] = false;
+            item['line'] = true;   //当前消息是否是分割线
+            array.push(item)
+            localStorage.chatData = JSON.stringify(array);
+            
+            // 等待机器答复
+            var loadingWHtml = null;
+            loadingWHtml = '<div class="loading-chat left-animation">\
+                                <img src="../../statics/images/chat.gif" alt="">\
+                            </div>';
+
+            $(loadingWHtml).appendTo(".messages");
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     };
     

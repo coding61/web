@@ -316,6 +316,29 @@ body{
     margin-bottom: 8px;
 }
 
+.sep-line{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #a6a6a6;
+    height: 40px;
+    line-height: 40px;
+}
+.sep-line .line{
+    width: 90%;
+    background-image: url(../../images/line.png);
+    background-size: 100%;
+    background-position: center;
+    height: 1px
+}
+.sep-line .title{
+    position: absolute;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: red;
+    background: rgb(229, 230, 231);
+}
 
 /*练习区*/
 .main-view .right-view{
