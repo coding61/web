@@ -130,7 +130,8 @@ body{
 	width: 100%;
 	text-align: center;
 }
-.idCode-view input{
+.idCode-view input,
+.idCode-view textarea{
 	width: 100%;
 	text-align: center;
 	border: none;
@@ -140,7 +141,11 @@ body{
 	/*width: 100%;
     text-align: center;*/
     /* font-size: 11px; */
+    word-break:break-all;
+    width: 90%;
+    margin-left: 5%;
 }
+
 .idCode-view .btn{
 	display: inline-block;
     width: 50%;
