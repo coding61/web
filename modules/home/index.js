@@ -359,11 +359,13 @@ define(function(require, exports, module) {
             Common.isLogin(function(token){
                 if (token == "null") {
                     $(".idCode-view input").val("");
+                    $(".idCode-view textarea").val("");
                 }else{
                     $(".idCode-view input").val(token);
+                    $(".idCode-view textarea").val(token);
                 }
             })
-
+             
             $(".idCode-shadow .cancel").click(function(){
                 $(".idCode-shadow").hide();
             })

@@ -362,26 +362,9 @@ body{
 	display: none;
 }
 
-.wx-code{
-    width: 150px;
-    height: 150px;
-    top: calc(50% - 75px);
-    left: calc(50% - 75px);
-    position: fixed;
-    background: transparent;
-    /*width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;*/
+.zuan-shadow-view{
     display: none;
 }
-.wx-code iframe{
-    width: 100%;
-    height: 100%;
-}
-@CHARSET "utf-8";  
-.impowerBox .qrcode { width: 80px; height: 80; margin-top: 15px; border: 1px solid #E2E2E2;} 
-
 
 
 /*左边飞入动画*/
