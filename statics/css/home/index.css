@@ -83,6 +83,22 @@ body{
     top: 50%;
 }
 
+.idCode{
+    color: blue;
+    font-size: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.idCode input{
+	width: 100%;
+    text-align: center;
+    font-size: 11px;
+    color: blue;
+    background: transparent;
+    border: none;
+}
 
 
 
