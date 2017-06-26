@@ -24,6 +24,15 @@ define(function(require, exports, module) {
             //     });
             // }
 
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    $(".idCode").hide();
+                }else{
+                    $(".idCode").show();
+                    $(".idCode input").val(token);
+                }
+            })
+
             $(".create").click(function(){
                 Common.isLogin(function(token){
                     if (token != "null") {

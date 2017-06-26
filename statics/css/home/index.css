@@ -90,6 +90,7 @@ body{
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+    display: none;
 }
 .idCode input{
 	width: 100%;
