@@ -23,15 +23,7 @@ define(function(require, exports, module) {
             //         path: "/"
             //     });
             // }
-
-            Common.isLogin(function(token){
-                if (token == "null") {
-                    $(".idCode").hide();
-                }else{
-                    $(".idCode").show();
-                    $(".idCode input").val(token);
-                }
-            })
+            Team.idCode();
 
             $(".create").click(function(){
                 Common.isLogin(function(token){
@@ -125,7 +117,7 @@ define(function(require, exports, module) {
             }else{
                 Team.joinTeam = $.cookie("joinTeam");
             }
-
+        
 
             if (Team.code) {
                 Team.getToken();
@@ -159,6 +151,8 @@ define(function(require, exports, module) {
                         // Team.joinUnknownTeam();
                         
                     }
+
+                    Team.idCode();
                     
                 },
                 error:function(xhr, textStatus){
@@ -357,6 +351,16 @@ define(function(require, exports, module) {
                     path: "/"
                 });
             }
+        },
+        idCode:function(){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    $(".idCode").hide();
+                }else{
+                    $(".idCode").show();
+                    $(".idCode input").val("我的身份识别码：" + token);
+                }
+            })
         },
         errorMessage:function(xhr){
 
