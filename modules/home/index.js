@@ -360,6 +360,8 @@ define(function(require, exports, module) {
                 if (token == "null") {
                     $(".idCode-view input").val("");
                     $(".idCode-view textarea").val("");
+                    $(".idCode-shadow").hide();
+                    Common.dialog('你还未授权');
                 }else{
                     $(".idCode-view input").val(token);
                     $(".idCode-view textarea").val(token);
