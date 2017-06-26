@@ -353,13 +353,19 @@ define(function(require, exports, module) {
             }
         },
         idCode:function(){
+            $(".idCode").click(function(){
+                $(".idCode-shadow").show();
+            })
             Common.isLogin(function(token){
                 if (token == "null") {
-                    $(".idCode").hide();
+                    $(".idCode-view input").val("");
                 }else{
-                    $(".idCode").show();
-                    $(".idCode input").val("我的身份识别码：" + token);
+                    $(".idCode-view input").val(token);
                 }
+            })
+
+            $(".idCode-shadow .cancel").click(function(){
+                $(".idCode-shadow").hide();
             })
         },
         errorMessage:function(xhr){

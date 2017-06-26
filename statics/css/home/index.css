@@ -41,6 +41,7 @@ body{
 	border-radius: 0.20rem;
 	background: #ff6b95;
 	color: white;
+	margin-bottom: 10%;
 
 	display: flex;
 	justify-content: center;
@@ -82,25 +83,82 @@ body{
     text-align: center;
     top: 50%;
 }
-
 .idCode{
-    color: blue;
-    font-size: 11px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+	width: 100%;
+	height: 0.50rem;
+	border-radius: 0.20rem;
+	background: white;
+	color: #ff6b95;
+	margin-bottom: 10%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.idCode-shadow{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
     display: none;
 }
-.idCode input{
-	width: 100%;
-    text-align: center;
-    font-size: 11px;
-    color: blue;
-    background: transparent;
-    border: none;
+.idCode-view{
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    margin-top: 50px;
+    /* display: none; */
+    background: white;
+    width: 80%;
+    /*height: 150px;*/
+    margin-left: 10%;
+    margin-top: 40%;
+    border-radius: 5px;
+   /* border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;*/
 }
-
+.idCode-view span{
+	display: inline-block;
+	font-size: 18px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	width: 100%;
+	text-align: center;
+}
+.idCode-view input{
+	width: 100%;
+	text-align: center;
+	border: none;
+	font-size: 14px;
+	margin-bottom: 30px;
+	color: lightblue;
+	/*width: 100%;
+    text-align: center;*/
+    /* font-size: 11px; */
+}
+.idCode-view .btn{
+	display: inline-block;
+    width: 50%;
+    float: left;
+    /*background: red;*/
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-top: solid 1px #e1e1e1;
+}
+.idCode-view .btn.cancel{
+	/*border-right: solid 1px #e1e1e1;*/
+	/*width: calc(50% - 1px);*/
+	width: 100%;
+}
+.idCode-view .btn.copy{
+	display: none;
+}
 
 
 
