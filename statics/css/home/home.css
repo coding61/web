@@ -43,7 +43,8 @@ body{
 }
 .header .right-view .icon1,
 .header .right-view .icon2,
-.header .right-view .icon3{
+.header .right-view .icon3,
+.header .right-view .icon4{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -57,6 +58,10 @@ body{
 	height: 15px;
 	margin-right: 5px;
 }
+.header .right-view .icon4>img{
+    height: 20px;
+    width: 20px;
+}
 
 /*主要界面*/
 .main-view{
@@ -65,6 +70,7 @@ body{
 
 	margin:1% 2%;
 	height: 100%;
+    height: calc(96% - 40px);
 	/*background-color: red;*/
 }
 .main-view .left-view{
@@ -363,7 +369,21 @@ body{
 }
 
 .zuan-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
     display: none;
+}
+.zuan-shadow-view .img{
+    width: 200px;
+    height: 200px;
+    background: red;
+    margin-left: calc(50% - 100px);
 }
 
 
