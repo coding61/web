@@ -115,6 +115,7 @@ define(function(require, exports, module) {
                 // Util.storeData();
                 // console.log(Page.index);
                 console.log(i);
+                return;
             } else{
                 setTimeout(function(){
                     Default.load(arr, i+1);
@@ -563,6 +564,7 @@ define(function(require, exports, module) {
                 // }
                 // Util.storeData();
                 console.log(i);
+                return;
             } else{
                 setTimeout(function(){
                     // 加载下一条数据
