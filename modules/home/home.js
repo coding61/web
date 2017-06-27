@@ -125,7 +125,7 @@ define(function(require, exports, module) {
     // --------------------------------2.缓存数据
     var ChatStroage = {
         numbers:0,    //已加载数据的个数
-        length:8,   //默认一组加载多少个
+        length:50,   //默认一组加载多少个
         timerAgo:null,  
         init:function(){
             // 加载缓存数据， 并展示出来
@@ -267,6 +267,7 @@ define(function(require, exports, module) {
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
             ChatStroage.load(arr, i+1, arrLen);
+
         },
         loadLastItem:function(array, arrLen){
 
@@ -325,7 +326,6 @@ define(function(require, exports, module) {
 
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
             $(".btns .actions").html(actionHtml);
-
             
             Page.clickEvent();     
             
@@ -373,6 +373,7 @@ define(function(require, exports, module) {
                     // console.log("top1--->"+top);
                     // console.log("sh1--->"+win);
                     // console.log("h1--->"+doc);
+                    Page.clickEvent(); 
                     clearTimeout(ChatStroage.timerAgo);
                 }
             });
@@ -382,6 +383,7 @@ define(function(require, exports, module) {
             if (i >= arrLen) {
                 //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
                 $(".loading-chat").remove();
+                Page.clickEvent(); 
                 return;
             }
             
