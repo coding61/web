@@ -6,17 +6,7 @@ define(function(require, exports, module) {
         init:function(){
             Page.configEdit();
 
-            $(".btn-blue").click(function(){
-                $(".web-page").attr({src:'https://www.baidu.com'});
-            })
-            
-            $(".btn-red").click(function(){
-                $(".web-page").attr({src:'http://free.bcjiaoyu.com/'});
-            })
-
             Page.clickEvent();
-
-
 
         },
         configEdit:function(){
@@ -76,8 +66,43 @@ define(function(require, exports, module) {
                 csEditor.showHint(); //满足自动触发自动联想功能 
             });
         },
-        load:function(){
-            
+        load:function(htmlValue, cssValue, jsValue){
+            console.log(htmlValue);
+            console.log(cssValue);
+            console.log(jsValue);
+
+            $.ajax({
+                type:"post",
+                url:Common.domain + "/userinfo/exercise_create/",
+                data:{
+                    html:htmlValue,
+                    css:cssValue,
+                    js:jsValue
+                },
+                timeout:6000,
+                success:function(json){
+                    console.log(json);
+                    var url =  "https://app.bcjiaoyu.com/program_girl"+"/userinfo/exercises/"+json.pk+"/"
+                    // console.log(url);
+
+                    $(".run-result iframe").attr({src:url});
+                },
+                error:function(xhr, textStatus){
+
+                    if (textStatus == "timeout") {
+                        Common.dialog("请求超时, 请稍后重试");
+                        return;
+                    }
+                    if (xhr.status == 400 || xhr.status == 403) {
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        return;
+                    }else{
+                        Common.dialog('服务器繁忙');
+                        return;
+                    }
+                    console.log(textStatus);
+                }
+            })
         },
         clickEvent:function(){
             var appId = 'wx58e15a667d09d70f',
@@ -89,12 +114,17 @@ define(function(require, exports, module) {
             })
 
             $(".result .run").click(function(){
-                console.log(htmlEditor.getValue());
-                console.log(csEditor.getValue());
+                // console.log(htmlEditor.getValue());
+                // console.log(csEditor.getValue());
+                // console.log(jsEditor.getValue());
+
+                Page.load(htmlEditor.getValue(), csEditor.getValue(), jsEditor.getValue());
+
                 // console.log(htmlEditor.getTextArea().value);
                 // console.log(htmlEditor.toTextArea());
             })
-        }
+        },
+
     };
 
     Page.init();
