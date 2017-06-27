@@ -586,7 +586,7 @@ define(function(require, exports, module) {
         clickEvent:function(){
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
-            $(".btn-wx-auth").click(function(){
+            $(".btn-wx-auth").unbind('click').click(function(){
                 // if ($(this).hasClass("wx-auth")) {
                 //     // 微信授权登录
                 //     var redirectUri = "https://www.cxy61.com/cxyteam/app/home/home.html";
@@ -606,7 +606,7 @@ define(function(require, exports, module) {
                 // }
             })
             
-            $(".option").click(function(){
+            $(".option").unbind('click').click(function(){
                 // 选项点击
                 if ($(this).hasClass("unselect")) {
                     //  选中，将选项放到数组中
@@ -622,18 +622,18 @@ define(function(require, exports, module) {
             })
             
 
-            $(".message.link").click(function(){
+            $(".message.link").unbind('click').click(function(){
                 $(".right-view>img").hide();
                 $(".right-view iframe").attr({src:'codeEdit.html'});
                 $(".right-view iframe").show();
             })
 
-            $(".message.text").click(function(){
+            $(".message.text").unbind('click').click(function(){
                 $(".right-view iframe").hide();
                 $(".right-view>img").show();
             })
 
-            $(".help").click(function(){
+            $(".help").unbind('click').click(function(){
                 $(".right-view>img").hide();
                 $(".right-view iframe").attr({src:'courseList.html'});
                 $(".right-view iframe").show();
