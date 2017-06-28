@@ -66,8 +66,8 @@ define(function(require, exports, module) {
                 if (item.exercises == true) {
                     // 如果是选择题，（多按钮）
                     var optionHtml = null;
-                    for (var i = 0; i < item.action.length; i++) {
-                        var option = item.action[i];
+                    for (var j = 0; j < item.action.length; j++) {
+                        var option = item.action[j];
                         optionHtml += '<span class="option unselect">'+option.content+'</span>'
                     }
                     actionHtml += optionHtml
@@ -468,6 +468,7 @@ define(function(require, exports, module) {
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
         init:function(){
             Page.load();
+
         },
         load:function(){
             // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认
@@ -507,8 +508,8 @@ define(function(require, exports, module) {
                 if (item.exercises == true) {
                     // 如果是选择题，（多按钮）
                     var optionHtml = "";
-                    for (var i = 0; i < item.action.length; i++) {
-                        var option = item.action[i];
+                    for (var j = 0; j < item.action.length; j++) {
+                        var option = item.action[j];
                         optionHtml += '<span class="option unselect">'+option.content+'</span>'
                     }
                     actionHtml += optionHtml
@@ -528,7 +529,12 @@ define(function(require, exports, module) {
                 Page.clickEvent();
             }, 800)
             
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            if($(".message").last().hasClass("img")){
+                var height = $(".message").last().height();
+                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight + height}, 50);
+            }else{
+                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            }
 
             // 2.存储数据(当前消息是否是机器消息)
             var array = [];
@@ -567,6 +573,7 @@ define(function(require, exports, module) {
                 return;
             } else{
                 setTimeout(function(){
+                    console.log(i);
                     // 加载下一条数据
                     // 等待符号
                     var loadingWHtml = null;
@@ -585,6 +592,13 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            
+            window.addEventListener(localStorage.currentCourse, function(e) {
+                // 检测是否为需要监听的key值
+                if(localStorage.currentCourse != localStorage.oldCourse){
+                    $(".actions").html('<span class="btn-wx-auth bottom-animation">开始学习</span>');
+                }
+            });
 
             $(".btn-wx-auth").unbind('click').click(function(){
                 // if ($(this).hasClass("wx-auth")) {
@@ -595,15 +609,16 @@ define(function(require, exports, module) {
                 //     // $(".wx-code").show();
                 //     // $(".wx-code iframe").attr({src:Common.authWXSiteLogin(redirectUri)});
                 // }else{
-                    // 普通 action 按钮点击事件
-                    if ($(this).hasClass("exercise")) {
-                        // 点了习题的，提交答案的按钮
-                        Page.loadClickMessage(Page.options.join(','), true);   //true 代表点了习题提交答案的按钮
-                    }else{
-                        // 普通的 action 按钮
-                        Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
-                    }
-                // }
+
+                    
+                // 普通 action 按钮点击事件
+                if ($(this).hasClass("exercise")) {
+                    // 点了习题的，提交答案的按钮
+                    Page.loadClickMessage(Page.options.join(','), true);   //true 代表点了习题提交答案的按钮
+                }else{
+                    // 普通的 action 按钮
+                    Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
+                }
             })
             
             $(".option").unbind('click').click(function(){
@@ -760,7 +775,7 @@ define(function(require, exports, module) {
                             Page.loadMessageWithData(actionText, Page.data, Page.index, false);
 
                         }else{
-                            Common.dialog("此课程已结束");
+                            Common.dialog("恭喜，您已经完成本课程的学习。您可以选择其它课程，再继续");
                             $(".loading-chat").remove();
                         }
                     }else{
@@ -800,8 +815,13 @@ define(function(require, exports, module) {
             }, 2000)
         },
         loadClickMessage:function(actionText, exercise){
+            if(localStorage.oldCourse != localStorage.currentCourse){
+                //更换课程数据
+                Page.loadClickMessageCourse(actionText);
+                return;
+            }
+            // 本课程继续学
             // $(".actions").hide(); 
-
             // 人工提问
             var answerHtml ='<div class="answer"> \
                                 <span class="content">'+actionText+'</span> \
@@ -854,7 +874,7 @@ define(function(require, exports, module) {
                         // Page.requestNextData(actionText, Page.pagenum);
 
                         // 请求当前课程的下一节课程
-                        Page.requestCourseData(actionText);
+                        Page.requestCourseData(actionText, false);
                     }else{
                         Page.loadMessageWithData(actionText, Page.data, Page.index+1, false);                
                     }
@@ -862,9 +882,31 @@ define(function(require, exports, module) {
                 
             }
         },
-        requestCourseData:function(actionText){
+        loadClickMessageCourse:function(actionText){
+            // 更换课程
+            // 人工提问
+            var answerHtml ='<div class="answer"> \
+                                <span class="content">'+actionText+'</span> \
+                            </div>';
+            $(answerHtml).appendTo(".messages");
+            
+            // 等待机器答复
+            var loadingWHtml = null;
+            loadingWHtml = '<div class="loading-chat left-animation">\
+                                <img src="../../statics/images/chat.gif" alt="">\
+                            </div>';
+
+            $(loadingWHtml).appendTo(".messages");
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            
+            Page.requestCourseData(actionText, true);  //true 代表课程更换了
+
+        },
+        requestCourseData:function(actionText, flag){
             // 请求课程数据
+            /*
             if (localStorage.currentCourse) {
+
                 if (localStorage.currentCourse == "html_simple") {
                     var htmlSimpleIndex = 0;
                     if (localStorage.htmlSimpleIndex) {
@@ -898,7 +940,82 @@ define(function(require, exports, module) {
                 Common.dialog("请选择一个课程");
                 $(".loading-chat").remove();
             }
-                
+            */
+            
+            if(localStorage.currentCourse){
+                if (localStorage.oldCourse != localStorage.currentCourse) {
+                    // 切换课程学习
+                    localStorage.oldCourse = localStorage.currentCourse;
+                    actionText = "开始学习";
+                    Page.requestCategoryCourse(actionText, flag);
+                }else{
+                    // 当前学习的课程跟用户选的课程一样，继续下一节的课程
+                    Page.requestCategoryCourse(actionText, flag);
+                }
+            }else{
+                // 还从未有过选课
+                Common.dialog("请选择一个课程");
+                $(".loading-chat").remove();
+            }    
+        },
+        requestCategoryCourse:function(actionText, flag){
+            if (localStorage.oldCourse == "html_simple") {
+                var htmlSimpleIndex = 0;
+                if (localStorage.htmlSimpleIndex) {
+                    htmlSimpleIndex = localStorage.htmlSimpleIndex;
+                }
+                htmlSimpleIndex = parseInt(htmlSimpleIndex) + 1;
+                if(flag == true){
+                    // 重复加载本节/从头加载
+                    if(htmlSimpleIndex == 1){
+                    }else{
+                        htmlSimpleIndex = htmlSimpleIndex - 1;
+                    }
+                }
+                Page.requestCourseNextData(actionText, localStorage.oldCourse, htmlSimpleIndex);
+            }else if (localStorage.oldCourse == "css_simple") {
+                var cssSimpleIndex = 0;
+                if (localStorage.cssSimpleIndex) {
+                    cssSimpleIndex = localStorage.cssSimpleIndex;
+                }
+                cssSimpleIndex = parseInt(cssSimpleIndex) + 1;
+                if(flag == true){
+                    // 重复加载本节/从头加载
+                    if(cssSimpleIndex == 1){
+                    }else{
+                        cssSimpleIndex = cssSimpleIndex - 1;
+                    }
+                }
+                Page.requestCourseNextData(actionText, localStorage.oldCourse, cssSimpleIndex);
+            }else if (localStorage.oldCourse == "javascript_simple") {
+                var jsSimpleIndex = 1;
+                if (localStorage.jsSimpleIndex) {
+                    jsSimpleIndex = localStorage.jsSimpleIndex;
+                }
+                jsSimpleIndex = parseInt(jsSimpleIndex) + 1;
+                if(flag == true){
+                    // 重复加载本节/从头加载
+                    if(jsSimpleIndex == 1){
+                    }else{
+                        jsSimpleIndex = jsSimpleIndex - 1;
+                    }
+                }
+                Page.requestCourseNextData(actionText, localStorage.oldCourse, jsSimpleIndex);
+            }else if (localStorage.oldCourse == "python_simple") {
+                var pythonSimpleIndex = 1;
+                if (localStorage.pythonSimpleIndex) {
+                    pythonSimpleIndex = localStorage.pythonSimpleIndex;
+                }
+                pythonSimpleIndex = parseInt(pythonSimpleIndex) + 1;
+                if(flag == true){
+                    // 重复加载本节/从头加载
+                    if(pythonSimpleIndex == 1){
+                    }else{
+                        pythonSimpleIndex = pythonSimpleIndex - 1;
+                    }
+                }
+                Page.requestCourseNextData(actionText, localStorage.oldCourse, pythonSimpleIndex);
+            }
         },
         loadSepLine:function(number){
             $(".loading-chat").remove();

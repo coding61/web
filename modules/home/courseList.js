@@ -72,13 +72,14 @@ define(function(require, exports, module) {
 
             $(".course").click(function(){
                 if ($(this).hasClass("select")) {
-                    $(this).removeClass("select");
+                    // $(this).removeClass("select");
                 }else{
                     $(".course").removeClass("select");
                     $(this).addClass("select");
                 }
                 
                 //存储当前学习的课程题目
+                // localStorage.setItem("currentCourse", $(this).attr("data-category"));
                 localStorage.currentCourse = $(this).attr("data-category");
 
                 // if ($(this).attr("data-category") == "html_simple") {
@@ -91,9 +92,21 @@ define(function(require, exports, module) {
                 //     Page.requestData(localStorage.currentCourse, htmlSimpleIndex);
                 // }
                 
+                /*
                 // 更改浏览器地址
-                var url = window.location.href + "?category=123";
-                history.pushState({}, null, url);
+                var category = null;
+                if($(this).attr("data-category") == "html_simple"){
+                    category = "html_simple";
+                }else if ($(this).attr("data-category") == "css_simple") {
+                    category = "css_simple";
+                }else if ($(this).attr("data-category") == "javascript_simple") {
+                    category = "javascript_simple";
+                }else if ($(this).attr("data-category") == "python_simple") {
+                    category = "python_simple";
+                }
+                var url = window.location.href.split('?')[0] + "?category=" + category;
+                history.pushState({"category":category}, null, url);
+                */
             })
         }
     };

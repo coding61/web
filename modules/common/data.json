@@ -175,7 +175,9 @@
 				"action":"是的是的！"
 			},
 			{
-				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF1.gif",
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF1.gif"
+			},
+			{
 				"message":"但是想要色彩缤纷的网页，只有HTML是远远不够的！",
 				"action":"咦，还需要神马？"
 			},
