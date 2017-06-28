@@ -623,20 +623,49 @@ define(function(require, exports, module) {
             
 
             $(".message.link").unbind('click').click(function(){
-                $(".right-view>img").hide();
-                $(".right-view iframe").attr({src:'codeEdit.html'});
-                $(".right-view iframe").show();
+                if($(".right-view iframe").css('display') == "none"){
+                    $(".right-view>img").hide();
+                    if($(".right-view iframe").attr('src') == "codeEdit.html"){
+                    }else{
+                        $(".right-view iframe").attr({src:'codeEdit.html'});
+                    }
+                    $(".right-view iframe").show();
+                }else{
+                    if($(".right-view iframe").attr('src') == "codeEdit.html"){
+                    }else{
+                        $(".right-view iframe").attr({src:'codeEdit.html'});
+                    }
+                }
+
+                // $(".right-view>img").hide();
+                // $(".right-view iframe").attr({src:'codeEdit.html'});
+                // $(".right-view iframe").show();
             })
 
             $(".message.text").unbind('click').click(function(){
                 $(".right-view iframe").hide();
+                $(".right-view iframe").attr({src:""});
                 $(".right-view>img").show();
             })
 
             $(".help").unbind('click').click(function(){
-                $(".right-view>img").hide();
-                $(".right-view iframe").attr({src:'courseList.html'});
-                $(".right-view iframe").show();
+                if($(".right-view iframe").css('display') == "none"){
+                    $(".right-view>img").hide();
+                    if($(".right-view iframe").attr('src') == "courseList.html"){
+                    }else{
+                        $(".right-view iframe").attr({src:'courseList.html'});
+                    }
+                    $(".right-view iframe").show();
+                }else{
+                    if($(".right-view iframe").attr('src') == "courseList.html"){
+                    }else{
+                        $(".right-view iframe").attr({src:'courseList.html'});
+                    }
+                }
+                
+                // $(".right-view>img").hide();
+                // $(".right-view iframe").attr({src:'courseList.html'});
+                // $(".right-view iframe").show();
 
                 // Util.zuanAnimate();
                 

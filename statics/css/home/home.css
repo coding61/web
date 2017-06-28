@@ -188,7 +188,7 @@ body{
     width: calc(100% - 30px);
 }
 .main-view .left-view .chat .message.img{
-    height: 100px;
+    /*height: 100px;*/
 }
 .main-view .left-view .chat .message.img img{
     width: 50%;
