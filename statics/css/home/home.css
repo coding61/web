@@ -20,7 +20,7 @@ body{
 	flex-direction: row;
 
     height: 50px;
-    font-size: 16px;
+    font-size: 15px;
 
 }
 .header .left-view{
@@ -151,7 +151,7 @@ body{
     position: relative;
     width: 100%;
 
-    font-size: 18px;
+    font-size: 16px;
 
 }
 .main-view .left-view .chat .messages{
@@ -405,6 +405,12 @@ body{
     height: 200px;
     background: red;
     margin-left: calc(50% - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.zuan-shadow-view .img img{
+    width: 200%;
 }
 
 
