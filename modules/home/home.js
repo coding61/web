@@ -128,6 +128,7 @@ define(function(require, exports, module) {
         numbers:0,    //已加载数据的个数
         length:50,   //默认一组加载多少个
         timerAgo:null,  
+        loadMore:true,  //上拉的时候判断是否可以继续上拉加载
         init:function(){
             // 加载缓存数据， 并展示出来
             var array = JSON.parse(localStorage.chatData)
@@ -197,8 +198,6 @@ define(function(require, exports, module) {
 
 
             // ChatStroage.load(array, 0, array.length);   //加载全部
-
-
         },
         load:function(arr, i, arrLen){
             var item = arr[i];
@@ -344,36 +343,40 @@ define(function(require, exports, module) {
                     // console.log("top--->"+top);
                     // console.log("sh--->"+win);
                     // console.log("h--->"+doc);
-
+                    
                     //判断存储数据是否已全部加载完
                     var chatData = JSON.parse(localStorage.chatData)
                     if (ChatStroage.numbers<chatData.length){
                         // ChatStroage.numbers = parseInt(ChatStroage.numbers) + ChatStroage.length;
+                        
+                        if(ChatStroage.loadMore == true){
+                            ChatStroage.loadMore = false;
+                            //存储数据源还没有加载完, 继续加载(靠后的10条数据)。 判断已加载数据个数与存储个数是否相同
+                            var arr1 = [];
+                            var originIndex = chatData.length-1-ChatStroage.numbers,
+                                lastIndex = chatData.length-1-ChatStroage.numbers-ChatStroage.length;
+                            for (var i = originIndex; i > lastIndex; i--) {
+                                if (chatData[i]) {
+                                    arr1.push(chatData[i]);
+                                }
+                            } 
 
-                        //存储数据源还没有加载完, 继续加载(靠后的10条数据)。 判断已加载数据个数与存储个数是否相同
-                        var arr1 = [];
-                        var originIndex = chatData.length-1-ChatStroage.numbers,
-                            lastIndex = chatData.length-1-ChatStroage.numbers-ChatStroage.length;
-                        for (var i = originIndex; i > lastIndex; i--) {
-                            if (chatData[i]) {
-                                arr1.push(chatData[i]);
-                            }
-                        } 
+                            // 等待符号,加载上一组记录
+                            var loadingWHtml = null;
+                            loadingWHtml = '<div class="loading-chat">\
+                                                <img src="../../statics/images/chat.gif" alt="">\
+                                            </div>';
+                            $(loadingWHtml).prependTo($(".messages"));
 
-                        // 等待符号,加载上一组记录
-                        var loadingWHtml = null;
-                        loadingWHtml = '<div class="loading-chat">\
-                                            <img src="../../statics/images/chat.gif" alt="">\
-                                        </div>';
-                        $(loadingWHtml).prependTo($(".messages"));
-
-                        ChatStroage.loadAgo(arr1, 0, arr1.length);
+                            ChatStroage.loadAgo(arr1, 0, arr1.length);
+                        }
                     }
 
                 }else{
                     // console.log("top1--->"+top);
                     // console.log("sh1--->"+win);
                     // console.log("h1--->"+doc);
+                    ChatStroage.loadMore = true;
                     Page.clickEvent(); 
                     clearTimeout(ChatStroage.timerAgo);
                 }
@@ -382,6 +385,7 @@ define(function(require, exports, module) {
         loadAgo:function(arr, i, arrLen){
             var item = arr[i];
             if (i >= arrLen) {
+                ChatStroage.loadMore = true;
                 //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
                 $(".loading-chat").remove();
                 Page.clickEvent(); 
@@ -474,12 +478,31 @@ define(function(require, exports, module) {
                 var a = e.data;   
                 if(a == "currentCourse"){
                     if(localStorage.currentCourse == localStorage.oldCourse){
-                        // 不做处理
+                        // 回到原来的课程继续
+                        var actionHtml = "";
+                        var item = Page.data[Page.index];
+                        if (item.action) {
+                            if (item.exercises == true) {
+                                // 如果是选择题，（多按钮）
+                                var optionHtml = "";
+                                for (var j = 0; j < item.action.length; j++) {
+                                    var option = item.action[j];
+                                    optionHtml += '<span class="option unselect">'+option.content+'</span>'
+                                }
+                                actionHtml += optionHtml
+                                actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
+
+                            } else{
+                                // 单按钮
+                                actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                            }
+                        }
+                        $(".btns .actions").html(actionHtml);
                     }else{
                         // 改变 action 的状态(开始学习)
                         $(".actions").html('<span class="btn-wx-auth bottom-animation">开始学习</span>');
-                        Page.clickEvent();    //重新激活 action 点击事件
                     }
+                    Page.clickEvent();    //重新激活 action 点击事件
                 }
             }, false); 
         },
