@@ -975,7 +975,7 @@ define(function(require, exports, module) {
                         })
                     }, 200)
                 })
-            }, 1000)
+            }, 2000)
         },
         formatString:function(message){
             return message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
