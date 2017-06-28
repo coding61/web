@@ -468,7 +468,20 @@ define(function(require, exports, module) {
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
         init:function(){
             Page.load();
-
+            
+            // 监听课程列表那里传过来的点击事件
+            window.addEventListener('message', function(e) {  
+                var a = e.data;   
+                if(a == "currentCourse"){
+                    if(localStorage.currentCourse == localStorage.oldCourse){
+                        // 不做处理
+                    }else{
+                        // 改变 action 的状态(开始学习)
+                        $(".actions").html('<span class="btn-wx-auth bottom-animation">开始学习</span>');
+                        Page.clickEvent();    //重新激活 action 点击事件
+                    }
+                }
+            }, false); 
         },
         load:function(){
             // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认
@@ -592,14 +605,6 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-            
-            window.addEventListener(localStorage.currentCourse, function(e) {
-                // 检测是否为需要监听的key值
-                if(localStorage.currentCourse != localStorage.oldCourse){
-                    $(".actions").html('<span class="btn-wx-auth bottom-animation">开始学习</span>');
-                }
-            });
-
             $(".btn-wx-auth").unbind('click').click(function(){
                 // if ($(this).hasClass("wx-auth")) {
                 //     // 微信授权登录
@@ -946,7 +951,6 @@ define(function(require, exports, module) {
                 if (localStorage.oldCourse != localStorage.currentCourse) {
                     // 切换课程学习
                     localStorage.oldCourse = localStorage.currentCourse;
-                    actionText = "开始学习";
                     Page.requestCategoryCourse(actionText, flag);
                 }else{
                     // 当前学习的课程跟用户选的课程一样，继续下一节的课程

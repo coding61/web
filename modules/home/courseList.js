@@ -81,6 +81,7 @@ define(function(require, exports, module) {
                 //存储当前学习的课程题目
                 // localStorage.setItem("currentCourse", $(this).attr("data-category"));
                 localStorage.currentCourse = $(this).attr("data-category");
+                window.parent.postMessage("currentCourse", '*');
 
                 // if ($(this).attr("data-category") == "html_simple") {
                 //     // 判断此课程的上次学习进度的下标
