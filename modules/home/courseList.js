@@ -90,7 +90,10 @@ define(function(require, exports, module) {
 
                 //     Page.requestData(localStorage.currentCourse, htmlSimpleIndex);
                 // }
-
+                
+                // 更改浏览器地址
+                var url = window.location.href + "?category=123";
+                history.pushState({}, null, url);
             })
         }
     };
