@@ -172,7 +172,7 @@
 			},
 			{
 				"message":"相信通过学习你已经非常熟悉HTML了。",
-				"action":"是的是的！"
+				"action":"必须的！"
 			},
 			{
 				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF1.gif"
@@ -182,8 +182,14 @@
 				"action":"咦，还需要神马？"
 			},
 			{
-				"message":"还需要CSS！",
+				"message":"还需要CSS！"
+			},
+			{
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/gif2.gif",
 				"action":"CSS是啥玩意？"
+			},
+			{
+				"message":"CSS不是反恐精英的简称。"
 			},
 			{
 				"message":"CSS的名称叫做“层叠样式表”，说的直白点，"
@@ -192,7 +198,9 @@
 				"message":"就是改变HTML元素的样式。比如颜色、大小、边框这种。"
 			},
 			{
-				"message":"像这样：",
+				"message":"像这样："
+			},
+			{
 				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/p1-1.png"
 			},
 			{
@@ -200,10 +208,10 @@
 			},
 			{
 				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/p1-2.png",
-				"action":"哇！好棒哦！"
+				"action":"哇！太牛逼了！"
 			},
 			{
-				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF1.gif"
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/gif3.gif"
 			},
 			{
 				"message":"它们配合能做出很多酷炫的网页。"
@@ -213,7 +221,14 @@
 			},
 			{
 				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/p1-3.png",
-				"action":"好啊好啊"
+				"action":"赶紧的吧"
+			},
+			{
+				"message":"太棒了，你又学会了一小节，斌叔先喝杯茶下节再讲哦。"
+			},
+			{
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/gif4.gif",
+				"action":"打卡，炫耀下！"
 			}
 		],
 		"2":[
@@ -231,7 +246,10 @@
 				"action":"是的啊！"
 			},
 			{
-				"message":"我们是如何实现的呢？"
+				"message":"我们是如何实现绿色效果的呢？"
+			},
+			{
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/gif5.gif"
 			},
 			{
 				"message":"我们是通过在<h1>里面插入style=“”这样的CSS属性来做到的。"
@@ -240,7 +258,10 @@
 				"message":"现在，修改右边的HTML，改成这样："
 			},
 			{
-				"message":"<h1 style=“color:green;”>斌叔的个人网页</h1>",
+				"message":"<h1 style=“color:green;”>斌叔的个人网页</h1>"
+			},
+			{
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/gif6.GIF",
 				"action":"改好啦！"
 			},
 			{
@@ -250,7 +271,7 @@
 				"message":"其实斌叔不是这样子啦！"
 			},
 			{
-				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF4.gif"
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/gif7.gif"
 			},
 			{
 				"message":"好啦，我们可以看到颜色已经变了",
@@ -274,9 +295,16 @@
 			},
 			{
 				"message":"不要急，下节课我们在学习其他的样式。"
-			},{
-				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF5.gif",
-				"action":"next"
+			},
+			{
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF5.gif"
+			},
+			{
+				"message":"太棒了，你又学会了一小节，斌叔先喝杯茶下节再讲哦。"
+			},
+			{
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/gif4.gif",
+				"action":"打卡，炫耀下！"
 			}
 		],
 		"3":[
@@ -467,8 +495,7 @@
 				"action":"哇！好多！"
 			},
 			{
-				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF6-1.gif",
-				"action":"next"
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF6-1.gif"
 			}
 		],
 		"6":[
@@ -526,8 +553,7 @@
 				"action":"原来如此！"
 			},
 			{
-				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF6-1.gif",
-				"action":"next"
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF6-1.gif"
 			}
 		],
 		"7":[
@@ -583,10 +609,9 @@
 				"message":"到这里，你就已经掌握了CSS的初级教程。"
 			},
 			{
-				"message":"我们后续还会有高级课程哦！"	
+				"message":"我们后续还会有高级课程哦！"
 			},{
-				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF5.gif",
-				"action":"next"
+				"img":"https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/CSS/GIF5.gif"
 			}
 		]
 	},
