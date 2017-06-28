@@ -648,6 +648,17 @@ define(function(require, exports, module) {
                 $(".right-view>img").show();
             })
 
+            $(".message.img").unbind('click').click(function(){
+                var url = $(this).children('img').attr('src');
+                $(".imgmsg img").attr({src:url});
+                $(".imgmsg-shadow-view").show();
+            })
+
+            $(".imgmsg-shadow-view").unbind('click').click(function(){
+                $(".imgmsg img").attr({src:""});
+                $(".imgmsg-shadow-view").hide();
+            })
+
             $(".help").unbind('click').click(function(){
                 if($(".right-view iframe").css('display') == "none"){
                     $(".right-view>img").hide();
