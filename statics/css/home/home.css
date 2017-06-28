@@ -19,6 +19,9 @@ body{
 	justify-content: center;
 	flex-direction: row;
 
+    height: 50px;
+    font-size: 16px;
+
 }
 .header .left-view{
 	display: flex;
@@ -57,10 +60,15 @@ body{
 .header .right-view .icon3>img{
 	height: 15px;
 	margin-right: 5px;
+
+    height: 20px;
 }
 .header .right-view .icon4>img{
     height: 20px;
     width: 20px;
+
+    height: 25px;
+    width: 25px;
 }
 
 /*主要界面*/
@@ -70,7 +78,7 @@ body{
 
 	margin:1% 2%;
 	height: 100%;
-    height: calc(96% - 40px);
+    height: calc(96% - 50px);
 	/*background-color: red;*/
 }
 .main-view .left-view{
@@ -143,6 +151,8 @@ body{
     position: relative;
     width: 100%;
 
+    font-size: 18px;
+
 }
 .main-view .left-view .chat .messages{
 	overflow: auto;
@@ -192,6 +202,8 @@ body{
 }
 .main-view .left-view .chat .message.img img{
     width: 50%;
+
+    width: 70%;
 }
 .main-view .left-view .chat .message.link{
 	margin-right: 15px;
@@ -283,6 +295,9 @@ body{
     padding-right: 6.5%;
     margin-bottom: 15px;
     margin-top: 8px;
+
+    height: 40px;
+    line-height: 40px;
 }
 .main-view .left-view .btns .actions .option{
     height: 30px;
@@ -293,6 +308,9 @@ body{
     padding-right: 15px;
     display: inline-block;
     margin-left: 5px;
+
+    height: 40px;
+    line-height: 40px;
 }
 .main-view .left-view .btns .actions .option.unselect{
     color: rgb(250, 80, 131);
@@ -314,6 +332,9 @@ body{
     display: inline-block;
     margin-left: 5px;
     cursor: pointer;
+
+    height: 40px;
+    line-height: 40px;
 }
 .main-view .left-view .btns .help{
     height: 30px;

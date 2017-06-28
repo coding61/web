@@ -117,6 +117,10 @@ define(function(require, exports, module) {
                 // console.log(htmlEditor.getValue());
                 // console.log(csEditor.getValue());
                 // console.log(jsEditor.getValue());
+                // var htmlV = "<html><head></head><body>";
+                // htmlV += htmlEditor.getValue();
+                // htmlV += "</body></html>"
+                // console.log(htmlV);
 
                 Page.load(htmlEditor.getValue(), csEditor.getValue(), jsEditor.getValue());
 
