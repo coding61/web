@@ -445,14 +445,20 @@ body{
     background-image: url(../../images/line.png);
     background-size: 100%;
     background-position: center;
-    height: 1px
+    height: 1px;
+
+    position:absolute;
+    left: 5%;
+    top: 19.5px;
 }
 .sep-line .title{
-    position: absolute;
+    /*position: absolute;*/
     padding-left: 10px;
     padding-right: 10px;
     background: red;
     background: rgb(229, 230, 231);
+    
+    z-index: 10002;
 }
 
 /*练习区*/
