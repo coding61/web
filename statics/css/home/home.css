@@ -26,23 +26,46 @@ body{
 .header .left-view{
 	display: flex;
 	flex: 1;
+
+    /*height: 30px;*/
 }
 .header .left-view>span{
 	padding: 5px 10px;
 	background-color: rgba(0,0,0,0.4);
 	border-radius: 20px;
 	margin-left: 30%;
+
+    display: inline-flex;
+    align-items: center;
+}
+.header .left-view .msg img{
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    padding-right: 5px;
 }
 .header .right-view{
 	display: flex;
 	flex: 1;
 	flex-direction: row;
+
+    /*height: 30px;*/
+    align-items: center;
 }
 .header .right-view>span{
 	padding: 5px 10px;
 	background-color: rgba(0,0,0,0.4);
 	border-radius: 20px;
-	margin-right: 5%;
+	margin-right: 10%;
+
+    display: inline-flex;
+    align-items: center;
+}
+.header .right-view .msg img{
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    padding-right: 5px;
 }
 .header .right-view .icon1,
 .header .right-view .icon2,
@@ -71,6 +94,41 @@ body{
     width: 25px;
 }
 
+.header .right-view .avatar{
+   margin-right: 2%;
+}
+.header .right-view .zuan{
+    margin-left: 5%;
+}
+.header .right-view .zuan>img{
+    margin-right: 2px;
+}
+.header .right-view .info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.header .right-view .info-view .info{
+    margin-bottom: 2%;
+}
+.header .right-view .info-view .info .grade{
+    margin-right: 15px;
+    margin-right: 5%;
+}
+.header .right-view .progress{
+    background: white;
+    height: 7px;
+    position: relative;
+}
+.header .right-view .progress img{
+    position: absolute;
+    left: 0; 
+    top: 0; 
+    width: 58.5%;
+    height: 100%;
+}
 /*主要界面*/
 .main-view{
 	display: flex;
@@ -90,6 +148,7 @@ body{
 	/*background-color: blue;*/
 
     width: 30%;
+    height: 100%;
 }
 .main-view .left-view ul{
 	width: 30%;
@@ -342,6 +401,35 @@ body{
     margin-left: 85%;
     margin-bottom: 8px;
 }
+.main-view .left-view .helps-view{
+    position: absolute;
+    bottom: 50px;
+    width: 20%;
+    background: white;
+    border: solid 1px #d2d2d2;
+    border-radius: 5px;
+    right: 5px;
+    font-size: 13px;
+    padding: 0 10px;
+    display: none;
+}
+.main-view .left-view .helps-view>div{
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.main-view .left-view .helps-view>div:hover{
+    color: rgb(84, 180,225);
+}
+.main-view .left-view .helps-view .change-course,
+.main-view .left-view .helps-view .zuan-ani{
+    border-bottom: solid 1px #d2d2d2;
+}
+.main-view .left-view .helps-view .arrow{
+    position: absolute;
+    right: 28%;
+}
 
 .sep-line{
     display: flex;
@@ -379,6 +467,7 @@ body{
 	justify-content: center;
 	align-items: center;
     width: 70%;
+    height: 100%;
 }
 .main-view .right-view img{
 	width: 100px;
@@ -403,7 +492,7 @@ body{
 .zuan-shadow-view .img{
     width: 200px;
     height: 200px;
-    background: red;
+    /*background: red;*/
     margin-left: calc(50% - 100px);
     display: flex;
     align-items: center;

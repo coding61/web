@@ -43,7 +43,24 @@
 
         <script type="text/html" id="courses-template">
         	{{each}}
-	        	<div class="course" data-category="{{$value.category}}">
+	        	<div class="course{{if $value.open == true}} open{{else}} unopen{{/if}}" data-category="{{$value.category}}">
+	        		{{if $value.status == "finish"}}
+		                <img class="status" src="../../statics/images/course/icon1.png" />
+		            {{else if $value.status == "continue"}}
+		            	<img class="status" src="../../statics/images/course/icon2.png" />
+		            {{else}}
+		            {{/if}}
+		            {{if $value.open == false}}
+			            <div class="like{{if $value.like == true}} select-like{{else}} unselect-like{{/if}}" data-like-number={{$value.like_number}}>
+			                {{if $value.like == true}}
+				            	<img src="../../statics/images/zan-select.png">
+				            	<span>{{$value.like_number}}</span>
+				            {{else}}
+				            	<img src="../../statics/images/zan-unselect-p.png">
+				            	<span>想学习</span>
+				            {{/if}}
+			            </div>
+		            {{/if}}
 	                <h3>{{$value.title}}</h3>
 	                <img src="{{$value.img}}" />
 	                <span class="desc">简介:{{$value.desc}}</span>

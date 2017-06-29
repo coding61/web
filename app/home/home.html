@@ -10,31 +10,42 @@
 
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
 		<link type="text/css" rel="stylesheet" href="../../statics/css/home/home.css" />
+		<style type="text/css"></style>
 	</head>
 
 	<body>
 	<!-- 头部信息 -->
 		<div class="header">
 			<div class="left-view">
-				<span> 今天打卡了10次,太厉害了</span>
+				<span class="msg"><img src="../../statics/images/avatar.png"/>今天打卡了10次,太厉害了</span>
 			</div>
 			<div class="right-view">
-				<span> 获取了2颗钻石</span>
+				<span class="msg"><img src="../../statics/images/avatar.png"/>获取了2颗钻石</span>
 
-				<div class="icon1">
+				<!-- <div class="icon1">
 					<img src="../../statics/images/icon1.png" alt="" />
 					<span>x3</span>
 				</div>
 				<div class="icon2">
 					<img src="../../statics/images/icon2.png" alt="" />
 					<span>x236</span>
+				</div> -->
+				<div class="icon4 avatar">
+					<img src="../../statics/images/avatar.png" alt="">
 				</div>
+				<div class="info-view">
+					<div class="info">
+						<span class="grade">LV 青铜1</span>
+						<span class="grade-value">500/854</span>
+					</div>
+					<div class="progress">
+						<img src="../../statics/images/progress.png" alt="">
+					</div>
+				</div>
+
 				<div class="icon3 zuan">
 					<img src="../../statics/images/icon3.png" alt="" />
 					<span>x20</span>
-				</div>
-				<div class="icon4 avatar">
-					<img src="../../statics/images/avatar.png" alt="">
 				</div>
 
 			</div>
@@ -142,26 +153,37 @@
 					
 					<!-- 悬浮帮助按钮 -->
 					<!-- <img class="help" src="../../statics/images/help2.png" alt=""> -->
+					<div class="helps-view">
+						<div class="change-course">更换课程</div>
+						<div class="zuan-ani">钻石动画</div>
+						<div class="contact-us">联系我们</div>
+						<img class="arrow" src="../../statics/images/arrow-w.png" />
+					</div>
 				</div>
 			</div>
 			<!-- 练习区 -->
 			<div class="right-view">
 				<img src="../../statics/images/icon.png" alt="">
-				<iframe class="web-page" src="" frameborder="0"></iframe>
+				<iframe class="codeEdit" src="codeEdit.html" frameborder="0"></iframe>
+				<iframe class="courseList" src="courseList.html" frameborder="0"></iframe>
 			</div>
 		</div>
-
+		
+		<!-- 钻石效果 -->
         <div class="zuan-shadow-view">
       		<div class="img">
       			<img src="../../statics/images/zuan2.gif">
       		</div>
         </div>
-
+		
+		<!-- 图片放大效果 -->
         <div class="imgmsg-shadow-view">
         	<div class="imgmsg">
 	        	<img src="" alt="" />
         	</div>
         </div>
+
+        <script type="text/javascript"></script>
 		
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>

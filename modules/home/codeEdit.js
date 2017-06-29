@@ -5,9 +5,19 @@ define(function(require, exports, module) {
     var Page = {
         init:function(){
             Page.configEdit();
-
             Page.clickEvent();
 
+        },
+        addListen:function(){
+            // 监听课程列表那里传过来的点击事件
+            window.addEventListener('message', function(e) {  
+                var a = e.data;   
+                if(a == "codeEdit"){
+                    console.log(222);
+                    // htmlEditor.setValue(localStorage.htmlCode);
+                    // jsEditor.setValue(localStorage.jsCode);
+                }
+            }, false);
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
@@ -65,6 +75,40 @@ define(function(require, exports, module) {
             csEditor.on('keypress', function() { 
                 csEditor.showHint(); //满足自动触发自动联想功能 
             });
+
+            
+            /*
+            htmlEditor.on("update", function(Editor){
+                // console.log(Editor.getValue());
+            });
+
+            htmlEditor.on("change", function(Editor, changes){
+                console.log(Editor.getValue());
+            })
+            */
+
+            htmlEditor.on("blur", function(Editor){
+                // console.log(Editor.getValue());
+                localStorage.htmlCode = Editor.getValue();
+            })
+
+            jsEditor.on("blur", function(Editor){
+                localStorage.jsCode = Editor.getValue();
+            })
+            
+            if(localStorage.htmlCode){
+                // console.log(localStorage.htmlCode);
+                htmlEditor.setValue(localStorage.htmlCode);
+            }
+            
+            if(localStorage.jsCode){
+                // console.log(localStorage.jsCode);
+                jsEditor.setValue(localStorage.jsCode);
+            }
+           
+            
+
+            // Page.addListen();
         },
         load:function(htmlValue, cssValue, jsValue){
             console.log(htmlValue);

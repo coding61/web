@@ -127,6 +127,7 @@ define(function(require, exports, module) {
     var ChatStroage = {
         numbers:0,    //已加载数据的个数
         length:50,   //默认一组加载多少个
+        timer:null,
         timerAgo:null,  
         loadMore:true,  //上拉的时候判断是否可以继续上拉加载
         init:function(){
@@ -262,9 +263,8 @@ define(function(require, exports, module) {
             $(lineHtml).appendTo(".messages");
 
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-
-            // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 800);
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 10);
 
             ChatStroage.load(arr, i+1, arrLen);
 
@@ -323,11 +323,21 @@ define(function(require, exports, module) {
             }
 
 
-
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-            $(".btns .actions").html(actionHtml);
-            
-            Page.clickEvent();     
+
+            $(".message.img").each(function(){
+                $(this).children('img').load(function(){
+                    // console.log(2);
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 10);
+                });
+            })
+
+            setTimeout(function(){
+                // console.log(333);
+                $(".btns .actions").html(actionHtml);
+                Page.clickEvent();    
+            }, 800)
+             
             
         },
         initScroll:function(array, i, arrLen){
@@ -360,15 +370,20 @@ define(function(require, exports, module) {
                                     arr1.push(chatData[i]);
                                 }
                             } 
+                            
+                            if(ChatStroage.timerAgo){
+                                return;
+                            }
+                            ChatStroage.timerAgo = setTimeout(function(){
+                                // 等待符号,加载上一组记录
+                                var loadingWHtml = null;
+                                loadingWHtml = '<div class="loading-chat">\
+                                                    <img src="../../statics/images/chat.gif" alt="">\
+                                                </div>';
+                                $(loadingWHtml).prependTo($(".messages"));
 
-                            // 等待符号,加载上一组记录
-                            var loadingWHtml = null;
-                            loadingWHtml = '<div class="loading-chat">\
-                                                <img src="../../statics/images/chat.gif" alt="">\
-                                            </div>';
-                            $(loadingWHtml).prependTo($(".messages"));
-
-                            ChatStroage.loadAgo(arr1, 0, arr1.length);
+                                ChatStroage.loadAgo(arr1, 0, arr1.length);
+                            }, 1000)
                         }
                     }
 
@@ -378,7 +393,12 @@ define(function(require, exports, module) {
                     // console.log("h1--->"+doc);
                     ChatStroage.loadMore = true;
                     Page.clickEvent(); 
-                    clearTimeout(ChatStroage.timerAgo);
+                    
+
+                    if(ChatStroage.timerAgo){
+                        clearTimeout(ChatStroage.timerAgo);
+                        ChatStroage.timerAgo = null;
+                    }
                 }
             });
         },
@@ -434,11 +454,12 @@ define(function(require, exports, module) {
                 }
             }
 
+
             $(".loading-chat").remove();
             $(questionHtml).prependTo($(".messages"));
             $(answerHtml).prependTo($(".messages"));
             $(lineHtml).prependTo($(".messages"));
-
+            
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
 
             ChatStroage.timerAgo = setTimeout(function(){
@@ -450,7 +471,7 @@ define(function(require, exports, module) {
                                 </div>';
                 $(loadingWHtml).prependTo($(".messages"));
 
-                setTimeout(function(){
+                ChatStroage.timerAgo=setTimeout(function(){
                     // 2秒后加载信息
                     ChatStroage.loadAgo(arr, i+1, arrLen);
                 }, 2000)
@@ -666,6 +687,11 @@ define(function(require, exports, module) {
             
 
             $(".message.link").unbind('click').click(function(){
+                $(".right-view>img").hide();
+                $(".right-view iframe.courseList").hide();
+                $(".right-view iframe.codeEdit").show();
+                                
+                /*
                 if($(".right-view iframe").css('display') == "none"){
                     $(".right-view>img").hide();
                     if($(".right-view iframe").attr('src') == "codeEdit.html"){
@@ -679,15 +705,12 @@ define(function(require, exports, module) {
                         $(".right-view iframe").attr({src:'codeEdit.html'});
                     }
                 }
-
-                // $(".right-view>img").hide();
-                // $(".right-view iframe").attr({src:'codeEdit.html'});
-                // $(".right-view iframe").show();
+                */
             })
 
             $(".message.text").unbind('click').click(function(){
                 $(".right-view iframe").hide();
-                $(".right-view iframe").attr({src:""});
+                // $(".right-view iframe").attr({src:""});
                 $(".right-view>img").show();
             })
 
@@ -703,6 +726,22 @@ define(function(require, exports, module) {
             })
 
             $(".help").unbind('click').click(function(){
+                if($(".helps-view").css("display") == "none"){
+                    $(".helps-view").show();
+                }else{
+                    $(".helps-view").hide();
+                }
+                
+            })
+            $(".helps-view .change-course").unbind('click').click(function(){
+
+                $(".helps-view").hide();
+                
+                $(".right-view>img").hide();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.courseList").show();
+
+                /*
                 if($(".right-view iframe").css('display') == "none"){
                     $(".right-view>img").hide();
                     if($(".right-view iframe").attr('src') == "courseList.html"){
@@ -716,13 +755,15 @@ define(function(require, exports, module) {
                         $(".right-view iframe").attr({src:'courseList.html'});
                     }
                 }
-                
-                // $(".right-view>img").hide();
-                // $(".right-view iframe").attr({src:'courseList.html'});
-                // $(".right-view iframe").show();
+                */
 
-                // Util.zuanAnimate();
-                
+            })
+            $(".helps-view .zuan-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Util.zuanAnimate();
+            })
+            $(".helps-view .contact-us").unbind('click').click(function(){
+                $(".helps-view").hide();
             })
         },
         requestNextData:function(actionText, pagenum){
@@ -1100,8 +1141,8 @@ define(function(require, exports, module) {
 
             setTimeout(function(){
                 $(".zuan-shadow-view .img").animate({
-                    marginTop:"0.5%",
-                    marginLeft:"73%",
+                    marginTop:"1%",
+                    marginLeft:"88%",
                     width:20,
                     height:20,
                     opacity:0

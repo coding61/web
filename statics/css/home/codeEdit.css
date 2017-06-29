@@ -24,6 +24,11 @@ body{
 	width: calc(95% / 3);
 	height: 98%;
 	background: rgb(55, 56, 57);
+
+    width: calc(97% / 2);
+}
+.edits .css-edit{
+    display: none;
 }
 .edits .html-edit .tag,
 .edits .css-edit .tag,

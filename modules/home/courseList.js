@@ -9,30 +9,47 @@ define(function(require, exports, module) {
 
         },
         load:function(){
+            // status， 用户学习课程进度状态；open：课程是否开放；like：用户是否想学该课程；like_number:想学该课程的人数
             var array = [
                 {
                     "category":"html_simple",
                     "title":"HTML5",
                     "img":"../../statics/images/course/c2.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。"
+                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "status":"finish",
+                    "open":true,
+                    "like":true, 
+                    "like_number":2056        
                 },
                 {
                     "category":"css_simple",
                     "title":"CSS",
                     "img":"../../statics/images/course/c4.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。"
+                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "status":"continue",
+                    "open":true,
+                    "like":true, 
+                    "like_number":2056    
                 },
                 {
                     "category":"javascript_simple",
                     "title":"JavaScript",
                     "img":"../../statics/images/course/c3.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。"
+                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "status":"unbegin",
+                    "open":false,
+                    "like":true, 
+                    "like_number":2056    
                 },
                 {
                     "category":"python_simple",
                     "title":"Python",
                     "img":"../../statics/images/course/c1.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。"
+                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "status":"unbegin",
+                    "open":false,
+                    "like":false, 
+                    "like_number":3056    
                 }
             ]
             var html = ArtTemplate("courses-template", array);
@@ -70,7 +87,8 @@ define(function(require, exports, module) {
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
             })
 
-            $(".course").click(function(){
+            $(".course").click(function(e){
+                e.stopPropagation();
                 if ($(this).hasClass("select")) {
                     // $(this).removeClass("select");
                 }else{
@@ -108,6 +126,18 @@ define(function(require, exports, module) {
                 var url = window.location.href.split('?')[0] + "?category=" + category;
                 history.pushState({"category":category}, null, url);
                 */
+            })
+
+            $(".like").click(function(e){
+                e.stopPropagation();
+                if ($(this).hasClass("select-like")) {
+                    
+                }else if ($(this).hasClass("unselect-like")) {
+                    $(this).removeClass("unselect-like").addClass("select-like");
+                    $(this).children("img").attr({src:"../../statics/images/zan-select.png"});
+                    var n = parseInt($(this).attr("data-like-number")) + 1;
+                    $(this).children('span').html(n);
+                }
             })
         }
     };

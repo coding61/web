@@ -22,7 +22,7 @@ body{
 }
 .course{
 	width: calc(92% / 4);
-    background: white;
+    /*background: white;*/
     margin-right: 2%;
     margin-bottom: 2%;
 
@@ -34,12 +34,50 @@ body{
     width: calc(92% / 4 - 20px);
     margin-right: 4%;
     margin-bottom: 4%;
-    width: calc(84% / 4 - 20px);
+    width: calc(84% / 4 - 20px - 2px);
     height: 154px;
+    border:solid 1px #d2d2d2;
+
+    position: relative;
+}
+.course{
+    cursor: pointer;  
+    transition: all 0.6s;
+}
+.course:hover{
+    transform: scale(1.2); 
+}
+.course.open{
+    background: white;
+    color: black;
+}
+.course.unopen{
+    background: #e1e1e1;
+    color: #7e7e7e;
 }
 .course.select{
     background: #6bcdff;
     color: white;
+}
+.course .status{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+}
+.course .like{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: rgb(250, 80, 131);
+}
+.course .like img{
+    height: 20px;
+    margin-bottom: 5px;
 }
 .course h3{
 	font-size: 15px;
