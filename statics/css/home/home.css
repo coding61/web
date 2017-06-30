@@ -252,20 +252,33 @@ body{
 	margin-right: 20px;
 	overflow: hidden;
 
-	align-items: center;  
-    justify-content: flex-start;
+	/*align-items: center;  
+    justify-content: flex-start;*/
     width: calc(100% - 30px);
+
+    margin-right: 10px;
+    width: calc(100% - 20px);
+}
+.main-view .left-view .chat .message .msg-view,
+.main-view .left-view .chat .answer .msg-view{
+    align-items: center;
+    justify-content: flex-start;
+    display: inline-flex;
+    width: calc(100% - 90px);
+}
+.main-view .left-view .chat .answer .msg-view{
+    justify-content: flex-end;
 }
 .main-view .left-view .chat .message.img{
     /*height: 100px;*/
 }
-.main-view .left-view .chat .message.img img{
+.main-view .left-view .chat .message.img img.msg{
     width: 50%;
 
     width: 70%;
 }
 .main-view .left-view .chat .message.link{
-	margin-right: 15px;
+	/*margin-right: 15px;*/
 }
 .main-view .left-view .chat .message.text .content,
 .main-view .left-view .chat .message .link-text{
@@ -283,6 +296,18 @@ body{
 	height: 15px;
 	margin-left: 15px;
 }
+.main-view .left-view .chat .message .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-right: 5px;
+}
+.main-view .left-view .chat .answer .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-left: 5px;
+}
 .main-view .left-view .chat .answer{
 	display: inline-flex;
     margin-top: 10px;
@@ -290,9 +315,12 @@ body{
     margin-right: 20px;
     margin-left: 10px;
     overflow: hidden;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: flex-end;
     width: calc(100% - 30px);
+
+    margin-right: 10px;
+    width: calc(100% - 20px);
 }
 .main-view .left-view .chat .answer .content{
 	background-color: #f0f0f0;
@@ -457,8 +485,8 @@ body{
     padding-right: 10px;
     background: red;
     background: rgb(229, 230, 231);
-    
-    z-index: 10002;
+
+    z-index: 10000;
 }
 
 /*练习区*/
@@ -526,7 +554,42 @@ body{
     width: 100%;
     height: 100%;
 }
-
+.code-result-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.code-result-shadow-view .code-result{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.code-result-shadow-view .code-result .close{
+    height: 35px;
+    background: #ddd;
+    width: 70%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.code-result-shadow-view .code-result .close img{
+    position: absolute;
+    right: 10px;
+}
+.code-result-shadow-view .code-result iframe{
+    width: 70%;
+    height: 80%;
+    background: white;
+}
 
 /*左边飞入动画*/
 @keyframes lefteaseinAnimate {

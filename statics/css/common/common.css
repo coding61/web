@@ -10,7 +10,7 @@ html{
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	word-break: break-all;
 	outline: none;
-	-webkit-user-select: none;
+	/*-webkit-user-select: none;*/
 }
 
 input,

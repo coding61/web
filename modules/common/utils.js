@@ -51,7 +51,11 @@ define(function(require, exports, module) {
             num = Math.floor(num / 10000);
             unitPos++;
         }
-
+        
+        // 将一十一这种变成十一
+        if (chnStr.indexOf("一十") != -1) {
+            chnStr = chnStr.split("一")[1];
+        }
         return chnStr;
     }
 

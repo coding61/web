@@ -42,21 +42,30 @@ define(function(require, exports, module) {
             if (item.link) {
                 // 带链接的
                 questionHtml = '<div class="message link left-animation"> \
-                                    <div class="link-text"> \
-                                        <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                        <span style="color: rgb(84, 180,225);">'+item.link+'</span>\
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <div class="msg-view">\
+                                        <div class="link-text"> \
+                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                            <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                        </div>\
+                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                     </div>\
-                                    <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                 </div>';
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img src="'+item.img+'" alt="">\
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <div class="msg-view">\
+                                        <img class="msg" src="'+item.img+'" alt="">\
+                                    </div>\
                                 </div>';
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <div class="msg-view">\
+                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    </div>\
                                 </div>';
             }
 
@@ -230,28 +239,40 @@ define(function(require, exports, module) {
                 if (!item.question) {
                     // 加载人为回复
                     answerHtml = '<div class="answer"> \
-                                    <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    <div class="msg-view">\
+                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    </div>\
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
                                   </div>';
                 }else{
                     // 加载机器回复
                     if (item.link) {
                         // 带链接的
                         questionHtml = '<div class="message link"> \
-                                            <div class="link-text"> \
-                                                <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                <span style="color: rgb(84, 180,225);">'+item.link+'</span>\
+                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <div class="msg-view">\
+                                                <div class="link-text"> \
+                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                                    <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                                </div>\
+                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                             </div>\
-                                            <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                         </div>';
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img src="'+item.img+'" alt="">\
+                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <div class="msg-view">\
+                                                <img class="msg" src="'+item.img+'" alt="">\
+                                            </div>\
                                         </div>';
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <span class="content">'+Util.formatString(item.message)+'</span> \
+                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <div class="msg-view">\
+                                                <span class="content">'+Util.formatString(item.message)+'</span> \
+                                            </div>\
                                         </div>';
                     }
                 }
@@ -310,7 +331,7 @@ define(function(require, exports, module) {
                         // 已有数据源执行完，请求新的
 
                         // 请求当前课程的下一节课程
-                        Page.requestCourseData("");
+                        Page.requestCourseData("", false);
                     }else{
                         Page.loadMessage(Page.data, Page.index+1, false);
                         // ChatStroage.load(Page.data, Page.index+1, Page.data.length, true);
@@ -427,28 +448,40 @@ define(function(require, exports, module) {
                 if (!item.question) {
                     // 加载人为回复
                     answerHtml = '<div class="answer"> \
-                                    <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    <div class="msg-view">\
+                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    </div>\
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
                                   </div>';
                 }else{
                     // 加载机器回复
                     if (item.link) {
                         // 带链接的
                         questionHtml = '<div class="message link"> \
-                                            <div class="link-text"> \
-                                                <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                <span style="color: rgb(84, 180,225);">'+item.link+'</span>\
+                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <div class="msg-view">\
+                                                <div class="link-text"> \
+                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                                    <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                                </div>\
+                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                             </div>\
-                                            <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                         </div>';
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img src="'+item.img+'" alt="">\
+                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <div class="msg-view">\
+                                                <img class="msg" src="'+item.img+'" alt="">\
+                                            </div>\
                                         </div>';
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <span class="content">'+Util.formatString(item.message)+'</span> \
+                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <div class="msg-view">\
+                                                <span class="content">'+Util.formatString(item.message)+'</span> \
+                                            </div>\
                                         </div>';
                     }
                 }
@@ -524,6 +557,10 @@ define(function(require, exports, module) {
                         $(".actions").html('<span class="btn-wx-auth bottom-animation">开始学习</span>');
                     }
                     Page.clickEvent();    //重新激活 action 点击事件
+                }else{
+                    // 打开运行结果窗口，并赋值
+                    $(".code-result-shadow-view iframe").attr({src:a});
+                    $(".code-result-shadow-view").show();
                 }
             }, false); 
         },
@@ -541,21 +578,30 @@ define(function(require, exports, module) {
             if (item.link) {
                 // 带链接的
                 questionHtml = '<div class="message link left-animation"> \
-                                    <div class="link-text"> \
-                                        <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                        <span style="color: rgb(84, 180,225);">'+item.link+'</span>\
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <div class="msg-view">\
+                                        <div class="link-text"> \
+                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                            <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                        </div>\
+                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                     </div>\
-                                    <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                 </div>';
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img src="'+item.img+'" alt="">\
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <div class="msg-view">\
+                                        <img class="msg" src="'+item.img+'" alt="">\
+                                    </div>\
                                 </div>';
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <div class="msg-view">\
+                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    </div>\
                                 </div>';
             }
 
@@ -642,7 +688,16 @@ define(function(require, exports, module) {
 
                     setTimeout(function(){
                         // 2秒后加载信息
-                        Page.loadMessage(arr, i+1, opt);
+                        if(opt == true && Page.optionData.length == Page.optionIndex + 1){
+                            // 选项执行完，但是选项中最后一个元素没有 action 的时候
+                            // 选项执行完了， 执行下一条消息, 并重置问题下消息数组及下标
+                            Page.optionData = null;
+                            Page.optionIndex = 0;
+                            Page.loadMessage(Page.data, Page.index+1, false);
+                        }else{
+                            Page.loadMessage(arr, i+1, opt);
+                        }
+                        
                     }, 2000)
                 }, 1000)
             }
@@ -663,7 +718,9 @@ define(function(require, exports, module) {
                 // 普通 action 按钮点击事件
                 if ($(this).hasClass("exercise")) {
                     // 点了习题的，提交答案的按钮
-                    Page.loadClickMessage(Page.options.join(','), true);   //true 代表点了习题提交答案的按钮
+                    var msg = Page.options.join(',');
+                    Page.options = [];
+                    Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
                 }else{
                     // 普通的 action 按钮
                     Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
@@ -709,13 +766,13 @@ define(function(require, exports, module) {
             })
 
             $(".message.text").unbind('click').click(function(){
-                $(".right-view iframe").hide();
+                // $(".right-view iframe").hide();
                 // $(".right-view iframe").attr({src:""});
-                $(".right-view>img").show();
+                // $(".right-view>img").show();
             })
 
             $(".message.img").unbind('click').click(function(){
-                var url = $(this).children('img').attr('src');
+                var url = $(this).find('img.msg').attr('src');
                 $(".imgmsg img").attr({src:url});
                 $(".imgmsg-shadow-view").show();
             })
@@ -764,6 +821,11 @@ define(function(require, exports, module) {
             })
             $(".helps-view .contact-us").unbind('click').click(function(){
                 $(".helps-view").hide();
+            })
+
+            $(".code-result .close").unbind('click').click(function(){
+                // 关闭运行代码结果窗口
+                $(".code-result-shadow-view").hide();
             })
         },
         requestNextData:function(actionText, pagenum){
@@ -893,7 +955,10 @@ define(function(require, exports, module) {
             // $(".actions").hide(); 
             // 人工提问
             var answerHtml ='<div class="answer"> \
-                                <span class="content">'+actionText+'</span> \
+                                <div class="msg-view">\
+                                    <span class="content">'+actionText+'</span> \
+                                </div>\
+                                <img class="avatar" src="../../statics/images/avatar.png" />\
                             </div>';
             $(answerHtml).appendTo(".messages");
             
@@ -955,7 +1020,10 @@ define(function(require, exports, module) {
             // 更换课程
             // 人工提问
             var answerHtml ='<div class="answer"> \
-                                <span class="content">'+actionText+'</span> \
+                                <div class="msg-view">\
+                                    <span class="content">'+actionText+'</span> \
+                                </div>\
+                                <img class="avatar" src="../../statics/images/avatar.png" />\
                             </div>';
             $(answerHtml).appendTo(".messages");
             

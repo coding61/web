@@ -129,7 +129,8 @@ define(function(require, exports, module) {
                     var url =  "https://app.bcjiaoyu.com/program_girl"+"/userinfo/exercises/"+json.pk+"/"
                     // console.log(url);
 
-                    $(".run-result iframe").attr({src:url});
+                    // $(".run-result iframe").attr({src:url});
+                    window.parent.postMessage(url, '*');
                 },
                 error:function(xhr, textStatus){
 

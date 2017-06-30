@@ -6,6 +6,9 @@
 // answer: 习题消息的答案
 // wrong：习题下，用户做错了的消息
 // correct：习题下用户做对了的消息
+// zuan_number: 钻石的的数量(对奖励的)
+// grow_number: 成长值的数量(对奖励的)
+// record: 每节课的最后一条消息，加个 record：true, 代表这个需要打卡记录
 {
     "default": [
         {
@@ -265,6 +268,8 @@
                 ],
                 "answer": "A",
                 "exercises": true,
+                "zuan_number":2,
+                "grow_number":2,
                 "wrong": [
                     {
                         "img": "https://resource.bcgame-face2face.haorenao.cn/%E7%A8%8B%E5%BA%8F%E5%AA%9B/html/g5.gif"
@@ -337,7 +342,10 @@
             },
             {
                 "message": "很好，那么我们个人网页中需要用到的分隔线就解决了。",
-                "action": "谢谢斌叔"
+                "action": "谢谢斌叔",
+                "record":true,
+                "zuan_number":2,
+                "grow_number":3
             }
         ],
         "4": [
