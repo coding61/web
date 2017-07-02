@@ -38,6 +38,8 @@ define(function(require, exports, module) {
         },
         loadMessage:function(arr, i){
             var item = arr[i];
+            var imgI = "i_"+ChatStroage.numbers;
+
             var questionHtml = null;
             if (item.link) {
                 // 带链接的
@@ -56,7 +58,7 @@ define(function(require, exports, module) {
                 questionHtml = '<div class="message img">\
                                     <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
-                                        <img class="msg" src="'+item.img+'" alt="">\
+                                        <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                     </div>\
                                 </div>';
@@ -95,9 +97,13 @@ define(function(require, exports, module) {
             
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
-
-            Util.setMessageImgHeight(item);  //给图片消息中图片设高
-            Common.showLoadingPreImg();   //打开预加载图片
+            
+            if(item.img){
+                var a = "#"+imgI;
+                Util.setMessageImgHeight(item);  //给图片消息中图片设高
+                Common.showLoadingPreImg1(a);   //打开预加载图片
+            }
+            
             
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
@@ -216,6 +222,8 @@ define(function(require, exports, module) {
         },
         load:function(arr, i, arrLen){
             var item = arr[i];
+            var imgI = "i_"+ChatStroage.numbers;
+
             if (i >= arrLen) {
                 //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
                 ChatStroage.loadLastItem(arr, arrLen);
@@ -268,7 +276,7 @@ define(function(require, exports, module) {
                         questionHtml = '<div class="message img">\
                                             <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
-                                                <img class="msg" src="'+item.img+'" alt="">\
+                                                <img class="msg" id="'+imgI+'" src="'+item.img+'" data-src="../../statics/images/loading.gif" alt="" />\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                             </div>\
                                         </div>';
@@ -291,8 +299,15 @@ define(function(require, exports, module) {
             
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
             
-            Util.setMessageImgHeight(item);  //给图片消息中图片设高
-            Common.showLoadingPreImg();   //打开预加载图片
+            if(item.img){
+                // $('.lazy-img').imageloader();  //打开图片
+                Util.setMessageImgHeight(item);  //给图片消息中图片设高
+                var a = "#"+imgI;
+                Common.showLoadingPreImg1(a);   //打开预加载图片
+            }
+            
+
+
 
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 20);
 
@@ -425,6 +440,8 @@ define(function(require, exports, module) {
         },
         loadAgo:function(arr, i, arrLen){
             var item = arr[i];
+            var imgI = "i_"+ChatStroage.numbers;
+
             if (i >= arrLen) {
                 ChatStroage.loadMore = true;
                 //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
@@ -472,7 +489,7 @@ define(function(require, exports, module) {
                         questionHtml = '<div class="message img">\
                                             <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
-                                                <img class="msg" src="'+item.img+'" alt="">\
+                                                <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                             </div>\
                                         </div>';
@@ -495,9 +512,13 @@ define(function(require, exports, module) {
             $(lineHtml).prependTo($(".messages"));
             
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-
-            Util.setMessageImgHeightLoadAgo(item);  //给图片消息中图片设高
-            Common.showLoadingPreImg();   //打开预加载图片
+            
+            if(item.img){
+                var a = "#"+imgI;
+                Util.setMessageImgHeightLoadAgo(item);  //给图片消息中图片设高
+                Common.showLoadingPreImg1(a);   //打开预加载图片
+            }
+            
 
             ChatStroage.timerAgo = setTimeout(function(){
                 // 加载上一条数据
@@ -589,6 +610,8 @@ define(function(require, exports, module) {
         },
         loadMessage:function(arr, i, opt){
             var item = arr[i];
+            var imgI = "i_"+ChatStroage.numbers;
+
             var questionHtml = null;
             if (item.link) {
                 // 带链接的
@@ -607,7 +630,7 @@ define(function(require, exports, module) {
                 questionHtml = '<div class="message img">\
                                     <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
-                                        <img class="msg" src="'+item.img+'" alt="">\
+                                        <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                     </div>\
                                 </div>';
@@ -648,7 +671,12 @@ define(function(require, exports, module) {
                 Page.clickEvent();
             }, 800)
             
-            Util.setMessageImgHeight(item);  //给图片消息中图片设高
+            if(item.img){
+                var a = "#"+imgI;
+                Util.setMessageImgHeight(item);  //给图片消息中图片设高
+                Common.showLoadingPreImg1(a);   //打开预加载图片
+            }
+            
             
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
@@ -674,8 +702,6 @@ define(function(require, exports, module) {
             }
             Util.storeData();
             
-            Common.showLoadingPreImg();   //打开预加载图片
-
             if (item.action) {
                 // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
                 // // 存在行为按钮, 不继续执行
@@ -718,18 +744,8 @@ define(function(require, exports, module) {
             }
         },
         clickEvent:function(){
-            Common.showLoadingPreImg();
-            // $(".msg-view .msg").each(function(){
-            //     var url = $(this).attr("src");
-            //     var pW = $(this).width();
-            //     Common.getPhotoWidthHeight(url, function(width, height){
-            //         var pH = pW * height / width;
-            //         $(this).css({
-            //             height: pH + "px"
-            //         })
-            //     })
-            // })
-
+            // Common.showLoadingPreImg();
+        
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
             $(".btn-wx-auth").unbind('click').click(function(){
                 /*

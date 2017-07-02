@@ -142,20 +142,36 @@ define(function(require, exports, module) {
 				this_.find(".pre-msg").show();
 			});
 			
-			/*
-			if (img.complete) {
-				$(this).find("img.msg").show();  //打开加载的图片，关闭预加载
-				$(this).find("pre-msg").hide();
-
-			} else {
-				var this_ = $(this);
-				setTimeout(function(){
-					this_.find("img.msg").show();  //打开加载的图片，关闭预加载
-					this_.find("pre-msg").hide();
-				},500);
-			}
-			*/
 		})
+	}
+	// 预加载图片的隐藏
+	exports.showLoadingPreImg1 = function(b){
+		var img = new Image();
+		img.src = $(b).attr("src");
+
+		if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数 
+			$(b).show();
+			$(b).parents('.msg-view').find('.pre-msg').hide();
+			return; // 直接返回，不用再处理onload事件 
+		} 
+		img.onload = function(){ //图片下载完毕时异步调用callback函数。
+			$(b).show(); 
+			$(b).parents('.msg-view').find('.pre-msg').hide();
+		}; 
+		img.error = function(){
+			$(b).hide();
+			$(b).parents('.msg-view').find('.pre-msg').show();
+			$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
+		}
+
+
+		// $(b).onload(function(){
+		// 	$(b).parents('.msg-view').find('.pre-msg').hide();
+		// })
+		// $(b).onerror(function(){
+		// 	$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
+		// })
+		
 	}
 	
 	exports.changePhotoSrc = function(url, fx){
