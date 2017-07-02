@@ -4,49 +4,117 @@ define(function(require, exports, module) {
 
     var Page = {
         init:function(){
+            
+            // 监听课程列表那里传过来的点击事件
+            window.addEventListener('message', function(e) {  
+                var a = e.data;   
+                if(a == "loadCourses"){
+                    console.log(3232);
+                    Page.loadCourseInfo();
+                }
+            }, false); 
 
-            Page.load();
+            // Page.load();
 
+        },
+        loadCourseInfo:function(){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"get",
+                    url:Common.domain + "/course/courses/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                        for (var i = 0; i < json.results.length; i++) {
+                            var item = json.results[i];
+                            item["open"] = true;
+                            item["like"] = true;
+                            item["like_number"] = 0;
+                            
+                            // 1:Python 2:HTML5 3.CSS 4.JavaScript
+                            // item.learn_extent.last_lesson
+                            // 1:Python 2:HTML5 3.CSS 4.JavaScript
+                            if(item.pk == 1){
+                                localStorage.pythonSimpleIndex = item.learn_extent.last_lesson;
+                            }else if(item.pk == 2){
+                                localStorage.htmlSimpleIndex = item.learn_extent.last_lesson;
+                            }else if(item.pk == 3){
+                                localStorage.cssSimpleIndex = item.learn_extent.last_lesson;
+                            }else if(item.pk == 4){
+                                localStorage.jsSimpleIndex = item.learn_extent.last_lesson;
+                            }
+                        }
+
+                        var html = ArtTemplate("courses-template", json.results);
+                        $(".courses").html(html);
+
+                        Page.clickEvent();
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
         },
         load:function(){
             // status， 用户学习课程进度状态；open：课程是否开放；like：用户是否想学该课程；like_number:想学该课程的人数
             var array = [
                 {
-                    "category":"html_simple",
-                    "title":"HTML5",
-                    "img":"../../statics/images/course/c2.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "status":"finish",
+                    "pk":"html_simple",
+                    "name":"HTML5",
+                    "images":"../../statics/images/course/c2.png",
+                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "learn_extent":{
+                        "status":"processing",
+                    },
                     "open":true,
                     "like":true, 
                     "like_number":2056        
                 },
                 {
-                    "category":"css_simple",
-                    "title":"CSS",
-                    "img":"../../statics/images/course/c4.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "status":"continue",
+                    "pk":"css_simple",
+                    "name":"CSS",
+                    "images":"../../statics/images/course/c4.png",
+                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "learn_extent":{
+                        "status":"unbegin",
+                    },
                     "open":true,
                     "like":true, 
                     "like_number":2056    
                 },
                 {
-                    "category":"javascript_simple",
-                    "title":"JavaScript",
-                    "img":"../../statics/images/course/c3.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "status":"unbegin",
+                    "pk":"javascript_simple",
+                    "name":"JavaScript",
+                    "images":"../../statics/images/course/c3.png",
+                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "learn_extent":{
+                        "status":"unbegin",
+                    },
                     "open":false,
                     "like":true, 
                     "like_number":2056    
                 },
                 {
-                    "category":"python_simple",
-                    "title":"Python",
-                    "img":"../../statics/images/course/c1.png",
-                    "desc":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "status":"unbegin",
+                    "pk":"python_simple",
+                    "name":"Python",
+                    "images":"../../statics/images/course/c1.png",
+                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
+                    "learn_extent":{
+                        "status":"unbegin",
+                        "last_lesson":0
+                    },
                     "open":false,
                     "like":false, 
                     "like_number":3056    
@@ -79,16 +147,12 @@ define(function(require, exports, module) {
             });
         },
         clickEvent:function(){
-            var appId = 'wx58e15a667d09d70f',
-                redirectUri = "http://free.bcjiaoyu.com",
-                scope = 'snsapi_login';
-
-            $(".btn-wx-auth").click(function(){
-                location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
-            })
-
             $(".course").click(function(e){
                 e.stopPropagation();
+                if ($(this).attr("data-status") == "finish") {
+                    Common.dialog("当前课程已经学完了");
+                    return;
+                }
                 if ($(this).hasClass("select")) {
                     // $(this).removeClass("select");
                 }else{

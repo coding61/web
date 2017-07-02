@@ -51,6 +51,8 @@ body{
 
     /*height: 30px;*/
     align-items: center;
+
+    justify-content: flex-end;
 }
 .header .right-view>span{
 	padding: 5px 10px;
@@ -129,6 +131,9 @@ body{
     width: 58.5%;
     height: 100%;
 }
+.header .right-view .item{
+    display: none;
+}
 /*主要界面*/
 .main-view{
 	display: flex;
@@ -147,7 +152,7 @@ body{
 	justify-content: space-between;
 	/*background-color: blue;*/
 
-    width: 30%;
+    width: 35%;
     height: 100%;
 }
 .main-view .left-view ul{
@@ -248,7 +253,7 @@ body{
 	display: inline-flex;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	margin-left: 10px;
+	margin-left: 5px;
 	margin-right: 20px;
 	overflow: hidden;
 
@@ -256,8 +261,8 @@ body{
     justify-content: flex-start;*/
     width: calc(100% - 30px);
 
-    margin-right: 10px;
-    width: calc(100% - 20px);
+    margin-right: 5px;
+    width: calc(100% - 10px);
 }
 .main-view .left-view .chat .message .msg-view,
 .main-view .left-view .chat .answer .msg-view{
@@ -272,10 +277,20 @@ body{
 .main-view .left-view .chat .message.img{
     /*height: 100px;*/
 }
+/*加载的图片*/
 .main-view .left-view .chat .message.img img.msg{
     width: 50%;
-
     width: 70%;
+    display: none;
+}
+/*预加载的图片*/
+.main-view .left-view .chat .message.img .pre-msg{
+    width: 70%;
+
+    background: #d2d2d2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .main-view .left-view .chat .message.link{
 	/*margin-right: 15px;*/
@@ -313,14 +328,14 @@ body{
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 20px;
-    margin-left: 10px;
+    margin-left: 5px;
     overflow: hidden;
     /*align-items: center;*/
     justify-content: flex-end;
     width: calc(100% - 30px);
 
-    margin-right: 10px;
-    width: calc(100% - 20px);
+    margin-right: 5px;
+    width: calc(100% - 10px);
 }
 .main-view .left-view .chat .answer .content{
 	background-color: #f0f0f0;
@@ -500,7 +515,7 @@ body{
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-    width: 70%;
+    width: 65%;
     height: 100%;
 }
 .main-view .right-view img{
@@ -511,8 +526,10 @@ body{
 	height: 100%;
 	display: none;
 }
-
-.zuan-shadow-view{
+/*钻石效果*/
+.zuan-shadow-view,
+.up-grade-shadow-view
+{
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
     background-color: rgba(0, 0, 0, 0.6);
@@ -523,6 +540,7 @@ body{
     z-index: 10001;
     display: none;
 }
+.up-grade-shadow-view .img,
 .zuan-shadow-view .img{
     width: 200px;
     height: 200px;
@@ -532,10 +550,26 @@ body{
     align-items: center;
     justify-content: center;
 }
+.up-grade-shadow-view .img img,
 .zuan-shadow-view .img img{
     width: 200%;
 }
+/*升级效果*/
 
+/*经验值*/
+.grow-number-ani{
+    padding: 8px 15px;
+    /*background: white;*/
+    /*border-radius: 5px;*/
+    position: absolute;
+    bottom: 130px;
+    right: 20px;
+    font-size: 20px;
+    bottom: 50%;
+    font-family: -webkit-pictograph;
+    color: gray;
+}
+/*消息图片放大*/
 .imgmsg-shadow-view{
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
@@ -554,7 +588,9 @@ body{
     width: 100%;
     height: 100%;
 }
-.code-result-shadow-view{
+/*代码运行窗口*/
+.code-result-shadow-view,
+.login-shadow-view{
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
     background-color: rgba(0, 0, 0, 0.6);
@@ -565,7 +601,8 @@ body{
     z-index: 10001;
     display: none;
 }
-.code-result-shadow-view .code-result{
+.code-result-shadow-view .code-result,
+.login-shadow-view .login-view{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -590,6 +627,73 @@ body{
     height: 80%;
     background: white;
 }
+/*登录视图*/
+.login-view .close{
+    width: 30%;
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.login-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.login-view .account-view{
+    width: 30%;
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+
+.login-view .account-view .username,
+.login-view .account-view .password{
+    width: 80%;
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.login-view .account-view .password{
+    margin-top: 0;
+}
+.username span,
+.password span{
+    margin-right: 10px;
+    letter-spacing: 2px;
+    color: #616161;
+}
+.username input,
+.password input{
+    width: 75%;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+}
+.login-view .account-view .login{
+    padding: 5px 16px;
+    background: #ff6b95;
+    border-radius: 5px;
+    color: white;
+    border: solid 1px #e56c95;
+    margin-bottom: 25px;
+}
+
+
 
 /*左边飞入动画*/
 @keyframes lefteaseinAnimate {
@@ -736,5 +840,130 @@ body{
    -moz-animation-fill-mode: forwards;
 }
 
+/*渐入渐出*/
+@keyframes fadeIn {
+   0% {
+      transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
+   100% {
+      transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+}
 
+@-webkit-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
 
+}
+
+@-o-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-ms-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-moz-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+.fadeInOut{
+    animation: fadeIn 2s ease 1;
+   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
+   -webkit-animation: fadeIn 2s ease 1;
+   -ms-animation: fadeIn 2s ease 1;
+   -o-animation: fadeIn 2s ease 1;
+   -moz-animation: fadeIn 2s ease 1;
+   /*规定动画的最后状态为结束状态*/
+   animation-fill-mode: forwards;
+   -webkit-animation-fill-mode: forwards;
+   -o-animation-fill-mode: forwards;
+   -ms-animation-fill-mode: forwards;
+   -moz-animation-fill-mode: forwards;
+}

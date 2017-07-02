@@ -96,8 +96,67 @@ define(function(require, exports, module) {
 			//			location.hash = lh + "" + key+"/"+value + /);
 		}
 	}
+	//根据图片地址，获取图片的宽高
+	exports.getPhotoWidthHeight = function(url, fx){
+		var new_url = null;
+		var width = null;
+		var height = null;
+		url = decodeURIComponent(url);
 
-	
+		// 123.jpg-30x30
+		var array = ['.jpg-', '.png-', '.jpeg-', '.JPG-', '.PNG-', '.JPEG-', '.webp-', '.gif-', '.GIF-'];
+		var string = null;
+		for (var i = 0; i < array.length; i++) {
+			var item = array[i]
+			if (url.split(array[i])[1]) {
+				string = array[i];
+				break;
+			}
+		}
+
+		var str = url.split(string)[1]; //45x36
+		width = str.split('x')[0];  //45
+		height = str.split('x')[1];  //36
+		fx(width, height);
+	}
+	// 预加载图片的隐藏
+	exports.showLoadingPreImg = function(){
+		$(".message.img").each(function(){
+			var img = new Image();
+			img.src = $(this).find("img.msg").attr('src');
+			
+			if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数 
+				$(this).find("img.msg").show();  //打开加载的图片，关闭预加载
+				$(this).find(".pre-msg").hide();
+				return; // 直接返回，不用再处理onload事件 
+			} 
+			img.onload = function(){ //图片下载完毕时异步调用callback函数。 
+				$(this).find("img.msg").show();  //打开加载的图片，关闭预加载
+				$(this).find(".pre-msg").hide();
+			}; 
+
+			var this_ = $(this);
+			this_.find("img.msg").error(function() {  
+			    $(this).hide();  
+			    this_.find(".pre-msg").children('img').attr({src:"../../statics/images/error.png"});
+				this_.find(".pre-msg").show();
+			});
+			
+			/*
+			if (img.complete) {
+				$(this).find("img.msg").show();  //打开加载的图片，关闭预加载
+				$(this).find("pre-msg").hide();
+
+			} else {
+				var this_ = $(this);
+				setTimeout(function(){
+					this_.find("img.msg").show();  //打开加载的图片，关闭预加载
+					this_.find("pre-msg").hide();
+				},500);
+			}
+			*/
+		})
+	}
 	
 	exports.changePhotoSrc = function(url, fx){
 		var new_url = null;

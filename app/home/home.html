@@ -16,10 +16,10 @@
 	<!-- 头部信息 -->
 		<div class="header">
 			<div class="left-view">
-				<span class="msg"><img src="../../statics/images/avatar.png"/>今天打卡了10次,太厉害了</span>
+				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>今天打卡了10次,太厉害了</span>
 			</div>
 			<div class="right-view">
-				<span class="msg"><img src="../../statics/images/avatar.png"/>获取了2颗钻石</span>
+				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>获取了2颗钻石</span>
 
 				<!-- <div class="icon1">
 					<img src="../../statics/images/icon1.png" alt="" />
@@ -29,20 +29,20 @@
 					<img src="../../statics/images/icon2.png" alt="" />
 					<span>x236</span>
 				</div> -->
-				<div class="icon4 avatar">
+				<div class="icon4 avatar item">
 					<img src="../../statics/images/avatar.png" alt="">
 				</div>
-				<div class="info-view">
+				<div class="info-view item">
 					<div class="info">
 						<span class="grade">LV 青铜1</span>
 						<span class="grade-value">500/854</span>
 					</div>
-					<div class="progress">
+					<div class="progress item">
 						<img src="../../statics/images/progress.png" alt="">
 					</div>
 				</div>
 
-				<div class="icon3 zuan">
+				<div class="icon3 zuan item">
 					<img src="../../statics/images/icon3.png" alt="" />
 					<span>x20</span>
 				</div>
@@ -156,16 +156,19 @@
 					<div class="helps-view">
 						<div class="change-course">更换课程</div>
 						<div class="zuan-ani">钻石动画</div>
+						<div class="grow-ani">经验动画</div>
+						<div class="up-grade-ani">升级动画</div>
 						<div class="contact-us">联系我们</div>
 						<img class="arrow" src="../../statics/images/arrow-w.png" />
 					</div>
+
 				</div>
 			</div>
 			<!-- 练习区 -->
 			<div class="right-view">
 				<img src="../../statics/images/icon.png" alt="">
-				<iframe class="codeEdit" src="codeEdit.html" frameborder="0"></iframe>
-				<iframe class="courseList" src="courseList.html" frameborder="0"></iframe>
+				<iframe class="codeEdit" id="codeEdit" name="codeEdit" src="codeEdit.html" frameborder="0"></iframe>
+				<iframe class="courseList" id="courseList" name="courseList" src="courseList.html" frameborder="0"></iframe>
 			</div>
 		</div>
 		
@@ -174,6 +177,13 @@
       		<div class="img">
       			<img src="../../statics/images/zuan2.gif">
       		</div>
+        </div>
+
+        <!-- 升级效果 -->
+        <div class="up-grade-shadow-view">
+        	<div class="img">
+        		<img src="../../statics/images/growup.gif" alt="">
+        	</div>
         </div>
 		
 		<!-- 图片放大效果 -->
@@ -192,7 +202,26 @@
 				<iframe src="" frameborder="0"></iframe>
 			</div>
 		</div>
-
+		
+		<!-- 登录窗口 -->
+		<div class="login-shadow-view">
+			<div class="login-view">
+				<div class="close">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="account-view">
+					<div class="username">
+						<span>账号</span>
+						<input />
+					</div>
+					<div class="password">
+						<span>密码</span>
+						<input type="password"/>
+					</div>
+					<span class="login">确定</span>
+				</div>
+			</div>
+		</div>
 		
 		
 	</body>

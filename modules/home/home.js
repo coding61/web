@@ -57,6 +57,7 @@ define(function(require, exports, module) {
                                     <img class="avatar" src="../../statics/images/avatar.png" />\
                                     <div class="msg-view">\
                                         <img class="msg" src="'+item.img+'" alt="">\
+                                        <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                     </div>\
                                 </div>';
             }else{
@@ -84,7 +85,7 @@ define(function(require, exports, module) {
 
                 } else{
                     // 单按钮
-                    if (item.action == "点击微信登录") {
+                    if (item.action == "点击选择课程") {
                         actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
                     }else{
                         actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
@@ -94,6 +95,9 @@ define(function(require, exports, module) {
             
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
+
+            Util.setMessageImgHeight(item);  //给图片消息中图片设高
+
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
                 $("html,body").animate({scrollTop:$("html,body")[0].scrollHeight}, 300);
@@ -264,6 +268,7 @@ define(function(require, exports, module) {
                                             <img class="avatar" src="../../statics/images/avatar.png" />\
                                             <div class="msg-view">\
                                                 <img class="msg" src="'+item.img+'" alt="">\
+                                                <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                             </div>\
                                         </div>';
                     }else{
@@ -282,10 +287,12 @@ define(function(require, exports, module) {
             $(questionHtml).appendTo(".messages");
             $(answerHtml).appendTo(".messages");
             $(lineHtml).appendTo(".messages");
-
+            
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
             
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 10);
+            Util.setMessageImgHeight(item);  //给图片消息中图片设高
+
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 20);
 
             ChatStroage.load(arr, i+1, arrLen);
 
@@ -315,7 +322,7 @@ define(function(require, exports, module) {
 
                 } else{
                     // 单按钮
-                    if (item1.action == "点击微信登录") {
+                    if (item1.action == "点击选择课程") {
                         actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item1.action)+'</span>'
                     }else{
                         actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item1.action)+'</span>'
@@ -342,16 +349,8 @@ define(function(require, exports, module) {
                     // ChatStroage.load(Page.optionData, Page.optionIndex, Page.optionData.length, true);
                 }
             }
-
-
+            
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-
-            $(".message.img").each(function(){
-                $(this).children('img').load(function(){
-                    // console.log(2);
-                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 10);
-                });
-            })
 
             setTimeout(function(){
                 // console.log(333);
@@ -414,7 +413,6 @@ define(function(require, exports, module) {
                     // console.log("h1--->"+doc);
                     ChatStroage.loadMore = true;
                     Page.clickEvent(); 
-                    
 
                     if(ChatStroage.timerAgo){
                         clearTimeout(ChatStroage.timerAgo);
@@ -473,6 +471,7 @@ define(function(require, exports, module) {
                                             <img class="avatar" src="../../statics/images/avatar.png" />\
                                             <div class="msg-view">\
                                                 <img class="msg" src="'+item.img+'" alt="">\
+                                                <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                             </div>\
                                         </div>';
                     }else{
@@ -494,6 +493,8 @@ define(function(require, exports, module) {
             $(lineHtml).prependTo($(".messages"));
             
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
+
+            Util.setMessageImgHeightLoadAgo(item);  //给图片消息中图片设高
 
             ChatStroage.timerAgo = setTimeout(function(){
                 // 加载上一条数据
@@ -554,9 +555,11 @@ define(function(require, exports, module) {
                         $(".btns .actions").html(actionHtml);
                     }else{
                         // 改变 action 的状态(开始学习)
-                        $(".actions").html('<span class="btn-wx-auth bottom-animation">开始学习</span>');
+                        $(".actions").html('<span class="btn-wx-auth begin bottom-animation">开始学习</span>');
                     }
                     Page.clickEvent();    //重新激活 action 点击事件
+                }else if(a == "loadCourses"){
+
                 }else{
                     // 打开运行结果窗口，并赋值
                     $(".code-result-shadow-view iframe").attr({src:a});
@@ -565,12 +568,18 @@ define(function(require, exports, module) {
             }, false); 
         },
         load:function(){
-            // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认
-            if (localStorage.chatData) {
-                ChatStroage.init();
+            // 判断用户是否登录
+            if(localStorage.token){
+                // 加载个人信息
+                Common.showLoading();
+                Mananger.getInfo();
             }else{
-                Default.init();
+                // 弹出登录窗口
+                // 打开登录窗口
+                $(".login-shadow-view").show();
+                Page.clickEvent();
             }
+            
         },
         loadMessage:function(arr, i, opt){
             var item = arr[i];
@@ -593,6 +602,7 @@ define(function(require, exports, module) {
                                     <img class="avatar" src="../../statics/images/avatar.png" />\
                                     <div class="msg-view">\
                                         <img class="msg" src="'+item.img+'" alt="">\
+                                        <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
                                     </div>\
                                 </div>';
             }else{
@@ -632,12 +642,9 @@ define(function(require, exports, module) {
                 Page.clickEvent();
             }, 800)
             
-            if($(".message").last().hasClass("img")){
-                var height = $(".message").last().height();
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight + height}, 50);
-            }else{
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-            }
+            Util.setMessageImgHeight(item);  //给图片消息中图片设高
+            
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
             // 2.存储数据(当前消息是否是机器消息)
             var array = [];
@@ -703,28 +710,106 @@ define(function(require, exports, module) {
             }
         },
         clickEvent:function(){
+            Common.showLoadingPreImg();
+            // $(".msg-view .msg").each(function(){
+            //     var url = $(this).attr("src");
+            //     var pW = $(this).width();
+            //     Common.getPhotoWidthHeight(url, function(width, height){
+            //         var pH = pW * height / width;
+            //         $(this).css({
+            //             height: pH + "px"
+            //         })
+            //     })
+            // })
+
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
             $(".btn-wx-auth").unbind('click').click(function(){
-                // if ($(this).hasClass("wx-auth")) {
-                //     // 微信授权登录
-                //     var redirectUri = "https://www.cxy61.com/cxyteam/app/home/home.html";
-                //     Common.authWXSiteLogin(redirectUri);
+                /*
+                if($(this).attr('disabled') == true) return;
+                console.log(11);
+                $(this).attr('disabled', "true");  //禁用按钮
+                */
+                
+                
+                if ($(this).hasClass("wx-auth")) {
+                    // 打开选择课程窗口
+                    $(".right-view>img").hide();
+                    $(".right-view iframe.codeEdit").hide();
+                    $(".right-view iframe.courseList").show();
                     
-                //     // $(".wx-code").show();
-                //     // $(".wx-code iframe").attr({src:Common.authWXSiteLogin(redirectUri)});
-                // }else{
-
-                    
-                // 普通 action 按钮点击事件
-                if ($(this).hasClass("exercise")) {
-                    // 点了习题的，提交答案的按钮
-                    var msg = Page.options.join(',');
-                    Page.options = [];
-                    Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                }else if($(this).hasClass("begin")){
+                    // 开始学习，更换课程时，或者初次学习之旅时
+                    // 普通 action 按钮点击事件
+                    if ($(this).hasClass("exercise")) {
+                        // 点了习题的，提交答案的按钮
+                        var msg = Page.options.join(',');
+                        Page.options = [];
+                        Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                    }else{
+                        // 普通的 action 按钮
+                        Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
+                    }
                 }else{
-                    // 普通的 action 按钮
-                    Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
+                    // 当前课程的打卡及奖励
+                    // 点击按钮，判断是打卡还是奖励钻石，及经验值
+                    var item = null;
+                    if(Page.optionData){
+                        // 问题下的按钮
+                        item = Page.optionData[Page.optionIndex];
+                    }else{
+                        // 消息下的按钮
+                        item = Page.data[Page.index];
+                    }
+
+                    if(item.record == true){
+                        // 打卡
+                        var course = localStorage.oldCourse;
+                        var courseIndex = 0;
+                        if(course == 1){
+                            courseIndex = localStorage.pythonSimpleIndex;
+                        }else if(course == 2){
+                            courseIndex == localStorage.htmlSimpleIndex;
+                        }else if(course == 3){
+                            courseIndex = localStorage.cssSimpleIndex;
+                        }else if(course == 4){
+                            courseIndex = localStorage.jsSimpleIndex;
+                        }
+                        courseIndex = parseInt(courseIndex) + 1;
+
+                        Mananger.updateExtent(course, courseIndex, $(this));   //更新学习进度
+
+                    }else{
+                        if(item.zuan_number || item.grow_number){
+                            // 奖励钻石，经验
+                            var course = localStorage.oldCourse;
+                            var courseIndex = 0;
+                            if(course == 1){
+                                courseIndex = localStorage.pythonSimpleIndex;
+                            }else if(course == 2){
+                                courseIndex == localStorage.htmlSimpleIndex;
+                            }else if(course == 3){
+                                courseIndex = localStorage.cssSimpleIndex;
+                            }else if(course == 4){
+                                courseIndex = localStorage.jsSimpleIndex;
+                            }
+                            courseIndex = parseInt(courseIndex) + 1;
+                            
+                            Mananger.addReward(course, courseIndex, item.chapter, item.grow_number, item. zuan_number, $(this));  //奖励钻石
+                        }else{
+                            // 普通 action 按钮点击事件
+                            if ($(this).hasClass("exercise")) {
+                                // 点了习题的，提交答案的按钮
+                                var msg = Page.options.join(',');
+                                Page.options = [];
+                                Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                            }else{
+                                // 普通的 action 按钮
+                                Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
+                            }
+                        }
+                    }
                 }
+                
             })
             
             $(".option").unbind('click').click(function(){
@@ -817,16 +902,36 @@ define(function(require, exports, module) {
             })
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Util.zuanAnimate();
+                Util.zuanAnimate(2);
             })
             $(".helps-view .contact-us").unbind('click').click(function(){
                 $(".helps-view").hide();
             })
-
-            $(".code-result .close").unbind('click').click(function(){
-                // 关闭运行代码结果窗口
+            $(".helps-view .grow-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Util.growAnimate(2);
+            })
+            $(".helps-view .up-grade-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Util.gradeAnimate();
+            })
+            
+            // 关闭运行代码结果窗口
+            $(".code-result .close img").unbind('click').click(function(){
                 $(".code-result-shadow-view").hide();
             })
+
+            // 关闭登录窗口
+            $(".login-view .close img").unbind('click').click(function(){
+                $(".login-shadow-view").hide();
+            })
+
+            // 登录按钮
+            $(".login-view .login").unbind('click').click(function(){
+                // 登录成功，请求数据
+                Mananger.login();
+            })
+
         },
         requestNextData:function(actionText, pagenum){
             $.ajax({
@@ -939,6 +1044,8 @@ define(function(require, exports, module) {
                 ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
                 
                 $(".actions").html(null);
+
+                // $('.actions').removeAttr("disabled");  //移除disabled属性
             }
 
             setTimeout(function(){
@@ -1095,6 +1202,9 @@ define(function(require, exports, module) {
             }    
         },
         requestCategoryCourse:function(actionText, flag){
+            Mananger.getCourseInfoWithPk(actionText, localStorage.oldCourse);
+
+            /*
             if (localStorage.oldCourse == "html_simple") {
                 var htmlSimpleIndex = 0;
                 if (localStorage.htmlSimpleIndex) {
@@ -1152,6 +1262,7 @@ define(function(require, exports, module) {
                 }
                 Page.requestCourseNextData(actionText, localStorage.oldCourse, pythonSimpleIndex);
             }
+            */
         },
         loadSepLine:function(number){
             $(".loading-chat").remove();
@@ -1190,6 +1301,299 @@ define(function(require, exports, module) {
         }
     };
     
+    var Mananger = {
+        login:function(){
+            if($(".account-view .username input").val() == ""){
+                Common.dialog("请输入账号");
+                return;
+            }
+            if($(".account-view .password input").val() == ""){
+                Common.dialog("请输入密码");
+                return;
+            }
+
+            Common.showLoading();
+            $.ajax({
+                type:"post",
+                url:Common.domain + "/userinfo/invitation_code_login/",
+                data:{
+                    code:$(".account-view .username input").val(),
+                    password:$(".account-view .password input").val()
+                },
+                success:function(json){
+                    console.log(json);
+                    localStorage.token = json.token;
+
+                    Mananger.getInfo();
+                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
+                },
+                error:function(xhr, textStatus){
+                    Common.hideLoading();
+                    if (textStatus == "timeout") {
+                        Common.dialog("请求超时");
+                        return;
+                    }
+                    if (xhr.status == 400 || xhr.status == 403) {
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        return;
+                    }else{
+                        Common.dialog('服务器繁忙');
+                        return;
+                    }
+                }
+            })
+        },
+        getInfo:function(){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"get",
+                    url:Common.domain + "/userinfo/whoami/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(json){
+                        Common.hideLoading();
+                        $(".login-shadow-view").hide();
+                        
+                        /*
+                        $(".header .avatar img").attr({src:json.avatar});
+                        $(".header .info .grade").html(json.grade.current_name);
+                        $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
+                        $(".header .zuan span").html("x"+json.diamond);
+
+                        var percent = parseInt(json.experience)/parseInt(json.grade.next_all_experience)*$(".header .info-view").width();
+                        $(".header .progress img").css({
+                            width:percent
+                        })
+                        */
+                        Util.updateInfo(json);
+                        
+                        // 传递值，告知要获取课程信息
+                        window.frames[1].postMessage('loadCourses', '*');
+
+
+                        // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
+                        if (localStorage.chatData) {
+                            ChatStroage.init();
+                        }else{
+                            Default.init();
+                        }
+
+                    },
+                    error:function(xhr, textStatus){
+                        Common.hideLoading();
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        getCourseInfoWithPk:function(actionText, course){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"get",
+                    url: Common.domain + "/course/courses/"+course+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(data){
+                        console.log(data.json);
+                        console.log(JSON.parse(data.json));
+
+                        var array = JSON.parse(data.json);
+
+                        var courseIndex = null;
+                        // 1:Python 2:HTML5 3.CSS 4.JavaScript
+                        if(course == 1){
+                            courseIndex = localStorage.pythonSimpleIndex;
+                        }else if(course == 2){
+                            courseIndex = localStorage.htmlSimpleIndex;
+                        }else if(course == 3){
+                            courseIndex = localStorage.cssSimpleIndex;
+                        }else if(course == 4){
+                            courseIndex = localStorage.jsSimpleIndex;
+                        }
+                        courseIndex = parseInt(courseIndex);
+                        
+                        if(array){
+                            if (array[courseIndex+1]) {
+                                //如果此课程此小节消息存在
+                                Page.index = 0;
+                                Page.data = array[courseIndex+1];
+                                
+                                Page.loadSepLine(courseIndex+1);
+                                Page.loadMessageWithData(actionText, Page.data, Page.index, false);
+
+                            }else{
+                                Common.dialog("恭喜，您已经完成本课程的学习。您可以选择其它课程，再继续");
+                                $(".loading-chat").remove();
+                            }
+                        }else{
+                            Common.dialog("课程还未开放，敬请期待");
+                            $(".loading-chat").remove();
+                        }
+                        
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+                
+            })
+        },
+        addReward:function(course, courseIndex, chapter, growNum, zuanNum, this_){
+            // 奖励
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"put",
+                    url:Common.domain + "/userinfo/add_reward/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        course:course,
+                        lesson:courseIndex,
+                        chapter:chapter,
+                        experience_amount:growNum,
+                        diamond_amount:zuanNum
+                    },
+                    success:function(json){
+                        console.log(json);
+                        if(zuanNum != 0){
+                            // 打开钻石动画
+                            Util.zuanAnimate(json.diamond);
+                        }
+                        if(growNum != 0){
+                            // 打开经验动画
+                            Util.growAnimate(growNum);
+                        }
+
+                        if(localStorage.currentGrade != json.grade.current_name){
+                            // 打开升级动画
+                            Util.gradeAnimate();
+                        }
+
+                        // 更新个人信息
+                        Util.updateInfo(json);
+
+                        
+                        // 普通 action 按钮点击事件
+                        if (this_.hasClass("exercise")) {
+                            // 点了习题的，提交答案的按钮
+                            var msg = Page.options.join(',');
+                            Page.options = [];
+                            Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                        }else{
+                            // 普通的 action 按钮
+                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                        }
+                        
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            // 重复领取，不奖励，接着走消息
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            // 普通 action 按钮点击事件
+                            if (this_.hasClass("exercise")) {
+                                // 点了习题的，提交答案的按钮
+                                var msg = Page.options.join(',');
+                                Page.options = [];
+                                Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                            }else{
+                                // 普通的 action 按钮
+                                Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                            }
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        updateExtent:function(course, courseIndex, this_){
+            // 学习进度
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/update_learnextent/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        course:course,
+                        lesson:courseIndex
+                    },
+                    success:function(json){
+                        console.log(json);
+                        // 记录学习下标
+                        Util.setCourseIndex(course, courseIndex);
+                        
+                        
+                        // 普通 action 按钮点击事件
+                        if (this_.hasClass("exercise")) {
+                            // 点了习题的，提交答案的按钮
+                            var msg = Page.options.join(',');
+                            Page.options = [];
+                            Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                        }else{
+                            // 普通的 action 按钮
+                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                        }
+                        
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            // // 普通 action 按钮点击事件
+                            // if (this_.hasClass("exercise")) {
+                            //     // 点了习题的，提交答案的按钮
+                            //     var msg = Page.options.join(',');
+                            //     Page.options = [];
+                            //     Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                            // }else{
+                            //     // 普通的 action 按钮
+                            //     Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                            // }
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        }
+        
+    }
     // ---------------------4.帮助方法
     var Util = {
         storeData:function(){
@@ -1200,7 +1604,83 @@ define(function(require, exports, module) {
             localStorage.optionIndex = Page.optionIndex;
             localStorage.pagenum = Page.pagenum;
         },
-        zuanAnimate:function(){
+        setCourseIndex:function(course, courseIndex){
+            if(course == 1){
+                localStorage.pythonSimpleIndex = courseIndex;
+            }else if(course == 2){
+                localStorage.htmlSimpleIndex = courseIndex;
+            }else if(course == 3){
+                localStorage.cssSimpleIndex = courseIndex;
+            }else if(course == 4){
+                localStorage.jsSimpleIndex = courseIndex;
+            }
+        },
+        getCourseIndex:function(){
+            var course = localStorage.oldCourse;
+            var courseIndex = 0;
+            if(course == 1){
+                courseIndex = localStorage.pythonSimpleIndex;
+            }else if(course == 2){
+                courseIndex == localStorage.htmlSimpleIndex;
+            }else if(course == 3){
+                courseIndex = localStorage.cssSimpleIndex;
+            }else if(course == 4){
+                courseIndex = localStorage.jsSimpleIndex;
+            }
+            courseIndex = parseInt(courseIndex) + 1;
+            return courseIndex
+        },
+        setMessageImgHeight:function(item){
+            // 给消息中的图片设高
+            if(item.img){
+                // 给图片设高
+                var url = item.img;
+                var pW = $(".message.img").last().find(".msg-view").width() * 0.70;
+                Common.getPhotoWidthHeight(url, function(width, height){
+                    var pH = pW * height / width;
+                    $(".message.img").last().find('img.msg').css({
+                        height: pH + "px"
+                    })
+                    $(".message.img").last().find('.pre-msg').css({
+                        height:pH + "px"
+                    })
+                })
+            }
+        },
+        setMessageImgHeightLoadAgo:function(item){
+            // 给消息中的图片设高
+            if(item.img){
+                // 给图片设高
+                var url = item.img;
+                var pW = $(".message.img").first().find(".msg-view").width() * 0.70;
+                Common.getPhotoWidthHeight(url, function(width, height){
+                    var pH = pW * height / width;
+                    $(".message.img").first().find('img.msg').css({
+                        height: pH + "px"
+                    })
+                    $(".message.img").first().find('.pre-msg').css({
+                        height:pH + "px"
+                    })
+                })
+            }
+        },
+        updateInfo:function(json){
+            localStorage.currentGrade = json.grade.current_name;    //记录当前等级
+
+            $(".header .item").show();
+
+            $(".header .avatar img").attr({src:json.avatar});
+            $(".header .info .grade").html(json.grade.current_name);
+            $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
+            $(".header .zuan span").html("x"+json.diamond);
+
+            var percent = parseInt(json.experience)/parseInt(json.grade.next_all_experience)*$(".header .info-view").width();
+            $(".header .progress img").css({
+                width:percent
+            })
+
+        },
+        zuanAnimate:function(number){
             // 钻石出现，然后2秒后飞到右上角消失
             $(".zuan-shadow-view").show();
             $(".zuan-shadow-view .img").css({
@@ -1225,8 +1705,6 @@ define(function(require, exports, module) {
                         opacity:1
                     })
                     
-                    var number = $(".zuan span").html().split('x')[1];
-                    number = parseInt(number) + 1;
                     $(".zuan span").html("x" + number);
 
                     $(".zuan").css({
@@ -1239,6 +1717,21 @@ define(function(require, exports, module) {
                         })
                     }, 200)
                 })
+            }, 2000)
+        },
+        growAnimate:function(number){
+            $(".grow-number-ani").remove();
+            var growHtml = '<span class="grow-number-ani fadeInOut">+'+number+'</span>';
+            $(".chat").append(growHtml);
+        },
+        gradeAnimate:function(){
+            $(".up-grade-shadow-view").show();
+            $(".up-grade-shadow-view .img").css({
+                "margin-top": ($(window).height() - 200) / 2 + "px"
+            });
+            setTimeout(function(){
+                // 更改等级信息
+                $(".up-grade-shadow-view").hide();
             }, 2000)
         },
         formatString:function(message){
