@@ -32,6 +32,7 @@ define(function(require, exports, module) {
                             item["like"] = true;
                             item["like_number"] = 0;
                             
+                            /*
                             // 1:Python 2:HTML5 3.CSS 4.JavaScript
                             // item.learn_extent.last_lesson
                             // 1:Python 2:HTML5 3.CSS 4.JavaScript
@@ -44,6 +45,7 @@ define(function(require, exports, module) {
                             }else if(item.pk == 4){
                                 localStorage.jsSimpleIndex = item.learn_extent.last_lesson;
                             }
+                            */
                         }
 
                         var html = ArtTemplate("courses-template", json.results);
@@ -163,6 +165,7 @@ define(function(require, exports, module) {
                 //存储当前学习的课程题目
                 // localStorage.setItem("currentCourse", $(this).attr("data-category"));
                 localStorage.currentCourse = $(this).attr("data-category");
+                localStorage.currentCourseIndex = $(this).attr("data-course-index");
                 window.parent.postMessage("currentCourse", '*');
 
                 // if ($(this).attr("data-category") == "html_simple") {

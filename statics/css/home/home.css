@@ -294,6 +294,7 @@ body{
 }
 .main-view .left-view .chat .message.link{
 	/*margin-right: 15px;*/
+    cursor: pointer;
 }
 .main-view .left-view .chat .message.text .content,
 .main-view .left-view .chat .message .link-text{
@@ -665,6 +666,10 @@ body{
     height: 40px;
     margin-top: 25px;
     margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .login-view .account-view .password{
     margin-top: 0;
@@ -674,6 +679,9 @@ body{
     margin-right: 10px;
     letter-spacing: 2px;
     color: #616161;
+
+    width: 60px;
+    display: inline-block;
 }
 .username input,
 .password input{
@@ -683,6 +691,8 @@ body{
     padding-left: 5px;
     padding-right: 5px;
     padding: 5px;
+
+    width: calc(100% - 70px);
 }
 .login-view .account-view .login{
     padding: 5px 16px;
@@ -691,6 +701,7 @@ body{
     color: white;
     border: solid 1px #e56c95;
     margin-bottom: 25px;
+    cursor: pointer;
 }
 
 

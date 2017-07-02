@@ -42,7 +42,7 @@ define(function(require, exports, module) {
             if (item.link) {
                 // 带链接的
                 questionHtml = '<div class="message link left-animation"> \
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -54,7 +54,7 @@ define(function(require, exports, module) {
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <img class="msg" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -63,7 +63,7 @@ define(function(require, exports, module) {
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
@@ -97,7 +97,8 @@ define(function(require, exports, module) {
             $(questionHtml).appendTo(".messages");
 
             Util.setMessageImgHeight(item);  //给图片消息中图片设高
-
+            Common.showLoadingPreImg();   //打开预加载图片
+            
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
                 $("html,body").animate({scrollTop:$("html,body")[0].scrollHeight}, 300);
@@ -246,14 +247,14 @@ define(function(require, exports, module) {
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="'+localStorage.avatar+'"/>\
                                   </div>';
                 }else{
                     // 加载机器回复
                     if (item.link) {
                         // 带链接的
                         questionHtml = '<div class="message link"> \
-                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -265,7 +266,7 @@ define(function(require, exports, module) {
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <img class="msg" src="'+item.img+'" alt="">\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -274,7 +275,7 @@ define(function(require, exports, module) {
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <span class="content">'+Util.formatString(item.message)+'</span> \
                                             </div>\
@@ -291,6 +292,7 @@ define(function(require, exports, module) {
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
             
             Util.setMessageImgHeight(item);  //给图片消息中图片设高
+            Common.showLoadingPreImg();   //打开预加载图片
 
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 20);
 
@@ -449,14 +451,14 @@ define(function(require, exports, module) {
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="'+localStorage.avatar+'" />\
                                   </div>';
                 }else{
                     // 加载机器回复
                     if (item.link) {
                         // 带链接的
                         questionHtml = '<div class="message link"> \
-                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -468,7 +470,7 @@ define(function(require, exports, module) {
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <img class="msg" src="'+item.img+'" alt="">\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -477,7 +479,7 @@ define(function(require, exports, module) {
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="../../statics/images/avatar.png" />\
+                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <span class="content">'+Util.formatString(item.message)+'</span> \
                                             </div>\
@@ -495,6 +497,7 @@ define(function(require, exports, module) {
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
 
             Util.setMessageImgHeightLoadAgo(item);  //给图片消息中图片设高
+            Common.showLoadingPreImg();   //打开预加载图片
 
             ChatStroage.timerAgo = setTimeout(function(){
                 // 加载上一条数据
@@ -587,7 +590,7 @@ define(function(require, exports, module) {
             if (item.link) {
                 // 带链接的
                 questionHtml = '<div class="message link left-animation"> \
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -599,7 +602,7 @@ define(function(require, exports, module) {
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <img class="msg" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -608,7 +611,7 @@ define(function(require, exports, module) {
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="../../statics/images/avatar.png" />\
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
@@ -667,7 +670,9 @@ define(function(require, exports, module) {
                 Page.index = i;
             }
             Util.storeData();
-                        
+            
+            Common.showLoadingPreImg();   //打开预加载图片
+
             if (item.action) {
                 // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
                 // // 存在行为按钮, 不继续执行
@@ -764,17 +769,23 @@ define(function(require, exports, module) {
                     if(item.record == true){
                         // 打卡
                         var course = localStorage.oldCourse;
+                        var courseIndex = localStorage.currentCourseIndex;
+                        courseIndex = parseInt(courseIndex) + 1;
+                        /*
                         var courseIndex = 0;
+
                         if(course == 1){
                             courseIndex = localStorage.pythonSimpleIndex;
                         }else if(course == 2){
-                            courseIndex == localStorage.htmlSimpleIndex;
+                            courseIndex = localStorage.htmlSimpleIndex;
                         }else if(course == 3){
                             courseIndex = localStorage.cssSimpleIndex;
                         }else if(course == 4){
                             courseIndex = localStorage.jsSimpleIndex;
                         }
                         courseIndex = parseInt(courseIndex) + 1;
+                        */
+
 
                         Mananger.updateExtent(course, courseIndex, $(this));   //更新学习进度
 
@@ -782,17 +793,22 @@ define(function(require, exports, module) {
                         if(item.zuan_number || item.grow_number){
                             // 奖励钻石，经验
                             var course = localStorage.oldCourse;
+                            var courseIndex = localStorage.currentCourseIndex;
+                            courseIndex = parseInt(courseIndex) + 1;
+
+                            /*
                             var courseIndex = 0;
                             if(course == 1){
                                 courseIndex = localStorage.pythonSimpleIndex;
                             }else if(course == 2){
-                                courseIndex == localStorage.htmlSimpleIndex;
+                                courseIndex = localStorage.htmlSimpleIndex;
                             }else if(course == 3){
                                 courseIndex = localStorage.cssSimpleIndex;
                             }else if(course == 4){
                                 courseIndex = localStorage.jsSimpleIndex;
                             }
                             courseIndex = parseInt(courseIndex) + 1;
+                            */
                             
                             Mananger.addReward(course, courseIndex, item.chapter, item.grow_number, item. zuan_number, $(this));  //奖励钻石
                         }else{
@@ -1065,7 +1081,7 @@ define(function(require, exports, module) {
                                 <div class="msg-view">\
                                     <span class="content">'+actionText+'</span> \
                                 </div>\
-                                <img class="avatar" src="../../statics/images/avatar.png" />\
+                                <img class="avatar" src="'+localStorage.avatar+'" />\
                             </div>';
             $(answerHtml).appendTo(".messages");
             
@@ -1130,7 +1146,7 @@ define(function(require, exports, module) {
                                 <div class="msg-view">\
                                     <span class="content">'+actionText+'</span> \
                                 </div>\
-                                <img class="avatar" src="../../statics/images/avatar.png" />\
+                                <img class="avatar" src="'+localStorage.avatar+'" />\
                             </div>';
             $(answerHtml).appendTo(".messages");
             
@@ -1409,9 +1425,10 @@ define(function(require, exports, module) {
                         console.log(data.json);
                         console.log(JSON.parse(data.json));
 
+                        var courseIndex = data.learn_extent.last_lesson;
                         var array = JSON.parse(data.json);
 
-                        var courseIndex = null;
+                        /*
                         // 1:Python 2:HTML5 3.CSS 4.JavaScript
                         if(course == 1){
                             courseIndex = localStorage.pythonSimpleIndex;
@@ -1422,6 +1439,7 @@ define(function(require, exports, module) {
                         }else if(course == 4){
                             courseIndex = localStorage.jsSimpleIndex;
                         }
+                        */
                         courseIndex = parseInt(courseIndex);
                         
                         if(array){
@@ -1550,8 +1568,12 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         console.log(json);
-                        // 记录学习下标
-                        Util.setCourseIndex(course, courseIndex);
+                        
+                        //记录当前课程的当前节下标
+                        localStorage.currentCourseIndex = courseIndex;
+
+                        // // 记录学习下标
+                        // Util.setCourseIndex(course, courseIndex);
                         
                         
                         // 普通 action 按钮点击事件
@@ -1621,7 +1643,7 @@ define(function(require, exports, module) {
             if(course == 1){
                 courseIndex = localStorage.pythonSimpleIndex;
             }else if(course == 2){
-                courseIndex == localStorage.htmlSimpleIndex;
+                courseIndex = localStorage.htmlSimpleIndex;
             }else if(course == 3){
                 courseIndex = localStorage.cssSimpleIndex;
             }else if(course == 4){
@@ -1665,6 +1687,7 @@ define(function(require, exports, module) {
             }
         },
         updateInfo:function(json){
+            localStorage.avatar = json.avatar;     //记录用户的头像
             localStorage.currentGrade = json.grade.current_name;    //记录当前等级
 
             $(".header .item").show();
@@ -1721,7 +1744,7 @@ define(function(require, exports, module) {
         },
         growAnimate:function(number){
             $(".grow-number-ani").remove();
-            var growHtml = '<span class="grow-number-ani fadeInOut">+'+number+'</span>';
+            var growHtml = '<span class="grow-number-ani fadeInOut">经验 +'+number+'</span>';
             $(".chat").append(growHtml);
         },
         gradeAnimate:function(){
