@@ -444,6 +444,8 @@ body{
     display: block;
     margin-left: 85%;
     margin-bottom: 8px;
+
+    cursor: pointer;
 }
 .main-view .left-view .helps-view{
     position: absolute;

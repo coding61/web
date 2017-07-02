@@ -748,11 +748,14 @@ define(function(require, exports, module) {
         
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
             $(".btn-wx-auth").unbind('click').click(function(){
-                /*
-                if($(this).attr('disabled') == true) return;
-                console.log(11);
-                $(this).attr('disabled', "true");  //禁用按钮
-                */
+                
+                if($(this).attr('disabledImg') == "true"){
+                    console.log(000);
+                    return;
+                } 
+                console.log(111);
+                $(this).attr({disabledImg:"true"});
+                
                 
                 
                 if ($(this).hasClass("wx-auth")) {
@@ -790,21 +793,6 @@ define(function(require, exports, module) {
                         var course = localStorage.oldCourse;
                         var courseIndex = localStorage.currentCourseIndex;
                         courseIndex = parseInt(courseIndex) + 1;
-                        /*
-                        var courseIndex = 0;
-
-                        if(course == 1){
-                            courseIndex = localStorage.pythonSimpleIndex;
-                        }else if(course == 2){
-                            courseIndex = localStorage.htmlSimpleIndex;
-                        }else if(course == 3){
-                            courseIndex = localStorage.cssSimpleIndex;
-                        }else if(course == 4){
-                            courseIndex = localStorage.jsSimpleIndex;
-                        }
-                        courseIndex = parseInt(courseIndex) + 1;
-                        */
-
 
                         Mananger.updateExtent(course, courseIndex, $(this));   //更新学习进度
 
@@ -814,20 +802,6 @@ define(function(require, exports, module) {
                             var course = localStorage.oldCourse;
                             var courseIndex = localStorage.currentCourseIndex;
                             courseIndex = parseInt(courseIndex) + 1;
-
-                            /*
-                            var courseIndex = 0;
-                            if(course == 1){
-                                courseIndex = localStorage.pythonSimpleIndex;
-                            }else if(course == 2){
-                                courseIndex = localStorage.htmlSimpleIndex;
-                            }else if(course == 3){
-                                courseIndex = localStorage.cssSimpleIndex;
-                            }else if(course == 4){
-                                courseIndex = localStorage.jsSimpleIndex;
-                            }
-                            courseIndex = parseInt(courseIndex) + 1;
-                            */
                             
                             Mananger.addReward(course, courseIndex, item.chapter, item.grow_number, item. zuan_number, $(this));  //奖励钻石
                         }else{
@@ -844,6 +818,7 @@ define(function(require, exports, module) {
                         }
                     }
                 }
+                
                 
             })
             
@@ -937,6 +912,7 @@ define(function(require, exports, module) {
             })
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
+                Common.playSoun('http://opbh4armh.bkt.clouddn.com/Diamond%20Drop.wav');  //播放钻石音效
                 Util.zuanAnimate(2);
             })
             $(".helps-view .contact-us").unbind('click').click(function(){
@@ -948,6 +924,7 @@ define(function(require, exports, module) {
             })
             $(".helps-view .up-grade-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
+                Common.playSoun('http://opbh4armh.bkt.clouddn.com/level_up.mp3');  //播放经验音效
                 Util.gradeAnimate();
             })
             
@@ -1079,8 +1056,6 @@ define(function(require, exports, module) {
                 ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
                 
                 $(".actions").html(null);
-
-                // $('.actions').removeAttr("disabled");  //移除disabled属性
             }
 
             setTimeout(function(){
@@ -1517,7 +1492,9 @@ define(function(require, exports, module) {
                         console.log(json);
                         if(zuanNum != 0){
                             // 打开钻石动画
+                            Common.playSoun('http://opbh4armh.bkt.clouddn.com/Diamond%20Drop.wav');  //播放钻石音效
                             Util.zuanAnimate(json.diamond);
+                            
                         }
                         if(growNum != 0){
                             // 打开经验动画
@@ -1526,7 +1503,11 @@ define(function(require, exports, module) {
 
                         if(localStorage.currentGrade != json.grade.current_name){
                             // 打开升级动画
-                            Util.gradeAnimate();
+                            setTimeout(function(){
+                                Common.playSoun('http://opbh4armh.bkt.clouddn.com/level_up.mp3');  //播放经验音效
+                                Util.gradeAnimate();
+                            }, 500);
+                            
                         }
 
                         // 更新个人信息

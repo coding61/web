@@ -171,7 +171,31 @@ define(function(require, exports, module) {
 		// $(b).onerror(function(){
 		// 	$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
 		// })
-		
+	}
+	// 播放音效
+	exports.playSoun = function(url){
+	    var borswer = window.navigator.userAgent.toLowerCase();
+	    if ( borswer.indexOf( "ie" ) >= 0 )
+	    {//IE内核浏览器
+	    	$( "body" ).find( "embed" ).remove();
+	        var strEmbed = '<embed name="embedPlay" src="'+url+'" autostart="true" hidden="true" loop="false"></embed>';
+	        // if ( $( "body" ).find( "embed" ).length <= 0 )
+	          $( "body" ).append( strEmbed );
+	        var embed = document.embedPlay;
+	        //浏览器不支持 audion，则使用 embed 播放
+	        embed.volume = 100;
+	        //embed.play();这个不需要
+	    }else{
+	        //非IE内核浏览器
+	        $( "body" ).find( "audio" ).remove();
+	        var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+	        // if ( $( "body" ).find( "audio" ).length <= 0 )
+	        $( "body" ).append( strAudio );
+	        var audio = document.getElementById( "audioPlay" );
+
+	        //浏览器支持 audion
+	        audio.play();
+	    }
 	}
 	
 	exports.changePhotoSrc = function(url, fx){
