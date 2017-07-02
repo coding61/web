@@ -910,22 +910,35 @@ define(function(require, exports, module) {
                 */
 
             })
+            // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
                 Common.playSoun('http://opbh4armh.bkt.clouddn.com/Diamond%20Drop.wav');  //播放钻石音效
                 Util.zuanAnimate(2);
             })
+            // 联系我们
             $(".helps-view .contact-us").unbind('click').click(function(){
                 $(".helps-view").hide();
             })
+            // 经验值
             $(".helps-view .grow-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
                 Util.growAnimate(2);
             })
+            // 升级
             $(".helps-view .up-grade-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
                 Common.playSoun('http://opbh4armh.bkt.clouddn.com/level_up.mp3');  //播放经验音效
                 Util.gradeAnimate();
+            })
+            // 寻找帮助
+            $(".helps-view .find-help").unbind('click').click(function(){
+                $(".helps-view").hide();
+                $(".find-help-shadow-view").show();
+            })
+            // 关闭寻找帮助窗口
+            $(".find-help-shadow-view").unbind('click').click(function(){
+                $(".find-help-shadow-view").hide();
             })
             
             // 关闭运行代码结果窗口
@@ -942,6 +955,14 @@ define(function(require, exports, module) {
             $(".login-view .login").unbind('click').click(function(){
                 // 登录成功，请求数据
                 Mananger.login();
+            })
+
+            // 退出登录
+            $(".quit").unbind('click').click(function(){
+                Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+                     localStorage.clear();
+                     window.location.reload();
+                })
             })
 
         },
