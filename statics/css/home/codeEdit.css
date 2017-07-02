@@ -85,7 +85,8 @@ body{
     justify-content: center;
     height: 10%;
 }
-.result .run{
+.result .run,
+.result .close{
     background: rgb(78, 79, 80);
     color: white;
     font-size: 13px;
@@ -97,6 +98,7 @@ body{
     display: inline-block;
 
     margin-top: 0;
+    cursor: pointer;
 }
 .result .run-result{
     height: calc(92% - 45px);

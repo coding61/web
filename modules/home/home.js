@@ -563,6 +563,9 @@ define(function(require, exports, module) {
                     Page.clickEvent();    //重新激活 action 点击事件
                 }else if(a == "loadCourses"){
 
+                }else if(a == "closeCodeEdit"){
+                    $(".right-view iframe").hide();
+                    $(".right-view>img").show();
                 }else{
                     // 打开运行结果窗口，并赋值
                     $(".code-result-shadow-view iframe").attr({src:a});

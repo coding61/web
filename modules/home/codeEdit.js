@@ -172,6 +172,11 @@ define(function(require, exports, module) {
                 // console.log(htmlEditor.getTextArea().value);
                 // console.log(htmlEditor.toTextArea());
             })
+
+            $(".result .close").click(function(){
+                // 关闭编辑器
+                window.parent.postMessage("closeCodeEdit", '*');
+            })
         },
 
     };
