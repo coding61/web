@@ -575,7 +575,11 @@ define(function(require, exports, module) {
 
                             } else{
                                 // 单按钮
-                                actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                                if (item.action == "点击选择课程") {
+                                    actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                                }else{
+                                    actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                                }
                             }
                         }
                         $(".btns .actions").html(actionHtml);
@@ -661,7 +665,11 @@ define(function(require, exports, module) {
 
                 } else{
                     // 单按钮
-                    actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                    if (item.action == "点击选择课程") {
+                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                    }else{
+                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                    }
                 }
             }
             
