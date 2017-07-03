@@ -24,6 +24,7 @@ define(function(require, exports, module) {
             //     });
             // }
             Team.idCode();
+            Team.inviteCode();
 
             $(".create").click(function(){
                 Common.isLogin(function(token){
@@ -355,21 +356,87 @@ define(function(require, exports, module) {
         idCode:function(){
             $(".idCode").click(function(){
                 $(".idCode-shadow").show();
-            })
-            Common.isLogin(function(token){
-                if (token == "null") {
-                    $(".idCode-view input").val("");
-                    $(".idCode-view textarea").val("");
-                    $(".idCode-shadow").hide();
-                    Common.dialog('你还未授权');
-                }else{
-                    $(".idCode-view input").val(token);
-                    $(".idCode-view textarea").val(token);
-                }
+
+                Common.isLogin(function(token){
+                    if (token == "null") {
+                        $(".idCode-view input").val("");
+                        $(".idCode-view textarea").val("");
+                        $(".idCode-shadow").hide();
+                        Common.dialog('你还未授权');
+                    }else{
+                        $(".idCode-view input").val(token);
+                        $(".idCode-view textarea").val(token);
+                    }
+                })
             })
              
             $(".idCode-shadow .cancel").click(function(){
                 $(".idCode-shadow").hide();
+            })
+        },
+        inviteCode:function(){
+            // 邀请码
+            $(".inviteCode").click(function(){
+                Common.isLogin(function(token){
+                    if (token == "null") {
+                        Common.dialog('你还未授权');
+                    }else{
+                        $(".wait-loading").show();
+                        $(".wait-loading span").hide();
+                        Team.getInfo();
+                    }
+                })
+            })
+        },
+        getInfo:function(){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                    Common.authWXLogin(redirectUri);
+                    return;
+                }
+                $.ajax({
+                    type:'get',
+                    url: Common.domain + "/userinfo/whoami/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        $(".wait-loading").hide();
+                        
+                        if(json.invitation_code){
+                            $(".inviteCode-view .username .user").html(json.invitation_code.code);
+                            $(".inviteCode-view .password .pass").html(json.invitation_code.password)
+                            $(".inviteCode-shadow").show();
+                            $(".inviteCode-shadow").click(function(){
+                                $(".inviteCode-shadow").hide();
+                            })
+                        }else{
+                            Common.dialog("请先组队");
+                        }  
+                    },
+                    error:function(xhr, textStatus){
+                        $(".wait-loading").hide();
+
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
             })
         },
         errorMessage:function(xhr){

@@ -556,6 +556,8 @@ define(function(require, exports, module) {
             window.addEventListener('message', function(e) {  
                 var a = e.data;   
                 if(a == "currentCourse"){
+                    $(".right-view iframe").hide();
+                    $(".right-view>img").show();
                     if(localStorage.currentCourse == localStorage.oldCourse){
                         // 回到原来的课程继续
                         var actionHtml = "";
@@ -1131,9 +1133,15 @@ define(function(require, exports, module) {
                     // 问题下的普通按钮
                     if (Page.optionData.length == Page.optionIndex + 1) {
                         // 选项执行完了， 执行下一条消息, 并重置问题下消息数组及下标
+                        var cc = Page.optionData[Page.optionIndex];   //取出选项最后一个元素
                         Page.optionData = null;
                         Page.optionIndex = 0;
-                        Page.loadMessageWithData(actionText, Page.data, Page.index+1, false);
+                        if(cc.again == true){
+                            // 重做一遍习题
+                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
+                        }else{
+                            Page.loadMessageWithData(actionText, Page.data, Page.index+1, false);
+                        }
                     }else{
                         // 选项接着执行下去
                         Page.loadMessageWithData(actionText, Page.optionData, Page.optionIndex+1, true)

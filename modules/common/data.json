@@ -4,13 +4,32 @@
 			"message":"你好，欢迎进入程序媛课堂"
 		},
 		{
-			"message":"非常感谢您来到我们程序媛网站。接下来是一种对话式的学习。"
+			"message":"我们这里采用独创的对话式学习模式。"
 		},
 		{
-			"message":"你通过点击下方按钮，来获取相关信息"
+			"message":"你可以通过点击下方按钮，来获取信息。"
 		},
 		{
-			"message":"请开始选课",
+			"message":"开始学习之前，我先介绍下我自己，我叫陈斌，14岁开始编程，曾在微软从事windows7开发，是一个全栈工程师。你们可以叫我斌叔。",
+			"action":"斌叔你好"
+		}
+		{
+			"message":"很好，你已经知道如何操作啦！"
+		},
+		{
+			"message":"为了奖励你，斌叔决定爆个照！"
+		},
+		{
+			"img":"https://resource.bcgame-face2face.haorenao.cn/cxy/JSG/bsnj.gif-200x200"
+		},
+		{
+			"message":"这就是我，不一样的烟火！"
+		},
+		{
+			"message":"接下来就由斌叔教你学习编程吧！"
+		},
+		{
+			"message":"请选择你要学习的课程",
 			"action":"点击选择课程"
 		}
 	],
@@ -972,7 +991,7 @@
 	            "link": "www.code.com"
 	        },
 	        {
-	            "message": "<html>\n<body>\n<p>这是一个段落。</p>\n</body>\n</html>"
+	            "message": "<p>这是一个段落。</p>"
 	        },
 	        {
 	            "message": "然后点击 运行。",
@@ -1049,13 +1068,13 @@
 	            "message": "个人网页最终效果如图："
 	        },
 	        {
-	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/1-10.png-608x227"
+	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/html1-10.png-1050x1008"
 	        },
 	        {
-	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/1-11.png-608x216"
+	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/html1-11.png-660x982"
 	        },
 	        {
-	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/1-12.png-608x181",
+	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/html1-12.png-674x776",
 	            "action": "了解了!",
 	            "chapter":16,
 	            "zuan_number":0,
@@ -1067,7 +1086,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/1-13.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "2": [
@@ -1098,11 +1119,8 @@
 	            "message": "<h1>斌叔的个人网页</h1>"
 	        },
 	        {
-	            "message": "然后点运行。"
-	        },
-	         {
-	            "message": "再次提醒要加上<html><body>…</html></body>哦，以后每次做练习都要注意！",
-	            "action": "我运行好了",
+	            "message": "然后点运行。",
+	             "action": "我运行好了",
 	            "chapter":2,
 	            "zuan_number":3,
 				"grow_number":45
@@ -1133,6 +1151,9 @@
 	            "message": "顺序越往后，标题的字体就越小。"
 	        },
 	        {
+	            "message": "也就是<h1><h2><h3>...<h6>它们的字体是依次减小的～<h1>最大，<h6>最小"
+	        },
+	        {
 	            "message": "你可以在右边的html界面试一下哦。",
 	            "link": "www.code.com",
 	            "action": "试好啦!",
@@ -1153,7 +1174,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/2-4.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "3": [
@@ -1208,7 +1231,8 @@
 	                },
 	                {
 	                    "message": "What?再想想",
-	                    "action": "再做一次"
+	                    "action": "再做一次",
+	                    "again":true
 	                }
 	            ],
 	            "correct": [
@@ -1304,7 +1328,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/3-5.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "4": [
@@ -1338,7 +1364,8 @@
 	                },
 	                {
 	                	"img":"https://resource.bcgame-face2face.haorenao.cn/cxy/html/4-2.gif-200x200",
-	                	"action": "再试一次！"
+	                	"action": "再试一次！",
+	                	"again":true
 	                }
 	            ],
 	            "correct": [
@@ -1446,7 +1473,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/4-5.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "5": [
@@ -1479,7 +1508,8 @@
 	                },
 	                {
 	                	"img":"https://resource.bcgame-face2face.haorenao.cn/cxy/html/5-3.gif-200x200",
-	                	"action": "呜呜，我再试一次"
+	                	"action": "呜呜，我再试一次",
+	                	"again":true
 	                }
 	            ],
 	            "correct": [
@@ -1588,7 +1618,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/5-8.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "6": [
@@ -1687,7 +1719,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/6-4.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "7": [
@@ -1733,7 +1767,8 @@
 	                },
 	                {
 	                	"img":"https://resource.bcgame-face2face.haorenao.cn/cxy/html/7-2.gif-200x200",
-	                	"action":"对不起我再做一次！"
+	                	"action":"对不起我再做一次！",
+	                	"again":true
 	                }
 	            ],
 	            "correct": [
@@ -1758,7 +1793,10 @@
 	        },
 	        {
 	            "message": "那你想知道它是怎么实现的咩？",
-	            "action": "不想知道"
+	            "action": "不想知道",
+	            "chapter":4,
+	            "zuan_number":0,
+				"grow_number":10
 	        },
 	        {
 	            "message": "你……你……"
@@ -1769,7 +1807,7 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/7-3.jpg-255x255",
 	            "action": "哈哈，我也和你开个玩笑啦",
-	            "chapter":4,
+	            "chapter":5,
 	             "zuan_number":0,
 				"grow_number":25
 	        },
@@ -1789,7 +1827,7 @@
 	        {
 	            "message": "然后运行下。",
 	            "action": "完事",
-	            "chapter":5,
+	            "chapter":6,
 	             "zuan_number":2,
 				"grow_number":51
 	        },
@@ -1812,13 +1850,16 @@
 	        {
 	            "message": "斌叔就不给你举例子了",
 	            "action": "我练习好了",
-	            "chapter":6,
+	            "chapter":7,
 	             "zuan_number":3,
 				"grow_number":52
 	        },
 	        {
 	            "message": "Ok,那我们本小节就酱紫啦。",
-	            "action": "Byebye"
+	            "action": "Byebye",
+	            "chapter":8,
+	            "zuan_number":0,
+				"grow_number":10
 	        },
 	        {
 	            "message": "太棒了，你又学会了一节，斌叔先喝杯茶下节课再讲！"
@@ -1826,7 +1867,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/7-4.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "8": [
@@ -1864,7 +1907,10 @@
 	                },
 	                {
 	                	"img":"https://resource.bcgame-face2face.haorenao.cn/cxy/html/8-2.gif-200x200",
-	                	"action": "俺知道了…"
+	                	"action": "俺知道了…",
+	                	"again":true,
+	                	"zuan_number":0,
+						"grow_number":0
 	                }
 	            ],
 	            "correct": [
@@ -1890,7 +1936,7 @@
 	            "message": "斌叔来告诉你，是<img>元素。"
 	        },
 	        {
-	            "message": "我们先来试下效果吧，在右侧html内把以下代码粘过去：\n<img src=“http://wx2.sinaimg.cn/thumb180/71f81b09ly1fgjk9dvzifj20bq0e8q5o.jpg”>",
+	            "message": "我们先来试下效果吧，在右侧html内把以下代码粘过去：\n<img src='http://wx2.sinaimg.cn/thumb180/71f81b09ly1fgjk9dvzifj20bq0e8q5o.jpg'>",
 	            "link": "www.code.com"
 	        },
 	        {
@@ -1957,7 +2003,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/8-5.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "9": [
@@ -2054,7 +2102,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/9-4.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "10": [
@@ -2139,7 +2189,10 @@
 	        },
 	        {
 	            "message": "是不是很简单呢？",
-	            "action":"是挺简单"
+	            "action":"是挺简单",
+	            "chapter":6,
+	            "zuan_number":0,
+				"grow_number":10
 	        },
 	        {
 	        	"img":"https://resource.bcgame-face2face.haorenao.cn/cxy/html/10-4.gif-480x267"
@@ -2151,7 +2204,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/10-5.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "11": [
@@ -2184,7 +2239,8 @@
 	                },
 	                {
 	                    "message": "这两个不要记混啊！",
-	                    "action": "嗯…"
+	                    "action": "嗯…",
+	                    "again":true
 	                }
 	            ],
 	            "correct": [
@@ -2276,7 +2332,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/11-5.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "12": [
@@ -2390,7 +2448,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/12-4.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ],
 	    "13": [
@@ -2511,7 +2571,9 @@
 	        {
 	            "img": "https://resource.bcgame-face2face.haorenao.cn/cxy/html/13-4.gif-300x194",
 	            "action": "打卡，炫耀下！",
-	            "record":true
+	            "record":true,
+	            "zuan_number":0,
+				"grow_number":0
 	        }
 	    ]
     }
