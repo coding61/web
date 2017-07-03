@@ -1700,7 +1700,7 @@ define(function(require, exports, module) {
             if(item.img){
                 // 给图片设高
                 var url = item.img;
-                var pW = $(".message.img").last().find(".msg-view").width() * 0.70;
+                var pW = $(".message.img").last().find(".msg-view").width() * 0.50;
                 Common.getPhotoWidthHeight(url, function(width, height){
                     var pH = pW * height / width;
                     $(".message.img").last().find('img.msg').css({
