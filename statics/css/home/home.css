@@ -284,13 +284,13 @@ body{
 /*加载的图片*/
 .main-view .left-view .chat .message.img img.msg{
     width: 50%;
-    width: 70%;
+    /*width: 70%;*/
     display: none;
 }
 /*预加载的图片*/
 .main-view .left-view .chat .message.img .pre-msg{
-    width: 70%;
-
+    width: 50%;
+    
     background: #d2d2d2;
     display: flex;
     align-items: center;
@@ -558,9 +558,11 @@ body{
     align-items: center;
     justify-content: center;
 }
-.up-grade-shadow-view .img img,
-.zuan-shadow-view .img img{
+.up-grade-shadow-view .img img{
     width: 200%;
+}
+.zuan-shadow-view .img img{
+    width: 100%;
 }
 /*升级效果*/
 

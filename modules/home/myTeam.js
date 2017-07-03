@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-
+    ArtTemplate.config("escape", false);
     // var WXConfig = require('common/WXJSSDK.js');
 
     var Page = {
@@ -157,6 +157,60 @@ define(function(require, exports, module) {
                 }else if ($(this).hasClass('select')) {
                     // 不能取消赞
                 }
+            })
+
+            // 修改备注点击
+            $(".edit-bz").click(function(){
+                var remark = $(this).parents('.member').attr("data-remark");
+                // //调整格式
+                // if (remark.match(/<[a-zA-Z]+>/g)) {
+                // }else{
+                //     remark = remark.replace(/\r\n/g, "<br/>");
+                //     remark = remark.replace(/\n/g, "<br/>");
+                //     remark = remark.replace(/\ /g, "&nbsp"); //替换 空格
+                //     remark = remark.replace(/\t/g, "&nbsp");
+
+                // }
+                $(".bz textarea").val(remark);
+
+                $(".bz .item1").hide();
+                $(".bz .item").show();
+                $(".bz-shadow-view").show();
+            })
+
+            // 查看备住点击
+            $(".look-bz").click(function(){
+                var remark = $(this).parents('.member').attr("data-remark");
+                //调整格式
+                if (remark.match(/<[a-zA-Z]+>/g)) {
+                }else{
+                    remark = remark.replace(/\r\n/g, "<br/>");
+                    remark = remark.replace(/\n/g, "<br/>");
+                    remark = remark.replace(/\ /g, "&nbsp"); //替换 空格
+                    remark = remark.replace(/\t/g, "&nbsp");
+
+                }
+                
+                $(".bz .content span").html(remark);
+
+                $(".bz .item").hide();
+                $(".bz .item1").show();
+                $(".bz-shadow-view").show();
+
+            })
+
+            // 关闭备注
+            $(".bz .close").click(function(){
+                $(".bz-shadow-view").hide();
+            })
+
+            // 提交备注
+            $(".bz .confirm").click(function(){
+                if ($(".bz textarea").val() == "") {
+                    Common.dialog("请填写备注");
+                    return;
+                }
+                Team.editBz($(".bz textarea").val());
             })
         }
     };
@@ -471,6 +525,8 @@ define(function(require, exports, module) {
             
             var array = [null, null, null, null];
             for (var i = 0; i < dic.group_member.length; i++) {
+                dic.group_member[i]["currentUser"] = Team.currentUser;
+                // dic.group_member[i]["remark"] = "暂无备注";
                 array[i] = dic.group_member[i];
             }
 
@@ -791,6 +847,63 @@ define(function(require, exports, module) {
                         console.log(textStatus);
                     }
                 });
+            })
+        },
+        editBz:function(remark){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    var redirectUri = null;
+                    if (Common.getQueryString("pk")) {
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
+                    }else{
+                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                    }
+                    Common.authWXLogin(redirectUri);
+                    return;
+                }
+                $.ajax({
+                    type:"put",
+                    url:Common.domain + "/userinfo/userinfo_update/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        remark:remark
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        console.log(json);
+                        $(".edit-bz").parents('.member').attr({"data-remark":remark});
+                        Common.dialog("备注成功");
+                        $(".bz-shadow-view").hide();
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else if (xhr.status == 401) {
+                            var redirectUri = null;
+                            if (Common.getQueryString("pk")) {
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + Common.getQueryString("pk") + "&name=" +Team.name;
+                            }else{
+                                redirectUri = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
+                            }
+                            Common.authWXLogin(redirectUri);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
             })
         }
     }

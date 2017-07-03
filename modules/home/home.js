@@ -1453,10 +1453,14 @@ define(function(require, exports, module) {
                         Authorization:"Token " + token
                     },
                     success:function(data){
-                        console.log(data.json);
-                        console.log(JSON.parse(data.json));
 
                         var courseIndex = data.learn_extent.last_lesson;
+                        if(!data.json || data.json == ""){
+                            $(".btn-wx-auth").attr({disabledImg:false});
+                            Common.dialog("课程还未开放，敬请期待");
+                            $(".loading-chat").remove();
+                            return;
+                        }
                         var array = JSON.parse(data.json);
 
                         /*
@@ -1483,10 +1487,12 @@ define(function(require, exports, module) {
                                 Page.loadMessageWithData(actionText, Page.data, Page.index, false);
 
                             }else{
+                                $(".btn-wx-auth").attr({disabledImg:false});
                                 Common.dialog("恭喜，您已经完成本课程的学习。您可以选择其它课程，再继续");
                                 $(".loading-chat").remove();
                             }
                         }else{
+                            $(".btn-wx-auth").attr({disabledImg:false});
                             Common.dialog("课程还未开放，敬请期待");
                             $(".loading-chat").remove();
                         }
@@ -1777,7 +1783,7 @@ define(function(require, exports, module) {
                         })
                     }, 200)
                 })
-            }, 2000)
+            }, 1000)
         },
         growAnimate:function(number){
             $(".grow-number-ani").remove();
