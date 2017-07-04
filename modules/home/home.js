@@ -928,7 +928,7 @@ define(function(require, exports, module) {
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Common.playSoun('http://opbh4armh.bkt.clouddn.com/Diamond%20Drop.wav');  //播放钻石音效
+                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/Diamond%20Drop.wav');  //播放钻石音效
                 Util.zuanAnimate(2);
             })
             // 联系我们
@@ -943,7 +943,7 @@ define(function(require, exports, module) {
             // 升级
             $(".helps-view .up-grade-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Common.playSoun('http://opbh4armh.bkt.clouddn.com/level_up.mp3');  //播放经验音效
+                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/level_up.mp3');  //播放经验音效
                 Util.gradeAnimate();
             })
             // 寻找帮助
@@ -1540,7 +1540,7 @@ define(function(require, exports, module) {
                         console.log(json);
                         if(zuanNum != 0){
                             // 打开钻石动画
-                            Common.playSoun('http://opbh4armh.bkt.clouddn.com/Diamond%20Drop.wav');  //播放钻石音效
+                            Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/Diamond%20Drop.wav');  //播放钻石音效
                             Util.zuanAnimate(json.diamond);
                             
                         }
@@ -1552,7 +1552,7 @@ define(function(require, exports, module) {
                         if(localStorage.currentGrade != json.grade.current_name){
                             // 打开升级动画
                             setTimeout(function(){
-                                Common.playSoun('http://opbh4armh.bkt.clouddn.com/level_up.mp3');  //播放经验音效
+                                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/level_up.mp3');  //播放经验音效
                                 Util.gradeAnimate();
                             }, 500);
                             
