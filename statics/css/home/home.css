@@ -473,7 +473,7 @@ body{
     color: rgb(84, 180,225);
 }
 .main-view .left-view .helps-view .change-course,
-.main-view .left-view .helps-view .find-help,
+/*.main-view .left-view .helps-view .find-help,*/
 .main-view .left-view .helps-view .zuan-ani{
     border-bottom: solid 1px #d2d2d2;
 }

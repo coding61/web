@@ -550,12 +550,24 @@ define(function(require, exports, module) {
         optionData:null,    //记录用户当前选了答案之后的数组会话
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
         init:function(){
-            // 当年浏览器
-            // console.log(Common.platform);
-            // console.log(navigator.userAgent);
-            // alert(navigator.userAgent);
-
-            Page.load();
+            
+            // 判断浏览器内核
+            // 当前浏览器
+            if(!Common.platform.webKit){
+                //当前不是谷歌内核，放出消息流
+                var questionHtml = null;
+                var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
+                questionHtml = '<div class="message text left-animation"> \
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <div class="msg-view">\
+                                        <span class="content">'+message+'</span> \
+                                    </div>\
+                                </div>';
+                $(questionHtml).appendTo(".messages");
+            }else{
+                Page.load();
+            }
+            // Util.platform();
             
             // 监听课程列表那里传过来的点击事件
             window.addEventListener('message', function(e) {  
@@ -1807,6 +1819,21 @@ define(function(require, exports, module) {
         },
         formatString:function(message){
             return message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+        },
+        platform:function(){
+            // 当前浏览器
+            if(Common.platform.webKit){
+                //当前不是谷歌内核，放出消息流
+                var questionHtml = null;
+                var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
+                questionHtml = '<div class="message text left-animation"> \
+                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <div class="msg-view">\
+                                        <span class="content">'+message+'</span> \
+                                    </div>\
+                                </div>';
+                $(questionHtml).appendTo(".messages");
+            }
         }
 
     }
