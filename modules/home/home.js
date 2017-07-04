@@ -551,9 +551,9 @@ define(function(require, exports, module) {
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
         init:function(){
             // 当年浏览器
-            console.log(Common.platform);
-            console.log(navigator.userAgent);
-            alert(navigator.userAgent);
+            // console.log(Common.platform);
+            // console.log(navigator.userAgent);
+            // alert(navigator.userAgent);
 
             Page.load();
             
