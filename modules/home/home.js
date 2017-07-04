@@ -624,6 +624,7 @@ define(function(require, exports, module) {
                 // 加载个人信息
                 Common.showLoading();
                 Mananger.getInfo();
+                Page.clickEventTotal();
             }else{
                 // 弹出登录窗口
                 // 打开登录窗口
@@ -1001,6 +1002,26 @@ define(function(require, exports, module) {
                 })
             })
 
+        },
+        clickEventTotal:function(){
+            // 关闭登录窗口
+            $(".login-view .close img").unbind('click').click(function(){
+                $(".login-shadow-view").hide();
+            })
+
+            // 登录按钮
+            $(".login-view .login").unbind('click').click(function(){
+                // 登录成功，请求数据
+                Mananger.login();
+            })
+
+            // 退出登录
+            $(".quit").unbind('click').click(function(){
+                Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+                     localStorage.clear();
+                     window.location.reload();
+                })
+            })
         },
         requestNextData:function(actionText, pagenum){
             $.ajax({
