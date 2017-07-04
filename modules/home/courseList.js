@@ -28,6 +28,11 @@ define(function(require, exports, module) {
                     success:function(json){
                         for (var i = 0; i < json.results.length; i++) {
                             var item = json.results[i];
+                            // if(!item.json || item.json == ""){
+                            //     item["open"] = false
+                            // }else{
+                            //     item["open"] = true;
+                            // }
                             item["open"] = true;
                             item["like"] = true;
                             item["like_number"] = 0;
@@ -164,8 +169,9 @@ define(function(require, exports, module) {
                 
                 //存储当前学习的课程题目
                 // localStorage.setItem("currentCourse", $(this).attr("data-category"));
-                localStorage.currentCourse = $(this).attr("data-category");
-                localStorage.currentCourseIndex = $(this).attr("data-course-index");
+                localStorage.currentCourse = $(this).attr("data-category");            //当前课程
+                localStorage.currentCourseIndex = $(this).attr("data-course-index");   //当前课程节下标
+                localStorage.currentCourseTotal = $(this).attr("data-course-total");    //当前课程总节数
                 window.parent.postMessage("currentCourse", '*');
 
                 // if ($(this).attr("data-category") == "html_simple") {
@@ -206,6 +212,9 @@ define(function(require, exports, module) {
                     $(this).children('span').html(n);
                 }
             })
+        },
+        test:function(){
+            console.log(123);
         }
     };
 

@@ -44,7 +44,7 @@ define(function(require, exports, module) {
             if (item.link) {
                 // 带链接的
                 questionHtml = '<div class="message link left-animation"> \
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -56,7 +56,7 @@ define(function(require, exports, module) {
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -65,7 +65,7 @@ define(function(require, exports, module) {
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
@@ -262,7 +262,7 @@ define(function(require, exports, module) {
                     if (item.link) {
                         // 带链接的
                         questionHtml = '<div class="message link"> \
-                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -274,7 +274,7 @@ define(function(require, exports, module) {
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <img class="msg" id="'+imgI+'" src="'+item.img+'" data-src="../../statics/images/loading.gif" alt="" />\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -283,7 +283,7 @@ define(function(require, exports, module) {
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <span class="content">'+Util.formatString(item.message)+'</span> \
                                             </div>\
@@ -475,7 +475,7 @@ define(function(require, exports, module) {
                     if (item.link) {
                         // 带链接的
                         questionHtml = '<div class="message link"> \
-                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -487,7 +487,7 @@ define(function(require, exports, module) {
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -496,7 +496,7 @@ define(function(require, exports, module) {
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <span class="content">'+Util.formatString(item.message)+'</span> \
                                             </div>\
@@ -558,7 +558,7 @@ define(function(require, exports, module) {
                 var questionHtml = null;
                 var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+message+'</span> \
                                     </div>\
@@ -616,6 +616,7 @@ define(function(require, exports, module) {
                     $(".code-result-shadow-view").show();
                 }
             }, false); 
+            
         },
         load:function(){
             // 判断用户是否登录
@@ -639,7 +640,7 @@ define(function(require, exports, module) {
             if (item.link) {
                 // 带链接的
                 questionHtml = '<div class="message link left-animation"> \
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -651,7 +652,7 @@ define(function(require, exports, module) {
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -660,7 +661,7 @@ define(function(require, exports, module) {
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
@@ -820,8 +821,16 @@ define(function(require, exports, module) {
                         var course = localStorage.oldCourse;
                         var courseIndex = localStorage.currentCourseIndex;
                         courseIndex = parseInt(courseIndex) + 1;
-
-                        Mananger.updateExtent(course, courseIndex, $(this));   //更新学习进度
+                        
+                        //判断是否是已经打过最后一节课
+                        if(courseIndex > localStorage.currentCourseTotal){
+                            //不打卡
+                            $(".btn-wx-auth").attr({disabledImg:false});
+                            Common.dialog("本课程已结束，选择其它课程，再继续");
+                            $(".loading-chat").remove();
+                        }else{
+                            Mananger.updateExtent(course, courseIndex, $(this));   //更新学习进度
+                        }
 
                     }else{
                         if(item.zuan_number || item.grow_number){
@@ -1478,20 +1487,34 @@ define(function(require, exports, module) {
                             $(".loading-chat").remove();
                             return;
                         }
-                        var array = JSON.parse(data.json);
-
-                        /*
-                        // 1:Python 2:HTML5 3.CSS 4.JavaScript
-                        if(course == 1){
-                            courseIndex = localStorage.pythonSimpleIndex;
-                        }else if(course == 2){
-                            courseIndex = localStorage.htmlSimpleIndex;
-                        }else if(course == 3){
-                            courseIndex = localStorage.cssSimpleIndex;
-                        }else if(course == 4){
-                            courseIndex = localStorage.jsSimpleIndex;
+                        
+                        // 方法1，捕获异常
+                        try {
+                           var array = JSON.parse(data.json);
+                           // console.log(array);
                         }
+                        catch(err){
+                            // console.log(err);
+                            $(".btn-wx-auth").attr({disabledImg:false});
+                            alert("数据格式有问题!");
+                            $(".loading-chat").remove();
+                            return;
+                        }
+                        
+                        /*
+                        // 方法2：捕获异常
+                        Util.catchJsonParseError(data.json).then(function(b){
+                            var array = b;
+                        }).catch(function(err){
+                            // console.log(err);
+                            $(".btn-wx-auth").attr({disabledImg:false});
+                            alert("数据格式有问题!");
+                            $(".loading-chat").remove();
+                            return;
+                        })
                         */
+                        // var array = JSON.parse(data.json);
+
                         courseIndex = parseInt(courseIndex);
                         
                         if(array){
@@ -1507,6 +1530,12 @@ define(function(require, exports, module) {
                                 $(".btn-wx-auth").attr({disabledImg:false});
                                 Common.dialog("恭喜，您已经完成本课程的学习。您可以选择其它课程，再继续");
                                 $(".loading-chat").remove();
+
+                                // 打开课程列表窗口, 更改课程学习状态 为已完成
+                                $(".right-view>img").hide();
+                                $(".right-view iframe.codeEdit").hide();
+                                $(".right-view iframe.courseList").show();
+                                $("#courseList").contents().find(".course[data-category="+data.pk+"]").find(".status").attr({src:"../../statics/images/course/icon1.png"})
                             }
                         }else{
                             $(".btn-wx-auth").attr({disabledImg:false});
@@ -1516,6 +1545,9 @@ define(function(require, exports, module) {
                         
                     },
                     error:function(xhr, textStatus){
+                        $(".btn-wx-auth").attr({disabledImg:false});
+                        $(".loading-chat").remove();
+
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
                             return;
@@ -1649,22 +1681,15 @@ define(function(require, exports, module) {
                         
                     },
                     error:function(xhr, textStatus){
+                        $(".btn-wx-auth").attr({disabledImg:false});
+                        $(".loading-chat").remove();
+                        
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            // // 普通 action 按钮点击事件
-                            // if (this_.hasClass("exercise")) {
-                            //     // 点了习题的，提交答案的按钮
-                            //     var msg = Page.options.join(',');
-                            //     Page.options = [];
-                            //     Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                            // }else{
-                            //     // 普通的 action 按钮
-                            //     Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
-                            // }
                             return;
                         }else{
                             Common.dialog('服务器繁忙');
@@ -1827,13 +1852,21 @@ define(function(require, exports, module) {
                 var questionHtml = null;
                 var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="http://oe3six40u.bkt.clouddn.com/binshu.jpg" />\
+                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+message+'</span> \
                                     </div>\
                                 </div>';
                 $(questionHtml).appendTo(".messages");
             }
+        },
+        catchJsonParseError:function(str){
+            var p = new Promise(function(resolve, reject){
+                var cc = JSON.parse(str);
+                resolve(cc);
+            })
+            
+            return p;
         }
 
     }

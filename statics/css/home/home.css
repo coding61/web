@@ -22,6 +22,9 @@ body{
     height: 50px;
     font-size: 15px;
 
+    padding: 0 2%;
+    width: 96%;
+
 }
 .header .left-view{
 	display: flex;
@@ -132,7 +135,7 @@ body{
     height: 100%;
 }
 .header .right-view .quit{
-    margin-right: 5%;
+    /*margin-right: 5%;*/
     cursor: pointer;
 }
 .header .right-view .item{
@@ -418,6 +421,7 @@ body{
 
     height: 40px;
     line-height: 40px;
+    cursor: pointer;
 }
 .main-view .left-view .btns .actions .option.unselect{
     color: rgb(250, 80, 131);
@@ -462,12 +466,16 @@ body{
     font-size: 13px;
     padding: 0 10px;
     display: none;
+    font-size: 15px;
 }
 .main-view .left-view .helps-view>div{
     height: 25px;
     line-height: 25px;
     text-align: center;
     letter-spacing: 1px;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
 }
 .main-view .left-view .helps-view>div:hover{
     color: rgb(84, 180,225);

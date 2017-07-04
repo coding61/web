@@ -43,7 +43,7 @@
 
         <script type="text/html" id="courses-template">
         	{{each}}
-	        	<div class="course{{if $value.open == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}}>
+	        	<div class="course{{if $value.open == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}} data-course-total={{$value.total_lesson}}>
 	        		{{if $value.learn_extent.status == "finish"}}
 		                <img class="status" src="../../statics/images/course/icon1.png" />
 		            {{else if $value.learn_extent.status == "processing"}}
@@ -62,7 +62,7 @@
 			            </div>
 		            {{/if}}
 	                <h3>{{$value.name}}</h3>
-	                <img src="{{$value.images}}" />
+	                <img class="avatar" src="{{$value.images}}" />
 	                <span class="desc">简介:{{$value.content}}</span>
 	            </div>
         	{{/each}}
