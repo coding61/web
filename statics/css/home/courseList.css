@@ -16,7 +16,7 @@ body{
     padding-left: 2%;
     padding-left: 4%;
     width: 96%;
-    /*padding-top: 4%;*/
+    padding-top: 1%;
     /*min-height: 100%;*/
 }
 .course{
@@ -107,7 +107,7 @@ body{
     padding-right: 8%;
     padding-left: 4%;
     margin-bottom: 2%;
-    margin-top: 1%;
+    /*margin-top: 1%;*/
 }
 .category-view .desc{
     color: #a6a6a6;

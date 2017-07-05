@@ -28,32 +28,34 @@ define(function(require, exports, module) {
                     success:function(json){
                         for (var i = 0; i < json.results.length; i++) {
                             var item = json.results[i];
-                            // if(!item.json || item.json == ""){
-                            //     item["open"] = false
-                            // }else{
-                            //     item["open"] = true;
-                            // }
-                            item["open"] = true;
                             item["like"] = true;
                             item["like_number"] = 0;
-                            
-                            /*
-                            // 1:Python 2:HTML5 3.CSS 4.JavaScript
-                            // item.learn_extent.last_lesson
-                            // 1:Python 2:HTML5 3.CSS 4.JavaScript
-                            if(item.pk == 1){
-                                localStorage.pythonSimpleIndex = item.learn_extent.last_lesson;
-                            }else if(item.pk == 2){
-                                localStorage.htmlSimpleIndex = item.learn_extent.last_lesson;
-                            }else if(item.pk == 3){
-                                localStorage.cssSimpleIndex = item.learn_extent.last_lesson;
-                            }else if(item.pk == 4){
-                                localStorage.jsSimpleIndex = item.learn_extent.last_lesson;
-                            }
-                            */
                         }
+                        var categoryArr = [];
+                        for (var i = 0; i < json.results.length; i++) {
+                            var item = json.results[i];
+                            if (categoryArr.indexOf(item.profession) == -1) {
+                                categoryArr.push(item.profession);
+                            }
+                        }
+                        // console.log(categoryArr);
+                        
+                        var array = [];
+                        for (var i = 0; i < categoryArr.length; i++) {
+                            var category = categoryArr[i];
+                            var categoryCourses = [];
+                            for (var j = 0; j < json.results.length; j++) {
+                                var item = json.results[j];
+                                if (item.profession == category) {
+                                    categoryCourses.push(item);
+                                }
+                            }
+                            var dic = {"category":category, courses:categoryCourses};
+                            array.push(dic);
+                        }
+                        // console.log(array);
 
-                        var html = ArtTemplate("courses-template", json.results);
+                        var html = ArtTemplate("courses-template", array);
                         $(".courses").html(html);
 
                         Page.clickEvent();
