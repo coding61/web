@@ -328,8 +328,10 @@ body{
     align-items: center;
 }
 .bz-shadow-view .bz .close img{
-    position: absolute;
-    right: 0.1rem;
+    /*position: absolute;
+    right: 0.1rem;*/
+
+    margin-left: 90%;
 }
 .bz-shadow-view .bz .bz-content{
     width: 80%;

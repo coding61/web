@@ -156,6 +156,10 @@ define(function(require, exports, module) {
         clickEvent:function(){
             $(".course").click(function(e){
                 e.stopPropagation();
+                if ($(this).hasClass('unopen')) {
+                    // 未开放的课程，不能点击
+                    return;
+                }
                 if ($(this).attr("data-status") == "finish") {
                     Common.dialog("当前课程已经学完了");
                     return;

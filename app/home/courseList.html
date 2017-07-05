@@ -42,16 +42,23 @@
         </div>
 
         <script type="text/html" id="courses-template">
+        	<div class="category-view">
+        		<div class="category">
+                    <i class="line"></i>
+                    <span class="title">Web 前端工程师</span>
+        		</div>
+        		<span class="desc">职责是利用各种 web 技术进行客户端产品（也就是浏览器）的开发。我们提供前端必备的 HTML、CSS、JavaScript、JQuery 等基础教学，同时不断增加实用框架课程如 Bootstrap、React 等。学完所有课程，您可以成为合格的前端工程师。</span>
+        	</div>
         	{{each}}
-	        	<div class="course{{if $value.open == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}} data-course-total={{$value.total_lesson}}>
+	        	<div class="course{{if $value.isopen == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}} data-course-total={{$value.total_lesson}}>
 	        		{{if $value.learn_extent.status == "finish"}}
 		                <img class="status" src="../../statics/images/course/icon1.png" />
 		            {{else if $value.learn_extent.status == "processing"}}
 		            	<img class="status" src="../../statics/images/course/icon2.png" />
 		            {{else}}
 		            {{/if}}
-		            {{if $value.open == false}}
-			            <div class="like{{if $value.like == true}} select-like{{else}} unselect-like{{/if}}" data-like-number={{$value.like_number}}>
+		            {{if $value.isopen == false}}
+			            <!-- <div class="like{{if $value.like == true}} select-like{{else}} unselect-like{{/if}}" data-like-number={{$value.like_number}}>
 			                {{if $value.like == true}}
 				            	<img src="../../statics/images/zan-select.png">
 				            	<span>{{$value.like_number}}</span>
@@ -59,7 +66,7 @@
 				            	<img src="../../statics/images/zan-unselect-p.png">
 				            	<span>想学习</span>
 				            {{/if}}
-			            </div>
+			            </div> -->
 		            {{/if}}
 	                <h3>{{$value.name}}</h3>
 	                <img class="avatar" src="{{$value.images}}" />

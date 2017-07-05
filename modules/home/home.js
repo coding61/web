@@ -5,6 +5,7 @@ define(function(require, exports, module) {
     
     // ----------------------------------1.默认数据
     var Default = {
+        olduser:false,
         init:function(){
             $.ajax({
                 type:'get',
@@ -12,7 +13,11 @@ define(function(require, exports, module) {
                 success:function(json){
                     console.log(json);
                     Page.index = 0;
-                    Page.data = json.default;
+                    if(Default.olduser == true){
+                        Page.data = json.default;
+                    }else{
+                        Page.data = json.default;
+                    }
 
                     Default.load(Page.data, Page.index);
                 },
@@ -624,6 +629,9 @@ define(function(require, exports, module) {
                 // 加载个人信息
                 Common.showLoading();
                 Mananger.getInfo();
+
+                Mananger.loadMyTeam(); // 获取我的团队信息
+
                 Page.clickEventTotal();
             }else{
                 // 弹出登录窗口
@@ -1002,6 +1010,15 @@ define(function(require, exports, module) {
                 })
             })
 
+            // 鼠标划过用户头像
+            $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
+                // $(".header .team").show();
+                $(".header .team").toggle();
+            }).unbind('mouseout').mouseout(function(){
+                // $(".header .team").hide();
+                $(".header .team").toggle();
+            })
+
         },
         clickEventTotal:function(){
             // 关闭登录窗口
@@ -1022,6 +1039,16 @@ define(function(require, exports, module) {
                      window.location.reload();
                 })
             })
+
+            // 鼠标划过用户头像
+            $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
+                // $(".header .team").show();
+                $(".header .team").toggle();
+            }).unbind('mouseout').mouseout(function(){
+                // $(".header .team").hide();
+                $(".header .team").toggle();
+            })
+            
         },
         requestNextData:function(actionText, pagenum){
             $.ajax({
@@ -1419,6 +1446,8 @@ define(function(require, exports, module) {
                     localStorage.token = json.token;
 
                     Mananger.getInfo();
+
+                    Mananger.loadMyTeam();  // 获取我的团队信息
                     // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
                 },
                 error:function(xhr, textStatus){
@@ -1462,8 +1491,9 @@ define(function(require, exports, module) {
                         */
                         Util.updateInfo(json);
                         
-                        // 传递值，告知要获取课程信息
-                        window.frames[1].postMessage('loadCourses', '*');
+                        
+                        // Mananger.loadMyTeam(); // 获取我的团队信息
+                        window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
 
 
                         // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
@@ -1719,6 +1749,40 @@ define(function(require, exports, module) {
                     }
                 })
             })
+        },
+        loadMyTeam:function(){
+             Common.isLogin(function(token){
+                $.ajax({
+                    type:'get',
+                    url: Common.domain + "/userinfo/mygroup/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                       var html = ArtTemplate("team-template", json);
+                       $(".header .team").html(html);
+                    },
+                    error:function(xhr, textStatus){
+
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            // Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
         }
         
     }
@@ -1793,6 +1857,7 @@ define(function(require, exports, module) {
             }
         },
         updateInfo:function(json){
+            Default.olduser = json.olduser;      //记录是新用户还是老用户
             localStorage.avatar = json.avatar;     //记录用户的头像
             localStorage.currentGrade = json.grade.current_name;    //记录当前等级
 
@@ -1803,7 +1868,7 @@ define(function(require, exports, module) {
             $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
             $(".header .zuan span").html("x"+json.diamond);
 
-            var percent = parseInt(json.experience)/parseInt(json.grade.next_all_experience)*$(".header .info-view").width();
+            var percent = (parseInt(json.experience)-parseInt(json.grade.current_all_experience))/(parseInt(json.grade.next_all_experience)-parseInt(json.grade.current_all_experience))*$(".header .info-view").width();
             $(".header .progress img").css({
                 width:percent
             })

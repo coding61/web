@@ -97,6 +97,7 @@ body{
 
     height: 25px;
     width: 25px;
+    border-radius: 50%;
 }
 
 .header .right-view .avatar{
@@ -140,6 +141,52 @@ body{
 }
 .header .right-view .item{
     display: none;
+}
+/*团队成员等级*/
+.team{
+    position: absolute;
+    z-index: 100000;
+    background: white;
+    top: 50px;
+    color: #1a1a1a;
+    padding: 0 15px;
+    border: solid 1px #d2d2d2;
+    border-radius: 5px;
+    line-height: 30px;
+    left: 61%;
+    font-size: 13px;
+    display: none;
+}
+.team .member{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #696969;
+    font-size: 12px;
+}
+.team .member .member-name{
+    display: flex;
+    align-items: center;
+}
+.team .member-name img.avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.team .member span.name {
+    width: 60px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.team .arrow{
+    position: absolute;
+    height: 9px;
+    top: -9px;
+    left: 50%;
 }
 /*主要界面*/
 .main-view{
