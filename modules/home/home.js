@@ -631,6 +631,7 @@ define(function(require, exports, module) {
                 Mananger.getInfo();
 
                 Mananger.loadMyTeam(); // 获取我的团队信息
+                Mananger.loadTeamBrand();  //获取团队排行
 
                 Page.clickEventTotal();
             }else{
@@ -1012,11 +1013,11 @@ define(function(require, exports, module) {
 
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
-                // $(".header .team").show();
-                $(".header .team").toggle();
+                // $(".header .team-info").show();
+                $(".header .team-info").toggle();
             }).unbind('mouseout').mouseout(function(){
-                // $(".header .team").hide();
-                $(".header .team").toggle();
+                // $(".header .team-info").show();
+                $(".header .team-info").toggle();
             })
 
         },
@@ -1042,11 +1043,11 @@ define(function(require, exports, module) {
 
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
-                // $(".header .team").show();
-                $(".header .team").toggle();
+                // $(".header .team-info").show();
+                $(".header .team-info").toggle();
             }).unbind('mouseout').mouseout(function(){
-                // $(".header .team").hide();
-                $(".header .team").toggle();
+                // $(".header .team-info").show();
+                $(".header .team-info").toggle();
             })
             
         },
@@ -1448,6 +1449,7 @@ define(function(require, exports, module) {
                     Mananger.getInfo();
 
                     Mananger.loadMyTeam();  // 获取我的团队信息
+                    Mananger.loadTeamBrand();  //获取团队排行
                     // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
                 },
                 error:function(xhr, textStatus){
@@ -1783,6 +1785,51 @@ define(function(require, exports, module) {
                     }
                 })
             })
+        },
+        loadTeamBrand:function(){
+            var array = [
+                {name:'nozuonodie', zuan:237},
+                {name:'nozuonodie', zuan:230},
+                {name:'nozuonodie', zuan:230},
+                {name:'nozuonodie', zuan:230},
+                {name:'nozuonodie', zuan:220},
+                {name:'nozuonodie', zuan:210},
+                {name:'nozuonodie', zuan:130}
+            ]
+            var html = ArtTemplate("teams-brand-template", array);
+            $(".teams-brand").html(html);
+            /*
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"get",
+                    url:Common.domain + "/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
+            */
         }
         
     }

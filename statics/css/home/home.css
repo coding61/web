@@ -143,19 +143,34 @@ body{
     display: none;
 }
 /*团队成员等级*/
-.team{
+.team-info{
     position: absolute;
     z-index: 100000;
-    background: white;
+    background: rgb(229, 230, 231);
     top: 50px;
     color: #1a1a1a;
-    padding: 0 15px;
+    /*padding: 0 15px;*/
     border: solid 1px #d2d2d2;
     border-radius: 5px;
     line-height: 30px;
     left: 61%;
     font-size: 13px;
     display: none;
+}
+.team-info .team{
+    background: white;
+    padding: 0 15px;
+    margin-bottom: 4px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    /*border: solid 1px #d2d2d2;*/
+}
+.team-info .teams-brand{
+    padding: 0 15px;
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    /*border: solid 1px #d2d2d2;*/
 }
 .team .member{
     display: flex;
@@ -187,6 +202,26 @@ body{
     height: 9px;
     top: -9px;
     left: 50%;
+}
+.team-brand{
+    display: flex;
+    /*justify-content: space-between;*/
+    align-items: center;
+}
+.team-brand .name{
+    width: 70px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 30px;
+}
+.team-brand .zn{
+    display: inline-flex;
+    align-items: center;
+}
+.team-brand .zn .zuan{
+    margin-right: 2px;
+    width: 12px;
 }
 /*主要界面*/
 .main-view{
