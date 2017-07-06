@@ -1014,6 +1014,7 @@ define(function(require, exports, module) {
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
                 // $(".header .team-info").show();
+                Util.adjustTeaminfo();
                 $(".header .team-info").toggle();
             }).unbind('mouseout').mouseout(function(){
                 // $(".header .team-info").show();
@@ -1044,6 +1045,7 @@ define(function(require, exports, module) {
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
                 // $(".header .team-info").show();
+                Util.adjustTeaminfo();
                 $(".header .team-info").toggle();
             }).unbind('mouseout').mouseout(function(){
                 // $(".header .team-info").show();
@@ -1905,6 +1907,7 @@ define(function(require, exports, module) {
             }
         },
         updateInfo:function(json){
+
             Default.olduser = json.olduser;      //记录是新用户还是老用户
             localStorage.avatar = json.avatar;     //记录用户的头像
             localStorage.currentGrade = json.grade.current_name;    //记录当前等级
@@ -1920,7 +1923,14 @@ define(function(require, exports, module) {
             $(".header .progress img").css({
                 width:percent
             })
-
+        },
+        adjustTeaminfo:function(){
+            var a = $(".header .icon4").offset().left;
+            var b = $(".header .right-view").offset().left;
+            var c = $(".header .team-info").width();
+            $(".team-info").css({
+                left: (a-b-c/2) + "px"
+            })
         },
         zuanAnimate:function(number){
             // 钻石出现，然后2秒后飞到右上角消失
