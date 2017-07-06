@@ -379,7 +379,9 @@ define(function(require, exports, module) {
             $(".inviteCode").click(function(){
                 Common.isLogin(function(token){
                     if (token == "null") {
-                        Common.dialog('你还未授权');
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        Common.authWXLogin(redirectUri);
+                        return;
                     }else{
                         $(".wait-loading").show();
                         $(".wait-loading span").hide();

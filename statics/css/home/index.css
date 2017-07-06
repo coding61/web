@@ -114,14 +114,14 @@ body{
     /*flex-direction: column;*/
     /*justify-content: center;*/
     /*align-items: center;*/
-    margin-top: 50px;
+    margin-top: 0.50rem;
     /* display: none; */
     background: white;
     width: 80%;
     /*height: 150px;*/
     margin-left: 10%;
     margin-top: 40%;
-    border-radius: 5px;
+    border-radius: 0.05rem;
    /* border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;*/
 }
@@ -129,12 +129,16 @@ body{
 .inviteCode-view .password{
     width: 80%;
     margin-left: 10%;
-    font-size: 16px;
-    margin-bottom: 5%;
+    font-size: 0.18rem;
+    margin-bottom: 10%;
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 10%;
+}
+.inviteCode-view .username .text,
+.inviteCode-view .password .text{
+    width: 0.80rem;
 }
 .inviteCode-view .password{
 	margin-top: 0;
@@ -142,9 +146,9 @@ body{
 .idCode-view span,
 .inviteCode-view span.title{
 	display: inline-block;
-	font-size: 18px;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	font-size: 0.18rem;
+	margin-top: 0.15rem;
+	margin-bottom: 0.15rem;
 	width: 100%;
 	text-align: center;
 }
@@ -153,8 +157,8 @@ body{
 	width: 100%;
 	text-align: center;
 	border: none;
-	font-size: 14px;
-	margin-bottom: 30px;
+	font-size: 0.14rem;
+	margin-bottom: 0.30rem;
 	color: lightblue;
 	/*width: 100%;
     text-align: center;*/
@@ -162,7 +166,7 @@ body{
     word-break:break-all;
     width: 90%;
     margin-left: 5%;
-    font-size: 18px;
+    font-size: 0.18rem;
 }
 
 .idCode-view .btn{
@@ -170,10 +174,10 @@ body{
     width: 50%;
     float: left;
     /*background: red;*/
-    height: 40px;
-    line-height: 40px;
+    height: 0.40rem;
+    line-height: 0.40rem;
     text-align: center;
-    border-top: solid 1px #e1e1e1;
+    border-top: solid 0.01rem #e1e1e1;
 }
 .idCode-view .btn.cancel{
 	/*border-right: solid 1px #e1e1e1;*/
