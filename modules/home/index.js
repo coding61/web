@@ -362,7 +362,10 @@ define(function(require, exports, module) {
                         $(".idCode-view input").val("");
                         $(".idCode-view textarea").val("");
                         $(".idCode-shadow").hide();
-                        Common.dialog('你还未授权');
+                        
+                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        Common.authWXLogin(redirectUri);
+                        return;
                     }else{
                         $(".idCode-view input").val(token);
                         $(".idCode-view textarea").val(token);
