@@ -1787,28 +1787,30 @@ define(function(require, exports, module) {
             })
         },
         loadTeamBrand:function(){
+            /*
             var array = [
-                {name:'nozuonodie', zuan:237},
-                {name:'nozuonodie', zuan:230},
-                {name:'nozuonodie', zuan:230},
-                {name:'nozuonodie', zuan:230},
-                {name:'nozuonodie', zuan:220},
-                {name:'nozuonodie', zuan:210},
-                {name:'nozuonodie', zuan:130}
+                {name:'nozuonodie', diamond_amount:237},
+                {name:'nozuonodie', diamond_amount:230},
+                {name:'nozuonodie', diamond_amount:230},
+                {name:'nozuonodie', diamond_amount:230},
+                {name:'nozuonodie', diamond_amount:220},
+                {name:'nozuonodie', diamond_amount:210},
+                {name:'nozuonodie', diamond_amount:130}
             ]
             var html = ArtTemplate("teams-brand-template", array);
             $(".teams-brand").html(html);
-            /*
+            */
             Common.isLogin(function(token){
                 $.ajax({
                     type:"get",
-                    url:Common.domain + "/",
+                    url:Common.domain + "/userinfo/groups/diamond/ranking/",
                     headers:{
                         Authorization:"Token " + token
                     },
                     timeout:6000,
                     success:function(json){
-
+                        var html = ArtTemplate("teams-brand-template", json.results);
+                        $(".teams-brand").html(html);
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -1829,7 +1831,6 @@ define(function(require, exports, module) {
                     }
                 })
             })
-            */
         }
         
     }
