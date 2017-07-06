@@ -171,7 +171,11 @@ define(function(require, exports, module) {
                 //     remark = remark.replace(/\t/g, "&nbsp");
 
                 // }
-                $(".bz textarea").val(remark);
+                if(remark == "暂无备注"){
+                    remark = ""
+                }
+                $(".bz textarea").val("").focus().val(remark);
+                // $(".bz textarea").val(remark);
 
                 $(".bz .item1").hide();
                 $(".bz .item").show();
