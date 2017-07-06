@@ -48,7 +48,19 @@
 	                    <i class="line"></i>
 	                    <span class="title">{{$value.category}}</span>
 	        		</div>
-	        		<span class="desc">职责是利用各种 web 技术进行客户端产品（也就是浏览器）的开发。我们提供前端必备的 HTML、CSS、JavaScript、JQuery 等基础教学，同时不断增加实用框架课程如 Bootstrap、React 等。学完所有课程，您可以成为合格的前端工程师。</span>
+	        		<span class="desc">
+	        		{{if $value.category=="Web 前端工程师"}}
+		        		职责是利用各种 web 技术进行客户端产品（也就是浏览器）的开发。我们提供前端必备的 HTML、CSS、JavaScript、JQuery 等基础教学，同时不断增加实用框架课程如 Bootstrap、React 等。学完所有课程，您可以成为合格的前端工程师。
+	        		{{else if $value.category == "儿童编程"}}
+		        		让7-14岁儿童能使用基本的编程工具编程，了解编程的基本概念，并能用Scratch进行创造。
+	        		{{else if $value.category == "Web后端（服务器开发）"}}
+		        		用于服务器，处理客户端发来的请求。比如存储数据，进行实时通信等。
+	        		{{else if $value.category == "手机App开发"}}
+	        			流行的手机App开发，可以在学成后直接开发手机App。
+	        		{{else if $value.category == "人工智能开发"}}
+		        		未来的世界以人工智能为基础。在这里我们探索人工智能如何开发。
+	        		{{/if}}
+	        		</span>
 	        	</div>
 	        	{{each $value.courses}}
 		        	<div class="course{{if $value.isopen == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}} data-course-total={{$value.total_lesson}}>

@@ -146,9 +146,10 @@ define(function(require, exports, module) {
 	}
 	// 预加载图片的隐藏
 	exports.showLoadingPreImg1 = function(b){
+		/*
 		var img = new Image();
 		img.src = $(b).attr("src");
-
+		
 		if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数 
 			$(b).show();
 			$(b).parents('.msg-view').find('.pre-msg').hide();
@@ -162,15 +163,51 @@ define(function(require, exports, module) {
 			$(b).hide();
 			$(b).parents('.msg-view').find('.pre-msg').show();
 			$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
+		}*/
+		
+		
+		if(b.complete){
+			$(b).show();
+			$(b).parents('.msg-view').find('.pre-msg').hide();
+			return; // 直接返回，不用再处理onload事件 
 		}
+		$(b).bind('load', function(){
+			$(b).show(); 
+			$(b).parents('.msg-view').find('.pre-msg').hide();
+		})
+		$(b).bind('error', function(){
+			$(b).hide();
+			$(b).parents('.msg-view').find('.pre-msg').show();
+			$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
+		})
+		
+		/*
+		var imgdefereds=[];
+		var dfd=$.Deferred();
 
+		$(b).bind('load',function(){
+			dfd.resolve();
+		}).bind('error',function(){
+		    //图片加载错误，加入错误处理
+		    // dfd.resolve();
+		    $(b).hide();
+			$(b).parents('.msg-view').find('.pre-msg').show();
+			$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
+		})
 
-		// $(b).onload(function(){
-		// 	$(b).parents('.msg-view').find('.pre-msg').hide();
-		// })
-		// $(b).onerror(function(){
-		// 	$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
-		// })
+	 	if($(b).complete){
+		 	setTimeout(function(){
+				dfd.resolve();
+			},1000);
+	 	}
+		imgdefereds.push(dfd);
+			
+		$.when.apply(null,imgdefereds).done(function(){
+			// callback && callback.call(null);
+			$(b).show(); 
+			$(b).parents('.msg-view').find('.pre-msg').hide();
+		});
+		*/
 	}
 	// 播放音效
 	exports.playSoun = function(url){
@@ -828,6 +865,13 @@ define(function(require, exports, module) {
 			});
 		}
 	};
+	// 统计页面浏览量
+	var _hmt = _hmt || [];
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?a065df329280aef5cc07837410948a43";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+
 
 	(function() {
 		// var img = new Image();

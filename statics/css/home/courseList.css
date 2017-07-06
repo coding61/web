@@ -108,11 +108,15 @@ body{
     padding-left: 4%;
     margin-bottom: 2%;
     /*margin-top: 1%;*/
+    width: 88%;
 }
 .category-view .desc{
     color: #a6a6a6;
     line-height: 25px;
     font-size: 12px;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
 }
 /* 课程分类分割线*/
 .category{

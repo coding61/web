@@ -3,6 +3,7 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js');
 
     var Page = {
+        array:[],
         init:function(){
             
             // 监听课程列表那里传过来的点击事件
@@ -26,39 +27,13 @@ define(function(require, exports, module) {
                         Authorization:"Token " + token
                     },
                     success:function(json){
-                        for (var i = 0; i < json.results.length; i++) {
-                            var item = json.results[i];
-                            item["like"] = true;
-                            item["like_number"] = 0;
+                        if (json.next && json.next != "") {
+                            // 请求所有数据
+                            Page.loadCourseInfo1(json.count);
+                        }else{
+                            Page.adjustData(json.results);
                         }
-                        var categoryArr = [];
-                        for (var i = 0; i < json.results.length; i++) {
-                            var item = json.results[i];
-                            if (categoryArr.indexOf(item.profession) == -1) {
-                                categoryArr.push(item.profession);
-                            }
-                        }
-                        // console.log(categoryArr);
                         
-                        var array = [];
-                        for (var i = 0; i < categoryArr.length; i++) {
-                            var category = categoryArr[i];
-                            var categoryCourses = [];
-                            for (var j = 0; j < json.results.length; j++) {
-                                var item = json.results[j];
-                                if (item.profession == category) {
-                                    categoryCourses.push(item);
-                                }
-                            }
-                            var dic = {"category":category, courses:categoryCourses};
-                            array.push(dic);
-                        }
-                        // console.log(array);
-
-                        var html = ArtTemplate("courses-template", array);
-                        $(".courses").html(html);
-
-                        Page.clickEvent();
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -75,6 +50,73 @@ define(function(require, exports, module) {
                     }
                 })
             })
+        },
+        loadCourseInfo1:function(num){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"get",
+                    url:Common.domain + "/course/courses/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        page_size:num
+                    },
+                    success:function(json){
+                        
+                        Page.adjustData(json.results);
+                        
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        adjustData:function(results){
+            for (var i = 0; i < results.length; i++) {
+                var item = results[i];
+                item["like"] = true;
+                item["like_number"] = 0;
+            }
+            var categoryArr = [];
+            for (var i = 0; i < results.length; i++) {
+                var item = results[i];
+                if (categoryArr.indexOf(item.profession) == -1) {
+                    categoryArr.push(item.profession);
+                }
+            }
+            // console.log(categoryArr);
+            
+            var array = [];
+            for (var i = 0; i < categoryArr.length; i++) {
+                var category = categoryArr[i];
+                var categoryCourses = [];
+                for (var j = 0; j < results.length; j++) {
+                    var item = results[j];
+                    if (item.profession == category) {
+                        categoryCourses.push(item);
+                    }
+                }
+                var dic = {"category":category, courses:categoryCourses};
+                array.push(dic);
+            }
+            console.log(array);
+
+            var html = ArtTemplate("courses-template", array);
+            $(".courses").html(html);
+
+            Page.clickEvent();
         },
         load:function(){
             // status， 用户学习课程进度状态；open：课程是否开放；like：用户是否想学该课程；like_number:想学该课程的人数
