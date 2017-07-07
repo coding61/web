@@ -32,6 +32,19 @@ body{
 
     /*height: 30px;*/
 }
+.header .left-view .right-line{
+    border-right: solid 1px white;
+    height: 24px;
+    /* margin-top: 15px; */
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-flex;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.header .left-view .logo2{
+    cursor: pointer;
+}
 .header .left-view>span{
 	padding: 5px 10px;
 	background-color: rgba(0,0,0,0.4);

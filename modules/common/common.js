@@ -868,7 +868,7 @@ define(function(require, exports, module) {
 	// 统计页面浏览量
 	var _hmt = _hmt || [];
 	var hm = document.createElement("script");
-	hm.src = "https://hm.baidu.com/hm.js?a065df329280aef5cc07837410948a43";
+	hm.src = "https://hm.baidu.com/hm.js?0e1f2afd2def9daf664e5504d146965a";
 	var s = document.getElementsByTagName("script")[0]; 
 	s.parentNode.insertBefore(hm, s);
 
