@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)https://www.vipkid.com.cn/signup -->
+<html lang="zh-CN">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta content="charset=utf-8">
+		<meta name="baidu-site-verification" content="ABPa8iJcIL">
+		<meta name="msvalidate.01" content="C99CBBDA9CD136894A8971CE94EE9B92">
+		<meta name="360-site-verification" content="1b8ba692dd60752b3a9245aebb986870">
+		<title>论坛</title>
+		<link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap.min.css" />
+    	<link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap-theme.min.css" />
+    	<!--<link rel="stylesheet" href="../css/reset.css">
+		<link rel="stylesheet" href="../css/huiwan.css">
+		<link rel="stylesheet" type="text/css" href="../css/global.css" />-->
+		<link rel="stylesheet" href="css/layui.css" />
+		<link rel="stylesheet" href="css/font.css" />
+		<link rel="stylesheet" href="css/nav.css">
+		<link rel="stylesheet" href="css/page.css">
+		<link rel="stylesheet" href="css/bbsList.css" />
+	</head>
+
+	<body>
+		<div class="container-fluid">
+            <!-- <div style="padding-top:10px;">
+                <nav class="huiwan-navbar navbar navbar-default navbar-static-top" role="navigation">
+                   	
+                </nav>
+            </div> -->
+            
+            <nav>
+				<div class="nav">
+					<div class="logo">
+						<div class="logo-img">
+							<img src="img/zone/logo-2.png" alt="logo">
+						</div>
+					</div>
+					<div class="top-nav">
+					<a href="/">首页</a>
+					<a href="/static/html/class-list/class-list.html">购买课程</a>
+					<a href="/static/html/works/works_list.html">学生作品</a>
+					<a href="http://free.bcjiaoyu.com/" target="view_window">公益教学</a>
+					<a href="/orange-plan/" target="view_window">免费视频</a>
+					<a href="/forum/" target="view_window" class="active">学习论坛</a>
+					</div>
+					<div class="login">
+						<div class="callme"><span>&nbsp;周一至周日 10:00~19:00</span></div>
+						<div class="login-inner">
+							<a href="/static/html/login-reg/login.html" class="login-btn btn-normal bgc-bright">登陆</a>
+							<a href="/static/html/login-reg/reg.html" class="reg-btn btn-normal bgc-orange">注册</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+		<div class="main layui-clear container">
+			<div class="wrap">
+				<div class="content" style="margin-right:0">
+					<div class="fly-tab"> 
+						<span class="fly-tab-span">          
+							<a href="javascript:void(0);" data-pk="-1">全部</a>    
+							<a href="javascript:void(0);"data-pk="0">精帖</a>         
+							<!--<a href="javascript:void(0);" onclick="getPostByType(1,1,10);">求助</a>
+							<a href="javascript:void(0);" onclick="getPostByType(2,1,10);">讨论</a> 
+							<a href="javascript:void(0);" onclick="getPostByType(3,1,10);">分享</a> 
+							<a href="javascript:void(0);" onclick="getPostByType(4,1,10);">随记</a>  -->          
+							                 
+						</span>
+						<!-- <form action="http://cn.bing.com/search" class="fly-search"> 
+							<i class="iconfont icon-sousuo"></i> 
+							<input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q"> 
+						</form> -->
+						<a class="layui-btn jie-add1">发布帖子</a>
+						<a href="bbs.html" class="layui-btn jie-add">返回论坛</a>
+					</div>
+					<ul class="fly-list" id="bbsUl" style="min-height:996px;">
+						<!-- <li class="fly-list-li">
+							<a href="#" class="fly-list-avatar">
+								<img src="#" alt="贤心"></a>
+							<h2 class="fly-tip">            
+								<a href="#">layui 常见问题的处理和实用干货集锦</a>            
+								<span class="fly-tip-stick">置顶</span>            
+								<span class="fly-tip-jing">精帖</span>          
+							</h2>
+							<p> 
+								<span><a href="#">贤心</a></span> 
+								<span>5天前</span> 
+								<span>技术闲谈</span> 
+								<span class="fly-list-hint">               
+									<i class="iconfont" title="回答"></i>13              
+									<i class="iconfont" title="人气"></i> 1476            
+								</span> 
+							</p>
+						</li>
+						<li class="fly-list-li">
+							<a href="#" class="fly-list-avatar"> 
+								<img src="#" alt="贤心"></a>
+							<h2 class="fly-tip">            
+								<a href="#">LayIM 3.0 专业版 预计1周后发布，饱含深情的重大更新</a>            
+								<span class="fly-tip-stick">置顶</span>                      
+							</h2>
+							<p>
+								<span><a href="#">贤心</a></span> 
+								<span>7天前</span> 
+								<span>LayIM即时通讯</span> 
+								<span class="fly-list-hint">               
+									<i class="iconfont" title="回答"></i> 47              
+									<i class="iconfont" title="人气"></i> 2784            
+								</span> 
+							</p>
+						</li> -->
+					</ul>
+					<div style="text-align:center;clear:both;">
+						        <ul class="pagination" id="pagination">
+						        </ul>
+						        <input type="hidden"  id="PageCount" runat="server" />
+						        <input type="hidden" id="PageSize" runat="server" value="10" />
+						        <input type="hidden" id="countindex" runat="server" value="10"/>
+						        <!--设置最多显示的页码数 可以手动设置 默认为10-->
+						        <input type="hidden" id="visiblePages" runat="server" value="10" />
+					</div>
+					<div style="text-align: center" id="pageDiv"></div>
+				</div>
+			</div>
+		</div>
+		<div class="footer"></div>
+	</div>
+	</body>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="res/layui/layui.js"></script>
+	<script src="res/layui/layer/layer.js"></script>
+   <!-- <script src="../js/global.js"></script>-->
+    <script src="js/jquery.liveTimeAgo.js"></script>
+    <script src="js/jqPaginator.min.js"></script>
+    <!--<script type="text/javascript" src="../laypage/laypage.js"></script>-->
+    <script src="js/common.js"></script>
+    <script src="js/bbsList.js"></script>
+</html>

@@ -1,0 +1,80 @@
+/* 公用 */
+body .iconfont{-webkit-text-stroke-width: 0;}
+/* Tip */
+.fly-tip{position: relative;}
+.fly-tip span{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
+.fly-tip span{height: 20px; line-height: 20px; padding: 0 5px; background-color: #999; color: #fff; font-size: 12px;}
+.fly-tip .fly-tip-stick{background-color: #393D49;}
+.fly-tip .fly-tip-jing{background-color: #c00;}
+.fly-tip .fly-tip-jie{background-color: #8FCDA0;}
+
+/* 帖子列表 */
+.fly-list .fly-list-li{position: relative; height:89px; margin-top: 8px; padding: 0 0 8px 30px; border-bottom: 1px solid #E9E9E9;}
+.fly-list-li .fly-list-avatar{position: absolute; left: 0; top: 0;}
+.fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 8px;margin-left: 20px;float: left;width:91%;}
+.fly-list-li h2 *{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
+.fly-list-li h2 a{max-width: 86%; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;color:#666; font-size: 16px;}
+.fly-list-li h2 span{position: relative; top: 3px; margin-left: 5px;}
+
+.fly-list-li a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
+.fly-list-li img{display: inline-block;width: 53px;height: 53px;float: left;margin-top: 9px;border-radius: 53px;}
+.fly-list-li p{line-height: 40px; font-size: 12px; color: #999;}
+.fly-list-li p span{padding-right: 15px;margin-left:20px;}
+.fly-list-li p span a{color: #999;}
+.fly-list-avatar img{width: 45px; height: 45px; border-radius: 2px;}
+
+.fly-list-hint{position: absolute; right: 0; top: 0;}
+.fly-list-hint i{padding-left: 10px; color: #ccc;padding-right:4px;}
+/* Tab */
+.fly-tab{position:relative; margin-bottom:20px;}
+.fly-tab span,
+.fly-tab span a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.fly-tab span{border:1px solid #009E94; border-right:none; font-size:0;}
+.fly-tab span a{ height: 36px; line-height: 36px; padding: 0 20px; border-right:1px solid #009E94; font-size:14px;}
+.fly-tab .tab-this{background-color:#009E94; color:#fff;}
+/* 搜索 */
+.fly-search{position:relative; margin-left:10px; display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.fly-search input{padding-right: 30px;}
+.fly-search .icon-sousuo{position:absolute; right:10px; top:10px; color:#999; cursor:pointer;}
+.jie-add1{position:absolute; right:10%; top:0; font-size:14px;}
+.jie-add{position:absolute; right:0; top:0; font-size:14px;}
+/* 分页 */
+.laypage-main,
+.laypage-main *{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.laypage-main{margin: 20px 0; border: 1px solid #009E94; border-right: none; border-bottom: none; font-size: 0;}
+.laypage-main *{padding: 0 20px; line-height: 36px; border-right: 1px solid #009E94; border-bottom: 1px solid #009E94; font-size: 14px;}
+.laypage-main .laypage-curr{background-color:#009E94; color:#fff;}
+.main{
+	margin-top:120px;
+	min-height:500px;
+}
+#pageDiv{
+	margin-top:20px;
+}
+/* 适配多设备 */
+@media screen and (max-width: 1024px) {
+  .main{width: auto;}
+  img{max-width: 100%;}
+}
+
+@media screen and (max-width: 750px) {
+  .fly-tab,
+  .fly-search,
+  .fly-list-li h2 span,
+  .fly-list-hint{display:none;}
+  .fly-list-li h2 a{max-width: 100%;}
+  .fly-list-one li{margin: 0 10px;}
+  .jie-add{position: relative; display: inline-block;}
+  .laypage-main a, .laypage-main span{display: none;}
+  .laypage-main .laypage-prev, 
+  .laypage-main .laypage-next{display: inline-block;}
+}
+.v_content{
+  float: left;
+  display: inline-block;
+  max-width: 268px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

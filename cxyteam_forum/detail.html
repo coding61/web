@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>论坛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap.min.css" />
+  	<link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap-theme.min.css" />
+<!--  	<link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/huiwan.css">
+    <link rel="stylesheet" type="text/css" href="../css/global.css" />-->
+	<link rel="stylesheet" href="res/layui/css/layui.css">
+  <link rel="stylesheet" href="res/css/global.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/detail.css">
+</head>
+<body>
+<div class="container-fluid">
+	<!-- <div class="row">
+		<div style="padding-top:10px;">
+				<nav class="huiwan-navbar navbar navbar-default navbar-static-top" role="navigation">
+              	
+        </nav>
+        </div>    
+	</div> -->
+  <nav>
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-img">
+          <img src="img/zone/logo-2.png" alt="logo">
+        </div>
+      </div>
+      <div class="top-nav" style="margin-left:283px;">
+      <a href="/">首页</a>
+      <a href="/static/html/class-list/class-list.html">购买课程</a>
+      <a href="/static/html/works/works_list.html">学生作品</a>
+      <a href="http://free.bcjiaoyu.com/" target="view_window">公益教学</a>
+      <a href="/orange-plan/" target="view_window">免费视频</a>
+      <a href="/forum/" target="view_window" class="active" style="color:#000">学习论坛</a>
+      </div>
+      <div class="login">
+        <div class="callme"><span>&nbsp;周一至周日 10:00~19:00</span></div>
+        <div class="login-inner">
+          <a href="/static/html/login-reg/login.html" class="login-btn btn-normal bgc-bright">登陆</a>
+          <a href="/static/html/login-reg/reg.html" class="reg-btn btn-normal bgc-orange">注册</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<div class="main layui-clear">
+  <div class="wrap">
+    <div class="content detail">
+      <h1 class="post_title"></h1>
+      <div class="fly-tip fly-detail-hint post_status" data-id="">
+        <span class="fly-tip-stick" style="display:none">置顶帖</span>
+        <span class="fly-tip-jing " style="display:none">精帖</span>
+        <span style="background-color:white;"></span>
+        <div class="fly-list-hint"> 
+          <i class="iconfont" title="回帖+回复" >&#xe60c;</i><em class="replyCount"></em>
+          <i class="iconfont" title="浏览次数" >&#xe60b;</i> <em class="browseTime"></em>
+        </div>
+      </div>
+      <div class="detail-about post_user">
+        <a class="jie-user" href="javascript:void(0)">
+          <img src="" alt="">
+          <cite>
+            <em></em>
+          </cite>
+        </a>
+        <div class="detail-hits" data-id="">
+         <!--  <span style="color:#FF7200">悬赏：20飞吻</span> -->
+          <!-- <span class="jie-admin" type="edit"><a href="jvascript:void(0)">编辑此贴</a></span> -->
+        </div>
+      </div>
+      
+      <div class="detail-body post_content" style="margin-bottom: 20px;word-break: break-all;">
+      </div>
+      <h2 class="page-title">回帖数量<span>（<em id="jiedaCount">0</em>）</span> </h2>
+
+      <ul class="jieda photos post_reply" id="jieda">
+          
+      </ul>
+      
+      <div class="layui-form layui-form-pane post_answer global-reply">
+          <div class="layui-form-item layui-form-text">
+            <div class="layui-input-block">
+              <textarea id="L_content" name="content" required lay-verify="required" placeholder="我要回复主帖"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <input type="hidden" name="jid" value="0">
+            <button class="layui-btn postReply_btn  btn-left">回帖</button>
+          </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="edge">
+  	<p class="text-right post_btn"><a class="layui-btn jie-add1">发布帖子</a>
+	  <a href="bbs.html" class="layui-btn jie-add callbackToList">返回列表</a></p>
+    <h3 class="page-title">最近热帖</h3>
+    <ol class="fly-list-one orderByBrowseTime">
+      
+    </ol>
+    
+    <h3 class="page-title">近期热议</h3>
+    <ol class="fly-list-one orderByReplyCount">
+    </ol>
+    
+  </div>
+</div>
+</div>
+<!-- <div id="reply_textarea" hidden>
+	<div class="layui-form layui-form-pane">
+        <form action="/jie/reply/" method="post">
+          <div class="layui-form-item layui-form-text">
+            <div class="layui-input-block">
+              <textarea id="copy_reply_content" name="content" required lay-verify="required" placeholder="我要回复"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <input type="hidden" name="jid" value="0">
+            <button class="layui-btn btn-left" lay-filter="*" lay-submit>回复</button>
+          </div>
+        </form>
+      </div>
+</div>  -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="res/layui/layui.js"></script>
+<script src="res/layui/layer/layer.js"></script>
+<script>
+var this_fly;
+/* layui.cache.page = 'jie'; */
+layui.cache.user = {
+  username: '游客'
+  ,uid: -1
+  ,avatar: 'res/images/avatar/00.jpg'
+  ,experience: 83
+  ,sex: '男'
+};
+layui.config({
+  version: "1.0.0"
+  ,base: 'res/mods/'
+}).extend({
+  fly: 'index'
+}).use('fly', function(){
+  this_fly = layui.fly;
+  //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+});
+</script>
+
+<!--upload-->
+<script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
+<script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
+
+<script src="js/jquery.liveTimeAgo.js"></script>
+<script src="js/common.js"></script>
+<script src="js/detail.js"></script>
+<!--<script type="text/javascript" src="/s/js/global.js"></script>-->
+</body>
+</html>

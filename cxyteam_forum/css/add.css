@@ -1,0 +1,25 @@
+.main {
+	margin-top:120px;
+}
+.main .layui-form-pane .layui-form-label {
+	width:112px;
+}
+
+.nav .top-nav a, .nav .login a {
+    padding: 0;
+    font-size: 16px;
+    color: #999;
+}
+
+.nav .login a {
+    padding: 6px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 15px;
+    color: #fefefe;
+    line-height: 22px;
+}
+
+.nav .logo{
+	text-indent: 0;
+}
