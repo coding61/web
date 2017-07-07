@@ -71,6 +71,7 @@
 			            {{else}}
 			            {{/if}}
 			            {{if $value.isopen == false}}
+			            	<img class="status" src="../../statics/images/course/icon3.png"/> 
 				            <!-- <div class="like{{if $value.like == true}} select-like{{else}} unselect-like{{/if}}" data-like-number={{$value.like_number}}>
 				                {{if $value.like == true}}
 					            	<img src="../../statics/images/zan-select.png">
@@ -82,7 +83,9 @@
 				            </div> -->
 			            {{/if}}
 		                <h3>{{$value.name}}</h3>
-		                <img class="avatar" src="{{$value.images}}" />
+		                <div class="avatar">
+		                	<img src="{{$value.images}}" />
+		                </div>
 		                <span class="desc">简介:{{$value.content}}</span>
 		            </div>
 	        	{{/each}}

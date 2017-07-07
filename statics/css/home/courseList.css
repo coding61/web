@@ -84,9 +84,16 @@ body{
     height: 20px;
     line-height: 20px;
 }
-.course img.avatar{
+.course .avatar{
 	height: 60px;
 	margin-bottom: 10px;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.course .avatar img{
+    width: 60%;
 }
 .course .desc{
    height: 50px;
