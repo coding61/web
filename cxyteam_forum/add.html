@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>论坛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="res/layui/css/layui.css">
+  <link rel="stylesheet" href="res/css/global.css">
+  <!--<link rel="stylesheet" href="../css/huiwan.css">
+  <link rel="stylesheet" href="../css/global.css">-->
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/add.css">
+</head>
+<body>
+
+<div class="container-fluid">
+	<!-- <div class="row">
+		<nav class="huiwan-navbar navbar navbar-default navbar-static-top" role="navigation">
+       
+    </nav>
+            
+	</div> -->
+        <nav>
+          <div class="nav">
+            <div class="logo">
+              <div class="logo-img">
+                <img src="img/zone/logo-2.png" alt="logo">
+              </div>
+            </div>
+            <div class="top-nav" style="margin-left:283px;">
+            <a href="/">首页</a>
+            <a href="/static/html/class-list/class-list.html">购买课程</a>
+            <a href="/static/html/works/works_list.html">作品中心</a>
+            <a href="http://free.bcjiaoyu.com/" target="view_window">公益教学</a>
+            <a href="/orange-plan/" target="view_window">免费视频</a>
+            <a href="/forum/" target="view_window" class="active" style="color:#000">学习论坛</a>
+            </div>
+            <div class="login">
+              <div class="callme"><span>&nbsp;周一至周日 10:00~19:00</span></div>
+              <div class="login-inner">
+                <a href="/static/html/login-reg/login.html" class="login-btn btn-normal bgc-bright">登陆</a>
+                <a href="/static/html/login-reg/reg.html" class="reg-btn btn-normal bgc-orange">注册</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+</div>
+
+<div class="main layui-clear">
+<div style="text-align:right;"><a href="bbs.html" class="layui-btn jie-add1">返回论坛</a></div>
+  <div class="layui-form layui-form-pane">
+    <div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">所在专区</label>
+          <div class="layui-input-block">
+            <select lay-verify="required" name="class" class="zone_content">
+              <option></option>
+              <!--<option value="1" >综合讨论区</option> 
+              <option value="2" >6-11岁儿童编程区</option> 
+              <option value="3" >App开发专区</option> 
+              <option value="4" >机器人创客专区</option> 
+              <option value="5" >3D打印专区</option> 
+              <option value="6" >闲聊灌水</option> -->
+            </select>
+          </div>
+        </div>
+        
+        <div class="layui-inline">
+          <label class="layui-form-label">类别</label>
+          <div class="layui-input-block">
+            <select lay-verify="required" name="class" class="type_content">
+              <option></option>
+              <!--<option value="1" >求助</option> 
+              <option value="2" >讨论</option> 
+              <option value="3" >分享</option> 
+              <option value="4" >随记</option> -->
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label for="L_title" class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+          <input type="text" id="L_title" name="title" required lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+        <div class="layui-input-block">
+          <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
+        </div>
+      </div>
+      
+      <div class="layui-form-item">
+        <a href="#" class="layui-btn publish">立即发布</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="aaa"></div>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="res/layui/layer/layer.js"></script>
+<script src="res/layui/layui.js"></script>
+<!--<script src="../js/global.js"></script>-->
+
+<!--upload-->
+<script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
+<script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
+
+<script src="js/common.js"></script>
+<script src="js/add.js"></script>
+<script>
+/* layui.cache.page = 'jie'; */
+layui.cache.user = {
+  username: '游客'
+  ,uid: -1
+  ,avatar: 'res/images/avatar/00.jpg'
+  ,experience: 83
+  ,sex: '男'
+};
+layui.config({
+  version: "1.0.0"
+  ,base: 'res/mods/'
+}).extend({
+  fly: 'index'
+}).use('fly', function(){
+  var fly = layui.fly;
+  //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+  
+   /*$('.aaa').html(fly.content("face.[亲亲]"));*/
+   
+});
+
+</script>
+
+</body>
+</html>
