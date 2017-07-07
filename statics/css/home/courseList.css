@@ -83,6 +83,9 @@ body{
     margin-bottom: 10px;
     height: 20px;
     line-height: 20px;
+
+    overflow: hidden;
+    text-align: center;
 }
 .course .avatar{
 	height: 60px;
