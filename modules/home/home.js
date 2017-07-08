@@ -939,22 +939,6 @@ define(function(require, exports, module) {
                 $(".right-view iframe.codeEdit").hide();
                 $(".right-view iframe.courseList").show();
 
-                /*
-                if($(".right-view iframe").css('display') == "none"){
-                    $(".right-view>img").hide();
-                    if($(".right-view iframe").attr('src') == "courseList.html"){
-                    }else{
-                        $(".right-view iframe").attr({src:'courseList.html'});
-                    }
-                    $(".right-view iframe").show();
-                }else{
-                    if($(".right-view iframe").attr('src') == "courseList.html"){
-                    }else{
-                        $(".right-view iframe").attr({src:'courseList.html'});
-                    }
-                }
-                */
-
             })
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
@@ -1036,6 +1020,55 @@ define(function(require, exports, module) {
 
         },
         clickEventTotal:function(){
+            $(".help").unbind('click').click(function(){
+                if($(".helps-view").css("display") == "none"){
+                    $(".helps-view").show();
+                }else{
+                    $(".helps-view").hide();
+                }
+                
+            })
+            $(".helps-view .change-course").unbind('click').click(function(){
+
+                $(".helps-view").hide();
+                
+                $(".right-view>img").hide();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.courseList").show();
+
+            })
+            // 钻石动画
+            $(".helps-view .zuan-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/Diamond%20Drop.wav');  //播放钻石音效
+                Util.zuanAnimate(2);
+            })
+            // 联系我们
+            $(".helps-view .contact-us").unbind('click').click(function(){
+                $(".helps-view").hide();
+            })
+            // 经验值
+            $(".helps-view .grow-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Util.growAnimate(2);
+            })
+            // 升级
+            $(".helps-view .up-grade-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/level_up.mp3');  //播放经验音效
+                Util.gradeAnimate();
+            })
+            // 寻找帮助
+            $(".helps-view .find-help").unbind('click').click(function(){
+                $(".helps-view").hide();
+                $(".find-help-shadow-view").show();
+            })
+            // 关闭寻找帮助窗口
+            $(".find-help-shadow-view").unbind('click').click(function(){
+                $(".find-help-shadow-view").hide();
+            })
+
+
             // 关闭登录窗口
             $(".login-view .close img").unbind('click').click(function(){
                 $(".login-shadow-view").hide();
@@ -1676,11 +1709,12 @@ define(function(require, exports, module) {
                         
                         var courseIndex = parseInt(localStorage.currentCourseIndex);
                         // 更改数据源
-                        Page.data = array[courseIndex + 1];
-                        localStorage.data = JSON.stringify(Page.data);   //更改缓存数据源
-
+                        if(array[courseIndex+1]){
+                            Page.data = array[courseIndex + 1];
+                            localStorage.data = JSON.stringify(Page.data);   //更改缓存数据源
+                        }
                         ChatStroage.init();    //加载缓存会话消息
-
+                    
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -1889,7 +1923,7 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
-                    timeout:6000,
+                    timeout:15000,
                     success:function(json){
                         var html = ArtTemplate("teams-brand-template", json.results);
                         $(".teams-brand").html(html);
