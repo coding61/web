@@ -11,16 +11,19 @@ define(function(require, exports, module) {
                 var a = e.data;   
                 if(a == "loadCourses"){
                     console.log(3232);
-                    // Page.loadCourseInfo();
+                    Page.loadCourseInfo();
                 }
             }, false); 
 
             // Page.load();
-            Page.loadCourseInfo();
+            // Page.loadCourseInfo();
 
         },
         loadCourseInfo:function(){
             Common.isLogin(function(token){
+                if (token == "null") {
+                    return;
+                }
                 $.ajax({
                     type:"get",
                     url:Common.domain + "/course/courses/",
