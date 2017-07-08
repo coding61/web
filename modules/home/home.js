@@ -1527,8 +1527,11 @@ define(function(require, exports, module) {
 
                         // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
                         if (localStorage.chatData) {
-                            // ChatStroage.init();
-                            Mananger.getCourse(localStorage.currentCourse);  //更改缓存数据源后，加载会话消息
+                            if(localStorage.currentCourse){
+                                Mananger.getCourse(localStorage.currentCourse);  //更改缓存数据源后，加载会话消息
+                            }else{
+                                ChatStroage.init();
+                            }
                         }else{
                             Default.init();
                         }
