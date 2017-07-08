@@ -1043,6 +1043,7 @@ header .back:before {
 
     text-align: center;
     line-height: 45px;
+    cursor: pointer;
 }
 .bc-alert-btns .bc-alert-cancel-btn{
     flex: 1;
@@ -1051,4 +1052,5 @@ header .back:before {
 
     text-align: center;
     line-height: 45px;
+    cursor: pointer;
 }

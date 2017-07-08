@@ -146,7 +146,8 @@ body{
     padding: 3px 8px;
     background: orange;
     display: inline-block;
-    border-radius: 5px
+    border-radius: 5px;
+    cursor:pointer;
 }
 /* 课程分类分割线*/
 .category{
