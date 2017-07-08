@@ -58,6 +58,7 @@ function getPostByType(typeId,essence,page,buy){
 				}
 				html+='<li class="fly-list-li">'
 					+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'">'
+					+'<span>'+v.userinfo.grade.current_name+'</span>'
 					+'<h2 class="fly-tip">'          
 					+'<a href="detail.html?id='+v.pk+'&pk='+zoneId+'">'+v.title+'</a>'         
 					if(v.istop){
@@ -105,6 +106,7 @@ function getPostByType(typeId,essence,page,buy){
 				}
 				html+='<li class="fly-list-li">'
 					+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'">'
+					+'<span class="grade">'+v.userinfo.grade.current_name+'</span>'
 					+'<h2 class="fly-tip">'          
 					+'<a href="detail.html?id='+v.pk+'&pk='+zoneId+'">'+v.title+'</a>'         
 					if(v.istop){

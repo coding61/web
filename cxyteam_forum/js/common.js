@@ -41,7 +41,7 @@ function liveTimeAgo(){
 	});
 }
 function myAjax(url,type,data,success,async){
-	// localStorage.token = 'c0d93e1fb6981da8f6c8b7cacae166b278162070';
+	// localStorage.token = 'a1c7ba96fedd788f3551f8120c6033c8f2a35859';
 	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
 		$.ajax({
 	        url: url,

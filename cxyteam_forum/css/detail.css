@@ -71,3 +71,5 @@ ul.reply_mess>li .reply_txt {
 .nav .logo{
 	text-indent: 0;
 }
+
+.post_user .grade{left: 22px;position: absolute;margin-top: 43px;}

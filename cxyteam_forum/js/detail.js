@@ -95,6 +95,7 @@ function postDetail() {
 		$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
 		$(".post_title").text(result.title);
 		$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
+		$(".post_user .grade").text(result.userinfo.grade.current_name);
 		$(".post_user cite").prepend(result.userinfo.name);
 		$(".post_user cite em").text(dealWithTime(result.create_time));
 		$('.post_content').each(function(){
@@ -123,6 +124,7 @@ function getReplys(){
 				+'<div class="detail-about detail-about-reply">'
 			  +'<a class="jie-user" href="javascript:void(0)">'
 			   +' <img src="'+dealWithAvatar(v.userinfo.avatar)+'" alt="">'
+			   +'<span class="reGrade">'+v.userinfo.grade.current_name+'</span>'
 			    +'<cite><i class="reply_name">'+v.userinfo.name+'</i></cite>'
 			  +'</a>'
 			 + '<div class="detail-hits reply_time">'
@@ -161,6 +163,7 @@ function getReplys(){
 				_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'"><div class="detail-about detail-about-reply">'
 		            +'<a class="jie-user" href="javascript:void(0)">'
 		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt="">'
+		            +'<span class="reGrade">'+v.userinfo.grade.current_name+'</span>'
 		            +' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
 		            +' </a>'
 		            +' <div class="detail-hits reply_time">'
