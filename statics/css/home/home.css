@@ -754,7 +754,7 @@ body{
 }
 /*登录视图*/
 .login-view .close{
-    width: 30%;
+    width: 35%;
     background: #ff6b95;
     height: 35px;
     border-top-right-radius: 5px;
@@ -767,8 +767,37 @@ body{
     position: absolute;
     right: 10px;
 }
+.login-view .login-info{
+    width: 31%;
+    background: #efefef;
+    padding: 1% 2%;
+}
+.login-info .login-info-view{
+    border: dashed 1px #a0a0a0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+.login-info .info{
+    padding: 10px;
+    color: #525252;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+.login-info .wx-code{
+    width: 80px;
+    height: 80px;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+}
+.login-info .wx-code img{
+    width: 100%;
+}
 .login-view .account-view{
-    width: 30%;
+    width: 35%;
     background: #efefef;
     /*height: 40%;*/
     border-bottom-left-radius: 5px;
@@ -788,8 +817,8 @@ body{
     margin-top: 5%;
 
     height: 40px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 
     display: flex;
     align-items: center;
@@ -824,11 +853,9 @@ body{
     border-radius: 5px;
     color: white;
     border: solid 1px #e56c95;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     cursor: pointer;
 }
-
-
 
 /*左边飞入动画*/
 @keyframes lefteaseinAnimate {

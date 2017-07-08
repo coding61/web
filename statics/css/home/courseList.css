@@ -18,6 +18,15 @@ body{
     width: 96%;
     padding-top: 1%;
     /*min-height: 100%;*/
+
+    padding-left: 0;
+    width: 100%;
+}
+.category-courses{
+    width: 96%;
+    padding-left: 4%;
+    display: flex;
+    flex-wrap: wrap;
 }
 .course{
 	width: calc(92% / 4);
@@ -127,6 +136,18 @@ body{
     text-align: center;
     display: inline-block;
     width: 100%;
+}
+.category-view .cer{
+    text-align: center;
+    color: white;
+    display: none;
+}
+.category-view .cer .look-cer{
+    padding: 3px 8px;
+    background: orange;
+    display: inline-block;
+    border-radius: 5px;
+    cursor:pointer;
 }
 /* 课程分类分割线*/
 .category{

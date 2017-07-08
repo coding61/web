@@ -939,22 +939,6 @@ define(function(require, exports, module) {
                 $(".right-view iframe.codeEdit").hide();
                 $(".right-view iframe.courseList").show();
 
-                /*
-                if($(".right-view iframe").css('display') == "none"){
-                    $(".right-view>img").hide();
-                    if($(".right-view iframe").attr('src') == "courseList.html"){
-                    }else{
-                        $(".right-view iframe").attr({src:'courseList.html'});
-                    }
-                    $(".right-view iframe").show();
-                }else{
-                    if($(".right-view iframe").attr('src') == "courseList.html"){
-                    }else{
-                        $(".right-view iframe").attr({src:'courseList.html'});
-                    }
-                }
-                */
-
             })
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
@@ -1005,10 +989,15 @@ define(function(require, exports, module) {
 
             // 退出登录
             $(".quit").unbind('click').click(function(){
-                Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
-                     localStorage.clear();
-                     window.location.reload();
+                Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+                    localStorage.clear();
+                    window.location.reload();
                 })
+
+                // Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+                //     localStorage.clear();
+                //     window.location.reload();
+                // })
             })
 
             // logo 点击打开一个网站
@@ -1031,6 +1020,55 @@ define(function(require, exports, module) {
 
         },
         clickEventTotal:function(){
+            $(".help").unbind('click').click(function(){
+                if($(".helps-view").css("display") == "none"){
+                    $(".helps-view").show();
+                }else{
+                    $(".helps-view").hide();
+                }
+                
+            })
+            $(".helps-view .change-course").unbind('click').click(function(){
+
+                $(".helps-view").hide();
+                
+                $(".right-view>img").hide();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.courseList").show();
+
+            })
+            // 钻石动画
+            $(".helps-view .zuan-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/Diamond%20Drop.wav');  //播放钻石音效
+                Util.zuanAnimate(2);
+            })
+            // 联系我们
+            $(".helps-view .contact-us").unbind('click').click(function(){
+                $(".helps-view").hide();
+            })
+            // 经验值
+            $(".helps-view .grow-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Util.growAnimate(2);
+            })
+            // 升级
+            $(".helps-view .up-grade-ani").unbind('click').click(function(){
+                $(".helps-view").hide();
+                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/level_up.mp3');  //播放经验音效
+                Util.gradeAnimate();
+            })
+            // 寻找帮助
+            $(".helps-view .find-help").unbind('click').click(function(){
+                $(".helps-view").hide();
+                $(".find-help-shadow-view").show();
+            })
+            // 关闭寻找帮助窗口
+            $(".find-help-shadow-view").unbind('click').click(function(){
+                $(".find-help-shadow-view").hide();
+            })
+
+
             // 关闭登录窗口
             $(".login-view .close img").unbind('click').click(function(){
                 $(".login-shadow-view").hide();
@@ -1044,10 +1082,14 @@ define(function(require, exports, module) {
 
             // 退出登录
             $(".quit").unbind('click').click(function(){
-                Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
-                     localStorage.clear();
-                     window.location.reload();
+                Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+                    localStorage.clear();
+                    window.location.reload();
                 })
+                // Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+                //      localStorage.clear();
+                //      window.location.reload();
+                // })
             })
 
             // logo 点击打开一个网站
@@ -1518,7 +1560,11 @@ define(function(require, exports, module) {
 
                         // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
                         if (localStorage.chatData) {
-                            ChatStroage.init();
+                            if(localStorage.currentCourse){
+                                Mananger.getCourse(localStorage.currentCourse);  //更改缓存数据源后，加载会话消息
+                            }else{
+                                ChatStroage.init();
+                            }
                         }else{
                             Default.init();
                         }
@@ -1551,7 +1597,6 @@ define(function(require, exports, module) {
                     },
                     success:function(data){
 
-                        var courseIndex = data.learn_extent.last_lesson;
                         if(!data.json || data.json == ""){
                             $(".btn-wx-auth").attr({disabledImg:false});
                             Common.dialog("课程还未开放，敬请期待");
@@ -1585,8 +1630,13 @@ define(function(require, exports, module) {
                         })
                         */
                         // var array = JSON.parse(data.json);
-
+                        
+                        var courseIndex = data.learn_extent.last_lesson;
+                        localStorage.currentCourseIndex = courseIndex;  //记录课程下标
                         courseIndex = parseInt(courseIndex);
+
+                        // 课程列表窗口, 当前课程的下标进度 data-course-index:
+                        $("#courseList").contents().find(".course[data-category="+data.pk+"]").attr({"data-course-index":courseIndex});
                         
                         if(array){
                             if (array[courseIndex+1]) {
@@ -1602,10 +1652,11 @@ define(function(require, exports, module) {
                                 Common.dialog("恭喜，您已经完成本课程的学习。您可以选择其它课程，再继续");
                                 $(".loading-chat").remove();
 
-                                // 打开课程列表窗口, 更改课程学习状态 为已完成
+                                // 打开课程列表窗口, 更改课程学习状态 为已完成, data-status:finish, data-course-index:
                                 $(".right-view>img").hide();
                                 $(".right-view iframe.codeEdit").hide();
                                 $(".right-view iframe.courseList").show();
+                                $("#courseList").contents().find(".course[data-category="+data.pk+"]").attr({"data-status":"finish"});
                                 $("#courseList").contents().find(".course[data-category="+data.pk+"]").find(".status").attr({src:"../../statics/images/course/icon1.png"})
                             }
                         }else{
@@ -1628,6 +1679,53 @@ define(function(require, exports, module) {
                             return;
                         }else{
                             Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+                
+            })
+        },
+        getCourse:function(course){
+            //网页每次刷新的时候，更改数据源，Page.data
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"get",
+                    url: Common.domain + "/course/courses/"+course+"/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    success:function(data){
+                        // 方法1，捕获异常
+                        try {
+                           var array = JSON.parse(data.json);
+                           // console.log(array);
+                        }
+                        catch(err){
+                            // console.log(err);
+                            alert("数据格式有问题!");
+                            return;
+                        }
+                        
+                        var courseIndex = parseInt(localStorage.currentCourseIndex);
+                        // 更改数据源
+                        if(array[courseIndex+1]){
+                            Page.data = array[courseIndex + 1];
+                            localStorage.data = JSON.stringify(Page.data);   //更改缓存数据源
+                        }
+                        ChatStroage.init();    //加载缓存会话消息
+                    
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
                             return;
                         }
                     }
@@ -1733,7 +1831,7 @@ define(function(require, exports, module) {
                         console.log(json);
                         
                         //记录当前课程的当前节下标
-                        localStorage.currentCourseIndex = courseIndex;
+                        // localStorage.currentCourseIndex = courseIndex;
 
                         // // 记录学习下标
                         // Util.setCourseIndex(course, courseIndex);
@@ -1786,17 +1884,17 @@ define(function(require, exports, module) {
                     error:function(xhr, textStatus){
 
                         if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
+                            // Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
                             // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            Common.dialog('服务器繁忙');
+                            // Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
@@ -1825,24 +1923,24 @@ define(function(require, exports, module) {
                     headers:{
                         Authorization:"Token " + token
                     },
-                    timeout:6000,
+                    timeout:15000,
                     success:function(json){
                         var html = ArtTemplate("teams-brand-template", json.results);
                         $(".teams-brand").html(html);
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
+                            // Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            Common.dialog('服务器繁忙');
+                            // Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);

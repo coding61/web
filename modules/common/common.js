@@ -234,6 +234,45 @@ define(function(require, exports, module) {
 	        audio.play();
 	    }
 	}
+	// bc alert弹出框
+	exports.bcAlert = function(text, callback, textSubmit, textCancel){
+		exports.bcSubmitCB = callback;
+		textSubmit = textSubmit ? textSubmit : "确&nbsp定";
+		textCancel = textCancel ? textCancel : "取&nbsp消";
+		
+		if(! $(".bc-alert-shadow-view").length){
+			var html = '<div class="bc-alert-shadow-view">\
+							<div class="bc-alert-view">\
+								<div class="bc-alert-msg">\
+									<span class="bc-msg">'+text+'</span>\
+								</div>\
+								<div class="bc-alert-btns">\
+									<span class="bc-alert-submit-btn">'+textSubmit+'</span>\
+									<span class="bc-alert-cancel-btn">'+textCancel+'</span>\
+								</div>\
+							</div>\
+						</div>';
+			$(html).appendTo("body");
+
+			// 确定事件
+			$(".bc-alert-submit-btn").unbind('click').click(function(){
+				$(".bc-alert-shadow-view").hide();
+				exports.bcSubmitCB();
+			})
+			// 取消事件
+			$(".bc-alert-cancel-btn").unbind('click').click(function(){
+				$(".bc-alert-shadow-view").hide();
+			})
+		}else{
+			$(".bc-alert-view .bc-alert-msg .bc-msg").html(text);
+			$(".bc-alert-submit-btn").html(textSubmit);
+			$(".bc-alert-cancel-btn").html(textCancel);
+		}
+		$(".bc-alert-shadow-view").show();
+
+	}
+	exports.bcSubmitCB = function(){};
+
 	
 	exports.changePhotoSrc = function(url, fx){
 		var new_url = null;

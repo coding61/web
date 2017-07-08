@@ -48,9 +48,12 @@
 	                    <i class="line"></i>
 	                    <span class="title">{{$value.category}}</span>
 	        		</div>
+	        		<div class="cer">
+	        			<span class="look-cer">查看证书</span>
+	        		</div>
 	        		<span class="desc">
 	        		{{if $value.category=="Web 前端工程师"}}
-		        		职责是利用各种 web 技术进行客户端产品（也就是浏览器）的开发。我们提供前端必备的 HTML、CSS、JavaScript、JQuery 等基础教学，同时不断增加实用框架课程如 Bootstrap、React 等。学完所有课程，您可以成为合格的前端工程师。
+		        		主要职责是利用各种 web 技术进行客户端产品（也就是浏览器）的开发。
 	        		{{else if $value.category == "儿童编程"}}
 		        		让7-14岁儿童能使用基本的编程工具编程，了解编程的基本概念，并能用Scratch进行创造。
 	        		{{else if $value.category == "Web后端（服务器开发）"}}
@@ -62,7 +65,9 @@
 	        		{{/if}}
 	        		</span>
 	        	</div>
-	        	{{each $value.courses}}
+
+	        	<div class="category-courses">
+	        		{{each $value.courses}}
 		        	<div class="course{{if $value.isopen == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}} data-course-total={{$value.total_lesson}}>
 		        		{{if $value.learn_extent.status == "finish"}}
 			                <img class="status" src="../../statics/images/course/icon1.png" />
@@ -89,6 +94,8 @@
 		                <span class="desc">简介:{{$value.content}}</span>
 		            </div>
 	        	{{/each}}
+	        	</div>
+	        	
 	        {{/each}}
         </script>
 	</body>
