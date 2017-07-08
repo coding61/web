@@ -3,7 +3,8 @@
  @Name: Fly社区主入口
 
  */
- var token=getCookie("Token");
+ var token=localStorage.token;
+ // console.log(token);
  my_init()
 function my_init(){
 layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){

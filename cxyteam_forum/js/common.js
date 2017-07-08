@@ -41,31 +41,29 @@ function liveTimeAgo(){
 	});
 }
 function myAjax(url,type,data,success,async){
-	// ************************要删掉*************************//
-	// setCookie("Token", 'db75066e9e33a4c1c19f243286206bff3b4db8df');
-	// ************************要删掉*************************//
-	if(getCookie("Token")){
-	$.ajax({
-        url: url,
-        type: type,
-        async:async==null?true:async,
-        headers: {
-            Authorization: 'Token ' + getCookie("Token")
-        },
-        data:data,
-        success: success,
-        error:function(XMLHttpRequest){
-        	console.log(XMLHttpRequest.status)
-        	if(XMLHttpRequest.status==403){
-        		layer.msg("请先购买课程");
-        	}else{
-        		layer.msg("请求异常")
-        	}
-        }
-  });
- }else{
- 	layer.msg("请先登录");
- }
+	// localStorage.token = 'c0d93e1fb6981da8f6c8b7cacae166b278162070';
+	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
+		$.ajax({
+	        url: url,
+	        type: type,
+	        async:async==null?true:async,
+	        headers: {
+	            Authorization: 'Token ' + localStorage.token
+	        },
+	        data:data,
+	        success: success,
+	        error:function(XMLHttpRequest){
+	        	console.log(XMLHttpRequest.status)
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请先购买课程");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
+	}else{
+	 	layer.msg("请先登录");
+	}
 }
 function myAjax2(url,type,data,success,async){
 	$.ajax({

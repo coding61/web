@@ -1,5 +1,5 @@
 //var token="f398c224a8a052bb9ba5fe278acb1128043bfd8e";
-var basePath="/server";
+var basePath="/program_girl";
 var postId=getQueryString("id");
 var postPk=getQueryString("pk");
 var zoneId=0;
