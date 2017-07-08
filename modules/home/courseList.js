@@ -11,11 +11,12 @@ define(function(require, exports, module) {
                 var a = e.data;   
                 if(a == "loadCourses"){
                     console.log(3232);
-                    Page.loadCourseInfo();
+                    // Page.loadCourseInfo();
                 }
             }, false); 
 
             // Page.load();
+            Page.loadCourseInfo();
 
         },
         loadCourseInfo:function(){
@@ -37,14 +38,14 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
+                            // Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            Common.dialog('服务器繁忙');
+                            // Common.dialog('服务器繁忙');
                             return;
                         }
                     }
@@ -69,14 +70,14 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
+                            // Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            Common.dialog('服务器繁忙');
+                            // Common.dialog('服务器繁忙');
                             return;
                         }
                     }
@@ -197,6 +198,38 @@ define(function(require, exports, module) {
                 }
             });
         },
+        updateExtent:function(course, courseIndex){
+            // 学习进度
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/update_learnextent/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        course:course,
+                        lesson:courseIndex
+                    },
+                    success:function(json){
+                        console.log(json);
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
         clickEvent:function(){
             $(".course").click(function(e){
                 e.stopPropagation();
@@ -205,48 +238,41 @@ define(function(require, exports, module) {
                     return;
                 }
                 if ($(this).attr("data-status") == "finish") {
-                    Common.dialog("当前课程已经学完了");
-                    return;
-                }
-                if ($(this).hasClass("select")) {
-                    // $(this).removeClass("select");
+                    // Common.dialog("当前课程已经学完了");
+                    // return
+                    var this_ = $(this);
+
+                    Common.bcAlert("你是否确定要再学一遍?", function(){
+                        // 更改服务器进度
+                        var course = this_.attr('data-category');
+                        Page.updateExtent(course, 0);
+
+                        this_.attr({"data-status":"processing"});
+                        this_.find(".status").attr({src:"../../statics/images/course/icon2.png"})
+                        this_.attr({"data-course-index":0});
+                        
+                        localStorage.currentCourse = this_.attr("data-category");            //当前课程
+                        localStorage.currentCourseIndex = this_.attr("data-course-index");   //当前课程节下标
+                        localStorage.currentCourseTotal = this_.attr("data-course-total");    //当前课程总节数
+                        window.parent.postMessage("currentCourse", '*');
+
+                    })
                 }else{
-                    $(".course").removeClass("select");
-                    $(this).addClass("select");
+                    if ($(this).hasClass("select")) {
+                        // $(this).removeClass("select");
+                    }else{
+                        $(".course").removeClass("select");
+                        $(this).addClass("select");
+                    }
+                    
+                    //存储当前学习的课程题目
+                    // localStorage.setItem("currentCourse", $(this).attr("data-category"));
+                    localStorage.currentCourse = $(this).attr("data-category");            //当前课程
+                    localStorage.currentCourseIndex = $(this).attr("data-course-index");   //当前课程节下标
+                    localStorage.currentCourseTotal = $(this).attr("data-course-total");    //当前课程总节数
+                    window.parent.postMessage("currentCourse", '*');
                 }
-                
-                //存储当前学习的课程题目
-                // localStorage.setItem("currentCourse", $(this).attr("data-category"));
-                localStorage.currentCourse = $(this).attr("data-category");            //当前课程
-                localStorage.currentCourseIndex = $(this).attr("data-course-index");   //当前课程节下标
-                localStorage.currentCourseTotal = $(this).attr("data-course-total");    //当前课程总节数
-                window.parent.postMessage("currentCourse", '*');
 
-                // if ($(this).attr("data-category") == "html_simple") {
-                //     // 判断此课程的上次学习进度的下标
-                //     var htmlSimpleIndex = 1;
-                //     if (localStorage.htmlSimpleIndex) {
-                //         htmlSimpleIndex = localStorage.htmlSimpleIndex;
-                //     }
-
-                //     Page.requestData(localStorage.currentCourse, htmlSimpleIndex);
-                // }
-                
-                /*
-                // 更改浏览器地址
-                var category = null;
-                if($(this).attr("data-category") == "html_simple"){
-                    category = "html_simple";
-                }else if ($(this).attr("data-category") == "css_simple") {
-                    category = "css_simple";
-                }else if ($(this).attr("data-category") == "javascript_simple") {
-                    category = "javascript_simple";
-                }else if ($(this).attr("data-category") == "python_simple") {
-                    category = "python_simple";
-                }
-                var url = window.location.href.split('?')[0] + "?category=" + category;
-                history.pushState({"category":category}, null, url);
-                */
             })
 
             $(".like").click(function(e){
@@ -259,6 +285,19 @@ define(function(require, exports, module) {
                     var n = parseInt($(this).attr("data-like-number")) + 1;
                     $(this).children('span').html(n);
                 }
+            })
+
+            $(".category-courses").each(function(){
+                if ($(this).find(".course[data-status=finish]").length == $(this).find(".course").length) {
+                    // 已完成课程的个数等于该分类下所有的课程, 打开查看证书按钮
+                    $(this).prev().find(".cer").show();
+                }else{
+                    $(this).prev().find(".cer").hide();
+                }
+            })
+
+            $(".cer").click(function(){
+                // 查看证书点击事件
             })
         },
         test:function(){
