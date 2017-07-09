@@ -418,7 +418,7 @@ define(function(require, exports, module) {
 		//设置延迟2秒
 		// setTimeout(function(){
 			$(".waitloading").remove();
-			location.href = "aichashuo://loadcomplete";
+			// location.href = "aichashuo://loadcomplete";
 		// }, 10);
 	}
 
@@ -438,7 +438,7 @@ define(function(require, exports, module) {
 	exports.hideLoading = function() {
 		$(".loading").hide();
 		exports.hideMask();
-		location.href = "aichashuo://loadcomplete/";
+		// location.href = "aichashuo://loadcomplete/";
 	}
 
 	exports.showLoginPanel = function() {
@@ -663,7 +663,7 @@ define(function(require, exports, module) {
 	}
 
 	exports.loadComplete = function() {
-		location.href = "aichashuo://loadcomplete/";
+		// location.href = "aichashuo://loadcomplete/";
 	}
 
 	exports.consoleLog = function(log) {
