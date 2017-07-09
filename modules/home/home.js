@@ -1018,6 +1018,11 @@ define(function(require, exports, module) {
                 $(".header .team-info").toggle();
             })
 
+            // 学习论坛
+            $(".header .luntan").unbind('click').click(function(){
+                window.open("../../cxyteam_forum/bbs.html");
+            })
+
         },
         clickEventTotal:function(){
             $(".help").unbind('click').click(function(){
@@ -1108,6 +1113,11 @@ define(function(require, exports, module) {
             }).unbind('mouseout').mouseout(function(){
                 // $(".header .team-info").show();
                 $(".header .team-info").toggle();
+            })
+
+            // 学习论坛
+            $(".header .luntan").unbind('click').click(function(){
+                window.open("../../cxyteam_forum/bbs.html");
             })
             
         },

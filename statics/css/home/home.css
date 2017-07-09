@@ -81,6 +81,9 @@ body{
     display: inline-flex;
     align-items: center;
 }
+.header .right-view .luntan{
+    cursor: pointer;
+}
 .header .right-view .msg img{
     width: 20px;
     height: 20px;
@@ -208,7 +211,7 @@ body{
     margin-right: 5px;
 }
 .team .member span.name {
-    width: 60px;
+    width: 145px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -226,7 +229,7 @@ body{
     align-items: center;
 }
 .team-brand .name{
-    width: 70px;
+    width: 145px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
