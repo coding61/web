@@ -188,6 +188,13 @@ body{
 	display: none;
 }
 
+.inviteCode-view .link{
+    margin-bottom: 10%;
+    display: inline-block;
+    width: 80%;
+    font-size: 0.16rem;
+    margin-left: 10%;
+}
 
 
 
