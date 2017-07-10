@@ -151,14 +151,15 @@ function initTypes(){
 	},false);
 }
 $('.fly-tab-span a').unbind().click(function(){
+	localStorage.page = 1;
 	if($(this).attr('data-pk')==-1){
-		getPostByType(-1,null,1);
+		getPostByType(-1,null,localStorage.page);
 		pageId=-1;
 	}else if($(this).attr('data-pk')==0){
-		getPostByType(0,true,1);
+		getPostByType(0,true,localStorage.page);
 		pageId=0;
 	}else{
-		getPostByType($(this).attr('data-pk'),null,1);
+		getPostByType($(this).attr('data-pk'),null,localStorage.page);
 		pageId=$(this).attr('data-pk');
 	}
 });

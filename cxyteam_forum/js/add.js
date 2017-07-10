@@ -70,6 +70,7 @@ function publish(title,zoneId,typeId,content) {
 		$("#L_title").val("");
 		$("#L_content").val("");
 		$(".main").find(".layui-select-title input").val("");
+		localStorage.page = 1;
 		window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
 	});
 }
