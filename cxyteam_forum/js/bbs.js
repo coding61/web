@@ -4,6 +4,7 @@
 // setCookie("password","15007065503");
 var basePath="/program_girl";
 bbsZone();
+localStorage.page = 1;
 function bbsZone(){
 	$("#bbs").empty();
 	//var basePath="http://10.144.238.71:8080/wodeworld/";
