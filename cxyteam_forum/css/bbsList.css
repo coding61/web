@@ -37,6 +37,9 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-search{position:relative; margin-left:10px; display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
 .fly-search input{padding-right: 30px;}
 .fly-search .icon-sousuo{position:absolute; right:10px; top:10px; color:#999; cursor:pointer;}
+.fly-tab .searchT{position: absolute;width: 275px;right: 22%;margin-top: -38px;}
+.fly-tab .searchT .searchinput{width: 200px;height: 40px;font-size: 16;}
+.fly-tab .searchT .searchTiezi{font-size: 14px;background-color: #009688;width: 60px;text-align: center;cursor: pointer;display: inline-block;color: white;height: 35px;line-height: 35px;top: -37px;margin-left: 206px;}
 .jie-add1{position:absolute; right:10%; top:0; font-size:14px;}
 .jie-add{position:absolute; right:0; top:0; font-size:14px;}
 /* ·ÖÒ³ */

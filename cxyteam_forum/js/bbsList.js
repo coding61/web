@@ -9,9 +9,9 @@ $('.jie-add1').unbind().click(function(){
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
 myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
 	if(result.needbuy==true){
-		getPostByType(-1,null,localStorage.page,1);
+		getPostByType(-1,null,localStorage.page,null,1);
 	}else{
-		getPostByType(-1,null,localStorage.page,0);
+		getPostByType(-1,null,localStorage.page,null,0);
 	}
 });
 
@@ -20,7 +20,7 @@ function getQueryString(name) {
 	var r = window.location.search.substr(1).match(reg); 
 	if (r != null) return unescape(r[2]); return null; 
 }
-function getPostByType(typeId,essence,page,buy){
+function getPostByType(typeId,essence,page,keyword,buy){
 	$("#bbsUl").empty();
 	var html="";
 	if(typeId==-1){
@@ -33,7 +33,7 @@ function getPostByType(typeId,essence,page,buy){
 		essence=null;
 	}
 	if(buy==1){
-		myAjax(basePath+"/forum/posts/?section="+zoneId,"get",{"types":typeId,"isessence":essence,page:page},function(result){
+		myAjax(basePath+"/forum/posts/?section="+zoneId,"get",{"types":typeId,"isessence":essence,"keyword":keyword,page:page},function(result){
 			if(result.count>10){
 				$("#pagination").show();
 				$("#PageCount").val(result.count);
@@ -83,7 +83,7 @@ function getPostByType(typeId,essence,page,buy){
 			liveTimeAgo();
 			})
 	}else{
-		myAjax2(basePath+"/forum/posts/?section="+zoneId,"get",{"types":typeId,"isessence":essence,page:page},function(result){
+		myAjax2(basePath+"/forum/posts/?section="+zoneId,"get",{"types":typeId,"isessence":essence,"keyword":keyword,page:page},function(result){
 			if(result.count>10){
 				$("#pagination").show();
 				$("#PageCount").val(result.count);
@@ -135,6 +135,17 @@ function getPostByType(typeId,essence,page,buy){
 	}
 	
 }
+
+$('.fly-tab .searchTiezi').click(function() {
+	var searchContent = $('.fly-tab .searchinput').val();
+	console.log(searchContent);
+	if (searchContent == '') {
+		layer.msg("请输入帖子主题");
+	} else {
+		localStorage.page = 1;
+		getPostByType(-1,null,localStorage.page,searchContent);
+	}
+})
 
 $(document).ready(function(){
 	$(".fly-tab-span>a").click(function(){
