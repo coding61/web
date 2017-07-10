@@ -54,7 +54,7 @@ define(function(require, exports, module) {
         
         // 将一十一这种变成十一
         if (chnStr.indexOf("一十") != -1) {
-            chnStr = chnStr.split("一")[1];
+            chnStr = "十"+chnStr.split("一十")[1];
         }
         return chnStr;
     }
