@@ -555,7 +555,7 @@ define(function(require, exports, module) {
         optionData:null,    //记录用户当前选了答案之后的数组会话
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
         init:function(){
-            
+            alert(navigator.userAgent);
             // 判断浏览器内核
             // 当前浏览器
             if(!Common.platform.webKit){
