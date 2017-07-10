@@ -9,9 +9,9 @@ $('.jie-add1').unbind().click(function(){
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
 myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
 	if(result.needbuy==true){
-		getPostByType(-1,null,1,1);
+		getPostByType(-1,null,localStorage.page,1);
 	}else{
-		getPostByType(-1,null,1,0);
+		getPostByType(-1,null,localStorage.page,0);
 	}
 });
 
@@ -186,6 +186,7 @@ function loadpage() {
         onPageChange: function (num, type) {
             if (type == "change") {
                 exeData(num, type);
+                localStorage.page = num;
             }
         }
     });

@@ -11,7 +11,13 @@ $('.jie-add1').unbind().click(function(){
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
 //var user= JSON.parse(sessionStorage.getItem("session_user"));
-var userName=getCookie("username");
+myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
+	if(result){
+		localStorage.userName=result.name;
+	}else{
+		localStorage.userName=null;
+	}
+})
 var postUserName;
 initDetail();
 function initDetail(){
@@ -91,7 +97,7 @@ function postDetail() {
 	myAjax2(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
 		//console.log(result);
 		zoneId=result.section.pk;
-		postUserName=result.author;
+		postUserName=result.userinfo.name;
 		$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
 		$(".post_title").text(result.title);
 		$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
@@ -106,7 +112,7 @@ function postDetail() {
 		$(".browseTime").text(result.browse_count);
 		 
 		 $(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
-		if(userName!=null&&postUserName==userName){
+		if(localStorage.userName!=null&&postUserName==localStorage.userName){
 		$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
 		if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
 		if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
@@ -145,10 +151,10 @@ function getReplys(){
 			_htm+='<span type="reply" class="question_reply" data-user-id="'+v.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复('+v.replymore.length+')</span>';
 			 /* +'<div class="jieda-admin">'*/
 			  /* +' <span type="edit">编辑</span>'*/
-			  if(userName!=null&&(postUserName==userName||userName==v.userinfo.owner)){
+			  if(localStorage.userName!=null&&(v.userinfo.name==localStorage.userName)){
 			  _htm+='<span type="del" onclick="deleteReplyById('+v.pk+')">删除</span>';
 			  }
-			    if(userName!=null&&postUserName==userName){
+			    if(localStorage.userName!=null&&postUserName==localStorage.userName){
 			    	if(v.adopt){
 			    	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',0)">取消采纳</span>';
 			    	}else{
@@ -163,7 +169,7 @@ function getReplys(){
 				_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'"><div class="detail-about detail-about-reply">'
 		            +'<a class="jie-user" href="javascript:void(0)">'
 		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt="">'
-		            +'<span class="reGrade">'+v.userinfo.grade.current_name+'</span>'
+		            +'<span class="reGrade">'+v1.userinfo.grade.current_name+'</span>'
 		            +' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
 		            +' </a>'
 		            +' <div class="detail-hits reply_time">'
@@ -178,7 +184,7 @@ function getReplys(){
 		           /* +'<span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
 		            /*+'<div class="jieda-admin">'*/
 		           /* +' <span type="edit">编辑</span>'*/
-		           if(userName!=null&&(postUserName==userName||userName==v.userinfo.owner)){
+		           if(localStorage.userName!=null&&(v1.userinfo.name==localStorage.userName)){
 		            	_htm+=' <span type="del" onclick="deleteReplymoreById('+v1.pk+')">删除</span>';
 		            }
 		           /* +' <span class="jieda-accept" type="accept">采纳</span>'*/
