@@ -555,10 +555,13 @@ define(function(require, exports, module) {
         optionData:null,    //记录用户当前选了答案之后的数组会话
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
         init:function(){
-            alert(navigator.userAgent);
+            // alert(navigator.userAgent);
             // 判断浏览器内核
             // 当前浏览器
-            if(!Common.platform.webKit){
+            if(Common.platform.isMobile){
+                alert("请使用电脑打开");
+                return;
+            }else if(!Common.platform.webKit){
                 //当前不是谷歌内核，放出消息流
                 var questionHtml = null;
                 var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
