@@ -22,6 +22,8 @@ function bbsZone(){
 				+ '<ul class="list-unstyled"><li>帖数：'+v.total+'</li></ul>'
 				+ '<ul class="list-unstyled lastUl">'
 				if(v.newposts){
+					v.newposts.title = v.newposts.title.replace(/</g,'&lt;');
+					v.newposts.title = v.newposts.title.replace(/>/g,'&gt;');
 					var date =dealWithTime(v.newposts.create_time);
 					html+=	'<li class="titleHandle">'    
 						+ '<a href="detail.html?id='+v.newposts.pk+'&pk='+v.pk+'">'+v.newposts.title+'</a></li>'
