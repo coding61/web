@@ -2049,11 +2049,13 @@ define(function(require, exports, module) {
             $(".header .info .grade").html(json.grade.current_name);
             $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
             $(".header .zuan span").html("x"+json.diamond);
-
-            var percent = (parseInt(json.experience)-parseInt(json.grade.current_all_experience))/(parseInt(json.grade.next_all_experience)-parseInt(json.grade.current_all_experience))*$(".header .info-view").width();
-            $(".header .progress img").css({
-                width:percent
-            })
+            
+            if(json.grade.current_all_experience != json.grade.next_all_experience){
+                var percent = (parseInt(json.experience)-parseInt(json.grade.current_all_experience))/(parseInt(json.grade.next_all_experience)-parseInt(json.grade.current_all_experience))*$(".header .info-view").width();
+                $(".header .progress img").css({
+                    width:percent
+                })
+            }
         },
         adjustTeaminfo:function(){
             var a = $(".header .icon4").offset().left;
