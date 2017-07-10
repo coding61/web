@@ -302,7 +302,7 @@ define(function(require, exports, module) {
                     success:function(json){
                         Team.storeJoinTeam();
                         $(".wait-loading").hide();
-                        Common.dialog("随机组队登记成功，请后天来查看组队结果");
+                        Common.dialog("随机组队登记成功，请过会来查看组队结果");
                         // location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
                        
                     },
