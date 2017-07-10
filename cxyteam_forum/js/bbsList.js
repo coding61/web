@@ -50,6 +50,8 @@ function getPostByType(typeId,essence,page,buy){
 				// 替换'<'和'>'
 				v.content = v.content.replace(/</g,'&lt;');
 				v.content = v.content.replace(/>/g,'&gt;');
+				v.title = v.title.replace(/>/g,'&gt;');
+				v.title = v.title.replace(/</g,'&lt;');
 				var name='';
 				if(v.userinfo.name){
 					name=v.userinfo.name;
@@ -98,6 +100,8 @@ function getPostByType(typeId,essence,page,buy){
 				// 替换'<'和'>'
 				v.content = v.content.replace(/</g,'&lt;');
 				v.content = v.content.replace(/>/g,'&gt;');
+				v.title = v.title.replace(/>/g,'&gt;');
+				v.title = v.title.replace(/</g,'&lt;');
 				var name='';
 				if(v.userinfo.name){
 					name=v.userinfo.name;
