@@ -15,6 +15,13 @@ define(function(require, exports, module) {
                 }
             }, false); 
 
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    return;
+                }
+                console.log(3131);
+                Page.loadCourseInfo();
+            })
             // Page.load();
             // Page.loadCourseInfo();
 
@@ -115,7 +122,7 @@ define(function(require, exports, module) {
                 var dic = {"category":category, courses:categoryCourses};
                 array.push(dic);
             }
-            console.log(array);
+            // console.log(array);
 
             var html = ArtTemplate("courses-template", array);
             $(".courses").html(html);

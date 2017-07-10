@@ -11,7 +11,7 @@ define(function(require, exports, module) {
                 type:'get',
                 url:"../../modules/common/data.json",
                 success:function(json){
-                    console.log(json);
+                    // console.log(json);
                     Page.index = 0;
                     if(Default.olduser == true){
                         Page.data = json.default;
@@ -39,7 +39,7 @@ define(function(require, exports, module) {
                 // 2秒后加载信息
                 // var item = array[i];
                 Default.loadMessage(arr, i);
-            }, 2000)
+            }, Util.messageTime)
         },
         loadMessage:function(arr, i){
             var item = arr[i];
@@ -144,7 +144,7 @@ define(function(require, exports, module) {
             } else{
                 setTimeout(function(){
                     Default.load(arr, i+1);
-                }, 1000)
+                }, Util.waitTime)
             }
         }
     }
@@ -425,7 +425,7 @@ define(function(require, exports, module) {
                                 $(loadingWHtml).prependTo($(".messages"));
 
                                 ChatStroage.loadAgo(arr1, 0, arr1.length);
-                            }, 1000)
+                            }, Util.waitTime)
                         }
                     }
 
@@ -537,8 +537,8 @@ define(function(require, exports, module) {
                 ChatStroage.timerAgo=setTimeout(function(){
                     // 2秒后加载信息
                     ChatStroage.loadAgo(arr, i+1, arrLen);
-                }, 2000)
-            }, 1000)
+                }, Util.messageTime)
+            }, Util.waitTime)
             
             // ChatStroage.loadAgo(arr, i+1, arrLen);
         },
@@ -777,8 +777,8 @@ define(function(require, exports, module) {
                             Page.loadMessage(arr, i+1, opt);
                         }
                         
-                    }, 2000)
-                }, 1000)
+                    }, Util.messageTime)
+                }, Util.waitTime)
             }
         },
         clickEvent:function(){
@@ -1236,7 +1236,7 @@ define(function(require, exports, module) {
 
             setTimeout(function(){
                 Page.loadMessage(arr, i, opt);
-            }, 2000)
+            }, Util.messageTime)
         },
         loadClickMessage:function(actionText, exercise){
             if(localStorage.oldCourse != localStorage.currentCourse){
@@ -1518,6 +1518,8 @@ define(function(require, exports, module) {
 
                     Mananger.getInfo();
 
+                    window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
+
                     Mananger.loadMyTeam();  // 获取我的团队信息
                     Mananger.loadTeamBrand();  //获取团队排行
                     // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
@@ -1565,7 +1567,7 @@ define(function(require, exports, module) {
                         
                         
                         // Mananger.loadMyTeam(); // 获取我的团队信息
-                        window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
+                        // window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
 
 
                         // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
@@ -1962,6 +1964,8 @@ define(function(require, exports, module) {
     }
     // ---------------------4.帮助方法
     var Util = {
+        waitTime:Common.getQueryString("wt")?10:1000,
+        messageTime:Common.getQueryString("mt")?20:2000,
         storeData:function(){
             // 存储实时数据的下标，数据源， 问题中信息下标
             localStorage.data = JSON.stringify(Page.data);
