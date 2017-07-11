@@ -69,6 +69,9 @@
 				</div>
 				<div class="members-view">
 					<span>团队成员</span>
+					<label style="font-size: 0.14rem;float: right;">
+						还差<span style="color: #ff6b95;">{{freeNum}}</span>人即可获取邀请码
+					</label>
 					<div class="members">
 						{{each group_member}}
 							{{if $value}}
@@ -100,6 +103,8 @@
 						{{/each}}
 					</div>
 				</div>
+
+				<label style="color: #787878;font-size: 0.13rem;">提示：满4人后请到公众号报名获取邀请码。</label>
 			</div>
 			{{if inTeam == true}}
 				{{if isManyuan == true}}
