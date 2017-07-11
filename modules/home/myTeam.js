@@ -509,6 +509,7 @@ define(function(require, exports, module) {
             dic['leader'] = leader;
             dic['inTeam'] = inTeam;
             dic['isManyuan'] = isManyuan;
+            dic['freeNum'] = 4-parseInt(json.group_member.length);
 
             
             // 将队长放到最前面

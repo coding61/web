@@ -264,7 +264,7 @@ define(function(require, exports, module) {
                         localStorage.currentCourse = this_.attr("data-category");            //当前课程
                         localStorage.currentCourseIndex = this_.attr("data-course-index");   //当前课程节下标
                         localStorage.currentCourseTotal = this_.attr("data-course-total");    //当前课程总节数
-                        window.parent.postMessage("currentCourse", '*');
+                        window.parent.postMessage("resetcurrentCourse", '*');
 
                     })
                 }else{

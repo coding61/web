@@ -581,6 +581,8 @@ define(function(require, exports, module) {
             window.addEventListener('message', function(e) {  
                 var a = e.data;   
                 if(a == "currentCourse"){
+                    Util.courseProgressUI();   //更新课程进度
+
                     $(".right-view iframe").hide();
                     $(".right-view>img").show();
                     if(localStorage.currentCourse == localStorage.oldCourse){
@@ -612,6 +614,13 @@ define(function(require, exports, module) {
                         // 改变 action 的状态(开始学习)
                         $(".actions").html('<span class="btn-wx-auth begin bottom-animation">开始学习</span>');
                     }
+                    Page.clickEvent();    //重新激活 action 点击事件
+                }else if(a == "resetcurrentCourse"){
+                    // 学完重学的时候
+                    Util.courseProgressUI();   //更新课程进度
+                    $(".right-view iframe").hide();
+                    $(".right-view>img").show();
+                    $(".actions").html('<span class="btn-wx-auth begin bottom-animation">开始学习</span>');
                     Page.clickEvent();    //重新激活 action 点击事件
                 }else if(a == "loadCourses"){
 
@@ -1567,6 +1576,8 @@ define(function(require, exports, module) {
                         })
                         */
                         Util.updateInfo(json);
+
+                        Util.courseProgressUI();   //更新课程进度
                         
                         
                         // Mananger.loadMyTeam(); // 获取我的团队信息
@@ -1850,7 +1861,8 @@ define(function(require, exports, module) {
 
                         // // 记录学习下标
                         // Util.setCourseIndex(course, courseIndex);
-                        
+
+                        Util.updateCourseProgress();   //更新课程进度
                         
                         // 普通 action 按钮点击事件
                         if (this_.hasClass("exercise")) {
@@ -2049,11 +2061,13 @@ define(function(require, exports, module) {
             $(".header .info .grade").html(json.grade.current_name);
             $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
             $(".header .zuan span").html("x"+json.diamond);
-
-            var percent = (parseInt(json.experience)-parseInt(json.grade.current_all_experience))/(parseInt(json.grade.next_all_experience)-parseInt(json.grade.current_all_experience))*$(".header .info-view").width();
-            $(".header .progress img").css({
-                width:percent
-            })
+            
+            if(json.grade.current_all_experience != json.grade.next_all_experience){
+                var percent = (parseInt(json.experience)-parseInt(json.grade.current_all_experience))/(parseInt(json.grade.next_all_experience)-parseInt(json.grade.current_all_experience))*$(".header .info-view").width();
+                $(".header .progress img").css({
+                    width:percent
+                })
+            }
         },
         adjustTeaminfo:function(){
             var a = $(".header .icon4").offset().left;
@@ -2142,6 +2156,76 @@ define(function(require, exports, module) {
             })
             
             return p;
+        },
+        courseProgressUI:function(){
+            // 更新课程进度，
+            //1.有默认课程，数据的时候，加载 2.选择课程的时候加载 
+            if (localStorage.currentCourse) {
+                var total = parseInt(localStorage.currentCourseTotal);
+                var studyN = parseInt(localStorage.currentCourseIndex);
+                var unStudyN = total - studyN;
+
+                var studyHtml = "";
+                var unStudyHtml = "";
+                for (var i = 0; i < studyN; i++) {
+                    studyHtml += '<li class="study cp">\
+                                    <img src="../../statics/images/cp1.png" alt="" />\
+                                </li>'
+                }
+                console.log(i);
+                for (var j = 0; j < unStudyN; j++) {
+                    unStudyHtml += '<li class="unstudy cp">\
+                                    <img src="../../statics/images/cp2.png" alt="" />\
+                                </li>'
+                }
+                
+                $(".courseProgressView .cp").remove();     //移除以前的所有进程
+                $(studyHtml).appendTo(".courseProgressView");
+                $(unStudyHtml).appendTo(".courseProgressView");
+                
+                var cp = $(".courseProgressView .cp").eq(0).height();
+                var unStudyH = cp * ($(".courseProgressView .cp").length-1);
+                var studyH = cp * ($(".courseProgressView .cp.study").length-1);
+                
+                $(".courseProgressView img.studyp").css({
+                    height:studyH + "px"
+                })
+                $(".courseProgressView img.unstudyp").css({
+                    height:unStudyH + "px"
+                })
+
+
+                $(".main-view .left-view .chat").css({
+                    width:"calc(85%)"
+                })
+                $(".courseProgress").show();
+
+            }else{
+                $(".courseProgress").hide();
+
+                $(".main-view .left-view .chat").css({
+                    width:"calc(100%)"
+                })
+            }
+        },
+        updateCourseProgress:function(){
+            //3.更新进度的时候加载
+            if ($(".courseProgressView .unstudy").length) {
+                var unstudy = $(".courseProgressView .unstudy").eq(0);
+                $(unstudy).children("img").attr({src:"../../statics/images/cp1.png"});
+                $(unstudy).removeClass("unstudy").addClass("study");
+
+                var cp = $(".courseProgressView .cp").eq(0).height();
+                var unStudyH = cp * ($(".courseProgressView .cp").length-1);
+                var studyH = cp * ($(".courseProgressView .cp.study").length-1);
+                
+                $(".courseProgressView img.studyp").css({
+                    height:studyH + "px"
+                })
+                $(".courseProgressView img.unstudyp").css({
+                    height:unStudyH + "px"
+                })
+            }
         }
 
     }

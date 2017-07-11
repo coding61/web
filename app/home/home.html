@@ -6,10 +6,11 @@
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
 		<title>程序媛计划</title>
 		<link rel="icon" href="../../statics/images/favicon.ico">
-		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.6" />
-		<link type="text/css" rel="stylesheet" href="../../statics/css/home/home.css?v=1.6" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.7" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/home.css?v=1.7" />
 	</head>
 
 	<body>
@@ -96,54 +97,63 @@
 			<div class="left-view">
 				<!-- 目录 -->
 				<ul class="menu">
-					<li class="readed">
+					<li class="readed kn">
 						<img src="../../statics/images/radio-pink.png" alt="" />
 						<span>编程一</span>
 					</li>
-					<li class="readed">
+					<li class="readed kn">
 						<img src="../../statics/images/radio-pink.png" alt="" />
 						<span>编程二</span>
 					</li>
-					<li class="readed">
+					<li class="readed kn">
 						<img src="../../statics/images/radio-pink.png" alt="" />
 						<span>编程三</span>
 					</li>
-					<li class="readed">
+					<li class="readed kn">
 						<img src="../../statics/images/radio-pink.png" alt="" />
 						<span>编程四</span>
 					</li>
-					<li class="reading">
+					<li class="reading kn">
 						<img src="../../statics/images/radio-white.png" alt="" />
 						<span>编程五</span>
 					</li>
-					<li class="unread">
+					<li class="unread kn">
 						<img src="../../statics/images/radio-gray.png" alt="" />
 						<span>编程六</span>
 					</li>
-					<li class="unread">
+					<li class="unread kn">
 						<img src="../../statics/images/radio-gray.png" alt="" />
 						<span>编程七</span>
 					</li>
-					<li class="unread">
+					<li class="unread kn">
 						<img src="../../statics/images/radio-gray.png" alt="" />
 						<span>编程八</span>
 					</li>
-					<li class="unread">
+					<li class="unread kn">
 						<img src="../../statics/images/radio-gray.png" alt="" />
 						<span>编程九</span>
 					</li>
-					<li class="unread">
+					<li class="unread kn">
 						<img src="../../statics/images/radio-gray.png" alt="" />
 						<span>编程十</span>
 					</li>
-					<li class="unread">
+					<li class="unread kn">
 						<img src="../../statics/images/radio-gray.png" alt="" />
 						<span>编程十一</span>
 					</li>
-					<li class="unread">
+					<li class="unread kn">
 						<img src="../../statics/images/radio-gray.png" alt="" />
 						<span>编程十二</span>
 					</li>
+				</ul>
+
+				<ul class="courseProgress">
+					<div class="courseProgressView">
+						<img class="studyp" src="../../statics/images/pink-line.png" />
+						<img class="unstudyp" src="../../statics/images/gray-line.png" />
+						
+					</div>
+					
 				</ul>
 				<!-- 会话区 -->
 				<div class="chat">
@@ -210,8 +220,8 @@
 			<!-- 练习区 -->
 			<div class="right-view">
 				<img src="../../statics/images/icon.png" alt="">
-				<iframe class="codeEdit" id="codeEdit" name="codeEdit" src="codeEdit.html?v=1.5" frameborder="0"></iframe>
-				<iframe class="courseList" id="courseList" name="courseList" src="courseList.html?v=1.5" frameborder="0"></iframe>
+				<iframe class="codeEdit" id="codeEdit" name="codeEdit" src="codeEdit.html?v=1.7" frameborder="0"></iframe>
+				<iframe class="courseList" id="courseList" name="courseList" src="courseList.html?v=1.7" frameborder="0"></iframe>
 			</div>
 		</div>
 		
@@ -287,7 +297,6 @@
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="../../libs/sea.js"></script>
-	<script type="text/javascript" src="../../libs/jquery.imageloader.js"></script>
 	<script>
 		var base = location.href.split("/app/")[0];
 		seajs.config({
@@ -302,7 +311,7 @@
 				}
 			})
 			// 加载入口模块
-		seajs.use("home/home.js?v=1.6");
+		seajs.use("home/home.js?v=1.7");
 	</script>
 
 </html>
