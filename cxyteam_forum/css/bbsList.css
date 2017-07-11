@@ -82,3 +82,63 @@ body .iconfont{-webkit-text-stroke-width: 0;}
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.navWai .right-view {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: calc(5%);
+  position: relative;
+}
+.avatar{
+   margin-right: 2%;
+}
+.avatar .item {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+.info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.info-view .info {
+    margin-bottom: 2%;
+}
+.info-view .info .grade {
+  display: inline;
+  margin-right: 5%;
+}
+.info-view .info .grade-value {
+  display: inline;
+}
+.info-view .progress {
+  display: block;
+  background: white;
+    height: 7px;
+    position: relative;
+}
+.info-view .progress img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58.5%;
+    height: 100%;
+    width: 150.202px;
+}
+.zuan{
+    margin-left: 5%;
+    display: flex;
+}
+.zuan img {
+    display: inline;
+    margin-right: 2px;
+}
+.zuan span {
+  display: inline;
+}

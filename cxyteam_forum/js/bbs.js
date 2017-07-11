@@ -4,6 +4,21 @@
 // setCookie("password","15007065503");
 var basePath="/program_girl";
 bbsZone();
+myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
+	if(result){
+		$('.avatar img').attr({src: result.avatar});//用户头像
+		$('.info .grade').html(result.grade.current_name);//用户段位等级
+		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
+		$('.zuan span').html("x"+result.diamond);
+		var wid = $(".info-view").width();
+		var percent = (parseInt(result.experience)-parseInt(result.grade.current_all_experience))/(parseInt(result.grade.next_all_experience)-parseInt(result.grade.current_all_experience))*$(".info-view").width();
+        $(".progress img").css({
+            width:percent
+        })
+	}else{
+	}
+})
+
 localStorage.page = 1;
 function bbsZone(){
 	$("#bbs").empty();

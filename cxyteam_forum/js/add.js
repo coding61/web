@@ -12,6 +12,19 @@ var zonePk = getQueryString("pk");
 //}
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
+myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
+	if(result){
+		$('.avatar img').attr({src: result.avatar});//用户头像
+		$('.info .grade').html(result.grade.current_name);//用户段位等级
+		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
+		$('.zuan span').html("x"+result.diamond);
+		var percent = (parseInt(result.experience)-parseInt(result.grade.current_all_experience))/(parseInt(result.grade.next_all_experience)-parseInt(result.grade.current_all_experience))*$(".info-view").width();
+        $(".progress img").css({
+            width:percent
+        })
+	}else{
+	}
+})
 
 //获取当前社区
 var zoneName='';
@@ -71,8 +84,75 @@ function publish(title,zoneId,typeId,content) {
 		$("#L_content").val("");
 		$(".main").find(".layui-select-title input").val("");
 		localStorage.page = 1;
-		window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
+		growNumAnimate(result);
+		// zuanNumAnimate();
+		gradeAnimate(result);
+        setTimeout(function() {
+        	window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
+        }, 4000)
+		
 	});
+}
+// 经验动画
+function growNumAnimate(result) {
+	var preEx = $('.info .grade-value').text().split("/")[0];
+	var experience = result.userinfo.experience-preEx;
+	$(".grow-number-ani").remove();
+    var growHtml = '<span class="grow-number-ani fadeInOut">经验 +'+experience+'</span>';
+    $("body").append(growHtml);
+}
+// 钻石动画
+function zuanNumAnimate() {
+	// 钻石出现，然后2秒后飞到右上角消失
+    $(".zuan-shadow-view").show();
+    $(".zuan-shadow-view .img").css({
+        "margin-top": ($(window).height() - 200) / 2 + "px"
+    });
+
+    setTimeout(function(){
+        $(".zuan-shadow-view .img").animate({
+            marginTop:"1%",
+            marginLeft:"88%",
+            width:20,
+            height:20,
+            opacity:0
+        }, "slow", function(){
+            // 恢复原样
+            $(".zuan-shadow-view").hide();
+            $(this).css({
+                width:200,
+                height:200,
+                "margin-left":"calc(50% - 100px)",
+                "margin-top": ($(window).height() - 200) / 2 + "px",
+                opacity:1
+            })
+            // 钻石加10
+            $(".zuan span").html("x" + 10);
+
+            $(".zuan").css({
+                transform:'scale(2)'
+            })
+            
+            setTimeout(function(){
+                $(".zuan").css({
+                    transform:'scale(1)'
+                })
+            }, 200)
+        })
+    }, 1000)
+}
+// 等级动画
+function gradeAnimate(result) {
+	if (result.userinfo.experience == result.userinfo.grade.next_all_experience) {
+		$(".up-grade-shadow-view").show();
+	    $(".up-grade-shadow-view .img").css({
+	        "margin-top": ($(window).height() - 200) / 2 + "px"
+	    });
+	    setTimeout(function(){
+	        // 更改等级信息
+	        $(".up-grade-shadow-view").hide();
+	    }, 2000)
+	}
 }
 initTypes();
 function initTypes(){

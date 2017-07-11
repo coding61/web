@@ -1,3 +1,62 @@
+.navWai .right-view {
+	display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: calc(5%);
+    position: relative;
+}
+.avatar{
+   margin-right: 2%;
+}
+.avatar .item {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+.info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.info-view .info {
+    margin-bottom: 2%;
+}
+.info-view .info .grade {
+	display: inline;
+	margin-right: 5%;
+}
+.info-view .info .grade-value {
+	display: inline;
+}
+.info-view .progress {
+	display: block;
+	background: white;
+    height: 7px;
+    position: relative;
+}
+.info-view .progress img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58.5%;
+    height: 100%;
+    width: 150.202px;
+}
+.zuan{
+    margin-left: 5%;
+    display: flex;
+}
+.zuan img {
+    display: inline;
+    margin-right: 2px;
+}
+.zuan span {
+	display: inline;
+}
 .main {
 	margin-top:120px;
 }
@@ -73,3 +132,175 @@ ul.reply_mess>li .reply_txt {
 }
 
 .post_user .grade{left: 22px;position: absolute;margin-top: 43px;}
+
+/*经验值*/
+.grow-number-ani{
+    padding: 8px 15px;
+    position: fixed;
+    /*bottom: 130px;*/
+    right: 50%;
+    font-size: 20px;
+    /*bottom: 50%;*/
+    top: 30%;
+    font-family: -webkit-pictograph;
+    color: gray;
+}
+
+/*渐入渐出*/
+@keyframes fadeIn {
+   0% {
+      transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
+   100% {
+      transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+}
+
+@-webkit-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+
+}
+
+@-o-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-ms-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-moz-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+.fadeInOut{
+    animation: fadeIn 2s ease 1;
+   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
+   -webkit-animation: fadeIn 2s ease 1;
+   -ms-animation: fadeIn 2s ease 1;
+   -o-animation: fadeIn 2s ease 1;
+   -moz-animation: fadeIn 2s ease 1;
+   /*规定动画的最后状态为结束状态*/
+   animation-fill-mode: forwards;
+   -webkit-animation-fill-mode: forwards;
+   -o-animation-fill-mode: forwards;
+   -ms-animation-fill-mode: forwards;
+   -moz-animation-fill-mode: forwards;
+}
+/*钻石效果*/
+.zuan-shadow-view,
+.up-grade-shadow-view
+{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.up-grade-shadow-view .img,
+.zuan-shadow-view .img{
+    width: 200px;
+    height: 200px;
+    /*background: red;*/
+    margin-left: calc(50% - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.up-grade-shadow-view .img img{
+    width: 200%;
+}
+.zuan-shadow-view .img img{
+    width: 100%;
+}
+/*升级效果*/

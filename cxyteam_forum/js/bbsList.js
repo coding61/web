@@ -7,6 +7,19 @@ $('.jie-add1').unbind().click(function(){
 });
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
+myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
+	if(result){
+		$('.avatar img').attr({src: result.avatar});//用户头像
+		$('.info .grade').html(result.grade.current_name);//用户段位等级
+		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
+		$('.zuan span').html("x"+result.diamond);
+		var percent = (parseInt(result.experience)-parseInt(result.grade.current_all_experience))/(parseInt(result.grade.next_all_experience)-parseInt(result.grade.current_all_experience))*$(".info-view").width();
+        $(".progress img").css({
+            width:percent
+        })
+	}else{
+	}
+})
 myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
 	if(result.needbuy==true){
 		getPostByType(-1,null,localStorage.page,null,1);
@@ -37,9 +50,9 @@ function getPostByType(typeId,essence,page,keyword,buy){
 			if(result.count>10){
 				$("#pagination").show();
 				$("#PageCount").val(result.count);
-				if(page<=1){
+				// if(page<=1){
 					loadpage();
-				}
+				// }
 			}else{
 				$("#pagination").hide();
 			}
@@ -87,9 +100,9 @@ function getPostByType(typeId,essence,page,keyword,buy){
 			if(result.count>10){
 				$("#pagination").show();
 				$("#PageCount").val(result.count);
-				if(page<=1){
+				// if(page<=1){
 					loadpage();
-				}
+				// }
 			}else{
 				$("#pagination").hide();
 			}
@@ -189,7 +202,7 @@ function loadpage() {
     $.jqPaginator('#pagination', {
         totalPages: parseInt($("#countindex").val()),
         visiblePages: parseInt($("#visiblePages").val()),
-        currentPage: 1,
+        currentPage: parseInt(localStorage.page),
         // first: '<li class="first"><a href="javascript:;">首页</a></li>',
         prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
         next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
