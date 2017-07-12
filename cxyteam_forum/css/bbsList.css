@@ -114,15 +114,18 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .info-view .info .grade {
   display: inline;
   margin-right: 5%;
+  color: #fff;
 }
 .info-view .info .grade-value {
   display: inline;
+  color: #fff;
 }
 .info-view .progress {
   display: block;
   background: white;
     height: 7px;
     position: relative;
+    margin-bottom: 0px;
 }
 .info-view .progress img {
     position: absolute;
@@ -142,4 +145,5 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 }
 .zuan span {
   display: inline;
+  color: #fff;
 }

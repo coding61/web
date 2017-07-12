@@ -44,7 +44,16 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-
+/*.workCenter {
+    background-color: white;
+    color: rgb(250, 80, 131);
+    width: 80px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-right: -18%;
+}*/
 .right-view {
 	display: flex;
     flex: 1;
@@ -75,15 +84,18 @@
 .info-view .info .grade {
 	display: inline;
 	margin-right: 5%;
+    color: #fff;
 }
 .info-view .info .grade-value {
 	display: inline;
+    color: #fff;
 }
 .info-view .progress {
 	display: block;
 	background: white;
     height: 7px;
     position: relative;
+    margin-bottom: 0px;
 }
 .info-view .progress img {
     position: absolute;
@@ -103,4 +115,5 @@
 }
 .zuan span {
 	display: inline;
+	color: #fff;
 }
