@@ -89,7 +89,7 @@ function publish(title,zoneId,typeId,content) {
 		gradeAnimate(result);
         setTimeout(function() {
         	window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
-        }, 4000)
+        }, 3000)
 		
 	});
 }
@@ -100,6 +100,7 @@ function growNumAnimate(result) {
 	$(".grow-number-ani").remove();
     var growHtml = '<span class="grow-number-ani fadeInOut">经验 +'+experience+'</span>';
     $("body").append(growHtml);
+
 }
 // 钻石动画
 function zuanNumAnimate() {

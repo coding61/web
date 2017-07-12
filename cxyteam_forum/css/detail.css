@@ -135,19 +135,18 @@ ul.reply_mess>li .reply_txt {
 
 /*经验值*/
 .grow-number-ani{
-    padding: 8px 15px;
     position: fixed;
-    /*bottom: 130px;*/
+    bottom: 130px;
     right: 50%;
     font-size: 20px;
-    /*bottom: 50%;*/
-    top: 30%;
+    bottom: 48%;
     font-family: -webkit-pictograph;
     color: gray;
+    padding: 8px 15px; 
 }
 
 /*渐入渐出*/
-@keyframes fadeIn {
+@keyframes fadeInExperience {
    0% {
       transform: translateY(calc(100% + 140px));
       opacity: 0;
@@ -171,7 +170,7 @@ ul.reply_mess>li .reply_txt {
    /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
 }
 
-@-webkit-keyframes fadeIn {
+@-webkit-keyframes fadeInExperience {
    0% {
       -webkit-transform: translateY(calc(100% + 140px));
       opacity: 0;
@@ -194,7 +193,7 @@ ul.reply_mess>li .reply_txt {
 
 }
 
-@-o-keyframes fadeIn {
+@-o-keyframes fadeInExperience {
    0% {
       -webkit-transform: translateY(calc(100% + 140px));
       opacity: 0;
@@ -216,7 +215,7 @@ ul.reply_mess>li .reply_txt {
    }
 }
 
-@-ms-keyframes fadeIn {
+@-ms-keyframes fadeInExperience {
    0% {
       -webkit-transform: translateY(calc(100% + 140px));
       opacity: 0;
@@ -238,7 +237,7 @@ ul.reply_mess>li .reply_txt {
    }
 }
 
-@-moz-keyframes fadeIn {
+@-moz-keyframes fadeInExperience {
    0% {
       -webkit-transform: translateY(calc(100% + 140px));
       opacity: 0;
@@ -260,12 +259,12 @@ ul.reply_mess>li .reply_txt {
    }
 }
 .fadeInOut{
-    animation: fadeIn 2s ease 1;
+    animation: fadeInExperience 2s ease 1;
    /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
-   -webkit-animation: fadeIn 2s ease 1;
-   -ms-animation: fadeIn 2s ease 1;
-   -o-animation: fadeIn 2s ease 1;
-   -moz-animation: fadeIn 2s ease 1;
+   -webkit-animation: fadeInExperience 2s ease 1;
+   -ms-animation: fadeInExperience 2s ease 1;
+   -o-animation: fadeInExperience 2s ease 1;
+   -moz-animation: fadeInExperience 2s ease 1;
    /*规定动画的最后状态为结束状态*/
    animation-fill-mode: forwards;
    -webkit-animation-fill-mode: forwards;
