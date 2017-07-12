@@ -1761,6 +1761,20 @@ define(function(require, exports, module) {
         },
         addReward:function(course, courseIndex, chapter, growNum, zuanNum, this_){
             // 奖励
+            if (!chapter || chapter == "") {
+                //不发奖励请求
+                // 普通 action 按钮点击事件
+                if (this_.hasClass("exercise")) {
+                    // 点了习题的，提交答案的按钮
+                    var msg = Page.options.join(',');
+                    Page.options = [];
+                    Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                }else{
+                    // 普通的 action 按钮
+                    Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                }
+                return;
+            }
             Common.isLogin(function(token){
                 $.ajax({
                     type:"put",

@@ -333,6 +333,8 @@ body{
 
     z-index: 13;
     position: relative;
+
+    height: 30px;
 }
 .main-view .left-view ul.courseProgress .studyp{
     position: absolute;
@@ -342,6 +344,8 @@ body{
     z-index: 12;
     left: calc(50% - 1px);
     /*background: red;*/
+
+    top: 15px;
 }
 .main-view .left-view ul.courseProgress .unstudyp{
     position: absolute;
@@ -351,6 +355,8 @@ body{
     z-index: 11;
     left: calc(50% - 1px);
     /*background: red;*/
+
+    top: 15px;
 }
 
 /*会话*/
