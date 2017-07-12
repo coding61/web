@@ -206,7 +206,7 @@ define(function(require, exports, module) {
                         // 隐藏动画,并跳转
                         Team.storeMyTeam();
                         $(".wait-loading").hide();
-                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name)+"&v=1.3";
+                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name)+"&v=1.4";
                     },
                     error:function(xhr, textStatus){
                         Team.storeMyTeam();
@@ -253,7 +253,7 @@ define(function(require, exports, module) {
                         Team.storeJoinTeam();
                         $(".wait-loading").hide();
 
-                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name) + "&v=1.3";
+                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name) + "&v=1.4";
                        
                     },
                     error:function(xhr, textStatus){
