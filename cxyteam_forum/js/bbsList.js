@@ -73,7 +73,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,buy){
 				}
 				html+='<li class="fly-list-li">'
 					+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'">'
-					+'<span>'+v.userinfo.grade.current_name+'</span>'
+					+'<span class="grade">'+v.userinfo.grade.current_name+'</span>'
 					+'<h2 class="fly-tip">'          
 					+'<a href="detail.html?id='+v.pk+'&pk='+zoneId+'">'+v.title+'</a>'         
 					if(v.istop){
