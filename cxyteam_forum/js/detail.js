@@ -219,7 +219,7 @@ function postReplyAdd() {
 	{"posts":postId,"content":$("#L_content").val()},function(result) {
 		if(result){
 			//console.log(result)
-			layer.msg("回帖成功");
+			// layer.msg("回帖成功");
 			growNumAnimate(result);
 			// zuanNumAnimate();
 			gradeAnimate(result);

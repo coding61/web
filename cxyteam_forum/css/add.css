@@ -66,22 +66,20 @@
 
 /*经验值*/
 .grow-number-ani{
-    padding: 8px 15px;
-    /*background: white;*/
-    /*border-radius: 5px;*/
     position: absolute;
     bottom: 130px;
     right: 50%;
     font-size: 20px;
-    bottom: 50%;
+    bottom: 48%;
     font-family: -webkit-pictograph;
     color: gray;
+    padding: 8px 15px;   
 }
 
 /*渐入渐出*/
-@keyframes fadeIn {
+@keyframes fadeInExperience {
    0% {
-      transform: translateY(calc(100% + 140px));
+      transform: translateY(calc(100% + 240px));
       opacity: 0;
    }
    25%{
@@ -93,19 +91,18 @@
      -webkit-transform: translateY(0);
       opacity: 1;
       font-size: 50px;
-      /*color: blue;*/
    }
    /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
    100% {
-      transform: translateY(calc(100% - 140px));
+      transform: translateY(calc(100% - 240px));
       opacity: 0;
    }
    /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
 }
 
-@-webkit-keyframes fadeIn {
+@-webkit-keyframes fadeInExperience {
    0% {
-      -webkit-transform: translateY(calc(100% + 140px));
+      -webkit-transform: translateY(calc(100% + 240px));
       opacity: 0;
    }
    25%{
@@ -117,18 +114,17 @@
      -webkit-transform: translateY(0);
       opacity: 1;
       font-size: 50px;
-      /*color: blue;*/
    }
    100% {
-      -webkit-transform: translateY(calc(100% - 140px));
+      -webkit-transform: translateY(calc(100% - 240px));
       opacity: 0;
    }
 
 }
 
-@-o-keyframes fadeIn {
+@-o-keyframes fadeInExperience {
    0% {
-      -webkit-transform: translateY(calc(100% + 140px));
+      -webkit-transform: translateY(calc(100% + 240px));
       opacity: 0;
    }
    25%{
@@ -140,17 +136,16 @@
      -webkit-transform: translateY(0);
       opacity: 1;
       font-size: 50px;
-      /*color: blue;*/
-   }
+    }
    100% {
-      -webkit-transform: translateY(calc(100% - 140px));
+      -webkit-transform: translateY(calc(100% - 240px));
       opacity: 0;
    }
 }
 
-@-ms-keyframes fadeIn {
+@-ms-keyframes fadeInExperience {
    0% {
-      -webkit-transform: translateY(calc(100% + 140px));
+      -webkit-transform: translateY(calc(100% + 240px));
       opacity: 0;
    }
    25%{
@@ -162,17 +157,16 @@
      -webkit-transform: translateY(0);
       opacity: 1;
       font-size: 50px;
-      /*color: blue;*/
    }
    100% {
-      -webkit-transform: translateY(calc(100% - 140px));
+      -webkit-transform: translateY(calc(100% - 240px));
       opacity: 0;
    }
 }
 
-@-moz-keyframes fadeIn {
+@-moz-keyframes fadeInExperience {
    0% {
-      -webkit-transform: translateY(calc(100% + 140px));
+      -webkit-transform: translateY(calc(100% + 240px));
       opacity: 0;
    }
    25%{
@@ -184,20 +178,19 @@
      -webkit-transform: translateY(0);
       opacity: 1;
       font-size: 50px;
-      /*color: blue;*/
    }
    100% {
-      -webkit-transform: translateY(calc(100% - 140px));
+      -webkit-transform: translateY(calc(100% - 240px));
       opacity: 0;
    }
 }
 .fadeInOut{
-    animation: fadeIn 2s ease 1;
+    animation: fadeInExperience 2s ease 1;
    /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
-   -webkit-animation: fadeIn 2s ease 1;
-   -ms-animation: fadeIn 2s ease 1;
-   -o-animation: fadeIn 2s ease 1;
-   -moz-animation: fadeIn 2s ease 1;
+   -webkit-animation: fadeInExperience 2s ease 1;
+   -ms-animation: fadeInExperience 2s ease 1;
+   -o-animation: fadeInExperience 2s ease 1;
+   -moz-animation: fadeInExperience 2s ease 1;
    /*规定动画的最后状态为结束状态*/
    animation-fill-mode: forwards;
    -webkit-animation-fill-mode: forwards;
