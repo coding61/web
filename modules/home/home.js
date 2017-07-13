@@ -220,7 +220,7 @@ define(function(require, exports, module) {
             arr1 = arr1.reverse();
             ChatStroage.load(arr1, 0, arr1.length)
 
-            ChatStroage.initScroll(array, i, array.length);
+            // ChatStroage.initScroll(array, i, array.length);
 
 
             // ChatStroage.load(array, 0, array.length);   //加载全部
@@ -310,8 +310,6 @@ define(function(require, exports, module) {
                 var a = "#"+imgI;
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
-            
-
 
 
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 20);
@@ -372,6 +370,8 @@ define(function(require, exports, module) {
                 }
             }
             
+            ChatStroage.loadFirstItem();
+
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
             setTimeout(function(){
@@ -381,6 +381,47 @@ define(function(require, exports, module) {
             }, 800)
              
             
+        },
+        loadFirstItem:function(){
+            $(".loadAgoMore").remove();
+            // 添加一个点击加载更多
+            var loadAgoMoreHtml = "";
+            var chatData = JSON.parse(localStorage.chatData);
+            if (ChatStroage.numbers<chatData.length){
+                loadAgoMoreHtml = '<div class="loadAgoMore">点击加载更多</div>';
+            }else{
+                loadAgoMoreHtml = '<div class="loadAgoNoMore">已经到头了</div>';
+            }
+            $(loadAgoMoreHtml).prependTo(".messages");
+            
+
+            $(".loadAgoMore").unbind('click').click(function(){
+                // $(".loadAgoMore").remove();
+                // 判断存储数据是否已全部加载完
+                var chatData = JSON.parse(localStorage.chatData);
+                if (ChatStroage.numbers<chatData.length){
+                    //存储数据源还没有加载完, 继续加载(靠后的10条数据)。 判断已加载数据个数与存储个数是否相同
+                    var arr1 = [];
+                    var originIndex = chatData.length-1-ChatStroage.numbers,
+                        lastIndex = chatData.length-1-ChatStroage.numbers-ChatStroage.length;
+                    for (var i = originIndex; i > lastIndex; i--) {
+                        if (chatData[i]) {
+                            arr1.push(chatData[i]);
+                        }
+                    } 
+                    
+                    ChatStroage.timerAgo = setTimeout(function(){
+                        // 等待符号,加载上一组记录
+                        var loadingWHtml = null;
+                        loadingWHtml = '<div class="loading-chat">\
+                                            <img src="../../statics/images/chat.gif" alt="">\
+                                        </div>';
+                        $(loadingWHtml).prependTo($(".messages"));
+
+                        ChatStroage.loadAgo(arr1, 0, arr1.length);
+                    })
+                }     
+            })
         },
         initScroll:function(array, i, arrLen){
             
@@ -392,9 +433,7 @@ define(function(require, exports, module) {
                 
                 if (top == 0) {
                     //用户向上滚动查看以前的聊天信息
-                    // console.log("top--->"+top);
-                    // console.log("sh--->"+win);
-                    // console.log("h--->"+doc);
+                    console.log(top);
                     
                     //判断存储数据是否已全部加载完
                     var chatData = JSON.parse(localStorage.chatData)
@@ -430,9 +469,6 @@ define(function(require, exports, module) {
                     }
 
                 }else{
-                    // console.log("top1--->"+top);
-                    // console.log("sh1--->"+win);
-                    // console.log("h1--->"+doc);
                     ChatStroage.loadMore = true;
                     Page.clickEvent(); 
 
@@ -448,10 +484,17 @@ define(function(require, exports, module) {
             var imgI = "i_"+ChatStroage.numbers;
 
             if (i >= arrLen) {
+                // 重新赋值点击加载更多
+                ChatStroage.loadFirstItem();
+                $(".loading-chat").remove();
+                Page.clickEvent(); 
+
+                /*
                 ChatStroage.loadMore = true;
                 //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
                 $(".loading-chat").remove();
                 Page.clickEvent(); 
+                */
                 return;
             }
             
@@ -2208,15 +2251,21 @@ define(function(require, exports, module) {
                     height:unStudyH + "px"
                 })
 
-
+                
+                $(".main-view").css({
+                    "margin-left":0
+                })
                 $(".main-view .left-view .chat").css({
-                    width:"calc(85%)"
+                    width:"calc(90%)"
                 })
                 $(".courseProgress").show();
 
             }else{
+                $(".main-view").css({
+                    "margin-left":"2%"
+                })
                 $(".courseProgress").hide();
-
+                
                 $(".main-view .left-view .chat").css({
                     width:"calc(100%)"
                 })

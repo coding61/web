@@ -306,26 +306,22 @@ body{
 	width: 15px;
 }
 
-.main-view .left-view ul.courseProgress{
+.main-view ul.courseProgress{
     width: 10%;
     height: 100%;
-    background-color: rgb(229, 230, 231);
+    /*background-color: rgb(229, 230, 231);
     border: solid 1px rgb(205, 206, 207);
-    border-radius: 5px;
+    border-radius: 5px;*/
     overflow: auto;
-
-    /*position: relative;
-    display: flex;
-    align-items: center;
-    flex-direction: column;*/
-
     display: none;
+
+    width: 8%;
 }
-.main-view .left-view ul.courseProgress .courseProgressView{
+.main-view ul.courseProgress .courseProgressView{
     position: relative;
     height: 100%;
 }
-.main-view .left-view ul.courseProgress li.cp{
+.main-view ul.courseProgress li.cp{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -336,7 +332,11 @@ body{
 
     height: 30px;
 }
-.main-view .left-view ul.courseProgress .studyp{
+.main-view ul.courseProgress li.cp img{
+    width: 12px;
+    height: 12px;
+}
+.main-view ul.courseProgress .studyp{
     position: absolute;
     top: 25px;
     height: 0px;
@@ -347,7 +347,7 @@ body{
 
     top: 15px;
 }
-.main-view .left-view ul.courseProgress .unstudyp{
+.main-view ul.courseProgress .unstudyp{
     position: absolute;
     top: 25px;
     height: 0px;
@@ -390,6 +390,18 @@ body{
     padding-bottom: 0;
     /*background: red;*/
     height: calc(100% - 100px);
+}
+.main-view .left-view .chat .messages .loadAgoMore,
+.main-view .left-view .chat .messages .loadAgoNoMore{
+    color: gray;
+    text-align: center;
+    height: 25px;
+    margin-top: 10px;
+    line-height: 25px;
+    font-size: 14px;
+}
+.main-view .left-view .chat .messages .loadAgoMore{
+    cursor: pointer;
 }
 .main-view .left-view .chat .messages .loading-chat{
     display: flex;
