@@ -425,7 +425,7 @@ define(function(require, exports, module) {
                                 $(loadingWHtml).prependTo($(".messages"));
 
                                 ChatStroage.loadAgo(arr1, 0, arr1.length);
-                            }, Util.waitTime)
+                            })
                         }
                     }
 
@@ -537,8 +537,8 @@ define(function(require, exports, module) {
                 ChatStroage.timerAgo=setTimeout(function(){
                     // 2秒后加载信息
                     ChatStroage.loadAgo(arr, i+1, arrLen);
-                }, Util.messageTime)
-            }, Util.waitTime)
+                })
+            })
             
             // ChatStroage.loadAgo(arr, i+1, arrLen);
         },
@@ -2051,7 +2051,7 @@ define(function(require, exports, module) {
             if(item.img){
                 // 给图片设高
                 var url = item.img;
-                var pW = $(".message.img").first().find(".msg-view").width() * 0.70;
+                var pW = $(".message.img").first().find(".msg-view").width() * 0.50;
                 Common.getPhotoWidthHeight(url, function(width, height){
                     var pH = pW * height / width;
                     $(".message.img").first().find('img.msg').css({
