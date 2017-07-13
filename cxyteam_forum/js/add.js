@@ -89,7 +89,7 @@ function publish(title,zoneId,typeId,content) {
 		gradeAnimate(result);
         setTimeout(function() {
         	window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
-        }, 3000)
+        }, 2000)
 		
 	});
 }
@@ -152,7 +152,7 @@ function gradeAnimate(result) {
 	    setTimeout(function(){
 	        // 更改等级信息
 	        $(".up-grade-shadow-view").hide();
-	    }, 2000)
+	    }, 1000)
 	}
 }
 initTypes();

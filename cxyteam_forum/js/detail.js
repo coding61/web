@@ -233,7 +233,7 @@ function postReplyAdd() {
 			growNumAnimate(result);
 			// zuanNumAnimate();
 			gradeAnimate(result);
-			setTimeout("window.location.reload()",3000);
+			setTimeout("window.location.reload()",2000);
 		}else{
 			layer.msg("回帖异常");
 		}
@@ -308,7 +308,7 @@ function gradeAnimate(result) {
 	    setTimeout(function(){
 	        // 更改等级信息
 	        $(".up-grade-shadow-view").hide();
-	    }, 2000)
+	    }, 1000)
 	}
 }
 
