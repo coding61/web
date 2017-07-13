@@ -79,6 +79,9 @@
 .jie-add {
 	position:static;
 }
+#jieda .moreReply{
+  margin-left: calc((100% - 100px)/2);
+}
 .post_btn {
 	margin-bottom:44px;
 }
