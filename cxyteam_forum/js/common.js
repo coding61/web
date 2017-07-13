@@ -1,6 +1,6 @@
 
 if(/Mobile/i.test(navigator.userAgent)){
-    location.href = 'http://www.cxy61.com/cxyteam/cxyteam_forum/bbs.html';
+    // location.href = 'http://www.cxy61.com/cxyteam/cxyteam_forum/bbs.html';
 }
 dealWithLogin();
 function getQueryString(name) { //解析地址栏
