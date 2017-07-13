@@ -130,13 +130,15 @@ function postDetail() {
 		if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
 		if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
 		}
-		getReplys();//获取评论回复
+		getReplys(1);//获取评论回复
 	})
 }
-function getReplys(){
-	myAjax2(basePath+"/forum/replies/","get",{"posts":postId},function(result) {
+function getReplys(page){
+	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
 		//console.log(result);
-		$("#jieda").empty();
+		if (page == 1) {
+			$("#jieda").empty();
+		}
 		var _htm="";
 		$.each(result.results,function(k,v){
 			_htm+='<li data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+'">'
@@ -210,6 +212,9 @@ function getReplys(){
 		});
 		$("#jieda").append(_htm);
 		liveTimeAgo();
+		if (result.next) {
+			getReplys(page+1);
+		}
 	});
 }
 
