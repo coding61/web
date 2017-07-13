@@ -425,7 +425,7 @@ define(function(require, exports, module) {
                                 $(loadingWHtml).prependTo($(".messages"));
 
                                 ChatStroage.loadAgo(arr1, 0, arr1.length);
-                            }, Util.waitTime)
+                            })
                         }
                     }
 
@@ -537,8 +537,8 @@ define(function(require, exports, module) {
                 ChatStroage.timerAgo=setTimeout(function(){
                     // 2秒后加载信息
                     ChatStroage.loadAgo(arr, i+1, arrLen);
-                }, Util.messageTime)
-            }, Util.waitTime)
+                })
+            })
             
             // ChatStroage.loadAgo(arr, i+1, arrLen);
         },
@@ -1761,6 +1761,20 @@ define(function(require, exports, module) {
         },
         addReward:function(course, courseIndex, chapter, growNum, zuanNum, this_){
             // 奖励
+            if (!chapter || chapter == "") {
+                //不发奖励请求
+                // 普通 action 按钮点击事件
+                if (this_.hasClass("exercise")) {
+                    // 点了习题的，提交答案的按钮
+                    var msg = Page.options.join(',');
+                    Page.options = [];
+                    Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                }else{
+                    // 普通的 action 按钮
+                    Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                }
+                return;
+            }
             Common.isLogin(function(token){
                 $.ajax({
                     type:"put",
@@ -2037,7 +2051,7 @@ define(function(require, exports, module) {
             if(item.img){
                 // 给图片设高
                 var url = item.img;
-                var pW = $(".message.img").first().find(".msg-view").width() * 0.70;
+                var pW = $(".message.img").first().find(".msg-view").width() * 0.50;
                 Common.getPhotoWidthHeight(url, function(width, height){
                     var pH = pW * height / width;
                     $(".message.img").first().find('img.msg').css({
