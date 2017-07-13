@@ -5,6 +5,7 @@ var postPk=getQueryString("pk");
 var zoneId=0;
 var toUserId=0;
 var replyId=0;
+var replyPage = 1;
 $('.jie-add1').unbind().click(function(){
 	window.location.href="add.html?pk="+postPk;
 });
@@ -13,6 +14,7 @@ $('.jie-add1').unbind().click(function(){
 //var user= JSON.parse(sessionStorage.getItem("session_user"));
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
+		localStorage.userName=result.name;
 		$('.avatar img').attr({src: result.avatar});//用户头像
 		$('.info .grade').html(result.grade.current_name);//用户段位等级
 		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
@@ -22,15 +24,10 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
             width:percent
         })
 	}else{
-	}
-})
-myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
-	if(result){
-		localStorage.userName=result.name;
-	}else{
 		localStorage.userName=null;
 	}
 })
+
 var postUserName;
 initDetail();
 function initDetail(){
@@ -130,7 +127,7 @@ function postDetail() {
 		if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
 		if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
 		}
-		getReplys(1);//获取评论回复
+		getReplys(replyPage);//获取评论回复
 	})
 }
 function getReplys(page){
@@ -213,11 +210,19 @@ function getReplys(page){
 		$("#jieda").append(_htm);
 		liveTimeAgo();
 		if (result.next) {
-			getReplys(page+1);
+			$("#jieda").append('<a class="moreReply">点击加载更多</a>');
+			// getReplys(page+1);
 		}
 	});
 }
 
+// 点击加载更多回帖
+$(document).on("click",".moreReply",function() {
+	replyPage = replyPage+1;
+	getReplys(replyPage);
+	$(".moreReply").remove();
+
+})
 
 function postReplyAdd() {
 	myAjax(basePath+"/forum/replies_create/","post",
