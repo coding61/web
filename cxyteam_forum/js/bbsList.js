@@ -22,9 +22,9 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 })
 myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
 	if(result.needbuy==true){
-		getPostByType(-1,null,localStorage.page,null,false,1);
+		getPostByType(-1,null,localStorage.page,localStorage.searchPostContent,false,1);
 	}else{
-		getPostByType(-1,null,localStorage.page,null,false,0);
+		getPostByType(-1,null,localStorage.page,localStorage.searchPostContent,false,0);
 	}
 });
 
@@ -156,6 +156,7 @@ $('.fly-tab .searchTiezi').click(function() {
 	if (searchContent == '') {
 		layer.msg("请输入帖子主题");
 	} else {
+		localStorage.searchPostContent = searchContent;
 		localStorage.page = 1;
 		getPostByType(-1,null,localStorage.page,searchContent);
 	}
@@ -181,22 +182,23 @@ function initTypes(){
 	},false);
 }
 $('.fly-tab-span a').unbind().click(function(){
+	$('.fly-tab .searchinput').val('');
+	localStorage.removeItem("searchPostContent");
 	localStorage.page = 1;
 	if($(this).attr('data-pk')==-1){
-		getPostByType(-1,null,localStorage.page);
+		getPostByType(-1,null,localStorage.page,localStorage.searchPostContent);
 		pageId=-1;
 	}else if($(this).attr('data-pk')==0){
-		getPostByType(0,true,localStorage.page);
+		getPostByType(0,true,localStorage.page), localStorage.searchPostContent;
 		pageId=0;
 	}else{
-		getPostByType($(this).attr('data-pk'),null,localStorage.page);
+		getPostByType($(this).attr('data-pk'),null,localStorage.page,localStorage.searchPostContent);
 		pageId=$(this).attr('data-pk');
 	}
 });
 function exeData(num, type) {
 	//alert(num);
-	getPostByType(pageId,null,num);
-	
+	getPostByType(pageId,null,num,localStorage.searchPostContent)
 }
 
 function loadpage() {
