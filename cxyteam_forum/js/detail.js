@@ -41,7 +41,8 @@ $(".postReply_btn").click(function() {
 		layer.msg("请输入回复内容");
 		return false;
 	}else {
-		postReplyAdd()
+        $(".postReply_btn").attr({"disabled": true});
+        postReplyAdd();
 	}
 	
 })
@@ -54,6 +55,7 @@ $(document).on("click",".postReplyMore_btn",function() {
 		layer.msg("请输入回复内容");
 		return false;
 	}else {
+        $(this).attr({"disabled": true});
 		postReplyMoreAdd();
 	}
 	
