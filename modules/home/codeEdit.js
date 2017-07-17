@@ -32,6 +32,8 @@ define(function(require, exports, module) {
                 theme: "monokai",
                 // foldGutter: true,
                 // gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                gutters: ["CodeMirror-lint-markers"],
+                lint: true,
                 value: ""
             });
             htmlEditor.on('keypress', function() { 
@@ -51,6 +53,8 @@ define(function(require, exports, module) {
                 theme: "monokai",
                 // foldGutter: true,
                 // gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                gutters: ["CodeMirror-lint-markers"],
+                lint: true,
                 // value:""
             })
             jsEditor.on('keypress', function() { 
@@ -70,6 +74,8 @@ define(function(require, exports, module) {
                 theme: "monokai",
                 // foldGutter: true,
                 // gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                gutters: ["CodeMirror-lint-markers"],
+                lint: true,
                 // value:""
             })
             csEditor.on('keypress', function() { 

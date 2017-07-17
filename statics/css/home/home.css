@@ -790,6 +790,7 @@ body{
 }
 /*代码运行窗口*/
 .code-result-shadow-view,
+.message-link-shadow-view,
 .login-shadow-view{
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
@@ -802,6 +803,7 @@ body{
     display: none;
 }
 .code-result-shadow-view .code-result,
+.message-link-shadow-view .message-link,
 .login-shadow-view .login-view{
     display: flex;
     align-items: center;
@@ -810,7 +812,8 @@ body{
     height: 100%;
     flex-direction: column;
 }
-.code-result-shadow-view .code-result .close{
+.code-result-shadow-view .code-result .close,
+.message-link-shadow-view .message-link .close{
     height: 35px;
     background: #ddd;
     width: 70%;
@@ -818,14 +821,26 @@ body{
     display: flex;
     align-items: center;
 }
-.code-result-shadow-view .code-result .close img{
+.message-link-shadow-view .message-link .close{
+    width: 80%;
+}
+.code-result-shadow-view .code-result .close img,
+.message-link-shadow-view .message-link .close img{
     position: absolute;
     right: 10px;
+
+    width: 15px;
+    height: 15px;
+    top: 10px;
 }
-.code-result-shadow-view .code-result iframe{
+.code-result-shadow-view .code-result iframe,
+.message-link-shadow-view .message-link iframe{
     width: 70%;
     height: 80%;
     background: white;
+}
+.message-link-shadow-view .message-link iframe{
+    width: 80%;
 }
 /*登录视图*/
 .login-view .close{
