@@ -36,6 +36,9 @@ define(function(require, exports, module) {
 						likeTeam(this_.attr('data-pk'), this_);
 					})
 
+					//搜索框焦点事件
+					$('.search-team').focus(function(){$(this).val('')})
+
 					Search.init();
 				}
 			})

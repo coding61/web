@@ -48,12 +48,16 @@ define(function(require, exports, module) {
             var questionHtml = null;
             if (item.link) {
                 // 带链接的
-                questionHtml = '<div class="message link left-animation"> \
+                var text = "点击打开新网页"
+                if (item.link == "www.code.com") {
+                    text = "点击打开编辑器"
+                }
+                questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
                                     <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                            <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
                                         </div>\
                                         <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                     </div>\
@@ -266,12 +270,16 @@ define(function(require, exports, module) {
                     // 加载机器回复
                     if (item.link) {
                         // 带链接的
-                        questionHtml = '<div class="message link"> \
+                        var text = "点击打开新网页"
+                        if (item.link == "www.code.com") {
+                            text = "点击打开编辑器"
+                        }
+                        questionHtml = '<div class="message link" data-link="'+item.link+'"> \
                                             <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
                                                 </div>\
                                                 <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                             </div>\
@@ -522,12 +530,16 @@ define(function(require, exports, module) {
                     // 加载机器回复
                     if (item.link) {
                         // 带链接的
-                        questionHtml = '<div class="message link"> \
+                        var text = "点击打开新网页"
+                        if (item.link == "www.code.com") {
+                            text = "点击打开编辑器"
+                        }
+                        questionHtml = '<div class="message link" data-link="'+item.link+'"> \
                                             <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
                                                 </div>\
                                                 <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                             </div>\
@@ -703,13 +715,17 @@ define(function(require, exports, module) {
 
             var questionHtml = null;
             if (item.link) {
+                var text = "点击打开新网页"
+                if (item.link == "www.code.com") {
+                    text = "点击打开编辑器"
+                }
                 // 带链接的
-                questionHtml = '<div class="message link left-animation"> \
+                questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
                                     <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                            <span style="color: rgb(84, 180,225);">'+'点击打开编辑器'+'</span>\
+                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
                                         </div>\
                                         <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                     </div>\
@@ -859,6 +875,7 @@ define(function(require, exports, module) {
                     
                 }else if($(this).hasClass("begin")){
                     // 开始学习，更换课程时，或者初次学习之旅时
+                    /*
                     // 普通 action 按钮点击事件
                     if ($(this).hasClass("exercise")) {
                         // 点了习题的，提交答案的按钮
@@ -869,6 +886,9 @@ define(function(require, exports, module) {
                         // 普通的 action 按钮
                         Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
                     }
+                    */
+                    // 普通 action 按钮点击事件
+                    Util.actionClickEvent($(this));
                 }else{
                     // 当前课程的打卡及奖励
                     // 点击按钮，判断是打卡还是奖励钻石，及经验值
@@ -906,6 +926,7 @@ define(function(require, exports, module) {
                             
                             Mananger.addReward(course, courseIndex, item.chapter, item.grow_number, item. zuan_number, $(this));  //奖励钻石
                         }else{
+                            /*
                             // 普通 action 按钮点击事件
                             if ($(this).hasClass("exercise")) {
                                 // 点了习题的，提交答案的按钮
@@ -916,6 +937,9 @@ define(function(require, exports, module) {
                                 // 普通的 action 按钮
                                 Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
                             }
+                            */
+                            // 普通 action 按钮点击事件
+                            Util.actionClickEvent($(this));
                         }
                     }
                 }
@@ -932,33 +956,32 @@ define(function(require, exports, module) {
                 }else if ($(this).hasClass("select")) {
                     // 取消选中
                     $(this).removeClass("select").addClass("unselect");
-                    Page.options.pop($(this).html()); 
+                    Page.options.splice(Page.options.indexOf($(this).html()), 1);
                 }else{
 
                 }
+                Page.options.sort();
+                console.log(Page.options);
             })
             
 
             $(".message.link").unbind('click').click(function(){
-                $(".right-view>img").hide();
-                $(".right-view iframe.courseList").hide();
-                $(".right-view iframe.codeEdit").show();
-                                
-                /*
-                if($(".right-view iframe").css('display') == "none"){
+                var link = $(this).attr("data-link");
+                if (link == "www.code.com") {
                     $(".right-view>img").hide();
-                    if($(".right-view iframe").attr('src') == "codeEdit.html"){
-                    }else{
-                        $(".right-view iframe").attr({src:'codeEdit.html'});
-                    }
-                    $(".right-view iframe").show();
+                    $(".right-view iframe.courseList").hide();
+                    $(".right-view iframe.codeEdit").show();
                 }else{
-                    if($(".right-view iframe").attr('src') == "codeEdit.html"){
-                    }else{
-                        $(".right-view iframe").attr({src:'codeEdit.html'});
-                    }
+                    // window.open(link);
+                    // 打开消息链接窗口
+                    // $(".message-link-shadow-view .message-link #message-link-iframe").attr({src:"http://develop.cxy61.com:8001/s/course1/game7/2.html"});
+                    // $(".message-link-shadow-view").show();
+
+                    var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+                    params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+                    console.log(params);
+                    window.open(link, '_blank', params);
                 }
-                */
             })
 
             $(".message.text").unbind('click').click(function(){
@@ -1029,6 +1052,11 @@ define(function(require, exports, module) {
             // 关闭运行代码结果窗口
             $(".code-result .close img").unbind('click').click(function(){
                 $(".code-result-shadow-view").hide();
+            })
+
+            // 关闭消息链接窗口
+            $(".message-link-shadow-view .message-link .close img").unbind('click').click(function(){
+                $(".message-link-shadow-view").hide();
             })
 
             // 关闭登录窗口
@@ -1781,6 +1809,11 @@ define(function(require, exports, module) {
                         if(array[courseIndex+1]){
                             Page.data = array[courseIndex + 1];
                             localStorage.data = JSON.stringify(Page.data);   //更改缓存数据源
+
+                            Page.optionData = null;
+                            Page.optionIndex = 0;
+                            localStorage.optionData = JSON.stringify(Page.optionData);
+                            localStorage.optionIndex = Page.optionIndex;
                         }
                         ChatStroage.init();    //加载缓存会话消息
                     
@@ -1806,6 +1839,7 @@ define(function(require, exports, module) {
             // 奖励
             if (!chapter || chapter == "") {
                 //不发奖励请求
+                /*
                 // 普通 action 按钮点击事件
                 if (this_.hasClass("exercise")) {
                     // 点了习题的，提交答案的按钮
@@ -1816,6 +1850,9 @@ define(function(require, exports, module) {
                     // 普通的 action 按钮
                     Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
                 }
+                */
+                // 普通 action 按钮点击事件
+                Util.actionClickEvent(this_);
                 return;
             }
             Common.isLogin(function(token){
@@ -1856,8 +1893,8 @@ define(function(require, exports, module) {
 
                         // 更新个人信息
                         Util.updateInfo(json);
-
-                        
+                    
+                        /*    
                         // 普通 action 按钮点击事件
                         if (this_.hasClass("exercise")) {
                             // 点了习题的，提交答案的按钮
@@ -1868,6 +1905,9 @@ define(function(require, exports, module) {
                             // 普通的 action 按钮
                             Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
                         }
+                        */
+                        // 普通 action 按钮点击事件
+                        Util.actionClickEvent(this_);
                         
                     },
                     error:function(xhr, textStatus){
@@ -1878,6 +1918,7 @@ define(function(require, exports, module) {
                         if (xhr.status == 400 || xhr.status == 403) {
                             // 重复领取，不奖励，接着走消息
                             // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            /*
                             // 普通 action 按钮点击事件
                             if (this_.hasClass("exercise")) {
                                 // 点了习题的，提交答案的按钮
@@ -1888,6 +1929,9 @@ define(function(require, exports, module) {
                                 // 普通的 action 按钮
                                 Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
                             }
+                            */
+                            // 普通 action 按钮点击事件
+                            Util.actionClickEvent(this_);
                             return;
                         }else{
                             Common.dialog('服务器繁忙');
@@ -1921,6 +1965,7 @@ define(function(require, exports, module) {
 
                         Util.updateCourseProgress();   //更新课程进度
                         
+                        /*
                         // 普通 action 按钮点击事件
                         if (this_.hasClass("exercise")) {
                             // 点了习题的，提交答案的按钮
@@ -1931,6 +1976,9 @@ define(function(require, exports, module) {
                             // 普通的 action 按钮
                             Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
                         }
+                        */
+                        // 普通 action 按钮点击事件
+                        Util.actionClickEvent(this_);
                         
                     },
                     error:function(xhr, textStatus){
@@ -2109,12 +2157,12 @@ define(function(require, exports, module) {
         updateInfo:function(json){
 
             Default.olduser = json.olduser;      //记录是新用户还是老用户
-            localStorage.avatar = json.avatar;     //记录用户的头像
+            localStorage.avatar = json.avatar.replace("http://", "https://");     //记录用户的头像
             localStorage.currentGrade = json.grade.current_name;    //记录当前等级
 
             $(".header .item").show();
 
-            $(".header .avatar img").attr({src:json.avatar});
+            $(".header .avatar img").attr({src:json.avatar.replace("http://", "https://")});
             $(".header .info .grade").html(json.grade.current_name);
             $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
             $(".header .zuan span").html("x"+json.diamond);
@@ -2189,7 +2237,15 @@ define(function(require, exports, module) {
             }, 2000)
         },
         formatString:function(message){
-            return message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+            // 方法1，捕获异常
+            try {
+               var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+               return msg
+            }
+            catch(err){
+                alert("消息组合格式有问题!");
+                return;
+            }
         },
         platform:function(){
             // 当前浏览器
@@ -2288,6 +2344,24 @@ define(function(require, exports, module) {
                 $(".courseProgressView img.unstudyp").css({
                     height:unStudyH + "px"
                 })
+            }
+        },
+        actionClickEvent:function(this_){
+            // 普通 action 按钮点击事件
+            if (this_.hasClass("exercise")) {
+                // 点了习题的，提交答案的按钮
+                if (!Page.options || !Page.options.length) {
+                    Common.dialog("请选择一个选项");
+                    $(".btn-wx-auth").attr({disabledImg:false});
+                    $(".loading-chat").remove();
+                    return;
+                }
+                var msg = Page.options.join(',');
+                Page.options = [];
+                Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+            }else{
+                // 普通的 action 按钮
+                Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
             }
         }
 
