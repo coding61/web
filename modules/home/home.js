@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
-	var Common = require('common/common.js');
+	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
     
     // ----------------------------------1.默认数据
