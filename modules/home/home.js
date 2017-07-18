@@ -675,7 +675,7 @@ define(function(require, exports, module) {
                     Util.courseProgressUI();   //更新课程进度
                     $(".right-view iframe").hide();
                     $(".right-view>img").show();
-                    $(".actions").html('<span class="btn-wx-auth begin bottom-animation">开始学习</span>');
+                    $(".actions").html('<span class="btn-wx-auth restart bottom-animation">重新学习</span>');
                     Page.clickEvent();    //重新激活 action 点击事件
                 }else if(a == "loadCourses"){
 
@@ -889,6 +889,9 @@ define(function(require, exports, module) {
                     */
                     // 普通 action 按钮点击事件
                     Util.actionClickEvent($(this));
+                }else if($(this).hasClass("restart")){
+                    // 课程完成，重新开始，课程未完成，重新开始
+                    Page.loadClickMessageCourse($(this).html());
                 }else{
                     // 当前课程的打卡及奖励
                     // 点击按钮，判断是打卡还是奖励钻石，及经验值

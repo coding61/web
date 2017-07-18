@@ -235,8 +235,9 @@ define(function(require, exports, module) {
 	    }
 	}
 	// bc alert弹出框
-	exports.bcAlert = function(text, callback, textSubmit, textCancel){
-		exports.bcSubmitCB = callback;
+	exports.bcAlert = function(text, submitCallback, cancelCallback, textSubmit, textCancel){
+		exports.bcSubmitCB = submitCallback;
+		exports.bcCancelCB = cancelCallback;
 		textSubmit = textSubmit ? textSubmit : "确&nbsp定";
 		textCancel = textCancel ? textCancel : "取&nbsp消";
 		
@@ -262,6 +263,9 @@ define(function(require, exports, module) {
 			// 取消事件
 			$(".bc-alert-cancel-btn").unbind('click').click(function(){
 				$(".bc-alert-shadow-view").hide();
+				if (exports.bcCancelCB) {
+					exports.bcCancelCB();
+				}
 			})
 		}else{
 			$(".bc-alert-view .bc-alert-msg .bc-msg").html(text);
@@ -272,6 +276,7 @@ define(function(require, exports, module) {
 
 	}
 	exports.bcSubmitCB = function(){};
+	exports.bcCancelCB = function(){};
 
 	
 	exports.changePhotoSrc = function(url, fx){
