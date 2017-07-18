@@ -269,11 +269,11 @@ define(function(require, exports, module) {
                     })
                 }else{
                     var this_ = $(this);
-                    Common.bcAlert("是否要重新开始？", function(){
+                    Common.bcAlert("此课程已经开始学习，请选择重新开始学习，还是继续上次学习？", function(){
                         Util.restartStudy(this_);
                     }, function(){
                         Util.continueStudy(this_);
-                    }, "是", "继续");
+                    }, "重新开始", "继续上次");
                     
                     /*
                     if ($(this).hasClass("select")) {
