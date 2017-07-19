@@ -222,11 +222,16 @@ function getReplys(page){
 
 // 点击已解决
 $(document).on("click",".solved",function(){
+	$(this).addClass("had-click").siblings().removeClass("had-click");
 	$(this).css({"backgroundColor": '#009688',"color": 'white'});
+	$('.wrap .finish').css({"backgroundColor": 'white', "color": '#777'});
 	// changePostStatus('solved');
 })
 // 点击已结束
 $(document).on("click",".finish",function(){
+	$(this).addClass("had-click").siblings().removeClass("had-click");
+	$(this).css({"backgroundColor": '#009688',"color": 'white'});
+	$('.wrap .solved').css({"backgroundColor": 'white', "color": '#777'});
 	// changePostStatus('finish');
 })
 // 修改帖子状态
@@ -272,27 +277,28 @@ function postReplyMoreAdd() {
 }
 // 鼠标
 function shubiao() {
-	if ($('.wrap .solved').css("color") != 'white') {
-		$(document).on('mouseover','.wrap .solved',function(){
+	// 鼠标滑过已解决按钮
+	$(document).on('mouseover','.wrap .solved',function(){
+		if (!$(this).hasClass('had-click')) {
 			$(this).css({"backgroundColor": '#009688',"color": 'white'});
-		})
-	}
-	if ($('.wrap .solved').css("color") != '#777') {
-		$(document).on('mouseout','.wrap .solved',function(){
+		}
+	}).on('mouseout','.wrap .solved',function(){
+		if (!$(this).hasClass('had-click')) {
 			$(this).css({"backgroundColor": 'white',"color": '#777'});
-		})
-	}
+		}
+	})
+	// 鼠标滑过已结束按钮
+	$(document).on('mouseover','.wrap .finish',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": '#009688',"color": 'white'});
+		}
+	}).on('mouseout','.wrap .finish',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": 'white',"color": '#777'});
+		}
+	})
 }
-// 鼠标滑过已解决按钮
-// $(document).on('mouseover','.wrap .changeStatus .solved',function(){
-// 	if ($(this).css("color") != 'white') {
-// 		$(this).css({"backgroundColor": '#009688',"color": 'white'});
-// 	}
-// }).on('mouseout','.wrap .changeStatus .solved',function(){
-// 	if ($(this).css("color") != '#777') {
-// 		$(this).css({"backgroundColor": 'white',"color": '#777'});
-// 	}
-// })
+
 // 经验动画
 function growNumAnimate(result) {
 	var preEx = $('.info .grade-value').text().split("/")[0];
