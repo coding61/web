@@ -166,6 +166,11 @@ $('.myTie').click(function() {
 	localStorage.page = 1;
 	getPostByType(-1,null,localStorage.page,null,true);
 })
+// 返回论坛
+$('.jie-add').click(function() {
+	localStorage.removeItem("searchPostContent");
+	window.location.href="bbs.html";
+})
 
 $(document).ready(function(){
 	$(".fly-tab-span>a").click(function(){

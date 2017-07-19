@@ -125,11 +125,13 @@ function postDetail() {
 		 
 		 $(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
 		if(localStorage.userName!=null&&postUserName==localStorage.userName){
-		$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
-		if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
-		if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
+			$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
+			if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
+			if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
+			$(".wrap .page-title").append('<div class="changeStatus"><span class="solved">已解决</span><span class="finish">已结束</span>');
 		}
 		getReplys(replyPage);//获取评论回复
+		shubiao();
 	})
 }
 function getReplys(page){
@@ -218,6 +220,27 @@ function getReplys(page){
 	});
 }
 
+// 点击已解决
+$(document).on("click",".solved",function(){
+	$(this).addClass("had-click").siblings().removeClass("had-click");
+	$(this).css({"backgroundColor": '#009688',"color": 'white'});
+	$('.wrap .finish').css({"backgroundColor": 'white', "color": '#777'});
+	// changePostStatus('solved');
+})
+// 点击已结束
+$(document).on("click",".finish",function(){
+	$(this).addClass("had-click").siblings().removeClass("had-click");
+	$(this).css({"backgroundColor": '#009688',"color": 'white'});
+	$('.wrap .solved').css({"backgroundColor": 'white', "color": '#777'});
+	// changePostStatus('finish');
+})
+// 修改帖子状态
+function changePostStatus(status) {
+	myAjax(basePath+"forum/posts/"+postId+"/","get",{"status":status},function(result) {
+
+	})
+}
+
 // 点击加载更多回帖
 $(document).on("click",".moreReply",function() {
 	replyPage = replyPage+1;
@@ -252,6 +275,30 @@ function postReplyMoreAdd() {
 		}
 	})
 }
+// 鼠标
+function shubiao() {
+	// 鼠标滑过已解决按钮
+	$(document).on('mouseover','.wrap .solved',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": '#009688',"color": 'white'});
+		}
+	}).on('mouseout','.wrap .solved',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": 'white',"color": '#777'});
+		}
+	})
+	// 鼠标滑过已结束按钮
+	$(document).on('mouseover','.wrap .finish',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": '#009688',"color": 'white'});
+		}
+	}).on('mouseout','.wrap .finish',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": 'white',"color": '#777'});
+		}
+	})
+}
+
 // 经验动画
 function growNumAnimate(result) {
 	var preEx = $('.info .grade-value').text().split("/")[0];
