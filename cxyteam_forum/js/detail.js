@@ -108,30 +108,53 @@ $(document).on("click",".question_reply",function(){
 function postDetail() {
 	myAjax2(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
 		//console.log(result);
-		zoneId=result.section.pk;
-		postUserName=result.userinfo.name;
-		$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
-		$(".post_title").text(result.title);
-		$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
-		$(".post_user .grade").text(result.userinfo.grade.current_name);
-		$(".post_user cite").prepend(result.userinfo.name);
-		$(".post_user cite em").text(dealWithTime(result.create_time));
-		$('.post_content').each(function(){
-		    $(this).html(this_fly.content(result.content));
-		  });
-		$("#jiedaCount").text(result.reply_count);
-		$(".replyCount").text((result.reply_count));
-		$(".browseTime").text(result.browse_count);
-		 
-		 $(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
-		if(localStorage.userName!=null&&postUserName==localStorage.userName){
-			$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
-			if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
-			if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
-			$(".wrap .page-title").append('<div class="changeStatus"><span class="solved">已解决</span><span class="finish">已结束</span>');
+		if (result) {
+			zoneId=result.section.pk;
+			postUserName=result.userinfo.name;
+			$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
+			$(".post_title").text(result.title);
+			$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
+			$(".post_user .grade").text(result.userinfo.grade.current_name);
+			$(".post_user cite").prepend(result.userinfo.name);
+			$(".post_user cite em").text(dealWithTime(result.create_time));
+			$('.post_content').each(function(){
+			    $(this).html(this_fly.content(result.content));
+			  });
+			$("#jiedaCount").text(result.reply_count);
+			$(".replyCount").text((result.reply_count));
+			$(".browseTime").text(result.browse_count);
+			 
+			 $(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
+			if(localStorage.userName!=null&&postUserName==localStorage.userName){
+				$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
+				if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
+				if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
+				$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">已解决</span><span class="finish" id="finish">已关闭</span>');
+			}
+			if (result.status_display == '未解决') {
+				document.getElementById("solved").style.backgroundColor = 'white';
+				document.getElementById("solved").style.color = '#777';
+				document.getElementById("finish").style.backgroundColor = 'white';
+				document.getElementById("finish").style.color = '#777';
+			} else if (result.status_display == '已解决') {
+				document.getElementById("solved").style.backgroundColor = '#009688';
+				document.getElementById("solved").style.color = 'white';
+				document.getElementById("finish").style.backgroundColor = 'white';
+				document.getElementById("finish").style.color = '#777';
+				$('.solved').addClass("had-click").siblings().removeClass("had-click");
+			} else if (result.status_display == '已关闭') {
+				document.getElementById("solved").style.backgroundColor = 'white';
+				document.getElementById("solved").style.color = '#777';
+				document.getElementById("finish").style.backgroundColor = '#009688';
+				document.getElementById("finish").style.color = 'white';
+				$('.finish').addClass("had-click").siblings().removeClass("had-click");
+			}
+			getReplys(replyPage);//获取评论回复
+			shubiao();
+		} else {
+			layer.msg('请求异常');
 		}
-		getReplys(replyPage);//获取评论回复
-		shubiao();
+		
 	})
 }
 function getReplys(page){
@@ -225,19 +248,21 @@ $(document).on("click",".solved",function(){
 	$(this).addClass("had-click").siblings().removeClass("had-click");
 	$(this).css({"backgroundColor": '#009688',"color": 'white'});
 	$('.wrap .finish').css({"backgroundColor": 'white', "color": '#777'});
-	// changePostStatus('solved');
+	changePostStatus('solved');
 })
-// 点击已结束
+// 点击已关闭
 $(document).on("click",".finish",function(){
 	$(this).addClass("had-click").siblings().removeClass("had-click");
 	$(this).css({"backgroundColor": '#009688',"color": 'white'});
 	$('.wrap .solved').css({"backgroundColor": 'white', "color": '#777'});
-	// changePostStatus('finish');
+	changePostStatus('finish');
 })
 // 修改帖子状态
 function changePostStatus(status) {
-	myAjax(basePath+"forum/posts/"+postId+"/","get",{"status":status},function(result) {
-
+	myAjax(basePath+"/forum/posts/"+postId+"/","patch",{"status":status},function(result) {
+		if (result) {
+			layer.msg(result.status_display);
+		}
 	})
 }
 
