@@ -53,7 +53,7 @@ define(function(require, exports, module) {
                     text = "点击打开编辑器"
                 }
                 questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -65,7 +65,7 @@ define(function(require, exports, module) {
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -74,7 +74,7 @@ define(function(require, exports, module) {
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
@@ -275,7 +275,7 @@ define(function(require, exports, module) {
                             text = "点击打开编辑器"
                         }
                         questionHtml = '<div class="message link" data-link="'+item.link+'"> \
-                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -287,7 +287,7 @@ define(function(require, exports, module) {
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <img class="msg" id="'+imgI+'" src="'+item.img+'" data-src="../../statics/images/loading.gif" alt="" />\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -296,7 +296,7 @@ define(function(require, exports, module) {
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <span class="content">'+Util.formatString(item.message)+'</span> \
                                             </div>\
@@ -535,7 +535,7 @@ define(function(require, exports, module) {
                             text = "点击打开编辑器"
                         }
                         questionHtml = '<div class="message link" data-link="'+item.link+'"> \
-                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <div class="link-text"> \
                                                     <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -547,7 +547,7 @@ define(function(require, exports, module) {
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                                 <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -556,7 +556,7 @@ define(function(require, exports, module) {
                     }else{
                         // 文本
                         questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                             <div class="msg-view">\
                                                 <span class="content">'+Util.formatString(item.message)+'</span> \
                                             </div>\
@@ -621,7 +621,7 @@ define(function(require, exports, module) {
                 var questionHtml = null;
                 var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+message+'</span> \
                                     </div>\
@@ -721,7 +721,7 @@ define(function(require, exports, module) {
                 }
                 // 带链接的
                 questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <div class="link-text"> \
                                             <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
@@ -733,7 +733,7 @@ define(function(require, exports, module) {
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
                                         <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
@@ -742,7 +742,7 @@ define(function(require, exports, module) {
             }else{
                 // 文本
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+Util.formatString(item.message)+'</span> \
                                     </div>\
@@ -1024,12 +1024,13 @@ define(function(require, exports, module) {
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/Diamond%20Drop.wav');  //播放钻石音效
+                Common.playSoun('https://static1.bcjiaoyu.com/Diamond%20Drop.wav');  //播放钻石音效
                 Util.zuanAnimate(2);
             })
             // 联系我们
             $(".helps-view .contact-us").unbind('click').click(function(){
                 $(".helps-view").hide();
+                Common.playSoun('https://static1.bcjiaoyu.com/2.mp3');  //播放钻石音效
             })
             // 经验值
             $(".helps-view .grow-ani").unbind('click').click(function(){
@@ -1039,7 +1040,7 @@ define(function(require, exports, module) {
             // 升级
             $(".helps-view .up-grade-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/level_up.mp3');  //播放经验音效
+                Common.playSoun('https://static1.bcjiaoyu.com/level_up.mp3');  //播放经验音效
                 Util.gradeAnimate();
             })
             // 寻找帮助
@@ -1131,7 +1132,7 @@ define(function(require, exports, module) {
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/Diamond%20Drop.wav');  //播放钻石音效
+                Common.playSoun('https://static1.bcjiaoyu.com/Diamond%20Drop.wav');  //播放钻石音效
                 Util.zuanAnimate(2);
             })
             // 联系我们
@@ -1146,7 +1147,7 @@ define(function(require, exports, module) {
             // 升级
             $(".helps-view .up-grade-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/level_up.mp3');  //播放经验音效
+                Common.playSoun('https://static1.bcjiaoyu.com/level_up.mp3');  //播放经验音效
                 Util.gradeAnimate();
             })
             // 寻找帮助
@@ -1876,7 +1877,7 @@ define(function(require, exports, module) {
                         console.log(json);
                         if(zuanNum != 0){
                             // 打开钻石动画
-                            Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/Diamond%20Drop.wav');  //播放钻石音效
+                            Common.playSoun('https://static1.bcjiaoyu.com/Diamond%20Drop.wav');  //播放钻石音效
                             Util.zuanAnimate(json.diamond);
                             
                         }
@@ -1888,7 +1889,7 @@ define(function(require, exports, module) {
                         if(localStorage.currentGrade != json.grade.current_name){
                             // 打开升级动画
                             setTimeout(function(){
-                                Common.playSoun('https://resource.bcgame-face2face.haorenao.cn/level_up.mp3');  //播放经验音效
+                                Common.playSoun('https://static1.bcjiaoyu.com/level_up.mp3');  //播放经验音效
                                 Util.gradeAnimate();
                             }, 500);
                             
@@ -2257,7 +2258,7 @@ define(function(require, exports, module) {
                 var questionHtml = null;
                 var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
                 questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="https://resource.bcgame-face2face.haorenao.cn/binshu.jpg" />\
+                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                     <div class="msg-view">\
                                         <span class="content">'+message+'</span> \
                                     </div>\
