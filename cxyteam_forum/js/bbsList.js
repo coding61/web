@@ -93,8 +93,15 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 				html+='<li class="fly-list-li">'
 					+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'">'
 					+'<span class="grade">'+v.userinfo.grade.current_name+'</span>'
-					+'<h2 class="fly-tip">'          
-					+'<a href="detail.html?id='+v.pk+'&pk='+zoneId+'">'+v.title+'</a>'         
+					+'<h2 class="fly-tip">'
+					if (v.status_display == '未解决') {
+						html+='<span class="unsolved">[未解决]</span>'
+					} else if (v.status_display == '已解决') {
+						html+='<span class="solved">[已解决]</span>'
+					} else if (v.status_display == '已关闭') {
+						html+='<span class="finish">[已关闭]</span>'
+					}          
+					html+='<a href="detail.html?id='+v.pk+'&pk='+zoneId+'">'+v.title+'</a>'         
 					if(v.istop){
 						html+='<span class="fly-tip-stick">置顶</span>'
 					}

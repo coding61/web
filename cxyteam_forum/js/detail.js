@@ -172,7 +172,13 @@ function postDetail() {
 				$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
 				if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
 				if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
-				$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">标记为已解决</span><span class="finish" id="finish">关闭问题</span>');
+				if (result.status == 'unsolved') {
+					$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">标记为已解决</span><span class="finish" id="finish">关闭问题</span>');
+				} else if (result.status == 'solved') {
+					$(".wrap .page-title").append('<div class="changeStatus"><span class="unsolved" id="unsolved">标记为未解决</span>');
+				} else if (result.status == 'finish') {
+					$(".wrap .page-title").append('<div class="changeStatus"><span class="unsolved" id="unsolved">标记为未解决</span>');
+				}
 				if (result.status_display == '未解决') {
 					document.getElementById("solved").style.backgroundColor = 'white';
 					document.getElementById("solved").style.color = '#777';
@@ -289,19 +295,25 @@ function getReplys(page){
 	});
 }
 
-// 点击已解决
+// 标记为已解决
 $(document).on("click",".solved",function(){
 	$(this).addClass("had-click").siblings().removeClass("had-click");
 	$(this).css({"backgroundColor": '#009688',"color": 'white'});
 	$('.wrap .finish').css({"backgroundColor": 'white', "color": '#777'});
 	changePostStatus('solved');
 })
-// 点击已关闭
+// 关闭问题
 $(document).on("click",".finish",function(){
 	$(this).addClass("had-click").siblings().removeClass("had-click");
 	$(this).css({"backgroundColor": '#009688',"color": 'white'});
 	$('.wrap .solved').css({"backgroundColor": 'white', "color": '#777'});
 	changePostStatus('finish');
+})
+// 标记为未解决
+$(document).on("click",".unsolved",function(){
+	$(this).addClass("had-click").siblings().removeClass("had-click");
+	$(this).css({"backgroundColor": '#009688',"color": 'white'});
+	changePostStatus('unsolved');
 })
 // 修改帖子状态
 function changePostStatus(status) {
@@ -364,6 +376,16 @@ function shubiao() {
 			$(this).css({"backgroundColor": '#009688',"color": 'white'});
 		}
 	}).on('mouseout','.wrap .finish',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": 'white',"color": '#777'});
+		}
+	})
+	// 鼠标滑过未解决按钮
+	$(document).on('mouseover','.wrap .unsolved',function(){
+		if (!$(this).hasClass('had-click')) {
+			$(this).css({"backgroundColor": '#009688',"color": 'white'});
+		}
+	}).on('mouseout','.wrap .unsolved',function(){
 		if (!$(this).hasClass('had-click')) {
 			$(this).css({"backgroundColor": 'white',"color": '#777'});
 		}

@@ -159,3 +159,24 @@ body .iconfont{-webkit-text-stroke-width: 0;}
     color: #999;*/
     cursor: pointer;
 }
+.fly-tip .unsolved {
+    color: red;
+    background-color: #fcfcfc;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+.fly-tip .solved {
+    color: #999;
+    background-color: #fcfcfc;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+.fly-tip .finish {
+    color: #999;
+    background-color: #fcfcfc;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
