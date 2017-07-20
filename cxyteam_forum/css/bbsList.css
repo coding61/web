@@ -147,3 +147,15 @@ body .iconfont{-webkit-text-stroke-width: 0;}
   display: inline;
   color: #fff;
 }
+
+.fly-tab-span .solved {
+    width: 84px;
+   /* height: 36px;
+    border: none;
+    font-size: 14px;
+    line-height: 36px;
+    text-align: center;
+    border-right: 1px solid #009E94;
+    color: #999;*/
+    cursor: pointer;
+}

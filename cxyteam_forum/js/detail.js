@@ -29,7 +29,7 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 })
 
 var postUserName;
-initDetail();
+// initDetail();
 function initDetail(){
 	setTimeout(postDetail,200);//获取主帖详情
 	//addBrowseTime();
@@ -105,6 +105,13 @@ $(document).on("click",".question_reply",function(){
 //	});
 //}
 
+// function digui(event1, event2, time){
+// 	if (new Date().getTime() - time > 3000) {
+// 		alert('加载失败，请刷新');
+// 		return;
+// 	}
+// 	typeof this_fly == 'object' ? event1.html(this_fly.content(event2)) : setTimeout(function(){digui(event1, event2, time)},500);
+// }
 function postDetail() {
 	myAjax2(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
 		//console.log(result);
@@ -119,6 +126,7 @@ function postDetail() {
 			$(".post_user cite em").text(dealWithTime(result.create_time));
 			$('.post_content').each(function(){
 			    $(this).html(this_fly.content(result.content));
+			    // digui($(this), result.content, new Date().getTime());
 			  });
 			$("#jiedaCount").text(result.reply_count);
 			$(".replyCount").text((result.reply_count));
@@ -131,24 +139,24 @@ function postDetail() {
 				if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
 				$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">已解决</span><span class="finish" id="finish">已关闭</span>');
 			}
-			if (result.status_display == '未解决') {
-				document.getElementById("solved").style.backgroundColor = 'white';
-				document.getElementById("solved").style.color = '#777';
-				document.getElementById("finish").style.backgroundColor = 'white';
-				document.getElementById("finish").style.color = '#777';
-			} else if (result.status_display == '已解决') {
-				document.getElementById("solved").style.backgroundColor = '#009688';
-				document.getElementById("solved").style.color = 'white';
-				document.getElementById("finish").style.backgroundColor = 'white';
-				document.getElementById("finish").style.color = '#777';
-				$('.solved').addClass("had-click").siblings().removeClass("had-click");
-			} else if (result.status_display == '已关闭') {
-				document.getElementById("solved").style.backgroundColor = 'white';
-				document.getElementById("solved").style.color = '#777';
-				document.getElementById("finish").style.backgroundColor = '#009688';
-				document.getElementById("finish").style.color = 'white';
-				$('.finish').addClass("had-click").siblings().removeClass("had-click");
-			}
+			// if (result.status_display == '未解决') {
+			// 	document.getElementById("solved").style.backgroundColor = 'white';
+			// 	document.getElementById("solved").style.color = '#777';
+			// 	document.getElementById("finish").style.backgroundColor = 'white';
+			// 	document.getElementById("finish").style.color = '#777';
+			// } else if (result.status_display == '已解决') {
+			// 	document.getElementById("solved").style.backgroundColor = '#009688';
+			// 	document.getElementById("solved").style.color = 'white';
+			// 	document.getElementById("finish").style.backgroundColor = 'white';
+			// 	document.getElementById("finish").style.color = '#777';
+			// 	$('.solved').addClass("had-click").siblings().removeClass("had-click");
+			// } else if (result.status_display == '已关闭') {
+			// 	document.getElementById("solved").style.backgroundColor = 'white';
+			// 	document.getElementById("solved").style.color = '#777';
+			// 	document.getElementById("finish").style.backgroundColor = '#009688';
+			// 	document.getElementById("finish").style.color = 'white';
+			// 	$('.finish').addClass("had-click").siblings().removeClass("had-click");
+			// }
 			getReplys(replyPage);//获取评论回复
 			shubiao();
 		} else {
@@ -176,11 +184,12 @@ function getReplys(page){
 			   +' <span>'+dealWithTime(v.create_time)+'</span>'
 			   +'<span class="liveTime">'+dealWithTime(v.create_time)+'</span>'
 			  +'</div>';
-			  if(v.adopt){
-				  _htm+=' <i data-id="'+v.pk+'" class="iconfont icon-caina isAccept_active" title="最佳答案"></i>';
-				}else{
-					_htm+=' <i data-id="'+v.pk+'" class="iconfont icon-caina isAccept" title="最佳答案"></i>';
-				}
+			  // 隐藏
+			 //  if(v.adopt){
+				//   _htm+=' <i data-id="'+v.pk+'" class="iconfont icon-caina isAccept_active" title="最佳答案"></i>';
+				// }else{
+				// 	_htm+=' <i data-id="'+v.pk+'" class="iconfont icon-caina isAccept" title="最佳答案"></i>';
+				// }
 			  _htm+='</div>'
 			+'<div class="detail-body jieda-body">'
 			 +this_fly.content(v.content)
@@ -193,13 +202,14 @@ function getReplys(page){
 			  if(localStorage.userName!=null&&(v.userinfo.name==localStorage.userName)){
 			  _htm+='<span type="del" onclick="deleteReplyById('+v.pk+')">删除</span>';
 			  }
-			    if(localStorage.userName!=null&&postUserName==localStorage.userName){
-			    	if(v.adopt){
-			    	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',0)">取消采纳</span>';
-			    	}else{
-			    	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',1)">采纳</span>';	
-		    		}
-			    }
+			  // 隐藏
+		    // if(localStorage.userName!=null&&postUserName==localStorage.userName){
+		    // 	if(v.adopt){
+		    // 	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',0)">取消采纳</span>';
+		    // 	}else{
+		    // 	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',1)">采纳</span>';	
+	    	// 	}
+		    // }
 			/*  +'</div>'*/
 			    _htm+='</div>'
 			+'<div class="reply_content">'
