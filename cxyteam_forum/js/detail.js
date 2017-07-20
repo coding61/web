@@ -35,7 +35,7 @@ function initDetail(){
 	//addBrowseTime();
 }
 //提交回帖
-$(".postReply_btn").click(function() {
+$(document).on("click",".postReply_btn",function() {
 	var content=$("#L_content").val();
 	if(!content) {
 		layer.msg("请输入回复内容");
@@ -138,25 +138,26 @@ function postDetail() {
 				if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
 				if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
 				$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">已解决</span><span class="finish" id="finish">已关闭</span>');
+				if (result.status_display == '未解决') {
+					document.getElementById("solved").style.backgroundColor = 'white';
+					document.getElementById("solved").style.color = '#777';
+					document.getElementById("finish").style.backgroundColor = 'white';
+					document.getElementById("finish").style.color = '#777';
+				} else if (result.status_display == '已解决') {
+					document.getElementById("solved").style.backgroundColor = '#009688';
+					document.getElementById("solved").style.color = 'white';
+					document.getElementById("finish").style.backgroundColor = 'white';
+					document.getElementById("finish").style.color = '#777';
+					$('.solved').addClass("had-click").siblings().removeClass("had-click");
+				} else if (result.status_display == '已关闭') {
+					document.getElementById("solved").style.backgroundColor = 'white';
+					document.getElementById("solved").style.color = '#777';
+					document.getElementById("finish").style.backgroundColor = '#009688';
+					document.getElementById("finish").style.color = 'white';
+					$('.finish').addClass("had-click").siblings().removeClass("had-click");
+				}
 			}
-			// if (result.status_display == '未解决') {
-			// 	document.getElementById("solved").style.backgroundColor = 'white';
-			// 	document.getElementById("solved").style.color = '#777';
-			// 	document.getElementById("finish").style.backgroundColor = 'white';
-			// 	document.getElementById("finish").style.color = '#777';
-			// } else if (result.status_display == '已解决') {
-			// 	document.getElementById("solved").style.backgroundColor = '#009688';
-			// 	document.getElementById("solved").style.color = 'white';
-			// 	document.getElementById("finish").style.backgroundColor = 'white';
-			// 	document.getElementById("finish").style.color = '#777';
-			// 	$('.solved').addClass("had-click").siblings().removeClass("had-click");
-			// } else if (result.status_display == '已关闭') {
-			// 	document.getElementById("solved").style.backgroundColor = 'white';
-			// 	document.getElementById("solved").style.color = '#777';
-			// 	document.getElementById("finish").style.backgroundColor = '#009688';
-			// 	document.getElementById("finish").style.color = 'white';
-			// 	$('.finish').addClass("had-click").siblings().removeClass("had-click");
-			// }
+			
 			getReplys(replyPage);//获取评论回复
 			shubiao();
 		} else {
