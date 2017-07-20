@@ -202,6 +202,7 @@ function getReplys(page){
 			  if(localStorage.userName!=null&&(v.userinfo.name==localStorage.userName)){
 			  _htm+='<span type="del" onclick="deleteReplyById('+v.pk+')">删除</span>';
 			  }
+			  // 隐藏
 		    // if(localStorage.userName!=null&&postUserName==localStorage.userName){
 		    // 	if(v.adopt){
 		    // 	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',0)">取消采纳</span>';
