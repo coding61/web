@@ -6,8 +6,34 @@ var zoneId=0;
 var toUserId=0;
 var replyId=0;
 var replyPage = 1;
-$('.jie-add1').unbind().click(function(){
-	window.location.href="add.html?pk="+postPk;
+// $('.jie-add1').unbind().click(function(){
+// 	window.location.href="add.html?pk="+postPk;
+// });
+$(document).on("click",".jie-add1",function() {
+	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
+		$.ajax({
+	        url: basePath+"/forum/posts_check/",
+	        type: "get",
+	        headers: {
+	            Authorization: 'Token ' + localStorage.token
+	        },
+	        success: function(result) {
+	        	if (result.message == '该用户可以发帖') {
+	        		window.location.href="add.html?pk="+postPk;
+	        	}
+	        },
+	        error:function(XMLHttpRequest){
+	        	console.log(XMLHttpRequest.status)
+	        	if(XMLHttpRequest.status==400){
+	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        	}else{
+	        		layer.msg("已被禁言");
+	        	}
+	        }
+	    });	
+	}else{
+	 	layer.msg("请先登录");
+	}
 });
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
@@ -34,6 +60,16 @@ function initDetail(){
 	setTimeout(postDetail,200);//获取主帖详情
 	//addBrowseTime();
 }
+// 收藏／取消收藏
+$(document).on("click",".wrap .collectBtn",function(){
+	myAjax(basePath+"/collect/collection/","put",{"type": "posts","pk": postId},function(result) {
+		if (result.messgae == '取消收藏') {
+
+		} else if (result.messgae == '收藏成功') {
+
+		}
+	})
+})
 //提交回帖
 $(document).on("click",".postReply_btn",function() {
 	var content=$("#L_content").val();
@@ -58,7 +94,6 @@ $(document).on("click",".postReplyMore_btn",function() {
         $(this).attr({"disabled": true});
 		postReplyMoreAdd();
 	}
-	
 });
 //点击回复
 $(document).on("click",".question_reply",function(){

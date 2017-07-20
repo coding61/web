@@ -3,8 +3,31 @@ var basePath="/program_girl";
 var pageId=-1;
 var zoneId = getQueryString("id");
 $('.jie-add1').unbind().click(function(){
-
-	window.location.href="add.html?pk="+zoneId;
+	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
+		$.ajax({
+	        url: basePath+"/forum/posts_check/",
+	        type: "get",
+	        headers: {
+	            Authorization: 'Token ' + localStorage.token
+	        },
+	        success: function(result) {
+	        	if (result.message == '该用户可以发帖') {
+	        		window.location.href="add.html?pk="+zoneId;
+	        	}
+	        },
+	        error:function(XMLHttpRequest){
+	        	console.log(XMLHttpRequest.status)
+	        	if(XMLHttpRequest.status==400){
+	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        	}else{
+	        		layer.msg("已被禁言");
+	        	}
+	        }
+	    });	
+	}else{
+	 	layer.msg("请先登录");
+	}
+	
 });
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
@@ -108,6 +131,8 @@ $('.fly-tab .searchTiezi').click(function() {
 })
 // 我的帖子
 $('.myTie').click(function() {
+	$('.fly-tab .searchinput').val('');
+	localStorage.removeItem("searchPostContent");
 	localStorage.page = 1;
 	getPostByType(-1,null,localStorage.page,null,true);
 })
@@ -125,14 +150,14 @@ $(document).ready(function(){
 initTypes();
 function initTypes(){
 	// 不显示类型，只显示全部和精帖
-	myAjax2(basePath+"/forum/types/","get",null,function(result){
-		console.log(result);
-		$.each(result.results, function(k,v) {
-			$(".fly-tab-span").append('<a href="javascript:void(0);" data-pk="'+v.pk+'">'+v.name+'</a>');
-		});
+	// myAjax2(basePath+"/forum/types/","get",null,function(result){
+	// 	console.log(result);
+	// 	$.each(result.results, function(k,v) {
+	// 		$(".fly-tab-span").append('<a href="javascript:void(0);" data-pk="'+v.pk+'">'+v.name+'</a>');
+	// 	});
 		// 已解决状态
-		// $(".fly-tab-span").append('<a class="solved">已解决</a>');
-	},false);
+		$(".fly-tab-span").append('<a class="solved">已解决</a>');
+	// },false);
 }
 $('.fly-tab-span a').unbind().click(function(){
 	$('.fly-tab .searchinput').val('');
