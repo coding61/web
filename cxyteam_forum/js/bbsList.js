@@ -129,7 +129,7 @@ function initTypes(){
 		$.each(result.results, function(k,v) {
 			$(".fly-tab-span").append('<a href="javascript:void(0);" data-pk="'+v.pk+'">'+v.name+'</a>');
 		});
-		// $(".fly-tab-span").append('<span class="">')
+		// $(".fly-tab-span").append('<a class="solved">已解决</a>');
 	},false);
 }
 $('.fly-tab-span a').unbind().click(function(){
@@ -140,13 +140,21 @@ $('.fly-tab-span a').unbind().click(function(){
 		getPostByType(-1,null,localStorage.page,localStorage.searchPostContent);
 		pageId=-1;
 	}else if($(this).attr('data-pk')==0){
-		getPostByType(0,true,localStorage.page), localStorage.searchPostContent;
+		getPostByType(0,true,localStorage.page);
 		pageId=0;
 	}else{
 		getPostByType($(this).attr('data-pk'),null,localStorage.page,localStorage.searchPostContent);
 		pageId=$(this).attr('data-pk');
-	}
+	} 
 });
+// 点击已解决
+$('.fly-tab-span .solved').click(function() {
+	$('.fly-tab .searchinput').val('');
+	localStorage.removeItem("searchPostContent");
+	localStorage.page = 1;
+	// $(this).css({"backgroundColor": '#009E94', "color": '#fff'});
+	getPostByType(null,null,localStorage.page,null,null,'solved');
+})
 function exeData(num, type) {
 	//alert(num);
 	getPostByType(pageId,null,num,localStorage.searchPostContent)

@@ -18,6 +18,13 @@
   <script src="js/jquery-1.11.2.min.js"></script>
   <script src="res/layui/layui.js"></script>
   <script src="res/layui/layer/layer.js"></script>
+  <script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
+  <script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
+  <script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
+
+  <script src="js/jquery.liveTimeAgo.js"></script>
+  <script src="js/common.js?v=1.0"></script>
+  <script src="js/detail.js?v=1.2"></script>
   <script>
   var this_fly;
   /* layui.cache.page = 'jie'; */
@@ -36,6 +43,7 @@
   }).use('fly', function(){
     this_fly = layui.fly;
     //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+    initDetail();
   });
   </script>
 </head>
@@ -173,13 +181,7 @@
 
 
 <!--upload-->
-<script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
-<script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
-<script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
 
-<script src="js/jquery.liveTimeAgo.js"></script>
-<script src="js/common.js?v=1.0"></script>
-<script src="js/detail.js?v=1.2"></script>
 <!--<script type="text/javascript" src="/s/js/global.js"></script>-->
 </body>
 </html>
