@@ -145,7 +145,7 @@ ul.reply_mess>li .reply_txt {
     position: absolute;
     right: 20px;
     top: 10px;
-    display: none;
+    /*display: none;*/
 }
 .wrap .changeStatus .solved {
     height: 36px;
@@ -167,6 +167,11 @@ ul.reply_mess>li .reply_txt {
     margin-left: 20px;
     color: #777;
     cursor: pointer;
+}
+.wrap .fly-list-hint .collectBtn {
+    width: 16px;
+    height: 16px;
+    margin-top: -4px;
 }
 /*经验值*/
 .grow-number-ani{
