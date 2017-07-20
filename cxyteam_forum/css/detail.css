@@ -157,6 +157,16 @@ ul.reply_mess>li .reply_txt {
     color: #777;
     cursor: pointer;
 }
+.wrap .changeStatus .unsolved {
+    height: 36px;
+    /* line-height: 36px; */
+    padding: 5px 20px;
+    border: 1px solid #009E94;
+    background-color: white;
+    font-size: 14px;
+    color: #777;
+    cursor: pointer;
+}
 .wrap .changeStatus .finish {
     height: 36px;
     /* line-height: 36px; */
