@@ -172,19 +172,19 @@ function postDetail() {
 				$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
 				if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
 				if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
-				$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">已解决</span><span class="finish" id="finish">已关闭</span>');
+				$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">标记为已解决</span><span class="finish" id="finish">关闭问题</span>');
 				if (result.status_display == '未解决') {
 					document.getElementById("solved").style.backgroundColor = 'white';
 					document.getElementById("solved").style.color = '#777';
 					document.getElementById("finish").style.backgroundColor = 'white';
 					document.getElementById("finish").style.color = '#777';
-				} else if (result.status_display == '已解决') {
+				} else if (result.status_display == '标记为已解决') {
 					document.getElementById("solved").style.backgroundColor = '#009688';
 					document.getElementById("solved").style.color = 'white';
 					document.getElementById("finish").style.backgroundColor = 'white';
 					document.getElementById("finish").style.color = '#777';
 					$('.solved').addClass("had-click").siblings().removeClass("had-click");
-				} else if (result.status_display == '已关闭') {
+				} else if (result.status_display == '关闭问题') {
 					document.getElementById("solved").style.backgroundColor = 'white';
 					document.getElementById("solved").style.color = '#777';
 					document.getElementById("finish").style.backgroundColor = '#009688';
