@@ -68,15 +68,8 @@ $(".right-view .ranking").unbind('mouseover').mouseover(function(){
 function getRanking() {
 	myAjax(basePath+"/userinfo/userinfo/diamond/ranking/","get",null,function(result) {
 		if(result){
-			var arr = {results:[]};
-			for (var i = 0; i < result.results.length; i++) {
-				arr.results.push(result.results[i]);
-			}
-			for (var j = 0; j < result.results.length; j++) {
-				arr.results.push(result.results[j]);
-			}
 			$('.rankingView').show();
-			var html = template("rankList-template", arr);
+			var html = template("rankList-template", result);
 			$('.rankList').html(html);
 		}else{
 		}
