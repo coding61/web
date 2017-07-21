@@ -2,6 +2,7 @@
 var basePath="/program_girl";
 var pageId=-1;
 var zoneId = getQueryString("id");
+$('.fly-tab .searchinput').val(sessionStorage.searchPostContent);
 $('.jie-add1').unbind().click(function(){
 	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
 		$.ajax({
@@ -12,7 +13,7 @@ $('.jie-add1').unbind().click(function(){
 	        },
 	        success: function(result) {
 	        	if (result.message == '该用户可以发帖') {
-	        		window.location.href="add.html?pk="+zoneId;
+	        		window.location.href="add.html?pk="+getQueryString("id");
 	        	}
 	        },
 	        error:function(XMLHttpRequest){
@@ -45,7 +46,7 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	}
 })
 myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
-	getPostByType(-1,null,localStorage.page,localStorage.searchPostContent,false,null);
+	getPostByType(sessionStorage.typeId,null,sessionStorage.page,sessionStorage.searchPostContent,sessionStorage.myPost,null);
 });
 
 function getQueryString(name) { 
@@ -65,7 +66,13 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 	}else{
 		essence=null;
 	}
-		myAjax(basePath+"/forum/posts/?section="+zoneId,"get",{"types":typeId,"isessence":essence,"keyword":keyword,"myposts":myposts,"page":page,"status":status},function(result){
+	if (myposts == 'true') {
+		zoneId = null;
+	} else {
+		zoneId = getQueryString("id");
+	}
+
+		myAjax(basePath+"/forum/posts/","get",{"section":zoneId,"types":typeId,"isessence":essence,"keyword":keyword,"myposts":myposts,"page":page,"status":sessionStorage.postStatus},function(result){
 			if(result.count>10){
 				$("#pagination").show();
 				$("#PageCount").val(result.count);
@@ -131,21 +138,36 @@ $('.fly-tab .searchTiezi').click(function() {
 	if (searchContent == '') {
 		layer.msg("请输入帖子主题");
 	} else {
-		localStorage.searchPostContent = searchContent;
-		localStorage.page = 1;
-		getPostByType(-1,null,localStorage.page,searchContent);
+		sessionStorage.searchPostContent = searchContent;
+		sessionStorage.page = 1;
+		sessionStorage.removeItem("myPost");
+		sessionStorage.removeItem("typeId");
+		sessionStorage.removeItem("postStatus");
+		$(".fly-tab-span a").each(function() {
+			$(this).removeClass("tab-this");
+		});
+		getPostByType(-1,null,sessionStorage.page,searchContent);
 	}
 })
 // 我的帖子
 $('.myTie').click(function() {
+
 	$('.fly-tab .searchinput').val('');
-	localStorage.removeItem("searchPostContent");
-	localStorage.page = 1;
-	getPostByType(-1,null,localStorage.page,null,true);
+	sessionStorage.removeItem("searchPostContent");
+	sessionStorage.removeItem("postStatus");
+	sessionStorage.page = 1;
+	sessionStorage.myPost = true;
+	$(".fly-tab-span a").each(function() {
+		$(this).removeClass("tab-this");
+	});
+	getPostByType(-1,null,sessionStorage.page,null,sessionStorage.myPost);
 })
 // 返回论坛
 $('.jie-add').click(function() {
-	localStorage.removeItem("searchPostContent");
+	sessionStorage.removeItem("searchPostContent");
+	sessionStorage.removeItem("myPost");
+	sessionStorage.removeItem("page");
+	sessionStorage.removeItem("typeId");
 	window.location.href="bbs.html";
 })
 // 点击帖子类型
@@ -165,28 +187,45 @@ function initTypes(){
 		// 已解决状态
 		$(".fly-tab-span").append('<a class="solved">已解决</a>');
 	// },false);
+	
+	$(".fly-tab-span a").each(function() {
+		if (sessionStorage.typeId) {
+			if ($(this).attr("data-pk") == sessionStorage.typeId) {
+				$(this).addClass("tab-this").siblings().removeClass("tab-this");
+			}
+		} else if (sessionStorage.postStatus == 'solved') {
+			$(this).addClass("tab-this").siblings().removeClass("tab-this");
+		}
+	})
 }
 $('.fly-tab-span a').unbind().click(function(){
 	$('.fly-tab .searchinput').val('');
-	localStorage.removeItem("searchPostContent");
-	localStorage.page = 1;
+	sessionStorage.removeItem("searchPostContent");
+	sessionStorage.removeItem("myposts");
+	sessionStorage.page = 1;
 	if($(this).attr('data-pk')==-1){
-		getPostByType(-1,null,localStorage.page,localStorage.searchPostContent);
+		sessionStorage.removeItem("postStatus");
+		getPostByType(-1,null,sessionStorage.page);
 		pageId=-1;
+		sessionStorage.typeId = -1;
 	}else if($(this).attr('data-pk')==0){
-		getPostByType(0,true,localStorage.page);
+		sessionStorage.typeId = 0;
+		sessionStorage.removeItem("postStatus");
+		getPostByType(0,true,sessionStorage.page);
 		pageId=0;
 	}else if ($(this).attr('class') == 'solved') {
-		getPostByType(null,null,localStorage.page,null,null,'solved');
+		sessionStorage.postStatus = 'solved';
+		sessionStorage.removeItem("typeId");
+		getPostByType(null,null,sessionStorage.page,null,null,'solved');
 	}else{
-		getPostByType($(this).attr('data-pk'),null,localStorage.page,localStorage.searchPostContent);
+		getPostByType($(this).attr('data-pk'),null,sessionStorage.page,sessionStorage.searchPostContent);
 		pageId=$(this).attr('data-pk');
 	} 
 });
 
 function exeData(num, type) {
 	//alert(num);
-	getPostByType(pageId,null,num,localStorage.searchPostContent)
+	getPostByType(pageId,null,num,sessionStorage.searchPostContent,sessionStorage.myPost)
 }
 
 function loadpage() {
@@ -194,11 +233,14 @@ function loadpage() {
     var myPageSize = parseInt($("#PageSize").val());
     var countindex = myPageCount % myPageSize > 0 ? (myPageCount / myPageSize) + 1 : (myPageCount / myPageSize);
     $("#countindex").val(countindex);
-
+    if (sessionStorage.page) {
+    } else {
+    	sessionStorage.page = 1;
+    }
     $.jqPaginator('#pagination', {
         totalPages: parseInt($("#countindex").val()),
         visiblePages: parseInt($("#visiblePages").val()),
-        currentPage: parseInt(localStorage.page),
+        currentPage: parseInt(sessionStorage.page),
         // first: '<li class="first"><a href="javascript:;">首页</a></li>',
         prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
         next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
@@ -207,7 +249,7 @@ function loadpage() {
         onPageChange: function (num, type) {
             if (type == "change") {
                 exeData(num, type);
-                localStorage.page = num;
+                sessionStorage.page = num;
             }
         }
     });

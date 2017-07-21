@@ -154,6 +154,14 @@ function postDetail() {
 			zoneId=result.section.pk;
 			postUserName=result.userinfo.name;
 			$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
+			$(".postStatus").text("[" + result.status_display + "]");
+			if (result.status_display == '未解决') {
+				$(".postStatus").css({"color": 'red'});
+			} else if (result.status_display == '已解决') {
+				$(".postStatus").css({"color": '#777'});
+			} else if (result.status_display == '已关闭') {
+				$(".postStatus").css({"color": '#777'});
+			}
 			$(".post_title").text(result.title);
 			$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
 			$(".post_user .grade").text(result.userinfo.grade.current_name);
@@ -320,6 +328,7 @@ function changePostStatus(status) {
 	myAjax(basePath+"/forum/posts/"+postId+"/","patch",{"status":status},function(result) {
 		if (result) {
 			layer.msg(result.status_display);
+			setTimeout("window.location.reload()",1000);
 		}
 	})
 }
