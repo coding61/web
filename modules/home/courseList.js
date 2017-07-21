@@ -267,7 +267,7 @@ define(function(require, exports, module) {
                         window.parent.postMessage("resetcurrentCourse", '*');
 
                     })
-                }else{
+                }else if($(this).attr("data-category") == "processing"){
                     var this_ = $(this);
                     Common.bcAlert("此课程已经开始学习，请选择重新开始学习，还是继续上次学习？", function(){
                         Util.restartStudy(this_);
@@ -290,6 +290,9 @@ define(function(require, exports, module) {
                     localStorage.currentCourseTotal = $(this).attr("data-course-total");    //当前课程总节数
                     window.parent.postMessage("currentCourse", '*');
                     */
+                }else{
+                    var this_ = $(this);
+                    Util.continueStudy(this_);
                 }
 
             })
