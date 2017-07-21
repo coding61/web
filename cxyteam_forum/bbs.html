@@ -35,6 +35,7 @@
 	            <!-- <div class="workCenter">作品中心</div> -->
 				
 				<div class="right-view">
+					<div class="ranking">排行榜</div>
 					<div class="icon4 avatar">
 						<img class="item" src="../statics/images/avatar.png" alt="">
 					</div>
@@ -53,6 +54,22 @@
 						<img class="item" src="../statics/images/icon3.png" alt="" />
 						<span class="item">x20</span>
 					</div>
+				</div>
+				<div class="rankingView">
+					<img class="arrow" src="../statics/images/arrow-d.png">
+					<div class="rankList" style="overflow: scroll;overflow: scroll;height: 300px;">
+						
+					</div>
+					<script type="text/html" id="rankList-template">
+						<div>
+							{{each results}}
+								<li class="item">
+									<span class="">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
+									<span style="float: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
+								</li>
+							{{/each}}
+						</div>
+					</script>
 				</div>
 			</nav>
 
@@ -108,6 +125,7 @@
 		<div class="footer"></div>
 	</div>
 	</body>
+	<script src="../libs/template.js"></script>
 	<script src="js/jquery-1.11.2.min.js"></script>
 	<script src="res/layui/layer/layer.js"></script>
     <script src="js/jquery.liveTimeAgo.js"></script>

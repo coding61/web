@@ -52,3 +52,33 @@ function bbsZone(){
 		liveTimeAgo();
 	})
 }
+
+// 鼠标划过排行榜
+$(".right-view .ranking").unbind('mouseover').mouseover(function(){
+    // $(".header .team-info").toggle();
+    getRanking();
+
+
+}).unbind('mouseout').mouseout(function(){
+    // $(".header .team-info").show();
+    // $(".header .team-info").toggle();
+    $('.rankingView').hide();
+})
+
+function getRanking() {
+	myAjax(basePath+"/userinfo/userinfo/diamond/ranking/","get",null,function(result) {
+		if(result){
+			var arr = {results:[]};
+			for (var i = 0; i < result.results.length; i++) {
+				arr.results.push(result.results[i]);
+			}
+			for (var j = 0; j < result.results.length; j++) {
+				arr.results.push(result.results[j]);
+			}
+			$('.rankingView').show();
+			var html = template("rankList-template", arr);
+			$('.rankList').html(html);
+		}else{
+		}
+	})
+}

@@ -63,6 +63,36 @@
     margin-right: calc(5%);
     position: relative;
 }
+.right-view .ranking {
+    cursor: default;
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 20px;
+    margin-right: 10%;
+    color: white;
+    font-size: 14px;
+}
+.rankingView {
+    position: fixed;
+    background: white;
+    color: #1a1a1a;
+    border: solid 1px #d2d2d2;
+    border-radius: 5px;
+    line-height: 30px;
+    left: 54%;
+    font-size: 13px;
+    top: 40px;
+    /*width: 250px;*/
+    /*min-height: 314px;*/
+    padding: 10px 10px;
+    /*overflow: scroll;*/
+    display: none;
+}
+.rankingView .arrow {
+    position: absolute;
+    left: 117px;
+    top: -10px;
+}
 .avatar{
    margin-right: 2%;
 }
