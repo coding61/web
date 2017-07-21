@@ -78,7 +78,15 @@
 							<input type="text" name="" class="searchinput" placeholder="请输入帖子主题">
 							<a class="searchTiezi">搜索</a>
 						</div>
-						<a class="myTie">我的帖子</a>
+						<!-- <a class="myTie">我的帖子</a> -->
+						<form class="selectTable" style="width: 100px;height: 38px;position: absolute;top: 0;right: 20%;">
+							<select id="cars" name="cars" onchange="mySelectHadChange(this.value)" style="width: 100%;height: 100%;background-color: #009688;color: white;font-size: 14px;">
+								<option value="my">我的</option>
+								<option value="myTie">我的帖子</option>
+								<option value="myCollect">我的收藏</option>
+								<option value="myMessage">我的消息</option>
+							</select>
+						</form>
 						<a class="layui-btn jie-add1">发布帖子</a>
 						<a class="layui-btn jie-add">返回论坛</a>
 					</div>
