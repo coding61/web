@@ -631,6 +631,7 @@ header .back:before {
 	width: 100%;
 	border-radius: 0em 0em .4em .4em;
 	border-top: solid 1px #e1e1e1;
+	cursor: pointer;
 }
 
 .is-visible .ui-dialog-container {
