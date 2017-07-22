@@ -83,7 +83,7 @@ function getRanking() {
             var b = $(".right-view").offset().left;
             var c = $(".rankingView").width();
             $(".rankingView").css({
-                left: (a-b-c/2)+30 + "px"
+                left: (a-b-c/2)+50 + "px"
             })
 		}else{
 		}

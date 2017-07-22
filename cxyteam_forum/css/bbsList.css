@@ -13,7 +13,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-list-li .fly-list-avatar{position: absolute; left: 0; top: 0;}
 .fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 8px;margin-left: 20px;float: left;width:91%;}
 .fly-list-li h2 *{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
-.fly-list-li h2 a{max-width: 86%; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;color:#666; font-size: 16px;}
+.fly-list-li h2 a{max-width: 70%; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;color:#666; font-size: 16px;}
 .fly-list-li h2 span{position: relative; top: 3px; margin-left: 5px;}
 
 .fly-list-li a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
