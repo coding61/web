@@ -80,6 +80,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 		data = {"section":zoneId,"types":typeId,"isessence":essence,"keyword":keyword,"myposts":myposts,"page":page,"status":sessionStorage.postStatus};
 	} else if (sessionStorage.myCollect == 'true') {
 		document.getElementById("cars").options[2].selected=true;
+		// 收藏接口
 		url = "/collect/collections/";
 		data = null;
 	} 
@@ -242,59 +243,59 @@ function mySelectHadChange(mySelect) {
 	} 
 }
 // 获取我的收藏
-function getMyCollect() {
-	myAjax(basePath+"/collect/collections/","get",null,function(result){
-		$("#bbsUl").empty();
-		var html="";
-		if(result.count>10){
-			$("#pagination").show();
-			$("#PageCount").val(result.count);
-			// if(page<=1){
-				loadpage();
-			// }
-		}else{
-			$("#pagination").hide();
-		}
-		if(result.results.length==0){
-			html='<p style="text-align:center;line-height:500px;color:#999;font-size:18px;letter-spacing:1px;">无收藏帖子</p>';
-		}
-		$.each(result.results,function(i,v){
-			// 替换'<'和'>'
-			v.posts.content = v.posts.content.replace(/</g,'&lt;');
-			v.posts.content = v.posts.content.replace(/>/g,'&gt;');
-			v.posts.title = v.posts.title.replace(/>/g,'&gt;');
-			v.posts.title = v.posts.title.replace(/</g,'&lt;');
-			var name='';
-			if(v.posts.userinfo.name){
-				name=v.posts.userinfo.name;
-			}else{
-				name=v.posts.userinfo.owner;
-			}
-			html+='<li class="fly-list-li">'
-				+'<img src="'+dealWithAvatar(v.posts.userinfo.avatar)+'">'
-				+'<span class="grade">'+v.posts.userinfo.grade.current_name+'</span>'
-				+'<h2 class="fly-tip">'          
-				+'<a href="detail.html?id='+v.posts.pk+'&pk='+getQueryString("id")+'">'+v.posts.title+'</a>'         
-				if(v.posts.istop){
-					html+='<span class="fly-tip-stick">置顶</span>'
-				}
-				if(v.posts.isessence){
-					html+='<span class="fly-tip-jing">精帖</span> '
-				}          
-			    html +='</h2><p>'
-			    +'<span class="v_content">'+v.posts.content+'</span>'
-				+'<span>'+name+'</span>'
-				+'<span class="liveTime"  title="'+dealWithTime(v.posts.create_time)+'">'+dealWithTime(v.posts.create_time)+'</span>'
+// function getMyCollect() {
+// 	myAjax(basePath+"/collect/collections/","get",null,function(result){
+// 		$("#bbsUl").empty();
+// 		var html="";
+// 		if(result.count>10){
+// 			$("#pagination").show();
+// 			$("#PageCount").val(result.count);
+// 			// if(page<=1){
+// 				loadpage();
+// 			// }
+// 		}else{
+// 			$("#pagination").hide();
+// 		}
+// 		if(result.results.length==0){
+// 			html='<p style="text-align:center;line-height:500px;color:#999;font-size:18px;letter-spacing:1px;">无收藏帖子</p>';
+// 		}
+// 		$.each(result.results,function(i,v){
+// 			// 替换'<'和'>'
+// 			v.posts.content = v.posts.content.replace(/</g,'&lt;');
+// 			v.posts.content = v.posts.content.replace(/>/g,'&gt;');
+// 			v.posts.title = v.posts.title.replace(/>/g,'&gt;');
+// 			v.posts.title = v.posts.title.replace(/</g,'&lt;');
+// 			var name='';
+// 			if(v.posts.userinfo.name){
+// 				name=v.posts.userinfo.name;
+// 			}else{
+// 				name=v.posts.userinfo.owner;
+// 			}
+// 			html+='<li class="fly-list-li">'
+// 				+'<img src="'+dealWithAvatar(v.posts.userinfo.avatar)+'">'
+// 				+'<span class="grade">'+v.posts.userinfo.grade.current_name+'</span>'
+// 				+'<h2 class="fly-tip">'          
+// 				+'<a href="detail.html?id='+v.posts.pk+'&pk='+getQueryString("id")+'">'+v.posts.title+'</a>'         
+// 				if(v.posts.istop){
+// 					html+='<span class="fly-tip-stick">置顶</span>'
+// 				}
+// 				if(v.posts.isessence){
+// 					html+='<span class="fly-tip-jing">精帖</span> '
+// 				}          
+// 			    html +='</h2><p>'
+// 			    +'<span class="v_content">'+v.posts.content+'</span>'
+// 				+'<span>'+name+'</span>'
+// 				+'<span class="liveTime"  title="'+dealWithTime(v.posts.create_time)+'">'+dealWithTime(v.posts.create_time)+'</span>'
 				
-				+'<span class="fly-list-hint">'             
-				+'<i class="iconfont" title="回帖+回复"></i>'+(v.posts.reply_count)          
-				+'<i class="iconfont" title="人气"></i>'+v.posts.browse_count        
-				+'</span></p></li>';
-		})
-		$("#bbsUl").append(html);
-		liveTimeAgo();
-	})
-}
+// 				+'<span class="fly-list-hint">'             
+// 				+'<i class="iconfont" title="回帖+回复"></i>'+(v.posts.reply_count)          
+// 				+'<i class="iconfont" title="人气"></i>'+v.posts.browse_count        
+// 				+'</span></p></li>';
+// 		})
+// 		$("#bbsUl").append(html);
+// 		liveTimeAgo();
+// 	})
+// }
 // 返回论坛
 $('.jie-add').click(function() {
 	sessionStorage.removeItem("searchPostContent");
@@ -321,6 +322,8 @@ function initTypes(){
 	// 	});
 		// 已解决状态
 		$(".fly-tab-span").append('<a class="solved">已解决</a>');
+		// 未解决状态
+		$(".fly-tab-span").append('<a class="unsolved">未解决</a>');
 	// },false);
 	
 	$(".fly-tab-span a").each(function() {
@@ -329,6 +332,8 @@ function initTypes(){
 				$(this).addClass("tab-this").siblings().removeClass("tab-this");
 			}
 		} else if (sessionStorage.postStatus == 'solved') {
+			$(this).addClass("tab-this").siblings().removeClass("tab-this");
+		} else if (sessionStorage.postStatus == 'unsolved') {
 			$(this).addClass("tab-this").siblings().removeClass("tab-this");
 		}
 	})
@@ -357,6 +362,10 @@ $('.fly-tab-span a').unbind().click(function(){
 		sessionStorage.postStatus = 'solved';
 		sessionStorage.removeItem("typeId");
 		getPostByType(null,null,sessionStorage.page,null,null,'solved');
+	}else if ($(this).attr('class') == 'unsolved') {
+		sessionStorage.postStatus = 'unsolved';
+		sessionStorage.removeItem("typeId");
+		getPostByType(null,null,sessionStorage.page,null,null,'unsolved');
 	}else{
 		getPostByType($(this).attr('data-pk'),null,sessionStorage.page,sessionStorage.searchPostContent);
 		pageId=$(this).attr('data-pk');

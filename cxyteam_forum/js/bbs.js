@@ -3,6 +3,7 @@
 // setCookie("nickname","豆平");
 // setCookie("password","15007065503");
 var basePath="/program_girl";
+var rankingHadClick = false;
 bbsZone();
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
@@ -54,15 +55,21 @@ function bbsZone(){
 }
 
 // 鼠标划过排行榜
-$(".right-view .ranking").unbind('mouseover').mouseover(function(){
-    // $(".header .team-info").toggle();
-    getRanking();
+// $(".right-view .ranking").unbind('mouseover').mouseover(function(){
+//     getRanking();
+// }).unbind('mouseout').mouseout(function(){
+//     $('.rankingView').hide();
+// })
 
-
-}).unbind('mouseout').mouseout(function(){
-    // $(".header .team-info").show();
-    // $(".header .team-info").toggle();
-    $('.rankingView').hide();
+$(".right-view .ranking").click(function() {
+	if (rankingHadClick) {
+		// 隐藏排名
+		$('.rankingView').hide();
+		rankingHadClick = false;
+	} else {
+		rankingHadClick = true;
+		getRanking();
+	}
 })
 
 function getRanking() {
@@ -72,12 +79,19 @@ function getRanking() {
 			for (var i = 0; i < result.results.length; i++) {
 				arr.results.push(result.results[i]);
 			}
-			for (var j = 0; j < result.results.length; j++) {
-				arr.results.push(result.results[j]);
+			for (var i = 0; i < result.results.length; i++) {
+				arr.results.push(result.results[i]);
 			}
+			// 显示排名
 			$('.rankingView').show();
 			var html = template("rankList-template", arr);
 			$('.rankList').html(html);
+			var a = $(".ranking").offset().left;
+            var b = $(".right-view").offset().left;
+            var c = $(".rankingView").width();
+            $(".rankingView").css({
+                left: (a-b-c/2)+30 + "px"
+            })
 		}else{
 		}
 	})
