@@ -1,0 +1,406 @@
+.container-fluid{
+  background-color: #ffecf1;
+}
+.navWai .right-view {
+	display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    /*margin-right: calc(5%);*/
+    position: relative;
+}
+.avatar{
+   margin-right: 2%;
+}
+.avatar .item {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+.info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.info-view .info {
+    margin-bottom: 2%;
+}
+.info-view .info .grade {
+	display: inline;
+	margin-right: 5%;
+  color: #fff;
+}
+.info-view .info .grade-value {
+	display: inline;
+  color: #fff;
+}
+.info-view .progress {
+	display: block;
+	background: white;
+    height: 7px;
+    position: relative;
+    margin-bottom: 0px;
+}
+.info-view .progress img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58.5%;
+    height: 100%;
+    width: 150.202px;
+}
+.zuan{
+    margin-left: 5%;
+    display: flex;
+}
+.zuan img {
+    display: inline;
+    margin-right: 2px;
+}
+.zuan span {
+	display: inline;
+  color: #fff;
+}
+.main {
+	margin-top:49px;
+  background-color: white;
+  width: 70%;
+  border: 1px solid #dadada;
+}
+.main .layui-form-pane .layui-form-label {
+	width:112px;
+}
+.copy-reply_textarea{
+	
+}
+.btn-left{
+	float: right;
+}
+.post_del {
+	cursor:pointer;
+}
+.jie-add {
+	position:static;
+  font-size: 14px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  color: #4c4c4c;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 80px;
+  background-color: white;
+}
+#jieda .moreReply{
+  margin-left: calc((100% - 100px)/2);
+  cursor: pointer;
+}
+.post_btn {
+	/*margin-bottom:44px;*/
+}
+.post_btn .jie-add1 {
+  font-size: 14px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  color: #4c4c4c;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 80px;
+  background-color: white;
+  display: inline-block;
+  border: none;
+}
+.reply_content {
+	background-color:white;
+	margin-top:20px;
+}
+ul.post_reply>li{
+	 /*padding:15px;*/
+	 background-color:#eef; 
+	 border:1px solid #ddd;
+	 margin-bottom:10px;
+}
+ul.reply_mess>li {
+	padding:15px;
+}
+ul.reply_mess>li .reply_name {
+	padding-left:5px;
+	padding-right:5px;
+}
+ul.reply_mess>li .reply_txt {
+	display:inline-block;
+	margin:0;
+	color:black;
+}
+.isAccept{
+	display:none;
+}
+.isAccept_active{
+	display:line-block;
+}
+.jieda-body {
+	width:100%;
+	word-wrap:break-word;
+}
+
+/*******************/
+.nav .top-nav a, .nav .login a {
+    padding: 0;
+    font-size: 16px;
+    color: #999;
+}
+
+.nav .login a {
+    padding: 6px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 15px;
+    color: #fefefe;
+    line-height: 22px;
+}
+
+.nav .logo{
+	text-indent: 0;
+}
+
+.post_user .grade{display: flex;flex-direction: row;align-items: center;background-color: rgb(250, 80, 131);margin-top: 10px;}
+.post_del{
+    position: absolute;
+    right: -40px;
+    color: rgb(250, 80, 131);
+    font-size: 14px;
+    top: 10px;
+    cursor: pointer;
+}
+.post_content .posContentDate{
+    position: absolute;
+    bottom: 0px;
+    /* float: right; */
+    right: -50px;
+    /* margin-top: 10px; */
+    font-size: 14px;
+    width: 150px;
+    text-align: center;
+}
+.post_content .replyContentDate{
+  position: absolute;
+  bottom: 0px;
+  /*float: right;*/
+  right: 10px;
+  /*margin-top: 10px*/
+  font-size: 14px;
+    width: 150px;
+    text-align: center;
+}
+.post_content .huifuDel{
+  position: absolute;
+  right: -40px;
+  top: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.post_content .tieReply{
+  position: absolute;
+  right: -40px;
+  bottom: 0px;
+  font-size: 14px;
+  color: rgb(250, 80, 131);
+  cursor: pointer;
+}
+.post_reply .copy_reply_textarea {
+  margin-top: 10px;
+}
+
+.global-reply .layui-form {
+  padding-bottom: 130px;
+}
+.global-reply .layui-textarea {
+  height: 200px;
+}
+.post_reply .grade{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: rgb(250, 80, 131);
+}
+.post_reply .grade .gradeImg{
+  width: 16px;
+  height: 16px;
+}
+.post_reply .grade .reGrade{
+  color: white;
+}
+/*经验值*/
+.grow-number-ani{
+    position: fixed;
+    bottom: 130px;
+    right: 50%;
+    font-size: 20px;
+    bottom: 48%;
+    font-family: -webkit-pictograph;
+    color: gray;
+    padding: 8px 15px; 
+}
+
+/*渐入渐出*/
+@keyframes fadeInExperience {
+   0% {
+      transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
+   100% {
+      transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+}
+
+@-webkit-keyframes fadeInExperience {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+
+}
+
+@-o-keyframes fadeInExperience {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-ms-keyframes fadeInExperience {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-moz-keyframes fadeInExperience {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+.fadeInOut{
+    animation: fadeInExperience 2s ease 1;
+   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
+   -webkit-animation: fadeInExperience 2s ease 1;
+   -ms-animation: fadeInExperience 2s ease 1;
+   -o-animation: fadeInExperience 2s ease 1;
+   -moz-animation: fadeInExperience 2s ease 1;
+   /*规定动画的最后状态为结束状态*/
+   animation-fill-mode: forwards;
+   -webkit-animation-fill-mode: forwards;
+   -o-animation-fill-mode: forwards;
+   -ms-animation-fill-mode: forwards;
+   -moz-animation-fill-mode: forwards;
+}
+/*钻石效果*/
+.zuan-shadow-view,
+.up-grade-shadow-view
+{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.up-grade-shadow-view .img,
+.zuan-shadow-view .img{
+    width: 200px;
+    height: 200px;
+    /*background: red;*/
+    margin-left: calc(50% - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.up-grade-shadow-view .img img{
+    width: 200%;
+}
+.zuan-shadow-view .img img{
+    width: 100%;
+}
+/*升级效果*/

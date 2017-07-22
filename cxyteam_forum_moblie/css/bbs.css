@@ -1,0 +1,156 @@
+html,body {
+    height: 100%;
+    background-color: #ffecf1;
+}
+.container-fluid {
+    /*height: 100%;
+    background-color: #ffecf1;*/
+}
+.bbs{
+	margin-top:48px;
+	height: calc(100% - 50px);
+    width: 70%;
+}
+.panel {
+    height: 100%;
+}
+.bbsBox{
+	padding-bottom: 10px;
+	margin: 0 0 10px 0;
+}
+.bbsItem{
+	height:110px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-top: 1px solid #dadada;
+}
+/* .bbsItem:last-child{
+	border-bottom: none;
+	margin: 0;
+	padding:0;
+} */
+.bbsItem img{
+	width:64px;
+	height:64px;
+}
+.bbsItem ul{
+	margin-bottom:5px;
+	overflow: hidden;
+}
+.bbsItem ul li{
+	float: left;
+	/*margin-right: 10px;*/
+}
+.bbsItem .liveTime{
+    color: #bababa;
+    margin-left: 20px;
+    margin-top: 3px;
+}
+.bbsItem .author {
+    margin-left: 20px;
+    color: #bababa;
+    margin-top: 3px;
+}
+.bbsItem ul li:last-child{
+	margin-right: 0;
+}
+.bbsItem .lastUl{
+	margin-bottom:0;
+}
+.bbsItem .tieCount{
+    color: #bababa;
+}
+.redColor{
+	color:red;
+}
+.titleHandle{
+	max-width:50% ;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.tieTitle{
+    font-size: 12px;
+    color: #bababa;
+}
+.media-left{
+    padding-left: 10px;
+}
+.media-body{
+    padding-left: 20px;
+}
+.workCenter {
+    background-color: white;
+    color: #4c4c4c;
+    text-align: center;
+    width: 80px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-right: -18%;
+    cursor: pointer;
+}
+.right-view {
+	display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    /*margin-right: calc(5%);*/
+    /*position: relative;*/
+}
+.avatar{
+   margin-right: 2%;
+}
+.avatar .item {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+.info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.info-view .info {
+    margin-bottom: 2%;
+}
+.info-view .info .grade {
+	display: inline;
+	margin-right: 5%;
+    color: #fff;
+}
+.info-view .info .grade-value {
+	display: inline;
+    color: #fff;
+}
+.info-view .progress {
+	display: block;
+	background: white;
+    height: 7px;
+    position: relative;
+    margin-bottom: 0px;
+}
+.info-view .progress img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58.5%;
+    height: 100%;
+    width: 150.202px;
+}
+.zuan{
+    margin-left: 5%;
+    display: flex;
+}
+.zuan img {
+    display: inline;
+    margin-right: 2px;
+}
+.zuan span {
+	display: inline;
+	color: #fff;
+}
