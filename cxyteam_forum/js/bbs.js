@@ -75,16 +75,9 @@ $(".right-view .ranking").click(function() {
 function getRanking() {
 	myAjax(basePath+"/userinfo/userinfo/diamond/ranking/","get",null,function(result) {
 		if(result){
-			var arr = {results:[]};
-			for (var i = 0; i < result.results.length; i++) {
-				arr.results.push(result.results[i]);
-			}
-			for (var i = 0; i < result.results.length; i++) {
-				arr.results.push(result.results[i]);
-			}
 			// 显示排名
 			$('.rankingView').show();
-			var html = template("rankList-template", arr);
+			var html = template("rankList-template", result);
 			$('.rankList').html(html);
 			var a = $(".ranking").offset().left;
             var b = $(".right-view").offset().left;
