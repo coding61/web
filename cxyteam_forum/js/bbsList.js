@@ -83,7 +83,12 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 		// 收藏接口
 		url = "/collect/collections/";
 		data = null;
-	} 
+	} else if (sessionStorage.myMessage == 'true') {
+		document.getElementById("cars").options[3].selected=true;
+		// 消息列表接口
+		url = "/message/messages/";
+		data = {"types":"forum","status":status};
+	}
 		myAjax(basePath+url,"get",data,function(result){
 			if(result.count>10){
 				$("#pagination").show();
@@ -97,6 +102,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 			if(result.results.length==0){
 				html='<p style="text-align:center;line-height:500px;color:#999;font-size:18px;letter-spacing:1px;">该类别暂无帖子</p>';
 			}
+			// 帖子列表
 			if (url == '/forum/posts/') {
 				$.each(result.results,function(i,v){
 					// 替换'<'和'>'
@@ -138,7 +144,9 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 						+'<i class="iconfont" title="人气"></i>'+v.browse_count        
 						+'</span></p></li>';
 				})
-			} else if (url == '/collect/collections/') {
+			}
+			// 收藏列表
+			else if (url == '/collect/collections/') {
 				$.each(result.results,function(i,v){
 					// 替换'<'和'>'
 					v.posts.content = v.posts.content.replace(/</g,'&lt;');
@@ -173,7 +181,25 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 						+'</span></p></li>';
 				})
 			}
-			
+			// 消息列表
+			else if (url == '/message/messages/') {
+				$.each(result.results,function(i,v){
+					// 替换'<'和'>'
+					v.text = v.text.replace(/</g,'&lt;');
+					v.text.content = v.text.replace(/>/g,'&gt;');
+					html+='<li class="messageLi">'
+						if (v.status == 'read') {
+							html+='<div class="readMessage">[已读]</div>'
+						} else if (v.status == 'unread') {
+							html+='<div class="unreadMessage">[未读]</div>'
+						}
+					html+='<h2 class="content">'          
+						+'<a href="'+v.url+'">'+v.text+'</a>'         
+					    +'</h2>'
+						+'<span class="liveTime"  title="'+dealWithTime(v.create_time)+'">'+dealWithTime(v.create_time)+'</span>'
+						+'</li>';
+				})
+			}
 			$("#bbsUl").append(html);
 			liveTimeAgo();
 			})
@@ -193,6 +219,7 @@ $('.fly-tab .searchTiezi').click(function() {
 		sessionStorage.removeItem("typeId");
 		sessionStorage.removeItem("postStatus");
 		sessionStorage.removeItem("myCollect");
+		sessionStorage.removeItem("myMessage");
 		$(".fly-tab-span a").each(function() {
 			$(this).removeClass("tab-this");
 		});
@@ -201,25 +228,27 @@ $('.fly-tab .searchTiezi').click(function() {
 	}
 })
 // 我的帖子
-$('.myTie').click(function() {
+// $('.myTie').click(function() {
 
-	$('.fly-tab .searchinput').val('');
-	sessionStorage.removeItem("searchPostContent");
-	sessionStorage.removeItem("postStatus");
-	sessionStorage.page = 1;
-	sessionStorage.myPost = true;
-	$(".fly-tab-span a").each(function() {
-		$(this).removeClass("tab-this");
-	});
-	getPostByType(-1,null,sessionStorage.page,null,sessionStorage.myPost);
-})
+// 	$('.fly-tab .searchinput').val('');
+// 	sessionStorage.removeItem("searchPostContent");
+// 	sessionStorage.removeItem("postStatus");
+// 	sessionStorage.page = 1;
+// 	sessionStorage.myPost = true;
+// 	$(".fly-tab-span a").each(function() {
+// 		$(this).removeClass("tab-this");
+// 	});
+// 	getPostByType(-1,null,sessionStorage.page,null,sessionStorage.myPost);
+// })
 // 我的下拉菜单选择
 function mySelectHadChange(mySelect) {
 	if (mySelect == 'myTie') {
 		$('.fly-tab .searchinput').val('');
 		sessionStorage.removeItem("searchPostContent");
 		sessionStorage.removeItem("postStatus");
+		sessionStorage.removeItem("typeId");
 		sessionStorage.removeItem("myCollect");
+		sessionStorage.removeItem("myMessage");
 		sessionStorage.page = 1;
 		sessionStorage.myPost = true;
 		$(".fly-tab-span a").each(function() {
@@ -230,7 +259,9 @@ function mySelectHadChange(mySelect) {
 		$('.fly-tab .searchinput').val('');
 		sessionStorage.removeItem("searchPostContent");
 		sessionStorage.removeItem("postStatus");
+		sessionStorage.removeItem("typeId");
 		sessionStorage.removeItem("myPost");
+		sessionStorage.removeItem("myMessage");
 		sessionStorage.page = 1;
 		$(".fly-tab-span a").each(function() {
 			$(this).removeClass("tab-this");
@@ -239,7 +270,18 @@ function mySelectHadChange(mySelect) {
 		// getMyCollect();
 		getPostByType();
 	} else if (mySelect == 'myMessage') {
-
+		$('.fly-tab .searchinput').val('');
+		sessionStorage.removeItem("searchPostContent");
+		sessionStorage.removeItem("postStatus");
+		sessionStorage.removeItem("typeId");
+		sessionStorage.removeItem("myPost");
+		sessionStorage.removeItem("myCollect");
+		sessionStorage.page = 1;
+		$(".fly-tab-span a").each(function() {
+			$(this).removeClass("tab-this");
+		});
+		sessionStorage.myMessage = true;
+		getPostByType();
 	} 
 }
 // 获取我的收藏
@@ -304,6 +346,7 @@ $('.jie-add').click(function() {
 	sessionStorage.removeItem("typeId");
 	sessionStorage.removeItem("postStatus");
 	sessionStorage.removeItem("myCollect");
+	sessionStorage.removeItem("myMessage");
 	window.location.href="bbs.html";
 })
 // 点击帖子类型
@@ -343,6 +386,7 @@ $('.fly-tab-span a').unbind().click(function(){
 	sessionStorage.removeItem("searchPostContent");
 	sessionStorage.removeItem("myPost");
 	sessionStorage.removeItem("myCollect");
+	sessionStorage.removeItem("myMessage");
 	sessionStorage.page = 1;
 	// var mySelect = document.getElementById("cars");
 	// console.log(document.getElementById("cars").options[mySelect.selectedIndex].value);

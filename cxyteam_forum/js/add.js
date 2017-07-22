@@ -17,6 +17,7 @@ $('.jie-add1').click(function() {
 	sessionStorage.removeItem("typeId");
 	sessionStorage.removeItem("postStatus");
 	sessionStorage.removeItem("myCollect");
+	sessionStorage.removeItem("myMessage");
 	sessionStorage.removeItem("searchPostContent");
 	window.location.href="bbs.html";
 })
