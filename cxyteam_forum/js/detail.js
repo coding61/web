@@ -6,6 +6,7 @@ var zoneId=0;
 var toUserId=0;
 var replyId=0;
 var replyPage = 1;
+var hasCollect;
 // $('.jie-add1').unbind().click(function(){
 // 	window.location.href="add.html?pk="+postPk;
 // });
@@ -62,11 +63,13 @@ function initDetail(){
 }
 // 收藏／取消收藏
 $(document).on("click",".wrap .collectBtn",function(){
-	myAjax(basePath+"/collect/collection/","put",{"type": "posts","pk": postId},function(result) {
-		if (result.messgae == '取消收藏') {
-
-		} else if (result.messgae == '收藏成功') {
-
+	myAjax(basePath+"/collect/collection/","put",{"types": "posts","pk": postId},function(result) {
+		if (result.message == '取消收藏') {
+			$(".collectBtn").attr({"src": 'img/unCollect.png'});
+			layer.msg(result.message);
+		} else if (result.message == '收藏成功') {
+			$(".collectBtn").attr({"src": 'img/hadCollect.png'});
+			layer.msg(result.message);
 		}
 	})
 })
@@ -148,17 +151,31 @@ $(document).on("click",".question_reply",function(){
 // 	typeof this_fly == 'object' ? event1.html(this_fly.content(event2)) : setTimeout(function(){digui(event1, event2, time)},500);
 // }
 function postDetail() {
-	myAjax2(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
+	myAjax(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
 		//console.log(result);
 		if (result) {
 			zoneId=result.section.pk;
 			postUserName=result.userinfo.name;
 			$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
+			$(".postStatus").text("[" + result.status_display + "]");
+			if (result.status_display == '未解决') {
+				$(".postStatus").css({"color": 'red'});
+			} else if (result.status_display == '已解决') {
+				$(".postStatus").css({"color": '#777'});
+			} else if (result.status_display == '已关闭') {
+				$(".postStatus").css({"color": '#777'});
+			}
 			$(".post_title").text(result.title);
 			$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
 			$(".post_user .grade").text(result.userinfo.grade.current_name);
 			$(".post_user cite").prepend(result.userinfo.name);
 			$(".post_user cite em").text(dealWithTime(result.create_time));
+			hasCollect = result.collect;
+			if (result.collect) {
+				$(".collectBtn").attr({"src": 'img/hadCollect.png'});
+			} else {
+				$(".collectBtn").attr({"src": 'img/unCollect.png'});
+			}
 			$('.post_content').each(function(){
 			    $(this).html(this_fly.content(result.content));
 			    // digui($(this), result.content, new Date().getTime());
@@ -320,6 +337,7 @@ function changePostStatus(status) {
 	myAjax(basePath+"/forum/posts/"+postId+"/","patch",{"status":status},function(result) {
 		if (result) {
 			layer.msg(result.status_display);
+			setTimeout("window.location.reload()",1000);
 		}
 	})
 }

@@ -34,8 +34,8 @@ nav{
     font-size: 16px;
     background-color: #fff;
     z-index: 10005;
-  overflow: auto;
-  overflow-y: hidden;
+  /*overflow: auto;
+  overflow-y: hidden;*/
 }
 
 footer{

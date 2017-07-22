@@ -63,6 +63,33 @@
     margin-right: calc(5%);
     position: relative;
 }
+.right-view .ranking {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 20px;
+    margin-right: 10%;
+    color: white;
+    font-size: 14px;
+}
+.rankingView {
+    position: absolute;
+    background: white;
+    color: #1a1a1a;
+    border: solid 1px #d2d2d2;
+    border-radius: 5px;
+    line-height: 30px;
+    /*left: 54%;*/
+    /*margin-left: calc(-10% - 210px);*/
+    font-size: 13px;
+    top: 50px;
+    display: none;
+}
+.rankingView .arrow {
+    position: absolute;
+    left: 145px;
+    top: -10px;
+}
 .avatar{
    margin-right: 2%;
 }

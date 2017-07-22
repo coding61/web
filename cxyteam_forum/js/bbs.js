@@ -3,6 +3,7 @@
 // setCookie("nickname","豆平");
 // setCookie("password","15007065503");
 var basePath="/program_girl";
+var rankingHadClick = false;
 bbsZone();
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
@@ -50,5 +51,48 @@ function bbsZone(){
 		})
 		$("#bbs").append(html);
 		liveTimeAgo();
+	})
+}
+
+// 鼠标划过排行榜
+// $(".right-view .ranking").unbind('mouseover').mouseover(function(){
+//     getRanking();
+// }).unbind('mouseout').mouseout(function(){
+//     $('.rankingView').hide();
+// })
+
+$(".right-view .ranking").click(function() {
+	if (rankingHadClick) {
+		// 隐藏排名
+		$('.rankingView').hide();
+		rankingHadClick = false;
+	} else {
+		rankingHadClick = true;
+		getRanking();
+	}
+})
+
+function getRanking() {
+	myAjax(basePath+"/userinfo/userinfo/diamond/ranking/","get",null,function(result) {
+		if(result){
+			var arr = {results:[]};
+			for (var i = 0; i < result.results.length; i++) {
+				arr.results.push(result.results[i]);
+			}
+			for (var i = 0; i < result.results.length; i++) {
+				arr.results.push(result.results[i]);
+			}
+			// 显示排名
+			$('.rankingView').show();
+			var html = template("rankList-template", arr);
+			$('.rankList').html(html);
+			var a = $(".ranking").offset().left;
+            var b = $(".right-view").offset().left;
+            var c = $(".rankingView").width();
+            $(".rankingView").css({
+                left: (a-b-c/2)+30 + "px"
+            })
+		}else{
+		}
 	})
 }
