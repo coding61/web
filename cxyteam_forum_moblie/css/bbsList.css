@@ -1,0 +1,184 @@
+/* 公用 */
+body .iconfont{-webkit-text-stroke-width: 0;}
+.replyImg{
+  width: 16px;height: 14px;
+}
+.seeImg{
+  width: 17px;height: 13px;margin-left: 20px;
+}
+.container-fluid {
+    background-color: #ffecf1;
+}
+/* Tip */
+.fly-tip{position: relative;}
+.fly-list-hint .replyCount {
+  margin-left: 5px;
+  background-color: white;
+  color: #999;
+}
+.fly-list-hint .seeCount{
+  margin-left: 5px;
+  background-color: white;
+  color: #999;
+}
+.fly-tip span{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
+.fly-tip span{height: 20px; line-height: 20px; padding: 0 5px; background-color: #999; color: #fff; font-size: 12px;}
+.fly-tip .fly-tip-stick{background-color: #393D49;}
+.fly-tip .fly-tip-jing{background-color: #c00;}
+.fly-tip .fly-tip-jie{background-color: #8FCDA0;}
+
+/* 帖子列表 */
+.fly-list .fly-list-li{position: relative; height:116px; padding: 15px 15px 15px 20px; border-bottom: 1px solid #E9E9E9;}
+.fly-list-li .fly-list-avatar{position: absolute; left: 0; top: 0;}
+
+.fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 20px;margin-left: 30px;float: left;width:88%;}
+.fly-list-li h2 *{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
+.fly-list-li h2 a{max-width: 86%; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;color:#666; font-size: 16px;}
+.fly-list-li h2 span{top: 3px; margin-left: 5px;background-color: white;}
+.fly-list-li h2 .fly-list-hint{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.fly-list-li a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
+.fly-list-li >img{display: inline-block;width: 53px;height: 53px;float: left;margin-top: 9px;border-radius: 53px;}
+.fly-list-li .grade{left: 20px;position: absolute;margin-top: 65px;background-color: rgb(250, 80, 131);width: 53px;flex-direction: row;display: flex;justify-content: space-around;align-items: center;}
+.fly-list-li .gradeImg{width: 12px;height: 14px;}
+.fly-list-li .gradeText{color: white}
+.fly-list-li p{line-height: 40px; font-size: 12px; color: #999;float: left;}
+.fly-list-li p >span{padding-right: 15px;margin-left:30px;}
+.fly-list-li p span a{color: #999;}
+
+.fly-list-avatar img{width: 45px; height: 45px; border-radius: 2px;}
+
+.fly-list-hint{position: absolute; right: 0; top: 0;}
+.fly-list-hint i{padding-left: 10px; color: #ccc;padding-right:4px;}
+/* Tab */
+.fly-tab{position:relative; background-color: #f2f2f2;}
+.fly-tab span,
+.fly-tab span a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.fly-tab span{border-right:none; font-size:0;width: 42%;}
+.fly-tab span a{ height: 40px; line-height: 40px; padding: 0 14px;font-size:14px;color: #5f5f5f}
+.fly-tab .tab-this{background-color:#dedede; color:#5f5f5f;}
+/* 搜索 */
+.fly-search{position:relative; margin-left:10px; display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.fly-search input{padding-right: 30px;}
+.fly-search .icon-sousuo{position:absolute; right:10px; top:10px; color:#999; cursor:pointer;}
+.fly-tab .searchT{position: absolute;right: 0;top: 5px;width: 25%;}
+.fly-tab .searchT .searchinput{height: 26px;width: calc(100% - 40px);}
+.fly-tab .searchT .searchTiezi{font-size: 14px;background-color: #dedede;width: 40px;text-align: center;cursor: pointer;display: inline-block;color: white;height: 26px;line-height: 26px;top: 1px;margin-left: -4px;}
+.threeBtn{
+  position: absolute;
+  top: 0;
+  width: 35%;
+  right: 24%;
+}
+.fly-tab .myTie{cursor: pointer;width: 80px;background-color: white;font-size: 14px;height: 26px;text-align: center;line-height: 26px;margin-top: 7px;border-radius: 5px;color: #4c4c4c;}
+.jie-add1{margin-top:7px; font-size:14px;border-radius: 5px;cursor: pointer;width: 80px;background-color: white;font-size: 14px;height: 26px;text-align: center;line-height: 26px;color: #4c4c4c;}
+.jie-add{margin-top:7px; font-size:14px;height: 26px;text-align: center;line-height: 26px;color: #4c4c4c;border-radius: 5px;cursor: pointer;width: 80px;background-color: white;}
+/* 分页 */
+.laypage-main,
+.laypage-main *{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.laypage-main{margin: 20px 0; border: 1px solid #009E94; border-right: none; border-bottom: none; font-size: 0;}
+.laypage-main *{padding: 0 20px; line-height: 36px; border-right: 1px solid #009E94; border-bottom: 1px solid #009E94; font-size: 14px;}
+.laypage-main .laypage-curr{background-color:#009E94; color:#fff;}
+.main{
+	margin-top:50px;
+	min-height:500px;
+  width: 70%;
+  border: 1px solid #dadada;
+}
+#pageDiv{
+	margin-top:20px;
+}
+/* 适配多设备 */
+@media screen and (max-width: 1024px) {
+  .main{width: auto;}
+  img{max-width: 100%;}
+}
+
+@media screen and (max-width: 750px) {
+  .fly-tab,
+  .fly-search,
+  .fly-list-li h2 span,
+  .fly-list-hint{display:none;}
+  .fly-list-li h2 a{max-width: 100%;}
+  .fly-list-one li{margin: 0 10px;}
+  .jie-add{position: relative; display: inline-block;}
+  .laypage-main a, .laypage-main span{display: none;}
+  .laypage-main .laypage-prev, 
+  .laypage-main .laypage-next{display: inline-block;}
+}
+.v_content{
+  float: left;
+  display: inline-block;
+  max-width: 268px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navWai .right-view {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  /*margin-right: calc(5%);*/
+  position: relative;
+}
+.avatar{
+   margin-right: 2%;
+}
+.avatar .item {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+.info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.info-view .info {
+    margin-bottom: 2%;
+}
+.info-view .info .grade {
+  display: inline;
+  margin-right: 5%;
+  color: #fff;
+}
+.info-view .info .grade-value {
+  display: inline;
+  color: #fff;
+}
+.info-view .progress {
+  display: block;
+  background: white;
+    height: 7px;
+    position: relative;
+    margin-bottom: 0px;
+}
+.info-view .progress img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58.5%;
+    height: 100%;
+    width: 150.202px;
+}
+.zuan{
+    margin-left: 5%;
+    display: flex;
+}
+.zuan img {
+    display: inline;
+    margin-right: 2px;
+}
+.zuan span {
+  display: inline;
+  color: #fff;
+}
