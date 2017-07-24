@@ -194,7 +194,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 							html+='<div class="unreadMessage">[未读]</div>'
 						}
 					html+='<h2 class="content">'          
-						+'<a href="'+v.url+'">'+v.text+'</a>'         
+						+'<a href="#" class="messageTitle" message-pk="'+v.pk+'">'+v.text+'</a>'         
 					    +'</h2>'
 						+'<span class="liveTime"  title="'+dealWithTime(v.create_time)+'">'+dealWithTime(v.create_time)+'</span>'
 						+'</li>';
@@ -205,6 +205,30 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 			})
 	
 }
+// 点击消息
+$(document).on("click", ".messageTitle", function() {
+	var messagePk = $(this).attr("message-pk");
+	$.ajax({
+		url: basePath+"/message/messages/"+messagePk+"/",
+		type: "get",
+		headers:{
+			Authorization: 'Token ' + localStorage.token
+		},
+		success: function(result){
+			console.log(result);
+			if (result) {
+				var p = result.url.split("cxyteam_forum/")[1];
+				window.location.href = p;
+			}
+		},
+		error: function(XMLHttpRequest){
+			console.log(XMLHttpRequest);
+			if (XMLHttpRequest.status == 403) {
+				layer.msg('该帖子已删除');
+			}
+		}
+	})
+})
 
 // 搜索
 $('.fly-tab .searchTiezi').click(function() {

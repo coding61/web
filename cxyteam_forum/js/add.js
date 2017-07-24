@@ -107,7 +107,11 @@ function growNumAnimate(result) {
 	var preEx = $('.info .grade-value').text().split("/")[0];
 	var experience = result.userinfo.experience-preEx;
 	$(".grow-number-ani").remove();
-    var growHtml = '<span class="grow-number-ani fadeInOut">经验 +'+experience+'</span>';
+	if (experience == 0) {
+		var growHtml = '<span class="grow-number-ani fadeInOut">经验已达上限</span>';
+	} else {
+		var growHtml = '<span class="grow-number-ani fadeInOut">经验 +'+experience+'</span>';
+	}
     $("body").append(growHtml);
 
 }
