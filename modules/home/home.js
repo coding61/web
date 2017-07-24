@@ -54,31 +54,50 @@ define(function(require, exports, module) {
                 }
                 questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
                                     <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view">\
-                                        <div class="link-text"> \
-                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                    <div class="msg-view-parent">\
+                                        <div class="msg-view">\
+                                            <div class="link-text"> \
+                                                <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                                <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                            </div>\
+                                            <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                         </div>\
-                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                     </div>\
                                 </div>';
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
                                     <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view">\
-                                        <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                        <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                    <div class="msg-view-parent">\
+                                        <div class="msg-view">\
+                                            <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
+                                            <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                        </div>\
                                     </div>\
                                 </div>';
             }else{
                 // 文本
-                questionHtml = '<div class="message text left-animation"> \
-                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view">\
-                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                    </div>\
-                                </div>';
+                if (item.audio) {
+                    questionHtml = '<div class="message text left-animation"> \
+                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
+                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
+                                            <div class="msg-view">\
+                                                <span class="content">'+Util.formatString(item.message)+'</span> \
+                                            </div>\
+                                            <img class="audio" src="../../statics/images/audio.png"/>\
+                                        </div>\
+                                    </div>';
+                }else{
+                    questionHtml = '<div class="message text left-animation"> \
+                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
+                                        <div class="msg-view-parent">\
+                                            <div class="msg-view">\
+                                                <span class="content">'+Util.formatString(item.message)+'</span> \
+                                            </div>\
+                                        </div>\
+                                    </div>';
+                }
+                
             }
 
 
@@ -276,31 +295,49 @@ define(function(require, exports, module) {
                         }
                         questionHtml = '<div class="message link" data-link="'+item.link+'"> \
                                             <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                            <div class="msg-view-parent">\
+                                                <div class="msg-view">\
+                                                    <div class="link-text"> \
+                                                        <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                                        <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                                    </div>\
+                                                    <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                                 </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                             </div>\
                                         </div>';
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
                                             <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view">\
-                                                <img class="msg" id="'+imgI+'" src="'+item.img+'" data-src="../../statics/images/loading.gif" alt="" />\
-                                                <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                            <div class="msg-view-parent">\
+                                                <div class="msg-view">\
+                                                    <img class="msg" id="'+imgI+'" src="'+item.img+'" data-src="../../statics/images/loading.gif" alt="" />\
+                                                    <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                                </div>\
                                             </div>\
                                         </div>';
                     }else{
                         // 文本
-                        questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                        </div>';
+                        if (item.audio) {
+                            questionHtml = '<div class="message text"> \
+                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
+                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
+                                                    <div class="msg-view">\
+                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                                    </div>\
+                                                    <img class="audio" src="../../statics/images/audio.png"/>\
+                                                </div>\
+                                            </div>';
+                        }else{
+                            questionHtml = '<div class="message text"> \
+                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
+                                                <div class="msg-view-parent" >\
+                                                    <div class="msg-view">\
+                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                                    </div>\
+                                                </div>\
+                                            </div>';
+                        }
                     }
                 }
             }
@@ -536,31 +573,49 @@ define(function(require, exports, module) {
                         }
                         questionHtml = '<div class="message link" data-link="'+item.link+'"> \
                                             <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                            <div class="msg-view-parent">\
+                                                <div class="msg-view">\
+                                                    <div class="link-text"> \
+                                                        <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                                        <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                                    </div>\
+                                                    <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                                 </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                             </div>\
                                         </div>';
                     }else if(item.img){
                         // 图片
                         questionHtml = '<div class="message img">\
                                             <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view">\
-                                                <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                                <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                            <div class="msg-view-parent">\
+                                                <div class="msg-view">\
+                                                    <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
+                                                    <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                                </div>\
                                             </div>\
                                         </div>';
                     }else{
                         // 文本
-                        questionHtml = '<div class="message text"> \
-                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                        </div>';
+                        if (item.audio) {
+                            questionHtml = '<div class="message text"> \
+                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
+                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
+                                                    <div class="msg-view">\
+                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                                    </div>\
+                                                    <img class="audio" src="../../statics/images/audio.png"/>\
+                                                </div>\
+                                            </div>';
+                        }else{
+                            questionHtml = '<div class="message text"> \
+                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
+                                                <div class="msg-view-parent">\
+                                                    <div class="msg-view">\
+                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                                    </div>\
+                                                </div>\
+                                            </div>';
+                        }
                     }
                 }
             }
@@ -722,31 +777,50 @@ define(function(require, exports, module) {
                 // 带链接的
                 questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
                                     <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view">\
-                                        <div class="link-text"> \
-                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                    <div class="msg-view-parent">\
+                                        <div class="msg-view">\
+                                            <div class="link-text"> \
+                                                <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
+                                                <span style="color: rgb(84, 180,225);">'+text+'</span>\
+                                            </div>\
+                                            <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                         </div>\
-                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
                                     </div>\
                                 </div>';
             }else if(item.img){
                 // 图片
                 questionHtml = '<div class="message img">\
                                     <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view">\
-                                        <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                        <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                    <div class="msg-view-parent">\
+                                        <div class="msg-view">\
+                                            <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
+                                            <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
+                                        </div>\
                                     </div>\
                                 </div>';
             }else{
                 // 文本
-                questionHtml = '<div class="message text left-animation"> \
+                if (item.audio) {
+                    questionHtml = '<div class="message text left-animation"> \
                                     <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view">\
-                                        <span class="content">'+Util.formatString(item.message)+'</span> \
+                                    <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
+                                        <div class="msg-view">\
+                                            <span class="content">'+Util.formatString(item.message)+'</span> \
+                                        </div>\
+                                        <img class="audio" src="../../statics/images/audio.png"/>\
                                     </div>\
                                 </div>';
+                }else{
+                    questionHtml = '<div class="message text left-animation"> \
+                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
+                                        <div class="msg-view-parent">\
+                                            <div class="msg-view">\
+                                                <span class="content">'+Util.formatString(item.message)+'</span> \
+                                            </div>\
+                                        </div>\
+                                    </div>';
+                }
+                
             }
 
 
@@ -1109,7 +1183,17 @@ define(function(require, exports, module) {
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
             })
+            
 
+            // 消息音频播放
+            $(".msg-view-parent .audio").unbind('click').click(function(){
+                console.log('cc');
+                var url = $(this).parents('.msg-view-parent').attr("data-audio-url");
+                if (url) {
+                    // 'https://static1.bcjiaoyu.com/2.mp3'
+                    Common.playMessageSoun(url);  //播放钻石音效
+                }
+            })
         },
         clickEventTotal:function(){
             $(".help").unbind('click').click(function(){
@@ -2259,8 +2343,10 @@ define(function(require, exports, module) {
                 var message = "本课堂仅支持Chrome内核的浏览器，请更换成谷歌浏览器，360浏览器或者搜狗浏览器重新打开网站上课。";
                 questionHtml = '<div class="message text left-animation"> \
                                     <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view">\
-                                        <span class="content">'+message+'</span> \
+                                    <div class="msg-view-parent">\
+                                        <div class="msg-view">\
+                                            <span class="content">'+message+'</span> \
+                                        </div>\
                                     </div>\
                                 </div>';
                 $(questionHtml).appendTo(".messages");
