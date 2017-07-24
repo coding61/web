@@ -2,42 +2,134 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>论坛</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <title>论坛</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap.min.css" />
   	<link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap-theme.min.css" />
-<!--  	<link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/huiwan.css">
-    <link rel="stylesheet" type="text/css" href="../css/global.css" />-->
 	<link rel="stylesheet" href="res/layui/css/layui.css">
-  <link rel="stylesheet" href="res/css/global.css?v=1.1">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/detail.css?v=1.8">
+    <link rel="stylesheet" href="res/css/global.css?v=1.1">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/detail.css?v=1.8">
+    <script type="text/javascript">
+        function Webweb(){
+            window.postMessage('Title:webweb');
+        }
+        function msg(event){
+            document.write('event:'+event);
+        }
+    </script>
 </head>
 <body style="position: relative;">
-    <div id="main" style="background: #cccccc;">
-        <div class="detail_top" style="background: red;">
-            <div class="forum_title" style="height: 50px;background: blue;text-align: left;padding: 10px 0 10px 20px;">
-                <h1 >关于的论坛</h1>
+    <div id="main" style="">
+        <!--主贴详情信息-->
+        <div class="detail_top">
+            <div style="height: 50px;text-align: left;padding: 10px 0 10px 20px;">
+                <h1 style="font-size: 18px;" class="forum_title"></h1>
             </div>
-            <div class="forum_person_info " style="background: #cccccc;border: 1px solid #cccccc;height: 90px;padding-left: 20px;">
-                <div style="float: left;padding-top: 10px;padding-bottom: 10px;text-align: center;">
-                    <img src="img/defaultHeader.png" style="width: 50px;height: 50px;border-radius: 25px;">
-                    <p style="padding-top: 10px;">黄金2</p>
+            <div class="forum_person_info " style="background: #F2F2F2;width: 100%;display: inline-block;padding-bottom: 10px;">
+                <div class="info" style="display: inline-block;width: 20%;height: 80px;padding-top: 10px;padding-bottom: 10px;text-align: center;float: left;">
+                    <img src="" style="width: 50px;height: 50px;border-radius: 25px;">
+                    <p style="padding-top: 10px;"></p>
                 </div>
-                <div style="float: left;padding: 10px 0 10px 20px;">
-                    <p><span>董伟</span><span>2017-01-03</span></p>
-                    <p>技术交流</p>
+                <div style="display: inline-block;padding: 10px 0 10px 20px;float: left;width: 60%;">
+                    <p style="font-size: 16px;color: #4f99cf" class="info_name"></p>
+                    <p style="font-size: 14px;" class="forum_time"></p>
+                    <div style="font-size: 16px;">
+                        <span class="forum_types" style="color: #FF7200;margin-right:20px;"></span>
+                       <!--  <span>查看：</span><span class="browseTime"></span>
+                       <span>回复：</span><span class="replyCount"></span> -->
+                    </div>
+                </div>
+                <div style="display: inline-block;float: left;width: 20%;">
+                    <p class="main_forum_reply question_reply"  style="padding-top: 30px;font-size: 16px;" ><i class="iconfont icon-svgmoban53" style="margin-right: 10px;font-size: 20px;"></i>回复</p>
                 </div>
             </div>
-            <div class="forum_content" style="background: #BC8F8F;min-height: 100px">
-                <p>帖子详情</p>
+            <div class="post_content" style="padding: 10px;"> 
+                
             </div>
         </div>
-        <div class="forum_reply"> 
-
+        <!--回复的帖子详情-->
+        <ul class="jieda photos post_reply" id="jieda" style="width: 100%;background: #F2F2F2;padding-bottom: 180px;">
+            
+        </ul>
+        <script type="text/html" id="post_reply_template">
+            {{each results}}
+            <div class="detail-about post_user reply_{{$value.pk}}" style="border-top: 1px solid #dadada;">
+                <div class="jie-user no-oneImg main_detail" href="javascript:void(0)" style="width: 100%;padding-top: 10px;background: #F2F2F2">
+                    <div style="width: 20%;float: left;text-align: center;">
+                        {{if $value.userinfo.avatar == ''}}
+                            <img src="img/defaultHeader.png" />
+                        {{else}}
+                            <img src={{$value.userinfo.avatar}} />
+                        {{/if}}
+                        <span style="color: rgb(250, 80, 131);">{{$value.userinfo.grade.current_name}}</span>
+                    </div>
+                    <div style="width: 57%;float: left;padding-left: 3%;">
+                        <p class="reply_name" style="color: #4f99cf;line-height: 26px;font-size: 16px;">{{$value.userinfo.name}}</p>
+                        <p style="font-size: 16px;padding-top: 10px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
+                        
+                    </div>
+                    <div style="width: 17%;float: left;padding-left: 3%;">
+                        <span class="question_reply"  style="font-size: 16px;" data-user-id={{$value.userinfo.pk}} data-id={{$value.pk}}>
+                        <span class="iconfont icon-svgmoban53" style="margin-right: 20px;font-size: 20px;"></span><span
+                        >回复({{$value.replymore.length}})</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="detail-body post_content" data-pk={{$value.pk}} style="background: #ffffff;padding-left: 20px;"></div>
+                    <div id="replyWai" style="background-color: #f8f8f8;border: 1px solid #dadada;">
+                        {{each $value.replymore}}
+                        <div class="replyNei replymore_{{$value.pk}}" style="border-bottom: 1px solid #dadada;position: relative;">
+                            <div class="jie-user" href="javascript:void(0)" style="width: 100%;padding-top: 10px;padding-bottom: 10px;">
+                                <div style="width: 30%;text-align: center;float: left;">
+                                    {{if $value.userinfo.avatar == ''}}
+                                        <img src="img/defaultHeader.png" style="" />
+                                    {{else}}
+                                        <img src={{$value.userinfo.avatar}} style="margin-right: 10px" />
+                                    {{/if}}
+                                        <span style="color: rgb(250, 80, 131);padding-left: 10px;">{{$value.userinfo.grade.current_name}}
+                                        </span>
+                                </div>
+                                <div style="width: 65%;padding-left: 5%;float: left;">
+                                    <p class="reply_name" style="line-height: 30px;font-size: 16px;">{{$value.userinfo.name}}</p>
+                                    <p class="replyContentDate" style="font-size: 14px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
+                                    {{if showReplyDel($value.userinfo.name)}}
+                                    <span type="del" class="huifuDel" onclick=deleteReplymoreById({{$value.pk}}) style="float: right;color: red;cursor: pointer;">删除</span>
+                                    {{/if}}
+                                </div>  
+                            </div>     
+                            <div class="detail-body jieda-body" data-pk={{$value.pk}} style="word-break: break-all;background-color: #fff;width: 100%;padding-left: 20px;margin-bottom: 10px;">
+                                {{#stringChange($value.content)}}
+                            </div>        
+                            
+                        </div>                
+                        {{/each}}  
+                    </div>
+            </div>
+            {{/each}}
+        </script>
+   <!--      <div class="reply_box" style="position: fixed;bottom: 40px;width: 100%;height: 60px;">
+       <div style="position:absolute;right: 10px;top: 5px;">
+           <button class="postReply_btn" style="border: none;padding: 5px 10px 5px 10px;background: #009E94;color: #fff">提交</button>
+       </div>
+       <textarea id="L_content" name="content" required="" lay-verify="required" placeholder="回复：楼主" class="layui-textarea fly-editor"></textarea>
+   </div> -->
+        <!-- <div class="more_reply_box"  style="display:none;">
+            
+            <textarea id="copy_reply_content" name="content" required="" lay-verify="required" placeholder="评论" class="layui-textarea fly-editor"></textarea>
+        </div> -->
+<!--         <div class="layui-form layui-form-pane post_answer global-reply" style="position: fixed;bottom: 0;width: 100%;height: 150px;">
+    <div class="layui-form-item">
+        <input type="hidden" name="jid" value="0">
+        <button class="layui-btn postReply_btn  btn-left" style="position: absolute;right: 0px;bottom: 40px;width: 60px;">回帖</button>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <div class="layui-input-block">
+            <textarea id="L_content" name="content" required lay-verify="required" placeholder="我要回复主帖"  class="layui-textarea fly-editor" style="height: 200px;"></textarea>
         </div>
+    </div>
+</div> -->
     </div>
 
 <script src="js/jquery-1.11.2.min.js"></script>
