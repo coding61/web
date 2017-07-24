@@ -825,3 +825,51 @@ body{
     border-color: rgb(250,80,131);
     display: inline-block;
 }
+
+/*保存弹窗*/
+.save-new-work{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+    z-index: 10001;
+}
+.save-new-work > div{
+    display: inline-block;
+    margin-top: 150px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.save-new-work > div > div:last-child{
+    margin-top: 30px;
+}
+.save-new-work label{
+    font-size: 16px;
+    margin-right: 5px;
+}
+.save-new-work-input{
+    line-height: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+.save-new-work button{
+    margin: 0 10px;
+    line-height: 26px;
+    padding: 5px 30px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    border: none;
+}
+.save-new-work .save-btn{
+    background-color: #ff92b1;
+}
+.save-new-work .save-btn:hover{
+    background-color: rgb(250, 80, 131);
+}
