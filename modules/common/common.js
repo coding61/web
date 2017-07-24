@@ -265,6 +265,54 @@ define(function(require, exports, module) {
 			}
 		}
 	}
+	// 自动顺序播放音频文件
+	exports.playMessageSoun1 = function(url){
+		var borswer = window.navigator.userAgent.toLowerCase();
+		if (borswer.indexOf("ie") >= 0) {
+
+		}else{
+			playSouns.queue.push(url);
+			if (playSouns.status) {
+				if (!playSouns.inited) {
+					playSouns.inited = true;
+					var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+					$( "body" ).append( strAudio );
+				}
+				audioPlay();
+
+				function audioPlay(){
+					playSouns.status = false;
+					$("#audioPlay").attr({"src":playSouns.queue[0]});
+					var audio = document.getElementById( "audioPlay");
+					audio.play();
+
+					$("#audioPlay").bind('ended',function () {
+					    playSouns.status = true;
+						playSouns.queue.shift();
+						playSouns.queueLength = playSouns.queue.length;
+						if (playSouns.queue.length > 0) {
+							audioPlay();
+						}
+					});
+
+					// audio.addEventListener("ended", function() {
+					// 	playSouns.status = true;
+					// 	playSouns.queue.shift();
+					// 	playSouns.queueLength = playSouns.queue.length;
+					// 	if (playSouns.queue.length > 0) {
+					// 		audioPlay();
+					// 	}
+				 //    }, false)
+				}
+			}
+		}
+	}
+	var playSouns = {
+		status: true,
+		queue: [],
+		inited: false,
+		queueLength: 0
+	};
 	// bc alert弹出框
 	exports.bcAlert = function(text, submitCallback, cancelCallback, textSubmit, textCancel){
 		exports.bcSubmitCB = submitCallback;
