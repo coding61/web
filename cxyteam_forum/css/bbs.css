@@ -64,7 +64,7 @@
     position: relative;
 }
 .right-view .ranking {
-    cursor: default;
+    cursor: pointer;
     padding: 5px 10px;
     background-color: rgba(0,0,0,0.4);
     border-radius: 20px;
@@ -73,24 +73,21 @@
     font-size: 14px;
 }
 .rankingView {
-    position: fixed;
+    position: absolute;
     background: white;
     color: #1a1a1a;
     border: solid 1px #d2d2d2;
     border-radius: 5px;
     line-height: 30px;
-    left: 54%;
+    /*left: 54%;*/
+    /*margin-left: calc(-10% - 210px);*/
     font-size: 13px;
-    top: 40px;
-    /*width: 250px;*/
-    /*min-height: 314px;*/
-    padding: 10px 10px;
-    /*overflow: scroll;*/
+    top: 50px;
     display: none;
 }
 .rankingView .arrow {
     position: absolute;
-    left: 117px;
+    left: 145px;
     top: -10px;
 }
 .avatar{

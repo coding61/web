@@ -12,6 +12,14 @@ var zonePk = getQueryString("pk");
 //}
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
+$('.jie-add1').click(function() {
+	sessionStorage.removeItem("myPost");
+	sessionStorage.removeItem("typeId");
+	sessionStorage.removeItem("postStatus");
+	sessionStorage.removeItem("myCollect");
+	sessionStorage.removeItem("searchPostContent");
+	window.location.href="bbs.html";
+})
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		$('.avatar img').attr({src: result.avatar});//用户头像
@@ -159,9 +167,10 @@ initTypes();
 function initTypes(){
 	myAjax(basePath+"/forum/types/","get",null,function(result){
 		//console.log(result);
-		$.each(result.results, function(k,v) {
-			$(".type_content").append('<option value="'+v.pk+'" >'+v.name+'</option>');
-		});
+		// 默认类别为技术交流
+		// $.each(result.results, function(k,v) {
+		// 	$(".type_content").append('<option value="'+v.pk+'" >'+v.name+'</option>');
+		// });
 	},false);
 }
 initSection();
