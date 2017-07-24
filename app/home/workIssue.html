@@ -107,7 +107,7 @@
 						{{else if $value.apply_for_home || $value.apply_for_home == 'true'}}
 						<span class="had-show">已申请</span>
 						{{else}}
-						<span class="show-home">上首页</span>
+						<span class="show-home" data-name="{{$value.name}}">上首页</span>
 						{{/if}}
 					</p>
 				</li>
@@ -127,6 +127,18 @@
 					<img src="../../statics/images/close.png">
 				</div>
 				<iframe src="" frameborder="0"></iframe>
+			</div>
+		</div>
+
+		<div class="save-new-work">
+			<div>
+				<div>
+					<label for="">作品名称</label><input type="text" class="save-new-work-input">
+				</div>
+				<div>
+					<button type="button" class="save-btn">保存</button>
+					<button type="button" class="save-cancel-btn">取消</button>
+				</div>
 			</div>
 		</div>
 
