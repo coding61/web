@@ -349,14 +349,14 @@ $(document).on("click",".moreReply",function() {
 	$(".moreReply").remove();
 
 })
-
+// 添加回帖
 function postReplyAdd() {
 	myAjax(basePath+"/forum/replies_create/","post",
 	{"posts":postId,"content":$("#L_content").val()},function(result) {
 		if(result){
 			//console.log(result)
 			// layer.msg("回帖成功");
-			growNumAnimate(result);
+			growNumAnimate(result.userinfo.experience);
 			// zuanNumAnimate();
 			gradeAnimate(result);
 			setTimeout("window.location.reload()",2000);
@@ -365,12 +365,16 @@ function postReplyAdd() {
 		}
 	})
 }
+// 添加回复
 function postReplyMoreAdd() {
 	myAjax(basePath+"/forum/replymore_create/","post",
 	{"replies":replyId,"content":$("#copy_reply_content").val()},function(result) {
 		if(result){
-			layer.msg("回复成功");
-			setTimeout("window.location.reload()",1000);
+			// layer.msg("回复成功");
+			growNumAnimate(result.userinfo.experience);
+			// zuanNumAnimate();
+			gradeAnimate(result);
+			setTimeout("window.location.reload()",2000);
 		}else{
 			layer.msg("回复异常");
 		}
@@ -411,11 +415,18 @@ function shubiao() {
 }
 
 // 经验动画
-function growNumAnimate(result) {
+function growNumAnimate(ex) {
 	var preEx = $('.info .grade-value').text().split("/")[0];
-	var experience = result.userinfo.experience-preEx;
+	var experience = ex-preEx;
+	if (experience>0) {
+		experience = '+' + experience;
+	}
 	$(".grow-number-ani").remove();
-    var growHtml = '<span class="grow-number-ani fadeInOut">经验 +'+experience+'</span>';
+	if (experience == 0) {
+		var growHtml = '<span class="grow-number-ani fadeInOut">经验已达上限</span>';
+	} else {
+		var growHtml = '<span class="grow-number-ani fadeInOut">经验'+experience+'</span>';
+	}
     $("body").append(growHtml);
 }
 // 钻石动画
@@ -481,8 +492,11 @@ function delPost(){
 			  myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
 			  	//console.log(result)
 //				  if(result==1){
-						layer.msg("删除成功");
-						setTimeout('window.location.href="bbsList.html?id="+zoneId',800);
+						// layer.msg("删除成功");
+						layer.close(index);
+						var currentExperience = parseInt($('.info .grade-value').text().split("/")[0])-5;
+						growNumAnimate(currentExperience);
+						setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
 //					}else{
 //						layer.msg("删除失败");
 //					}	
@@ -502,13 +516,13 @@ layer.open({
 	  ,btn: ['确认', '取消']
 	  ,yes: function(index, layero){
 		  myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".reply_"+replyId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
-				});
+				// layer.msg("删除成功");
+				layer.close(index);
+				$(".reply_"+replyId).remove();
+				var currentExperience = parseInt($('.info .grade-value').text().split("/")[0])-10;
+				growNumAnimate(currentExperience);
+				$('.info .grade-value').html(parseInt($('.info .grade-value').text().split("/")[0])-10 + '/' + $('.info .grade-value').text().split("/")[1]);
+			});
 	  },btn2: function(index, layero){
 	    layer.close();
 	  }
@@ -525,12 +539,22 @@ layer.open({
 	  ,btn: ['确认', '取消']
 	  ,yes: function(index, layero){
 		  myAjax(basePath+"/forum/replymores/"+replymoreId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".replymore_"+replymoreId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
+				// layer.msg("删除成功");
+				layer.close(index);
+				$(".replymore_"+replymoreId).remove();
+				$('.detail-about #replyWai').each(function() {
+					if ($(this).children('.replyNei').length == 0) {
+						$(this).css({"border": 'none'});
+					}
+				})
+				$('.rightContent').each(function() {
+					var rightContentH = $(this).css("height");
+					var rcH = parseFloat(rightContentH);
+					$(this).parent('.post_user').children('.jie-user').css({"height": rcH+'px'});
+				})
+				var currentExperience = parseInt($('.info .grade-value').text().split("/")[0])-10;
+				growNumAnimate(currentExperience);
+				$('.info .grade-value').html(parseInt($('.info .grade-value').text().split("/")[0])-10 + '/' + $('.info .grade-value').text().split("/")[1]);
 			});
 	  },btn2: function(index, layero){
 	    layer.close();
