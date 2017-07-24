@@ -234,6 +234,115 @@ define(function(require, exports, module) {
 	        audio.play();
 	    }
 	}
+	// 播放消息音频
+	exports.playMessageSoun = function(url){
+		var borswer = window.navigator.userAgent.toLowerCase();
+		if (borswer.indexOf("ie") >= 0) {
+			// IE 内核
+		}else{
+			// 非 IE 内核
+			if ($("body").find("audio").length <= 0) {
+				var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+				$( "body" ).append( strAudio );
+				var audio = document.getElementById( "audioPlay");
+				audio.play();
+			}else{
+				var audio = document.getElementById( "audioPlay");
+				var oldUrl = audio.getAttribute("src");
+				if (oldUrl == url) {
+					if(audio.paused){
+			            audio.play();
+			        }else{
+			            audio.pause();
+			        }
+				}else{
+					$("body").find("audio").remove();
+					var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+					$( "body" ).append( strAudio );
+					var audio = document.getElementById( "audioPlay");
+					audio.play();
+				}
+			}
+		}
+	}
+	// 自动播放暂停、播放某一具体音频
+	exports.playMessageSoun2 = function(url){
+		// 中断自动播放
+		playSouns.status = true;
+		playSouns.queue = [];
+		playSouns.queueLength = 0;
+		
+		if($("body").find("audio").length <= 0){
+			var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+			$( "body" ).append( strAudio );
+			var audio = document.getElementById( "audioPlay");
+			audio.play();
+		}else{
+			var audio = document.getElementById( "audioPlay");
+			var oldUrl = audio.getAttribute("src");
+			if (oldUrl == url) {
+				if(audio.paused){
+		            audio.play();
+		        }else{
+		            audio.pause();
+		        }
+		    }else{
+		    	$("#audioPlay").attr({"src":url});
+				audio.play();
+		    }
+		}
+		
+	}
+	// 自动顺序播放音频文件
+	exports.playMessageSoun1 = function(url){
+		var borswer = window.navigator.userAgent.toLowerCase();
+		if (borswer.indexOf("ie") >= 0) {
+
+		}else{
+			playSouns.queue.push(url);
+			if (playSouns.status) {
+				if (!playSouns.inited) {
+					playSouns.inited = true;
+					if($("body").find("audio").length <= 0){
+						var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+						$( "body" ).append( strAudio );
+					}
+				}
+				audioPlay();
+
+				function audioPlay(){
+					playSouns.status = false;
+					$("#audioPlay").attr({"src":playSouns.queue[0]});
+					var audio = document.getElementById( "audioPlay");
+					audio.play();
+
+					$("#audioPlay").bind('ended',function () {
+					    playSouns.status = true;
+						playSouns.queue.shift();
+						playSouns.queueLength = playSouns.queue.length;
+						if (playSouns.queue.length > 0) {
+							audioPlay();
+						}
+					});
+
+					// audio.addEventListener("ended", function() {
+					// 	playSouns.status = true;
+					// 	playSouns.queue.shift();
+					// 	playSouns.queueLength = playSouns.queue.length;
+					// 	if (playSouns.queue.length > 0) {
+					// 		audioPlay();
+					// 	}
+				 //    }, false)
+				}
+			}
+		}
+	}
+	var playSouns = {
+		status: true,
+		queue: [],
+		inited: false,
+		queueLength: 0
+	};
 	// bc alert弹出框
 	exports.bcAlert = function(text, submitCallback, cancelCallback, textSubmit, textCancel){
 		exports.bcSubmitCB = submitCallback;

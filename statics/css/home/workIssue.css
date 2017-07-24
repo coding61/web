@@ -29,8 +29,10 @@ body{
 .header .left-view{
 	display: flex;
 	flex: 1;
-
-    /*height: 30px;*/
+}
+.header .middle-view{
+    display: flex;
+    flex: 1;
 }
 .header .left-view .right-line{
     border-right: solid 1px white;
@@ -54,7 +56,7 @@ body{
     display: inline-flex;
     align-items: center;
 }
-.header .left-view .msg img{
+.header .middle-view .msg img{
     width: 20px;
     height: 20px;
     border-radius: 10px;
@@ -64,20 +66,15 @@ body{
 	display: flex;
 	flex: 1;
 	flex-direction: row;
-
-    /*height: 30px;*/
     align-items: center;
-
     justify-content: flex-end;
-
     position: relative;
 }
-.header .right-view>span{
+.header .middle-view>span, .header .left-view>span{
 	padding: 5px 10px;
 	background-color: rgba(0,0,0,0.4);
 	border-radius: 20px;
-	margin-right: 10%;
-
+	margin-right: 10px;
     display: inline-flex;
     align-items: center;
 }
@@ -154,7 +151,6 @@ body{
     height: 100%;
 }
 .header .right-view .quit{
-    /*margin-right: 5%;*/
     cursor: pointer;
 }
 .header .right-view .item{
@@ -167,13 +163,11 @@ body{
     background: rgb(229, 230, 231);
     top: 50px;
     color: #1a1a1a;
-    /*padding: 0 15px;*/
     border: solid 1px #d2d2d2;
     border-radius: 5px;
     line-height: 30px;
     left: 61%;
     font-size: 13px;
-    /*display: none;*/
     top: 38px;
     display: none;
 }
@@ -183,14 +177,12 @@ body{
     margin-bottom: 4px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    /*border: solid 1px #d2d2d2;*/
 }
 .team-info .teams-brand{
     padding: 0 15px;
     background: white;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    /*border: solid 1px #d2d2d2;*/
 }
 .team .member{
     display: flex;
@@ -225,7 +217,6 @@ body{
 }
 .team-brand{
     display: flex;
-    /*justify-content: space-between;*/
     align-items: center;
 }
 .team-brand .name{
@@ -247,22 +238,16 @@ body{
 .main-view{
 	display: flex;
 	flex-direction: row;
-
 	margin:1% 2%;
 	height: 100%;
     height: calc(96% - 50px);
-	/*background-color: red;*/
 }
 .main-view .left-view{
-	width: 40%;
-
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	/*background-color: blue;*/
-
-    width: 35%;
+    width: 25%;
     height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .main-view .left-view ul.menu{
 	width: 30%;
@@ -270,22 +255,19 @@ body{
 	background-color: rgb(229, 230, 231);
 	border: solid 1px rgb(205, 206, 207);
 	border-radius: 5px;
-
 	overflow: auto;
     display: none;
 }
 .main-view .left-view ul.menu li.kn{
-	width: 60%;
-	/*height: 40px;*/
-	margin: auto;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	padding-left: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	overflow: hidden;
-
 	display: flex;
+    width: 60%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    overflow: hidden;
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
@@ -309,12 +291,8 @@ body{
 .main-view ul.courseProgress{
     width: 10%;
     height: 100%;
-    /*background-color: rgb(229, 230, 231);
-    border: solid 1px rgb(205, 206, 207);
-    border-radius: 5px;*/
     overflow: auto;
     display: none;
-
     width: 8%;
 }
 .main-view ul.courseProgress .courseProgressView{
@@ -326,10 +304,8 @@ body{
     align-items: center;
     justify-content: center;
     height: 50px;
-
     z-index: 13;
     position: relative;
-
     height: 30px;
 }
 .main-view ul.courseProgress li.cp img{
@@ -343,8 +319,6 @@ body{
     width: 2px;
     z-index: 12;
     left: calc(50% - 1px);
-    /*background: red;*/
-
     top: 15px;
 }
 .main-view ul.courseProgress .unstudyp{
@@ -354,8 +328,6 @@ body{
     width: 2px;
     z-index: 11;
     left: calc(50% - 1px);
-    /*background: red;*/
-
     top: 15px;
 }
 
@@ -367,28 +339,20 @@ body{
 	background-color: rgb(229, 230, 231);
 	border: solid 1px rgb(205, 206, 207);
 	border-radius: 5px;
-
     display: inline-flex;
     justify-content: center;
-
     flex-direction: column;
     justify-content: flex-start;
-
     position: relative;
     width: 100%;
-
     font-size: 16px;
-    /*width: 85%;*/
-
+    overflow: hidden;
 }
 .main-view .left-view .chat .messages{
 	overflow: auto;
 	padding-bottom: 70px;
 	width: 100%;
-	/*height: 80%;*/
-    
     padding-bottom: 0;
-    /*background: red;*/
     height: calc(100% - 100px);
 }
 .main-view .left-view .chat .messages .loadAgoMore,
@@ -411,7 +375,6 @@ body{
     margin-right: 20px;
     overflow: hidden;
     align-items: center;
-    /* justify-content: center; */
     background: white;
     border-radius: 5px;
     border-bottom-left-radius: 0;
@@ -431,21 +394,9 @@ body{
 	margin-left: 5px;
 	margin-right: 20px;
 	overflow: hidden;
-
-	/*align-items: center;  
-    justify-content: flex-start;*/
     width: calc(100% - 30px);
-
     margin-right: 5px;
     width: calc(100% - 10px);
-}
-.main-view .left-view .chat .message .msg-view-parent{
-    width: calc(100% - 90px);
-}
-.main-view .left-view .chat .message .msg-view-parent .audio{
-    width: 25px;
-    margin-left: 5px;
-    margin-top: 5px;
 }
 .main-view .left-view .chat .message .msg-view,
 .main-view .left-view .chat .answer .msg-view{
@@ -454,45 +405,36 @@ body{
     display: inline-flex;
     width: calc(100% - 90px);
 }
-.main-view .left-view .chat .message .msg-view{
-    width: 100%;
-}
 .main-view .left-view .chat .answer .msg-view{
     justify-content: flex-end;
 }
 .main-view .left-view .chat .message.img{
-    /*height: 100px;*/
 }
 /*加载的图片*/
 .main-view .left-view .chat .message.img img.msg{
     width: 50%;
-    /*width: 70%;*/
     display: none;
 }
 /*预加载的图片*/
 .main-view .left-view .chat .message.img .pre-msg{
-    width: 50%;
-    
+    width: 50%;    
     background: #d2d2d2;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .main-view .left-view .chat .message.link{
-	/*margin-right: 15px;*/
     cursor: pointer;
 }
 .main-view .left-view .chat .message.text .content,
 .main-view .left-view .chat .message .link-text{
 	background-color: white;
 	padding: 10px 15px;
-
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 	line-height: 1.5em;
 	color: rgb(58, 59, 60);
-	/*font-family: serif;*/
 }
 .main-view .left-view .chat .message .arrow{
 	height: 15px;
@@ -517,10 +459,8 @@ body{
     margin-right: 20px;
     margin-left: 5px;
     overflow: hidden;
-    /*align-items: center;*/
     justify-content: flex-end;
     width: calc(100% - 30px);
-
     margin-right: 5px;
     width: calc(100% - 10px);
 }
@@ -536,45 +476,17 @@ body{
     border-radius: 5px 5px 0 5px;
 }
 .main-view .left-view .chat .btn-wx-auth{
-	/*background: rgb(250, 80, 131);
-	color: white;
-
-	height: 30px;
-	line-height: 30px;
-	border-radius: 5px;
-	border-bottom-right-radius: 0px;
-	padding-left: 15px;
-	padding-right: 15px;
-
-	position: fixed;
-	bottom: 20px;
-
-    bottom: 70px;
-    margin-left: 8%;
-
-    margin-left: 11.5%;*/
 }
 .main-view .left-view .chat .help{	
-	/*height: 30px;
-    position: fixed;
-    display: inline-block;
-    bottom: 20px;
-    margin-left: 10%;
-
-    margin-left: 21.5%;*/
 }
 .main-view .left-view .chat .btns{
     overflow: hidden;
     width: 100%;
-    /*height: 20%;*/
-    /*background: blue;*/
     position: relative;
-
     position: absolute;
     bottom: 0
 }
 .main-view .left-view .btns .actions{
-    /*background: yellow;*/
     color: white;
     height: 30px;
     line-height: 30px;
@@ -584,7 +496,6 @@ body{
     padding-right: 6.5%;
     margin-bottom: 15px;
     margin-top: 8px;
-
     height: 40px;
     line-height: 40px;
 }
@@ -597,7 +508,6 @@ body{
     padding-right: 15px;
     display: inline-block;
     margin-left: 5px;
-
     height: 40px;
     line-height: 40px;
     cursor: pointer;
@@ -622,7 +532,6 @@ body{
     display: inline-block;
     margin-left: 5px;
     cursor: pointer;
-
     height: 40px;
     line-height: 40px;
 }
@@ -631,7 +540,6 @@ body{
     display: block;
     margin-left: 85%;
     margin-bottom: 8px;
-
     cursor: pointer;
 }
 .main-view .left-view .helps-view{
@@ -684,34 +592,29 @@ body{
     background-size: 100%;
     background-position: center;
     height: 1px;
-
     position:absolute;
     left: 5%;
     top: 19.5px;
 }
 .sep-line .title{
-    /*position: absolute;*/
     padding-left: 10px;
     padding-right: 10px;
     background: red;
-    background: rgb(229, 230, 231);
-
+    background: rgb(229, 230, 231); 
     z-index: 10000;
 }
 
 /*练习区*/
 .main-view .right-view{
-	width: 60%;
-	background-color: rgb(229, 230, 231);
-	border: solid 1px rgb(205, 206, 207);
-	border-radius: 5px;
-	
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-    width: 65%;
+    display: flex;
+    width: 75%;
     height: 100%;
+    border: solid 1px rgb(205, 206, 207);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(229, 230, 231);
+    border-radius: 5px;
 }
 .main-view .right-view img{
 	width: 100px;
@@ -721,87 +624,9 @@ body{
 	height: 100%;
 	display: none;
 }
-/*钻石效果*/
-.zuan-shadow-view,
-.up-grade-shadow-view
-{
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    background-color: rgba(0, 0, 0, 0.6);
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 10001;
-    display: none;
-}
-.up-grade-shadow-view .img,
-.zuan-shadow-view .img{
-    width: 200px;
-    height: 200px;
-    /*background: red;*/
-    margin-left: calc(50% - 100px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.up-grade-shadow-view .img img{
-    width: 200%;
-}
-.zuan-shadow-view .img img{
-    width: 100%;
-}
-/*升级效果*/
 
-/*经验值*/
-.grow-number-ani{
-    padding: 8px 15px;
-    /*background: white;*/
-    /*border-radius: 5px;*/
-    position: absolute;
-    bottom: 130px;
-    right: 20px;
-    font-size: 20px;
-    bottom: 50%;
-    font-family: -webkit-pictograph;
-    color: gray;
-}
-/*消息图片放大*/
-.imgmsg-shadow-view,
-.find-help-shadow-view{
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    background-color: rgba(0, 0, 0, 0.6);
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 10001;
-    display: none;
-}
-.imgmsg-shadow-view .imgmsg,
-.find-help-shadow-view .find-help-view{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-}
-.imgmsg-shadow-view .imgmsg .imgdiv{
-    max-width: 100%;
-    max-height: 100%;
-    overflow: auto;
-    text-align: center;
-}
-.find-help-shadow-view .find-help-view span{
-    color: white;
-    font-size: 25px;
-    width: 50%;
-    letter-spacing: 2px;
-}
 /*代码运行窗口*/
 .code-result-shadow-view,
-.message-link-shadow-view,
 .login-shadow-view{
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
@@ -814,7 +639,6 @@ body{
     display: none;
 }
 .code-result-shadow-view .code-result,
-.message-link-shadow-view .message-link,
 .login-shadow-view .login-view{
     display: flex;
     align-items: center;
@@ -823,8 +647,7 @@ body{
     height: 100%;
     flex-direction: column;
 }
-.code-result-shadow-view .code-result .close,
-.message-link-shadow-view .message-link .close{
+.code-result-shadow-view .code-result .close{
     height: 35px;
     background: #ddd;
     width: 70%;
@@ -832,11 +655,7 @@ body{
     display: flex;
     align-items: center;
 }
-.message-link-shadow-view .message-link .close{
-    width: 80%;
-}
-.code-result-shadow-view .code-result .close img,
-.message-link-shadow-view .message-link .close img{
+.code-result-shadow-view .code-result .close img{
     position: absolute;
     right: 10px;
 
@@ -844,15 +663,12 @@ body{
     height: 15px;
     top: 10px;
 }
-.code-result-shadow-view .code-result iframe,
-.message-link-shadow-view .message-link iframe{
+.code-result-shadow-view .code-result iframe{
     width: 70%;
     height: 80%;
     background: white;
 }
-.message-link-shadow-view .message-link iframe{
-    width: 80%;
-}
+
 /*登录视图*/
 .login-view .close{
     width: 35%;
@@ -958,275 +774,54 @@ body{
     cursor: pointer;
 }
 
-/*左边飞入动画*/
-@keyframes lefteaseinAnimate {
-   0% {
-      transform: translateX(-2000px);
-      opacity: 0;
-   }
-   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
-   100% {
-      transform: translateX(0px);
-      opacity: 1;
-   }
-   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+.works-header{
+    position: relative;
+    text-align: right;
+    background-color: rgb(155,155,155);
+    line-height: 44px;
 }
-
-@-webkit-keyframes lefteaseinAnimate {
-   0% {
-      -webkit-transform: translateX(-2000px);
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateX(0px);
-      opacity: 1;
-   }
+.works-header span{
+    display: inline-block;
+    line-height: 16px;
+    margin-right: 15px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    background-color: #fff;
+    cursor: pointer;
 }
-
-@-o-keyframes lefteaseinAnimate {
-   0% {
-      -webkit-transform: translateX(-2000px);
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateX(0px);
-      opacity: 1;
-   }
+.works-list{
+    background-color: #fefefe;
 }
-
-@-ms-keyframes lefteaseinAnimate {
-   0% {
-      -webkit-transform: translateX(-2000px);
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateX(0px);
-      opacity: 1;
-   }
+.works-list li{
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    line-height: 26px;
+    overflow: hidden;
 }
-
-@-moz-keyframes lefteaseinAnimate {
-   0% {
-      -webkit-transform: translateX(-2000px);
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateX(0px);
-      opacity: 1;
-   }
+.works-list li p span{
+    display: none;
+    float: right;
+    width: 60px;
+    line-height: 24px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 3px;
+    cursor: pointer;
 }
-
-.left-animation{
-   animation: lefteaseinAnimate 1s ease 1;
-   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
-   -webkit-animation: lefteaseinAnimate 1s ease 1;
-   -ms-animation: lefteaseinAnimate 1s ease 1;
-   -o-animation: lefteaseinAnimate 1s ease 1;
-   -moz-animation: lefteaseinAnimate 1s ease 1;
-   /*规定动画的最后状态为结束状态*/
-   animation-fill-mode: forwards;
-   -webkit-animation-fill-mode: forwards;
-   -o-animation-fill-mode: forwards;
-   -ms-animation-fill-mode: forwards;
-   -moz-animation-fill-mode: forwards;
+.works-list li p .had-show{
+    border: none;
+    cursor: default;
 }
-
-/*底部进入动画*/
-@keyframes bottomeaseinAnimate {
-   0% {
-      transform: translateY(calc(100% + 40px));
-      opacity: 0;
-   }
-   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
-   100% {
-      transform: translateY(0);
-      opacity: 1;
-   }
-   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+.works-list li p .works-drop{
+    margin-left: 10px;
 }
-
-@-webkit-keyframes bottomeaseinAnimate {
-   0% {
-      -webkit-transform: translateY(calc(100% + 40px));
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateY(0);
-      opacity: 1;
-   }
+.works-list .active{
+    color: rgb(250, 80, 131);
 }
-
-@-o-keyframes bottomeaseinAnimate {
-   0% {
-      -webkit-transform: translateY(calc(100% + 40px));
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateY(0);
-      opacity: 1;
-   }
-}
-
-@-ms-keyframes bottomeaseinAnimate {
-   0% {
-      -webkit-transform: translateY(calc(100% + 40px));
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateY(0);
-      opacity: 1;
-   }
-}
-
-@-moz-keyframes bottomeaseinAnimate {
-   0% {
-      -webkit-transform: translateY(calc(100% + 40px));
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateY(0);
-      opacity: 1;
-   }
-}
-.bottom-animation{
-	animation: bottomeaseinAnimate 1s ease 1;
-   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
-   -webkit-animation: bottomeaseinAnimate 1s ease 1;
-   -ms-animation: bottomeaseinAnimate 1s ease 1;
-   -o-animation: bottomeaseinAnimate 1s ease 1;
-   -moz-animation: bottomeaseinAnimate 1s ease 1;
-   /*规定动画的最后状态为结束状态*/
-   animation-fill-mode: forwards;
-   -webkit-animation-fill-mode: forwards;
-   -o-animation-fill-mode: forwards;
-   -ms-animation-fill-mode: forwards;
-   -moz-animation-fill-mode: forwards;
-}
-
-/*渐入渐出*/
-@keyframes fadeIn {
-   0% {
-      transform: translateY(calc(100% + 140px));
-      opacity: 0;
-   }
-   25%{
-      -webkit-transform: translateY(0);
-      opacity: 0.6;
-      font-size: 30px;
-   }
-   50%{
-     -webkit-transform: translateY(0);
-      opacity: 1;
-      font-size: 50px;
-      /*color: blue;*/
-   }
-   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
-   100% {
-      transform: translateY(calc(100% - 140px));
-      opacity: 0;
-   }
-   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
-}
-
-@-webkit-keyframes fadeIn {
-   0% {
-      -webkit-transform: translateY(calc(100% + 140px));
-      opacity: 0;
-   }
-   25%{
-      -webkit-transform: translateY(0);
-      opacity: 0.6;
-      font-size: 30px;
-   }
-   50%{
-     -webkit-transform: translateY(0);
-      opacity: 1;
-      font-size: 50px;
-      /*color: blue;*/
-   }
-   100% {
-      -webkit-transform: translateY(calc(100% - 140px));
-      opacity: 0;
-   }
-
-}
-
-@-o-keyframes fadeIn {
-   0% {
-      -webkit-transform: translateY(calc(100% + 140px));
-      opacity: 0;
-   }
-   25%{
-      -webkit-transform: translateY(0);
-      opacity: 0.6;
-      font-size: 30px;
-   }
-   50%{
-     -webkit-transform: translateY(0);
-      opacity: 1;
-      font-size: 50px;
-      /*color: blue;*/
-   }
-   100% {
-      -webkit-transform: translateY(calc(100% - 140px));
-      opacity: 0;
-   }
-}
-
-@-ms-keyframes fadeIn {
-   0% {
-      -webkit-transform: translateY(calc(100% + 140px));
-      opacity: 0;
-   }
-   25%{
-      -webkit-transform: translateY(0);
-      opacity: 0.6;
-      font-size: 30px;
-   }
-   50%{
-     -webkit-transform: translateY(0);
-      opacity: 1;
-      font-size: 50px;
-      /*color: blue;*/
-   }
-   100% {
-      -webkit-transform: translateY(calc(100% - 140px));
-      opacity: 0;
-   }
-}
-
-@-moz-keyframes fadeIn {
-   0% {
-      -webkit-transform: translateY(calc(100% + 140px));
-      opacity: 0;
-   }
-   25%{
-      -webkit-transform: translateY(0);
-      opacity: 0.6;
-      font-size: 30px;
-   }
-   50%{
-     -webkit-transform: translateY(0);
-      opacity: 1;
-      font-size: 50px;
-      /*color: blue;*/
-   }
-   100% {
-      -webkit-transform: translateY(calc(100% - 140px));
-      opacity: 0;
-   }
-}
-.fadeInOut{
-    animation: fadeIn 2s ease 1;
-   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
-   -webkit-animation: fadeIn 2s ease 1;
-   -ms-animation: fadeIn 2s ease 1;
-   -o-animation: fadeIn 2s ease 1;
-   -moz-animation: fadeIn 2s ease 1;
-   /*规定动画的最后状态为结束状态*/
-   animation-fill-mode: forwards;
-   -webkit-animation-fill-mode: forwards;
-   -o-animation-fill-mode: forwards;
-   -ms-animation-fill-mode: forwards;
-   -moz-animation-fill-mode: forwards;
+.works-list .active p span{
+    border-color: rgb(250,80,131);
+    display: inline-block;
 }
