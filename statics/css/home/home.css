@@ -439,12 +439,23 @@ body{
     margin-right: 5px;
     width: calc(100% - 10px);
 }
+.main-view .left-view .chat .message .msg-view-parent{
+    width: calc(100% - 90px);
+}
+.main-view .left-view .chat .message .msg-view-parent .audio{
+    width: 25px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
 .main-view .left-view .chat .message .msg-view,
 .main-view .left-view .chat .answer .msg-view{
     align-items: center;
     justify-content: flex-start;
     display: inline-flex;
     width: calc(100% - 90px);
+}
+.main-view .left-view .chat .message .msg-view{
+    width: 100%;
 }
 .main-view .left-view .chat .answer .msg-view{
     justify-content: flex-end;
