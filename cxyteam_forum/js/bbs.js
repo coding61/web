@@ -67,6 +67,10 @@ $(".right-view .ranking").click(function() {
 		$('.rankingView').hide();
 		rankingHadClick = false;
 	} else {
+		$('#loading').show();
+		// 显示排名
+		$('.rankingView').show();
+		$('#loading').show();
 		rankingHadClick = true;
 		getRanking();
 	}
@@ -75,10 +79,10 @@ $(".right-view .ranking").click(function() {
 function getRanking() {
 	myAjax(basePath+"/userinfo/userinfo/diamond/ranking/","get",null,function(result) {
 		if(result){
-			// 显示排名
-			$('.rankingView').show();
+			$('.rankList').empty();
 			var html = template("rankList-template", result);
 			$('.rankList').html(html);
+			$('#loading').hide();
 			var a = $(".ranking").offset().left;
             var b = $(".right-view").offset().left;
             var c = $(".rankingView").width();

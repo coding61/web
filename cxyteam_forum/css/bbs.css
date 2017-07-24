@@ -83,12 +83,21 @@
     /*margin-left: calc(-10% - 210px);*/
     font-size: 13px;
     top: 50px;
+    /*min-width: 250px;*/
     display: none;
 }
 .rankingView .arrow {
     position: absolute;
     left: 145px;
     top: -10px;
+}
+#loading {
+    display: none;
+    text-align: center;
+}
+.loadingImg {
+    width: 50px;
+    height: 50px;
 }
 .avatar{
    margin-right: 2%;
