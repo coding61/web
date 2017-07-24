@@ -48,7 +48,7 @@ function myAjax(url,type,data,success,async){
 	        type: type,
 	        async:async==null?true:async,
 	        headers: {
-	            Authorization: 'Token ' + localStorage.token
+	            Authorization: 'Token ' + '7bf60add8fa1a96c75ea214afc0e6173478cece1'
 	        },
 	        data:data,
 	        success: success,
