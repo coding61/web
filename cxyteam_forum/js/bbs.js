@@ -70,7 +70,12 @@ $(".right-view .ranking").click(function() {
 		$('#loading').show();
 		// 显示排名
 		$('.rankingView').show();
-		$('#loading').show();
+		var a = $(".ranking").offset().left;
+        var b = $(".right-view").offset().left;
+        var c = $(".rankingView").width();
+        $(".rankingView").css({
+            left: (a-b-c/2)+50 + "px"
+        })
 		rankingHadClick = true;
 		getRanking();
 	}
