@@ -265,6 +265,34 @@ define(function(require, exports, module) {
 			}
 		}
 	}
+	// 自动播放暂停、播放某一具体音频
+	exports.playMessageSoun2 = function(url){
+		// 中断自动播放
+		playSouns.status = true;
+		playSouns.queue = [];
+		playSouns.queueLength = 0;
+		
+		if($("body").find("audio").length <= 0){
+			var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+			$( "body" ).append( strAudio );
+			var audio = document.getElementById( "audioPlay");
+			audio.play();
+		}else{
+			var audio = document.getElementById( "audioPlay");
+			var oldUrl = audio.getAttribute("src");
+			if (oldUrl == url) {
+				if(audio.paused){
+		            audio.play();
+		        }else{
+		            audio.pause();
+		        }
+		    }else{
+		    	$("#audioPlay").attr({"src":url});
+				audio.play();
+		    }
+		}
+		
+	}
 	// 自动顺序播放音频文件
 	exports.playMessageSoun1 = function(url){
 		var borswer = window.navigator.userAgent.toLowerCase();
@@ -275,8 +303,10 @@ define(function(require, exports, module) {
 			if (playSouns.status) {
 				if (!playSouns.inited) {
 					playSouns.inited = true;
-					var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
-					$( "body" ).append( strAudio );
+					if($("body").find("audio").length <= 0){
+						var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+						$( "body" ).append( strAudio );
+					}
 				}
 				audioPlay();
 

@@ -1262,7 +1262,7 @@ define(function(require, exports, module) {
                 var url = $(this).parents('.msg-view-parent').attr("data-audio-url");
                 if (url) {
                     // 'https://static1.bcjiaoyu.com/2.mp3'
-                    Common.playMessageSoun(url);  //播放钻石音效
+                    Common.playMessageSoun2(url);  //播放钻石音效
                 }
             })
         },
