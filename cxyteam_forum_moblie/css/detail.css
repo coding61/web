@@ -205,10 +205,11 @@ ul.reply_mess>li .reply_txt {
 }
 .post_content .huifuDel{
   position: absolute;
-  right: 40px;
-  top: 10px;
-  font-size: 14px;
+  right: 70px;
+  top: 60px;
+  font-size: 16px;
   cursor: pointer;
+  color: red;
 }
 .post_content .tieReply{
   position: absolute;
