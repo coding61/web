@@ -111,13 +111,7 @@ $(document).on("click",".question_reply",function(){
 			+'<div>';
 	$(".layui-form-pane .fly-edit").remove();
 	$("#main").append(htm)
-/*	$(this).parent().after(htm);
 
-	$('.post_reply').children('.post_user').each(function() {
-		var rightContentHeight = $(this).children('.rightContent').css("height");
-		var leftHeight = parseFloat(rightContentHeight) + 50;
-		$(this).children('.jie-user').css({"height": leftHeight+'px'});
-	})*/
 	my_init();
 });
 
