@@ -3,6 +3,9 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js');
 
 	var Page = {
+        isNew: false,
+        toPk: null,
+        workListClick: false,
 		init: function(){
 			// 当前浏览器
             if(Common.platform.isMobile){
@@ -25,7 +28,7 @@ define(function(require, exports, module) {
 			// 监听课程列表那里传过来的点击事件
             window.addEventListener('message', function(e) {  
             	var a = e.data;  
-                a == 'closeCodeEdit' ? (location.href = './workSave.html') : (function(){
+                a == 'closeCodeEdit' ? $('.save-new-work').show() : (function(){
                     // 打开运行结果窗口，并赋值
                     $(".code-result-shadow-view iframe").attr({src:a});
                     $(".code-result-shadow-view").show();
@@ -101,6 +104,7 @@ define(function(require, exports, module) {
 
             //新建
             $('.createNew').click(function(){
+                Page.isNew = true;
                 localStorage.removeItem('htmlCode');
                 localStorage.removeItem('jsCode');
                 $('#codeEdit').attr('src', $('#codeEdit').attr('src'));
@@ -110,13 +114,40 @@ define(function(require, exports, module) {
 
             //点击某个作品
             $('.works-list').on('click', 'li', function(){
-                Mananger.getWorkDetail($(this).attr('data-pk'));
+                if (Page.isNew && (!!localStorage.htmlCode || !!localStorage.jsCode)) {
+                    $('.save-new-work').show();
+                    Page.toPk = $(this).attr('data-pk');
+                    Page.isNew = false;
+                    Page.workListClick = true;
+                } else {
+                    Page.isNew = false;
+                    Mananger.getWorkDetail($(this).attr('data-pk'));
+                }
+            })
+
+            //保存新作品
+            $('.save-btn').click(function(){
+                Page.isNew = false;
+                Page.workListClick = false;
+                Mananger.saveWork();
+            })
+            $('.save-cancel-btn').click(function(){
+                if (!Page.workListClick) {
+                    $('.save-new-work').hide();
+                } else {
+                    $('.save-new-work').hide();
+                    Mananger.getWorkDetail(Page.toPk);
+                }
+                Page.workListClick = false;
             })
 
             //作品上首页
             $('.works-list').on('click', '.show-home', function(e){
                 e.stopPropagation();
-                Mananger.issueHome($(this).parent().parent().attr('data-pk'))
+                var this_ = $(this);
+                Mananger.getWorkDetail($(this).parent().parent().attr('data-pk'), function(){
+                    location.href = './workSave.html?work_pk=' + this_.parent().parent().attr('data-pk') + '&work_name=' + this_.attr('data-name');
+                });
             })
             //删除作品
             $('.works-list').on('click', '.works-drop', function(e){
@@ -307,7 +338,7 @@ define(function(require, exports, module) {
                 })
             })
         },
-        getWorkDetail: function(pk){
+        getWorkDetail: function(pk, callback){
             Common.isLogin(function(){
                 $.ajax({
                     type: 'get',
@@ -320,6 +351,7 @@ define(function(require, exports, module) {
                         $('#codeEdit').attr('src', $('#codeEdit').attr('src'));
                         $('.right-view img').hide();
                         $('.right-view .codeEdit').show();
+                        typeof callback == 'function' ? callback() : '';
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -366,21 +398,31 @@ define(function(require, exports, module) {
                 })
             })
         },
-        issueHome: function(pk){
+        saveWork: function(){
+            var work_name = $.trim($('.save-new-work-input').val());
+            if (!work_name || work_name == '') {
+                Common.dialog('请输入作品名');
+                return;
+            }
+            Common.showLoading();
             Common.isLogin(function(token){
                 $.ajax({
-                    type: 'PATCH',
-                    url: Common.domain + '/userinfo/myexercises/' + pk + '/',
-                    headers:{
-                        Authorization:"Token " + token
+                    type: 'POST',
+                    url: Common.domain + '/userinfo/myexercise_create/',
+                    headers: {
+                        'Authorization': 'Token ' + token
                     },
                     data: {
-                        'apply_for_home': true
+                        'name': work_name,
+                        'html': localStorage.htmlCode ? localStorage.htmlCode : '',
+                        'css': localStorage.cssCode ? localStorage.cssCode : '',
+                        'js': localStorage.jsCode ? localStorage.jsCode : ''
                     },
                     timeout: 12000,
                     success: function(json){
-                        console.log('issue success', json);
-                        Mananger.getWorkList();
+                        Common.dialog('作品保存成功', function(){
+                            Mananger.getWorkList();
+                        })
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -388,12 +430,16 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail || JSON.parse(xhr.responseText).name[0]);
                             return;
                         }else{
                             Common.dialog('服务器繁忙');
                             return;
                         }
+                    },
+                    complete: function(){
+                        Common.hideLoading();
+                        $('.save-new-work').hide();
                     }
                 })
             })
