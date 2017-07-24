@@ -74,7 +74,7 @@ $(".right-view .ranking").click(function() {
         var b = $(".right-view").offset().left;
         var c = $(".rankingView").width();
         $(".rankingView").css({
-            left: (a-b-c/2)+25 + "px"
+            left: (a-b-c/2)+20 + "px"
         })
 		rankingHadClick = true;
 		getRanking();
@@ -92,7 +92,7 @@ function getRanking() {
             var b = $(".right-view").offset().left;
             var c = $(".rankingView").width();
             $(".rankingView").css({
-                left: (a-b-c/2)+25 + "px"
+                left: (a-b-c/2)+20 + "px"
             })
 		}else{
 		}
