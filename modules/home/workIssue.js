@@ -152,7 +152,10 @@ define(function(require, exports, module) {
             //删除作品
             $('.works-list').on('click', '.works-drop', function(e){
                 e.stopPropagation();
-                Mananger.dropWork($(this).parent().parent().attr('data-pk'));
+                var this_ = $(this);
+                Common.bcAlert('确定删除此作品？', function(){
+                    Mananger.dropWork(this_.parent().parent().attr('data-pk'));
+                })
             })
 
             //鼠标移入事件

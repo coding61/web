@@ -336,6 +336,7 @@ body{
     background-color: #ddd;
     color: #666;
     font-size: 14px;
+    cursor: pointer;
 }
 .main-view .save-table .submit .submit-btn{
     background-color: rgb(250, 80, 131);
