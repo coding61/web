@@ -293,8 +293,71 @@ define(function(require, exports, module) {
 		}
 		
 	}
-	// 自动顺序播放音频文件
 	exports.playMessageSoun1 = function(url){
+
+		playSouns.queue.push(url);
+		if (playSouns.status) {
+			if (!playSouns.inited) {
+				playSouns.inited = true;
+				if($("body").find("audio").length <= 0){
+					var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
+					$( "body" ).append( strAudio );
+
+					$("#audioPlay").bind('ended',function () {
+						setTimeout(function(){
+							if (playSouns.status == false) {
+								playSouns.status = true;
+							    console.log(1111);
+								playSouns.queue.shift();
+								playSouns.queueLength = playSouns.queue.length;
+								if (playSouns.queue.length > 0) {
+									audioPlay();
+								}
+							}else{
+								console.log(2222)
+							}
+						    
+						}, 0)
+						
+					});
+				}
+			}
+			audioPlay();
+
+			function audioPlay(){
+				console.log(playSouns.queue);
+				playSouns.status = false;
+				var audio = document.getElementById( "audioPlay");
+				$("#audioPlay").attr({"src":playSouns.queue[0]});
+				audio.currentTime = 0;
+				audio.pause();
+				audio.autoplay = true;
+				var playPromise = audio.play();
+				playPromiseFunc(playPromise);
+				function playPromiseFunc(playPromise){
+					if (playPromise !== undefined) {
+				    	playPromise.then(_ => {
+					      // Automatic playback started!
+					      // Show playing UI.
+					      console.log($("#audioPlay").attr("src"));
+					      console.log('success');
+					    })
+				    	.catch(error => {
+					      // Auto-play was prevented
+					      // Show paused UI.
+					      console.log($("#audioPlay").attr("src"));
+					        console.log('error');
+					        audio.currentTime = 0;
+							var pp = audio.play();
+							playPromiseFunc(pp);
+					    });
+					}
+				}
+			}
+		}
+	}
+	// 自动顺序播放音频文件
+	exports.playMessageSoun3 = function(url){
 		var borswer = window.navigator.userAgent.toLowerCase();
 		if (borswer.indexOf("ie") >= 0) {
 
