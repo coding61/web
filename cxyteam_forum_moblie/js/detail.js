@@ -1,5 +1,3 @@
-//var token="f398c224a8a052bb9ba5fe278acb1128043bfd8e";
-// var ArtTemplate = require("../../libs/template.js");
 var basePath="/program_girl";
 var postId=170;
 var postPk=getQueryString("pk");
@@ -10,7 +8,6 @@ var replyPage = 1;
 $('.jie-add1').unbind().click(function(){
 	window.location.href="add.html?pk="+postPk;
 });
-
 //var user= JSON.parse(sessionStorage.getItem("session_user"));
 	$.ajax({
 	        url: basePath+"/userinfo/whoami/",
@@ -46,27 +43,25 @@ $('.jie-add1').unbind().click(function(){
 		localStorage.userName=null;
 	}
 })*/
-/*
 
-var postUserName;*/
+var postUserName;
 initDetail();
 function initDetail(){
 	setTimeout(postDetail,200);//获取主帖详情
 	//addBrowseTime();
 }
 //提交回帖
-$(".postReply_btn").click(function() {
-	var content=$("#L_content").val();
+$(document).on("click",".postReply_btn",function() {
+	var content=$("#copy_reply_content").val();
 	if(!content) {
 		layer.msg("请输入回复内容");
 		return false;
 	}else {
-		$(".postReply_btn").attr({"disabled": true});
+		$(".copy_reply_textarea").attr({"disabled": true});
 		postReplyAdd();
 	}
-	
 })
-//提交回复
+//提交回复回复
 $(document).on("click",".postReplyMore_btn",function() {
 	var content=$("#copy_reply_content").val();
 	toUserId=$(this).attr("data-user-id");
@@ -111,13 +106,43 @@ $(document).on("click",".question_reply",function(){
 			+'<div>';
 	$(".layui-form-pane .fly-edit").remove();
 	$("#main").append(htm)
-
 	my_init();
 });
 
+$(document).on("click",".main_forum_reply",function(){
+	if($(this).parent().next(".copy_reply_textarea").length>0){//如果存在
+		return;
+	}
+	if($(".copy_reply_textarea").length>0){
+		if($("#copy_reply_content").val()!=null&&$.trim($("#copy_reply_content").val())!=""){
+			if(confirm("确定要放弃正在编辑的回复？")){
+				$(".copy_reply_textarea").remove();
+			}else{
+				return;
+			}
+		}else{
+			$(".copy_reply_textarea").remove();
+		}
+	}
+	var htm='<div class="copy_reply_textarea">'
+				+'<div class="layui-form layui-form-pane">'
+					+' <div class="layui-form-item layui-form-text">'
+						+'<div class="layui-input-block">'
+							+' <textarea id="copy_reply_content" name="content" required lay-verify="required" placeholder="回复帖子"  class="layui-textarea fly-editor" style="height: 100px;"></textarea>'
+						+'</div>'
+					+'</div>'
+					+'<div class="layui-form-item">'
+						+'<input type="hidden" name="jid" value="0">'
+						+'<button class="layui-btn btn-left postReply_btn" lay-filter="*" lay-submit data-user-id="'+$(this).attr("data-user-id")+'" data-id="'+$(this).attr("data-id")+'">回复</button>'
+					+'</div>'
+				+'</div>'
+			+'<div>';
+	$(".layui-form-pane .fly-edit").remove();
+	$("#main").append(htm)
+	my_init();
+});
 function postDetail() {
 	myAjax2(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
-		console.log(result);
 		zoneId=result.section.pk;
 		postUserName=result.userinfo.name;
 		$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
@@ -133,7 +158,7 @@ function postDetail() {
 		});
 		$(".forum_time").append('<em class="posContentDate">'+dealWithTime(result.create_time)+'</em>');
 		if(localStorage.userName!=null&&postUserName==localStorage.userName){
-			$(".post_user .post_content").append('<span type="del" onclick="delPost()" class="post_del">删除此帖</span>');
+			$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
 		}
 		$(".replyCount").text((result.reply_count));
 		$(".browseTime").text(result.browse_count);
@@ -208,8 +233,9 @@ $(document).on("click",".moreReply",function() {
 //回复主贴
 function postReplyAdd() {
 	myAjax(basePath+"/forum/replies_create/","post",
-	{"posts":postId,"content":$("#L_content").val()},function(result) {
+	{"posts":postId,"content":$("#copy_reply_content").val()},function(result) {
 		if(result){
+			console.log(result)
 			growNumAnimate(result);
 			gradeAnimate(result);
 			setTimeout("window.location.reload()",2000);
@@ -223,6 +249,7 @@ function postReplyMoreAdd() {
 	myAjax(basePath+"/forum/replymore_create/","post",
 	{"replies":replyId,"content":$("#copy_reply_content").val()},function(result) {
 		if(result){
+
 			layer.msg("回复成功");
 			setTimeout("window.location.reload()",1000);
 		}else{

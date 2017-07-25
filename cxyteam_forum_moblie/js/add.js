@@ -28,9 +28,9 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 
 //获取当前社区
 var zoneName='';
-myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
+/*myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
 	zoneName=result.name;
-});
+});*/
 //$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
 $(function() {
 	$(".publish").click(function() {
@@ -87,9 +87,9 @@ function publish(title,zoneId,typeId,content) {
 		growNumAnimate(result);
 		// zuanNumAnimate();
 		gradeAnimate(result);
-        setTimeout(function() {
+       /* setTimeout(function() {
         	window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
-        }, 2000)
+        }, 2000)*/
 		
 	});
 }
