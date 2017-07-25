@@ -79,7 +79,14 @@ body{
     align-items: center;
 }
 .header .right-view .luntan{
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 30px;
+    border-radius: 3px;
+    background-color: #fff;
+    color: rgb(250, 80, 131);
     cursor: pointer;
+    font-size: 13px;
 }
 .header .right-view .msg img{
     width: 20px;
