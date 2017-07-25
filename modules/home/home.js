@@ -1254,6 +1254,10 @@ define(function(require, exports, module) {
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
             })
+            // 作品中心
+            $(".header .works").unbind('click').click(function(){
+                window.open("worksList.html");
+            })
             
 
             // 消息音频播放
@@ -1360,6 +1364,10 @@ define(function(require, exports, module) {
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
+            })
+            // 作品中心
+            $(".header .works").unbind('click').click(function(){
+                window.open("worksList.html");
             })
             
         },
@@ -2030,16 +2038,18 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         console.log(json);
-                        if(zuanNum != 0){
+                        if (json.diamond > localStorage.currentZuan) {
                             // 打开钻石动画
                             Common.playSoun('https://static1.bcjiaoyu.com/Diamond%20Drop.wav');  //播放钻石音效
                             Util.zuanAnimate(json.diamond);
-                            
                         }
-                        if(growNum != 0){
+
+                        if (json.experience > localStorage.currentExper) {
                             // 打开经验动画
+                            var growNum = parseInt(json.experience) - localStorage.currentExper;
                             Util.growAnimate(growNum);
                         }
+                        
 
                         if(localStorage.currentGrade != json.grade.current_name){
                             // 打开升级动画
@@ -2318,6 +2328,8 @@ define(function(require, exports, module) {
             Default.olduser = json.olduser;      //记录是新用户还是老用户
             localStorage.avatar = json.avatar.replace("http://", "https://");     //记录用户的头像
             localStorage.currentGrade = json.grade.current_name;    //记录当前等级
+            localStorage.currentExper = json.experience;   //记录当前经验
+            localStorage.currentZuan = json.diamond;     //记录当前钻石
 
             $(".header .item").show();
 
