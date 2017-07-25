@@ -336,9 +336,23 @@ define(function(require, exports, module) {
 				playPromiseFunc(playPromise);
 				function playPromiseFunc(playPromise){
 					if (playPromise !== undefined) {
+						playPromise.then(function(){
+							console.log($("#audioPlay").attr("src"));
+						    console.log('success');
+						})
+						.catch(function(){
+							console.log($("#audioPlay").attr("src"));
+					        console.log('error');
+					        audio.currentTime = 0;
+							var pp = audio.play();
+							playPromiseFunc(pp);
+						})
+						
+						/*
 				    	playPromise.then(_ => {
 					      // Automatic playback started!
 					      // Show playing UI.
+
 					      console.log($("#audioPlay").attr("src"));
 					      console.log('success');
 					    })
@@ -351,6 +365,7 @@ define(function(require, exports, module) {
 							var pp = audio.play();
 							playPromiseFunc(pp);
 					    });
+					    */
 					}
 				}
 			}
