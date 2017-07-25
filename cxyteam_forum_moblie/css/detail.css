@@ -76,6 +76,18 @@
 .copy-reply_textarea{
 	
 }
+.jieda-body {
+    margin: 0px 0 8px;
+    min-height: 0;
+    line-height: 24px;
+    font-size: 14px;
+}
+.detail-about >span, .jie-about span, .detail-about .jie-user {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 12px;
+    padding: 20px 20px 0 10px;
+}
 .btn-left{
 	float: right;
 }
@@ -211,7 +223,7 @@ ul.reply_mess>li .reply_txt {
 
 .post_content .huifuDel{
   position: absolute;
-  right: 63px;
+  right: 70px;
   top: 60px;
   font-size: 16px;
   cursor: pointer;
