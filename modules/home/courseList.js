@@ -267,7 +267,7 @@ define(function(require, exports, module) {
                         window.parent.postMessage("resetcurrentCourse", '*');
 
                     })
-                }else if($(this).attr("data-category") == "processing"){
+                }else if($(this).attr("data-status") == "processing"){
                     var this_ = $(this);
                     Common.bcAlert("此课程已经开始学习，请选择重新开始学习，还是继续上次学习？", function(){
                         Util.restartStudy(this_);
