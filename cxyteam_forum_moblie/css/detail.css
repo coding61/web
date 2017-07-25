@@ -99,6 +99,7 @@
   width: 100%;
   text-align: center;
   padding-bottom: 10px;
+  padding-top: 10px;
   cursor: pointer;
   background: #fff;
 }
@@ -174,13 +175,12 @@ ul.reply_mess>li .reply_txt {
 }
 
 .post_user .grade{
-  margin-top: 10px;}
+  margin-top: 10px;
+}
 .post_del{
-    position: absolute;
-    right: -40px;
-    color: rgb(250, 80, 131);
-    font-size: 14px;
-    top: 10px;
+    color: red;
+    font-size: 16px;
+    margin-top: 20px;
     cursor: pointer;
 }
 .post_content .posContentDate{
@@ -203,9 +203,15 @@ ul.reply_mess>li .reply_txt {
     width: 150px;
     text-align: center;
 }
+.detail-about .jie-user img {
+    display: block;
+    border-radius: 100%;
+    margin-left: 16px; 
+}
+
 .post_content .huifuDel{
   position: absolute;
-  right: 70px;
+  right: 63px;
   top: 60px;
   font-size: 16px;
   cursor: pointer;

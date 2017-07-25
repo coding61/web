@@ -30,7 +30,7 @@
             <div class="forum_person_info " style="background: #F2F2F2;width: 100%;display: inline-block;padding-bottom: 10px;">
                 <div class="info" style="display: inline-block;width: 20%;height: 80px;padding-top: 10px;padding-bottom: 10px;text-align: center;float: left;">
                     <img src="" style="width: 50px;height: 50px;border-radius: 25px;">
-                    <p style="padding-top: 10px;"></p>
+                    <p style="padding-top: 7px;color: rgb(250, 80, 131);"></p>
                 </div>
                 <div style="display: inline-block;padding: 10px 0 10px 20px;float: left;width: 60%;">
                     <p style="font-size: 16px;color: #4f99cf" class="info_name"></p>
@@ -41,8 +41,8 @@
                        <span>回复：</span><span class="replyCount"></span> -->
                     </div>
                 </div>
-                <div style="display: inline-block;float: left;width: 20%;">
-                    <p class="main_forum_reply question_reply"  style="padding-top: 30px;font-size: 16px;" ><i class="iconfont icon-svgmoban53" style="margin-right: 10px;font-size: 20px;"></i>回复</p>
+                <div style="display: inline-block;float: left;width: 20%;" id="reply_detele">
+                    <p class="main_forum_reply"  style="padding-top: 30px;font-size: 16px;" ><i class="iconfont icon-svgmoban53" style="margin-right: 10px;font-size: 20px;"></i>回复</p>
                 </div>
             </div>
             <div class="post_content" style="padding: 10px;"> 
@@ -78,28 +78,28 @@
                     </div>
                 </div>
                 <div class="detail-body post_content" data-pk={{$value.pk}} style="background: #ffffff;padding-left: 20px;"></div>
-                    <div id="replyWai" style="background-color: #f8f8f8;border: 1px solid #dadada;">
+                    <div id="replyWai" style="background-color: #F0F0F0;margin-left: 10px;">
                         {{each $value.replymore}}
                         <div class="replyNei replymore_{{$value.pk}}" style="border-bottom: 1px solid #dadada;position: relative;">
-                            <div class="jie-user" href="javascript:void(0)" style="width: 100%;padding-top: 10px;padding-bottom: 10px;">
+                            <div class="jie-user" href="javascript:void(0)" style="width: 100%;padding-top: 10px;">
                                 <div style="width: 30%;text-align: center;float: left;">
                                     {{if $value.userinfo.avatar == ''}}
                                         <img src="img/defaultHeader.png" style="" />
                                     {{else}}
                                         <img src={{$value.userinfo.avatar}} style="margin-right: 10px" />
                                     {{/if}}
-                                        <span style="color: rgb(250, 80, 131);padding-left: 10px;">{{$value.userinfo.grade.current_name}}
+                                        <span style="color: rgb(250, 80, 131);  margin-right: 30px;">{{$value.userinfo.grade.current_name}}
                                         </span>
                                 </div>
                                 <div style="width: 65%;padding-left: 5%;float: left;">
                                     <p class="reply_name" style="line-height: 30px;font-size: 16px;">{{$value.userinfo.name}}</p>
                                     <p class="replyContentDate" style="font-size: 14px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
                                     {{if showReplyDel($value.userinfo.name)}}
-                                    <span type="del" class="huifuDel" onclick=deleteReplymoreById({{$value.pk}}) style="float: right;color: red;cursor: pointer;">删除</span>
+                                    <span type="del" class="huifuDel" onclick=deleteReplymoreById({{$value.pk}}) style="float: right;color: red;cursor: pointer;font-size: 16px;">删除</span>
                                     {{/if}}
                                 </div>  
                             </div>     
-                            <div class="detail-body jieda-body" data-pk={{$value.pk}} style="word-break: break-all;background-color: #fff;width: 100%;padding-left: 20px;margin-bottom: 10px;">
+                            <div class="detail-body jieda-body" data-pk={{$value.pk}} style="word-break: break-all;background-color: #fff;width: 100%;padding-left: 20px;margin-bottom: 20px;">
                                 {{#stringChange($value.content)}}
                             </div>        
                             
