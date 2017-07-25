@@ -1254,6 +1254,10 @@ define(function(require, exports, module) {
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
             })
+            // 作品中心
+            $(".header .works").unbind('click').click(function(){
+                window.open("worksList.html");
+            })
             
 
             // 消息音频播放
@@ -1360,6 +1364,10 @@ define(function(require, exports, module) {
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
+            })
+            // 作品中心
+            $(".header .works").unbind('click').click(function(){
+                window.open("worksList.html");
             })
             
         },
