@@ -76,6 +76,12 @@
 .post_del {
 	cursor:pointer;
 }
+.postsEssence {
+  cursor: pointer;
+}
+.postsTop {
+  cursor: pointer;
+}
 .jie-add {
 	position:static;
 }

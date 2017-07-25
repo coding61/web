@@ -7,6 +7,7 @@ var toUserId=0;
 var replyId=0;
 var replyPage = 1;
 var hasCollect;
+var is_staff = false;//是否为管理员
 // $('.jie-add1').unbind().click(function(){
 // 	window.location.href="add.html?pk="+postPk;
 // });
@@ -50,8 +51,8 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
         $(".progress img").css({
             width:percent
         })
+        is_staff = result.is_staff;
 	}else{
-		localStorage.userName=null;
 	}
 })
 
@@ -215,6 +216,18 @@ function postDetail() {
 					$('.finish').addClass("had-click").siblings().removeClass("had-click");
 				}
 			}
+			if (is_staff) {
+				if (result.isessence) {
+					$(".detail-hits").append('<span onclick="canclePostsEssence()" class="postsEssence">取消加精</span>');
+				} else {
+					$(".detail-hits").append('<span onclick="postsEssence()" class="postsEssence">加精</span>');
+				}
+				if (result.istop) {
+					$(".detail-hits").append('<span onclick="canclePostsTop()" class="postsTop">取消置顶</span>');
+				} else {
+					$(".detail-hits").append('<span onclick="postsTop()" class="postsTop">置顶</span>');
+				}
+			}
 			
 			getReplys(replyPage);//获取评论回复
 			shubiao();
@@ -310,6 +323,42 @@ function getReplys(page){
 			// getReplys(page+1);
 		}
 	});
+}
+// 管理员加精
+function postsEssence() {
+	myAjax(basePath+"/forum/posts_essence/"+postId+"/","put",null,function(result) {
+		if (result) {
+			layer.msg("成功加精帖子");
+			setTimeout("window.location.reload()",2000);
+		}
+	})
+}
+// 管理员取消加精
+function canclePostsEssence() {
+	myAjax(basePath+"/forum/posts_essence/cancel/"+postId+"/","put",null,function(result) {
+		if (result) {
+			layer.msg("该帖子已被取消加精");
+			setTimeout("window.location.reload()",2000);
+		}
+	})
+}
+// 置顶帖子
+function postsTop() {
+	myAjax(basePath+"/forum/posts_top/"+postId+"/","put",null,function(result) {
+		if (result) {
+			layer.msg("成功置顶帖子");
+			setTimeout("window.location.reload()",2000);
+		}
+	})
+}
+// 取消置顶
+function canclePostsTop() {
+	myAjax(basePath+"/forum/posts_top/cancel/"+postId+"/","put",null,function(result) {
+		if (result) {
+			layer.msg("该帖子已被取消置顶");
+			setTimeout("window.location.reload()",2000);
+		}
+	})
 }
 
 // 标记为已解决
