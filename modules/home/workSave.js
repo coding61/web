@@ -334,8 +334,13 @@ define(function(require, exports, module) {
         },
         saveWork: function(){
             var work_name_val = $.trim($('.work-name-input').val());
+            var work_banner = $('#layui-input2').attr('src');
             if (!work_name_val || work_name_val == '') {
                 Common.dialog('请输入作品名');
+                return;
+            }
+            if (!work_banner || work_banner == '') {
+                Common.dialog('请上传图片，或等待图片上传完成');
                 return;
             }
             Common.showLoading();
@@ -349,7 +354,7 @@ define(function(require, exports, module) {
                     data: {
                         'name': work_name_val,
                         'content': $('.work-detail-textarea').val(),
-                        'images': $('#layui-input2').attr('src'),
+                        'images': work_banner,
                         'apply_for_home': true
                     },
                     timeout: 12000,
