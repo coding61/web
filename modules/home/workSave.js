@@ -1,6 +1,8 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
+    var work_pk = Common.getQueryString('work_pk');
+    var work_name = Common.getQueryString('work_name');
 
 	var Page = {
 		init: function(){
@@ -40,7 +42,7 @@ define(function(require, exports, module) {
                 $(".login-shadow-view").show();
                 Page.clickEvent();
             }
-            
+            $('.work-name-input').val(decodeURIComponent(work_name));
         },
         clickEvent:function(){
             // 关闭登录窗口
@@ -331,30 +333,33 @@ define(function(require, exports, module) {
           });
         },
         saveWork: function(){
-            var work_name = $.trim($('.work-name-input').val());
-            if (!work_name || work_name == '') {
+            var work_name_val = $.trim($('.work-name-input').val());
+            var work_banner = $('#layui-input2').attr('src');
+            if (!work_name_val || work_name_val == '') {
                 Common.dialog('请输入作品名');
+                return;
+            }
+            if (!work_banner || work_banner == '') {
+                Common.dialog('请上传图片，或等待图片上传完成');
                 return;
             }
             Common.showLoading();
             Common.isLogin(function(token){
                 $.ajax({
-                    type: 'POST',
-                    url: Common.domain + '/userinfo/myexercise_create/',
-                    headers: {
-                        'Authorization': 'Token ' + token
+                    type: 'PATCH',
+                    url: Common.domain + '/userinfo/myexercises/' + work_pk + '/',
+                    headers:{
+                        Authorization:"Token " + token
                     },
                     data: {
-                        'name': work_name,
+                        'name': work_name_val,
                         'content': $('.work-detail-textarea').val(),
-                        'images': $('#layui-input2').attr('src'),
-                        'html': localStorage.htmlCode ? localStorage.htmlCode : '',
-                        'css': localStorage.cssCode ? localStorage.cssCode : '',
-                        'js': localStorage.jsCode ? localStorage.jsCode : ''
+                        'images': work_banner,
+                        'apply_for_home': true
                     },
                     timeout: 12000,
                     success: function(json){
-                        Common.dialog('作品上传成功', function(){
+                        Common.dialog('作品申请上首页成功，请等待审核', function(){
                             history.back();
                         })
                     },
@@ -364,7 +369,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail || JSON.parse(xhr.responseText).name[0]);
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
                             Common.dialog('服务器繁忙');
