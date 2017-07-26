@@ -23,12 +23,12 @@ function getQueryString(name) {
 	var r = window.location.search.substr(1).match(reg); 
 	if (r != null) return unescape(r[2]); return null; 
 }
-getMessage();
+getMessage(sessionStorage.page);
 
-function getMessage(){
+function getMessage(page){
 	$("#bbsUl").empty();
 	var html="";
-		myAjax(basePath+"/message/messages/","get",{"types":"forum"},function(result){
+		myAjax(basePath+"/message/messages/","get",{"types":"forum","page":page},function(result){
 			if(result.count>10){
 				$("#pagination").show();
 				$("#PageCount").val(result.count);
@@ -100,6 +100,11 @@ $('.jie-add').click(function() {
 	sessionStorage.removeItem("myMessage");
 	window.location.href="bbs.html";
 })
+
+function exeData(num, type) {
+	//alert(num);
+	getMessage(num);
+}
 
 function loadpage() {
     var myPageCount = parseInt($("#PageCount").val());
