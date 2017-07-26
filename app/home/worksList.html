@@ -94,10 +94,6 @@
 			    <ul class="pagination" id="pagination">
 			    	
 			    </ul>
-			    <!-- <input type="hidden"  id="PageCount" runat="server" value="10" />
-			    <input type="hidden" id="PageSize" runat="server" value="20" />
-			    <input type="hidden" id="countindex" runat="server" value="1"/>
-			    <input type="hidden" id="visiblePages" runat="server" value="5" /> -->
 			</div>
 		</div>
 		<script type="text/html" id="works-list-arttemplate">
@@ -107,7 +103,7 @@
 					<a href="./workDetail.html?workPk={{$value.pk}}" class="works-content">
 						<div class="works-banner" style="background-image: url('{{$value.images ? $value.images : '';}}')"></div>
 						<p class="work-name">{{$value.name ? $value.name : ''}}</p>
-						<p><span class="author-name">{{$value.owner.name ? $value.owner.name : ''}}</span><span class="create-time">{{$value.create_time ? $value.create_time.split('T')[0] : ''}}</span></p>
+						<p><span class="author-name">{{$value.owner ? $value.owner.name : ''}}</span><span class="create-time">{{$value.create_time ? $value.create_time.split('T')[0] : ''}}</span></p>
 					</a>
 				</div>
 			</li>
