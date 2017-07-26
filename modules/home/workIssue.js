@@ -31,6 +31,7 @@ define(function(require, exports, module) {
                 a == 'closeCodeEdit' ? $('.save-new-work').show() : (function(){
                     // 打开运行结果窗口，并赋值
                     $(".code-result-shadow-view iframe").attr({src:a});
+                    $('.play-in-newwin').attr({href: a});
                     $(".code-result-shadow-view").show();
                 }())
             }, false);
