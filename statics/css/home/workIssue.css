@@ -675,6 +675,14 @@ body{
     height: 80%;
     background: white;
 }
+.play-in-newwin{
+    display: inline-block;
+    padding: 3px 5px;
+    background-color: rgb(250, 80, 131);
+    margin-left: 5px;
+    color: #fff;
+    border-radius: 3px;
+}
 
 /*登录视图*/
 .login-view .close{
