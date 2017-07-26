@@ -77,7 +77,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
         +'<span type="picture" title="插入图片：img[src]"><i class="iconfont icon-tupian"></i>图片</span>'
         +'<span type="href" title="超链接格式：a(href)[text]"><i class="iconfont icon-lianjie"></i>链接</span>'
         +'<span type="code" title="插入代码"><i class="iconfont icon-daima"></i>代码</span>'
-        +'<span type="yulan" title="预览"><i class="iconfont icon-yulan"></i>预览</span>'
+/*        +'<span type="yulan" title="预览"><i class="iconfont icon-yulan"></i>预览</span>'*/
       +'</div>';
       var log = {}, mod = {
         picture: function(editor){ //插入图片
@@ -88,7 +88,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
               ,title: '插入图片'
               ,area: 'auto'
               ,shade: false
-              ,area: '465px'
+              ,area: '98%'
               ,skin: 'layui-layer-border'
               ,content: ['<ul class="layui-form layui-form-pane" style="margin: 20px;">'
                 ,'<li class="layui-form-item">'

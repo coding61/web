@@ -12,21 +12,22 @@
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/detail.css?v=1.8">
     <script type="text/javascript">
-        function Webweb(){
-            window.postMessage('Title:webweb');
-        }
-        function msg(event){
-            document.write('event:'+event);
-        }
+             window.onload = function() {
+                document.addEventListener('message', function(e) {
+                    document.getElementById('data').value = e.data;
+                });   
+            }
     </script>
 </head>
 <body style="position: relative;">
     <div id="main" style="">
+        <p style="text-align: center">收到react native发送的数据: <input id="data" value='www' /></p>
         <!--主贴详情信息-->
         <div class="detail_top">
-            <div style="height: 50px;text-align: left;padding: 10px 0 10px 20px;">
+            <div style="height: 50px;text-align: left;padding:20px;">
                 <h1 style="font-size: 18px;" class="forum_title"></h1>
             </div>
+            <!--发帖人详情-->
             <div class="forum_person_info " style="background: #F2F2F2;width: 100%;display: inline-block;padding-bottom: 10px;">
                 <div class="info" style="display: inline-block;width: 20%;height: 80px;padding-top: 10px;padding-bottom: 10px;text-align: center;float: left;">
                     <img src="" style="width: 50px;height: 50px;border-radius: 25px;">
@@ -45,6 +46,7 @@
                     <p class="main_forum_reply"  style="padding-top: 30px;font-size: 16px;" ><i class="iconfont icon-svgmoban53" style="margin-right: 10px;font-size: 20px;"></i>回复</p>
                 </div>
             </div>
+            <!--主贴详情-->
             <div class="post_content" style="padding: 10px;"> 
                 
             </div>
@@ -70,11 +72,11 @@
                         <p style="font-size: 16px;padding-top: 10px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
                         
                     </div>
-                    <div style="width: 17%;float: left;padding-left: 3%;">
-                        <span class="question_reply"  style="font-size: 16px;" data-user-id={{$value.userinfo.pk}} data-id={{$value.pk}}>
-                        <span class="iconfont icon-svgmoban53" style="margin-right: 20px;font-size: 20px;"></span><span
-                        >回复({{$value.replymore.length}})</span>
-                        </span>
+                    <div style="width: 19%;float: left;padding-left: 1%;">
+                        <p class="question_reply"  style="font-size: 16px;display: inline-block;" data-user-id={{$value.userinfo.pk}} data-id={{$value.pk}}>
+                        <span class="iconfont icon-svgmoban53" style="margin-right: 20px;font-size: 20px;"></span>
+                        <span style="display: inline-block;">回复({{$value.replymore.length}})</span>
+                        </p>
                     </div>
                 </div>
                 <div class="detail-body post_content" data-pk={{$value.pk}} style="background: #ffffff;padding-left: 20px;"></div>
@@ -95,41 +97,19 @@
                                     <p class="reply_name" style="line-height: 30px;font-size: 16px;">{{$value.userinfo.name}}</p>
                                     <p class="replyContentDate" style="font-size: 14px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
                                     {{if showReplyDel($value.userinfo.name)}}
-                                    <span type="del" class="huifuDel" onclick=deleteReplymoreById({{$value.pk}}) style="float: right;color: red;cursor: pointer;font-size: 16px;">删除</span>
+                                    <span type="del" class="huifuDel" onclick=deleteReplymoreById({{$value.pk}}) style="float: right;color: red;cursor: pointer;font-size: 16px;display: inline-block;">删除</span>
                                     {{/if}}
                                 </div>  
                             </div>     
                             <div class="detail-body jieda-body" data-pk={{$value.pk}} style="word-break: break-all;background-color: #fff;width: 100%;padding-left: 20px;margin-bottom: 20px;">
                                 {{#stringChange($value.content)}}
                             </div>        
-                            
                         </div>                
                         {{/each}}  
                     </div>
-            </div>
+                </div>
             {{/each}}
         </script>
-   <!--      <div class="reply_box" style="position: fixed;bottom: 40px;width: 100%;height: 60px;">
-       <div style="position:absolute;right: 10px;top: 5px;">
-           <button class="postReply_btn" style="border: none;padding: 5px 10px 5px 10px;background: #009E94;color: #fff">提交</button>
-       </div>
-       <textarea id="L_content" name="content" required="" lay-verify="required" placeholder="回复：楼主" class="layui-textarea fly-editor"></textarea>
-   </div> -->
-        <!-- <div class="more_reply_box"  style="display:none;">
-            
-            <textarea id="copy_reply_content" name="content" required="" lay-verify="required" placeholder="评论" class="layui-textarea fly-editor"></textarea>
-        </div> -->
-<!--         <div class="layui-form layui-form-pane post_answer global-reply" style="position: fixed;bottom: 0;width: 100%;height: 150px;">
-    <div class="layui-form-item">
-        <input type="hidden" name="jid" value="0">
-        <button class="layui-btn postReply_btn  btn-left" style="position: absolute;right: 0px;bottom: 40px;width: 60px;">回帖</button>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <div class="layui-input-block">
-            <textarea id="L_content" name="content" required lay-verify="required" placeholder="我要回复主帖"  class="layui-textarea fly-editor" style="height: 200px;"></textarea>
-        </div>
-    </div>
-</div> -->
     </div>
 
 <script src="js/jquery-1.11.2.min.js"></script>
@@ -138,22 +118,20 @@
 <script src="../libs/template.js"></script>
 <script>
 var this_fly;
-/* layui.cache.page = 'jie'; */
 layui.cache.user = {
-  username: '游客'
-  ,uid: -1
-  ,avatar: 'res/images/avatar/00.jpg'
-  ,experience: 83
-  ,sex: '男'
+    username: '游客',
+    uid: -1,
+    avatar: 'res/images/avatar/00.jpg',
+    experience: 83,
+    sex: '男'
 };
 layui.config({
-  version: "1.0.0"
-  ,base: 'res/mods/'
+    version: "1.0.0",
+    base: 'res/mods/'
 }).extend({
-  fly: 'index'
+    fly: 'index'
 }).use('fly', function(){
-  this_fly = layui.fly;
-  //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+    this_fly = layui.fly;
 });
 </script>
 
