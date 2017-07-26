@@ -74,6 +74,10 @@ html, body {
 }
 .layui-form-item{
   width: 100%;
+
+}
+.btn_publish{
+  width: 100%;
   text-align: center;
 }
 .layui-btn{

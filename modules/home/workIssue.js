@@ -31,6 +31,7 @@ define(function(require, exports, module) {
                 a == 'closeCodeEdit' ? $('.save-new-work').show() : (function(){
                     // 打开运行结果窗口，并赋值
                     $(".code-result-shadow-view iframe").attr({src:a});
+                    $('.play-in-newwin').attr({href: a});
                     $(".code-result-shadow-view").show();
                 }())
             }, false);
@@ -82,6 +83,9 @@ define(function(require, exports, module) {
             $(".header .logo2").unbind('click').click(function(){
                 window.open("https://www.cxy61.com");
             })
+            $(".header .logo1").unbind('click').click(function(){
+                location.href = './worksList.html';
+            })
 
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
@@ -99,7 +103,7 @@ define(function(require, exports, module) {
 
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
-                window.open("../../cxyteam_forum/bbs.html");
+                location.href = './worksList.html';
             })
 
             //新建

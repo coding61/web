@@ -31,8 +31,7 @@ define(function(require, exports, module) {
                 Mananger.getInfo();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
-                Mananger.getWorkInfo();  //获取作品详情
-                Mananger.getWorkDetail();
+                Mananger.getWorkDetail(); //获取作品详情
                 Page.clickEvent();
             }else{
                 // 弹出登录窗口
@@ -93,7 +92,7 @@ define(function(require, exports, module) {
 
             //运行作品
             $('.main-view').on('click', '.play-btn button', function(){
-                $(".code-result-shadow-view").show();
+                window.open(Common.domain + '/userinfo/myexercise_show/' + work_pk + '/');
             })
         }
 	}
@@ -124,8 +123,7 @@ define(function(require, exports, module) {
                     Mananger.getInfo();
                     Mananger.loadMyTeam();  // 获取我的团队信息
                     Mananger.loadTeamBrand();  //获取团队排行
-                    Mananger.getWorkInfo();  //获取作品详情
-                    Mananger.getWorkDetail();
+                    Mananger.getWorkDetail();  //获取作品详情
                     // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件
                 },
                 error:function(xhr, textStatus){
@@ -237,33 +235,6 @@ define(function(require, exports, module) {
                             return;
                         }
                         console.log(textStatus);
-                    }
-                })
-            })
-        },
-        getWorkInfo: function(){
-            Common.isLogin(function(token){
-                $.ajax({
-                    type: 'GET',
-                    url: Common.domain + '/userinfo/myexercise_show/' + work_pk + '/',
-                    timeout: 12000,
-                    success: function(json){
-                        $('.work-play-iframe').attr({
-                            'srcdoc': json
-                        })
-                    },
-                    error: function(xhr, textStatus){
-                        if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            return;
-                        }else{
-                            Common.dialog('服务器繁忙');
-                            return;
-                        }
                     }
                 })
             })

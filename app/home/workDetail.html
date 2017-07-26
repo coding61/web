@@ -97,7 +97,12 @@
 					<div class="play-btn"><button>运行</button></div>
 				</header>
 				<section class="content-div">
-					<img src="{{images ? images : ''}}" alt="">
+					<div class="work-content-img">
+						<img src="{{images ? images : ''}}" alt="">
+					</div>
+					<div class="work-content-detail">
+						<pre>作品介绍：{{content ? content : ''}}</pre>
+					</div>
 				</section>
 			</div>
 		</script>

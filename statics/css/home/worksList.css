@@ -346,17 +346,17 @@ body{
     width: -moz-calc(100% - 20px);
     width: -o-calc(100% - 20px);
     width: calc(100% - 20px);
-    padding: 10px;
+    padding: 5px 10px;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 13px;
+    font-size: 12px;
     color: #444;
 }
 .main-view .works-list .works-content .work-name{
-    bottom: 30px;
-    font-size: 15px;
+    bottom: 20px;
+    font-size: 14px;
 }
 .main-view .works-list .works-content .author-name{
     display: block;
@@ -368,7 +368,7 @@ body{
 }
 .main-view .works-list .works-content .create-time{
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
     right: 10px;
     color: #999;
 }

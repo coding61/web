@@ -26,6 +26,16 @@ body{
     width: 96%;
 
 }
+.header .center-view{
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 20px;
+    margin-left: 4%;
+
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
 .header .left-view{
 	display: flex;
 	flex: 1;
@@ -157,7 +167,7 @@ body{
     /*margin-right: 5%;*/
     cursor: pointer;
 }
-.header .right-view .item{
+.header .item{
     display: none;
 }
 /*团队成员等级*/

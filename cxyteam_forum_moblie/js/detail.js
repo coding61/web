@@ -8,6 +8,13 @@ var replyPage = 1;
 $('.jie-add1').unbind().click(function(){
 	window.location.href="add.html?pk="+postPk;
 });
+
+/*$(window).on("message", function(e) {
+	console.log
+    var data = e.originalEvent.data; 
+    $("#data").text(data)
+});*/
+
 //var user= JSON.parse(sessionStorage.getItem("session_user"));
 	$.ajax({
 	        url: basePath+"/userinfo/whoami/",
@@ -17,10 +24,10 @@ $('.jie-add1').unbind().click(function(){
 	        },
 	        data:null,
 	        success: function(result){
+	        	console.log(result)
 	        	localStorage.userName=result.name;
 	        },
 	        error:function(XMLHttpRequest){
-	        	console.log(XMLHttpRequest.status)
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("");
 	        	}else{
@@ -47,6 +54,9 @@ $('.jie-add1').unbind().click(function(){
 var postUserName;
 initDetail();
 function initDetail(){
+	var data_pk=$('#data').val();
+	localStorage.data_pk=data_pk;
+	/*alert(data_pk)*/
 	setTimeout(postDetail,200);//获取主帖详情
 	//addBrowseTime();
 }
@@ -194,16 +204,13 @@ function getReplys(page){
 		    for (var i = 0; i < result.results.length; i++) {
 		    	if (result.results[i].pk == $(this).attr("data-pk")) {
 		    		$(this).html(this_fly.content(result.results[i].content));
-		    		/*$(this).append('<span class="tieReply question_reply" data-user-id='+result.results[i].userinfo.pk+' data-id="'+result.results[i].pk+'">回复</span>');*/
-		    		/*$(this).append('<em class="replyContentDate">'+dealWithTime(result.results[i].create_time)+'</em><span class="tieReply question_reply" data-user-id='+result.results[i].userinfo.pk+' data-id="'+result.results[i].pk+'">回复</span>');
-					*/if(localStorage.userName!=null&&(result.results[i].userinfo.name==localStorage.userName)){
+		    		if(localStorage.userName!=null&&(result.results[i].userinfo.name==localStorage.userName)){
 					    $(this).append('<span type="del" class="huifuDel" onclick="deleteReplyById('+result.results[i].pk+')">删除</span>');
 					}
 		    	}
 		    }
 		});
 		$('.detail-about #replyWai').each(function() {
-			// $(this).parent('.replyDaWai').css({"paddingTop": '0px',"paddingBottom": '0px'});
 			if ($(this).children('.replyNei').length == 0) {
 				$(this).css({"border": 'none'});
 			}
@@ -214,10 +221,7 @@ function getReplys(page){
 		}
 		setTimeout(function() {
 			$('.layui-form ').show();
-			$('.post_reply').children('.post_user').each(function() {/*
-				var rightContentHeight = $(this).children('.rightContent').css("height");
-				var leftHeight = parseFloat(rightContentHeight);*/
-				/*$(this).children('.jie-user').css({"height": leftHeight+'px'});*/
+			$('.post_reply').children('.post_user').each(function() {
 			})
 		}, 1000)
 	});
@@ -276,7 +280,7 @@ function delPost(){
 			  	//console.log(result)
 //				  if(result==1){
 						layer.msg("删除成功");
-						setTimeout('window.location.href="bbsList.html?id="+zoneId',800);
+						/*setTimeout('window.location.href="bbsList.html?id="+zoneId',800);*/
 //					}else{
 //						layer.msg("删除失败");
 //					}	
