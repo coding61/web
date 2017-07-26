@@ -261,7 +261,7 @@ define(function(require, exports, module) {
             })
         },
         pagination: function(all){
-            var total = all / 20 + 1;
+            var total = all / 10 + 1;
             var visibleNum = total > 5 ? 5 : total;            
             $.jqPaginator('#pagination', {
                 totalPages: parseInt(total),
