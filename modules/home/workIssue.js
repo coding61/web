@@ -325,7 +325,7 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        var html = ArtTemplate('works-list-template', json.results);
+                        var html = ArtTemplate('works-list-template', json);
                         $('.works-list').html(html);
                     },
                     error: function(xhr, textStatus){

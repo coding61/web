@@ -1,8 +1,13 @@
-
+$(document).ready(function() {
+	document.addEventListener('message', function(e) {
+    	var json=JSON.parse(e.data);
+    	var token=json.token;
+    	var zonePk=json.pk;
+    }); 
 var basePath="/program_girl";
 var userId=1;
-var userName=getCookie("userName");
-var zonePk = getQueryString("pk");
+//var userName=getCookie("userName");
+//var zonePk = getQueryString("pk");
 //if(userName) {
 //	userId=user.pk;
 //	userName=user.name;
@@ -12,7 +17,7 @@ var zonePk = getQueryString("pk");
 //}
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
-myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
+/*myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		$('.avatar img').attr({src: result.avatar});//用户头像
 		$('.info .grade').html(result.grade.current_name);//用户段位等级
@@ -24,7 +29,25 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
         })
 	}else{
 	}
-})
+})*/
+$.ajax({
+	        url: basePath+"/userinfo/whoami/",
+	        type: 'get',
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:null,
+	        success: function(result){
+	        	var userName=result.name;
+	        },
+	        error:function(XMLHttpRequest){
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });
 
 //获取当前社区
 var zoneName='';
@@ -179,4 +202,4 @@ function initSection(){
 		});
 	},false);
 }
-
+})
