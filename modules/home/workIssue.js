@@ -31,6 +31,7 @@ define(function(require, exports, module) {
                 a == 'closeCodeEdit' ? $('.save-new-work').show() : (function(){
                     // 打开运行结果窗口，并赋值
                     $(".code-result-shadow-view iframe").attr({src:a});
+                    $('.play-in-newwin').attr({href: a});
                     $(".code-result-shadow-view").show();
                 }())
             }, false);
@@ -324,7 +325,7 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        var html = ArtTemplate('works-list-template', json.results);
+                        var html = ArtTemplate('works-list-template', json);
                         $('.works-list').html(html);
                     },
                     error: function(xhr, textStatus){

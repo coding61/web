@@ -107,7 +107,7 @@
 					<a href="./workDetail.html?workPk={{$value.pk}}" class="works-content">
 						<div class="works-banner" style="background-image: url('{{$value.images ? $value.images : '';}}')"></div>
 						<p class="work-name">{{$value.name ? $value.name : ''}}</p>
-						<p><span class="author-name">来自{{$value.owner.name ? $value.owner.name : ''}}</span><span class="create-time">{{$value.create_time ? $value.create_time.split('T')[0] : ''}}</span></p>
+						<p><span class="author-name">{{$value.owner.name ? $value.owner.name : ''}}</span><span class="create-time">{{$value.create_time ? $value.create_time.split('T')[0] : ''}}</span></p>
 					</a>
 				</div>
 			</li>
