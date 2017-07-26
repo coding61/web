@@ -66,12 +66,12 @@
 							<script type="text/html" id="rankList-template">
 								{{each results}}
 									{{if $index%2==0}}
-										<li class="item" style="height: 30px;padding-left: 10px;padding-right: 10px;">
+										<li class="item" style="height: 30px;padding-left: 10px;padding-right: 10px;position: relative;">
 											<span style="display: inline-block;width: calc(60%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
 											<span style="position: absolute;right: 10px; width: calc(34%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
 										</li>
 									{{else}}
-										<li class="item" style="height: 30px;background-color: #eeeeee;padding-left: 10px;padding-right: 10px;">
+										<li class="item" style="height: 30px;background-color: #eeeeee;position: relative;padding-left: 10px;padding-right: 10px;">
 											<span style="display: inline-block;width: calc(60%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
 											<span style="position: absolute;right: 10px; width: calc(34%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
 										</li>

@@ -309,12 +309,12 @@ body{
     margin-bottom: 30px;
     text-align: center;
 }
-@media (min-width: 1900px) {
+/*@media (min-width: 1900px) {
     .main-view .works-list li{
         width: 20%;
         padding-top: 20%;
     }
-}
+}*/
 .main-view .works-list li > div{
     position: absolute;
     top: 0;
