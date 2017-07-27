@@ -1,36 +1,45 @@
 $(document).ready(function() {
+	var basePath="/program_girl";
+	
+	var toUserId=0;
+	var replyId=0;
+	var replyPage = 1;
+	var postUserName;
+	var postId=0;
+	var token;
 	document.addEventListener('message', function(e) {
-    	var json=JSON.parse(e.data);
-    	var token=json.token;
-    	var postId=json.pk;
+    	json=JSON.parse(e.data);
+    	token=json.token;
+    	postId=json.pk;
+    	
     	localStorage.token=json.token;
-    });
-var basePath="/program_girl";
-    $.ajax({
-        url: basePath+"/userinfo/whoami/",
-        type: 'get',
-        headers: {
-            Authorization: 'Token ' + token
-        },
-        data:null,
-        success: function(result){
-        	localStorage.userName=result.name;
-        },
-        error:function(XMLHttpRequest){
-        	if(XMLHttpRequest.status==403){
-        		layer.msg("");
-        	}else{
-        		layer.msg("暂未登录")
-        	}
-        }
-	});	
+	    $.ajax({
+	        url: basePath+"/userinfo/whoami/",
+	        type: 'get',
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:null,
+	        success: function(result){
+	 
+	        	localStorage.userName=result.name;
+	        },
+	        error:function(XMLHttpRequest){
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("");
+	        	}else{
+	        		layer.msg("暂未登录")
+	        	}
+	        }
+		});	
+    })
+ /*var bt= document.getElementById('bt');
+ bt.addEventListener('click',function(){
+   var valA = 111;
+   window.postMessage(JSON.stringify({data:{A:valA,}}))
+ });*/
+initDetail()
 
-
-var toUserId=0;
-var replyId=0;
-var replyPage = 1;
-var postUserName;
-initDetail();
 function initDetail(){
 	setTimeout(postDetail,500);//获取主帖详情
 }
