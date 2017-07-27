@@ -2,6 +2,7 @@ $(document).ready(function() {
 	document.addEventListener('message', function(e) {
     	var json=JSON.parse(e.data);
     	var token=json.token;
+    	localStorage.token=json.token;
     	var zonePk=json.pk;
     }); 
 var basePath="/program_girl";
@@ -39,12 +40,13 @@ $.ajax({
 	        data:null,
 	        success: function(result){
 	        	var userName=result.name;
+	        	localStorage.userName=result.name;
 	        },
 	        error:function(XMLHttpRequest){
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("");
 	        	}else{
-	        		layer.msg("请求异常")
+	        		layer.msg("暂未登录")
 	        	}
 	        }
 	    });
@@ -63,8 +65,6 @@ $(function() {
 		var zone_txt=$(".zone_content").siblings(".layui-form-select").find(".layui-this");
 		var typeId=type_txt.attr("lay-value");
 		var zoneId=zone_txt.attr("lay-value");
-		/*alert(zoneId)
-		alert(typeId)*/
 		
 		if(!type_txt.length) {
 			layer.msg("请选择类别");

@@ -2,13 +2,15 @@ $(document).ready(function() {
 	document.addEventListener('message', function(e) {
     	var json=JSON.parse(e.data);
     	var token=json.token;
+    	var postId=json.pk;
+    	localStorage.token=json.token;
     });
 var basePath="/program_girl";
     $.ajax({
         url: basePath+"/userinfo/whoami/",
         type: 'get',
         headers: {
-            Authorization: 'Token ' + 'f0b3897f26417c66c27d6e782724317010694cdc'
+            Authorization: 'Token ' + token
         },
         data:null,
         success: function(result){
@@ -18,12 +20,12 @@ var basePath="/program_girl";
         	if(XMLHttpRequest.status==403){
         		layer.msg("");
         	}else{
-        		layer.msg("请求异常")
+        		layer.msg("暂未登录")
         	}
         }
 	});	
 
-var postId=170;
+
 var toUserId=0;
 var replyId=0;
 var replyPage = 1;
