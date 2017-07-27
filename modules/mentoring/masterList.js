@@ -1,7 +1,10 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-    // var url_page=sessionStorage.getItem('page')?sessionStorage.getItem('page'):1;
+
+    //初始化， 在分页的哪一页还有是全部教师还是我的教师
+    var url_page = sessionStorage.getItem('loadPage') ? sessionStorage.getItem('loadPage') : 1;
+    var loadMasterType = sessionStorage.getItem('loadMasterType') ? sessionStorage.getItem('loadMasterType') : 'allMaster';
 
 	var Page = {
 		init: function(){
@@ -32,6 +35,16 @@ define(function(require, exports, module) {
                 Mananger.getInfo();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
+                //全部教师或我的教师
+                loadMasterType == 'allMaster' ? (
+                    Mananger.getMasterList(url_page, Mananger.pagination),
+                    $('.main-tab .btn').removeClass('active'),
+                    $('.all-btn').addClass('active')
+                ) : (
+                    Mananger.getMyMaster(url_page, Mananger.pagination),
+                    $('.main-tab .btn').removeClass('active'),
+                    $('.mine-btn').addClass('active')
+                );
 
                 Page.clickEvent();
             }else{
@@ -83,6 +96,21 @@ define(function(require, exports, module) {
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
             })
+
+            //全部教师  || 我的教师
+            $('.all-btn, .mine-btn').click(function(){
+                Mananger.masterTypeChange($(this));
+            })
+            //成为教师
+            $('.become-btn').click(function(){
+                $('.become-master').show();
+            })
+            $('.become-master .submit-submit').click(function(){
+                Mananger.becomeMaster();
+            })
+            $('.become-master .submit-cancel').click(function(){
+                $('.become-master').hide();
+            })
         }
 	}
 
@@ -112,6 +140,16 @@ define(function(require, exports, module) {
                     Mananger.getInfo();
                     Mananger.loadMyTeam();  // 获取我的团队信息
                     Mananger.loadTeamBrand();  //获取团队排行
+                    //全部教师或我的教师
+                    loadMasterType == 'allMaster' ? (
+                        Mananger.getMasterList(url_page, Mananger.pagination),
+                        $('.main-tab .btn').removeClass('active'),
+                        $('.all-btn').addClass('active')
+                    ) : (
+                        Mananger.getMyMaster(url_page, Mananger.pagination),
+                        $('.main-tab .btn').removeClass('active'),
+                        $('.mine-btn').addClass('active')
+                    );
 
                     // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
                 },
@@ -228,9 +266,104 @@ define(function(require, exports, module) {
                 })
             })
         },
+        getMasterList: function(page, callback){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/teachers/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        if (json.count > 0) {
+                            if (json.results[0].isteacher != 'Yes') {
+                                $('.become-btn').show();
+                            }
+                            var html = ArtTemplate('master-list-templete', json.results);
+                            $('.master-list').html(html);
+                            typeof callback == 'function' ? callback(json.count) : '';
+                        } else {
+                            $('.master-list').html('<div style="width: 100%; text-align: center; font-size: 18px;">当前没有教师</div>');
+                            typeof callback == 'function' ? callback(0) : '';
+                        }
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    },
+                    complete: function(){}
+                })
+            })
+        },
+        getMyMaster: function(page, callback){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/myteachers/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        if (json.count > 0) {
+                            var html = ArtTemplate('master-list-templete', json.results);
+                            $('.master-list').html(html);
+                            typeof callback == 'function' ? callback(json.count) : '';
+                        } else {
+                            $('.master-list').html('<div style="width: 100%; text-align: center; font-size: 18px;">您还没有拜师哦!</div>');
+                            typeof callback == 'function' ? callback(0) : '';
+                        }
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    },
+                    complete: function(){}
+                })
+            })
+        },
+        masterTypeChange: function(this_){
+            url_page = 1;
+            sessionStorage.setItem('loadPage',url_page);
+            $('.main-tab .btn-tab').removeClass('active');
+            this_.addClass('active');
+            this_.hasClass('all-btn') ? (function(){
+                Mananger.getMasterList(1, Mananger.pagination);
+                loadMasterType = 'allMaster';
+                sessionStorage.setItem('loadMasterType', 'allMaster');
+            }()) : (function(){
+                Mananger.getMyMaster(1, Mananger.pagination)
+                loadMasterType = 'mineMaster';
+                sessionStorage.setItem('loadMasterType', 'mineMaster');
+            }())
+        },
         pagination: function(all){
-            var total = all / 20 + 1;
-            var visibleNum = total > 5 ? 5 : total;            
+            if (all == 0) {
+                var total = 1;
+                var visibleNum = 1;
+            } else {
+                var total = Math.ceil(all / 10);
+                var visibleNum = total > 5 ? 5 : total;            
+            }
             $.jqPaginator('#pagination', {
                 totalPages: parseInt(total),
                 visiblePages: parseInt(visibleNum),
@@ -242,11 +375,47 @@ define(function(require, exports, module) {
                 page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
                 onPageChange: function(num, type) {
                     if (type == "change") {
-                        // Mananger.getWorksList(num);
-                        sessionStorage.setItem('page',num);
+                        loadMasterType == 'allMaster' ? Mananger.getMasterList(num) : Mananger.getMyMaster(num);
+                        sessionStorage.setItem('loadPage',num);
                     }
                 }
             });
+        },
+        becomeMaster: function(){
+            Common.showLoading();
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/teacher/become_teacher/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: {
+                        'introduction': $.trim($('.become-master textarea').val())
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        console.log(json)
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    },
+                    complete: function(){
+                        Common.hideLoading();
+                        $('.become-master').hide();
+                    }
+                })
+            })
         }
     }
 

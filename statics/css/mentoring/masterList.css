@@ -261,7 +261,6 @@ body{
     width: 900px;
     min-height: 100%;
     margin: 0 auto;
-    background-color: #fff;
 }
 @media (min-width: 1500px) {
     .main-view{
@@ -274,103 +273,96 @@ body{
     }
 }
 
-.main-view .create-btn{
+.main-tab{
+    position: relative;
+    padding: 0 30px;
+    margin-bottom: 10px;
     text-align: center;
+    background-color: #fff;
+    line-height: 60px;
 }
-.main-view .create-btn a{
-    display: inline-block;
-    margin: 30px auto;
-    padding: 8px 80px;
+.main-tab button.btn{
+    padding: 7px 20px;
     border-radius: 3px;
-    color: #fff;
-    font-size: 15px;
-    cursor: pointer;
     background-color: #ff92b1;
+    color: #fff;
+    cursor: pointer;
 }
-.main-view .create-btn a:hover{
+.main-tab button.btn-tab{
+    margin: 0 25px;
+    padding: 0 10px;
+    line-height: 60px;
+    cursor: pointer;
+}
+.main-tab button.btn:hover{
     background-color: rgb(250, 80, 131);
 }
-
-/*
-*列表这里布局，用flex控制li元素
-*li元素用padding-top控制高度等于宽度,直接子元素div绝对定位,并跟父级的li等高等宽。
-*@author: gaoxj
-*/
-.main-view .works-list{
-    display: -webkit-flex;
-    display: flex;
-    flex-wrap: wrap;
+.main-tab button.become-btn{
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 25px;
 }
-.main-view .works-list li{
+.main-tab button.active{
+    border-bottom: 2px solid rgb(250,80,131);
+    color: rgb(250,80,131);
+}
+.main-view .master-list{
     position: relative;
-    width: 25%;
-    height: 0;
-    padding-top: 25%;
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 15px;
+    min-height: 440px;
+    background-color: #fff;
+}
+.main-view .master-list li{
+    display: inline-block;
+    width: 50%;
+    padding: 10px 0;
     text-align: center;
 }
-@media (min-width: 1900px) {
-    .main-view .works-list li{
-        width: 20%;
-        padding-top: 20%;
-    }
+.main-view .master-list li .master-avatar img{
+    width: 110px;
+    height: auto;
+    /*border-radius: 50%;*/
+    vertical-align: middle;
 }
-.main-view .works-list li > div{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-.main-view .works-list li > div .works-content{
-    position: relative;
-    display: block;
-    margin: 30px;
-    width: calc(100% - 60px);
-    height: calc(100% - 60px);
-    background-color: #f6f6f6;
-}
-.main-view .works-list .works-content .works-banner{
-    width: 100%;
-    height: 70%;
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: contain;
-}
-.main-view .works-list .works-content p{
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.master-list li .outer-div{
+    display: inline-block;
+    margin: 0 10px;
     width: -webkit-calc(100% - 20px);
     width: -moz-calc(100% - 20px);
     width: -o-calc(100% - 20px);
     width: calc(100% - 20px);
-    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.master-list li .outer-div > div{
+    display: inline-block;
+    margin: 10px;
+    font-size: 14px;
+    vertical-align: top;
+}
+.master-list .master-content{
+    width: -webkit-calc(100% - 170px);
+    width: -moz-calc(100% - 170px);
+    width: -o-calc(100% - 170px);
+    width: calc(100% - 170px);
     text-align: left;
+}
+.master-list .master-content-detail{
+    white-space: pre-line;
+    width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 13px;
-    color: #444;
 }
-.main-view .works-list .works-content .work-name{
-    bottom: 30px;
-    font-size: 15px;
-}
-.main-view .works-list .works-content .author-name{
-    display: block;
-    width: 50%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: rgb(250, 80, 131);
-}
-.main-view .works-list .works-content .create-time{
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: #999;
+.master-list .master-name{
+    font-size: 16px;
+    margin: 5px 0;
 }
 /****/
 
@@ -502,7 +494,6 @@ body{
 
 
 
-
 /*分页*/
 .pagination {
     display:inline-block;
@@ -607,3 +598,45 @@ body{
     cursor:not-allowed
 }
 /*分页*/
+
+
+
+/*成为教师弹窗*/
+.become-master{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+}
+.become-master > div{
+    display: inline-block;
+    margin-top: 150px;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.become-master .introduction{
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 16px;
+}
+.become-master textarea{
+    vertical-align: top;
+    font-size: 14px;
+    padding: 5px;
+}
+.become-master .submit-become button{
+    padding: 7px 30px;
+    margin: 15px 10px 0 10px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 3px;
+}
+.become-master .submit-become button.submit-submit{
+    background-color: #ff92b1;
+}
+/**/
