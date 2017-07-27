@@ -1,7 +1,6 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-    var Utils = require("common/utils.js");
     var htmlEditor, jsEditor, csEditor;
     var Page = {
         init:function(){
@@ -135,11 +134,18 @@ define(function(require, exports, module) {
                 timeout:6000,
                 success:function(json){
                     console.log(json);
-                    alert(json.pk)
-                    // var url =  "https://www.cxy61.com/program_girl"+"/userinfo/exercises/"+json.pk+"/"
-
+                    // alert(json.pk)
                     // $(".run-result iframe").attr({src:url});
-                    // window.parent.postMessage(url, '*');
+                    var url =  "https://app.bcjiaoyu.com/program_girl"+"/userinfo/exercises/"+json.pk+"/"
+                    $(".code-result-shadow-view iframe").attr({src:url})
+                    $(".code-result-shadow-view").show();
+                    
+                    // 关闭运行代码结果窗口
+                    $(".code-result .close img").unbind('click').click(function(){
+                        $(".code-result-shadow-view").hide();
+                    })
+
+                    window.postMessage(json.pk, "*");
                 },
                 error:function(xhr, textStatus){
 
@@ -157,22 +163,6 @@ define(function(require, exports, module) {
                     console.log(textStatus);
                 }
             })
-        },
-        load1:function(htmlValue, cssValue, jsValue){
-            var type = "post",
-                url = Common.domain + "/userinfo/exercise_create/",
-                token = null,
-                data = {
-                    html:htmlValue,
-                    css:cssValue,
-                    js:jsValue
-                };
-
-            Utils.fetchData(type, url, token, data, function(response){
-                console.log(response);
-            }, function(err){
-
-            });
         },
         clickEvent:function(){
             $(".tabs .tab").click(function(){
@@ -209,11 +199,12 @@ define(function(require, exports, module) {
 
                 Page.load(htmlV, cssV, jsV);
 
-            })
+                // $(".code-result-shadow-view").show();
+                // // 关闭运行代码结果窗口
+                // $(".code-result .close img").unbind('click').click(function(){
+                //     $(".code-result-shadow-view").hide();
+                // })
 
-            $(".result .close").click(function(){
-                // 关闭编辑器
-                window.parent.postMessage("closeCodeEdit", '*');
             })
         },
 
