@@ -28,12 +28,18 @@ define(function(require, exports, module) {
 			// 监听课程列表那里传过来的点击事件
             window.addEventListener('message', function(e) {  
             	var a = e.data;  
-                a == 'closeCodeEdit' ? $('.save-new-work').show() : (function(){
+                if (a == 'closeCodeEdit') {
+                    if (Page.isNew) {
+                        $('.save-new-work').show();
+                    } else {
+                        Mananger.editWork();
+                    }
+                } else {
                     // 打开运行结果窗口，并赋值
                     $(".code-result-shadow-view iframe").attr({src:a});
                     $('.play-in-newwin').attr({href: a});
                     $(".code-result-shadow-view").show();
-                }())
+                }
             }, false);
 		},
 		load:function(){
@@ -124,6 +130,7 @@ define(function(require, exports, module) {
                     Page.isNew = false;
                     Page.workListClick = true;
                 } else {
+                    Page.toPk = $(this).attr('data-pk');
                     Page.isNew = false;
                     Mananger.getWorkDetail($(this).attr('data-pk'));
                 }
@@ -447,6 +454,43 @@ define(function(require, exports, module) {
                     complete: function(){
                         Common.hideLoading();
                         $('.save-new-work').hide();
+                    }
+                })
+            })
+        },
+        editWork: function(){
+            Common.showLoading();
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'PATCH',
+                    url: Common.domain + '/userinfo/myexercises/' + Page.toPk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: {
+                        'html': localStorage.htmlCode ? localStorage.htmlCode : '',
+                        'css': localStorage.cssCode ? localStorage.cssCode : '',
+                        'js': localStorage.jsCode ? localStorage.jsCode : ''
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.dialog('保存成功');
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail || JSON.parse(xhr.responseText).name[0]);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    },
+                    complete: function(){
+                        Common.hideLoading();
                     }
                 })
             })
