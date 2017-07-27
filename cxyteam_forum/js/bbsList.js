@@ -294,18 +294,20 @@ function mySelectHadChange(mySelect) {
 		// getMyCollect();
 		getPostByType();
 	} else if (mySelect == 'myMessage') {
-		$('.fly-tab .searchinput').val('');
-		sessionStorage.removeItem("searchPostContent");
-		sessionStorage.removeItem("postStatus");
-		sessionStorage.removeItem("typeId");
-		sessionStorage.removeItem("myPost");
-		sessionStorage.removeItem("myCollect");
-		sessionStorage.page = 1;
-		$(".fly-tab-span a").each(function() {
-			$(this).removeClass("tab-this");
-		});
-		sessionStorage.myMessage = true;
-		getPostByType();
+		// $('.fly-tab .searchinput').val('');
+		// sessionStorage.removeItem("searchPostContent");
+		// sessionStorage.removeItem("postStatus");
+		// sessionStorage.removeItem("typeId");
+		// sessionStorage.removeItem("myPost");
+		// sessionStorage.removeItem("myCollect");
+		// sessionStorage.page = 1;
+		// $(".fly-tab-span a").each(function() {
+		// 	$(this).removeClass("tab-this");
+		// });
+		// sessionStorage.myMessage = true;
+		// getPostByType();
+		document.getElementById("cars").options[0].selected=true;
+		window.location.href = "message.html";
 	} 
 }
 // 获取我的收藏

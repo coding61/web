@@ -280,10 +280,10 @@ body{
 .main-view .create-btn a{
     display: inline-block;
     margin: 30px auto;
-    padding: 8px 80px;
+    padding: 15px 100px;
     border-radius: 3px;
     color: #fff;
-    font-size: 15px;
+    font-size: 16px;
     cursor: pointer;
     background-color: #ff92b1;
 }
@@ -309,12 +309,6 @@ body{
     margin-bottom: 30px;
     text-align: center;
 }
-/*@media (min-width: 1900px) {
-    .main-view .works-list li{
-        width: 20%;
-        padding-top: 20%;
-    }
-}*/
 .main-view .works-list li > div{
     position: absolute;
     top: 0;
