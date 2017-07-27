@@ -20,6 +20,19 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	}
 })
 
+myAjax(basePath+"/message/messages/","get",{"types":"forum","status":"unread"},function(result){
+	if (result.count != 0) {
+		$('.message').show();
+		$('.message').html("您有"+result.count+"条消息未读！");
+		var width = $('.container').css("width");
+		var t = parseFloat(width)/2 + "px";
+		$('.message').css({"width":width,"marginLeft":"calc(50% - "+t+")"});
+	} else {
+		$('.message').hide();
+	}
+})
+
+
 localStorage.page = 1;
 function bbsZone(){
 	$("#bbs").empty();
@@ -61,6 +74,12 @@ function bbsZone(){
 //     $('.rankingView').hide();
 // })
 
+// 点击消息
+$('.message').click(function() {
+	window.location.href = "message.html";
+})
+
+// 排行榜
 $(".right-view .ranking").click(function() {
 	if (rankingHadClick) {
 		// 隐藏排名

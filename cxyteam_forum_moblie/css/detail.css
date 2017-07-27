@@ -113,6 +113,7 @@
   padding-bottom: 10px;
   padding-top: 10px;
   cursor: pointer;
+  font-size: 14px;
   background: #fff;
 }
 .post_btn {
@@ -225,9 +226,9 @@ ul.reply_mess>li .reply_txt {
   position: absolute;
   right: 70px;
   top: 60px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
-  color: red;
+
 }
 .post_content .tieReply{
   position: absolute;
