@@ -136,7 +136,16 @@ define(function(require, exports, module) {
                     console.log(json);
                     // alert(json.pk)
                     // $(".run-result iframe").attr({src:url});
-                    window.postMessage(json.pk);
+                    var url =  "https://app.bcjiaoyu.com/program_girl"+"/userinfo/exercises/"+json.pk+"/"
+                    $(".code-result-shadow-view iframe").attr({src:url})
+                    $(".code-result-shadow-view").show();
+                    
+                    // 关闭运行代码结果窗口
+                    $(".code-result .close img").unbind('click').click(function(){
+                        $(".code-result-shadow-view").hide();
+                    })
+
+                    window.postMessage(json.pk, "*");
                 },
                 error:function(xhr, textStatus){
 
@@ -190,11 +199,12 @@ define(function(require, exports, module) {
 
                 Page.load(htmlV, cssV, jsV);
 
-            })
+                // $(".code-result-shadow-view").show();
+                // // 关闭运行代码结果窗口
+                // $(".code-result .close img").unbind('click').click(function(){
+                //     $(".code-result-shadow-view").hide();
+                // })
 
-            $(".result .close").click(function(){
-                // 关闭编辑器
-                window.parent.postMessage("closeCodeEdit", '*');
             })
         },
 
