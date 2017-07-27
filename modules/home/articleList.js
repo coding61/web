@@ -21,36 +21,71 @@ define(function(require, exports, module) {
     Page.init();
 
     function loadData() {
-
+		var isMySelf = false;
         var dict = {
             "count": 10,
             "next": null,
             "results": [
-                {"pk": 1, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 1, "img": "https://static1.bcjiaoyu.com/cxy/js&jquery/0-1.jpg-640x640", "title": "我是测试题目", "content": "我是测试我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊内容内容啊啊啊啊嗷嗷啊啊啊"},
                 {"pk": 2, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 3, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 3, "img": "https://static1.bcjiaoyu.com/cxy/js&jquery/0-1.jpg-640x640", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
                 {"pk": 4, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
                 {"pk": 5, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
                 {"pk": 6, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 7, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 7, "img": "https://static1.bcjiaoyu.com/cxy/js&jquery/0-1.jpg-640x640", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
                 {"pk": 8, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 9, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 9, "img": "https://static1.bcjiaoyu.com/cxy/js&jquery/0-1.jpg-640x640", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
                 {"pk": 0, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"}
             ]
         }
 
-        var html = template('list-template', dict.results);
+		var html = template('list-template', dict.results);
         $('.list-view').html(html);
 
-        $(".list-item").unbind("click").click(function(){
+		if (!isMySelf) {
+			$('.push').hide();
+			$('.item-buy').show();
+		} else {
+			$('.push').show();
+			$('.item-buy').hide();
+		}
+
+        $(".item-info").unbind('click').click(function(){
+            var id = $(this).closest('li').attr('data-id');
+            alert("看文章" + String(id));
+        })
+        $(".cover").unbind('click').click(function(){
             var id = $(this).closest('li').attr('data-id');
             alert("看文章" + String(id));
         })
 
-        $(".item-buy").unbind("click").click(function(){
+        $(".item-buy").click(function(){
             var id = $(this).closest('li').attr('data-id');
             alert("购买" + String(id));
         })
+
+        $(".item-buy").mouseover(function(){
+            var id = $(this).closest('li').attr('data-id');
+            // alert("鼠标在上" + String(id));
+            $(this).css("background-color","#E66689");
+            $(this).css("color", "#fff");
+        });
+
+        $(".item-buy").mouseout(function(){
+            var id = $(this).closest('li').attr('data-id');
+            // alert("鼠标移除" + String(id));
+            $(this).css("background-color","#fff");
+            $(this).css("color", "#000");
+        });
+
+        $('#pagination').jqPaginator({
+            totalPages: 10,
+            visiblePages: 10,
+            currentPage: 1,
+            onPageChange: function (num, type) {
+                $('#text').html('当前第' + num + '页');
+            }
+        });
     }
     function loadMyTeam() {
         Common.isLogin(function(token){
@@ -172,6 +207,7 @@ define(function(require, exports, module) {
                     Authorization:"Token " + token
                 },
                 success:function(json){
+					console.log(json);
                     Common.hideLoading();
                     $(".header .avatar img").attr({src:json.avatar});
                     $(".header .info .grade").html(json.grade.current_name);
@@ -218,5 +254,13 @@ define(function(require, exports, module) {
         $(".push").unbind("click").click(function(){
             alert("发布文章");
         })
+
+        $(".push").mouseover(function(){
+            $(this).css("background-color","#ED8AAB");
+        });
+
+        $(".push").mouseout(function(){
+            $(this).css("background-color","#E66689");
+        });
     }
 });
