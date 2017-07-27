@@ -26,16 +26,16 @@ define(function(require, exports, module) {
             "count": 10,
             "next": null,
             "results": [
-                {"pk": 1,"title": "我是测试题目", "content": "我是测试我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 2,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 3,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 4,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 5,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 6,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 7,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 8,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 9,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
-                {"pk": 0,"title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"}
+                {"pk": 1, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊我是测试内容内容啊啊啊啊嗷嗷啊啊啊内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 2, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 3, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 4, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 5, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 6, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 7, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 8, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 9, "img": "http://img4.duitang.com/uploads/item/201312/05/20131205172433_NWcmE.thumb.700_0.jpeg", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"},
+                {"pk": 0, "img": "https://facebook.github.io/react/img/logo_og.png", "title": "我是测试题目", "content": "我是测试内容内容啊啊啊啊嗷嗷啊啊啊"}
             ]
         }
 

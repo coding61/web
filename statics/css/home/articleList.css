@@ -309,9 +309,9 @@ body{
 
 .cover {
     margin-left: 4.6%;
-    padding-right: 2.5%;
-    width: 100px;
-    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    background-color: #E66689;
 }
 
 .list-item {
@@ -325,7 +325,8 @@ body{
 
 .item-info {
     width: 68%;
-    padding-right: 20%
+    padding-left: 2.5%;
+    padding-right: 20%;
 }
 
 .item-title {
