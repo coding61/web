@@ -32,7 +32,7 @@ $(document).on("click",".jie-add1",function() {
 	        		layer.msg("已被禁言");
 	        	}
 	        }
-	    });	
+	    });
 	}else{
 	 	layer.msg("请先登录");
 	}
@@ -84,7 +84,7 @@ $(document).on("click",".postReply_btn",function() {
         $(".postReply_btn").attr({"disabled": true});
         postReplyAdd();
 	}
-	
+
 })
 //提交回复
 $(document).on("click",".postReplyMore_btn",function() {
@@ -140,7 +140,7 @@ $(document).on("click",".question_reply",function(){
 //});
 
 //function addBrowseTime(){//浏览次数++
-//	$.post(basePath+"hBbsZoneController/addBrowseTime",{"postId":postId},function(result) {	
+//	$.post(basePath+"hBbsZoneController/addBrowseTime",{"postId":postId},function(result) {
 //	});
 //}
 
@@ -184,7 +184,7 @@ function postDetail() {
 			$("#jiedaCount").text(result.reply_count);
 			$(".replyCount").text((result.reply_count));
 			$(".browseTime").text(result.browse_count);
-			 
+
 			 $(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
 			if(localStorage.userName!=null&&postUserName==localStorage.userName){
 				$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
@@ -228,13 +228,13 @@ function postDetail() {
 					$(".detail-hits").append('<span onclick="postsTop()" class="postsTop">置顶</span>');
 				}
 			}
-			
+
 			getReplys(replyPage);//获取评论回复
 			shubiao();
 		} else {
 			layer.msg('请求异常');
 		}
-		
+
 	})
 }
 function getReplys(page){
@@ -279,7 +279,7 @@ function getReplys(page){
 		    // 	if(v.adopt){
 		    // 	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',0)">取消采纳</span>';
 		    // 	}else{
-		    // 	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',1)">采纳</span>';	
+		    // 	_htm+='<span class="jieda-accept" type="accept"  onclick="updateIsAccept('+v.pk+',1)">采纳</span>';
 	    	// 	}
 		    // }
 			/*  +'</div>'*/
@@ -509,7 +509,7 @@ function zuanNumAnimate() {
             $(".zuan").css({
                 transform:'scale(2)'
             })
-            
+
             setTimeout(function(){
                 $(".zuan").css({
                     transform:'scale(1)'
@@ -548,12 +548,12 @@ function delPost(){
 						setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
 //					}else{
 //						layer.msg("删除失败");
-//					}	
+//					}
 				});
 		  },btn2: function(index, layero){
 		    layer.close();
 		  }
-		  ,cancel: function(){ 
+		  ,cancel: function(){
 		    //右上角关闭回调
 		  }
 		});
@@ -575,7 +575,7 @@ layer.open({
 	  },btn2: function(index, layero){
 	    layer.close();
 	  }
-	  ,cancel: function(){ 
+	  ,cancel: function(){
 	    //右上角关闭回调
 	  }
 	});
@@ -608,7 +608,7 @@ layer.open({
 	  },btn2: function(index, layero){
 	    layer.close();
 	  }
-	  ,cancel: function(){ 
+	  ,cancel: function(){
 	    //右上角关闭回调
 	  }
 	});
@@ -632,13 +632,13 @@ myAjax2(basePath+"/forum/reply_posts_list/","get",null,function(result){
 	        +'<a href="detail.html?id='+v.pk+'">'+v.title+'</a>'
 	        +'<span><i class="iconfont">&#xe60c;</i> '+v.reply_count+'</span>'
 	        +'</li>';
-	}); 
+	});
 	$(".orderByReplyCount").append(htm);
 });
 
 //处理采纳
 function updateIsAccept(id,isAccept){
-	
+
 	if(isAccept==1){//采纳
 		var oid=$(".isAccept_active").attr("data-id");
 				 if(oid){
@@ -666,11 +666,11 @@ function updateIsAccept(id,isAccept){
 				$(".reply_"+id).find(".jieda-accept").text("采纳");
 				layer.msg("已取消采纳");
 			}else{
-				layer.msg("操作失败");	
+				layer.msg("操作失败");
 			}
 		 });
 	}
-	 
+
 }
 
 //调用分页

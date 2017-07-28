@@ -153,7 +153,7 @@ $(document).on("click",".question_reply",function(){
 // }
 function postDetail() {
 	myAjax(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
-		console.log(result);
+		//console.log(result);
 		if (result) {
 			zoneId=result.section.pk;
 			postUserName=result.userinfo.name;

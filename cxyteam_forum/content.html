@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <title>文章详情</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/bootstrap3.3.5/css/bootstrap.min.css" />
-  	<link rel="stylesheet" type="text/css" href="../../cxyteam_forum/bootstrap3.3.5/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap.min.css" />
+  	<link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap-theme.min.css" />
 <!--  	<link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/huiwan.css">
     <link rel="stylesheet" type="text/css" href="../css/global.css" />-->
-	<link rel="stylesheet" href="../../cxyteam_forum/res/layui/css/layui.css">
-  <link rel="stylesheet" href="../../cxyteam_forum/res/css/global.css">
-  <link rel="stylesheet" href="../../cxyteam_forum/css/nav.css">
-  <link rel="stylesheet" href="../../cxyteam_forum/css/detail.css?v=1.4">
+	<link rel="stylesheet" href="res/layui/css/layui.css">
+  <link rel="stylesheet" href="res/css/global.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/detail.css?v=1.4">
 
-  <script src="../../cxyteam_forum/js/jquery-1.11.2.min.js"></script>
-  <script src="../../cxyteam_forum/res/layui/layui.js"></script>
-  <script src="../../cxyteam_forum/res/layui/layer/layer.js"></script>
-  <script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/moxie.min.js"></script>
-  <script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/plupload.full.min.js"></script>
-  <script type="text/javascript" src="../../cxyteam_forum/js/qiniu/src/qiniu.js"></script>
+  <script src="js/jquery-1.11.2.min.js"></script>
+  <script src="res/layui/layui.js"></script>
+  <script src="res/layui/layer/layer.js"></script>
+  <script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
+  <script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
+  <script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
 
-  <script src="../../cxyteam_forum/js/jquery.liveTimeAgo.js"></script>
-  <script src="../../cxyteam_forum/js/common.js?v=1.0"></script>
-  <script src="../../modules/home/articleContent.js?v=1.2"></script>
+  <script src="js/jquery.liveTimeAgo.js"></script>
+  <script src="js/common.js?v=1.0"></script>
+  <script src="js/detail.js?v=1.2"></script>
   <script>
   var this_fly;
   /* layui.cache.page = 'jie'; */
@@ -37,7 +37,7 @@
   };
   layui.config({
     version: "1.0.0"
-    ,base: '../../cxyteam_forum/res/mods/'
+    ,base: 'res/mods/'
   }).extend({
     fly: 'index'
   }).use('fly', function(){
@@ -58,14 +58,14 @@
 	</div> -->
   <nav class="navWai" style="background-color: rgb(250, 80, 131);display: flex; align-items: center; padding: 0 2%;">
     <div style="display: flex;flex: 1;">
-      <img class="logo1" style="height: 30px;" src="../../../statics/images/logo2.png" />
+      <img class="logo1" style="height: 30px;" src="../statics/images/logo2.png" />
     <div class="right-line" style="border-right: solid 1px white;height: 24px;margin-left: 20px;margin-right: 20px;display: inline-flex;margin-top: 3px;margin-bottom: 3px;"></div>
-      <img class="logo2" style="height: 30px;" src="../../../statics/images/logo1.png"/>
+      <img class="logo2" style="height: 30px;" src="../statics/images/logo1.png"/>
     </div>
 
     <div class="right-view">
       <div class="icon4 avatar">
-        <img class="item" src="../../../statics/images/avatar.png" alt="">
+        <img class="item" src="../statics/images/avatar.png" alt="">
       </div>
 
       <div class="info-view">
@@ -74,12 +74,12 @@
           <span class="grade-value item">500/854</span>
         </div>
         <div class="progress item">
-          <img src="../../../statics/images/progress.png" alt="">
+          <img src="../statics/images/progress.png" alt="">
         </div>
       </div>
 
       <div class="icon3 zuan">
-        <img class="item" src="../../../statics/images/icon3.png" alt="" />
+        <img class="item" src="../statics/images/icon3.png" alt="" />
         <span class="item">x20</span>
       </div>
     </div>
@@ -95,7 +95,7 @@
         <span class="fly-tip-jing " style="display:none">精帖</span>
         <span style="background-color:white;"></span>
         <div class="fly-list-hint">
-          <img class="collectBtn" src="../../cxyteam_forum/img/unCollect.png" />
+          <img class="collectBtn" src="img/unCollect.png" />
           <i class="iconfont" title="回帖+回复" >&#xe60c;</i><em class="replyCount"></em>
           <i class="iconfont" title="浏览次数" >&#xe60b;</i> <em class="browseTime"></em>
         </div>
@@ -152,6 +152,35 @@
   </div>
 </div>
 </div>
+<!-- 钻石效果 -->
+<div class="zuan-shadow-view">
+  <div class="img">
+    <img src="../statics/images/zuan2.gif">
+  </div>
+</div>
+
+<!-- 升级效果 -->
+<div class="up-grade-shadow-view">
+  <div class="img">
+    <img src="../statics/images/growup.gif" alt="">
+  </div>
+</div>
+<!-- <div id="reply_textarea" hidden>
+	<div class="layui-form layui-form-pane">
+        <form action="/jie/reply/" method="post">
+          <div class="layui-form-item layui-form-text">
+            <div class="layui-input-block">
+              <textarea id="copy_reply_content" name="content" required lay-verify="required" placeholder="我要回复"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <input type="hidden" name="jid" value="0">
+            <button class="layui-btn btn-left" lay-filter="*" lay-submit>回复</button>
+          </div>
+        </form>
+      </div>
+</div>  -->
+
 
 <!--upload-->
 
