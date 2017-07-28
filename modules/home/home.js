@@ -797,6 +797,7 @@ define(function(require, exports, module) {
             
         },
         load:function(){
+
             // 判断用户是否登录
             if(localStorage.token){
                 // 加载个人信息
@@ -813,7 +814,7 @@ define(function(require, exports, module) {
                 $(".login-shadow-view").show();
                 Page.clickEvent();
             }
-            
+            Common.addCopyRight();   //添加版权标识
         },
         loadMessage:function(arr, i, opt){
             var item = arr[i];
