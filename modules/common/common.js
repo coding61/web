@@ -96,6 +96,19 @@ define(function(require, exports, module) {
 			//			location.hash = lh + "" + key+"/"+value + /);
 		}
 	}
+	//版权标识
+	exports.addCopyRight = function(){
+		var str = ""
+		if (location.host.indexOf("bcjiaoyu.com") > -1) {
+			str = "京ICP备16048245号-2"
+		}else if (location.host.indexOf("cxy61.com") > -1) {
+			str = "京ICP备16048245号-3";
+		}else{
+			str = "京ICP备16048245号-3";
+		}
+		var cr = '<div class="copyright" style="text-align: center;font-size: 11px;color: gray;line-height: 30px;">'+str+'</div>'
+		$(cr).appendTo("body");
+	}
 	//根据图片地址，获取图片的宽高
 	exports.getPhotoWidthHeight = function(url, fx){
 		var new_url = null;
