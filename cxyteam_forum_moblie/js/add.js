@@ -1,12 +1,37 @@
 $(document).ready(function() {
+	var basePath="/program_girl";
+	var userId=1;
+	var zoneName='';
 	document.addEventListener('message', function(e) {
-    	var json=JSON.parse(e.data);
-    	var token=json.token;
-    	localStorage.token=json.token;
-    	var zonePk=json.pk;
+    	json=JSON.parse(e.data);
+    	token=json.token;
+    	zonePk=json.pk;
+    	$.ajax({
+		    url: basePath+"/userinfo/whoami/",
+		    type: 'get',
+		    headers: {
+		        Authorization: 'Token ' + token
+		    },
+		    data:null,
+		    success: function(result){
+		    	userName=result.name;
+		    },
+		    error:function(XMLHttpRequest){
+		    	if(XMLHttpRequest.status==403){
+		    		layer.msg("");
+		    	}else{
+		    		layer.msg("暂未登录")
+		    	}
+		    }
+		});
+
+		myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
+			zoneName=result.name;
+			$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
+		});
     }); 
-var basePath="/program_girl";
-var userId=1;
+
+
 //var userName=getCookie("userName");
 //var zonePk = getQueryString("pk");
 //if(userName) {
@@ -31,32 +56,10 @@ var userId=1;
 	}else{
 	}
 })*/
-$.ajax({
-	        url: basePath+"/userinfo/whoami/",
-	        type: 'get',
-	        headers: {
-	            Authorization: 'Token ' + token
-	        },
-	        data:null,
-	        success: function(result){
-	        	var userName=result.name;
-	        	localStorage.userName=result.name;
-	        },
-	        error:function(XMLHttpRequest){
-	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("");
-	        	}else{
-	        		layer.msg("暂未登录")
-	        	}
-	        }
-	    });
+
 
 //获取当前社区
-var zoneName='';
-/*myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
-	zoneName=result.name;
-});*/
-//$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
+
 $(function() {
 	$(".publish").click(function() {
 		var title=$("#L_title").val();
@@ -91,42 +94,55 @@ $(function() {
 			$(".main").find(".layui-select-title input").val("");
 			publish(title,zoneId,typeId,content)
 		}
-		
 	})
 })
-
 function publish(title,zoneId,typeId,content) {
-	myAjax(basePath+"/forum/posts_create/","post",{
-  "section":zoneId,
-  "types":typeId,
-  "title":title,
-  "content":content
-},function(result) {
-		//console.log(result)
-		$("#L_title").val("");
-		$("#L_content").val("");
-		$(".main").find(".layui-select-title input").val("");
-		localStorage.page = 1;
-		growNumAnimate(result);
-		// zuanNumAnimate();
-		gradeAnimate(result);
-       /* setTimeout(function() {
-        	window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
-        }, 2000)*/
-		
-	});
+	$.ajax({
+	        url: basePath+"/forum/posts_create/",
+	        type: "post",
+	        //async:async==null?true:async,
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:{
+		  		"section":zoneId,
+		  		"types":typeId,
+		  		"title":title,
+		  		"content":content
+			},
+	        success: function(result) {
+				$("#L_title").val("");
+				$("#L_content").val("");
+				$(".main").find(".layui-select-title input").val("");
+				page = 1;
+				//growNumAnimate(result);
+				// zuanNumAnimate();
+				//gradeAnimate(result);
+		       	setTimeout(function() {
+		        	window.postMessage(JSON.stringify({data:data}))
+		        }, 500)	
+			},
+	        error:function(XMLHttpRequest){
+	        	console.log(XMLHttpRequest.status)
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
 }
 // 经验动画
-function growNumAnimate(result) {
+/*function growNumAnimate(result) {
 	var preEx = $('.info .grade-value').text().split("/")[0];
 	var experience = result.userinfo.experience-preEx;
 	$(".grow-number-ani").remove();
     var growHtml = '<span class="grow-number-ani fadeInOut">经验 +'+experience+'</span>';
     $("body").append(growHtml);
 
-}
+}*/
 // 钻石动画
-function zuanNumAnimate() {
+/*function zuanNumAnimate() {
 	// 钻石出现，然后2秒后飞到右上角消失
     $(".zuan-shadow-view").show();
     $(".zuan-shadow-view .img").css({
@@ -164,9 +180,9 @@ function zuanNumAnimate() {
             }, 200)
         })
     }, 1000)
-}
+}*/
 // 等级动画
-function gradeAnimate(result) {
+/*function gradeAnimate(result) {
 	if (result.userinfo.experience == result.userinfo.grade.next_all_experience) {
 		$(".up-grade-shadow-view").show();
 	    $(".up-grade-shadow-view .img").css({
@@ -177,11 +193,10 @@ function gradeAnimate(result) {
 	        $(".up-grade-shadow-view").hide();
 	    }, 1000)
 	}
-}
+}*/
 initTypes();
 function initTypes(){
 	myAjax(basePath+"/forum/types/","get",null,function(result){
-		//console.log(result);
 		$.each(result.results, function(k,v) {
 			$(".type_content").append('<option value="'+v.pk+'" >'+v.name+'</option>');
 		});

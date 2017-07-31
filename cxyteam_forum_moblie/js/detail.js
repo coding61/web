@@ -1,19 +1,16 @@
 $(document).ready(function() {
 	var basePath="/program_girl";
-	
 	var toUserId=0;
 	var replyId=0;
 	var replyPage = 1;
 	var postUserName;
-	var postId=0;
-	var token;
+	//var postId=3151;
+	//var token='f0b3897f26417c66c27d6e782724317010694cdc';
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
     	postId=json.pk;
-    	
-    	localStorage.token=json.token;
-	    $.ajax({
+    	$.ajax({
 	        url: basePath+"/userinfo/whoami/",
 	        type: 'get',
 	        headers: {
@@ -21,8 +18,7 @@ $(document).ready(function() {
 	        },
 	        data:null,
 	        success: function(result){
-	 
-	        	localStorage.userName=result.name;
+	        	userName=result.name;
 	        },
 	        error:function(XMLHttpRequest){
 	        	if(XMLHttpRequest.status==403){
@@ -31,46 +27,61 @@ $(document).ready(function() {
 	        		layer.msg("暂未登录")
 	        	}
 	        }
-		});	
+		});
+
+    	postDetail();
+    	getReplys(replyPage);
     })
- /*var bt= document.getElementById('bt');
+    
+/*var bt= document.getElementById('bt');
  bt.addEventListener('click',function(){
    var valA = 111;
    window.postMessage(JSON.stringify({data:{A:valA,}}))
  });*/
-initDetail()
+/*//获取主帖详情
+}*/
 
-function initDetail(){
-	setTimeout(postDetail,500);//获取主帖详情
-}
 //主贴详情信息
 function postDetail() {
-	myAjax2(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
-		zoneId=result.section.pk;
-		postUserName=result.userinfo.name;
-		//$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
-		$(".forum_types").text("["+result.types.name+"]");
-		$(".forum_title").text(result.title);
-		$(".info >img").attr("src",dealWithAvatar(result.userinfo.avatar));
-		$(".main_forum_reply").attr({"data-id":result.pk,'data-user-id':result.userinfo.pk});
-		$(".info >p").text(result.userinfo.grade.current_name);
-		$(".info_name").prepend(result.userinfo.name);
-		
-		$('.post_content').each(function(){
-		    $(this).html(this_fly.content(result.content));
-		});
-		$(".forum_time").append('<em class="posContentDate">'+dealWithTime(result.create_time)+'</em>');
-		if(localStorage.userName!=null&&postUserName==localStorage.userName){
-			$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
-		}
-		$(".replyCount").text((result.reply_count));
-		$(".browseTime").text(result.browse_count);
-		 
-		if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
-		if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
-		
-		getReplys(replyPage);//获取评论回复
-	})
+	$.ajax({
+        url: basePath+"/forum/posts/"+postId+"/",
+        type: "get",
+        //async:async==null?true:async,
+        data:null,
+        success: function(result){
+        	console.log(result.section.pk)
+        	zoneId=result.section.pk;
+			postUserName=result.userinfo.name;
+			//$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
+			$(".forum_types").text("["+result.types.name+"]");
+			$(".forum_title").text(result.title);
+			$(".info >img").attr("src",dealWithAvatar(result.userinfo.avatar));
+			$(".main_forum_reply").attr({"data-id":result.pk,'data-user-id':result.userinfo.pk});
+			$(".info >p").text(result.userinfo.grade.current_name);
+			$(".info_name").prepend(result.userinfo.name);
+			
+			$('.post_content').each(function(){
+			    $(this).html(this_fly.content(result.content));
+			});
+			$(".forum_time").append('<em class="posContentDate">'+dealWithTime(result.create_time)+'</em>');
+			if(userName!=null&&postUserName==userName){
+				$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
+			}
+			$(".replyCount").text((result.reply_count));
+			$(".browseTime").text(result.browse_count);
+			 
+			if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
+			if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
+        },
+        error:function(XMLHttpRequest){
+        	if(XMLHttpRequest.status==403){
+        		layer.msg("请求异常");
+        	}else{
+        		//alert(XMLHttpRequest.status)
+        		layer.msg("请求异常")
+        	}
+        }
+  });
 }
 function getReplys(page){
 	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
@@ -83,7 +94,7 @@ function getReplys(page){
 		    for (var i = 0; i < result.results.length; i++) {
 		    	if (result.results[i].pk == $(this).attr("data-pk")) {
 		    		$(this).html(this_fly.content(result.results[i].content));
-		    		if(localStorage.userName!=null&&(result.results[i].userinfo.name==localStorage.userName)){
+		    		if(userName!=null&&(result.results[i].userinfo.name==userName)){
 					    $(this).append('<span type="del" class="huifuDel" onclick="deleteReplyById('+result.results[i].pk+')">删除</span>');
 					}
 		    	}
@@ -204,7 +215,7 @@ template.helper("stringChange", function(e) {
 })
 
 template.helper("showReplyDel", function(name) {
-	if (localStorage.userName!=null&&(name==localStorage.userName)) {
+	if (userName!=null&&(name==userName)) {
 		return true;
 	} else {
 		return false;
@@ -289,7 +300,6 @@ layer.open({
 	    layer.close();
 	  }
 	  ,cancel: function(){ 
-	    //右上角关闭回调
 	  }
 	});
 }
