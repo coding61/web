@@ -229,6 +229,18 @@ define(function(require, exports, module) {
         },
         getMasterInfo: function(){
             
+        },
+        getAllStudents: function(){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/students/' + current_master_pk + '/',
+                    timeout: 8000,
+                    success: function(){
+                        
+                    }
+                })
+            })
         }
     }
 
