@@ -453,6 +453,7 @@ body{
 
 /*登录视图*/
 .login-view .close{
+	display: none;
     width: 35%;
     background: #ff6b95;
     height: 35px;

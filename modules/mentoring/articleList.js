@@ -35,7 +35,7 @@ define(function(require, exports, module) {
 			   },
 			   timeout:6000,
 			   success:function(json){
-				  console.log(json);
+
 				  totalPages = Math.ceil(json.count / 10);
 
 				  var html = template('list-template', json.results);
@@ -197,6 +197,9 @@ define(function(require, exports, module) {
 	}
 	// 点击事件
     function clickEvent() {
+		$(".header .logo2").unbind('click').click(function(){
+            window.open("https://www.cxy61.com");
+        })
         // 登录
         $(".login-view .login").unbind('click').click(function(){
             login();
