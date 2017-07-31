@@ -1,6 +1,10 @@
 define(function(require, exports, module) {
 	var Common = require('common/common.js?v=1.1');
 	var teacherPk = Common.getQueryString("pk");
+	// var teacherPk = localStorage.current_master_pk ? localStorage.current_master_pk : null;
+	// if (teacherPk == null) {
+	// 	Common.dialog("未获取到教师pk值");
+	// }
 	var myPk = null;
 	var isMySelf = false;
 	var totalPages = 1;
@@ -31,7 +35,7 @@ define(function(require, exports, module) {
 			   },
 			   timeout:6000,
 			   success:function(json){
-				  console.log(json);
+
 				  totalPages = Math.ceil(json.count / 10);
 
 				  var html = template('list-template', json.results);
@@ -193,6 +197,9 @@ define(function(require, exports, module) {
 	}
 	// 点击事件
     function clickEvent() {
+		$(".header .logo2").unbind('click').click(function(){
+            window.open("https://www.cxy61.com");
+        })
         // 登录
         $(".login-view .login").unbind('click').click(function(){
             login();

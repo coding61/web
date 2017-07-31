@@ -11,7 +11,7 @@
 		<link rel="icon" href="../../statics/images/favicon.ico">
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.7" />
-		<link type="text/css" rel="stylesheet" href="../../statics/css/home/articleList.css?v=2.7" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/mentoring/articleList.css?v=2.7" />
 	</head>
 
 	<body>
@@ -23,7 +23,7 @@
 				<div class="right-line"></div>
 				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
 			</div>
-			<span class="teacher center-view item">教师中心</span>
+			<a class="teacher center-view item" href="../mentoring/masterList.html">教师中心</a>
 			<!-- <span class="works center-view item">作品中心</span> -->
 			<!-- <span class="luntan center-view item">学习论坛</span> -->
 			<!-- <div class="right-view"> -->
@@ -140,7 +140,7 @@
         <div style="text-align: center" id="pageDiv"></div>
 
 		<!-- 登录窗口 -->
-		<div class="login-shadow-view">
+		<!-- <div class="login-shadow-view">
 			<div class="login-view">
 				<div style="font-size: 30px;margin-bottom: 25px;color: white; display: none;">邀请码、密码请到战队中查询</div>
 				<div class="close">
@@ -167,7 +167,7 @@
 					<span class="login">确定</span>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
@@ -178,7 +178,7 @@
 		var base = location.href.split("/app/")[0];
 		seajs.config({
 				paths: {
-					"home": base + "/modules/home",
+					"home": base + "/modules/mentoring",
 					"libs": base + "/libs",
 					"common": base + "/modules/common"
 				},
