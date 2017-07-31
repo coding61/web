@@ -303,6 +303,45 @@ body{
     border-radius: 50%;
     margin-right: 15px;
 }
+.info-body > div{
+    display: inline-block;
+    margin-top: 15px;
+    padding: 5px 5px 5px 0;
+    vertical-align: top;
+}
+.info-body .master-info-content{
+    width: calc(100% - 150px);
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 13px;
+    color: #666;
+}
+.info-content-title > button{
+    float: right;
+    width: 80px;
+    line-height: 28px;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.info-content-title > button.baishi-btn{
+    background-color: rgb(250, 80, 131);
+    color: #fff;
+}
+.info-body .master-info-content .info-content-title > span{
+    margin-right: 10px;
+}
+.info-body .master-info-content .info-content-title > span.name{
+    font-size: 14px;
+    color: #444;
+}
+.info-body .master-info-content .info-content-detail{
+    margin-top: 15px;
+}
 
 /*登录视图*/
 .login-view .close{
