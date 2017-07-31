@@ -226,6 +226,9 @@ define(function(require, exports, module) {
                     }
                 })
             })
+        },
+        getMasterInfo: function(){
+            
         }
     }
 
