@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<!-- <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" /> -->
+		<title>教师详情</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.3" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/mentoring/masterDetail.css?v=2.3" />
+	</head>
+
+	<body>
+	<!-- 头部信息 -->
+		<div class="header">
+			<div class="left-view">
+				<img class="logo1" style="height: 30px;" src="../../statics/images/logo2.png" />
+				<div class="right-line"></div>
+				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
+			</div>
+			<div class="middle-view">
+				<p style="width: 100%; text-align: center;">教师详情</p>
+			</div>
+			<div class="right-view">
+				<!-- <span class="luntan">学习论坛</span> -->
+
+				<div class="icon4 avatar">
+					<img class="item" src="../../statics/images/avatar.png" alt="">
+				</div>
+				<div class="info-view">
+					<div class="info">
+						<span class="grade item">LV 青铜1</span>
+						<span class="grade-value item">500/854</span>
+					</div>
+					<div class="progress item">
+						<img src="../../statics/images/progress.png" alt="">
+					</div>
+				</div>
+
+				<div class="icon3 zuan">
+					<img class="item" src="../../statics/images/icon3.png" alt="" />
+					<span class="item">x20</span>
+				</div>
+				
+				<!-- <div class="quit item">退出</div> -->
+
+				<div class="team-info">
+					<div class="team">
+						
+					</div>
+					<div class="teams-brand">
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<script type="text/html" id="team-template">
+			<img class="arrow" src="../../statics/images/arrow-d.png"/>
+			<div>我的团队</div>
+			<div class="members">
+				{{each group_member}}
+				<div class="member">
+					<span class="member-name">
+						<img class="avatar" src="{{$value.owner.avatar}}"/>
+						<span class="name">{{$value.owner.name}}</span>
+					</span>
+					<span class="gm">{{$value.owner.grade.current_name}}</span>
+				</div>
+				{{/each}}
+			</div>
+		</script>
+		<script type="text/html" id="teams-brand-template">
+			<div>团队排行</div>
+			{{each}}
+			<div class="team-brand">
+				<span class="name">{{$index+1}}.{{$value.name}}</span>
+				<span class="zn">
+					<img class="zuan" src="../../statics/images/zuan-s.png">
+					<span>x{{$value.diamond_amount}}</span>
+				</span>
+			</div>
+			{{/each}}
+		</script>
+
+		<div class="main-view">
+			<div class="master-info">
+				<header class="title">
+					<span class="head-title">个人信息</span>
+				</header>
+				<section class="info-body">
+					<div class="master-avatar">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="" width="120px" height="120px">
+					</div>
+					<div class="master-info-content">
+						<div class="info-content-title">
+							<span class="name">小仙女</span>
+							<span>LV 黄金3</span>
+							<span class="zuanshi-num">x420</span>
+							<button class="works-list-btn">查看作品</button>
+							<button class="baishi-btn">拜师</button>
+						</div>
+						<div class="info-content-detail">
+							<p>简介：我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！</p>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="student-list">
+				<header class="title">
+					<span class="head-title">学员（56人）</span>
+				</header>
+				<section class="info-body">
+					<div class="student-list-avatar">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
+					</div>
+				</section>
+			</div>
+			<div class="artical-list">
+				<header class="title">
+					<span class="head-title">文章</span>
+				</header>
+				<section class="info-body">
+					<div class="info-body-div">
+						<div class="artical-banner">
+							<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="" width="90px" height="90px">
+						</div>
+						<div class="artical-content">
+							<p class="title">文章标题</p>
+							<p class="content-artical">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+						</div>
+						<div class="artical-btn">
+							<button>购买文章</button>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<!-- 登录窗口 -->
+		<div class="login-shadow-view" style="display: none;">
+			<div class="login-view">
+				<div style="font-size: 30px;margin-bottom: 25px;color: white; display: none;">邀请码、密码请到战队中查询</div>
+				<div class="close">
+					<img style="display: none;" src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="login-info">
+					<div class="login-info-view">
+						<div class="info"><span>邀请码请到微信公众号领取</span></div>
+						<div class="wx-code">
+							<img src="../../statics/images/code.png">
+						</div>
+					</div>
+					
+				</div>
+				<div class="account-view">
+					<div class="username">
+						<span>邀请码</span>
+						<input placeholder="邀请码" />
+					</div>
+					<div class="password">
+						<span>密码</span>
+						<input type="password" placeholder="密码" />
+					</div>
+					<span class="login">确定</span>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"mentoring": base + "/modules/mentoring",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("mentoring/masterDetail.js?v=2.3");
+	</script>
+
+</html>
+
