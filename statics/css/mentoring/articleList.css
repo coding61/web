@@ -30,14 +30,11 @@ body{
 }
 
 .header .center-view{
-    padding: 5px 10px;
-    /*background-color: rgba(0,0,0,0.4);*/
-    border-radius: 20px;
-    margin-left: 4%;
-
-    display: inline-flex;
+	width: 100%;
+	text-align: center;
     align-items: center;
-    cursor: pointer;
+	text-decoration: none;
+	color: #fff;
 }
 .header .left-view{
 	display: flex;
@@ -328,7 +325,7 @@ body{
 }
 
 .item-info {
-    width: 68%;
+    width: 80%;
     padding-left: 2.5%;
     padding-right: 20%;
 }
