@@ -77,7 +77,6 @@ function postDetail() {
         	if(XMLHttpRequest.status==403){
         		layer.msg("请求异常");
         	}else{
-        		//alert(XMLHttpRequest.status)
         		layer.msg("请求异常")
         	}
         }
@@ -139,7 +138,6 @@ $(document).on("click",".postReplyMore_btn",function() {
 		$(this).attr({"disabled": true});
 		postReplyMoreAdd();
 	}
-	
 });
 //点击回复
 $(document).on("click",".question_reply",function(){
@@ -231,12 +229,30 @@ $(document).on("click",".moreReply",function() {
 })
 //回复主贴
 function postReplyAdd() {
+/*	$.ajax({
+	        url: basePath+"/forum/replies_create/",
+	        type: "post",
+	        //async:async==null?true:async,
+	        headers: {
+	            Authorization: 'Token ' + localStorage.token
+	        },
+	        data:data,
+	        success: success,
+	        error:function(XMLHttpRequest){
+	        	console.log(XMLHttpRequest.status)
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        	}else{
+	        		layer.msg("请求异常1")
+	        	}
+	        }
+	    });	*/
 	myAjax(basePath+"/forum/replies_create/","post",
 	{"posts":postId,"content":$("#copy_reply_content").val()},function(result) {
 		if(result){
 			//growNumAnimate(result);
 			//gradeAnimate(result);
-			setTimeout("window.location.reload()",1000);
+			setTimeout("window.location.reload()",500);
 		}else{
 			layer.msg("回帖异常");
 		}
@@ -248,7 +264,7 @@ function postReplyMoreAdd() {
 	{"replies":replyId,"content":$("#copy_reply_content").val()},function(result) {
 		if(result){
 			layer.msg("回复成功");
-			setTimeout("window.location.reload()",1000);
+			setTimeout("window.location.reload()",500);
 		}else{
 			layer.msg("回复异常");
 		}
@@ -265,65 +281,23 @@ function growNumAnimate(result) {
 
 //删除帖子
 function delPost(){
-	layer.open({
-		  content: '确定删除该帖子？'
-		  ,btn: ['确认', '取消']
-		  ,yes: function(index, layero){
-			  myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
-
-						layer.msg("删除成功");
-	
-				});
-		  },btn2: function(index, layero){
-		    layer.close();
-		  }
-		  ,cancel: function(){ 
-
-		  }
-		});
+	myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
+		layer.msg("删除成功");
+	});
 }
 //删除回帖
 function deleteReplyById(replyId){
-layer.open({
-	  content: '确定删除该回帖？'
-	  ,btn: ['确认', '取消']
-	  ,yes: function(index, layero){
-		  myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".reply_"+replyId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
-				});
-	  },btn2: function(index, layero){
-	    layer.close();
-	  }
-	  ,cancel: function(){ 
-	  }
+	myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
+		layer.msg("删除成功");
+		$(".reply_"+replyId).remove();
 	});
 }
 
 //删除回复
 function deleteReplymoreById(replymoreId){
-layer.open({
-	  content: '确定删除该回帖？'
-	  ,btn: ['确认', '取消']
-	  ,yes: function(index, layero){
-		  myAjax(basePath+"/forum/replymores/"+replymoreId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".replymore_"+replymoreId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
-			});
-	  },btn2: function(index, layero){
-	    layer.close();
-	  }
-	  ,cancel: function(){ 
-	    //右上角关闭回调
-	  }
+	myAjax(basePath+"/forum/replymores/"+replymoreId+"/","DELETE",null,function(result){
+		layer.msg("删除成功");
+		$(".replymore_"+replymoreId).remove();
 	});
 }
 

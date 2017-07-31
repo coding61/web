@@ -24,13 +24,12 @@ $(document).ready(function() {
 		    	}
 		    }
 		});
-
+    	initSection();
 		myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
 			zoneName=result.name;
 			$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
 		});
     }); 
-
 
 //var userName=getCookie("userName");
 //var zonePk = getQueryString("pk");
@@ -120,12 +119,12 @@ function publish(title,zoneId,typeId,content) {
 				//gradeAnimate(result);
 		       	setTimeout(function() {
 		        	window.postMessage(JSON.stringify({data:data}))
-		        }, 500)	
+		        }, 200)	
 			},
 	        error:function(XMLHttpRequest){
 	        	console.log(XMLHttpRequest.status)
 	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        		layer.msg("请求异常");
 	        	}else{
 	        		layer.msg("请求异常")
 	        	}
@@ -202,7 +201,7 @@ function initTypes(){
 		});
 	},false);
 }
-initSection();
+//initSection();
 function initSection(){
 	myAjax(basePath+"/forum/sections/","get",null,function(result){
 		//console.log(result);
