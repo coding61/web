@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	document.addEventListener('message', function(e) {
-    	var json=JSON.parse(e.data);
-    	var token=json.token;
+    	json=JSON.parse(e.data);
+    	token=json.token;
     	localStorage.token=json.token;
-    	var zonePk=json.pk;
+    	zonePk=json.pk;
     }); 
 var basePath="/program_girl";
 var userId=1;
@@ -97,23 +97,21 @@ $(function() {
 
 function publish(title,zoneId,typeId,content) {
 	myAjax(basePath+"/forum/posts_create/","post",{
-  "section":zoneId,
-  "types":typeId,
-  "title":title,
-  "content":content
-},function(result) {
-		//console.log(result)
+  		"section":zoneId,
+  		"types":typeId,
+  		"title":title,
+  		"content":content
+	},function(result) {
 		$("#L_title").val("");
 		$("#L_content").val("");
 		$(".main").find(".layui-select-title input").val("");
 		localStorage.page = 1;
-		growNumAnimate(result);
+		//growNumAnimate(result);
 		// zuanNumAnimate();
-		gradeAnimate(result);
-       /* setTimeout(function() {
-        	window.location.href="detail.html?id="+result.pk+'&pk='+zonePk;
-        }, 2000)*/
-		
+		//gradeAnimate(result);
+       	setTimeout(function() {
+        	window.postMessage(JSON.stringify({data:data}))
+        }, 1000)	
 	});
 }
 // 经验动画
