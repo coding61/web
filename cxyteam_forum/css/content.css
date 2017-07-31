@@ -7,9 +7,16 @@
     margin-right: calc(5%);
     position: relative;
 }
+
+.article {
+	width: 81.5%;
+	margin-left: 9.25%;
+}
+
 .avatar{
    margin-right: 2%;
 }
+
 .avatar .item {
     height: 25px;
     width: 25px;

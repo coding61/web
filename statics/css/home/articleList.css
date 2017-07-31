@@ -23,12 +23,15 @@ body{
     font-size: 15px;
 
     padding: 0 2%;
-    width: 96%;
-
 }
+
+.teacher {
+    margin-right: 30%;
+}
+
 .header .center-view{
     padding: 5px 10px;
-    background-color: rgba(0,0,0,0.4);
+    /*background-color: rgba(0,0,0,0.4);*/
     border-radius: 20px;
     margin-left: 4%;
 
@@ -39,7 +42,7 @@ body{
 .header .left-view{
 	display: flex;
 	flex: 1;
-
+	margin-left: 17.75%;
     /*height: 30px;*/
 }
 .header .left-view .right-line{
@@ -64,6 +67,7 @@ body{
     display: inline-flex;
     align-items: center;
 }
+
 .header .left-view .msg img{
     width: 20px;
     height: 20px;
