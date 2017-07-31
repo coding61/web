@@ -57,7 +57,7 @@ function myAjax(url,type,data,success,async){
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
 	        	}else{
-	        		layer.msg("请求异常1")
+	        		layer.msg("请求异常")
 	        	}
 	        }
 	    });	
@@ -75,9 +75,9 @@ function myAjax2(url,type,data,success,async){
         error:function(XMLHttpRequest){
         	console.log(XMLHttpRequest.status)
         	if(XMLHttpRequest.status==403){
-        		layer.msg("请先购买课程");
+        		layer.msg("请求异常");
         	}else{
-        		layer.msg("请求异常2")
+        		layer.msg("请求异常")
         	}
         }
   });
