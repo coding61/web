@@ -11,32 +11,7 @@ var is_staff = false;//是否为管理员
 // $('.jie-add1').unbind().click(function(){
 // 	window.location.href="add.html?pk="+postPk;
 // });
-$(document).on("click",".jie-add1",function() {
-	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
-		$.ajax({
-	        url: basePath+"/forum/posts_check/",
-	        type: "get",
-	        headers: {
-	            Authorization: 'Token ' + localStorage.token
-	        },
-	        success: function(result) {
-	        	if (result.message == '该用户可以发帖') {
-	        		window.location.href="add.html?pk="+postPk;
-	        	}
-	        },
-	        error:function(XMLHttpRequest){
-	        	console.log(XMLHttpRequest.status)
-	        	if(XMLHttpRequest.status==400){
-	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
-	        	}else{
-	        		layer.msg("已被禁言");
-	        	}
-	        }
-	    });
-	}else{
-	 	layer.msg("请先登录");
-	}
-});
+
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
 //var user= JSON.parse(sessionStorage.getItem("session_user"));
@@ -151,85 +126,32 @@ $(document).on("click",".question_reply",function(){
 // 	}
 // 	typeof this_fly == 'object' ? event1.html(this_fly.content(event2)) : setTimeout(function(){digui(event1, event2, time)},500);
 // }
+
+// 获取文章详情
 function postDetail() {
-	myAjax(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
-		//console.log(result);
+	myAjax(basePath+"/teacher/read_article/"+postPk+"/","get",null,function(result) {
+		console.log(result);
 		if (result) {
-			zoneId=result.section.pk;
-			postUserName=result.userinfo.name;
+			zoneId=result.pk;
+			postUserName=result.author.name;
 			$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
-			$(".postStatus").text("[" + result.status_display + "]");
-			if (result.status_display == '未解决') {
-				$(".postStatus").css({"color": 'red'});
-			} else if (result.status_display == '已解决') {
-				$(".postStatus").css({"color": '#777'});
-			} else if (result.status_display == '已关闭') {
-				$(".postStatus").css({"color": '#777'});
-			}
+
 			$(".post_title").text(result.title);
-			$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
-			$(".post_user .grade").text(result.userinfo.grade.current_name);
-			$(".post_user cite").prepend(result.userinfo.name);
+			$(".post_user img").attr("src",dealWithAvatar(result.author.avatar));
+			$(".post_user .grade").text(result.author.grade.current_name);
+			$(".post_user cite").prepend(result.author.name);
 			$(".post_user cite em").text(dealWithTime(result.create_time));
-			hasCollect = result.collect;
-			if (result.collect) {
-				$(".collectBtn").attr({"src": 'img/hadCollect.png'});
-			} else {
+
+
 				$(".collectBtn").attr({"src": 'img/unCollect.png'});
-			}
+
 			$('.post_content').each(function(){
 			    $(this).html(this_fly.content(result.content));
-			    // digui($(this), result.content, new Date().getTime());
-			  });
-			$("#jiedaCount").text(result.reply_count);
-			$(".replyCount").text((result.reply_count));
-			$(".browseTime").text(result.browse_count);
+			});
 
-			 $(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
-			if(localStorage.userName!=null&&postUserName==localStorage.userName){
-				$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
-				if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
-				if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
-				if (result.status == 'unsolved') {
-					$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">标记为已解决</span><span class="finish" id="finish">关闭问题</span>');
-				} else if (result.status == 'solved') {
-					$(".wrap .page-title").append('<div class="changeStatus"><span class="unsolved" id="unsolved">标记为未解决</span>');
-				} else if (result.status == 'finish') {
-					$(".wrap .page-title").append('<div class="changeStatus"><span class="unsolved" id="unsolved">标记为未解决</span>');
-				}
-				if (result.status_display == '未解决') {
-					document.getElementById("solved").style.backgroundColor = 'white';
-					document.getElementById("solved").style.color = '#777';
-					document.getElementById("finish").style.backgroundColor = 'white';
-					document.getElementById("finish").style.color = '#777';
-				} else if (result.status_display == '标记为已解决') {
-					document.getElementById("solved").style.backgroundColor = '#009688';
-					document.getElementById("solved").style.color = 'white';
-					document.getElementById("finish").style.backgroundColor = 'white';
-					document.getElementById("finish").style.color = '#777';
-					$('.solved').addClass("had-click").siblings().removeClass("had-click");
-				} else if (result.status_display == '关闭问题') {
-					document.getElementById("solved").style.backgroundColor = 'white';
-					document.getElementById("solved").style.color = '#777';
-					document.getElementById("finish").style.backgroundColor = '#009688';
-					document.getElementById("finish").style.color = 'white';
-					$('.finish').addClass("had-click").siblings().removeClass("had-click");
-				}
-			}
-			if (is_staff) {
-				if (result.isessence) {
-					$(".detail-hits").append('<span onclick="canclePostsEssence()" class="postsEssence">取消加精</span>');
-				} else {
-					$(".detail-hits").append('<span onclick="postsEssence()" class="postsEssence">加精</span>');
-				}
-				if (result.istop) {
-					$(".detail-hits").append('<span onclick="canclePostsTop()" class="postsTop">取消置顶</span>');
-				} else {
-					$(".detail-hits").append('<span onclick="postsTop()" class="postsTop">置顶</span>');
-				}
-			}
+			 $(".detail-hits").append('<span style="color:#FF7200">教师发布的文章</span>');
 
-			getReplys(replyPage);//获取评论回复
+			// getReplys(replyPage);//获取评论回复
 			shubiao();
 		} else {
 			layer.msg('请求异常');
