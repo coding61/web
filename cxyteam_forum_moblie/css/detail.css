@@ -44,6 +44,29 @@
     position: relative;
     margin-bottom: 0px;
 }
+.layui-edit-face ul {
+    position: relative;
+    width: 300px ! important;
+    padding: 10px;
+    border: 1px solid #D9D9D9;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,.2);
+}
+.layui-btn {
+    display: inline-block;
+    padding: 0 23px ! important;
+    height: 38px;
+    line-height: 38px;
+    background-color: #009688;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    opacity: .9;
+    filter: alpha(opacity=90);
+}
 .info-view .progress img {
     position: absolute;
     left: 0;

@@ -4,8 +4,9 @@ $(document).ready(function() {
 	var replyId=0;
 	var replyPage = 1;
 	var postUserName;
-	//var postId=3151;
+	//var postId=213;
 	//var token='f0b3897f26417c66c27d6e782724317010694cdc';
+	//localStorage.token=token;
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
@@ -32,7 +33,27 @@ $(document).ready(function() {
     	postDetail();
     	getReplys(replyPage);
     })
-    
+  /*  $.ajax({
+	        url: basePath+"/userinfo/whoami/",
+	        type: 'get',
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:null,
+	        success: function(result){
+	        	userName=result.name;
+	        },
+	        error:function(XMLHttpRequest){
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("");
+	        	}else{
+	        		layer.msg("暂未登录")
+	        	}
+	        }
+		});
+
+    	postDetail();
+    	getReplys(replyPage);*/
 /*var bt= document.getElementById('bt');
  bt.addEventListener('click',function(){
    var valA = 111;
@@ -49,10 +70,8 @@ function postDetail() {
         //async:async==null?true:async,
         data:null,
         success: function(result){
-        	console.log(result.section.pk)
         	zoneId=result.section.pk;
 			postUserName=result.userinfo.name;
-			//$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
 			$(".forum_types").text("["+result.types.name+"]");
 			$(".forum_title").text(result.title);
 			$(".info >img").attr("src",dealWithAvatar(result.userinfo.avatar));
@@ -89,13 +108,14 @@ function getReplys(page){
 		}
 		var html = template("post_reply_template", result);
 		$('#jieda').append(html);
-		$('#jieda .post_content').each(function(){
+		$('#jieda .post_content').each(function(user){
 		    for (var i = 0; i < result.results.length; i++) {
 		    	if (result.results[i].pk == $(this).attr("data-pk")) {
 		    		$(this).html(this_fly.content(result.results[i].content));
-		    		if(userName!=null&&(result.results[i].userinfo.name==userName)){
+		    		/*if(userName!=null&&(result.results[i].userinfo.name==userName)){
 					    $(this).append('<span type="del" class="huifuDel" onclick="deleteReplyById('+result.results[i].pk+')">删除</span>');
-					}
+					    //$(this).append('<span type="del" class="huifuDel" onclick=""JavaScript:alert(123)">删除</span>');
+					}*/
 		    	}
 		    }
 		});
@@ -106,7 +126,6 @@ function getReplys(page){
 		})
 		if (result.next) {
 			$("#jieda").append('<a class="moreReply">点击加载更多</a>');
-
 		}
 		setTimeout(function() {
 			$('.layui-form ').show();
@@ -287,6 +306,7 @@ function delPost(){
 }
 //删除回帖
 function deleteReplyById(replyId){
+	alert(replyId)
 	myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
 		layer.msg("删除成功");
 		$(".reply_"+replyId).remove();
