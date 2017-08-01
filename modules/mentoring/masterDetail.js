@@ -287,7 +287,8 @@ define(function(require, exports, module) {
                     },
                     success: function(json){
                         if (json.count > 0) {
-
+                            var html = ArtTemplate('student-list-template', json.results);
+                            $('.student-list .info-body').html(html);
                         } else {
                             $('.student-list-avatar').html('<p style="font-size:14px">没有学生</p>')
                         }

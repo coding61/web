@@ -114,19 +114,17 @@
 					<span class="head-title">学员</span>
 				</header>
 				<section class="info-body">
-					<div class="student-list-avatar">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="">
-					</div>
+					
 				</section>
+				<script type="text/html" id="student-list-template">
+					<div class="student-list-avatar">
+						{{each}}
+						{{if $value.owner}}
+						<img src="{{$value.owner.avatar}}" alt="">
+						{{/if}}
+						{{/each}}
+					</div>
+				</script>
 			</div>
 			<div class="article-list">
 				<header class="title">
