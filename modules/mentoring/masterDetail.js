@@ -289,6 +289,11 @@ define(function(require, exports, module) {
                     timeout: 8000,
                     success: function(json){
                         json.isme = (who && who == 'isme' ? true : false);
+                        if (json.isme) {
+                            $('.middle-view p').text('个人中心');
+                        } else {
+                            $('.middle-view p').text('教师详情');
+                        }
                         var html = ArtTemplate('master-info-template', json);
                         $('.master-info .info-body').html(html);
                     },
@@ -322,7 +327,7 @@ define(function(require, exports, module) {
                             var html = ArtTemplate('student-list-template', json.results);
                             $('.student-list .info-body').html(html);
                         } else {
-                            $('.student-list-avatar').html('<p style="font-size:14px">没有学生</p>')
+                            $('.student-list .info-body').html('<p style="font-size:14px">没有学生</p>')
                         }
                     },
                     error: function(xhr,textStatus){
@@ -435,6 +440,9 @@ define(function(require, exports, module) {
                             Common.dialog('服务器繁忙');
                             return;
                         }
+                    },
+                    complete: function(){
+                        $('.baishi-window').hide();
                     }
                 })
             })

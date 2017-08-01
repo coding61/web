@@ -293,6 +293,7 @@ define(function(require, exports, module) {
                         } else {
                             $('.master-list').html('<div style="width: 100%; text-align: center; font-size: 18px;">当前没有教师</div>');
                             typeof callback == 'function' ? callback(0) : '';
+                            $('.become-btn').show();
                         }
                     },
                     error: function(xhr, textStatus){
@@ -402,7 +403,7 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        console.log(json)
+                        Common.dialog('申请成功，请等待审核');
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
