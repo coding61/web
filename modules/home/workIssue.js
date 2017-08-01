@@ -138,8 +138,6 @@ define(function(require, exports, module) {
 
             //保存新作品
             $('.save-btn').click(function(){
-                Page.isNew = false;
-                Page.workListClick = false;
                 Mananger.saveWork();
             })
             $('.save-cancel-btn').click(function(){
@@ -437,6 +435,8 @@ define(function(require, exports, module) {
                         Common.dialog('作品保存成功', function(){
                             Mananger.getWorkList();
                         })
+                        Page.isNew = false;
+                        Page.workListClick = false;
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
