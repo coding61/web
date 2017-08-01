@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var basePath="/program_girl";
 	var userId=1;
+	
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
@@ -23,49 +24,27 @@ $(document).ready(function() {
 		    	}
 		    }
 		});
-    	initSection();
-		/*myAjax2(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
-			zoneName=result.name;
-			$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
-		});*/
+    	myAjax2(basePath+"/forum/sections/","get",null,function(result){
+			$.each(result.results, function(k,v) {
+				var html='';
+				if(v.pk==zonePk){
+					html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
+				}else{
+					html='<option value="'+v.pk+'" >'+v.name+'</option>';
+				}
+				$(".zone_content").append(html);
+			});
+		},false);
     }); 
 
-//var userName=getCookie("userName");
-//var zonePk = getQueryString("pk");
-//if(userName) {
-//	userId=user.pk;
-//	userName=user.name;
-//}else{
-//	alert("请先登录");
-//	setTimeout("window.location.href='/s/login.html?targetUrl="+window.location.href+"'",500);
-//}
-//var basePath="http://10.144.238.71:8080/wodeworld/";
-//var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
-/*myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
-	if(result){
-		$('.avatar img').attr({src: result.avatar});//用户头像
-		$('.info .grade').html(result.grade.current_name);//用户段位等级
-		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
-		$('.zuan span').html("x"+result.diamond);
-		var percent = (parseInt(result.experience)-parseInt(result.grade.current_all_experience))/(parseInt(result.grade.next_all_experience)-parseInt(result.grade.current_all_experience))*$(".info-view").width();
-        $(".progress img").css({
-            width:percent
-        })
-	}else{
-	}
-})*/
-
 //获取当前社区
-
-$(function() {
-	$(".publish").click(function() {
+$(".publish").click(function() {
 		var title=$("#L_title").val();
 		var content=$("#L_content").val();
 		var type_txt=$(".type_content").siblings(".layui-form-select").find(".layui-this");
 		var zone_txt=$(".zone_content").siblings(".layui-form-select").find(".layui-this");
 		var typeId=type_txt.attr("lay-value");
 		var zoneId=zone_txt.attr("lay-value");
-		
 		if(!type_txt.length) {
 			layer.msg("请选择类别");
 			return false;
@@ -92,7 +71,7 @@ $(function() {
 			publish(title,zoneId,typeId,content)
 		}
 	})
-})
+
 function publish(title,zoneId,typeId,content) {
 	$.ajax({
 	        url: basePath+"/forum/posts_create/",
@@ -200,7 +179,7 @@ function initTypes(){
 	},false);
 }
 //initSection();
-	function initSection(){
+/*	function initSection(zonePk){
 		myAjax2(basePath+"/forum/sections/","get",null,function(result){
 			$.each(result.results, function(k,v) {
 				var html='';
@@ -213,4 +192,4 @@ function initTypes(){
 			});
 		},false);
 	}
-})
+*/})
