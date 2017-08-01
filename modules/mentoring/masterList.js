@@ -111,6 +111,13 @@ define(function(require, exports, module) {
             $('.become-master .submit-cancel').click(function(){
                 $('.become-master').hide();
             })
+
+            //去教室个人详情
+            $('.master-list').on('click', '.outer-div', function(){
+                var this_ = $(this);
+                sessionStorage.current_master_pk = this_.attr('data-pk');
+                location.href = './masterDetail.html?current_master_pk=' + this_.attr('data-pk');
+            })
         }
 	}
 

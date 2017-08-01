@@ -100,7 +100,7 @@
 							<span class="name">小仙女</span>
 							<span>LV 黄金3</span>
 							<span class="zuanshi-num">x420</span>
-							<button class="works-list-btn">查看作品</button>
+							<!-- <button class="works-list-btn">查看作品</button> -->
 							<button class="baishi-btn">拜师</button>
 						</div>
 						<div class="info-content-detail">
@@ -111,7 +111,7 @@
 			</div>
 			<div class="student-list">
 				<header class="title">
-					<span class="head-title">学员（56人）</span>
+					<span class="head-title">学员</span>
 				</header>
 				<section class="info-body">
 					<div class="student-list-avatar">
@@ -128,24 +128,36 @@
 					</div>
 				</section>
 			</div>
-			<div class="artical-list">
+			<div class="article-list">
 				<header class="title">
 					<span class="head-title">文章</span>
+					<i class="more-article">更多 >></i>
 				</header>
 				<section class="info-body">
+					
+				</section>
+				<script type="text/html" id="article-list-template">
+					{{each results}}
+					{{if $index < 5}}
 					<div class="info-body-div">
-						<div class="artical-banner">
-							<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="" width="90px" height="90px">
+						<div class="article-banner">
+							<img src="{{$value.images}}" alt="" width="90px" height="90px">
 						</div>
-						<div class="artical-content">
-							<p class="title">文章标题</p>
-							<p class="content-artical">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+						<div class="article-content">
+							<p class="title">{{$value.title}}</p>
+							<p class="content-article">{{$value.content}}</p>
 						</div>
-						<div class="artical-btn">
-							<button>购买文章</button>
+						<div class="article-btn">
+							{{if $value.isbuy == 'Yes' || isme}}
+							<button class="bought-btn" data-article_pk="{{$value.pk}}">阅读文章</button>
+							{{else}}
+							<button class="tobuy-btn" data-article_pk="{{$value.pk}}" data-diamond_amount="{{$value.diamond_amount}}">购买文章</button>
+							{{/if}}
 						</div>
 					</div>
-				</section>
+					{{/if}}
+					{{/each}}
+				</script>
 			</div>
 		</div>
 
@@ -175,6 +187,32 @@
 						<input type="password" placeholder="密码" />
 					</div>
 					<span class="login">确定</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- 购买文章弹窗 -->
+		<div class="buy-window">
+			<div>
+				<div class="win-title">
+					<span>X</span>
+				</div>
+				<p class="zuanshi-buy-num">购买此文章需要消耗<span>0</span>颗钻石</p>
+				<p>你确定要购买吗</p>
+				<div class="buy-submit">
+					<button>确定</button>
+				</div>
+			</div>
+		</div>
+		<!-- 拜师窗口 -->
+		<div class="baishi-window">
+			<div>
+				<div class="win-title">
+					<span>X</span>
+				</div>
+				<p class="zuanshi-buy-num">确定要拜<span>小仙女</span>为师吗？</p>
+				<div class="buy-submit">
+					<button>确定</button>
 				</div>
 			</div>
 		</div>
