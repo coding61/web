@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<!-- <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" /> -->
+		<title>师徒中心</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.3" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/mentoring/masterList.css?v=2.3" />
+	</head>
+
+	<body>
+	<!-- 头部信息 -->
+		<div class="header">
+			<div class="left-view">
+				<img class="logo1" style="height: 30px;" src="../../statics/images/logo2.png" />
+				<div class="right-line"></div>
+				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
+			</div>
+			<div class="middle-view">
+				<p style="width: 100%; text-align: center;">教师中心</p>
+			</div>
+			<div class="right-view">
+				<!-- <span class="luntan">学习论坛</span> -->
+
+				<div class="icon4 avatar">
+					<img class="item" src="../../statics/images/avatar.png" alt="">
+				</div>
+				<div class="info-view">
+					<div class="info">
+						<span class="grade item">LV 青铜1</span>
+						<span class="grade-value item">500/854</span>
+					</div>
+					<div class="progress item">
+						<img src="../../statics/images/progress.png" alt="">
+					</div>
+				</div>
+
+				<div class="icon3 zuan">
+					<img class="item" src="../../statics/images/icon3.png" alt="" />
+					<span class="item">x20</span>
+				</div>
+				
+				<!-- <div class="quit item">退出</div> -->
+
+				<div class="team-info">
+					<div class="team">
+						
+					</div>
+					<div class="teams-brand">
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<script type="text/html" id="team-template">
+			<img class="arrow" src="../../statics/images/arrow-d.png"/>
+			<div>我的团队</div>
+			<div class="members">
+				{{each group_member}}
+				<div class="member">
+					<span class="member-name">
+						<img class="avatar" src="{{$value.owner.avatar}}"/>
+						<span class="name">{{$value.owner.name}}</span>
+					</span>
+					<span class="gm">{{$value.owner.grade.current_name}}</span>
+				</div>
+				{{/each}}
+			</div>
+		</script>
+		<script type="text/html" id="teams-brand-template">
+			<div>团队排行</div>
+			{{each}}
+			<div class="team-brand">
+				<span class="name">{{$index+1}}.{{$value.name}}</span>
+				<span class="zn">
+					<img class="zuan" src="../../statics/images/zuan-s.png">
+					<span>x{{$value.diamond_amount}}</span>
+				</span>
+			</div>
+			{{/each}}
+		</script>
+
+		<div class="main-view">
+			<div class="main-tab">
+				<button class="btn-tab all-btn">全部教师</button>
+				<button class="btn-tab mine-btn">我的教师</button>
+				<button class="btn become-btn">成为教师</button>
+			</div>
+			<ul class="master-list">
+				
+			</ul>
+			<div style="text-align:center;width:100%;clear: both; background-color: #fff;">
+			    <ul class="pagination" id="pagination"></ul>
+			</div>
+			<script type="text/html" id="master-list-templete">
+				{{each}}
+				<li>
+					<div class="outer-div" data-pk="{{$value.pk}}">
+						<div class="master-avatar"><img src="{{$value.owner ? $value.owner.avatar : 'http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0'}}" alt="" width="100px" height="100px"></div>
+						<div class="master-content">
+							<p class="master-name">{{$value.owner ? $value.owner.name : '未知'}}</p>
+							<pre class="master-content-detail">{{$value.introduction}}</pre>
+						</div>
+					</div>
+				</li>
+				{{/each}}
+			</script>
+		</div>
+
+		<!-- 登录窗口 -->
+		<div class="login-shadow-view" style="display: none;">
+			<div class="login-view">
+				<div style="font-size: 30px;margin-bottom: 25px;color: white; display: none;">邀请码、密码请到战队中查询</div>
+				<div class="close">
+					<img style="display: none;" src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="login-info">
+					<div class="login-info-view">
+						<div class="info"><span>邀请码请到微信公众号领取</span></div>
+						<div class="wx-code">
+							<img src="../../statics/images/code.png">
+						</div>
+					</div>
+					
+				</div>
+				<div class="account-view">
+					<div class="username">
+						<span>邀请码</span>
+						<input placeholder="邀请码" />
+					</div>
+					<div class="password">
+						<span>密码</span>
+						<input type="password" placeholder="密码" />
+					</div>
+					<span class="login">确定</span>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 成为教师弹窗 -->
+		<div class="become-master">
+			<div>
+				<label for="" class="introduction">简介</label>
+				<textarea name="" id="" cols="60" rows="10" placeholder="请认真输入教师简介哦"></textarea>
+				<div class="submit-become">
+					<button class="submit-submit">提交</button>
+					<button class="submit-cancel">取消</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script type="text/javascript" src="../../libs/jqPaginator.min.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"mentoring": base + "/modules/mentoring",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("mentoring/masterList.js?v=2.3");
+	</script>
+
+</html>
+

@@ -2,10 +2,11 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
 
+    //初始化， 在分页的哪一页还有是全部教师还是我的教师
+    var url_page = sessionStorage.getItem('loadPage') ? sessionStorage.getItem('loadPage') : 1;
+    var loadMasterType = sessionStorage.getItem('loadMasterType') ? sessionStorage.getItem('loadMasterType') : 'allMaster';
+
 	var Page = {
-        isNew: false,
-        toPk: null,
-        workListClick: false,
 		init: function(){
 			// 当前浏览器
             if(Common.platform.isMobile){
@@ -25,22 +26,6 @@ define(function(require, exports, module) {
             }else{
                 Page.load();
             }
-			// 监听课程列表那里传过来的点击事件
-            window.addEventListener('message', function(e) {  
-            	var a = e.data;  
-                if (a == 'closeCodeEdit') {
-                    if (Page.isNew) {
-                        $('.save-new-work').show();
-                    } else {
-                        Mananger.editWork();
-                    }
-                } else {
-                    // 打开运行结果窗口，并赋值
-                    $(".code-result-shadow-view iframe").attr({src:a});
-                    $('.play-in-newwin').attr({href: a});
-                    $(".code-result-shadow-view").show();
-                }
-            }, false);
 		},
 		load:function(){
             // 判断用户是否登录
@@ -50,7 +35,16 @@ define(function(require, exports, module) {
                 Mananger.getInfo();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
-                Mananger.getWorkList(); //获取我的作品列表
+                //全部教师或我的教师
+                loadMasterType == 'allMaster' ? (
+                    Mananger.getMasterList(url_page, Mananger.pagination),
+                    $('.main-tab .btn').removeClass('active'),
+                    $('.all-btn').addClass('active')
+                ) : (
+                    Mananger.getMyMaster(url_page, Mananger.pagination),
+                    $('.main-tab .btn').removeClass('active'),
+                    $('.mine-btn').addClass('active')
+                );
 
                 Page.clickEvent();
             }else{
@@ -62,11 +56,6 @@ define(function(require, exports, module) {
             
         },
         clickEvent:function(){
-            // 关闭运行代码结果窗口
-            $(".code-result .close img").unbind('click').click(function(){
-                $(".code-result-shadow-view").hide();
-            })
-
             // 关闭登录窗口
             $(".login-view .close img").unbind('click').click(function(){
                 $(".login-shadow-view").hide();
@@ -89,16 +78,12 @@ define(function(require, exports, module) {
             $(".header .logo2").unbind('click').click(function(){
                 window.open("https://www.cxy61.com");
             })
-            $(".header .logo1").unbind('click').click(function(){
-                location.href = './worksList.html';
-            })
 
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
                 // $(".header .team-info").show();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
-                Mananger.getWorkList(); //获取我的作品列表
 
                 Util.adjustTeaminfo();
                 $(".header .team-info").toggle();
@@ -109,72 +94,30 @@ define(function(require, exports, module) {
 
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
-                location.href = './worksList.html';
+                window.open("../../cxyteam_forum/bbs.html");
             })
 
-            //新建
-            $('.createNew').click(function(){
-                Page.isNew = true;
-                localStorage.removeItem('htmlCode');
-                localStorage.removeItem('jsCode');
-                $('#codeEdit').attr('src', $('#codeEdit').attr('src'));
-                $('.right-view img').hide();
-                $('.right-view .codeEdit').show();
+            //全部教师  || 我的教师
+            $('.all-btn, .mine-btn').click(function(){
+                Mananger.masterTypeChange($(this));
+            })
+            //成为教师
+            $('.become-btn').click(function(){
+                $('.become-master').show();
+            })
+            $('.become-master .submit-submit').click(function(){
+                Mananger.becomeMaster();
+            })
+            $('.become-master .submit-cancel').click(function(){
+                $('.become-master').hide();
             })
 
-            //点击某个作品
-            $('.works-list').on('click', 'li', function(){
-                if (Page.isNew && (!!localStorage.htmlCode || !!localStorage.jsCode)) {
-                    $('.save-new-work').show();
-                    Page.toPk = $(this).attr('data-pk');
-                    Page.isNew = false;
-                    Page.workListClick = true;
-                } else {
-                    Page.toPk = $(this).attr('data-pk');
-                    Page.isNew = false;
-                    Mananger.getWorkDetail($(this).attr('data-pk'));
-                }
-            })
-
-            //保存新作品
-            $('.save-btn').click(function(){
-                Page.isNew = false;
-                Page.workListClick = false;
-                Mananger.saveWork();
-            })
-            $('.save-cancel-btn').click(function(){
-                if (!Page.workListClick) {
-                    $('.save-new-work').hide();
-                } else {
-                    $('.save-new-work').hide();
-                    Mananger.getWorkDetail(Page.toPk);
-                }
-                Page.workListClick = false;
-            })
-
-            //作品上首页
-            $('.works-list').on('click', '.show-home', function(e){
-                e.stopPropagation();
+            //去教室个人详情
+            $('.master-list').on('click', '.outer-div', function(){
                 var this_ = $(this);
-                Mananger.getWorkDetail($(this).parent().parent().attr('data-pk'), function(){
-                    location.href = './workSave.html?work_pk=' + this_.parent().parent().attr('data-pk') + '&work_name=' + this_.attr('data-name');
-                });
+                sessionStorage.current_master_pk = this_.attr('data-pk');
+                location.href = './masterDetail.html?current_master_pk=' + this_.attr('data-pk');
             })
-            //删除作品
-            $('.works-list').on('click', '.works-drop', function(e){
-                e.stopPropagation();
-                var this_ = $(this);
-                Common.bcAlert('确定删除此作品？', function(){
-                    Mananger.dropWork(this_.parent().parent().attr('data-pk'));
-                })
-            })
-
-            //鼠标移入事件
-            $('.works-list').on('mouseenter','li', function (event) {
-				$(this).addClass('active');
-			}).on('mouseleave','li',  function(){
-				$(this).removeClass('active');
-			});
         }
 	}
 
@@ -198,15 +141,23 @@ define(function(require, exports, module) {
                     password:$(".account-view .password input").val()
                 },
                 success:function(json){
+                    console.log(json);
                     localStorage.token = json.token;
 
                     Mananger.getInfo();
-
-                    window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
-
                     Mananger.loadMyTeam();  // 获取我的团队信息
                     Mananger.loadTeamBrand();  //获取团队排行
-                    Mananger.getWorkList(); //获取我的作品列表
+                    //全部教师或我的教师
+                    loadMasterType == 'allMaster' ? (
+                        Mananger.getMasterList(url_page, Mananger.pagination),
+                        $('.main-tab .btn').removeClass('active'),
+                        $('.all-btn').addClass('active')
+                    ) : (
+                        Mananger.getMyMaster(url_page, Mananger.pagination),
+                        $('.main-tab .btn').removeClass('active'),
+                        $('.mine-btn').addClass('active')
+                    );
+
                     // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
                 },
                 error:function(xhr, textStatus){
@@ -322,21 +273,29 @@ define(function(require, exports, module) {
                 })
             })
         },
-        getWorkList: function(){
+        getMasterList: function(page, callback){
             Common.isLogin(function(token){
                 $.ajax({
-                    type: 'get',
-                    url: Common.domain + '/userinfo/myexercises/',
-                    headers:{
-                        Authorization:"Token " + token
+                    type: 'GET',
+                    url: Common.domain + '/teacher/teachers/',
+                    headers: {
+                        'Authorization': 'Token ' + token
                     },
                     timeout: 8000,
                     success: function(json){
-                        var html = ArtTemplate('works-list-template', json);
-                        $('.works-list').html(html);
+                        if (json.count > 0) {
+                            if (json.results[0].isteacher != 'Yes') {
+                                $('.become-btn').show();
+                            }
+                            var html = ArtTemplate('master-list-templete', json.results);
+                            $('.master-list').html(html);
+                            typeof callback == 'function' ? callback(json.count) : '';
+                        } else {
+                            $('.master-list').html('<div style="width: 100%; text-align: center; font-size: 18px;">当前没有教师</div>');
+                            typeof callback == 'function' ? callback(0) : '';
+                        }
                     },
                     error: function(xhr, textStatus){
-                        Common.hideLoading();
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
                             return;
@@ -348,24 +307,29 @@ define(function(require, exports, module) {
                             Common.dialog('服务器繁忙');
                             return;
                         }
-                    }
+                    },
+                    complete: function(){}
                 })
             })
         },
-        getWorkDetail: function(pk, callback){
-            Common.isLogin(function(){
+        getMyMaster: function(page, callback){
+            Common.isLogin(function(token){
                 $.ajax({
-                    type: 'get',
-                    url: Common.domain + '/userinfo/myexercises/' + pk + '/',
+                    type: 'GET',
+                    url: Common.domain + '/teacher/myteachers/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
                     timeout: 8000,
                     success: function(json){
-                        localStorage.htmlCode = json.html;
-                        localStorage.jsCode = json.js;
-                        localStorage.cssCode = json.css;
-                        $('#codeEdit').attr('src', $('#codeEdit').attr('src'));
-                        $('.right-view img').hide();
-                        $('.right-view .codeEdit').show();
-                        typeof callback == 'function' ? callback() : '';
+                        if (json.count > 0) {
+                            var html = ArtTemplate('master-list-templete', json.results);
+                            $('.master-list').html(html);
+                            typeof callback == 'function' ? callback(json.count) : '';
+                        } else {
+                            $('.master-list').html('<div style="width: 100%; text-align: center; font-size: 18px;">您还没有拜师哦!</div>');
+                            typeof callback == 'function' ? callback(0) : '';
+                        }
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -379,102 +343,66 @@ define(function(require, exports, module) {
                             Common.dialog('服务器繁忙');
                             return;
                         }
-                    }
+                    },
+                    complete: function(){}
                 })
             })
         },
-        dropWork: function(pk){
-            Common.isLogin(function(token) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: Common.domain + '/userinfo/myexercises/' + pk + '/',
-                    headers:{
-                        Authorization:"Token " + token
-                    },
-                    timeout: 12000,
-                    success: function(json){
-                        console.log(json);
-                        Mananger.getWorkList();
-                    },
-                    error: function(xhr, textStatus){
-                        if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            return;
-                        }else{
-                            Common.dialog('服务器繁忙');
-                            return;
-                        }
-                    }
-                })
-            })
+        masterTypeChange: function(this_){
+            url_page = 1;
+            sessionStorage.setItem('loadPage',url_page);
+            $('.main-tab .btn-tab').removeClass('active');
+            this_.addClass('active');
+            this_.hasClass('all-btn') ? (function(){
+                Mananger.getMasterList(1, Mananger.pagination);
+                loadMasterType = 'allMaster';
+                sessionStorage.setItem('loadMasterType', 'allMaster');
+            }()) : (function(){
+                Mananger.getMyMaster(1, Mananger.pagination)
+                loadMasterType = 'mineMaster';
+                sessionStorage.setItem('loadMasterType', 'mineMaster');
+            }())
         },
-        saveWork: function(){
-            var work_name = $.trim($('.save-new-work-input').val());
-            if (!work_name || work_name == '') {
-                Common.dialog('请输入作品名');
-                return;
+        pagination: function(all){
+            if (all == 0) {
+                var total = 1;
+                var visibleNum = 1;
+            } else {
+                var total = Math.ceil(all / 10);
+                var visibleNum = total > 5 ? 5 : total;            
             }
+            $.jqPaginator('#pagination', {
+                totalPages: parseInt(total),
+                visiblePages: parseInt(visibleNum),
+                currentPage: parseInt(url_page),
+                // first: '<li class="first"><a href="javascript:;">首页</a></li>',
+                prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
+                next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
+                // last: '<li class="last"><a href="javascript:;">末页</a></li>',
+                page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+                onPageChange: function(num, type) {
+                    if (type == "change") {
+                        loadMasterType == 'allMaster' ? Mananger.getMasterList(num) : Mananger.getMyMaster(num);
+                        sessionStorage.setItem('loadPage',num);
+                    }
+                }
+            });
+        },
+        becomeMaster: function(){
             Common.showLoading();
             Common.isLogin(function(token){
                 $.ajax({
                     type: 'POST',
-                    url: Common.domain + '/userinfo/myexercise_create/',
+                    url: Common.domain + '/teacher/become_teacher/',
                     headers: {
                         'Authorization': 'Token ' + token
                     },
                     data: {
-                        'name': work_name,
-                        'html': localStorage.htmlCode ? localStorage.htmlCode : '',
-                        'css': localStorage.cssCode ? localStorage.cssCode : '',
-                        'js': localStorage.jsCode ? localStorage.jsCode : ''
-                    },
-                    timeout: 12000,
-                    success: function(json){
-                        Common.dialog('作品保存成功', function(){
-                            Mananger.getWorkList();
-                        })
-                    },
-                    error: function(xhr, textStatus){
-                        if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail || JSON.parse(xhr.responseText).name[0]);
-                            return;
-                        }else{
-                            Common.dialog('服务器繁忙');
-                            return;
-                        }
-                    },
-                    complete: function(){
-                        Common.hideLoading();
-                        $('.save-new-work').hide();
-                    }
-                })
-            })
-        },
-        editWork: function(){
-            Common.showLoading();
-            Common.isLogin(function(token){
-                $.ajax({
-                    type: 'PATCH',
-                    url: Common.domain + '/userinfo/myexercises/' + Page.toPk + '/',
-                    headers: {
-                        'Authorization': 'Token ' + token
-                    },
-                    data: {
-                        'html': localStorage.htmlCode ? localStorage.htmlCode : '',
-                        'css': localStorage.cssCode ? localStorage.cssCode : '',
-                        'js': localStorage.jsCode ? localStorage.jsCode : ''
+                        'introduction': $.trim($('.become-master textarea').val())
                     },
                     timeout: 8000,
                     success: function(json){
-                        Common.dialog('保存成功');
+                        console.log(json)
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -482,7 +410,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail || JSON.parse(xhr.responseText).name[0]);
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
                             Common.dialog('服务器繁忙');
@@ -491,6 +419,7 @@ define(function(require, exports, module) {
                     },
                     complete: function(){
                         Common.hideLoading();
+                        $('.become-master').hide();
                     }
                 })
             })

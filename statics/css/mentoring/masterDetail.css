@@ -151,7 +151,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 30%;
+    width: 40%;
 }
 .header .right-view .info-view .info{
     margin-bottom: 2%;
@@ -261,6 +261,7 @@ body{
     width: 900px;
     min-height: 100%;
     margin: 0 auto;
+    border: 1px solid #ccc;
     background-color: #fff;
 }
 @media (min-width: 1500px) {
@@ -273,100 +274,193 @@ body{
         width: 1400px;
     }
 }
-
-.main-view .create-btn{
-    text-align: center;
+.main-view > div{
+    padding: 15px 30px;
+    border-bottom: 1px solid #ccc;
 }
-.main-view .create-btn a{
-    display: inline-block;
-    margin: 30px auto;
-    padding: 15px 100px;
-    border-radius: 3px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #ff92b1;
+.main-view > div:last-child{
+    border-bottom: none;
+    padding-right: 0;
 }
-.main-view .create-btn a:hover{
-    background-color: rgb(250, 80, 131);
-}
-
-/*
-*列表这里布局，用flex控制li元素
-*li元素用padding-top控制高度等于宽度,直接子元素div绝对定位,并跟父级的li等高等宽。
-*@author: gaoxj
-*/
-.main-view .works-list{
-    display: -webkit-flex;
-    display: flex;
-    flex-wrap: wrap;
-}
-.main-view .works-list li{
+.main-view header.title{
     position: relative;
-    width: 25%;
-    height: 0;
-    padding-top: 25%;
-    margin-bottom: 30px;
-    text-align: center;
+    background-color: #fff;
+    text-align: left;
+    font-size: 15px;
+    color: #666;
 }
-.main-view .works-list li > div{
-    position: absolute;
+.main-view header.title .head-title{
+    display: inline-block;
+    line-height: 34px;
+    width: 120px;
+    border-bottom: 2px solid #bcbcbc;
+}
+.student-list-avatar{
+    margin-top: 20px;
+}
+.student-list-avatar img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.info-body > div{
+    display: inline-block;
+    margin-top: 15px;
+    padding: 5px 5px 5px 0;
+    vertical-align: top;
+}
+.info-body .master-info-content{
+    width: calc(100% - 150px);
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 13px;
+    color: #666;
+}
+.info-content-title > button{
+    float: right;
+    width: 80px;
+    line-height: 28px;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.info-content-title > button.baishi-btn{
+    background-color: rgb(250, 80, 131);
+    color: #fff;
+}
+.info-body .master-info-content .info-content-title > span{
+    margin-right: 15px;
+}
+.info-body .master-info-content .info-content-title > span.name{
+    font-size: 14px;
+    color: #444;
+}
+.info-body .master-info-content .info-content-detail{
+    margin-top: 15px;
+    
+}
+.info-body .master-info-content .info-content-detail p{
+    width: calc(100% - 150px);
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+}
+.zuanshi-num{
+    background-image: url(../../images/icon3.png);
+    padding-left: 20px;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: left center;
+}
+.info-body-div > div{
+    display: inline-block;
+    vertical-align: top;
+}
+.info-body .info-body-div{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    width: 100%;
+    cursor: pointer;
+}
+.article-content{
+    width: calc(100% - 300px);
+    margin-left: 15px;
+    font-size: 13px;
+    color: #666;
+}
+.article-content .title{
+    font-size: 14px;
+    color: #444;
+}
+.content-article{
+    margin-top: 15px;
+    width: 100%;
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+.article-btn{
+    width: 160px;
+    text-align: center;
+    line-height: 100px;
+}
+.article-btn button{
+    width: 80px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.more-article{
+    font-style: normal;
+    float: right;
+    margin-right: 30px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.buy-window, .baishi-window{
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 10001;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+}
+.buy-window > div, .baishi-window > div{
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 180px;
+    display: inline-block;
+    width: 260px;
+    height: 160px;
     overflow: hidden;
 }
-.main-view .works-list li > div .works-content{
-    position: relative;
-    display: block;
-    margin: 30px;
-    width: calc(100% - 60px);
-    height: calc(100% - 60px);
-    background-color: #f6f6f6;
+.buy-window > div .win-title, .baishi-window > div .win-title{
+    line-height: 26px;
+    text-align: right;
+    background-color: rgb(250, 80, 131);
+    color: #fff;
 }
-.main-view .works-list .works-content .works-banner{
-    width: 100%;
-    height: 70%;
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: contain;
-}
-.main-view .works-list .works-content p{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: -webkit-calc(100% - 20px);
-    width: -moz-calc(100% - 20px);
-    width: -o-calc(100% - 20px);
-    width: calc(100% - 20px);
+.win-title > span{
     padding: 5px 10px;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 12px;
-    color: #444;
+    cursor: pointer;
 }
-.main-view .works-list .works-content .work-name{
-    bottom: 20px;
+.buy-window > div p, .baishi-window > div p{
     font-size: 14px;
+    margin: 15px 0;
 }
-.main-view .works-list .works-content .author-name{
-    display: block;
-    width: 50%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.buy-window > div p.zuanshi-buy-num{
+    margin-top: 20px;
+}
+.baishi-window > div p.zuanshi-buy-num{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.zuanshi-buy-num span{
     color: rgb(250, 80, 131);
 }
-.main-view .works-list .works-content .create-time{
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
-    color: #999;
+.buy-submit button, .baishi-window button{
+    background-color: rgb(250, 80, 131);
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    cursor: pointer;
 }
-/****/
 
 /*登录视图*/
 .login-view .close{
@@ -493,111 +587,3 @@ body{
     flex-direction: column;
 }
 /*登录视图*/
-
-
-
-
-/*分页*/
-.pagination {
-    display:inline-block;
-    padding-left:0;
-    margin:20px 0;
-    border-radius:4px
-}
-.pagination>li {
-    display:inline
-}
-.pagination>li>a,.pagination>li>span {
-    position:relative;
-    float:left;
-    padding:6px 12px;
-    line-height:1.42857143;
-    text-decoration:none;
-    color:#428bca;
-    background-color:#fff;
-    border:1px solid #ddd;
-    margin-left:-1px
-}
-.pagination>li:first-child>a,.pagination>li:first-child>span {
-    margin-left:0;
-    border-bottom-left-radius:4px;
-    border-top-left-radius:4px
-}
-.pagination>li:last-child>a,.pagination>li:last-child>span {
-    border-bottom-right-radius:4px;
-    border-top-right-radius:4px
-}
-.pagination>li>a:hover,.pagination>li>span:hover,.pagination>li>a:focus,.pagination>li>span:focus {
-    color:#2a6496;
-    background-color:#eee;
-    border-color:#ddd
-}
-.pagination>.active>a,.pagination>.active>span,.pagination>.active>a:hover,.pagination>.active>span:hover,.pagination>.active>a:focus,.pagination>.active>span:focus {
-    z-index:2;
-    color:#fff;
-    background-color:#428bca;
-    border-color:#428bca;
-    cursor:default
-}
-.pagination>.disabled>span,.pagination>.disabled>span:hover,.pagination>.disabled>span:focus,.pagination>.disabled>a,.pagination>.disabled>a:hover,.pagination>.disabled>a:focus {
-    color:#999;
-    background-color:#fff;
-    border-color:#ddd;
-    cursor:not-allowed
-}
-.pagination-lg>li>a,.pagination-lg>li>span {
-    padding:10px 16px;
-    font-size:18px
-}
-.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span {
-    border-bottom-left-radius:6px;
-    border-top-left-radius:6px
-}
-.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span {
-    border-bottom-right-radius:6px;
-    border-top-right-radius:6px
-}
-.pagination-sm>li>a,.pagination-sm>li>span {
-    padding:5px 10px;
-    font-size:12px
-}
-.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span {
-    border-bottom-left-radius:3px;
-    border-top-left-radius:3px
-}
-.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span {
-    border-bottom-right-radius:3px;
-    border-top-right-radius:3px
-}
-.pager {
-    padding-left:0;
-    margin:20px 0;
-    list-style:none;
-    text-align:center
-}
-.pager li {
-    display:inline
-}
-.pager li>a,.pager li>span {
-    display:inline-block;
-    padding:5px 14px;
-    background-color:#fff;
-    border:1px solid #ddd;
-    border-radius:15px
-}
-.pager li>a:hover,.pager li>a:focus {
-    text-decoration:none;
-    background-color:#eee
-}
-.pager .next>a,.pager .next>span {
-    float:right
-}
-.pager .previous>a,.pager .previous>span {
-    float:left
-}
-.pager .disabled>a,.pager .disabled>a:hover,.pager .disabled>a:focus,.pager .disabled>span {
-    color:#999;
-    background-color:#fff;
-    cursor:not-allowed
-}
-/*分页*/

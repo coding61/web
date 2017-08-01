@@ -1,18 +1,22 @@
-.container-fluid{
-  background-color: #ffecf1;
-}
 .navWai .right-view {
 	display: flex;
     flex: 1;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    /*margin-right: calc(5%);*/
+    margin-right: calc(5%);
     position: relative;
 }
+
+.article {
+	width: 81.5%;
+	margin-left: 9.25%;
+}
+
 .avatar{
    margin-right: 2%;
 }
+
 .avatar .item {
     height: 25px;
     width: 25px;
@@ -44,29 +48,6 @@
     position: relative;
     margin-bottom: 0px;
 }
-.layui-edit-face ul {
-    position: relative;
-    width: 300px ! important;
-    padding: 10px;
-    border: 1px solid #D9D9D9;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0,0,0,.2);
-}
-.layui-btn {
-    display: inline-block;
-    padding: 0 23px ! important;
-    height: 38px;
-    line-height: 38px;
-    background-color: #009688;
-    color: #fff;
-    white-space: nowrap;
-    text-align: center;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    opacity: .9;
-    filter: alpha(opacity=90);
-}
 .info-view .progress img {
     position: absolute;
     left: 0;
@@ -88,28 +69,13 @@
   color: #fff;
 }
 .main {
-	margin-top:49px;
-  background-color: white;
-  width: 70%;
-  border: 1px solid #dadada;
+	margin-top:120px;
 }
 .main .layui-form-pane .layui-form-label {
 	width:112px;
 }
 .copy-reply_textarea{
-	
-}
-.jieda-body {
-    margin: 0px 0 8px;
-    min-height: 0;
-    line-height: 24px;
-    font-size: 14px;
-}
-.detail-about >span, .jie-about span, .detail-about .jie-user {
-    display: inline-block;
-    vertical-align: top;
-    font-size: 12px;
-    padding: 20px 20px 0 10px;
+
 }
 .btn-left{
 	float: right;
@@ -117,51 +83,29 @@
 .post_del {
 	cursor:pointer;
 }
+.postsEssence {
+  cursor: pointer;
+}
+.postsTop {
+  cursor: pointer;
+}
 .jie-add {
 	position:static;
-  font-size: 14px;
-  height: 26px;
-  text-align: center;
-  line-height: 26px;
-  color: #4c4c4c;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 80px;
-  background-color: white;
 }
 #jieda .moreReply{
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  margin-left: calc((100% - 100px)/2);
   cursor: pointer;
-  font-size: 14px;
-  background: #fff;
 }
 .post_btn {
-	/*margin-bottom:44px;*/
-}
-.post_btn .jie-add1 {
-  font-size: 14px;
-  height: 26px;
-  text-align: center;
-  line-height: 26px;
-  color: #4c4c4c;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 80px;
-  background-color: white;
-  display: inline-block;
-  border: none;
+	margin-bottom:44px;
 }
 .reply_content {
 	background-color:white;
 	margin-top:20px;
 }
 ul.post_reply>li{
-	 /*padding:15px;*/
-	 background-color:#eef; 
+	 padding:15px;
+	 background-color:#eef;
 	 border:1px solid #ddd;
 	 margin-bottom:10px;
 }
@@ -187,9 +131,7 @@ ul.reply_mess>li .reply_txt {
 	width:100%;
 	word-wrap:break-word;
 }
-.layui-fixbar li{
-      margin-bottom: 145px;
-}
+
 /*******************/
 .nav .top-nav a, .nav .login a {
     padding: 0;
@@ -210,85 +152,49 @@ ul.reply_mess>li .reply_txt {
 	text-indent: 0;
 }
 
-.post_user .grade{
-  margin-top: 10px;
+.post_user .grade{left: 22px;position: absolute;margin-top: 43px;}
+
+.wrap .changeStatus {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    /*display: none;*/
 }
-.post_del{
-    color: red;
-    font-size: 16px;
-    margin-top: 20px;
+.wrap .changeStatus .solved {
+    height: 36px;
+    /* line-height: 36px; */
+    padding: 5px 20px;
+    border: 1px solid #009E94;
+    background-color: white;
+    font-size: 14px;
+    color: #777;
     cursor: pointer;
 }
-.post_content .posContentDate{
-    position: absolute;
-    bottom: 0px;
-    /* float: right; */
-    right: -50px;
-    /* margin-top: 10px; */
+.wrap .changeStatus .unsolved {
+    height: 36px;
+    /* line-height: 36px; */
+    padding: 5px 20px;
+    border: 1px solid #009E94;
+    background-color: white;
     font-size: 14px;
-    width: 150px;
-    text-align: center;
+    color: #777;
+    cursor: pointer;
 }
-.post_content .replyContentDate{
-  position: absolute;
-  bottom: 0px;
-  /*float: right;*/
-  right: 10px;
-  /*margin-top: 10px*/
-  font-size: 14px;
-    width: 150px;
-    text-align: center;
+.wrap .changeStatus .finish {
+    height: 36px;
+    /* line-height: 36px; */
+    padding: 5px 20px;
+    border: 1px solid #009E94;
+    background-color: white;
+    font-size: 14px;
+    margin-left: 20px;
+    color: #777;
+    cursor: pointer;
 }
-.detail-about .jie-user img {
-    display: block;
-    border-radius: 100%;
-    margin-left: 16px; 
-}
-
-.post_content .huifuDel{
-  position: absolute;
-  right: 70px;
-  top: 60px;
-  font-size: 14px;
-  cursor: pointer;
-
-}
-.post_content .tieReply{
-  position: absolute;
-  right: 60px;
-  bottom: 10px;
-  font-size: 14px;
-  color: rgb(250, 80, 131);
-  cursor: pointer;
-}
-.copy_reply_textarea {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-}
-.layui-btn{
-
-}
-.layui-form-item {
-    background: #fff;
-    margin-bottom: 0px;
-    clear: both;
-}
-.global-reply .layui-form {
- 
-}
-.global-reply .layui-textarea {
-  
-}
-.post_reply .grade{
- 
-}
-.post_reply .grade .gradeImg{
-
-}
-.post_reply .grade .reGrade{
-
+.wrap .fly-list-hint .collectBtn {
+    width: 16px;
+    height: 16px;
+    margin-top: -4px;
 }
 /*经验值*/
 .grow-number-ani{
@@ -299,41 +205,9 @@ ul.reply_mess>li .reply_txt {
     bottom: 48%;
     font-family: -webkit-pictograph;
     color: gray;
-    padding: 8px 15px; 
+    padding: 8px 15px;
 }
-.detail-about{
 
-}
-.detail-body {
-    padding: 10px 20px 10px 10px;
-    font-size: 16px;
-    background-color: #eef;
-    min-height: 70px;
-}
-.detail-about .post_user {
-  width:300px;
-  height: 100px;
-}
-.detail-about .jie-user cite {
-    color: #4f99cf;
-    text-align: center;
-    margin-top: 10px;
-}
-.detail-about >span, .jie-about span, .detail-about .jie-userabout .jie-user {
-    display: inline-block;
-    vertical-align: top;
-    font-size: 12px;
-    padding:0 ! important;
-}
-.jie-user {
-    display: inline-block;
-    vertical-align: top;
-    font-size: 12px;
-    padding: 0px;
-}
-.detail-about .no-oneImg {
-    background-color: #fcfcfc;
-}
 /*渐入渐出*/
 @keyframes fadeInExperience {
    0% {
