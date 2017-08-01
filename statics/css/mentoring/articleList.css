@@ -309,6 +309,7 @@ body{
 }
 
 .cover {
+	cursor:pointer;
     margin-left: 4.6%;
     max-width: 100px;
     max-height: 100px;
@@ -331,6 +332,7 @@ body{
 }
 
 .item-title {
+	cursor: pointer;
     font-size: 20px;
     line-height: 20px;
     padding-bottom: 30px;
@@ -341,6 +343,7 @@ body{
 }
 
 .item-content {
+	cursor: pointer;
     font-size: 16px;
     color: #838485;
     display: -webkit-box;
