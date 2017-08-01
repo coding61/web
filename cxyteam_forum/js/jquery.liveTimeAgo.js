@@ -58,14 +58,14 @@
                 return options.translate['days'].replace('%', diff.day);
             } else if (diff.day == 1) {
                 return options.translate['day'].replace('%', diff.day);
-            } else if (diff.month > 1) {
-                return options.translate['months'].replace('%', diff.month);
-            } else if (diff.month == 1) {
-                return options.translate['month'].replace('%', diff.month);
             } else if (diff.hour > 1) {
                 return options.translate['hours'].replace('%', diff.hour);
             } else if (diff.hour == 1) {
                 return options.translate['hour'].replace('%', diff.hour);
+            } else if (diff.month > 1) {
+                return options.translate['months'].replace('%', diff.month);
+            } else if (diff.month == 1) {
+                return options.translate['month'].replace('%', diff.month);
             } else if (diff.min > 1) {
                 return options.translate['minutes'].replace('%', diff.min);
             } else if (diff.min == 1) {
