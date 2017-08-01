@@ -7,24 +7,6 @@ $(document).ready(function() {
     	token=json.token;
     	zonePk=json.pk;
     	$.ajax({
-		    url: basePath+"/userinfo/whoami/",
-		    type: 'get',
-		    headers: {
-		        Authorization: 'Token ' + token
-		    },
-		    data:null,
-		    success: function(result){
-		    	userName=result.name;
-		    },
-		    error:function(XMLHttpRequest){
-		    	if(XMLHttpRequest.status==403){
-		    		layer.msg("");
-		    	}else{
-		    		layer.msg("暂未登录")
-		    	}
-		    }
-		});
-		$.ajax({
 	        url: basePath+"/forum/sections/",
 	        type: "get",
 	        //async:async==null?true:async,
@@ -48,19 +30,9 @@ $(document).ready(function() {
 	        		layer.msg("请求异常")
 	        	}
 	        }
-	  });
-    	/*myAjax2(basePath+"/forum/sections/","get",null,function(result){
-			$.each(result.results, function(k,v) {
-				var html='';
-				if(v.pk==zonePk){
-					html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
-				}else{
-					html='<option value="'+v.pk+'" >'+v.name+'</option>';
-				}
-				$(".zone_content").append(html);
-			});
-		},false);*/
+	  	});
     }); 
+
 
 //获取当前社区
 $(".publish").click(function() {
