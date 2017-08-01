@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-    var current_master_pk = Common.getQueryString('current_master_pk') ? Common.getQueryString('current_master_pk') : null;
+    var current_master_pk = Common.getQueryString('current_master_pk') ? Common.getQueryString('current_master_pk') : 'no_pk';
 
 	var Page = {
 		init: function(){
@@ -190,7 +190,8 @@ define(function(require, exports, module) {
                         
                         Util.updateInfo(json);
 
-                        if (json.pk == current_master_pk) {
+                        if (json.pk == current_master_pk || current_master_pk == 'no_pk') {
+                            current_master_pk = json.pk;
                             Mananger.getAllArticle('isme');  //获取文章列表
                             Mananger.getMasterInfo('isme');  //获取教师详情
                         } else {
