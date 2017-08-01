@@ -117,6 +117,9 @@ define(function(require, exports, module) {
             $('.baishi-window .win-title span').click(function(){
                 $('.baishi-window').hide();
             })
+            $('.baishi-window .buy-submit button').click(function(){
+                Mananger.baishiFn();
+            })
 
             //跳转文章列表
             $('.more-article').click(function(){
@@ -186,8 +189,10 @@ define(function(require, exports, module) {
 
                         if (json.pk == current_master_pk) {
                             Mananger.getAllArticle('isme');  //获取文章列表
+                            Mananger.getMasterInfo('isme');  //获取教师详情
                         } else {
                             Mananger.getAllArticle();  //获取文章列表
+                            Mananger.getMasterInfo();  //获取教师详情
                         }
                     },
                     error:function(xhr, textStatus){
@@ -273,8 +278,35 @@ define(function(require, exports, module) {
                 })
             })
         },
-        getMasterInfo: function(){
-            
+        getMasterInfo: function(who){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/teachers/' + current_master_pk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        json.isme = (who && who == 'isme' ? true : false);
+                        var html = ArtTemplate('master-info-template', json);
+                        $('.master-info .info-body').html(html);
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
         },
         getAllStudents: function(){
             Common.isLogin(function(token){
@@ -373,6 +405,36 @@ define(function(require, exports, module) {
                     },
                     complete: function(){
                         $('.buy-window').hide();
+                    }
+                })
+            })
+        },
+        baishiFn: function(){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/teacher/become_student/' + current_master_pk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.dialog('恭喜您拜师成功', function(){
+                            $('.baishi-btn').hide();
+                        })
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
                     }
                 })
             })

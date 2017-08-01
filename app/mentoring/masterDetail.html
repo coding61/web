@@ -92,22 +92,27 @@
 					<span class="head-title">个人信息</span>
 				</header>
 				<section class="info-body">
+					
+				</section>
+				<script type="text/html" id="master-info-template">
 					<div class="master-avatar">
-						<img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" alt="" width="120px" height="120px">
+						<img src="{{owner.avatar}}" alt="" width="120px" height="120px">
 					</div>
 					<div class="master-info-content">
 						<div class="info-content-title">
-							<span class="name">小仙女</span>
-							<span>LV 黄金3</span>
-							<span class="zuanshi-num">x420</span>
+							<span class="name">{{owner.name}}</span>
+							<span>LV {{owner.grade.current_name}}</span>
+							<span class="zuanshi-num">x{{owner.diamond}}</span>
 							<!-- <button class="works-list-btn">查看作品</button> -->
+							{{if !(isme || ismyteacher == 'Yes')}}
 							<button class="baishi-btn">拜师</button>
+							{{/if}}
 						</div>
 						<div class="info-content-detail">
-							<p>简介：我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！我是一个小仙女。我很开心，哈哈哈哈！</p>
+							<p>简介：{{introduction}}</p>
 						</div>
 					</div>
-				</section>
+				</script>
 			</div>
 			<div class="student-list">
 				<header class="title">
