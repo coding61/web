@@ -54,11 +54,7 @@
                 return options.translate['years'].replace('%', diff.year);
             } else if (diff.year == 1) {
                 return options.translate['year'].replace('%', diff.year);
-            } else if (diff.month > 1) {
-                return options.translate['months'].replace('%', diff.month);
-            } else if (diff.month == 1) {
-                return options.translate['month'].replace('%', diff.month);
-            } else if (diff.day > 1) {
+            } else if (diff.day > 1 && diff.day < 30) {
                 return options.translate['days'].replace('%', diff.day);
             } else if (diff.day == 1) {
                 return options.translate['day'].replace('%', diff.day);
@@ -66,6 +62,10 @@
                 return options.translate['hours'].replace('%', diff.hour);
             } else if (diff.hour == 1) {
                 return options.translate['hour'].replace('%', diff.hour);
+            } else if (diff.month > 1) {
+                return options.translate['months'].replace('%', diff.month);
+            } else if (diff.month == 1) {
+                return options.translate['month'].replace('%', diff.month);
             } else if (diff.min > 1) {
                 return options.translate['minutes'].replace('%', diff.min);
             } else if (diff.min == 1) {

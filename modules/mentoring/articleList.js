@@ -1,12 +1,8 @@
 define(function(require, exports, module) {
 	var Common = require('common/common.js?v=1.1');
-	var teacherPk = Common.getQueryString("pk");
-	// var teacherPk = localStorage.current_master_pk ? localStorage.current_master_pk : null;
-	// if (teacherPk == null) {
-	// 	Common.dialog("未获取到教师pk值");
-	// }
+	var teacherPk = Common.getQueryString("current_master_pk");
 	var myPk = null;
-	var isMySelf = false;
+	var isMySelf = Common.getQueryString("ismyself");
 	var totalPages = 1;
 	var requestURL = Common.domain + "/teacher/articles/" + teacherPk + "/?page=1";
 	var currentPage = 1;
@@ -45,7 +41,7 @@ define(function(require, exports, module) {
 					  $('.none-view').show();
 				  }
 
-			  	  if (!isMySelf) {
+			  	  if (isMySelf != 'Yes') {
 					  $('.push').hide();
 					  $('.item-buy').show();
 				  } else {
@@ -112,7 +108,7 @@ define(function(require, exports, module) {
 	// 检查是否需要购买
 	function checkForBuy(buy, price, articlePk) {
 		if (buy == "Yes") {
-			location.href = '../../cxyteam_forum/content.html?pk=' + articlePk;
+			location.href = '../../cxyteam_forum/content.html?current_article_pk=' + articlePk;
 		} else if (buy == "No") {
 			buyArticle(price, articlePk);
 		}
@@ -166,11 +162,7 @@ define(function(require, exports, module) {
                         width:percent
                     })
                     $(".login-shadow-view").hide();
-					// 判断是否为本人
-					myPk = json.pk
-					if (myPk == teacherPk) {
-						isMySelf = true;
-					}
+
 					// 获取文章
 					loadData(requestURL);
                 },
@@ -213,7 +205,7 @@ define(function(require, exports, module) {
         })
 		// 发布文章
         $(".push").unbind("click").click(function(){
-            alert("发布文章");
+			location.href = '../home/article.html';
         })
         $(".push").mouseover(function(){
             $(this).css("background-color","#ED8AAB");

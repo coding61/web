@@ -151,7 +151,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 30%;
+    width: 40%;
 }
 .header .right-view .info-view .info{
     margin-bottom: 2%;
@@ -366,18 +366,19 @@ body{
 .info-body .info-body-div{
     border-bottom: 1px solid #ccc;
     padding-bottom: 15px;
+    width: 100%;
 }
-.artical-content{
+.article-content{
     width: calc(100% - 300px);
     margin-left: 15px;
     font-size: 13px;
     color: #666;
 }
-.artical-content .title{
+.article-content .title{
     font-size: 14px;
     color: #444;
 }
-.content-artical{
+.content-article{
     margin-top: 15px;
     width: 100%;
     white-space: pre-line;
@@ -386,17 +387,81 @@ body{
     -webkit-line-clamp: 3;
     overflow: hidden;
 }
-.artical-btn{
+.article-btn{
     width: 160px;
     text-align: center;
     line-height: 100px;
 }
-.artical-btn button{
+.article-btn button{
     width: 80px;
     line-height: 30px;
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 14px;
+    cursor: pointer;
+}
+.article-btn button:hover{
+    background-color: rgb(250, 80, 131);
+    color: #fff;
+}
+.more-article{
+    font-style: normal;
+    float: right;
+    margin-right: 30px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.buy-window, .baishi-window{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+}
+.buy-window > div, .baishi-window > div{
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 180px;
+    display: inline-block;
+    width: 260px;
+    height: 160px;
+    overflow: hidden;
+}
+.buy-window > div .win-title, .baishi-window > div .win-title{
+    line-height: 26px;
+    text-align: right;
+    background-color: rgb(250, 80, 131);
+    color: #fff;
+}
+.win-title > span{
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.buy-window > div p, .baishi-window > div p{
+    font-size: 14px;
+    margin: 15px 0;
+}
+.buy-window > div p.zuanshi-buy-num{
+    margin-top: 20px;
+}
+.baishi-window > div p.zuanshi-buy-num{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.zuanshi-buy-num span{
+    color: rgb(250, 80, 131);
+}
+.buy-submit button, .baishi-window button{
+    background-color: rgb(250, 80, 131);
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 10px;
+    border-radius: 3px;
     cursor: pointer;
 }
 

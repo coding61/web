@@ -6,6 +6,23 @@ body{
 	height: 100%;
     background-color: #FBECF0;
 }
+
+.bc-alert-view .bc-alert-msg{
+    min-height: 100px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: solid 1px #e1e1e1;
+    color: #333;
+    font-size: 16px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 35% !important;
+    max-height: 300px;
+    overflow: auto;
+}
 /*顶部状态*/
 .header{
 	background: rgb(250, 80, 131);
@@ -309,6 +326,7 @@ body{
 }
 
 .cover {
+	cursor:pointer;
     margin-left: 4.6%;
     max-width: 100px;
     max-height: 100px;
@@ -331,6 +349,7 @@ body{
 }
 
 .item-title {
+	cursor: pointer;
     font-size: 20px;
     line-height: 20px;
     padding-bottom: 30px;
@@ -341,6 +360,7 @@ body{
 }
 
 .item-content {
+	cursor: pointer;
     font-size: 16px;
     color: #838485;
     display: -webkit-box;

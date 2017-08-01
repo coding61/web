@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
+    var current_master_pk = Common.getQueryString('current_master_pk') ? Common.getQueryString('current_master_pk') : 'no_pk';
 
 	var Page = {
 		init: function(){
@@ -31,7 +32,7 @@ define(function(require, exports, module) {
                 Mananger.getInfo();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
-
+                
                 Page.clickEvent();
             }else{
                 // 弹出登录窗口
@@ -64,6 +65,9 @@ define(function(require, exports, module) {
             $(".header .logo2").unbind('click').click(function(){
                 window.open("https://www.cxy61.com");
             })
+            $('.header .logo1').unbind('click').click(function(){
+                window.open('../../app/home/home.html');
+            })
 
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
@@ -81,6 +85,47 @@ define(function(require, exports, module) {
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
+            })
+
+            //购买文章
+            $('.article-list .info-body').on('click', '.tobuy-btn', function(){
+                var num = $(this).attr('data-diamond_amount');
+                var article_pk = $(this).attr('data-article_pk');
+                $('.zuanshi-buy-num span').text(num);
+                $('.buy-window .buy-submit button').attr({
+                    'data-article_pk': article_pk
+                });
+                $('.buy-window').show();
+            })
+            $('.buy-window .buy-submit button').click(function(){
+                Mananger.buyArticle($(this).attr('data-article_pk'));
+            })
+
+            //阅读文章
+            $('.article-list .info-body').on('click', '.bought-btn', function(){
+                // console.log('to read artical', $(this).attr('data-article_pk'));
+                location.href = '../../cxyteam_forum/content.html?current_master_pk=' + current_master_pk + '&current_article_pk=' + $(this).attr('data-article_pk');
+            })
+
+            //关闭购买窗口
+            $('.buy-window .win-title span').click(function(){
+                $('.buy-window').hide();
+            })
+
+            //拜师
+            $('.master-info').on('click', '.baishi-btn', function(){
+                $('.baishi-window').show();
+            })
+            $('.baishi-window .win-title span').click(function(){
+                $('.baishi-window').hide();
+            })
+            $('.baishi-window .buy-submit button').click(function(){
+                Mananger.baishiFn();
+            })
+
+            //跳转文章列表
+            $('.more-article').click(function(){
+                location.href = './articleList.html?current_master_pk=' + current_master_pk + '&ismyself=' + (sessionStorage.ismyself ? sessionStorage.ismyself : 'No');
             })
         }
 	}
@@ -143,6 +188,10 @@ define(function(require, exports, module) {
                         $(".login-shadow-view").hide();
                         
                         Util.updateInfo(json);
+
+                        Mananger.getMasterInfo();  //获取教师详情
+                        Mananger.getAllArticle();  //获取文章列表
+                        Mananger.getAllStudents(); //获取学生列表
                     },
                     error:function(xhr, textStatus){
                         Common.hideLoading();
@@ -227,8 +276,173 @@ define(function(require, exports, module) {
                 })
             })
         },
-        getMasterInfo: function(){
-            
+        getMasterInfo: function(who){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/teachers/' + current_master_pk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        if (json.ismyself == 'Yes') {
+                            $('.middle-view p').text('个人中心');
+                            sessionStorage.ismyself = 'Yes';
+                        } else {
+                            $('.middle-view p').text('教师详情');
+                        }
+                        var html = ArtTemplate('master-info-template', json);
+                        $('.master-info .info-body').html(html);
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        getAllStudents: function(){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/students/' + current_master_pk + '/',
+                    timeout: 8000,
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    success: function(json){
+                        if (json.count > 0) {
+                            var html = ArtTemplate('student-list-template', json.results);
+                            $('.student-list .info-body').html(html);
+                        } else {
+                            $('.student-list .info-body').html('<p style="font-size:14px">没有学生</p>')
+                        }
+                    },
+                    error: function(xhr,textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        getAllArticle: function(who){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/articles/' + current_master_pk + '/',
+                    timeout: 8000,
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    success: function(json){
+                        if (json.count > 0) {
+                            var html = ArtTemplate('article-list-template', json);
+                            $('.article-list .info-body').html(html);
+                        } else {
+                            $('.article-list .info-body').html('<p style="font-size:14px">还没有发表的文章</p>')
+                        }
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        buyArticle: function(article_pk){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/teacher/buy_article/',
+                    timeout: 8000,
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: {
+                        'article': article_pk
+                    },
+                    success: function(json){
+                        Mananger.getAllArticle();
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    },
+                    complete: function(){
+                        $('.buy-window').hide();
+                    }
+                })
+            })
+        },
+        baishiFn: function(){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/teacher/become_student/' + current_master_pk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.dialog('恭喜您拜师成功', function(){
+                            $('.baishi-btn').hide();
+                        })
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    },
+                    complete: function(){
+                        $('.baishi-window').hide();
+                    }
+                })
+            })
         }
     }
 

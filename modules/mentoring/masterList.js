@@ -78,6 +78,9 @@ define(function(require, exports, module) {
             $(".header .logo2").unbind('click').click(function(){
                 window.open("https://www.cxy61.com");
             })
+            $('.header .logo1').unbind('click').click(function(){
+                window.open('../../app/home/home.html');
+            })
 
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
@@ -110,6 +113,13 @@ define(function(require, exports, module) {
             })
             $('.become-master .submit-cancel').click(function(){
                 $('.become-master').hide();
+            })
+
+            //去教室个人详情
+            $('.master-list').on('click', '.outer-div', function(){
+                var this_ = $(this);
+                sessionStorage.current_master_pk = this_.attr('data-pk');
+                location.href = './masterDetail.html?current_master_pk=' + this_.attr('data-pk');
             })
         }
 	}
@@ -286,6 +296,7 @@ define(function(require, exports, module) {
                         } else {
                             $('.master-list').html('<div style="width: 100%; text-align: center; font-size: 18px;">当前没有教师</div>');
                             typeof callback == 'function' ? callback(0) : '';
+                            $('.become-btn').show();
                         }
                     },
                     error: function(xhr, textStatus){
@@ -395,7 +406,7 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        console.log(json)
+                        Common.dialog('申请成功，请等待审核');
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
