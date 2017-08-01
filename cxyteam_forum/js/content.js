@@ -1,7 +1,8 @@
 //var token="f398c224a8a052bb9ba5fe278acb1128043bfd8e";
 var basePath="/program_girl";
 var postId=getQueryString("id");
-var postPk=getQueryString("pk");
+var postPk=getQueryString("current_article_pk");
+var teacherPk=getQueryString("current_master_pk");
 var zoneId=0;
 var toUserId=0;
 var replyId=0;
