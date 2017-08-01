@@ -83,9 +83,9 @@ function postDetail() {
 			    $(this).html(this_fly.content(result.content));
 			});
 			$(".forum_time").append('<em class="posContentDate">'+dealWithTime(result.create_time)+'</em>');
-			if(userName!=null&&postUserName==userName){
+			/*if(userName!=null&&postUserName==userName){
 				$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
-			}
+			}*/
 			$(".replyCount").text((result.reply_count));
 			$(".browseTime").text(result.browse_count);
 			 

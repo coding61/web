@@ -1,7 +1,7 @@
 
 
 layui.define(function(exports){
-      var base_path="res/layui/images/face/";
+  var base_path="res/layui/images/face/";
   var face = {
 		  "[微笑]":base_path+"0.gif",
 		  "[嘻嘻]":base_path+"1.gif",
