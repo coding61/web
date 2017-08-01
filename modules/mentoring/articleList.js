@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 	var Common = require('common/common.js?v=1.1');
-	var teacherPk = Common.getQueryString("pk");
+	var teacherPk = Common.getQueryString("current_master_pk");
 	// var teacherPk = localStorage.current_master_pk ? localStorage.current_master_pk : null;
 	// if (teacherPk == null) {
 	// 	Common.dialog("未获取到教师pk值");
