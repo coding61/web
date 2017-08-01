@@ -112,7 +112,7 @@ define(function(require, exports, module) {
 	// 检查是否需要购买
 	function checkForBuy(buy, price, articlePk) {
 		if (buy == "Yes") {
-			location.href = '../../cxyteam_forum/content.html?pk=' + articlePk;
+			location.href = '../../cxyteam_forum/content.html?current_article_pk=' + articlePk;
 		} else if (buy == "No") {
 			buyArticle(price, articlePk);
 		}
@@ -213,7 +213,7 @@ define(function(require, exports, module) {
         })
 		// 发布文章
         $(".push").unbind("click").click(function(){
-            alert("发布文章");
+			location.href = '../home/article.html';
         })
         $(".push").mouseover(function(){
             $(this).css("background-color","#ED8AAB");
