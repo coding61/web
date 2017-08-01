@@ -28,7 +28,7 @@ button {
 }
 
 @font-face {
-	
+
 	/*font-family: "iconfont";
 	src:url('iconfont.ttf') format('truetype');*/
 
@@ -760,7 +760,7 @@ header .back:before {
 	float: left;
 	border-radius: 0 0 0 .4em;
 	border-top: solid 1px #e1e1e1;
-	
+
 	width: calc(50% - 1px);
 	border-right: solid 1px #e1e1e1;
 	cursor: pointer;
@@ -893,27 +893,27 @@ header .back:before {
 }
 
 .tabbar .tab-home i {
-	background-image: url(../../images/tabbar/xinlue-news.png); 
+	background-image: url(../../images/tabbar/xinlue-news.png);
 }
 
 .tabbar .tab-shop i {
-	background-image: url(../../images/tabbar/xinlue-activity.png); 
+	background-image: url(../../images/tabbar/xinlue-activity.png);
 }
 
 .tabbar .tab-manager i {
-	background-image: url(../../images/tabbar/xinlue-services.png); 
+	background-image: url(../../images/tabbar/xinlue-services.png);
 }
 
 .tabbar .tab-find i {
-	background-image: url(../../images/tabbar/xinlue-question.png); 
+	background-image: url(../../images/tabbar/xinlue-question.png);
 }
 
 .tabbar .tab-me i {
-	background-image: url(../../images/tabbar/xinlue-me.png); 
+	background-image: url(../../images/tabbar/xinlue-me.png);
 }
 
 .tabbar .tab-home.active i {
-	background-image: url(../../images/tabbar/xinlue-news-active.png); 
+	background-image: url(../../images/tabbar/xinlue-news-active.png);
 }
 
 .tabbar .tab-shop.active i {
@@ -1014,14 +1014,14 @@ header .back:before {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border: solid 1px #e1e1e1;
-    color: #333; 
+    color: #333;
     font-size: 16px;
     background: #fafafa;
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    width: calc(35% - 40px);
+    /*width: calc(35% - 40px);*/
     max-height: 300px;
     overflow: auto;
 }

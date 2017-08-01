@@ -59,7 +59,7 @@
                         {{/if}}
                         <span style="color: rgb(250, 80, 131);">{{$value.userinfo.grade.current_name}}</span>
                     </div>
-                    <div style="width: 57%;float: left;padding-left: 3%;">
+                    <div style="width: 57%;float: left;padding-left: 3%;" >
                         <p class="reply_name" style="color: #4f99cf;line-height: 26px;font-size: 14px;">{{$value.userinfo.name}}</p>
                         <p style="font-size: 12px;padding-top: 10px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
                         
@@ -71,7 +71,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="detail-body post_content" data-pk={{$value.pk}} style="background: #F2F2F2;padding: 20px;"></div>
+                    <div class="detail-body post_content" data-pk={{$value.pk}} style="background: #F2F2F2;padding: 20px;"></div>
                     <div id="replyWai" style="margin-left: 10px;">
                         {{each $value.replymore}}
                         <div class="replyNei replymore_{{$value.pk}}" style="border-bottom: 1px solid #dadada;position: relative;width: 96%;margin-right: 10px;background-color: #ffffff;">
@@ -88,9 +88,9 @@
                                 <div style="width: 65%;padding-left: 5%;float: left;">
                                     <p class="reply_name" style="line-height: 30px;font-size: 16px;">{{$value.userinfo.name}}</p>
                                     <p class="replyContentDate" style="font-size: 14px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
-                                    {{if showReplyDel($value.userinfo.name)}}
-                                    <span type="del" class="huifuDel" onclick=deleteReplymoreById({{$value.pk}}) style="float: right;cursor: pointer;font-size: 14px;display: inline-block;">删除</span>
-                                    {{/if}}
+                                    <!-- {{if showReplyDel($value.userinfo.name)}}
+                                    <span type="del" class="huifuDel" onclick='deleteReplymoreById({{$value.pk}})' style="float: right;cursor: pointer;font-size: 14px;display: inline-block;">删除</span>
+                                    {{/if}} -->
                                 </div>  
                             </div>     
                             <div class="detail-body jieda-body" data-pk={{$value.pk}} style="word-break: break-all;background-color: #fff;width: 96%;padding-left: 20px;padding-right: 20px;margin-bottom: 20px;">

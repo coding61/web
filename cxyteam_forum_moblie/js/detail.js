@@ -4,8 +4,9 @@ $(document).ready(function() {
 	var replyId=0;
 	var replyPage = 1;
 	var postUserName;
-	//var postId=3151;
+	//var postId=213;
 	//var token='f0b3897f26417c66c27d6e782724317010694cdc';
+	//localStorage.token=token;
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
@@ -32,7 +33,27 @@ $(document).ready(function() {
     	postDetail();
     	getReplys(replyPage);
     })
-    
+  /*  $.ajax({
+	        url: basePath+"/userinfo/whoami/",
+	        type: 'get',
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:null,
+	        success: function(result){
+	        	userName=result.name;
+	        },
+	        error:function(XMLHttpRequest){
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("");
+	        	}else{
+	        		layer.msg("暂未登录")
+	        	}
+	        }
+		});
+
+    	postDetail();
+    	getReplys(replyPage);*/
 /*var bt= document.getElementById('bt');
  bt.addEventListener('click',function(){
    var valA = 111;
@@ -49,10 +70,8 @@ function postDetail() {
         //async:async==null?true:async,
         data:null,
         success: function(result){
-        	console.log(result.section.pk)
         	zoneId=result.section.pk;
 			postUserName=result.userinfo.name;
-			//$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
 			$(".forum_types").text("["+result.types.name+"]");
 			$(".forum_title").text(result.title);
 			$(".info >img").attr("src",dealWithAvatar(result.userinfo.avatar));
@@ -77,7 +96,6 @@ function postDetail() {
         	if(XMLHttpRequest.status==403){
         		layer.msg("请求异常");
         	}else{
-        		//alert(XMLHttpRequest.status)
         		layer.msg("请求异常")
         	}
         }
@@ -90,13 +108,14 @@ function getReplys(page){
 		}
 		var html = template("post_reply_template", result);
 		$('#jieda').append(html);
-		$('#jieda .post_content').each(function(){
+		$('#jieda .post_content').each(function(user){
 		    for (var i = 0; i < result.results.length; i++) {
 		    	if (result.results[i].pk == $(this).attr("data-pk")) {
 		    		$(this).html(this_fly.content(result.results[i].content));
-		    		if(userName!=null&&(result.results[i].userinfo.name==userName)){
+		    		/*if(userName!=null&&(result.results[i].userinfo.name==userName)){
 					    $(this).append('<span type="del" class="huifuDel" onclick="deleteReplyById('+result.results[i].pk+')">删除</span>');
-					}
+					    //$(this).append('<span type="del" class="huifuDel" onclick=""JavaScript:alert(123)">删除</span>');
+					}*/
 		    	}
 		    }
 		});
@@ -107,7 +126,6 @@ function getReplys(page){
 		})
 		if (result.next) {
 			$("#jieda").append('<a class="moreReply">点击加载更多</a>');
-
 		}
 		setTimeout(function() {
 			$('.layui-form ').show();
@@ -139,7 +157,6 @@ $(document).on("click",".postReplyMore_btn",function() {
 		$(this).attr({"disabled": true});
 		postReplyMoreAdd();
 	}
-	
 });
 //点击回复
 $(document).on("click",".question_reply",function(){
@@ -231,12 +248,30 @@ $(document).on("click",".moreReply",function() {
 })
 //回复主贴
 function postReplyAdd() {
+/*	$.ajax({
+	        url: basePath+"/forum/replies_create/",
+	        type: "post",
+	        //async:async==null?true:async,
+	        headers: {
+	            Authorization: 'Token ' + localStorage.token
+	        },
+	        data:data,
+	        success: success,
+	        error:function(XMLHttpRequest){
+	        	console.log(XMLHttpRequest.status)
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        	}else{
+	        		layer.msg("请求异常1")
+	        	}
+	        }
+	    });	*/
 	myAjax(basePath+"/forum/replies_create/","post",
 	{"posts":postId,"content":$("#copy_reply_content").val()},function(result) {
 		if(result){
 			//growNumAnimate(result);
 			//gradeAnimate(result);
-			setTimeout("window.location.reload()",1000);
+			setTimeout("window.location.reload()",500);
 		}else{
 			layer.msg("回帖异常");
 		}
@@ -248,7 +283,7 @@ function postReplyMoreAdd() {
 	{"replies":replyId,"content":$("#copy_reply_content").val()},function(result) {
 		if(result){
 			layer.msg("回复成功");
-			setTimeout("window.location.reload()",1000);
+			setTimeout("window.location.reload()",500);
 		}else{
 			layer.msg("回复异常");
 		}
@@ -265,65 +300,24 @@ function growNumAnimate(result) {
 
 //删除帖子
 function delPost(){
-	layer.open({
-		  content: '确定删除该帖子？'
-		  ,btn: ['确认', '取消']
-		  ,yes: function(index, layero){
-			  myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
-
-						layer.msg("删除成功");
-	
-				});
-		  },btn2: function(index, layero){
-		    layer.close();
-		  }
-		  ,cancel: function(){ 
-
-		  }
-		});
+	myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
+		layer.msg("删除成功");
+	});
 }
 //删除回帖
 function deleteReplyById(replyId){
-layer.open({
-	  content: '确定删除该回帖？'
-	  ,btn: ['确认', '取消']
-	  ,yes: function(index, layero){
-		  myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".reply_"+replyId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
-				});
-	  },btn2: function(index, layero){
-	    layer.close();
-	  }
-	  ,cancel: function(){ 
-	  }
+	alert(replyId)
+	myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
+		layer.msg("删除成功");
+		$(".reply_"+replyId).remove();
 	});
 }
 
 //删除回复
 function deleteReplymoreById(replymoreId){
-layer.open({
-	  content: '确定删除该回帖？'
-	  ,btn: ['确认', '取消']
-	  ,yes: function(index, layero){
-		  myAjax(basePath+"/forum/replymores/"+replymoreId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".replymore_"+replymoreId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
-			});
-	  },btn2: function(index, layero){
-	    layer.close();
-	  }
-	  ,cancel: function(){ 
-	    //右上角关闭回调
-	  }
+	myAjax(basePath+"/forum/replymores/"+replymoreId+"/","DELETE",null,function(result){
+		layer.msg("删除成功");
+		$(".replymore_"+replymoreId).remove();
 	});
 }
 

@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	var basePath="/program_girl";
 	var userId=1;
-	var zoneName='';
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
@@ -24,13 +23,12 @@ $(document).ready(function() {
 		    	}
 		    }
 		});
-
-		myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
+    	initSection();
+		/*myAjax2(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
 			zoneName=result.name;
 			$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
-		});
+		});*/
     }); 
-
 
 //var userName=getCookie("userName");
 //var zonePk = getQueryString("pk");
@@ -56,7 +54,6 @@ $(document).ready(function() {
 	}else{
 	}
 })*/
-
 
 //获取当前社区
 
@@ -120,12 +117,12 @@ function publish(title,zoneId,typeId,content) {
 				//gradeAnimate(result);
 		       	setTimeout(function() {
 		        	window.postMessage(JSON.stringify({data:data}))
-		        }, 500)	
+		        }, 200)	
 			},
 	        error:function(XMLHttpRequest){
 	        	console.log(XMLHttpRequest.status)
 	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        		layer.msg("请求异常");
 	        	}else{
 	        		layer.msg("请求异常")
 	        	}
@@ -196,25 +193,24 @@ function publish(title,zoneId,typeId,content) {
 }*/
 initTypes();
 function initTypes(){
-	myAjax(basePath+"/forum/types/","get",null,function(result){
+	myAjax2(basePath+"/forum/types/","get",null,function(result){
 		$.each(result.results, function(k,v) {
 			$(".type_content").append('<option value="'+v.pk+'" >'+v.name+'</option>');
 		});
 	},false);
 }
-initSection();
-function initSection(){
-	myAjax(basePath+"/forum/sections/","get",null,function(result){
-		//console.log(result);
-		$.each(result.results, function(k,v) {
-			var html='';
-			if(v.pk==zonePk){
-				html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
-			}else{
-				html='<option value="'+v.pk+'" >'+v.name+'</option>';
-			}
-			$(".zone_content").append(html);
-		});
-	},false);
-}
+//initSection();
+	function initSection(){
+		myAjax2(basePath+"/forum/sections/","get",null,function(result){
+			$.each(result.results, function(k,v) {
+				var html='';
+				if(v.pk==zonePk){
+					html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
+				}else{
+					html='<option value="'+v.pk+'" >'+v.name+'</option>';
+				}
+				$(".zone_content").append(html);
+			});
+		},false);
+	}
 })

@@ -88,7 +88,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
               ,title: '插入图片'
               ,area: 'auto'
               ,shade: false
-              ,area: '98%'
+              ,area: '96%'
               ,skin: 'layui-layer-border'
               ,content: ['<ul class="layui-form layui-form-pane" style="margin: 20px;">'
                 ,'<li class="layui-form-item">'
