@@ -102,7 +102,7 @@ define(function(require, exports, module) {
             //阅读文章
             $('.article-list .info-body').on('click', '.bought-btn', function(){
                 // console.log('to read artical', $(this).attr('data-article_pk'));
-                location.href = './articleList.html?current_master_pk=' + current_master_pk + '&current_article_pk=' + $(this).attr('data-article_pk');
+                location.href = '../../cxyteam_forum/content.html?current_master_pk=' + current_master_pk + '&current_article_pk=' + $(this).attr('data-article_pk');
             })
 
             //关闭购买窗口
@@ -120,7 +120,7 @@ define(function(require, exports, module) {
 
             //跳转文章列表
             $('.more-article').click(function(){
-                location.href = '../../cxyteam_forum/content.html?current_master_pk=' + current_master_pk;
+                location.href = './articleList.html?current_master_pk=' + current_master_pk;
             })
         }
 	}
