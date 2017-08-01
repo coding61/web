@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-    var current_master_pk = Common.getQueryString('current_master_pk') ? Common.getQueryString('current_master_pk') : null;
+    var current_master_pk = Common.getQueryString('current_master_pk') ? Common.getQueryString('current_master_pk') : 'no_pk';
 
 	var Page = {
 		init: function(){
@@ -66,6 +66,9 @@ define(function(require, exports, module) {
             $(".header .logo2").unbind('click').click(function(){
                 window.open("https://www.cxy61.com");
             })
+            $('.header .logo1').unbind('click').click(function(){
+                window.open('../../app/home/home.html');
+            })
 
             // 鼠标划过用户头像
             $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
@@ -116,6 +119,9 @@ define(function(require, exports, module) {
             })
             $('.baishi-window .win-title span').click(function(){
                 $('.baishi-window').hide();
+            })
+            $('.baishi-window .buy-submit button').click(function(){
+                Mananger.baishiFn();
             })
 
             //跳转文章列表
@@ -184,10 +190,13 @@ define(function(require, exports, module) {
                         
                         Util.updateInfo(json);
 
-                        if (json.pk == current_master_pk) {
+                        if (json.pk == current_master_pk || current_master_pk == 'no_pk') {
+                            current_master_pk = json.pk;
                             Mananger.getAllArticle('isme');  //获取文章列表
+                            Mananger.getMasterInfo('isme');  //获取教师详情
                         } else {
                             Mananger.getAllArticle();  //获取文章列表
+                            Mananger.getMasterInfo();  //获取教师详情
                         }
                     },
                     error:function(xhr, textStatus){
@@ -273,8 +282,40 @@ define(function(require, exports, module) {
                 })
             })
         },
-        getMasterInfo: function(){
-            
+        getMasterInfo: function(who){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/teacher/teachers/' + current_master_pk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        json.isme = (who && who == 'isme' ? true : false);
+                        if (json.isme) {
+                            $('.middle-view p').text('个人中心');
+                        } else {
+                            $('.middle-view p').text('教师详情');
+                        }
+                        var html = ArtTemplate('master-info-template', json);
+                        $('.master-info .info-body').html(html);
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
         },
         getAllStudents: function(){
             Common.isLogin(function(token){
@@ -287,9 +328,10 @@ define(function(require, exports, module) {
                     },
                     success: function(json){
                         if (json.count > 0) {
-
+                            var html = ArtTemplate('student-list-template', json.results);
+                            $('.student-list .info-body').html(html);
                         } else {
-                            $('.student-list-avatar').html('<p style="font-size:14px">没有学生</p>')
+                            $('.student-list .info-body').html('<p style="font-size:14px">没有学生</p>')
                         }
                     },
                     error: function(xhr,textStatus){
@@ -372,6 +414,39 @@ define(function(require, exports, module) {
                     },
                     complete: function(){
                         $('.buy-window').hide();
+                    }
+                })
+            })
+        },
+        baishiFn: function(){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/teacher/become_student/' + current_master_pk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.dialog('恭喜您拜师成功', function(){
+                            $('.baishi-btn').hide();
+                        })
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    },
+                    complete: function(){
+                        $('.baishi-window').hide();
                     }
                 })
             })
