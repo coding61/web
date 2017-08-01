@@ -1,12 +1,8 @@
 define(function(require, exports, module) {
 	var Common = require('common/common.js?v=1.1');
 	var teacherPk = Common.getQueryString("current_master_pk");
-	// var teacherPk = localStorage.current_master_pk ? localStorage.current_master_pk : null;
-	// if (teacherPk == null) {
-	// 	Common.dialog("未获取到教师pk值");
-	// }
 	var myPk = null;
-	var isMySelf = false;
+	var isMySelf = Common.getQueryString("ismyself");
 	var totalPages = 1;
 	var requestURL = Common.domain + "/teacher/articles/" + teacherPk + "/?page=1";
 	var currentPage = 1;
@@ -45,7 +41,7 @@ define(function(require, exports, module) {
 					  $('.none-view').show();
 				  }
 
-			  	  if (!isMySelf) {
+			  	  if (isMySelf != 'Yes') {
 					  $('.push').hide();
 					  $('.item-buy').show();
 				  } else {
@@ -166,11 +162,7 @@ define(function(require, exports, module) {
                         width:percent
                     })
                     $(".login-shadow-view").hide();
-					// 判断是否为本人
-					myPk = json.pk
-					if (myPk == teacherPk) {
-						isMySelf = true;
-					}
+
 					// 获取文章
 					loadData(requestURL);
                 },
