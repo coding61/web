@@ -125,7 +125,7 @@ define(function(require, exports, module) {
 
             //跳转文章列表
             $('.more-article').click(function(){
-                location.href = './articleList.html?current_master_pk=' + current_master_pk + '&ismyself=' + (sessionStorage.ismyself ? sessionStorage.ismyself : 'no');
+                location.href = './articleList.html?current_master_pk=' + current_master_pk + '&ismyself=' + (sessionStorage.ismyself ? sessionStorage.ismyself : 'No');
             })
         }
 	}
