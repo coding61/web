@@ -67,7 +67,7 @@ $(document).ready(function() {
 
 //主贴详情信息
 function postDetail() {
-	alert(postId)
+	
 	$.ajax({
         url: basePath+"/forum/posts/"+postId+"/",
         type: "get",
