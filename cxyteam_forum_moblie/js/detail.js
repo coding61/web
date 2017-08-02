@@ -92,8 +92,6 @@ function postDetail() {
 				if (result.status == 'unsolved') {
 					$('#forum_tag').append('<p class="solved" id="solved" style="color:#FF69B4">标记为已解决</p>');
 				} 
-
-				
 			}
 			$(".replyCount").text((result.reply_count));
 			$(".browseTime").text(result.browse_count);
@@ -154,24 +152,18 @@ function changePostStatus(status) {
 				if(result){
 					setTimeout("window.location.reload()",100);
 				}else{
-					layer.msg("回帖异常");
+					layer.msg("标记未成功");
 				}
 			},
 	        error:function(XMLHttpRequest){
 	        	
 	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        		layer.msg("请求异常");
 	        	}else{
 	        		layer.msg("请求异常")
 	        	}
 	        }
 	    });	
-	/*myAjax(basePath+"/forum/posts/"+postId+"/","patch",{"status":status},function(result) {
-		if (result) {
-			layer.msg(result.status_display);
-			setTimeout("window.location.reload()",1000);
-		}
-	})*/
 }
 $(document).on('click', '.solved', function(event) {
 	event.preventDefault();
@@ -280,7 +272,6 @@ $(document).on("click",".main_forum_reply",function(){
 	my_init();
 });
 
-
 template.helper("stringChange", function(e) {
 
 	return this_fly.content(e);
@@ -319,7 +310,6 @@ function postReplyAdd() {
 				}
 			},
 	        error:function(XMLHttpRequest){
-	        	
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
 	        	}else{
@@ -348,7 +338,7 @@ function postReplyMoreAdd() {
 			},
 	        error:function(XMLHttpRequest){
 	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        		layer.msg("请求异常");
 	        	}else{
 	        		layer.msg("请求异常")
 	        	}
@@ -419,7 +409,42 @@ function deleteReplymoreById(replymoreId){
 		$(".replymore_"+replymoreId).remove();
 	});
 }
-
+$(document).on("click",".collectBtn",function(){
+	$.ajax({
+	        url: basePath+"/collect/collection/",
+	        type: "put",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:{"types": "posts","pk": postId},
+	        success: function(result) {
+				if (result.message == '取消收藏') {
+					$(".collectBtn").attr({"src": 'img/unCollect.png'});
+					layer.msg(result.message);
+				} else if (result.message == '收藏成功') {
+					$(".collectBtn").attr({"src": 'img/hadCollect.png'});
+					layer.msg(result.message);
+				}
+			},
+	        error:function(XMLHttpRequest){
+	        	
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
+	/*myAjax(basePath+"/collect/collection/","put",{"types": "posts","pk": postId},function(result) {
+		if (result.message == '取消收藏') {
+			$(".collectBtn").attr({"src": 'img/unCollect.png'});
+			layer.msg(result.message);
+		} else if (result.message == '收藏成功') {
+			$(".collectBtn").attr({"src": 'img/hadCollect.png'});
+			layer.msg(result.message);
+		}
+	})*/
+})
 //处理采纳
 function updateIsAccept(id,isAccept){
 	if(isAccept==1){//采纳
