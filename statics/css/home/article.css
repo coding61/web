@@ -7,12 +7,170 @@ body{
     min-width: 960px;
     background-color: #ffecf0;
 }
+.main{
+    padding-top: 80px;
+}
+/*代码运行窗口*/
+.code-result-shadow-view,
+.message-link-shadow-view,
+.login-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.code-result-shadow-view .code-result,
+.message-link-shadow-view .message-link,
+.login-shadow-view .login-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.code-result-shadow-view .code-result .close,
+.message-link-shadow-view .message-link .close{
+    height: 35px;
+    background: #ddd;
+    width: 70%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.message-link-shadow-view .message-link .close{
+    width: 80%;
+}
+.code-result-shadow-view .code-result .close img,
+.message-link-shadow-view .message-link .close img{
+    position: absolute;
+    right: 10px;
+
+    width: 15px;
+    height: 15px;
+    top: 10px;
+}
+.code-result-shadow-view .code-result iframe,
+.message-link-shadow-view .message-link iframe{
+    width: 70%;
+    height: 80%;
+    background: white;
+}
+.message-link-shadow-view .message-link iframe{
+    width: 80%;
+}
+/*登录视图*/
+.login-view .close{
+    width: 35%;
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.login-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.login-view .login-info{
+    width: 31%;
+    background: #efefef;
+    padding: 1% 2%;
+}
+.login-info .login-info-view{
+    border: dashed 1px #a0a0a0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+.login-info .info{
+    padding: 10px;
+    color: #525252;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+.login-info .wx-code{
+    width: 80px;
+    height: 80px;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+}
+.login-info .wx-code img{
+    width: 100%;
+}
+.login-view .account-view{
+    width: 35%;
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+
+.login-view .account-view .username,
+.login-view .account-view .password{
+    width: 80%;
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-view .account-view .password{
+    margin-top: 0;
+}
+.username span,
+.password span{
+    margin-right: 10px;
+    letter-spacing: 2px;
+    color: #616161;
+
+    width: 60px;
+    display: inline-block;
+}
+.username input,
+.password input{
+    width: 75%;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.login-view .account-view .login{
+    padding: 5px 16px;
+    background: #ff6b95;
+    border-radius: 5px;
+    color: white;
+    border: solid 1px #e56c95;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
 /*顶部状态*/
 .header{
 	background: rgb(250, 80, 131);
-	height: 40px;
-	/*overflow: hidden;*/
-	font-size: 12px;
 	color: white;
 	display: inline-flex;
 	align-items: center;
@@ -21,7 +179,6 @@ body{
     height: 50px;
     font-size: 15px;
     padding: 0 2%;
-    width: 96%;
 }
 .header .center-view{
     padding: 5px 10px;
@@ -166,6 +323,7 @@ body{
 }
 /*团队成员等级*/
 .team-info{
+    display: none;
     position: absolute;
     z-index: 100000;
     background: rgb(229, 230, 231);
@@ -175,7 +333,7 @@ body{
     border: solid 1px #d2d2d2;
     border-radius: 5px;
     line-height: 30px;
-    left: 61%;
+    left: 10.5%;
     font-size: 13px;
     top: 38px;
 }
@@ -261,13 +419,14 @@ body{
     float: left;
 }
 .article_title span,.article_main span,.article_cover span{
-    width: 85px;
     line-height: 37px;
     font-size: 14px;
-    margin-right: 15px;
     text-align: center;
+    width: 173px;
     height: 37px;
     float: left;
+    border-bottom: none;
+    background:#fff;
 }
 .article_title input{
     width: 478px;
@@ -291,14 +450,26 @@ body{
     height: 180px;
     padding: 10px;
 }
+.article_zuan{
+    width: 200px;
+    float: left;
+}
+.article_zuan p{
+    float: right;
+    width: 100px;
+    line-height: 38px;
+}
+.article_zuan p img{margin-right: 10px;}
 #file_img{
     width: 200px;
-    height: 200px;
     display: block;
     cursor: pointer;
-    padding-left: 100px;
 }
-
+.h1_succ{
+    padding-left: 100px;
+    font-size: 35px;
+    color: #666;
+}
 
 .article_cover{
     width: 100%;
@@ -311,7 +482,7 @@ body{
     background: #D0EEFF;
     border: 1px solid #99D3F5;
     border-radius: 4px;
-    padding: 8px 12px;
+    padding: 8px 8px;
     overflow: hidden;
     color: #1E88C7;
     text-decoration: none;

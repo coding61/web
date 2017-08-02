@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="0" />
-		<!-- <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" /> -->
-		<title>程序媛计划</title>
-		<link rel="icon" href="../../statics/images/favicon.ico">
-		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
-		<link type="text/css" rel="stylesheet" href="../../statics/css/home/article.css" />
-	</head>
-	<body>
-	<!-- 头部信息 -->
+<head>
+  <meta charset="utf-8">
+  <title>发布文章</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/bootstrap3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../cxyteam_forum/res/layui/css/layui.css">
+  <link rel="stylesheet" href="../../cxyteam_forum/res/css/global.css">
+  <!--<link rel="stylesheet" href="../css/huiwan.css">
+  <link rel="stylesheet" href="../css/global.css">-->
+  <link rel="stylesheet" href="../../cxyteam_forum/css/nav.css">
+  <link rel="stylesheet" href="../../statics/css/home/article.css">
+</head>
+<body style="position: relative;">
+<!-- 头部信息 -->
 		<div class="header">
 			<div class="left-view">
+				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>今天打卡了10次,太厉害了</span>
 				<img class="logo1" style="height: 30px;" src="../../statics/images/logo2.png" />
 				<div class="right-line"></div>
 				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
@@ -23,6 +25,35 @@
 			<span class="works center-view item">作品中心</span>
 			<span class="luntan center-view item">学习论坛</span>
 			<div class="right-view">
+				<!-- <span class="luntan item">学习论坛</span> -->
+				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>获取了2颗钻石</span>
+
+				<!-- <div class="icon1">
+					<img src="../../statics/images/icon1.png" alt="" />
+					<span>x3</span>
+				</div>
+				<div class="icon2">
+					<img src="../../statics/images/icon2.png" alt="" />
+					<span>x236</span>
+				</div> -->
+				<div class="icon4 avatar">
+					<img class="item" src="../../statics/images/avatar.png" alt="">
+				</div>
+				<div class="info-view">
+					<div class="info">
+						<span class="grade item">LV 青铜1</span>
+						<span class="grade-value item">500/854</span>
+					</div>
+					<div class="progress item">
+						<img src="../../statics/images/progress.png" alt="">
+					</div>
+				</div>
+
+				<div class="icon3 zuan">
+					<img class="item" src="../../statics/images/icon3.png" alt="" />
+					<span class="item">x20</span>
+				</div>
+
 				<div class="team-info">
 					<div class="team">
 						
@@ -32,6 +63,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 		<script type="text/html" id="team-template">
 			<img class="arrow" src="../../statics/images/arrow-d.png"/>
@@ -61,43 +93,77 @@
 			{{/each}}
 		</script>
 
-		<!-- 文章内容 -->
-		<div class="article">
-			<p class="article_title">
-				<span>文章标题</span>
-				<input type="text" name="">
-			</p>
-			<p class="article_main">
-				<span>文章内容</span>
-				<textarea></textarea>
-			</p>
-			<p class="article_cover">
-				<span>文章封面</span>
-				<a href="javascript:;" class="file">选取封面
-				    <input id="file_upload" type="file" accept="image/png,image/gif,image/jpg,image/jpeg" name="file">
-				</a>
-				<img id="file_img" src="">
-			</p>
-			<button class="issue">发布</button>
+<div class="main layui-clear">
+  <div class="layui-form layui-form-pane">
+    <div>
+      <div class="layui-form-item">
+        <label for="L_title" class="layui-form-label">文章标题</label>
+        <div class="layui-input-block">
+          <input type="text" id="L_title" name="title" required lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+        <div class="layui-input-block">
+          <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
+        </div>
+      </div>
+	<div class="article_cover">
+		<label class="layui-form-label">文章封面</label>
+		<div id="art_fengmian" style="display: inline-block;">
+			<!-- <a href="javascript:;" class="file">选取封面
+			    <input id="file_upload" type="file" accept="image/png,image/gif,image/jpg,image/jpeg" name="file">
+			</a>
+			<img id="file_img" style="width: 200px;min-height: 50px;" src=""> -->
+			<div class="layui-input-block">
+				<textarea id="fengmian" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea feng-editor" style="height:60px;"></textarea>
+            </div>
 		</div>
-	</body>
-	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="../../libs/sea.js"></script>
-	<script>
-		var base = location.href.split("/app/")[0];
-		seajs.config({
-				paths: {
-					"home": base + "/modules/home",
-					"libs": base + "/libs",
-					"common": base + "/modules/common"
-				},
-				alias: {
-					"template": "libs/template.js",
-					"common": "common/common.js"
-				}
-			})
-			// 加载入口模块
-		seajs.use("home/article.js");
-	</script>
+	</div>
+	<div class="article_zuan">
+		<label class="layui-form-label">钻石数量</label>
+		<p>
+			<img src="../../statics/images/icon3.png">X
+			<span class="article_zuan_span"></span>
+		</p>
+	</div>
+      <div class="layui-form-item">
+        <a href="#" class="layui-btn publish">立即发布</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../../cxyteam_forum/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../../libs/sea.js"></script>
+<script src="../../cxyteam_forum/res/layui/layer/layer.js"></script>
+<script src="../../cxyteam_forum/res/layui/layui.js"></script>
+<!--<script src="../js/global.js"></script>-->
+<!--upload-->
+<script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/moxie.min.js"></script>
+<script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="../../cxyteam_forum/js/qiniu/src/qiniu.js"></script>
+<script type="text/javascript" src="../../cxyteam_forum/js/common.js"></script>
+<script type="text/javascript" src="../../modules/common/common.js"></script>
+<script src="../../modules/home/article.js"></script>
+<script type="text/javascript" src="../../modules/home/article_img.js"></script>
+<script>
+/* layui.cache.page = 'jie'; */
+layui.cache.user = {
+  username: '游客'
+  ,uid: -1
+  ,avatar: 'res/images/avatar/00.jpg'
+  ,experience: 83
+  ,sex: '男'
+};
+layui.config({
+  version: "1.0.0"
+  ,base: '../../cxyteam_forum/res/mods/'
+}).extend({
+  fly: 'index'
+}).use('fly', function(){
+  var fly = layui.fly;
+  //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+   /*$('.aaa').html(fly.content("face.[亲亲]"));*/
+});
+</script>
+</body>
 </html>
-
