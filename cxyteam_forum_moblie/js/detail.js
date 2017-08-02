@@ -246,6 +246,26 @@ $(document).on("click",".moreReply",function() {
 	$(".moreReply").remove();
 
 })
+function myAjax(url,type,data,success,async){
+		$.ajax({
+	        url: url,
+	        type: type,
+	        async:async==null?true:async,
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:data,
+	        success: success,
+	        error:function(XMLHttpRequest){
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
+	}
+}
 //回复主贴
 function postReplyAdd() {
 /*	$.ajax({
