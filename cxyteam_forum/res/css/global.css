@@ -165,6 +165,10 @@ pre{padding: 10px 15px; margin: 10px 0; font-size:12px; border:1px solid #ddd; b
 .fly-edit span{cursor:pointer; padding:0 10px; line-height: 38px; color:#009E94;}
 .fly-edit span i{padding-right:6px; font-size: 18px;}
 .fly-edit span:hover{color:#5DB276;}
+.feng-edit{position:relative; display: block;left:0;border-radius: 2px 2px 0 0; background-color: #FBFBFB;}
+.feng-edit span{cursor:pointer;line-height: 38px; color:#009E94; border: 1px solid #e6e6e6;}
+.feng-edit span i{padding-right:6px; font-size: 18px;}
+.feng-edit span:hover{color:#5DB276;}
 
 body .layui-edit-face{ border:none; background:none;}
 body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; color:#666; box-shadow:none}
