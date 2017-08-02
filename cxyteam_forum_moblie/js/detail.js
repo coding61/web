@@ -146,7 +146,6 @@ $(document).on("click",".postReply_btn",function() {
 		return false;
 	}else {
 		$(".copy_reply_textarea").attr({"disabled": true});
-		alert(content)
 		postReplyAdd();
 	}
 })
@@ -254,7 +253,8 @@ $(document).on("click",".moreReply",function() {
 
 //回复主贴
 function postReplyAdd() {
-	alert(token)
+	alert(postId)
+	alert($("#copy_reply_content").val())
 	$.ajax({
 	        url: basePath+"/forum/replies_create/",
 	        type: "post",
@@ -262,7 +262,7 @@ function postReplyAdd() {
 	        headers: {
 	            Authorization: 'Token ' + token
 	        },
-	        data:data,
+	        data:{"posts":postId,"content":$("#copy_reply_content").val()},
 	        success: function(result) {
 	        	alert(result)
 				if(result){
@@ -295,7 +295,8 @@ function postReplyAdd() {
 }
 //回复帖子列表
 function postReplyMoreAdd() {
-	alert(token)
+	alert(replyId)
+	alert($("#copy_reply_content").val())
 	$.ajax({
 	        url: basePath+"/forum/replymore_create/",
 	        type: "post",
