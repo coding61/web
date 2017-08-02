@@ -53,7 +53,6 @@ $(document).ready(function() {
 				});
 			},
 	        error:function(XMLHttpRequest){
-	     
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("请求异常");
 	        	}else{
@@ -97,7 +96,7 @@ $(".publish").click(function() {
 	})
 
 function publish(title,zoneId,typeId,content) {
-	alert(token)
+	
 	$.ajax({
 	        url: basePath+"/forum/posts_create/",
 	        type: "post",
