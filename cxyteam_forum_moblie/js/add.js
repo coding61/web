@@ -13,7 +13,7 @@ $(document).ready(function() {
 	        //async:async==null?true:async,
 	        data:null,
 	        success: function(result){
-	        	//alert(result)
+	        	alert(result)
 				$.each(result.results, function(k,v) {
 					var html='';
 					if(v.pk==zonePk){
@@ -25,7 +25,7 @@ $(document).ready(function() {
 				});
 			},
 	        error:function(XMLHttpRequest){
-	     
+	     		alert(XMLHttpRequest)
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("请求异常");
 	        	}else{
@@ -71,7 +71,10 @@ $(".publish").click(function() {
 	})
 
 function publish(title,zoneId,typeId,content) {
-	
+	alert(title)
+	alert(zoneId)
+	alert(typeId)
+	alert(content)
 	$.ajax({
 	        url: basePath+"/forum/posts_create/",
 	        type: "post",
@@ -94,7 +97,7 @@ function publish(title,zoneId,typeId,content) {
 				// zuanNumAnimate();
 				//gradeAnimate(result);
 		       	setTimeout(function() {
-		        	window.postMessage(JSON.stringify({data:data}))
+		        	window.postMessage(JSON.stringify({data:result}))
 		        }, 200)	
 			},
 	        error:function(XMLHttpRequest){
