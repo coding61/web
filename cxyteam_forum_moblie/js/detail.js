@@ -117,7 +117,7 @@ function getReplys(page){
 		    	if (result.results[i].pk == $(this).attr("data-pk")) {
 		    		$(this).html(this_fly.content(result.results[i].content));
 		    		if(result.results[i].userinfo.name==userName){
-					    $(this).append('<span type="del" class="huifuDel" onclick="deleteReplyById('+result.results[i].pk+')">删除</span>');
+					    $(this).append('<span type="del" class="huifuDel" data-pk='+result.results[i].pk+'>删除</span>');
 					    //$(this).append('<span type="del" class="huifuDel" onclick=""JavaScript:alert(123)">删除</span>');
 					}
 		    	}
@@ -138,6 +138,17 @@ function getReplys(page){
 		}, 1000)
 	});
 }
+$(document).on('click', '.post_del', function(event) {
+	event.preventDefault();
+	delPost();
+	
+});
+$(document).on('click', '.huifuDel', function(event) {
+	event.preventDefault();
+	var id=$(this).attr("data-pk");
+	deleteReplyById(id);
+	
+});
 //提交回帖
 $(document).on("click",".postReply_btn",function() {
 	var content=$("#copy_reply_content").val();
@@ -348,13 +359,14 @@ function delPost(){
 	        },
 	        data:null,
 	        success: function(result) {
+	        	alert(XMLHttpRequest.status)
 	        	window.postMessage(JSON.stringify({data:result}))
 				layer.msg("删除成功");
 			},
 	        error:function(XMLHttpRequest){
-	        	
+	        	alert(XMLHttpRequest.status)
 	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        		layer.msg("请求异常");
 	        	}else{
 	        		layer.msg("请求异常")
 	        	}
@@ -366,7 +378,7 @@ function delPost(){
 }
 //删除回帖
 function deleteReplyById(replyId){
-	//alert(replyId)
+	alert(replyId)
 	$.ajax({
 	        url: basePath+"/forum/replies/"+replyId+"/",
 	        type: "DELETE",
@@ -376,15 +388,15 @@ function deleteReplyById(replyId){
 	        },
 	        data:null,
 	        success: function(result) {
-	        
+	        	alert(XMLHttpRequest.status)
 				layer.msg("删除成功");
 				$(".reply_"+replyId).remove();
 				setTimeout("window.location.reload()",100);
 			},
 	        error:function(XMLHttpRequest){
-	        	
+	        	alert(XMLHttpRequest.status)
 	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        		layer.msg("请求异常");
 	        	}else{
 	        		layer.msg("请求异常")
 	        	}
