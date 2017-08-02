@@ -351,10 +351,13 @@ define(function(require, exports, module) {
             })
         },
         getWorkDetail: function(pk, callback){
-            Common.isLogin(function(){
+            Common.isLogin(function(token){
                 $.ajax({
                     type: 'get',
                     url: Common.domain + '/userinfo/myexercises/' + pk + '/',
+                    headers:{
+                        'Authorization': 'Token ' + token
+                    },
                     timeout: 8000,
                     success: function(json){
                         localStorage.htmlCode = json.html;
@@ -435,6 +438,7 @@ define(function(require, exports, module) {
                         Common.dialog('作品保存成功', function(){
                             Mananger.getWorkList();
                         })
+                        Page.toPk = json.pk;
                         Page.isNew = false;
                         Page.workListClick = false;
                     },
