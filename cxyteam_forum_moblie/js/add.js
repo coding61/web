@@ -1,14 +1,14 @@
 $(document).ready(function() {
 	var basePath="/program_girl";
 	var userId=1;
-	var zonePk=3;
+	var zonePk;
 	$.ajax({
 	        url: basePath+"/forum/sections/",
 	        type: "get",
 	        //async:async==null?true:async,
 	        data:null,
 	        success: function(result){
-	        	alert(result.count)
+	        	
 				$.each(result.results, function(k,v) {
 					var html='';
 					/*if(v.pk==zonePk){
@@ -76,10 +76,7 @@ $(".publish").click(function() {
 	})
 
 function publish(title,zoneId,typeId,content) {
-	alert(title)
-	alert(zoneId)
-	alert(typeId)
-	alert(content)
+
 	$.ajax({
 	        url: basePath+"/forum/posts_create/",
 	        type: "post",
@@ -102,7 +99,7 @@ function publish(title,zoneId,typeId,content) {
 				// zuanNumAnimate();
 				//gradeAnimate(result);
 		       	setTimeout(function() {
-		        	window.postMessage(JSON.stringify({data:result}))
+		        	window.postMessage(200)
 		        }, 200)	
 			},
 	        error:function(XMLHttpRequest){

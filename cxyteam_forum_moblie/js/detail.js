@@ -359,12 +359,12 @@ function delPost(){
 	        },
 	        data:null,
 	        success: function(result) {
-	        	alert(XMLHttpRequest.status)
-	        	window.postMessage(JSON.stringify({data:result}))
+	        	
+	        	window.postMessage(200)
 				layer.msg("删除成功");
 			},
 	        error:function(XMLHttpRequest){
-	        	alert(XMLHttpRequest.status)
+	        	
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("请求异常");
 	        	}else{
@@ -378,7 +378,7 @@ function delPost(){
 }
 //删除回帖
 function deleteReplyById(replyId){
-	alert(replyId)
+	
 	$.ajax({
 	        url: basePath+"/forum/replies/"+replyId+"/",
 	        type: "DELETE",
@@ -388,13 +388,13 @@ function deleteReplyById(replyId){
 	        },
 	        data:null,
 	        success: function(result) {
-	        	alert(XMLHttpRequest.status)
+	        	
 				layer.msg("删除成功");
 				$(".reply_"+replyId).remove();
 				setTimeout("window.location.reload()",100);
 			},
 	        error:function(XMLHttpRequest){
-	        	alert(XMLHttpRequest.status)
+	        	
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("请求异常");
 	        	}else{
