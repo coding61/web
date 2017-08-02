@@ -32,8 +32,7 @@ define(function(require, exports, module) {
                 Mananger.getInfo();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
-                Mananger.getAllStudents(); //获取学生列表
-
+                
                 Page.clickEvent();
             }else{
                 // 弹出登录窗口
@@ -126,7 +125,7 @@ define(function(require, exports, module) {
 
             //跳转文章列表
             $('.more-article').click(function(){
-                location.href = './articleList.html?current_master_pk=' + current_master_pk;
+                location.href = './articleList.html?current_master_pk=' + current_master_pk + '&ismyself=' + (sessionStorage.ismyself ? sessionStorage.ismyself : 'No');
             })
         }
 	}
@@ -190,14 +189,9 @@ define(function(require, exports, module) {
                         
                         Util.updateInfo(json);
 
-                        if (json.pk == current_master_pk || current_master_pk == 'no_pk') {
-                            current_master_pk = json.pk;
-                            Mananger.getAllArticle('isme');  //获取文章列表
-                            Mananger.getMasterInfo('isme');  //获取教师详情
-                        } else {
-                            Mananger.getAllArticle();  //获取文章列表
-                            Mananger.getMasterInfo();  //获取教师详情
-                        }
+                        Mananger.getMasterInfo();  //获取教师详情
+                        Mananger.getAllArticle();  //获取文章列表
+                        Mananger.getAllStudents(); //获取学生列表
                     },
                     error:function(xhr, textStatus){
                         Common.hideLoading();
@@ -292,9 +286,9 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        json.isme = (who && who == 'isme' ? true : false);
-                        if (json.isme) {
+                        if (json.ismyself == 'Yes') {
                             $('.middle-view p').text('个人中心');
+                            sessionStorage.ismyself = 'Yes';
                         } else {
                             $('.middle-view p').text('教师详情');
                         }
@@ -361,7 +355,6 @@ define(function(require, exports, module) {
                     },
                     success: function(json){
                         if (json.count > 0) {
-                            json.isme = (who && who == 'isme' ? true : false);
                             var html = ArtTemplate('article-list-template', json);
                             $('.article-list .info-body').html(html);
                         } else {

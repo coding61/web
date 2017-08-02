@@ -1,71 +1,43 @@
 $(document).ready(function() {
 	var basePath="/program_girl";
 	var userId=1;
+	var zonePk;
+	$.ajax({
+	        url: basePath+"/forum/sections/",
+	        type: "get",
+	        //async:async==null?true:async,
+	        data:null,
+	        success: function(result){
+				$.each(result.results, function(k,v) {
+					var html='';
+					html='<option value="'+v.pk+'" >'+v.name+'</option>';
+					$(".zone_content").append(html);
+				});
+			},
+	        error:function(XMLHttpRequest){
+	     		alert(XMLHttpRequest.status)
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg(XMLHttpRequest.status)
+	        	}
+	        }
+	  	});
+	initTypes();
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
     	zonePk=json.pk;
-    	$.ajax({
-		    url: basePath+"/userinfo/whoami/",
-		    type: 'get',
-		    headers: {
-		        Authorization: 'Token ' + token
-		    },
-		    data:null,
-		    success: function(result){
-		    	userName=result.name;
-		    },
-		    error:function(XMLHttpRequest){
-		    	if(XMLHttpRequest.status==403){
-		    		layer.msg("");
-		    	}else{
-		    		layer.msg("暂未登录")
-		    	}
-		    }
-		});
-    	initSection();
-		/*myAjax2(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
-			zoneName=result.name;
-			$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
-		});*/
     }); 
 
-//var userName=getCookie("userName");
-//var zonePk = getQueryString("pk");
-//if(userName) {
-//	userId=user.pk;
-//	userName=user.name;
-//}else{
-//	alert("请先登录");
-//	setTimeout("window.location.href='/s/login.html?targetUrl="+window.location.href+"'",500);
-//}
-//var basePath="http://10.144.238.71:8080/wodeworld/";
-//var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
-/*myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
-	if(result){
-		$('.avatar img').attr({src: result.avatar});//用户头像
-		$('.info .grade').html(result.grade.current_name);//用户段位等级
-		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
-		$('.zuan span').html("x"+result.diamond);
-		var percent = (parseInt(result.experience)-parseInt(result.grade.current_all_experience))/(parseInt(result.grade.next_all_experience)-parseInt(result.grade.current_all_experience))*$(".info-view").width();
-        $(".progress img").css({
-            width:percent
-        })
-	}else{
-	}
-})*/
-
 //获取当前社区
-
-$(function() {
-	$(".publish").click(function() {
+$(".publish").click(function() {
 		var title=$("#L_title").val();
 		var content=$("#L_content").val();
 		var type_txt=$(".type_content").siblings(".layui-form-select").find(".layui-this");
 		var zone_txt=$(".zone_content").siblings(".layui-form-select").find(".layui-this");
 		var typeId=type_txt.attr("lay-value");
 		var zoneId=zone_txt.attr("lay-value");
-		
 		if(!type_txt.length) {
 			layer.msg("请选择类别");
 			return false;
@@ -92,12 +64,11 @@ $(function() {
 			publish(title,zoneId,typeId,content)
 		}
 	})
-})
+
 function publish(title,zoneId,typeId,content) {
 	$.ajax({
 	        url: basePath+"/forum/posts_create/",
 	        type: "post",
-	        //async:async==null?true:async,
 	        headers: {
 	            Authorization: 'Token ' + token
 	        },
@@ -116,7 +87,7 @@ function publish(title,zoneId,typeId,content) {
 				// zuanNumAnimate();
 				//gradeAnimate(result);
 		       	setTimeout(function() {
-		        	window.postMessage(JSON.stringify({data:data}))
+		        	window.postMessage(200)
 		        }, 200)	
 			},
 	        error:function(XMLHttpRequest){
@@ -191,7 +162,7 @@ function publish(title,zoneId,typeId,content) {
 	    }, 1000)
 	}
 }*/
-initTypes();
+
 function initTypes(){
 	myAjax2(basePath+"/forum/types/","get",null,function(result){
 		$.each(result.results, function(k,v) {
@@ -199,18 +170,4 @@ function initTypes(){
 		});
 	},false);
 }
-//initSection();
-	function initSection(){
-		myAjax2(basePath+"/forum/sections/","get",null,function(result){
-			$.each(result.results, function(k,v) {
-				var html='';
-				if(v.pk==zonePk){
-					html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
-				}else{
-					html='<option value="'+v.pk+'" >'+v.name+'</option>';
-				}
-				$(".zone_content").append(html);
-			});
-		},false);
-	}
 })

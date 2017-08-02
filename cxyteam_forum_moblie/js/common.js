@@ -41,14 +41,12 @@ function liveTimeAgo(){
 	});
 }
 function myAjax(url,type,data,success,async){
-	// localStorage.token = 'a1c7ba96fedd788f3551f8120c6033c8f2a35859';
-	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
 		$.ajax({
 	        url: url,
 	        type: type,
 	        async:async==null?true:async,
 	        headers: {
-	            Authorization: 'Token ' + localStorage.token
+	            Authorization: 'Token ' + token
 	        },
 	        data:data,
 	        success: success,
@@ -61,9 +59,6 @@ function myAjax(url,type,data,success,async){
 	        	}
 	        }
 	    });	
-	}else{
-	 	layer.msg("请先登录");
-	}
 }
 function myAjax2(url,type,data,success,async){
 	$.ajax({

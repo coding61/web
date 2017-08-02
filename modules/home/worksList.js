@@ -231,33 +231,38 @@ define(function(require, exports, module) {
             })
         },
         getWorksList: function(page,callback){
-            $.ajax({
-                type: 'get',
-                url: Common.domain + '/userinfo/homeexercises/',
-                data: {
-                    page: page
-                },
-                timeout: 8000,
-                success: function(json){
-                    console.log(json);
-                    var html = ArtTemplate('works-list-arttemplate', json.results);
-                    $('.works-list').html(html);
-                    
-                    typeof callback == 'function' ? callback(json.count) : '';
-                },
-                error: function(xhr, textStatus){
-                    if (textStatus == "timeout") {
-                        Common.dialog("请求超时,请刷新");
-                        return;
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'get',
+                    url: Common.domain + '/userinfo/homeexercises/',
+                    data: {
+                        page: page
+                    },
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        console.log(json);
+                        var html = ArtTemplate('works-list-arttemplate', json.results);
+                        $('.works-list').html(html);
+                        
+                        typeof callback == 'function' ? callback(json.count) : '';
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时,请刷新");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
                     }
-                    if (xhr.status == 400 || xhr.status == 403) {
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                        return;
-                    }else{
-                        Common.dialog('服务器繁忙');
-                        return;
-                    }
-                }
+                })
             })
         },
         pagination: function(all){
