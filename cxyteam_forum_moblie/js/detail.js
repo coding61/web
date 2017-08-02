@@ -440,15 +440,6 @@ $(document).on("click",".collectBtn",function(){
 	        	}
 	        }
 	    });	
-	/*myAjax(basePath+"/collect/collection/","put",{"types": "posts","pk": postId},function(result) {
-		if (result.message == '取消收藏') {
-			$(".collectBtn").attr({"src": 'img/unCollect.png'});
-			layer.msg(result.message);
-		} else if (result.message == '收藏成功') {
-			$(".collectBtn").attr({"src": 'img/hadCollect.png'});
-			layer.msg(result.message);
-		}
-	})*/
 })
 //处理采纳
 function updateIsAccept(id,isAccept){
