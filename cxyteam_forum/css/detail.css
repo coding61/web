@@ -1,5 +1,5 @@
 .navWai .right-view {
-	display: flex;
+	 display: flex;
     flex: 1;
     flex-direction: row;
     align-items: center;
@@ -74,7 +74,8 @@
 	float: right;
 }
 .post_del {
-	cursor:pointer;
+
+  color: #FF69B4;
 }
 .postsEssence {
   cursor: pointer;

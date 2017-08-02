@@ -1,21 +1,15 @@
 $(document).ready(function() {
 	var basePath="/program_girl";
 	var userId=1;
-	var zonePk=3;
+	var zonePk;
 	$.ajax({
 	        url: basePath+"/forum/sections/",
 	        type: "get",
 	        //async:async==null?true:async,
 	        data:null,
 	        success: function(result){
-	        	alert(result.count)
 				$.each(result.results, function(k,v) {
 					var html='';
-					/*if(v.pk==zonePk){
-						html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
-					}else{
-						
-					}*/
 					html='<option value="'+v.pk+'" >'+v.name+'</option>';
 					$(".zone_content").append(html);
 				});
@@ -34,10 +28,6 @@ $(document).ready(function() {
     	json=JSON.parse(e.data);
     	token=json.token;
     	zonePk=json.pk;
-    	
-    	/*html='<option>yyyyyyyy</option>';
-    	$(".zone_content").append(html);*/
-    	
     }); 
 
 //获取当前社区
@@ -76,14 +66,9 @@ $(".publish").click(function() {
 	})
 
 function publish(title,zoneId,typeId,content) {
-	alert(title)
-	alert(zoneId)
-	alert(typeId)
-	alert(content)
 	$.ajax({
 	        url: basePath+"/forum/posts_create/",
 	        type: "post",
-	        //async:async==null?true:async,
 	        headers: {
 	            Authorization: 'Token ' + token
 	        },
@@ -102,7 +87,7 @@ function publish(title,zoneId,typeId,content) {
 				// zuanNumAnimate();
 				//gradeAnimate(result);
 		       	setTimeout(function() {
-		        	window.postMessage(JSON.stringify({data:result}))
+		        	window.postMessage(200)
 		        }, 200)	
 			},
 	        error:function(XMLHttpRequest){
@@ -185,18 +170,4 @@ function initTypes(){
 		});
 	},false);
 }
-//initSection();
-/*	function initSection(zonePk){
-		myAjax2(basePath+"/forum/sections/","get",null,function(result){
-			$.each(result.results, function(k,v) {
-				var html='';
-				if(v.pk==zonePk){
-					html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
-				}else{
-					html='<option value="'+v.pk+'" >'+v.name+'</option>';
-				}
-				$(".zone_content").append(html);
-			});
-		},false);
-	}
-*/})
+})
