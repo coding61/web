@@ -3,6 +3,14 @@ var basePath="/program_girl";
 var pageId=-1;
 var zoneId = getQueryString("id");
 $('.fly-tab .searchinput').val(sessionStorage.searchPostContent);
+// 进到程序媛计划
+$('.logo1').click(function() {
+	window.location.href = "../app/home/home.html"
+})
+// 打开儿童编程窗口
+$('.logo2').click(function() {
+	window.open("https://www.cxy61.com");
+})
 $('.jie-add1').unbind().click(function(){
 	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
 		$.ajax({

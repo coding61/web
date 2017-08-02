@@ -5,6 +5,14 @@
 var basePath="/program_girl";
 var rankingHadClick = false;
 bbsZone();
+// 进到程序媛计划
+$('.logo1').click(function() {
+	window.location.href = "../app/home/home.html"
+})
+// 打开儿童编程窗口
+$('.logo2').click(function() {
+	window.open("https://www.cxy61.com");
+})
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		$('.avatar img').attr({src: result.avatar});//用户头像
@@ -31,7 +39,6 @@ myAjax(basePath+"/message/messages/","get",{"types":"forum","status":"unread"},f
 		$('.message').hide();
 	}
 })
-
 
 localStorage.page = 1;
 function bbsZone(){
