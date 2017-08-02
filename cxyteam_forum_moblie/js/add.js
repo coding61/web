@@ -2,14 +2,7 @@ $(document).ready(function() {
 	var basePath="/program_girl";
 	var userId=1;
 	var zonePk=3;
-	document.addEventListener('message', function(e) {
-    	json=JSON.parse(e.data);
-    	token=json.token;
-    	zonePk=json.pk;
-    	initTypes();
-    	html='<option>yyyyyyyy</option>';
-    	$(".zone_content").append(html);
-    	/*$.ajax({
+	$.ajax({
 	        url: basePath+"/forum/sections/",
 	        type: "get",
 	        //async:async==null?true:async,
@@ -18,11 +11,12 @@ $(document).ready(function() {
 	        	alert(result.count)
 				$.each(result.results, function(k,v) {
 					var html='';
-					if(v.pk==zonePk){
+					/*if(v.pk==zonePk){
 						html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
 					}else{
-						html='<option value="'+v.pk+'" >'+v.name+'</option>';
-					}
+						
+					}*/
+					html='<option value="'+v.pk+'" >'+v.name+'</option>';
 					$(".zone_content").append(html);
 				});
 			},
@@ -34,7 +28,16 @@ $(document).ready(function() {
 	        		layer.msg(XMLHttpRequest.status)
 	        	}
 	        }
-	  	});*/
+	  	});
+	initTypes();
+	document.addEventListener('message', function(e) {
+    	json=JSON.parse(e.data);
+    	token=json.token;
+    	zonePk=json.pk;
+    	
+    	/*html='<option>yyyyyyyy</option>';
+    	$(".zone_content").append(html);*/
+    	
     }); 
 
 //获取当前社区

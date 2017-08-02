@@ -146,6 +146,7 @@ $(document).on("click",".postReply_btn",function() {
 		return false;
 	}else {
 		$(".copy_reply_textarea").attr({"disabled": true});
+		alert(content)
 		postReplyAdd();
 	}
 })
@@ -253,6 +254,7 @@ $(document).on("click",".moreReply",function() {
 
 //回复主贴
 function postReplyAdd() {
+	alert(token)
 	$.ajax({
 	        url: basePath+"/forum/replies_create/",
 	        type: "post",
@@ -262,6 +264,7 @@ function postReplyAdd() {
 	        },
 	        data:data,
 	        success: function(result) {
+	        	alert(result)
 				if(result){
 					//growNumAnimate(result);
 					//gradeAnimate(result);
@@ -292,6 +295,7 @@ function postReplyAdd() {
 }
 //回复帖子列表
 function postReplyMoreAdd() {
+	alert(token)
 	$.ajax({
 	        url: basePath+"/forum/replymore_create/",
 	        type: "post",
@@ -301,6 +305,7 @@ function postReplyMoreAdd() {
 	        },
 	        data:{"replies":replyId,"content":$("#copy_reply_content").val()},
 	        success: function(result) {
+	        	alert(result)
 				if(result){
 					layer.msg("回复成功");
 					setTimeout("window.location.reload()",500);
@@ -344,7 +349,7 @@ function delPost(){
 }
 //删除回帖
 function deleteReplyById(replyId){
-	alert(replyId)
+	//alert(replyId)
 	myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
 		layer.msg("删除成功");
 		$(".reply_"+replyId).remove();
