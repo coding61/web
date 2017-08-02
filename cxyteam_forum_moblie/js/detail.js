@@ -93,6 +93,11 @@ function postDetail() {
 					$('#forum_tag').append('<p class="solved" id="solved" style="color:#FF69B4">标记为已解决</p>');
 				} 
 			}
+			if (result.collect) {
+				$(".collectBtn").attr({"src": 'img/hadCollect.png'});
+			} else {
+				$(".collectBtn").attr({"src": 'img/unCollect.png'});
+			}
 			$(".replyCount").text((result.reply_count));
 			$(".browseTime").text(result.browse_count);
 			 
