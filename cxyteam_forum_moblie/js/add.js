@@ -13,7 +13,7 @@ $(document).ready(function() {
 	        //async:async==null?true:async,
 	        data:null,
 	        success: function(result){
-	        	alert(result)
+	        	alert(result.count)
 				$.each(result.results, function(k,v) {
 					var html='';
 					if(v.pk==zonePk){
@@ -25,7 +25,7 @@ $(document).ready(function() {
 				});
 			},
 	        error:function(XMLHttpRequest){
-	     		alert(XMLHttpRequest)
+	     		alert(XMLHttpRequest.status)
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("请求异常");
 	        	}else{
