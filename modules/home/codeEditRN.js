@@ -136,7 +136,15 @@ define(function(require, exports, module) {
                     console.log(json);
                     // alert(json.pk)
                     // $(".run-result iframe").attr({src:url});
-                    var url =  "https://app.bcjiaoyu.com/program_girl"+"/userinfo/exercises/"+json.pk+"/"
+                    var str = "https://app.bcjiaoyu.com"
+                    if (location.host.indexOf("bcjiaoyu.com") > -1) {
+                        str = "https://app.bcjiaoyu.com"
+                    }else if (location.host.indexOf("cxy61.com") > -1) {
+                        str = "https://www.cxy61.com";
+                    }else{
+                        str = "https://www.cxy61.com";
+                    }
+                    var url = str+"/program_girl"+"/userinfo/exercises/"+json.pk+"/"
                     $(".code-result-shadow-view iframe").attr({src:url})
                     $(".code-result-shadow-view").show();
                     
