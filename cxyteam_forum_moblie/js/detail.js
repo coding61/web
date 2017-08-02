@@ -89,6 +89,11 @@ function postDetail() {
 			$(".forum_time").append('<em class="posContentDate">'+dealWithTime(result.create_time)+'</em>');
 			if(postUserName==userName){
 				$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
+				if (result.status == 'unsolved') {
+					$('#forum_tag').append('<p class="solved" id="solved" style="color:#FF69B4">标记为已解决</p>');
+				} 
+
+				
 			}
 			$(".replyCount").text((result.reply_count));
 			$(".browseTime").text(result.browse_count);
@@ -118,7 +123,6 @@ function getReplys(page){
 		    		$(this).html(this_fly.content(result.results[i].content));
 		    		if(result.results[i].userinfo.name==userName){
 					    $(this).append('<span type="del" class="huifuDel" data-pk='+result.results[i].pk+'>删除</span>');
-					    //$(this).append('<span type="del" class="huifuDel" onclick=""JavaScript:alert(123)">删除</span>');
 					}
 		    	}
 		    }
@@ -138,6 +142,42 @@ function getReplys(page){
 		}, 1000)
 	});
 }
+function changePostStatus(status) {
+	$.ajax({
+	        url: basePath+"/forum/posts/"+postId+"/",
+	        type: "patch",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:{"status":status},
+	        success: function(result) {
+				if(result){
+					setTimeout("window.location.reload()",100);
+				}else{
+					layer.msg("回帖异常");
+				}
+			},
+	        error:function(XMLHttpRequest){
+	        	
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
+	/*myAjax(basePath+"/forum/posts/"+postId+"/","patch",{"status":status},function(result) {
+		if (result) {
+			layer.msg(result.status_display);
+			setTimeout("window.location.reload()",1000);
+		}
+	})*/
+}
+$(document).on('click', '.solved', function(event) {
+	event.preventDefault();
+	changePostStatus('solved');
+	
+});
 $(document).on('click', '.post_del', function(event) {
 	event.preventDefault();
 	delPost();
@@ -267,15 +307,12 @@ function postReplyAdd() {
 	$.ajax({
 	        url: basePath+"/forum/replies_create/",
 	        type: "post",
-	        //async:async==null?true:async,
 	        headers: {
 	            Authorization: 'Token ' + token
 	        },
 	        data:{"posts":postId,"content":$("#copy_reply_content").val()},
 	        success: function(result) {
 				if(result){
-					//growNumAnimate(result);
-					//gradeAnimate(result);
 					setTimeout("window.location.reload()",100);
 				}else{
 					layer.msg("回帖异常");
@@ -290,23 +327,12 @@ function postReplyAdd() {
 	        	}
 	        }
 	    });	
-	/*myAjax(basePath+"/forum/replies_create/","post",
-	{"posts":postId,"content":$("#copy_reply_content").val()},function(result) {
-		if(result){
-			//growNumAnimate(result);
-			//gradeAnimate(result);
-			setTimeout("window.location.reload()",500);
-		}else{
-			layer.msg("回帖异常");
-		}
-	})*/
 }
 //回复帖子列表
 function postReplyMoreAdd() {
 	$.ajax({
 	        url: basePath+"/forum/replymore_create/",
 	        type: "post",
-	        //async:async==null?true:async,
 	        headers: {
 	            Authorization: 'Token ' + token
 	        },
@@ -321,7 +347,6 @@ function postReplyMoreAdd() {
 				}
 			},
 	        error:function(XMLHttpRequest){
-	        	
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
 	        	}else{
@@ -329,15 +354,6 @@ function postReplyMoreAdd() {
 	        	}
 	        }
 	    });	
-	/*myAjax(basePath+"/forum/replymore_create/","post",
-	{"replies":replyId,"content":$("#copy_reply_content").val()},function(result) {
-		if(result){
-			layer.msg("回复成功");
-			setTimeout("window.location.reload()",500);
-		}else{
-			layer.msg("回复异常");
-		}
-	})*/
 }
 // 经验动画
 function growNumAnimate(result) {
@@ -353,13 +369,11 @@ function delPost(){
 	$.ajax({
 	        url: basePath+"/forum/posts/"+postId+"/",
 	        type: "DELETE",
-	        //async:async==null?true:async,
 	        headers: {
 	            Authorization: 'Token ' + token
 	        },
 	        data:null,
 	        success: function(result) {
-	        	
 	        	window.postMessage(200)
 				layer.msg("删除成功");
 			},
@@ -372,23 +386,17 @@ function delPost(){
 	        	}
 	        }
 	    });	
-	/*myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
-		layer.msg("删除成功");
-	});*/
 }
 //删除回帖
 function deleteReplyById(replyId){
-	
 	$.ajax({
 	        url: basePath+"/forum/replies/"+replyId+"/",
 	        type: "DELETE",
-	        //async:async==null?true:async,
 	        headers: {
 	            Authorization: 'Token ' + token
 	        },
 	        data:null,
 	        success: function(result) {
-	        	
 				layer.msg("删除成功");
 				$(".reply_"+replyId).remove();
 				setTimeout("window.location.reload()",100);
@@ -402,10 +410,6 @@ function deleteReplyById(replyId){
 	        	}
 	        }
 	    });	
-	/*myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
-		layer.msg("删除成功");
-		$(".reply_"+replyId).remove();
-	});*/
 }
 
 //删除回复
