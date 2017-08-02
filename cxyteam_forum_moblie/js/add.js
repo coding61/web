@@ -25,7 +25,7 @@ $(document).ready(function() {
 				});
 			},
 	        error:function(XMLHttpRequest){
-	        	
+	     
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("请求异常");
 	        	}else{
@@ -34,7 +34,33 @@ $(document).ready(function() {
 	        }
 	  	});
     }); 
-
+	initTypes();
+    	$.ajax({
+	        url: basePath+"/forum/sections/",
+	        type: "get",
+	        //async:async==null?true:async,
+	        data:null,
+	        success: function(result){
+	        	//alert(result)
+				$.each(result.results, function(k,v) {
+					var html='';
+					if(v.pk==zonePk){
+						html='<option value="'+v.pk+'" selected>'+v.name+'</option>';
+					}else{
+						html='<option value="'+v.pk+'" >'+v.name+'</option>';
+					}
+					$(".zone_content").append(html);
+				});
+			},
+	        error:function(XMLHttpRequest){
+	     
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg(XMLHttpRequest.status)
+	        	}
+	        }
+	  	});
 //获取当前社区
 $(".publish").click(function() {
 		var title=$("#L_title").val();
@@ -71,6 +97,7 @@ $(".publish").click(function() {
 	})
 
 function publish(title,zoneId,typeId,content) {
+	alert(token)
 	$.ajax({
 	        url: basePath+"/forum/posts_create/",
 	        type: "post",
