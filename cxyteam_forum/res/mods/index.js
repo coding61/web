@@ -94,7 +94,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                 ,'<li class="layui-form-item">'
                   ,'<label class="layui-form-label">URL</label>'
                   ,'<div class="layui-input-inline">'
-                      ,'<input required name="image" placeholder="支持直接粘贴远程图片地址" lay-type="images" value="" class="layui-input" id="layui-input">'
+                      ,'<input required name="image" placeholder="请选择图片" lay-type="images" disabled="disabled" value="" class="layui-input" id="layui-input">'
                     ,'</div>'
                     ,'<div class="layui-box layui-upload-button" id="container">'
                     ,'<input required type="file" name="file" class="layui-upload-file" id="layui-upload-file" value="" accept="image/*">'
