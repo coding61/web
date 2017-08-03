@@ -94,7 +94,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                 ,'<li class="layui-form-item">'
                   ,'<label class="layui-form-label">URL</label>'
                   ,'<div class="layui-input-inline">'
-                      ,'<input required name="image" placeholder="支持直接粘贴远程图片地址" value="" class="layui-input" id="layui-input">'
+                      ,'<input required name="image" placeholder="支持直接粘贴远程图片地址" lay-type="images" value="" class="layui-input" id="layui-input">'
                     ,'</div>'
                     ,'<div class="layui-box layui-upload-button" id="container">'
                     ,'<input required type="file" name="file" class="layui-upload-file" id="layui-upload-file" value="" accept="image/*">'
@@ -144,7 +144,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                           return upToken;
                     },
                     container: 'container',//上传区域DOM ID，默认是browser_button的父元素，
-                    max_file_size: '1000mb',           //最大文件体积限制
+                    // max_file_size: '1000mb',           //最大文件体积限制
                     flash_swf_url: 'plupload/js/Moxie.swf', //引入flash,相对路径
                     max_retries: 3,
                     get_new_uptoken: true,                  //上传失败最大重试次数
@@ -153,12 +153,21 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                     drop_element: 'container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
                     chunk_size: '4mb',                //分块上传时，每片的体积
                     auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+                    filters : {
+                       // Maximum file size
+                       max_file_size : '10mb',
+                       // Specify what files to browse for
+                       mime_types: [
+                               {title : "Image files", extensions : "jpg,gif,png"},
+                       ]
+                    },
                     init: {
                           'FilesAdded': function(up, files) {
                               plupload.each(files, function(file) {
                               });
                           },
                           'BeforeUpload': function(up, file) {
+                            console.log(file);
                             //alert('e');
                                  // 每个文件上传前,处理相关的事情
                           },
