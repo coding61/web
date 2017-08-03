@@ -11,6 +11,18 @@ var is_staff = false;//是否为管理员
 // $('.jie-add1').unbind().click(function(){
 // 	window.location.href="add.html?pk="+postPk;
 // });
+// 进到程序媛计划
+$(document).ready(function() {
+	$('.logo1').click(function() {
+		window.location.href = "../app/home/home.html"
+	})
+})
+// 打开儿童编程窗口
+$(document).ready(function() {
+	$('.navWai .logo2').click(function() {
+		window.open("https://www.cxy61.com");
+	})
+})
 $(document).on("click",".jie-add1",function() {
 	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
 		$.ajax({

@@ -12,6 +12,14 @@ var zonePk = getQueryString("pk");
 //}
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
+// 进到程序媛计划
+$('.logo1').click(function() {
+	window.location.href = "../app/home/home.html"
+})
+// 打开儿童编程窗口
+$('.logo2').click(function() {
+	window.open("https://www.cxy61.com");
+})
 $('.jie-add1').click(function() {
 	sessionStorage.removeItem("myPost");
 	sessionStorage.removeItem("typeId");
