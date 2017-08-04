@@ -288,6 +288,7 @@ define(function(require, exports, module) {
                     success: function(json){
                         if (json.ismyself == 'Yes') {
                             $('.middle-view p').text('个人中心');
+                            $('title').text('个人中心')
                             sessionStorage.ismyself = 'Yes';
                         } else {
                             $('.middle-view p').text('教师详情');
