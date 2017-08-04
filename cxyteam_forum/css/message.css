@@ -192,13 +192,17 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .messageLi .unreadMessage {
   font-size: 13px;
   color: red;
+  display: inline-table;
 }
 .messageLi .readMessage {
   font-size: 13px;
   color: #999;
+  display: inline-table;
 }
 .messageLi .content {
     margin-left: 5px;
+    display: inline-block;
+    width: calc(90%);
 }
 .messageLi .content >a {
   color: #666;
