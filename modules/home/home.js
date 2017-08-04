@@ -2039,6 +2039,11 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         console.log(json);
+                        if (json.status == -4) {
+                            // 普通 action 按钮点击事件
+                            Util.actionClickEvent(this_);
+                            return;
+                        }
                         if (json.diamond > localStorage.currentZuan) {
                             // 打开钻石动画
                             Common.playSoun('https://static1.bcjiaoyu.com/Diamond%20Drop.wav');  //播放钻石音效
