@@ -464,6 +464,16 @@ body{
     border-radius: 3px;
     cursor: pointer;
 }
+.zunshi-banner{
+    background-image: url(../../images/icon3.png);
+    background-repeat: no-repeat;
+    background-size: 14px;
+    background-position: center;
+    width: 16px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+}
 
 /*登录视图*/
 .login-view .close{
