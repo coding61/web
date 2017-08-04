@@ -78,7 +78,7 @@ define(function(require, exports, module) {
 		          $(".item-buy").mouseout(function(){
 		              var id = $(this).closest('li').attr('data-id');
 		              $(this).css("background-color","#fff");
-		              $(this).css("color", "#000");
+		              $(this).css("color", "#5a5a5a");
 		          });
 				  // 分页
 		          $('#pagination').jqPaginator({
