@@ -94,7 +94,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                 ,'<li class="layui-form-item">'
                   ,'<label class="layui-form-label">URL</label>'
                   ,'<div class="layui-input-inline">'
-                      ,'<input required name="image" placeholder="支持直接粘贴远程图片地址" value="" class="layui-input" id="layui-input">'
+                      ,'<input required name="image" placeholder="请选择图片" lay-type="images" disabled="disabled" value="" class="layui-input" id="layui-input">'
                     ,'</div>'
                     ,'<div class="layui-box layui-upload-button" id="container">'
                     ,'<input required type="file" name="file" class="layui-upload-file" id="layui-upload-file" value="" accept="image/*">'
@@ -115,7 +115,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                 // inputFile.click(function(ev){
                 //     ev.preventDefault();
                 // });
-               
+               var filename = '';
                 var uploader = Qiniu.uploader({
                     runtimes: 'HTML5,flash,html4',    //上传模式,依次退化
                     browse_button: 'layui-upload-file',       //上传选择的点选按钮，**必需**
@@ -133,7 +133,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                                 Authorization: "Token "+ token
                             },
                             data: {
-                                filename: 'dfhu.png',
+                                filename: filename ? filename : 'dfhu.png',
                             },
                             dataType: "json",
                             success: function(json) {
@@ -144,21 +144,32 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                           return upToken;
                     },
                     container: 'container',//上传区域DOM ID，默认是browser_button的父元素，
-                    max_file_size: '1000mb',           //最大文件体积限制
+                    // max_file_size: '1000mb',           //最大文件体积限制
                     flash_swf_url: 'plupload/js/Moxie.swf', //引入flash,相对路径
                     max_retries: 3,
                     get_new_uptoken: true,                  //上传失败最大重试次数
                     dragdrop: true,  
-                    get_new_uptoken: false,                 
+                    // get_new_uptoken: false,                 
                     drop_element: 'container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
                     chunk_size: '4mb',                //分块上传时，每片的体积
+                    multi_selection: false,           //单个文件上传
                     auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+                    filters : {
+                       // Maximum file size
+                       max_file_size : '10mb',
+                       // Specify what files to browse for
+                       mime_types: [
+                               {title : "Image files", extensions : "jpg,gif,png,jpeg"},
+                       ]
+                    },
                     init: {
                           'FilesAdded': function(up, files) {
                               plupload.each(files, function(file) {
+                                filename = file.name;
                               });
                           },
                           'BeforeUpload': function(up, file) {
+                            // console.log(file);
                             //alert('e');
                                  // 每个文件上传前,处理相关的事情
                           },

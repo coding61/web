@@ -154,7 +154,7 @@
 							{{if $value.isbuy == 'Yes'}}
 							<button class="bought-btn" data-article_pk="{{$value.pk}}">阅读文章</button>
 							{{else}}
-							<button class="tobuy-btn" data-article_pk="{{$value.pk}}" data-diamond_amount="{{$value.diamond_amount}}">购买文章</button>
+							<button class="tobuy-btn" data-article_pk="{{$value.pk}}" data-diamond_amount="{{$value.diamond_amount}}">购买<i class="zunshi-banner"></i>x{{$value.diamond_amount}}</button>
 							{{/if}}
 						</div>
 					</div>

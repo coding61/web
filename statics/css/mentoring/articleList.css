@@ -370,15 +370,18 @@ body{
 }
 
 .item-buy {
-    width: 90px;
+    width: 120px;
     height: 35px;
     position: absolute;
     right: 22.85%;
     background-color: #fff;
-    color: #000;
+    color: #5a5a5a;
     font-size: 14px;
     border-radius: 5px;
     border: 1px solid #E66689;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #pagination {
