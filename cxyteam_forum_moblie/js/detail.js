@@ -4,9 +4,8 @@ $(document).ready(function() {
 	var replyId=0;
 	var replyPage = 1;
 	var postUserName;
-	//var postId=213;
+	//var postId=170;
 	//var token='f0b3897f26417c66c27d6e782724317010694cdc';
-	//localStorage.token=token;
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
@@ -32,46 +31,16 @@ $(document).ready(function() {
 	        	}
 	        }
 		});
-
     	postDetail();
     	getReplys(replyPage);
     })
-  /*  $.ajax({
-	        url: basePath+"/userinfo/whoami/",
-	        type: 'get',
-	        headers: {
-	            Authorization: 'Token ' + token
-	        },
-	        data:null,
-	        success: function(result){
-	        	userName=result.name;
-	        },
-	        error:function(XMLHttpRequest){
-	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("");
-	        	}else{
-	        		layer.msg("暂未登录")
-	        	}
-	        }
-		});
-
-    	postDetail();
-    	getReplys(replyPage);*/
-/*var bt= document.getElementById('bt');
- bt.addEventListener('click',function(){
-   var valA = 111;
-   window.postMessage(JSON.stringify({data:{A:valA,}}))
- });*/
-/*//获取主帖详情
-}*/
-
+	/*postDetail();
+    getReplys(replyPage);*/
 //主贴详情信息
 function postDetail() {
-	
 	$.ajax({
         url: basePath+"/forum/posts/"+postId+"/",
         type: "get",
-        //async:async==null?true:async,
         data:null,
         success: function(result){
         	zoneId=result.section.pk;
@@ -82,7 +51,6 @@ function postDetail() {
 			$(".main_forum_reply").attr({"data-id":result.pk,'data-user-id':result.userinfo.pk});
 			$(".info >p").text(result.userinfo.grade.current_name);
 			$(".info_name").prepend(result.userinfo.name);
-			
 			$('.post_content').each(function(){
 			    $(this).html(this_fly.content(result.content));
 			});
@@ -474,7 +442,6 @@ function updateIsAccept(id,isAccept){
 			}
 		 });
 	}
-	 
 }
 // 鼠标滑过
 // 发布帖子
