@@ -244,6 +244,9 @@ define(function(require, exports, module) {
                 $.ajax({
                     type: 'GET',
                     url: Common.domain + '/userinfo/myexercises/' + work_pk + '/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
                     timeout: 12000,
                     success: function(json){
                         var html = ArtTemplate('main-view-template', json);
