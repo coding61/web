@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9635ffbf-bfbe-4d01-ba57-4d769c702ca3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cxyteam_forum_moblie/js/messageEvent.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cxyteam_forum_moblie/detail.html" afterPath="$PROJECT_DIR$/cxyteam_forum_moblie/detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js" afterPath="$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js" />
     </list>
@@ -19,19 +17,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="121" column="53" lean-forward="false" selection-start-line="121" selection-start-column="53" selection-end-line="121" selection-end-column="53" />
-              <folding>
-                <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="detail.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/css/detail.css">
           <provider selected="true" editor-type-id="text-editor">
@@ -42,16 +27,39 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="36" />
+              <folding>
+                <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="detail.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="96" column="65" lean-forward="true" selection-start-line="96" selection-start-column="65" selection-end-line="96" selection-end-column="65" />
+            <state relative-caret-position="74">
+              <caret line="86" column="39" lean-forward="true" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
               <folding>
-                <marker date="1502101568000" expanded="true" signature="1945:1958" ph="..." />
-                <marker date="1502101568000" expanded="true" signature="8939:8953" ph="..." />
-                <marker date="1502101568000" expanded="true" signature="10168:10182" ph="..." />
+                <marker date="1502102876000" expanded="true" signature="1945:1958" ph="..." />
+                <marker date="1502102876000" expanded="true" signature="6018:6032" ph="..." />
+                <marker date="1502102876000" expanded="true" signature="7247:7261" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zoom.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/zoom.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="356">
+              <caret line="126" column="23" lean-forward="true" selection-start-line="126" selection-start-column="23" selection-end-line="126" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -209,12 +217,12 @@
       <workItem from="1502014844877" duration="670000" />
       <workItem from="1502015550109" duration="302000" />
       <workItem from="1502023660213" duration="1196000" />
-      <workItem from="1502070532792" duration="6065000" />
+      <workItem from="1502070532792" duration="7059000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8233000" />
+    <option name="totallyTimeSpent" value="9227000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="16" y="95" width="1400" height="772" extended-state="0" />
@@ -298,6 +306,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/transition.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/css/detail.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
@@ -312,18 +336,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/transition.js">
+    <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/zoom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+        <state relative-caret-position="356">
+          <caret line="126" column="23" lean-forward="true" selection-start-line="126" selection-start-column="23" selection-end-line="126" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="121" column="53" lean-forward="false" selection-start-line="121" selection-start-column="53" selection-end-line="121" selection-end-column="53" />
+        <state relative-caret-position="264">
+          <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="36" />
           <folding>
             <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -331,22 +355,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/css/detail.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="96" column="65" lean-forward="true" selection-start-line="96" selection-start-column="65" selection-end-line="96" selection-end-column="65" />
+        <state relative-caret-position="74">
+          <caret line="86" column="39" lean-forward="true" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
           <folding>
-            <marker date="1502101568000" expanded="true" signature="1945:1958" ph="..." />
-            <marker date="1502101568000" expanded="true" signature="8939:8953" ph="..." />
-            <marker date="1502101568000" expanded="true" signature="10168:10182" ph="..." />
+            <marker date="1502102876000" expanded="true" signature="1945:1958" ph="..." />
+            <marker date="1502102876000" expanded="true" signature="6018:6032" ph="..." />
+            <marker date="1502102876000" expanded="true" signature="7247:7261" ph="..." />
           </folding>
         </state>
       </provider>
