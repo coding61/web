@@ -104,7 +104,7 @@
 							<span>LV {{owner.grade.current_name}}</span>
 							<span class="zuanshi-num">x{{owner.diamond}}</span>
 							<!-- <button class="works-list-btn">查看作品</button> -->
-							{{if ismyself != 'Yes'}}
+							{{if ismyself == 'No' && ismyteacher == 'No'}}
 							<button class="baishi-btn">拜师</button>
 							{{/if}}
 						</div>

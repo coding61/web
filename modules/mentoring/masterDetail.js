@@ -91,7 +91,7 @@ define(function(require, exports, module) {
             $('.article-list .info-body').on('click', '.tobuy-btn', function(){
                 var num = $(this).attr('data-diamond_amount');
                 var article_pk = $(this).attr('data-article_pk');
-                $('.zuanshi-buy-num span').text(num);
+                $('.buy-window .zuanshi-buy-num span').text(num);
                 $('.buy-window .buy-submit button').attr({
                     'data-article_pk': article_pk
                 });
@@ -229,7 +229,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -262,7 +262,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -292,9 +292,12 @@ define(function(require, exports, module) {
                             sessionStorage.ismyself = 'Yes';
                         } else {
                             $('.middle-view p').text('教师详情');
+                            sessionStorage.ismyself = 'No';
                         }
                         var html = ArtTemplate('master-info-template', json);
                         $('.master-info .info-body').html(html);
+
+                        $('.baishi-window .zuanshi-buy-num span').text(json.owner.name);
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -391,7 +394,9 @@ define(function(require, exports, module) {
                         'article': article_pk
                     },
                     success: function(json){
-                        Mananger.getAllArticle();
+                        Common.dialog('购买成功', function(){
+                            Mananger.getAllArticle();
+                        })
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {

@@ -151,7 +151,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 30%;
+    width: 40%;
 }
 .header .right-view .info-view .info{
     margin-bottom: 2%;
