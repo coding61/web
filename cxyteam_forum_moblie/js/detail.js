@@ -83,7 +83,6 @@ function postDetail() {
 }
 
 $('.post_content').on('click','img',function () {
-	alert($(this).attr("data-action"));
 	$(this).attr("data-action","zoom");
 })
 
