@@ -4,6 +4,7 @@ define(function(require, exports, module) {
     var current_master_pk = Common.getQueryString('current_master_pk') ? Common.getQueryString('current_master_pk') : 'no_pk';
 
 	var Page = {
+        ismyteacher: false,
 		init: function(){
 			// 当前浏览器
             if(Common.platform.isMobile){
@@ -104,6 +105,10 @@ define(function(require, exports, module) {
             //阅读文章
             $('.article-list .info-body').on('click', '.bought-btn', function(){
                 // console.log('to read artical', $(this).attr('data-article_pk'));
+                if (!Page.ismyteacher) {
+                    Common.dialog('请先拜师');
+                    return;
+                }
                 location.href = '../../cxyteam_forum/content.html?current_master_pk=' + current_master_pk + '&current_article_pk=' + $(this).attr('data-article_pk');
             })
 
@@ -298,6 +303,7 @@ define(function(require, exports, module) {
                         $('.master-info .info-body').html(html);
 
                         $('.baishi-window .zuanshi-buy-num span').text(json.owner.name);
+                        Page.ismyteacher = json.ismyteacher == 'Yes' ? true : false;
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -328,6 +334,7 @@ define(function(require, exports, module) {
                         if (json.count > 0) {
                             var html = ArtTemplate('student-list-template', json.results);
                             $('.student-list .info-body').html(html);
+                            $('.student-list .title .head-title').html('学员(' + json.count + '人)');
                         } else {
                             $('.student-list .info-body').html('<p style="font-size:14px">没有学生</p>')
                         }
@@ -428,6 +435,7 @@ define(function(require, exports, module) {
                     timeout: 8000,
                     success: function(json){
                         Common.dialog('恭喜您拜师成功', function(){
+                            Page.ismyteacher = true;
                             $('.baishi-btn').hide();
                         })
                     },

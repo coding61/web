@@ -35,8 +35,11 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 var postUserName;
 // initDetail();
 function initDetail(){
-	setTimeout(postDetail,200);//获取主帖详情
-	//addBrowseTime();
+	if(localStorage.token){
+		setTimeout(postDetail,200);//获取主帖详情
+	}else{
+		layer.msg('请先登录');
+	}
 }
 // 收藏／取消收藏
 $(document).on("click",".wrap .collectBtn",function(){
@@ -130,35 +133,48 @@ $(document).on("click",".question_reply",function(){
 
 // 获取文章详情
 function postDetail() {
-	myAjax(basePath+"/teacher/read_article/"+postPk+"/","get",null,function(result) {
-		console.log(result);
-		if (result) {
-			zoneId=result.pk;
-			postUserName=result.author.name;
-			$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
+		$.ajax({
+			type:"get",
+			url: basePath+"/teacher/read_article/"+postPk+"/",
+			headers:{
+				Authorization: "Token " + localStorage.token
+			},
+			success:function(json){
+				zoneId=json.pk;
+				postUserName=json.author.name;
+				$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
 
-			$(".post_title").text(result.title);
-			$(".post_user img").attr("src",dealWithAvatar(result.author.avatar));
-			$(".post_user .grade").text(result.author.grade.current_name);
-			$(".post_user cite").prepend(result.author.name);
-			$(".post_user cite em").text(dealWithTime(result.create_time));
-
+				$(".post_title").text(json.title);
+				$(".post_user img").attr("src",dealWithAvatar(json.author.avatar));
+				$(".post_user .grade").text(json.author.grade.current_name);
+				$(".post_user cite").prepend(json.author.name);
+				$(".post_user cite em").text(dealWithTime(json.create_time));
 
 				$(".collectBtn").attr({"src": 'img/unCollect.png'});
 
-			$('.post_content').each(function(){
-			    $(this).html(this_fly.content(result.content));
-			});
+				$('.post_content').each(function(){
+				    $(this).html(this_fly.content(json.content));
+				});
 
-			 $(".detail-hits").append('<span style="color:#FF7200">教师发布的文章</span>');
+				$(".detail-hits").append('<span style="color:#FF7200">教师发布的文章</span>');
+				// getReplys(replyPage);//获取评论回复
+				shubiao();
+			},
+			error:function(xhr, textStatus){
+				if (textStatus == "timeout") {
+					layer.msg('请求超时');
+					return;
+				}
+				if (xhr.status == 400 || xhr.status == 403) {
+					layer.msg(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+					return;
+				}else{
+					layer.msg('服务器繁忙');
+					return;
+				}
+			}
+		})
 
-			// getReplys(replyPage);//获取评论回复
-			shubiao();
-		} else {
-			layer.msg('请求异常');
-		}
-
-	})
 }
 function getReplys(page){
 	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
