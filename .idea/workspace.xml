@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9635ffbf-bfbe-4d01-ba57-4d769c702ca3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js" afterPath="$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js" />
-    </list>
+    <list default="true" id="9635ffbf-bfbe-4d01-ba57-4d769c702ca3" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -32,8 +30,8 @@
       <file leaf-file-name="detail.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="84" column="49" lean-forward="true" selection-start-line="84" selection-start-column="49" selection-end-line="84" selection-end-column="49" />
+            <state relative-caret-position="74">
+              <caret line="86" column="2" lean-forward="true" selection-start-line="86" selection-start-column="2" selection-end-line="86" selection-end-column="2" />
               <folding>
                 <marker date="1502103154000" expanded="true" signature="1945:1958" ph="..." />
                 <marker date="1502103154000" expanded="true" signature="5981:5995" ph="..." />
@@ -196,12 +194,12 @@
       <workItem from="1502014844877" duration="670000" />
       <workItem from="1502015550109" duration="302000" />
       <workItem from="1502023660213" duration="1196000" />
-      <workItem from="1502070532792" duration="7312000" />
+      <workItem from="1502070532792" duration="7449000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9480000" />
+    <option name="totallyTimeSpent" value="9617000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="16" y="95" width="1400" height="772" extended-state="0" />
@@ -336,8 +334,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="84" column="49" lean-forward="true" selection-start-line="84" selection-start-column="49" selection-end-line="84" selection-end-column="49" />
+        <state relative-caret-position="74">
+          <caret line="86" column="2" lean-forward="true" selection-start-line="86" selection-start-column="2" selection-end-line="86" selection-end-column="2" />
           <folding>
             <marker date="1502103154000" expanded="true" signature="1945:1958" ph="..." />
             <marker date="1502103154000" expanded="true" signature="5981:5995" ph="..." />
