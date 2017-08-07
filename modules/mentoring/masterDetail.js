@@ -292,6 +292,7 @@ define(function(require, exports, module) {
                             sessionStorage.ismyself = 'Yes';
                         } else {
                             $('.middle-view p').text('教师详情');
+                            sessionStorage.ismyself = 'No';
                         }
                         var html = ArtTemplate('master-info-template', json);
                         $('.master-info .info-body').html(html);
