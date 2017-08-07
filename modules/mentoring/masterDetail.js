@@ -91,7 +91,7 @@ define(function(require, exports, module) {
             $('.article-list .info-body').on('click', '.tobuy-btn', function(){
                 var num = $(this).attr('data-diamond_amount');
                 var article_pk = $(this).attr('data-article_pk');
-                $('.zuanshi-buy-num span').text(num);
+                $('.buy-window .zuanshi-buy-num span').text(num);
                 $('.buy-window .buy-submit button').attr({
                     'data-article_pk': article_pk
                 });
