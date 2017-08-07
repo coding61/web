@@ -191,7 +191,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -224,7 +224,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
