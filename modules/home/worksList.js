@@ -88,7 +88,7 @@ define(function(require, exports, module) {
             //点赞
             $('.works-list').on('click', '.likes', function(){
                 // e.stopPropagation();
-                Mananger.likes($(this).attr('data-pk'));
+                Mananger.likes($(this));
                 return false;
             })
         }
@@ -292,7 +292,7 @@ define(function(require, exports, module) {
                 }
             });
         },
-        likes: function(work_pk){
+        likes: function(this_){
             Common.isLogin(function(token){
                 $.ajax({
                     type: 'POST',
@@ -300,12 +300,25 @@ define(function(require, exports, module) {
                     headers: {
                         'Authorization': 'Token ' + token
                     },
-                    data: JSON.stringify({
-                        'myexercise': work_pk
-                    }),
+                    data: {
+                        'myexercise': this_.attr('data-pk')
+                    },
                     timeout: 8000,
                     success: function(json){
-                        Common.showToast(json);
+                        Common.showToast(json.message);
+                        if (json.message == '点赞成功') {
+                            this_.removeClass('likes-no').addClass('likes-yes');
+                            this_.text(parseInt(this_.attr('data-likes-num')) + 1 + '人');
+                            this_.attr({
+                                'data-likes-num': parseInt(this_.attr('data-likes-num')) + 1
+                            });
+                        } else {
+                            this_.removeClass('likes-yes').addClass('likes-no');
+                            this_.text(parseInt(this_.attr('data-likes-num')) - 1 + '人')
+                            this_.attr({
+                                'data-likes-num': parseInt(this_.attr('data-likes-num')) - 1
+                            });
+                        }
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
