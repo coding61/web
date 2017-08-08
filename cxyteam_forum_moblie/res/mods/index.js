@@ -74,7 +74,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
     ,layEditor: function(options){
       var html = '<div class="fly-edit">'
         +'<span type="face" title="插入表情"><i class="iconfont icon-biaoqing"></i>表情</span>'
-        +'<span type="picture" title="插入图片：img[src]"><i class="iconfont icon-tupian"></i>图片</span>'
+      /*  +'<span type="picture" title="插入图片：img[src]"><i class="iconfont icon-tupian"></i>图片</span>'*/
         +'<span type="href" title="超链接格式：a(href)[text]"><i class="iconfont icon-lianjie"></i>链接</span>'
         +'<span type="code" title="插入代码"><i class="iconfont icon-daima"></i>代码</span>'
 /*        +'<span type="yulan" title="预览"><i class="iconfont icon-yulan"></i>预览</span>'*/
