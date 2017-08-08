@@ -19,7 +19,6 @@ $(document).ready(function() {
 	        },
 	        data:null,
 	        success: function(result){
-
 	        	userName=result.name;
 	        },
 	        error:function(XMLHttpRequest){
@@ -34,7 +33,12 @@ $(document).ready(function() {
     	postDetail();
     	getReplys(replyPage);
     })
-	/*postDetail();
+     /*initDetail();
+    function initDetail(){
+        setTimeout(postDetail,500);//获取主帖详情
+        //addBrowseTime();
+    }
+
     getReplys(replyPage);*/
 //主贴详情信息
 function postDetail() {
@@ -81,25 +85,30 @@ function postDetail() {
         }
   });
 }
-var flag = true,//状态true为正常的状态,false为放大的状态
-        imgH,//图片的高度
-        imgW;//图片的宽度
-$('.post_content').on('click','img',function (event) {
-    	event.preventDefault();
-        imgH = $(this).height; //获取图片的高度
-        imgW = $(this).width; //获取图片的宽度
-        if(flag){
-            //图片为正常状态,设置图片宽高为现在宽高的2倍
-            flag = false;//把状态设为放大状态
-            $(this).height = imgH*2;
-            $(this).width = imgW*2;
-        }else{
-            //图片为放大状态,设置图片宽高为现在宽高的二分之一
-            flag = true;//把状态设为正常状态
-            $(this).height = imgH/2;
-            $(this).width = imgW/2;
-        }
+
+$('.post_content .post_content .detail-body').on('click','img',function () {
+
+    ImgZoomIn($(this))
+
 })
+function ImgZoomIn (param) {
+	var _this=param
+        bgstr = '<div id="ImgZoomInBG" style=" background:#000000; filter:Alpha(Opacity=70); opacity:0.7; position:fixed; left:0; top:0; z-index:10000; width:100%; height:100%; display:none;"><iframe src="about:blank" frameborder="5px" scrolling="yes" style="width:100%; height:100%;"></iframe></div>';
+        imgstr = '<img id="ImgZoomInImage" src="' + _this.attr('src')+'" onclick=$(\'#ImgZoomInImage\').hide();$(\'#ImgZoomInBG\').hide(); style="cursor:pointer; display:none; position:absolute; z-index:10001;" />';
+        if ($('#ImgZoomInBG').length < 1) {
+            $('body').append(bgstr);
+        }
+        if ($('#ImgZoomInImage').length < 1) {
+            $('body').append(imgstr);
+        }
+        else {
+            $('#ImgZoomInImage').attr('src', _this.attr('src'));
+        }
+        $('#ImgZoomInImage').css('left', $(window).scrollLeft() + ($(window).width() - $('#ImgZoomInImage').width()) / 2);
+        $('#ImgZoomInImage').css('top', $(window).scrollTop() + ($(window).height() - $('#ImgZoomInImage').height()) / 2);
+        $('#ImgZoomInBG').show();
+        $('#ImgZoomInImage').show();
+    };
 function getReplys(page){
 	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
 		if (page == 1) {

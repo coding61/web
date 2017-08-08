@@ -18,6 +18,12 @@
     width: 25px;
     border-radius: 50%;
 }
+
+  /*.post_content  img {
+        width: 70% !important;
+    }*/
+
+
 .info-view{
     font-size: 12px;
     display: flex;
