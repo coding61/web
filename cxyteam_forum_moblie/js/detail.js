@@ -19,7 +19,6 @@ $(document).ready(function() {
 	        },
 	        data:null,
 	        success: function(result){
-
 	        	userName=result.name;
 	        },
 	        error:function(XMLHttpRequest){
@@ -34,7 +33,12 @@ $(document).ready(function() {
     	postDetail();
     	getReplys(replyPage);
     })
-	/*postDetail();
+     /*initDetail();
+    function initDetail(){
+        setTimeout(postDetail,500);//获取主帖详情
+        //addBrowseTime();
+    }
+
     getReplys(replyPage);*/
 //主贴详情信息
 function postDetail() {
@@ -82,10 +86,29 @@ function postDetail() {
   });
 }
 
-$('.post_content').on('click','img',function () {
-	$(this).attr("data-action","zoom");
-})
+$('.post_content .post_content .detail-body').on('click','img',function () {
 
+    ImgZoomIn($(this))
+
+})
+function ImgZoomIn (param) {
+	var _this=param
+        bgstr = '<div id="ImgZoomInBG" style=" background:#000000; filter:Alpha(Opacity=70); opacity:0.7; position:fixed; left:0; top:0; z-index:10000; width:100%; height:100%; display:none;"><iframe src="about:blank" frameborder="5px" scrolling="yes" style="width:100%; height:100%;"></iframe></div>';
+        imgstr = '<img id="ImgZoomInImage" src="' + _this.attr('src')+'" onclick=$(\'#ImgZoomInImage\').hide();$(\'#ImgZoomInBG\').hide(); style="cursor:pointer; display:none; position:absolute; z-index:10001;" />';
+        if ($('#ImgZoomInBG').length < 1) {
+            $('body').append(bgstr);
+        }
+        if ($('#ImgZoomInImage').length < 1) {
+            $('body').append(imgstr);
+        }
+        else {
+            $('#ImgZoomInImage').attr('src', _this.attr('src'));
+        }
+        $('#ImgZoomInImage').css('left', $(window).scrollLeft() + ($(window).width() - $('#ImgZoomInImage').width()) / 2);
+        $('#ImgZoomInImage').css('top', $(window).scrollTop() + ($(window).height() - $('#ImgZoomInImage').height()) / 2);
+        $('#ImgZoomInBG').show();
+        $('#ImgZoomInImage').show();
+    };
 function getReplys(page){
 	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
 		if (page == 1) {
