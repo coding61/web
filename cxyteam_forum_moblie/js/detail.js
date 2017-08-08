@@ -4,7 +4,8 @@ $(document).ready(function() {
 	var replyId=0;
 	var replyPage = 1;
 	var postUserName;
-	//var postId=170;
+	/*var postId=170;
+	var userName="二十二";*/
 	//var token='f0b3897f26417c66c27d6e782724317010694cdc';
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
@@ -33,12 +34,10 @@ $(document).ready(function() {
     	postDetail();
     	getReplys(replyPage);
     })
-     /*initDetail();
+    /* initDetail();
     function initDetail(){
         setTimeout(postDetail,500);//获取主帖详情
-        //addBrowseTime();
     }
-
     getReplys(replyPage);*/
 //主贴详情信息
 function postDetail() {
@@ -86,10 +85,13 @@ function postDetail() {
   });
 }
 
-$('.post_content .post_content .detail-body').on('click','img',function () {
-
+$('.post_content').on('click','img',function () {
+	console.log($(this))
     ImgZoomIn($(this))
-
+})
+$('.post_reply').on('click','img',function () {
+	console.log($(this))
+	ImgZoomIn($(this))
 })
 function ImgZoomIn (param) {
 	var _this=param
