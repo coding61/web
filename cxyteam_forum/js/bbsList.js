@@ -3,6 +3,14 @@ var basePath="/program_girl";
 var pageId=-1;
 var zoneId = getQueryString("id");
 $('.fly-tab .searchinput').val(sessionStorage.searchPostContent);
+// 进到程序媛计划
+$('.logo1').click(function() {
+	window.location.href = "../app/home/home.html"
+})
+// 打开儿童编程窗口
+$('.logo2').click(function() {
+	window.open("https://www.cxy61.com");
+})
 $('.jie-add1').unbind().click(function(){
 	if (localStorage.token && localStorage.token != null && localStorage.token != '') {
 		$.ajax({
@@ -294,18 +302,20 @@ function mySelectHadChange(mySelect) {
 		// getMyCollect();
 		getPostByType();
 	} else if (mySelect == 'myMessage') {
-		$('.fly-tab .searchinput').val('');
-		sessionStorage.removeItem("searchPostContent");
-		sessionStorage.removeItem("postStatus");
-		sessionStorage.removeItem("typeId");
-		sessionStorage.removeItem("myPost");
-		sessionStorage.removeItem("myCollect");
-		sessionStorage.page = 1;
-		$(".fly-tab-span a").each(function() {
-			$(this).removeClass("tab-this");
-		});
-		sessionStorage.myMessage = true;
-		getPostByType();
+		// $('.fly-tab .searchinput').val('');
+		// sessionStorage.removeItem("searchPostContent");
+		// sessionStorage.removeItem("postStatus");
+		// sessionStorage.removeItem("typeId");
+		// sessionStorage.removeItem("myPost");
+		// sessionStorage.removeItem("myCollect");
+		// sessionStorage.page = 1;
+		// $(".fly-tab-span a").each(function() {
+		// 	$(this).removeClass("tab-this");
+		// });
+		// sessionStorage.myMessage = true;
+		// getPostByType();
+		document.getElementById("cars").options[0].selected=true;
+		window.location.href = "message.html";
 	} 
 }
 // 获取我的收藏

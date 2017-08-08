@@ -797,6 +797,7 @@ define(function(require, exports, module) {
             
         },
         load:function(){
+
             // 判断用户是否登录
             if(localStorage.token){
                 // 加载个人信息
@@ -813,7 +814,7 @@ define(function(require, exports, module) {
                 $(".login-shadow-view").show();
                 Page.clickEvent();
             }
-            
+            Common.addCopyRight();   //添加版权标识
         },
         loadMessage:function(arr, i, opt){
             var item = arr[i];
@@ -2038,6 +2039,11 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         console.log(json);
+                        if (json.status == -4) {
+                            // 普通 action 按钮点击事件
+                            Util.actionClickEvent(this_);
+                            return;
+                        }
                         if (json.diamond > localStorage.currentZuan) {
                             // 打开钻石动画
                             Common.playSoun('https://static1.bcjiaoyu.com/Diamond%20Drop.wav');  //播放钻石音效

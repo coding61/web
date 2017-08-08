@@ -42,7 +42,11 @@ define(function(require, exports, module) {
                             // 请求所有数据
                             Page.loadCourseInfo1(json.count);
                         }else{
-                            Page.adjustData(json.results);
+                            if (json.results) {
+                                Page.adjustData(json.results);
+                            }else{
+                                Page.adjustData(json);
+                            }
                         }
                         
                     },

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<!-- <meta http-equiv="X-Frame-Options" content="ALLOW-FROM" /> -->
+		<title>首页</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/codeEditRN.css" />
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/codemirror.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/hint/show-hint.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/theme/base16-dark.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/theme/monokai.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/addon/foldgutter.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/lint/lint.css">
+
+		<script src="../../libs/codeMirror/codemirror.js"></script>
+	    <script src="../../libs/codeMirror/hint/show-hint.js"></script>
+	    <script src="../../libs/codeMirror/hint/xml-hint.js"></script>
+	    <script src="../../libs/codeMirror/hint/html-hint.js"></script>
+
+	    <script src="../../libs/codeMirror/addon/active-line.js"></script>
+	    <script src="../../libs/codeMirror/addon/matchbrackets.js"></script>
+	    <script src="../../libs/codeMirror/addon/closebrackets.js"></script>
+	    <script src="../../libs/codeMirror/addon/closetag.js"></script>
+
+	    <script src="../../libs/codeMirror/addon/foldcode.js"></script>
+	    <script src="../../libs/codeMirror/addon/foldgutter.js"></script>
+	    <!-- <script src="../../libs/codeMirror/addon/brace-fold.js"></script> -->
+	    <script src="../../libs/codeMirror/addon/xml-fold.js"></script>
+	    <script src="../../libs/codeMirror/addon/indent-fold.js"></script>
+	    <!-- <script src="../../libs/codeMirror/addon/comment-fold.js"></script> -->
+
+	    <script src="../../libs/codeMirror/mode/javascript.js"></script>
+	    <script src="../../libs/codeMirror/mode/xml.js"></script>
+	    <script src="../../libs/codeMirror/mode/css.js"></script>
+	    <script src="../../libs/codeMirror/mode/htmlmixed.js"></script>
+		
+		<!-- <script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script> -->
+		<script src="https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js"></script>
+		<!-- <script src="http://csslint.net/js/csslint.js"></script> -->
+		<!-- <script src="http://htmlhint.com/js/htmlhint.js"></script> -->
+		<script src="../../libs/codeMirror/lint/jshint.js"></script>
+		<script src="../../libs/codeMirror/lint/htmlhint.js"></script>
+	    <script src="../../libs/codeMirror/lint/lint.js"></script>
+	    <script src="../../libs/codeMirror/lint/html-lint.js"></script>
+	    <script src="../../libs/codeMirror/lint/css-lint.js"></script>
+	    <script src="../../libs/codeMirror/lint/javascript-lint.js"></script>
+	    <script src="../../libs/codeMirror/lint/json-lint.js"></script>
+
+	    <style type="text/css">
+		    .CodeMirror {height: calc(94%);}
+		  </style>
+	</head>
+
+	<body>
+		<div class="tabs">
+			<div class="htmlTag tab select">HTML</div>
+			<div class="jsTag tab unselect">JavaScript</div>
+		</div>
+		<div class="edits">
+			<div class="html-edit">
+				<!-- <span class="tag">HTML</span> -->
+				<textarea class="edit" id="html-code"></textarea>
+			</div>
+			
+			<div class="js-edit">
+				<!-- <span class="tag">JavaScript</span> -->
+				<textarea id="js-code" class="edit"></textarea>
+			</div>
+		</div>
+		
+		<div class="result">
+			<span class="run">运行</span>
+			<!-- <span class="close">关闭编辑器</span> -->
+			<div class="run-result">
+				<iframe src="" frameborder="0" style="width: 100%;height: 100%;">
+					
+				
+				</iframe>
+			</div>
+		</div>
+
+		<!-- 代码运行之后弹出的新窗口 -->
+		<div class="code-result-shadow-view">
+			<div class="code-result">
+				<div class="close">
+					<img src="../../statics/images/close.png">
+				</div>
+				<iframe src="" frameborder="0"></iframe>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/codeEditRN.js");
+	</script>
+
+</html>
+

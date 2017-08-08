@@ -84,6 +84,13 @@ define(function(require, exports, module) {
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
             })
+
+            //点赞
+            $('.works-list').on('click', '.likes', function(){
+                // e.stopPropagation();
+                Mananger.likes($(this));
+                return false;
+            })
         }
 	}
 
@@ -183,7 +190,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -216,7 +223,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -231,37 +238,42 @@ define(function(require, exports, module) {
             })
         },
         getWorksList: function(page,callback){
-            $.ajax({
-                type: 'get',
-                url: Common.domain + '/userinfo/homeexercises/',
-                data: {
-                    page: page
-                },
-                timeout: 8000,
-                success: function(json){
-                    console.log(json);
-                    var html = ArtTemplate('works-list-arttemplate', json.results);
-                    $('.works-list').html(html);
-                    
-                    typeof callback == 'function' ? callback(json.count) : '';
-                },
-                error: function(xhr, textStatus){
-                    if (textStatus == "timeout") {
-                        Common.dialog("请求超时,请刷新");
-                        return;
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'get',
+                    url: Common.domain + '/userinfo/homeexercises/',
+                    data: {
+                        page: page
+                    },
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        console.log(json);
+                        var html = ArtTemplate('works-list-arttemplate', json.results);
+                        $('.works-list').html(html);
+                        
+                        typeof callback == 'function' ? callback(json.count) : '';
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时,请刷新");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
                     }
-                    if (xhr.status == 400 || xhr.status == 403) {
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                        return;
-                    }else{
-                        Common.dialog('服务器繁忙');
-                        return;
-                    }
-                }
+                })
             })
         },
         pagination: function(all){
-            var total = all / 10 + 1;
+            var total = Math.ceil(all / 12);
             var visibleNum = total > 5 ? 5 : total;            
             $.jqPaginator('#pagination', {
                 totalPages: parseInt(total),
@@ -279,6 +291,50 @@ define(function(require, exports, module) {
                     }
                 }
             });
+        },
+        likes: function(this_){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/userinfo/myexercises/like/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: {
+                        'myexercise': this_.attr('data-pk')
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.showToast(json.message);
+                        if (json.message == '点赞成功') {
+                            this_.removeClass('likes-no').addClass('likes-yes');
+                            this_.text(parseInt(this_.attr('data-likes-num')) + 1 + '人');
+                            this_.attr({
+                                'data-likes-num': parseInt(this_.attr('data-likes-num')) + 1
+                            });
+                        } else {
+                            this_.removeClass('likes-yes').addClass('likes-no');
+                            this_.text(parseInt(this_.attr('data-likes-num')) - 1 + '人')
+                            this_.attr({
+                                'data-likes-num': parseInt(this_.attr('data-likes-num')) - 1
+                            });
+                        }
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时,请刷新");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
         }
     }
 

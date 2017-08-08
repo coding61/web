@@ -1,65 +1,189 @@
-var basePath="/program_girl";
-var postId=170;
-var postPk=getQueryString("pk");
-var zoneId=0;
-var toUserId=0;
-var replyId=0;
-var replyPage = 1;
-$('.jie-add1').unbind().click(function(){
-	window.location.href="add.html?pk="+postPk;
-});
+$(document).ready(function() {
+	var basePath="/program_girl";
+	var toUserId=0;
+	var replyId=0;
+	var replyPage = 1;
+	var postUserName;
+	/*var postId=170;
+	var userName="二十二";*/
+	//var token='f0b3897f26417c66c27d6e782724317010694cdc';
+	document.addEventListener('message', function(e) {
+    	json=JSON.parse(e.data);
+    	token=json.token;
+    	postId=json.pk;
 
-/*$(window).on("message", function(e) {
-	console.log
-    var data = e.originalEvent.data; 
-    $("#data").text(data)
-});*/
-
-//var user= JSON.parse(sessionStorage.getItem("session_user"));
-	$.ajax({
+    	$.ajax({
 	        url: basePath+"/userinfo/whoami/",
 	        type: 'get',
 	        headers: {
-	            Authorization: 'Token ' + '7bf60add8fa1a96c75ea214afc0e6173478cece1'
+	            Authorization: 'Token ' + token
 	        },
 	        data:null,
 	        success: function(result){
-	        	console.log(result)
-	        	localStorage.userName=result.name;
+	        	userName=result.name;
 	        },
 	        error:function(XMLHttpRequest){
+	        	alert(XMLHttpRequest)
 	        	if(XMLHttpRequest.status==403){
 	        		layer.msg("");
+	        	}else{
+	        		layer.msg("暂未登录")
+	        	}
+	        }
+		});
+    	postDetail();
+    	getReplys(replyPage);
+    })
+    /* initDetail();
+    function initDetail(){
+        setTimeout(postDetail,500);//获取主帖详情
+    }
+    getReplys(replyPage);*/
+//主贴详情信息
+function postDetail() {
+	$.ajax({
+        url: basePath+"/forum/posts/"+postId+"/",
+        type: "get",
+        data:null,
+        success: function(result){
+        	zoneId=result.section.pk;
+			postUserName=result.userinfo.name;
+			$(".forum_types").text("["+result.types.name+"]");
+			$(".forum_title").text(result.title);
+			$(".info >img").attr("src",dealWithAvatar(result.userinfo.avatar));
+			$(".main_forum_reply").attr({"data-id":result.pk,'data-user-id':result.userinfo.pk});
+			$(".info >p").text(result.userinfo.grade.current_name);
+			$(".info_name").prepend(result.userinfo.name);
+			$('.post_content').each(function(){
+			    $(this).html(this_fly.content(result.content));
+			});
+			$(".forum_time").append('<em class="posContentDate">'+dealWithTime(result.create_time)+'</em>');
+			if(postUserName==userName){
+				$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
+				if (result.status == 'unsolved') {
+					$('#forum_tag').append('<p class="solved" id="solved" style="color:#FF69B4">标记为已解决</p>');
+				} 
+			}
+			if (result.collect) {
+				$(".collectBtn").attr({"src": 'img/hadCollect.png'});
+			} else {
+				$(".collectBtn").attr({"src": 'img/unCollect.png'});
+			}
+			$(".replyCount").text((result.reply_count));
+			$(".browseTime").text(result.browse_count);
+			 
+			if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
+			if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
+        },
+        error:function(XMLHttpRequest){
+        	if(XMLHttpRequest.status==403){
+        		layer.msg("请求异常");
+        	}else{
+        		layer.msg("请求异常")
+        	}
+        }
+  });
+}
+
+$('.post_content').on('click','img',function () {
+	console.log($(this))
+    ImgZoomIn($(this))
+})
+$('.post_reply').on('click','img',function () {
+	console.log($(this))
+	ImgZoomIn($(this))
+})
+function ImgZoomIn (param) {
+	var _this=param
+        bgstr = '<div id="ImgZoomInBG" style=" background:#000000; filter:Alpha(Opacity=70); opacity:0.7; position:fixed; left:0; top:0; z-index:10000; width:100%; height:100%; display:none;"><iframe src="about:blank" frameborder="5px" scrolling="yes" style="width:100%; height:100%;"></iframe></div>';
+        imgstr = '<img id="ImgZoomInImage" src="' + _this.attr('src')+'" onclick=$(\'#ImgZoomInImage\').hide();$(\'#ImgZoomInBG\').hide(); style="cursor:pointer; display:none; position:absolute; z-index:10001;" />';
+        if ($('#ImgZoomInBG').length < 1) {
+            $('body').append(bgstr);
+        }
+        if ($('#ImgZoomInImage').length < 1) {
+            $('body').append(imgstr);
+        }
+        else {
+            $('#ImgZoomInImage').attr('src', _this.attr('src'));
+        }
+        $('#ImgZoomInImage').css('left', $(window).scrollLeft() + ($(window).width() - $('#ImgZoomInImage').width()) / 2);
+        $('#ImgZoomInImage').css('top', $(window).scrollTop() + ($(window).height() - $('#ImgZoomInImage').height()) / 2);
+        $('#ImgZoomInBG').show();
+        $('#ImgZoomInImage').show();
+    };
+function getReplys(page){
+	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
+		if (page == 1) {
+			$("#jieda").empty();
+		}
+		var html = template("post_reply_template", result);
+		$('#jieda').append(html);
+		$('#jieda .post_content').each(function(user){
+		    for (var i = 0; i < result.results.length; i++) {
+		    	if (result.results[i].pk == $(this).attr("data-pk")) {
+		    		$(this).html(this_fly.content(result.results[i].content));
+		    		if(result.results[i].userinfo.name==userName){
+					    $(this).append('<span type="del" class="huifuDel" data-pk='+result.results[i].pk+'>删除</span>');
+					}
+		    	}
+		    }
+		});
+		$('.detail-about #replyWai').each(function() {
+			if ($(this).children('.replyNei').length == 0) {
+				$(this).css({"border": 'none'});
+			}
+		})
+		if (result.next) {
+			$("#jieda").append('<a class="moreReply">点击加载更多</a>');
+		}
+		setTimeout(function() {
+			$('.layui-form ').show();
+			$('.post_reply').children('.post_user').each(function() {
+			})
+		}, 1000)
+	});
+}
+function changePostStatus(status) {
+	$.ajax({
+	        url: basePath+"/forum/posts/"+postId+"/",
+	        type: "patch",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:{"status":status},
+	        success: function(result) {
+				if(result){
+					setTimeout("window.location.reload()",100);
+				}else{
+					layer.msg("标记未成功");
+				}
+			},
+	        error:function(XMLHttpRequest){
+	        	
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
 	        	}else{
 	        		layer.msg("请求异常")
 	        	}
 	        }
 	    });	
-/*myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
-	if(result){
-		localStorage.userName=result.name;
-		$('.avatar img').attr({src: result.avatar});//用户头像
-		$('.info .grade').html(result.grade.current_name);//用户段位等级
-		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
-		$('.zuan span').html("x"+result.diamond);
-		var percent = (parseInt(result.experience)-parseInt(result.grade.current_all_experience))/(parseInt(result.grade.next_all_experience)-parseInt(result.grade.current_all_experience))*$(".info-view").width();
-        $(".progress img").css({
-            width:percent
-        })
-	}else{
-		localStorage.userName=null;
-	}
-})*/
-
-var postUserName;
-initDetail();
-function initDetail(){
-	var data_pk=$('#data').val();
-	localStorage.data_pk=data_pk;
-	/*alert(data_pk)*/
-	setTimeout(postDetail,200);//获取主帖详情
-	//addBrowseTime();
 }
+$(document).on('click', '.solved', function(event) {
+	event.preventDefault();
+	changePostStatus('solved');
+	
+});
+$(document).on('click', '.post_del', function(event) {
+	event.preventDefault();
+	delPost();
+	
+});
+$(document).on('click', '.huifuDel', function(event) {
+	event.preventDefault();
+	var id=$(this).attr("data-pk");
+	deleteReplyById(id);
+	
+});
 //提交回帖
 $(document).on("click",".postReply_btn",function() {
 	var content=$("#copy_reply_content").val();
@@ -83,7 +207,6 @@ $(document).on("click",".postReplyMore_btn",function() {
 		$(this).attr({"disabled": true});
 		postReplyMoreAdd();
 	}
-	
 });
 //点击回复
 $(document).on("click",".question_reply",function(){
@@ -118,7 +241,7 @@ $(document).on("click",".question_reply",function(){
 	$("#main").append(htm)
 	my_init();
 });
-
+//点击主贴回复
 $(document).on("click",".main_forum_reply",function(){
 	if($(this).parent().next(".copy_reply_textarea").length>0){//如果存在
 		return;
@@ -151,34 +274,6 @@ $(document).on("click",".main_forum_reply",function(){
 	$("#main").append(htm)
 	my_init();
 });
-function postDetail() {
-	myAjax2(basePath+"/forum/posts/"+postId+"/","get",null,function(result) {
-		zoneId=result.section.pk;
-		postUserName=result.userinfo.name;
-		$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
-		$(".forum_types").text("["+result.types.name+"]");
-		$(".forum_title").text(result.title);
-		$(".info >img").attr("src",dealWithAvatar(result.userinfo.avatar));
-		$(".main_forum_reply").attr({"data-id":result.pk,'data-user-id':result.userinfo.pk});
-		$(".info >p").text(result.userinfo.grade.current_name);
-		$(".info_name").prepend(result.userinfo.name);
-		
-		$('.post_content').each(function(){
-		    $(this).html(this_fly.content(result.content));
-		});
-		$(".forum_time").append('<em class="posContentDate">'+dealWithTime(result.create_time)+'</em>');
-		if(localStorage.userName!=null&&postUserName==localStorage.userName){
-			$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
-		}
-		$(".replyCount").text((result.reply_count));
-		$(".browseTime").text(result.browse_count);
-		 
-		if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
-		if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
-		
-		getReplys(replyPage);//获取评论回复
-	})
-}
 
 template.helper("stringChange", function(e) {
 
@@ -186,46 +281,12 @@ template.helper("stringChange", function(e) {
 })
 
 template.helper("showReplyDel", function(name) {
-	if (localStorage.userName!=null&&(name==localStorage.userName)) {
+	if (userName!=null&&(name==userName)) {
 		return true;
 	} else {
 		return false;
 	}
 })
-
-function getReplys(page){
-	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
-		if (page == 1) {
-			$("#jieda").empty();
-		}
-		var html = template("post_reply_template", result);
-		$('#jieda').append(html);
-		$('#jieda .post_content').each(function(){
-		    for (var i = 0; i < result.results.length; i++) {
-		    	if (result.results[i].pk == $(this).attr("data-pk")) {
-		    		$(this).html(this_fly.content(result.results[i].content));
-		    		if(localStorage.userName!=null&&(result.results[i].userinfo.name==localStorage.userName)){
-					    $(this).append('<span type="del" class="huifuDel" onclick="deleteReplyById('+result.results[i].pk+')">删除</span>');
-					}
-		    	}
-		    }
-		});
-		$('.detail-about #replyWai').each(function() {
-			if ($(this).children('.replyNei').length == 0) {
-				$(this).css({"border": 'none'});
-			}
-		})
-		if (result.next) {
-			$("#jieda").append('<a class="moreReply">点击加载更多</a>');
-
-		}
-		setTimeout(function() {
-			$('.layui-form ').show();
-			$('.post_reply').children('.post_user').each(function() {
-			})
-		}, 1000)
-	});
-}
 
 // 点击加载更多回帖
 $(document).on("click",".moreReply",function() {
@@ -234,32 +295,58 @@ $(document).on("click",".moreReply",function() {
 	$(".moreReply").remove();
 
 })
+
 //回复主贴
 function postReplyAdd() {
-	myAjax(basePath+"/forum/replies_create/","post",
-	{"posts":postId,"content":$("#copy_reply_content").val()},function(result) {
-		if(result){
-			console.log(result)
-			growNumAnimate(result);
-			gradeAnimate(result);
-			setTimeout("window.location.reload()",2000);
-		}else{
-			layer.msg("回帖异常");
-		}
-	})
+	$.ajax({
+	        url: basePath+"/forum/replies_create/",
+	        type: "post",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:{"posts":postId,"content":$("#copy_reply_content").val()},
+	        success: function(result) {
+				if(result){
+					setTimeout("window.location.reload()",100);
+				}else{
+					layer.msg("回帖异常");
+				}
+			},
+	        error:function(XMLHttpRequest){
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
 }
 //回复帖子列表
 function postReplyMoreAdd() {
-	myAjax(basePath+"/forum/replymore_create/","post",
-	{"replies":replyId,"content":$("#copy_reply_content").val()},function(result) {
-		if(result){
-
-			layer.msg("回复成功");
-			setTimeout("window.location.reload()",1000);
-		}else{
-			layer.msg("回复异常");
-		}
-	})
+	$.ajax({
+	        url: basePath+"/forum/replymore_create/",
+	        type: "post",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:{"replies":replyId,"content":$("#copy_reply_content").val()},
+	        success: function(result) {
+	        
+				if(result){
+					layer.msg("回复成功");
+					setTimeout("window.location.reload()",100);
+				}else{
+					layer.msg("回复异常");
+				}
+			},
+	        error:function(XMLHttpRequest){
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
 }
 // 经验动画
 function growNumAnimate(result) {
@@ -272,76 +359,88 @@ function growNumAnimate(result) {
 
 //删除帖子
 function delPost(){
-	layer.open({
-		  content: '确定删除该帖子？'
-		  ,btn: ['确认', '取消']
-		  ,yes: function(index, layero){
-			  myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
-			  	//console.log(result)
-//				  if(result==1){
-						layer.msg("删除成功");
-						/*setTimeout('window.location.href="bbsList.html?id="+zoneId',800);*/
-//					}else{
-//						layer.msg("删除失败");
-//					}	
-				});
-		  },btn2: function(index, layero){
-		    layer.close();
-		  }
-		  ,cancel: function(){ 
-		    //右上角关闭回调
-		  }
-		});
+	$.ajax({
+	        url: basePath+"/forum/posts/"+postId+"/",
+	        type: "DELETE",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:null,
+	        success: function(result) {
+	        	window.postMessage(200)
+				layer.msg("删除成功");
+			},
+	        error:function(XMLHttpRequest){
+	        	
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
 }
 //删除回帖
 function deleteReplyById(replyId){
-layer.open({
-	  content: '确定删除该回帖？'
-	  ,btn: ['确认', '取消']
-	  ,yes: function(index, layero){
-		  myAjax(basePath+"/forum/replies/"+replyId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".reply_"+replyId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
-				});
-	  },btn2: function(index, layero){
-	    layer.close();
-	  }
-	  ,cancel: function(){ 
-	    //右上角关闭回调
-	  }
-	});
+	$.ajax({
+	        url: basePath+"/forum/replies/"+replyId+"/",
+	        type: "DELETE",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:null,
+	        success: function(result) {
+				layer.msg("删除成功");
+				$(".reply_"+replyId).remove();
+				setTimeout("window.location.reload()",100);
+			},
+	        error:function(XMLHttpRequest){
+	        	
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
 }
 
 //删除回复
 function deleteReplymoreById(replymoreId){
-layer.open({
-	  content: '确定删除该回帖？'
-	  ,btn: ['确认', '取消']
-	  ,yes: function(index, layero){
-		  myAjax(basePath+"/forum/replymores/"+replymoreId+"/","DELETE",null,function(result){
-//				if(result==1){
-					layer.msg("删除成功");
-					$(".replymore_"+replymoreId).remove();
-//				}else{
-//					layer.msg("删除失败");
-//				}
-			});
-	  },btn2: function(index, layero){
-	    layer.close();
-	  }
-	  ,cancel: function(){ 
-	    //右上角关闭回调
-	  }
+	myAjax(basePath+"/forum/replymores/"+replymoreId+"/","DELETE",null,function(result){
+		layer.msg("删除成功");
+		$(".replymore_"+replymoreId).remove();
 	});
 }
-
+$(document).on("click",".collectBtn",function(){
+	$.ajax({
+	        url: basePath+"/collect/collection/",
+	        type: "put",
+	        headers: {
+	            Authorization: 'Token ' + token
+	        },
+	        data:{"types": "posts","pk": postId},
+	        success: function(result) {
+				if (result.message == '取消收藏') {
+					$(".collectBtn").attr({"src": 'img/unCollect.png'});
+					layer.msg(result.message);
+				} else if (result.message == '收藏成功') {
+					$(".collectBtn").attr({"src": 'img/hadCollect.png'});
+					layer.msg(result.message);
+				}
+			},
+	        error:function(XMLHttpRequest){
+	        	
+	        	if(XMLHttpRequest.status==403){
+	        		layer.msg("请求异常");
+	        	}else{
+	        		layer.msg("请求异常")
+	        	}
+	        }
+	    });	
+})
 //处理采纳
 function updateIsAccept(id,isAccept){
-	
 	if(isAccept==1){//采纳
 		var oid=$(".isAccept_active").attr("data-id");
 				 if(oid){
@@ -373,7 +472,6 @@ function updateIsAccept(id,isAccept){
 			}
 		 });
 	}
-	 
 }
 // 鼠标滑过
 // 发布帖子
@@ -388,4 +486,7 @@ $('.jie-add').unbind('mouseover').mouseover(function() {
 }).unbind('mouseout').mouseout(function(){
     $(".jie-add").css({"border": "none", "color": "#4c4c4c"})
 })
+
+});
+
 

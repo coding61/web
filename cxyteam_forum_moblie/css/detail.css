@@ -18,6 +18,12 @@
     width: 25px;
     border-radius: 50%;
 }
+
+  /*.post_content  img {
+        width: 70% !important;
+    }*/
+
+
 .info-view{
     font-size: 12px;
     display: flex;
@@ -43,6 +49,29 @@
     height: 7px;
     position: relative;
     margin-bottom: 0px;
+}
+.layui-edit-face ul {
+    position: relative;
+    width: 300px ! important;
+    padding: 10px;
+    border: 1px solid #D9D9D9;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,.2);
+}
+.layui-btn {
+    display: inline-block;
+    padding: 0 23px ! important;
+    height: 38px;
+    line-height: 38px;
+    background-color: #009688;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    opacity: .9;
+    filter: alpha(opacity=90);
 }
 .info-view .progress img {
     position: absolute;
@@ -113,6 +142,7 @@
   padding-bottom: 10px;
   padding-top: 10px;
   cursor: pointer;
+  font-size: 14px;
   background: #fff;
 }
 .post_btn {
@@ -225,9 +255,9 @@ ul.reply_mess>li .reply_txt {
   position: absolute;
   right: 70px;
   top: 60px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
-  color: red;
+
 }
 .post_content .tieReply{
   position: absolute;

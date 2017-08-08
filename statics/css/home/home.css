@@ -261,6 +261,7 @@ body{
 	margin:1% 2%;
 	height: 100%;
     height: calc(96% - 50px);
+    height: calc(96% - 50px - 30px);
 	/*background-color: red;*/
 }
 .main-view .left-view{

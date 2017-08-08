@@ -814,6 +814,7 @@ body{
     border-bottom: 1px solid #ccc;
     line-height: 26px;
     overflow: hidden;
+    cursor: pointer;
 }
 .works-list li p span{
     display: none;

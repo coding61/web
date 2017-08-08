@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<!-- <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" /> -->
+		<title>文章列表</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.7" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/mentoring/articleList.css?v=2.7" />
+	</head>
+
+	<body>
+	<!-- 头部信息 -->
+		<div class="header">
+			<div class="left-view">
+				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>今天打卡了10次,太厉害了</span>
+				<img class="logo1" style="height: 30px;" src="../../statics/images/logo2.png" />
+				<div class="right-line"></div>
+				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
+			</div>
+			<a class="teacher center-view item" href="../mentoring/masterList.html">教师中心</a>
+			<!-- <span class="works center-view item">作品中心</span> -->
+			<!-- <span class="luntan center-view item">学习论坛</span> -->
+			<!-- <div class="right-view"> -->
+				<!-- <div class="icon4 avatar">
+					<img class="item" src="../../statics/images/avatar.png" alt="">
+				</div>
+				<div class="info-view">
+					<div class="info">
+						<span class="grade item">LV 青铜1</span>
+						<span class="grade-value item">500/854</span>
+					</div>
+					<div class="progress item">
+						<img src="../../statics/images/progress.png" alt="">
+					</div>
+				</div> -->
+
+				<!-- <div class="icon3 zuan">
+					<img class="item" src="../../statics/images/icon3.png" alt="" />
+					<span class="item">x20</span>
+				</div>
+
+				<div class="quit item">退出</div> -->
+
+				<!-- <div class="team-info">
+					<div class="team">
+
+					</div>
+					<div class="teams-brand">
+
+					</div>
+				</div> -->
+			<!-- </div> -->
+
+		</div>
+		<!-- <script type="text/html" id="team-template">
+			<img class="arrow" src="../../statics/images/arrow-d.png"/>
+			<div>我的团队</div>
+			<div class="members">
+				{{each group_member}}
+				<div class="member">
+					<span class="member-name">
+						<img class="avatar" src="{{$value.owner.avatar}}"/>
+						<span class="name">{{$value.owner.name}}</span>
+					</span>
+					<span class="gm">{{$value.owner.grade.current_name}}</span>
+				</div>
+				{{/each}}
+			</div>
+		</script>
+		<script type="text/html" id="teams-brand-template">
+			<div>团队排行</div>
+			{{each}}
+			<div class="team-brand">
+				<span class="name">{{$index+1}}.{{$value.name}}</span>
+				<span class="zn">
+					<img class="zuan" src="../../statics/images/zuan-s.png">
+					<span>x{{$value.diamond_amount}}</span>
+				</span>
+			</div>
+			{{/each}}
+		</script> -->
+        <!-- 文章列表 -->
+        <div class="main-view">
+            <div class="top-view">
+                <div class="title-view">
+                    <p class="title">文章</p>
+                    <div class="under-line"></div>
+                </div>
+                <button type="button" class="push">发布文章</button>
+            </div>
+            <div class="list-view"></div>
+            <script type="text/html" id="list-template">
+	    		{{each}}
+					{{if $value.isbuy == "No"}}
+	    				<li data-pk="{{$value.pk}}" data-buy="{{$value.isbuy}}" data-price="{{$value.diamond_amount}}">
+	    					<div class="list-item">
+	                            <img class="cover" src={{$value.images}}>
+	                            <div class="item-info">
+	                                <div class="item-title">{{$value.title}}</div>
+	        						<div class="item-content">{{$value.content}}</div>
+	                            </div>
+								<button class="item-buy">购买 💎 × {{$value.diamond_amount}}</button>
+	    					</div>
+	    				</li>
+					{{/if}}
+					{{if $value.isbuy == "Yes"}}
+						<li data-pk="{{$value.pk}}" data-buy="{{$value.isbuy}}">
+							<div class="list-item">
+								<img class="cover" src={{$value.images}}>
+								<div class="item-info">
+									<div class="item-title">{{$value.title}}</div>
+									<div class="item-content">{{$value.content}}</div>
+								</div>
+								<button class="item-buy">阅读文章</button>
+							</div>
+						</li>
+					{{/if}}
+				{{/each}}
+    		</script>
+			<div class="none-view" style="display: none; width: 100%; height: 500px; text-align: center;">
+				<p style="margin-top: 220px; font-size: 20px;">暂无文章</p>
+			</div>
+        </div>
+
+        <div style="text-align:center;clear:both;">
+		        <ul class="pagination" id="pagination">
+		        </ul>
+		        <input type="hidden" id="PageCount" runat="server" />
+		        <input type="hidden" id="PageSize" runat="server" value="10" />
+		        <input type="hidden" id="countindex" runat="server" value="10"/>
+		        <!--设置最多显示的页码数 可以手动设置 默认为10-->
+		        <input type="hidden" id="visiblePages" runat="server" value="10" />
+    	</div>
+        <div style="text-align: center" id="pageDiv"></div>
+
+		<!-- 登录窗口 -->
+		<!-- <div class="login-shadow-view">
+			<div class="login-view">
+				<div style="font-size: 30px;margin-bottom: 25px;color: white; display: none;">邀请码、密码请到战队中查询</div>
+				<div class="close">
+					<img style="display: none;" src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="login-info">
+					<div class="login-info-view">
+						<div class="info"><span>邀请码请到微信公众号领取</span></div>
+						<div class="wx-code">
+							<img src="../../statics/images/code.png">
+						</div>
+					</div>
+
+				</div>
+				<div class="account-view">
+					<div class="username">
+						<span>邀请码</span>
+						<input placeholder="邀请码" />
+					</div>
+					<div class="password">
+						<span>密码</span>
+						<input type="password" placeholder="密码" />
+					</div>
+					<span class="login">确定</span>
+				</div>
+			</div>
+		</div> -->
+
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../libs/template.js"></script>
+    <script type="text/javascript" src="../../libs/jqPaginator.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/mentoring",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/articleList.js?v=2.7");
+	</script>
+
+</html>

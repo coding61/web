@@ -78,6 +78,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
         +'<span type="href" title="超链接格式：a(href)[text]"><i class="iconfont icon-lianjie"></i>链接</span>'
         +'<span type="code" title="插入代码"><i class="iconfont icon-daima"></i>代码</span>'
 /*        +'<span type="yulan" title="预览"><i class="iconfont icon-yulan"></i>预览</span>'*/
+        +'<button id="close" style="position:absolute;right:60px;top:5px;padding:2px 8px;background-color: #009688;border:none;color:#ffffff">关闭</button>'
       +'</div>';
       var log = {}, mod = {
         picture: function(editor){ //插入图片
@@ -88,7 +89,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
               ,title: '插入图片'
               ,area: 'auto'
               ,shade: false
-              ,area: '98%'
+              ,area: '96%'
               ,skin: 'layui-layer-border'
               ,content: ['<ul class="layui-form layui-form-pane" style="margin: 20px;">'
                 ,'<li class="layui-form-item">'
@@ -283,6 +284,9 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
         $(options.elem).each(function(index){
           var that = this, othis = $(that), parent = othis.parent();
           parent.prepend(html);
+          parent.find('#close').on('click', function(event){
+            $('.copy_reply_textarea').remove();
+          })
           parent.find('.fly-edit span').on('click', function(event){
             var type = $(this).attr('type');
             mod[type].call(that, othis, this);

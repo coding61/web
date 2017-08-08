@@ -1,0 +1,216 @@
+/* ¹«ÓÃ */
+body .iconfont{-webkit-text-stroke-width: 0;}
+/* Tip */
+.fly-tip{position: relative;}
+.fly-tip span{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
+.fly-tip span{height: 20px; line-height: 20px; padding: 0 5px; background-color: #999; color: #fff; font-size: 12px;}
+.fly-tip .fly-tip-stick{background-color: #393D49;}
+.fly-tip .fly-tip-jing{background-color: #c00;}
+.fly-tip .fly-tip-jie{background-color: #8FCDA0;}
+
+/* Ìû×ÓÁÐ±í */
+.fly-list .fly-list-li{position: relative; height:89px; margin-top: 8px; padding: 0 0 8px 30px; border-bottom: 1px solid #E9E9E9;}
+.fly-list-li .fly-list-avatar{position: absolute; left: 0; top: 0;}
+.fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 8px;margin-left: 20px;float: left;width:91%;}
+.fly-list-li h2 *{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
+.fly-list-li h2 a{max-width: 70%; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;color:#666; font-size: 16px;}
+.fly-list-li h2 span{position: relative; top: 3px; margin-left: 5px;}
+
+.fly-list-li a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
+.fly-list-li img{display: inline-block;width: 53px;height: 53px;float: left;margin-top: 9px;border-radius: 53px;}
+.fly-list-li .grade{left: 40px;position: absolute;margin-top: 65px;}
+.fly-list-li p{line-height: 40px; font-size: 12px; color: #999;}
+.fly-list-li p span{padding-right: 15px;margin-left:20px;}
+.fly-list-li p span a{color: #999;}
+.fly-list-avatar img{width: 45px; height: 45px; border-radius: 2px;}
+
+.fly-list-hint{position: absolute; right: 0; top: 0;}
+.fly-list-hint i{padding-left: 10px; color: #ccc;padding-right:4px;}
+/* Tab */
+.fly-tab{position:relative; margin-bottom:20px;}
+.fly-tab span,
+.fly-tab span a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.fly-tab span{border:1px solid #009E94; border-right:none; font-size:0;}
+.fly-tab span a{ height: 36px; line-height: 36px; padding: 0 20px; border-right:1px solid #009E94; font-size:14px;}
+.fly-tab .tab-this{background-color:#009E94; color:#fff;}
+/* ËÑË÷ */
+.fly-search{position:relative; margin-left:10px; display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.fly-search input{padding-right: 30px;}
+.fly-search .icon-sousuo{position:absolute; right:10px; top:10px; color:#999; cursor:pointer;}
+.fly-tab .searchT{position: absolute;width: 275px;right: 30%;margin-top: -38px;}
+.fly-tab .searchT .searchinput{width: 200px;height: 40px;font-size: 16;}
+.fly-tab .searchT .searchTiezi{font-size: 14px;background-color: #009688;width: 60px;text-align: center;cursor: pointer;display: inline-block;color: white;height: 35px;line-height: 35px;top: -37px;margin-left: 206px;}
+.fly-tab .myTie{cursor: pointer;width: 100px;background-color: #009688;font-size: 14px;height: 38px;text-align: center;line-height: 38px;color: #fff;position: absolute;right: 20%;top: 0;}
+.jie-add1{position:absolute; right:10%; top:0; font-size:14px;}
+.jie-add{position:absolute; right:0; top:0; font-size:14px;}
+/* ·ÖÒ³ */
+.laypage-main,
+.laypage-main *{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
+.laypage-main{margin: 20px 0; border: 1px solid #009E94; border-right: none; border-bottom: none; font-size: 0;}
+.laypage-main *{padding: 0 20px; line-height: 36px; border-right: 1px solid #009E94; border-bottom: 1px solid #009E94; font-size: 14px;}
+.laypage-main .laypage-curr{background-color:#009E94; color:#fff;}
+.main{
+	margin-top:120px;
+	min-height:500px;
+}
+#pageDiv{
+	margin-top:20px;
+}
+/* ÊÊÅä¶àÉè±¸ */
+@media screen and (max-width: 1024px) {
+  .main{width: auto;}
+  img{max-width: 100%;}
+}
+
+@media screen and (max-width: 750px) {
+  .fly-tab,
+  .fly-search,
+  .fly-list-li h2 span,
+  .fly-list-hint{display:none;}
+  .fly-list-li h2 a{max-width: 100%;}
+  .fly-list-one li{margin: 0 10px;}
+  .jie-add{position: relative; display: inline-block;}
+  .laypage-main a, .laypage-main span{display: none;}
+  .laypage-main .laypage-prev, 
+  .laypage-main .laypage-next{display: inline-block;}
+}
+.v_content{
+  float: left;
+  display: inline-block;
+  max-width: 268px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navWai .right-view {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: calc(5%);
+  position: relative;
+}
+.avatar{
+   margin-right: 2%;
+}
+.avatar .item {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+.info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.info-view .info {
+    margin-bottom: 2%;
+}
+.info-view .info .grade {
+  display: inline;
+  margin-right: 5%;
+  color: #fff;
+}
+.info-view .info .grade-value {
+  display: inline;
+  color: #fff;
+}
+.info-view .progress {
+  display: block;
+  background: white;
+    height: 7px;
+    position: relative;
+    margin-bottom: 0px;
+}
+.info-view .progress img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58.5%;
+    height: 100%;
+    width: 150.202px;
+}
+.zuan{
+    margin-left: 5%;
+    display: flex;
+}
+.zuan img {
+    display: inline;
+    margin-right: 2px;
+}
+.zuan span {
+  display: inline;
+  color: #fff;
+}
+
+.fly-tab-span .solved {
+    width: 84px;
+   /* height: 36px;
+    border: none;
+    font-size: 14px;
+    line-height: 36px;
+    text-align: center;
+    border-right: 1px solid #009E94;
+    color: #999;*/
+    cursor: pointer;
+}
+.fly-tip .unsolved {
+    color: red;
+    background-color: #fcfcfc;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+.fly-tip .solved {
+    color: #999;
+    background-color: #fcfcfc;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+.fly-tip .finish {
+    color: #999;
+    background-color: #fcfcfc;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+.messageLi {
+    position: relative;
+    height: 89px;
+    margin-top: 8px;
+    padding: 0 0 8px 30px;
+    border-bottom: 1px solid #E9E9E9;
+    display: flex;
+    align-items: center;
+}
+.messageLi .unreadMessage {
+  font-size: 13px;
+  color: red;
+  display: inline-table;
+}
+.messageLi .readMessage {
+  font-size: 13px;
+  color: #999;
+  display: inline-table;
+}
+.messageLi .content {
+    margin-left: 5px;
+    display: inline-block;
+    width: calc(90%);
+}
+.messageLi .content >a {
+  color: #666;
+}
+.messageLi .liveTime {
+    position: absolute;
+    right: 0;
+    padding-right: 15px;
+    font-size: 13px;
+    color: #999;
+}

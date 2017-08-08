@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>文章详情</title>
+  <link rel="icon" href="../statics/images/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap.min.css" />
+  	<link rel="stylesheet" type="text/css" href="bootstrap3.3.5/css/bootstrap-theme.min.css" />
+<!--  	<link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/huiwan.css">
+    <link rel="stylesheet" type="text/css" href="../css/global.css" />-->
+	<link rel="stylesheet" href="res/layui/css/layui.css">
+  <link rel="stylesheet" href="res/css/global.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/content.css?v=1.4">
+
+  <script src="js/jquery-1.11.2.min.js"></script>
+  <script src="res/layui/layui.js"></script>
+  <script src="res/layui/layer/layer.js"></script>
+  <script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
+  <script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
+  <script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
+
+  <script src="js/jquery.liveTimeAgo.js"></script>
+  <script src="js/common.js?v=1.0"></script>
+  <script src="js/content.js?v=1.2"></script>
+  <script>
+  var this_fly;
+  /* layui.cache.page = 'jie'; */
+  layui.cache.user = {
+    username: '游客'
+    ,uid: -1
+    ,avatar: 'res/images/avatar/00.jpg'
+    ,experience: 83
+    ,sex: '男'
+  };
+  layui.config({
+    version: "1.0.0"
+    ,base: 'res/mods/'
+  }).extend({
+    fly: 'index'
+  }).use('fly', function(){
+    this_fly = layui.fly;
+    //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+    initDetail();
+  });
+  </script>
+</head>
+<body style="position: relative;">
+<div class="container-fluid">
+	<!-- <div class="row">
+		<div style="padding-top:10px;">
+				<nav class="huiwan-navbar navbar navbar-default navbar-static-top" role="navigation">
+
+        </nav>
+        </div>
+	</div> -->
+  <nav class="navWai" style="background-color: rgb(250, 80, 131);display: flex; align-items: center;">
+    <div style="display: flex; flex: 1; margin-left: 18.75%;">
+      <img class="logo1" style="height: 30px;" src="../statics/images/logo2.png" />
+    <div class="right-line" style="border-right: solid 1px white;height: 24px;margin-left: 20px;margin-right: 20px;display: inline-flex;margin-top: 3px;margin-bottom: 3px;"></div>
+      <img class="logo2" style="height: 30px;" src="../statics/images/logo1.png"/>
+    </div>
+
+    <!-- <div class="right-view">
+      <div class="icon4 avatar">
+        <img class="item" src="../statics/images/avatar.png" alt="">
+      </div>
+
+      <div class="info-view">
+        <div class="info">
+          <span class="grade item">LV 青铜1</span>
+          <span class="grade-value item">500/854</span>
+        </div>
+        <div class="progress item">
+          <img src="../statics/images/progress.png" alt="">
+        </div>
+      </div>
+
+      <div class="icon3 zuan">
+        <img class="item" src="../statics/images/icon3.png" alt="" />
+        <span class="item">x20</span>
+      </div>
+    </div> -->
+  </nav>
+
+<div class="main layui-clear">
+  <div class="wrap">
+    <div class="article detail">
+      <!-- <span class="postStatus" style="font-size: 18px;"></span> -->
+      <h1 class="post_title" style="margin-top: -33px;"></h1>
+      <div class="fly-tip fly-detail-hint post_status" data-id="">
+        <span class="fly-tip-stick" style="display:none">置顶帖</span>
+        <span class="fly-tip-jing " style="display:none">精帖</span>
+        <span style="background-color:white;"></span>
+        <div class="fly-list-hint" style="display: none;">
+          <img class="collectBtn" src="img/unCollect.png" />
+          <i class="iconfont" title="回帖+回复" >&#xe60c;</i><em class="replyCount"></em>
+          <i class="iconfont" title="浏览次数" >&#xe60b;</i> <em class="browseTime"></em>
+        </div>
+      </div>
+      <div class="detail-about post_user">
+        <a class="jie-user" href="javascript:void(0)">
+          <img src="" alt="">
+          <cite>
+            <em></em>
+          </cite>
+        </a>
+        <span class="grade"></span>
+        <div class="detail-hits" data-id="">
+         <!--  <span style="color:#FF7200">悬赏：20飞吻</span> -->
+          <!-- <span class="jie-admin" type="edit"><a href="jvascript:void(0)">编辑此贴</a></span> -->
+        </div>
+      </div>
+
+      <div class="detail-body post_content" style="margin-bottom: 20px;word-break: break-all;">
+      </div>
+      <h2 class="page-title" style="display: none;">回帖数量<span>（<em id="jiedaCount">0</em>）</span> </h2>
+
+      <ul class="jieda photos post_reply" id="jieda" style="display: none;">
+
+      </ul>
+
+      <div class="layui-form layui-form-pane post_answer global-reply" style="display: none;">
+          <div class="layui-form-item layui-form-text">
+            <div class="layui-input-block">
+              <textarea id="L_content" name="content" required lay-verify="required" placeholder="我要回复主帖"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <input type="hidden" name="jid" value="0">
+            <button class="layui-btn postReply_btn  btn-left">回帖</button>
+          </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <div class="edge">
+  	<p class="text-right post_btn"><a class="layui-btn jie-add1">发布帖子</a>
+	  <a href="bbs.html" class="layui-btn jie-add callbackToList">返回列表</a></p>
+    <h3 class="page-title">最近热帖</h3>
+    <ol class="fly-list-one orderByBrowseTime">
+
+    </ol>
+
+    <h3 class="page-title">近期热议</h3>
+    <ol class="fly-list-one orderByReplyCount">
+    </ol>
+
+  </div> -->
+</div>
+</div>
+<!-- 钻石效果 -->
+<div class="zuan-shadow-view">
+  <div class="img">
+    <img src="../statics/images/zuan2.gif">
+  </div>
+</div>
+
+<!-- 升级效果 -->
+<div class="up-grade-shadow-view">
+  <div class="img">
+    <img src="../statics/images/growup.gif" alt="">
+  </div>
+</div>
+<!-- <div id="reply_textarea" hidden>
+	<div class="layui-form layui-form-pane">
+        <form action="/jie/reply/" method="post">
+          <div class="layui-form-item layui-form-text">
+            <div class="layui-input-block">
+              <textarea id="copy_reply_content" name="content" required lay-verify="required" placeholder="我要回复"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <input type="hidden" name="jid" value="0">
+            <button class="layui-btn btn-left" lay-filter="*" lay-submit>回复</button>
+          </div>
+        </form>
+      </div>
+</div>  -->
+
+
+<!--upload-->
+
+<!--<script type="text/javascript" src="/s/js/global.js"></script>-->
+</body>
+</html>

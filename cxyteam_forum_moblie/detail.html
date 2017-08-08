@@ -11,43 +11,37 @@
     <link rel="stylesheet" href="res/css/global.css?v=1.1">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/detail.css?v=1.8">
-    <script type="text/javascript">
-             window.onload = function() {
-                document.addEventListener('message', function(e) {
-                    document.getElementById('data').value = e.data;
-                });   
-            }
-    </script>
+
+    <!--<link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">-->
 </head>
 <body style="position: relative;">
     <div id="main" style="">
-        <p style="text-align: center">收到react native发送的数据: <input id="data" value='www' /></p>
         <!--主贴详情信息-->
         <div class="detail_top">
-            <div style="height: 50px;text-align: left;padding:20px;">
+            <div style="text-align: left;padding:20px;">
                 <h1 style="font-size: 18px;" class="forum_title"></h1>
             </div>
             <!--发帖人详情-->
-            <div class="forum_person_info " style="background: #F2F2F2;width: 100%;display: inline-block;padding-bottom: 10px;">
+            <div class="forum_person_info " style="background: #E8E8E8;width: 100%;display: inline-block;padding-bottom: 10px;">
                 <div class="info" style="display: inline-block;width: 20%;height: 80px;padding-top: 10px;padding-bottom: 10px;text-align: center;float: left;">
                     <img src="" style="width: 50px;height: 50px;border-radius: 25px;">
                     <p style="padding-top: 7px;color: rgb(250, 80, 131);"></p>
                 </div>
                 <div style="display: inline-block;padding: 10px 0 10px 20px;float: left;width: 60%;">
-                    <p style="font-size: 16px;color: #4f99cf" class="info_name"></p>
-                    <p style="font-size: 14px;" class="forum_time"></p>
-                    <div style="font-size: 16px;">
-                        <span class="forum_types" style="color: #FF7200;margin-right:20px;"></span>
-                       <!--  <span>查看：</span><span class="browseTime"></span>
-                       <span>回复：</span><span class="replyCount"></span> -->
+                    <p style="font-size: 14px;color: #4f99cf" class="info_name"></p>
+                    <p style="font-size: 12px;" class="forum_time"></p>
+                    <div style="font-size: 14px;" id="forum_tag">
+                        <p class="forum_types" style="color: #FF7200;margin-right:20px;"></p>
                     </div>
                 </div>
                 <div style="display: inline-block;float: left;width: 20%;" id="reply_detele">
-                    <p class="main_forum_reply"  style="padding-top: 30px;font-size: 16px;" ><i class="iconfont icon-svgmoban53" style="margin-right: 10px;font-size: 20px;"></i>回复</p>
+                    <img class="collectBtn" src="img/unCollect.png" style="width: 16px;height: 16px;margin-top: 4px;" />
+                    <p class="main_forum_reply"  style="padding-top: 15px;font-size: 16px;" ><i class="iconfont icon-svgmoban53" style="margin-right: 10px;font-size: 20px;"></i>回复</p>
                 </div>
             </div>
             <!--主贴详情-->
-            <div class="post_content" style="padding: 10px;"> 
+            <div class="post_content" style="padding: 20px;font-size: 14px;">
                 
             </div>
         </div>
@@ -63,32 +57,32 @@
                         {{if $value.userinfo.avatar == ''}}
                             <img src="img/defaultHeader.png" />
                         {{else}}
-                            <img src={{$value.userinfo.avatar}} />
+                            <img src={{$value.userinfo.avatar}} style="width: 40px;height: 40px;" />
                         {{/if}}
                         <span style="color: rgb(250, 80, 131);">{{$value.userinfo.grade.current_name}}</span>
                     </div>
-                    <div style="width: 57%;float: left;padding-left: 3%;">
-                        <p class="reply_name" style="color: #4f99cf;line-height: 26px;font-size: 16px;">{{$value.userinfo.name}}</p>
-                        <p style="font-size: 16px;padding-top: 10px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
+                    <div style="width: 57%;float: left;padding-left: 3%;" >
+                        <p class="reply_name" style="color: #4f99cf;line-height: 26px;font-size: 14px;">{{$value.userinfo.name}}</p>
+                        <p style="font-size: 12px;padding-top: 10px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
                         
                     </div>
-                    <div style="width: 19%;float: left;padding-left: 1%;">
-                        <p class="question_reply"  style="font-size: 16px;display: inline-block;" data-user-id={{$value.userinfo.pk}} data-id={{$value.pk}}>
-                        <span class="iconfont icon-svgmoban53" style="margin-right: 20px;font-size: 20px;"></span>
+                    <div style="width: 19%;float: left;padding-left: 1%;" id="detele">
+                        <p class="question_reply"  style="font-size: 14px;display: inline-block;" data-user-id={{$value.userinfo.pk}} data-id={{$value.pk}}>
+                        <span class="iconfont icon-svgmoban53" style="margin-right: 20px;font-size: 16px;"></span>
                         <span style="display: inline-block;">回复({{$value.replymore.length}})</span>
                         </p>
                     </div>
                 </div>
-                <div class="detail-body post_content" data-pk={{$value.pk}} style="background: #ffffff;padding-left: 20px;"></div>
-                    <div id="replyWai" style="background-color: #F0F0F0;margin-left: 10px;">
+                    <div class="detail-body post_content" data-pk={{$value.pk}} style="background: #F2F2F2;padding: 20px;"></div>
+                    <div id="replyWai" style="margin-left: 10px;">
                         {{each $value.replymore}}
-                        <div class="replyNei replymore_{{$value.pk}}" style="border-bottom: 1px solid #dadada;position: relative;">
-                            <div class="jie-user" href="javascript:void(0)" style="width: 100%;padding-top: 10px;">
+                        <div class="replyNei replymore_{{$value.pk}}" style="border-bottom: 1px solid #dadada;position: relative;width: 96%;margin-right: 10px;background-color: #ffffff;">
+                            <div class="jie-user" href="javascript:void(0)" style="width: 100%;padding-top: 10px;margin-right: 10px;">
                                 <div style="width: 30%;text-align: center;float: left;">
                                     {{if $value.userinfo.avatar == ''}}
                                         <img src="img/defaultHeader.png" style="" />
                                     {{else}}
-                                        <img src={{$value.userinfo.avatar}} style="margin-right: 10px" />
+                                        <img src={{$value.userinfo.avatar}} style="margin-right: 10px;width: 40px;height: 40px;" />
                                     {{/if}}
                                         <span style="color: rgb(250, 80, 131);  margin-right: 30px;">{{$value.userinfo.grade.current_name}}
                                         </span>
@@ -96,12 +90,12 @@
                                 <div style="width: 65%;padding-left: 5%;float: left;">
                                     <p class="reply_name" style="line-height: 30px;font-size: 16px;">{{$value.userinfo.name}}</p>
                                     <p class="replyContentDate" style="font-size: 14px;">{{$value.create_time.slice(0, 19).replace('T', ' ')}}</p>
-                                    {{if showReplyDel($value.userinfo.name)}}
-                                    <span type="del" class="huifuDel" onclick=deleteReplymoreById({{$value.pk}}) style="float: right;color: red;cursor: pointer;font-size: 16px;display: inline-block;">删除</span>
-                                    {{/if}}
+                                    <!-- {{if showReplyDel($value.userinfo.name)}}
+                                    <span type="del" class="huifuDel" onclick='deleteReplymoreById({{$value.pk}})' style="float: right;cursor: pointer;font-size: 14px;display: inline-block;">删除</span>
+                                    {{/if}} -->
                                 </div>  
                             </div>     
-                            <div class="detail-body jieda-body" data-pk={{$value.pk}} style="word-break: break-all;background-color: #fff;width: 100%;padding-left: 20px;margin-bottom: 20px;">
+                            <div class="detail-body jieda-body" data-pk={{$value.pk}} style="word-break: break-all;background-color: #fff;width: 96%;padding-left: 20px;padding-right: 20px;margin-bottom: 20px;">
                                 {{#stringChange($value.content)}}
                             </div>        
                         </div>                
@@ -112,37 +106,42 @@
         </script>
     </div>
 
-<script src="js/jquery-1.11.2.min.js"></script>
-<script src="res/layui/layui.js"></script>
-<script src="res/layui/layer/layer.js"></script>
-<script src="../libs/template.js"></script>
-<script>
-var this_fly;
-layui.cache.user = {
-    username: '游客',
-    uid: -1,
-    avatar: 'res/images/avatar/00.jpg',
-    experience: 83,
-    sex: '男'
-};
-layui.config({
-    version: "1.0.0",
-    base: 'res/mods/'
-}).extend({
-    fly: 'index'
-}).use('fly', function(){
-    this_fly = layui.fly;
-});
-</script>
+    <script src="js/jquery-1.11.2.min.js"></script>
+
+    <script src="res/layui/layui.js"></script>
+    <script src="res/layui/layer/layer.js"></script>
+    <script src="../libs/template.js"></script>
+
+    <script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
+    <script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
+    <script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
+
+    <script src="js/jquery.liveTimeAgo.js"></script>
+    <script src="js/common.js?v=1.0"></script>
+    <script src="js/detail.js?v=1.4"></script>
+
+
+    <script>
+    var this_fly;
+    layui.cache.user = {
+        username: '游客',
+        uid: -1,
+        avatar: 'res/images/avatar/00.jpg',
+        experience: 83,
+        sex: '男'
+    };
+    layui.config({
+        version: "1.0.0",
+        base: 'res/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly', function(){
+        this_fly = layui.fly;
+    });
+    </script>
 
 <!--upload-->
-<script type="text/javascript" src="js/plupload/js/moxie.min.js"></script>
-<script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
-<script type="text/javascript" src="js/qiniu/src/qiniu.js"></script>
 
-<script src="js/jquery.liveTimeAgo.js"></script>
-<script src="js/common.js?v=1.0"></script>
-<script src="js/detail.js?v=1.4"></script>
 <!--<script type="text/javascript" src="/s/js/global.js"></script>-->
 </body>
 </html>

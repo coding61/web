@@ -5,6 +5,14 @@
 var basePath="/program_girl";
 var rankingHadClick = false;
 bbsZone();
+// 进到程序媛计划
+$('.logo1').click(function() {
+	window.location.href = "../app/home/home.html"
+})
+// 打开儿童编程窗口
+$('.logo2').click(function() {
+	window.open("https://www.cxy61.com");
+})
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		$('.avatar img').attr({src: result.avatar});//用户头像
@@ -17,6 +25,18 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
             width:percent
         })
 	}else{
+	}
+})
+
+myAjax(basePath+"/message/messages/","get",{"types":"forum","status":"unread"},function(result){
+	if (result.count != 0) {
+		$('.message').show();
+		$('.message').html("您有"+result.count+"条消息未读！");
+		var width = $('.container').css("width");
+		var t = parseFloat(width)/2 + "px";
+		$('.message').css({"width":width,"marginLeft":"calc(50% - "+t+")"});
+	} else {
+		$('.message').hide();
 	}
 })
 
@@ -61,6 +81,12 @@ function bbsZone(){
 //     $('.rankingView').hide();
 // })
 
+// 点击消息
+$('.message').click(function() {
+	window.location.href = "message.html";
+})
+
+// 排行榜
 $(".right-view .ranking").click(function() {
 	if (rankingHadClick) {
 		// 隐藏排名

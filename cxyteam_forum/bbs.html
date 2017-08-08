@@ -19,7 +19,7 @@
 	</head>
 
 	<body>
-		<div class="container-fluid">
+		<div class="container-fluid" style="position: relative;">
             <!-- <div style="padding-top:10px;">
                 <nav class="huiwan-navbar navbar navbar-default navbar-static-top" role="navigation">
 					
@@ -27,9 +27,9 @@
             </div> -->
             <nav style="background-color: rgb(250, 80, 131);display: flex; align-items: center; padding: 0 2%;">
 	            <div style="display: flex;flex: 1;">
-	            	<img class="logo1" style="height: 30px;" src="../statics/images/logo2.png" />
+	            	<img class="logo1" style="height: 30px;cursor: pointer;" src="../statics/images/logo2.png" />
 					<div class="right-line" style="border-right: solid 1px white;height: 24px;margin-left: 20px;margin-right: 20px;display: inline-flex;margin-top: 3px;margin-bottom: 3px;"></div>
-					<img class="logo2" style="height: 30px;" src="../statics/images/logo1.png"/>
+					<img class="logo2" style="height: 30px;cursor: pointer;" src="../statics/images/logo1.png"/>
 	            </div>
 
 	            <!-- <div class="workCenter">作品中心</div> -->
@@ -66,14 +66,14 @@
 							<script type="text/html" id="rankList-template">
 								{{each results}}
 									{{if $index%2==0}}
-										<li class="item" style="height: 30px;padding-left: 10px;padding-right: 10px;">
-											<span style="display: inline-block;width: calc(70%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
-											<span style="float: right;width: calc(30%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
+										<li class="item" style="height: 30px;padding-left: 10px;padding-right: 10px;position: relative;">
+											<span style="display: inline-block;width: calc(60%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
+											<span style="position: absolute;right: 10px; width: calc(34%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
 										</li>
 									{{else}}
-										<li class="item" style="height: 30px;background-color: #eeeeee;padding-left: 10px;padding-right: 10px;">
-											<span style="display: inline-block;width: calc(70%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
-											<span style="float: right;width: calc(30%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
+										<li class="item" style="height: 30px;background-color: #eeeeee;position: relative;padding-left: 10px;padding-right: 10px;">
+											<span style="display: inline-block;width: calc(60%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
+											<span style="position: absolute;right: 10px; width: calc(34%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
 										</li>
 									{{/if}}
 								{{/each}}
@@ -84,6 +84,8 @@
 				</div>
 				
 			</nav>
+
+			<div class="message" style="display: none;margin-top: 90px;font-size: 16px; position: absolute;padding-left: 15px;padding-right: 20px;color: red; text-align: right;cursor: pointer;"></div>
 
 		<div class="container bbs">
 			<div class="panel panel-default">
