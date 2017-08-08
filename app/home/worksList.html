@@ -102,7 +102,14 @@
 				<div>
 					<a href="./workDetail.html?workPk={{$value.pk}}" class="works-content">
 						<div class="works-banner" style="background-image: url('{{$value.images ? $value.images : '';}}')"></div>
-						<p class="work-name">{{$value.name ? $value.name : ''}}</p>
+						<p class="work-name">
+							<span class="work-name-content">{{$value.name ? $value.name : ''}}</span>
+							{{if $value.islike}}
+							<span class="likes likes-yes" data-pk="{{$value.pk}}">{{$value.likes}}人</span>
+							{{else}}
+							<span class="likes likes-no" data-pk="{{$value.pk}}">{{$value.likes}}人</span>
+							{{/if}}
+						</p>
 						<p><span class="author-name">{{$value.owner ? $value.owner.name : ''}}</span><span class="create-time">{{$value.create_time ? $value.create_time.split('T')[0] : ''}}</span></p>
 					</a>
 				</div>

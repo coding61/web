@@ -601,3 +601,29 @@ body{
     cursor:not-allowed
 }
 /*分页*/
+
+
+.work-name .likes{
+    float: right;
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+    padding-left: 13px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 12px;
+}
+.work-name .likes-yes{
+    background-image: url(../../images/works-center/likes-icon.png);
+}
+.work-name .likes-no{
+    background-image: url(../../images/works-center/unlikes-icon.png);
+}
+.work-name .work-name-content{
+    display: inline-block;
+    width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
