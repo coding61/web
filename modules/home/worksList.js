@@ -84,6 +84,13 @@ define(function(require, exports, module) {
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
             })
+
+            //点赞
+            $('.works-list').on('click', '.likes', function(){
+                // e.stopPropagation();
+                Mananger.likes($(this).attr('data-pk'));
+                return false;
+            })
         }
 	}
 
@@ -284,6 +291,37 @@ define(function(require, exports, module) {
                     }
                 }
             });
+        },
+        likes: function(work_pk){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/userinfo/myexercises/like/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: JSON.stringify({
+                        'myexercise': work_pk
+                    }),
+                    timeout: 8000,
+                    success: function(json){
+                        Common.showToast(json);
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时,请刷新");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
         }
     }
 
