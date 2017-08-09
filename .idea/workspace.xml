@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9635ffbf-bfbe-4d01-ba57-4d769c702ca3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js" afterPath="$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/index.js" afterPath="$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,8 +19,8 @@
       <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="48" column="42" lean-forward="false" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="42" />
+            <state relative-caret-position="203">
+              <caret line="50" column="13" lean-forward="false" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -29,11 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="detail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="64" column="18" lean-forward="true" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+            <state relative-caret-position="265">
+              <caret line="128" column="13" lean-forward="false" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
               <folding>
                 <marker date="1502174983000" expanded="true" signature="2048:2061" ph="..." />
                 <marker date="1502174983000" expanded="true" signature="2971:3115" ph="..." />
@@ -50,23 +50,23 @@
         <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/css/detail.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+              <caret line="19" column="1" lean-forward="false" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="307" column="32" lean-forward="true" selection-start-line="307" selection-start-column="32" selection-end-line="307" selection-end-column="32" />
+            <state relative-caret-position="135">
+              <caret line="73" column="34" lean-forward="true" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
               <folding>
-                <marker date="1502014012000" expanded="true" signature="2291:2395" ph="..." />
-                <marker date="1502014012000" expanded="true" signature="2827:2840" ph="..." />
-                <marker date="1502014012000" expanded="true" signature="3636:3655" ph="..." />
-                <marker date="1502014012000" expanded="true" signature="6811:6823" ph="..." />
-                <marker date="1502014012000" expanded="true" signature="10756:10768" ph="..." />
+                <marker date="1502187845000" expanded="true" signature="2295:2399" ph="..." />
+                <marker date="1502187845000" expanded="true" signature="2831:2844" ph="..." />
+                <marker date="1502187845000" expanded="true" signature="3640:3659" ph="..." />
+                <marker date="1502187845000" expanded="true" signature="6815:6827" ph="..." />
+                <marker date="1502187845000" expanded="true" signature="10760:10772" ph="..." />
               </folding>
             </state>
           </provider>
@@ -89,6 +89,7 @@
         <option value="$PROJECT_DIR$/cxyteam_forum_moblie/css/detail.css" />
         <option value="$PROJECT_DIR$/cxyteam_forum_moblie/detail.html" />
         <option value="$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js" />
+        <option value="$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/index.js" />
       </list>
     </option>
   </component>
@@ -110,8 +111,8 @@
     <handled-path value="$PROJECT_DIR$/cxyteam_forum_moblie/js/qiniu/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="16" />
-    <option name="y" value="95" />
+    <option name="x" value="113" />
+    <option name="y" value="60" />
     <option name="width" value="1400" />
     <option name="height" value="772" />
   </component>
@@ -144,42 +145,7 @@
             <path>
               <item name="cxyteam-html5" type="b2602c69:ProjectViewProjectNode" />
               <item name="cxyteam-html5" type="462c0819:PsiDirectoryNode" />
-              <item name="cxyteam_forum" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyteam-html5" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyteam-html5" type="462c0819:PsiDirectoryNode" />
               <item name="cxyteam_forum_moblie" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyteam-html5" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyteam-html5" type="462c0819:PsiDirectoryNode" />
-              <item name="cxyteam_forum_moblie" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyteam-html5" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyteam-html5" type="462c0819:PsiDirectoryNode" />
-              <item name="cxyteam_forum_moblie" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyteam-html5" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyteam-html5" type="462c0819:PsiDirectoryNode" />
-              <item name="cxyteam_forum_moblie" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyteam-html5" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyteam-html5" type="462c0819:PsiDirectoryNode" />
-              <item name="cxyteam_forum_moblie" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="mods" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyteam-html5" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyteam-html5" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -220,15 +186,15 @@
       <workItem from="1502014844877" duration="670000" />
       <workItem from="1502015550109" duration="302000" />
       <workItem from="1502023660213" duration="1196000" />
-      <workItem from="1502070532792" duration="15142000" />
+      <workItem from="1502070532792" duration="17163000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17310000" />
+    <option name="totallyTimeSpent" value="19331000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="16" y="95" width="1400" height="772" extended-state="0" />
+    <frame x="113" y="60" width="1400" height="772" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16928571" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -332,20 +298,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="307" column="32" lean-forward="true" selection-start-line="307" selection-start-column="32" selection-end-line="307" selection-end-column="32" />
-          <folding>
-            <marker date="1502014012000" expanded="true" signature="2291:2395" ph="..." />
-            <marker date="1502014012000" expanded="true" signature="2827:2840" ph="..." />
-            <marker date="1502014012000" expanded="true" signature="3636:3655" ph="..." />
-            <marker date="1502014012000" expanded="true" signature="6811:6823" ph="..." />
-            <marker date="1502014012000" expanded="true" signature="10756:10768" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/zoom.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1053">
@@ -357,7 +309,7 @@
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/css/detail.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+          <caret line="19" column="1" lean-forward="false" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -367,15 +319,15 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="48" column="42" lean-forward="false" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="42" />
+        <state relative-caret-position="203">
+          <caret line="50" column="13" lean-forward="false" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
           <folding>
             <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -385,8 +337,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/js/detail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="64" column="18" lean-forward="true" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+        <state relative-caret-position="265">
+          <caret line="128" column="13" lean-forward="false" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
           <folding>
             <marker date="1502174983000" expanded="true" signature="2048:2061" ph="..." />
             <marker date="1502174983000" expanded="true" signature="2971:3115" ph="..." />
@@ -394,6 +346,20 @@
             <marker date="1502174983000" expanded="true" signature="3374:3437" ph="..." />
             <marker date="1502174983000" expanded="true" signature="7349:7363" ph="..." />
             <marker date="1502174983000" expanded="true" signature="8578:8592" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cxyteam_forum_moblie/res/mods/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="73" column="34" lean-forward="true" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
+          <folding>
+            <marker date="1502187845000" expanded="true" signature="2295:2399" ph="..." />
+            <marker date="1502187845000" expanded="true" signature="2831:2844" ph="..." />
+            <marker date="1502187845000" expanded="true" signature="3640:3659" ph="..." />
+            <marker date="1502187845000" expanded="true" signature="6815:6827" ph="..." />
+            <marker date="1502187845000" expanded="true" signature="10760:10772" ph="..." />
           </folding>
         </state>
       </provider>
