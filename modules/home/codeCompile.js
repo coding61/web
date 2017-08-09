@@ -22,6 +22,7 @@ define(function(require, exports, module) {
 
                 htmlEditor.setOption("mode", editModes[a].mode);
                 htmlEditor.setValue("");
+                $(".compile-result .content").html("");
                 Page.language = editModes[a].language;
                 console.log(htmlEditor.getOption("mode"));
 
@@ -52,21 +53,22 @@ define(function(require, exports, module) {
         },
         load:function(value){
             console.log(value);
-            var host = "https://app.bcjiaoyu.com"
-            if (location.host.indexOf("cxy61.com") > -1) {
-                host = "https://www.cxy61.com"
-            }
             $.ajax({
                 type:"post",
-                url: host + "/compile/",
+                url:  "/compile/",
                 data:JSON.stringify({
                     code:value,
                     language:Page.language
                 }),
-                contentType:"json",
+                contentType:"application/json",
                 timeout:6000,
                 success:function(json){
                     console.log(json);
+                    if (json.errors) {
+                        $(".compile-result .content").html(json.errors);
+                    }else{
+                        $(".compile-result .content").html(json.output);
+                    }
                     // console.log(url);
 
                     // $(".run-result iframe").attr({src:url});

@@ -1127,7 +1127,7 @@ define(function(require, exports, module) {
 
                 }else if (link.indexOf("www.compile.com") > -1){
                     var language = link.split("/")[1]
-                    language = "python";
+                    // language = "python";
                     window.frames["codeCompile"].postMessage(language, '*'); // 传递值，告知要获取课程信息
                     Util.openRightIframe("codeCompile"); //打开编译器
                 }else{
