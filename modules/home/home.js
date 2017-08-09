@@ -51,6 +51,8 @@ define(function(require, exports, module) {
                 var text = "点击打开新网页"
                 if (item.link == "www.code.com") {
                     text = "点击打开编辑器"
+                }else if (item.link.indexOf("www.compile.com") > -1) {
+                    text = "点击打开编译器"
                 }
                 if (item.audio) {
                     questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
@@ -309,6 +311,8 @@ define(function(require, exports, module) {
                         var text = "点击打开新网页"
                         if (item.link == "www.code.com") {
                             text = "点击打开编辑器"
+                        }else if (item.link.indexOf("www.compile.com") > -1) {
+                            text = "点击打开编译器"
                         }
                         if (item.audio) {
                             questionHtml = '<div class="message link" data-link="'+item.link+'"> \
@@ -604,6 +608,8 @@ define(function(require, exports, module) {
                         var text = "点击打开新网页"
                         if (item.link == "www.code.com") {
                             text = "点击打开编辑器"
+                        }else if (item.link.indexOf("www.compile.com") > -1) {
+                            text = "点击打开编译器"
                         }
                         if (item.audio) {
                             questionHtml = '<div class="message link" data-link="'+item.link+'"> \
@@ -825,6 +831,8 @@ define(function(require, exports, module) {
                 var text = "点击打开新网页"
                 if (item.link == "www.code.com") {
                     text = "点击打开编辑器"
+                }else if (item.link.indexOf("www.compile.com") > -1) {
+                    text = "点击打开编译器"
                 }
                 // 带链接的
                 if (item.audio) {
@@ -1015,9 +1023,7 @@ define(function(require, exports, module) {
                 
                 if ($(this).hasClass("wx-auth")) {
                     // 打开选择课程窗口
-                    $(".right-view>img").hide();
-                    $(".right-view iframe.codeEdit").hide();
-                    $(".right-view iframe.courseList").show();
+                    Util.openRightIframe("courseList");
                     
                 }else if($(this).hasClass("begin")){
                     // 开始学习，更换课程时，或者初次学习之旅时
@@ -1117,9 +1123,13 @@ define(function(require, exports, module) {
             $(".message.link").unbind('click').click(function(){
                 var link = $(this).attr("data-link");
                 if (link == "www.code.com") {
-                    $(".right-view>img").hide();
-                    $(".right-view iframe.courseList").hide();
-                    $(".right-view iframe.codeEdit").show();
+                    Util.openRightIframe("codeEdit");   //打开编辑器
+
+                }else if (link.indexOf("www.compile.com") > -1){
+                    var language = link.split("/")[1]
+                    // language = "python";
+                    window.frames["codeCompile"].postMessage(language, '*'); // 传递值，告知要获取课程信息
+                    Util.openRightIframe("codeCompile"); //打开编译器
                 }else{
                     // window.open(link);
                     // 打开消息链接窗口
@@ -1161,11 +1171,7 @@ define(function(require, exports, module) {
             $(".helps-view .change-course").unbind('click').click(function(){
 
                 $(".helps-view").hide();
-                
-                $(".right-view>img").hide();
-                $(".right-view iframe.codeEdit").hide();
-                $(".right-view iframe.courseList").show();
-
+                Util.openRightIframe("courseList");   //打开选择课程
             })
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
@@ -1283,10 +1289,7 @@ define(function(require, exports, module) {
             $(".helps-view .change-course").unbind('click').click(function(){
 
                 $(".helps-view").hide();
-                
-                $(".right-view>img").hide();
-                $(".right-view iframe.codeEdit").hide();
-                $(".right-view iframe.courseList").show();
+                Util.openRightIframe("courseList");   //打开选择课程
 
             })
             // 钻石动画
@@ -1918,9 +1921,7 @@ define(function(require, exports, module) {
                                 $(".loading-chat").remove();
 
                                 // 打开课程列表窗口, 更改课程学习状态 为已完成, data-status:finish, data-course-index:
-                                $(".right-view>img").hide();
-                                $(".right-view iframe.codeEdit").hide();
-                                $(".right-view iframe.courseList").show();
+                                Util.openRightIframe("courseList");  //打开选择课程
                                 $("#courseList").contents().find(".course[data-category="+data.pk+"]").attr({"data-status":"finish"});
                                 $("#courseList").contents().find(".course[data-category="+data.pk+"]").find(".status").attr({src:"../../statics/images/course/icon1.png"})
                             }
@@ -2542,8 +2543,30 @@ define(function(require, exports, module) {
                 // 普通的 action 按钮
                 Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
             }
+        },
+        openRightIframe:function(tag){
+            if (tag == "img") {
+                $(".right-view>img").show();
+                $(".right-view iframe.courseList").hide();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.codeCompile").hide();
+            }else if (tag == "courseList") {
+                $(".right-view>img").hide();
+                $(".right-view iframe.courseList").show();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.codeCompile").hide();
+            }else if (tag == "codeEdit") {
+                $(".right-view>img").hide();
+                $(".right-view iframe.courseList").hide();
+                $(".right-view iframe.codeEdit").show();
+                $(".right-view iframe.codeCompile").hide();
+            }else if (tag == "codeCompile") {
+                $(".right-view>img").hide();
+                $(".right-view iframe.courseList").hide();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.codeCompile").show();
+            }
         }
-
     }
 
     Page.init();
