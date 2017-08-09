@@ -4,6 +4,7 @@ define(function(require, exports, module) {
     var current_master_pk = Common.getQueryString('current_master_pk') ? Common.getQueryString('current_master_pk') : 'no_pk';
 
 	var Page = {
+        ismyteacher: false,
 		init: function(){
 			// 当前浏览器
             if(Common.platform.isMobile){
@@ -91,7 +92,7 @@ define(function(require, exports, module) {
             $('.article-list .info-body').on('click', '.tobuy-btn', function(){
                 var num = $(this).attr('data-diamond_amount');
                 var article_pk = $(this).attr('data-article_pk');
-                $('.zuanshi-buy-num span').text(num);
+                $('.buy-window .zuanshi-buy-num span').text(num);
                 $('.buy-window .buy-submit button').attr({
                     'data-article_pk': article_pk
                 });
@@ -104,6 +105,10 @@ define(function(require, exports, module) {
             //阅读文章
             $('.article-list .info-body').on('click', '.bought-btn', function(){
                 // console.log('to read artical', $(this).attr('data-article_pk'));
+                if (!Page.ismyteacher) {
+                    Common.dialog('请先拜师');
+                    return;
+                }
                 location.href = '../../cxyteam_forum/content.html?current_master_pk=' + current_master_pk + '&current_article_pk=' + $(this).attr('data-article_pk');
             })
 
@@ -229,7 +234,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -262,7 +267,7 @@ define(function(require, exports, module) {
                             return;
                         }
                         if (xhr.status == 404) {
-                            Common.dialog("您没有团队");
+                            // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -286,14 +291,20 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
+                        Page.ismyteacher = json.ismyteacher == 'Yes' ? true : false;
                         if (json.ismyself == 'Yes') {
                             $('.middle-view p').text('个人中心');
+                            $('title').text('个人中心')
                             sessionStorage.ismyself = 'Yes';
+                            Page.ismyteacher = true;
                         } else {
                             $('.middle-view p').text('教师详情');
+                            sessionStorage.ismyself = 'No';
                         }
                         var html = ArtTemplate('master-info-template', json);
                         $('.master-info .info-body').html(html);
+
+                        $('.baishi-window .zuanshi-buy-num span').text(json.owner.name);
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -324,6 +335,7 @@ define(function(require, exports, module) {
                         if (json.count > 0) {
                             var html = ArtTemplate('student-list-template', json.results);
                             $('.student-list .info-body').html(html);
+                            $('.student-list .title .head-title').html('学员(' + json.count + '人)');
                         } else {
                             $('.student-list .info-body').html('<p style="font-size:14px">没有学生</p>')
                         }
@@ -390,7 +402,9 @@ define(function(require, exports, module) {
                         'article': article_pk
                     },
                     success: function(json){
-                        Mananger.getAllArticle();
+                        Common.dialog('购买成功', function(){
+                            Mananger.getAllArticle();
+                        })
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -422,6 +436,7 @@ define(function(require, exports, module) {
                     timeout: 8000,
                     success: function(json){
                         Common.dialog('恭喜您拜师成功', function(){
+                            Page.ismyteacher = true;
                             $('.baishi-btn').hide();
                         })
                     },

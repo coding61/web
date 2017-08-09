@@ -4,9 +4,9 @@ $(document).ready(function() {
 	var replyId=0;
 	var replyPage = 1;
 	var postUserName;
-	//var postId=213;
+	/*var postId=170;
+	var userName="二十二";*/
 	//var token='f0b3897f26417c66c27d6e782724317010694cdc';
-	//localStorage.token=token;
 	document.addEventListener('message', function(e) {
     	json=JSON.parse(e.data);
     	token=json.token;
@@ -20,7 +20,6 @@ $(document).ready(function() {
 	        },
 	        data:null,
 	        success: function(result){
-
 	        	userName=result.name;
 	        },
 	        error:function(XMLHttpRequest){
@@ -32,46 +31,19 @@ $(document).ready(function() {
 	        	}
 	        }
 		});
-
     	postDetail();
     	getReplys(replyPage);
     })
-  /*  $.ajax({
-	        url: basePath+"/userinfo/whoami/",
-	        type: 'get',
-	        headers: {
-	            Authorization: 'Token ' + token
-	        },
-	        data:null,
-	        success: function(result){
-	        	userName=result.name;
-	        },
-	        error:function(XMLHttpRequest){
-	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("");
-	        	}else{
-	        		layer.msg("暂未登录")
-	        	}
-	        }
-		});
-
-    	postDetail();
-    	getReplys(replyPage);*/
-/*var bt= document.getElementById('bt');
- bt.addEventListener('click',function(){
-   var valA = 111;
-   window.postMessage(JSON.stringify({data:{A:valA,}}))
- });*/
-/*//获取主帖详情
-}*/
-
+    /* initDetail();
+    function initDetail(){
+        setTimeout(postDetail,500);//获取主帖详情
+    }
+    getReplys(replyPage);*/
 //主贴详情信息
 function postDetail() {
-	
 	$.ajax({
         url: basePath+"/forum/posts/"+postId+"/",
         type: "get",
-        //async:async==null?true:async,
         data:null,
         success: function(result){
         	zoneId=result.section.pk;
@@ -82,7 +54,6 @@ function postDetail() {
 			$(".main_forum_reply").attr({"data-id":result.pk,'data-user-id':result.userinfo.pk});
 			$(".info >p").text(result.userinfo.grade.current_name);
 			$(".info_name").prepend(result.userinfo.name);
-			
 			$('.post_content').each(function(){
 			    $(this).html(this_fly.content(result.content));
 			});
@@ -113,6 +84,33 @@ function postDetail() {
         }
   });
 }
+
+$('.post_content').on('click','img',function () {
+	console.log($(this))
+    ImgZoomIn($(this))
+})
+$('.post_reply').on('click','img',function () {
+	console.log($(this))
+	ImgZoomIn($(this))
+})
+function ImgZoomIn (param) {
+	var _this=param
+        bgstr = '<div id="ImgZoomInBG" style=" background:#000000; filter:Alpha(Opacity=70); opacity:0.7; position:fixed; left:0; top:0; z-index:10000; width:100%; height:100%; display:none;"><iframe src="about:blank" frameborder="5px" scrolling="yes" style="width:100%; height:100%;"></iframe></div>';
+        imgstr = '<img id="ImgZoomInImage" src="' + _this.attr('src')+'" onclick=$(\'#ImgZoomInImage\').hide();$(\'#ImgZoomInBG\').hide(); style="cursor:pointer; display:none; position:absolute; z-index:10001;" />';
+        if ($('#ImgZoomInBG').length < 1) {
+            $('body').append(bgstr);
+        }
+        if ($('#ImgZoomInImage').length < 1) {
+            $('body').append(imgstr);
+        }
+        else {
+            $('#ImgZoomInImage').attr('src', _this.attr('src'));
+        }
+        $('#ImgZoomInImage').css('left', $(window).scrollLeft() + ($(window).width() - $('#ImgZoomInImage').width()) / 2);
+        $('#ImgZoomInImage').css('top', $(window).scrollTop() + ($(window).height() - $('#ImgZoomInImage').height()) / 2);
+        $('#ImgZoomInBG').show();
+        $('#ImgZoomInImage').show();
+    };
 function getReplys(page){
 	myAjax2(basePath+"/forum/replies/","get",{"posts":postId,"page":page},function(result) {
 		if (page == 1) {
@@ -474,7 +472,6 @@ function updateIsAccept(id,isAccept){
 			}
 		 });
 	}
-	 
 }
 // 鼠标滑过
 // 发布帖子

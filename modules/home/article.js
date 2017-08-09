@@ -1,4 +1,3 @@
-$('.article_zuan_span').html(localStorage.currentZuan)
 var basePath="/program_girl";
 var userId=1;
 var userName=getCookie("userName");
@@ -16,7 +15,6 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
     }else{
     }
 })
-
 //获取当前社区
 var zoneName='';
 myAjax(basePath+"/forum/sections/","GET",null,function(result) {
@@ -28,7 +26,7 @@ $(function() {
         var title=$("#L_title").val();
         var content=$("#L_content").val();
         var images=$('#fengmian').val();
-        var diamond_amount=$('.article_zuan_span').text();
+        var diamond_amount=$('.article_zuan_span').val();
         if(!title) {
             layer.msg("请输入标题");
             return false;
@@ -41,10 +39,14 @@ $(function() {
             layer.msg("请选取封面");
             return false;
         }
+        if(!diamond_amount){
+            layer.msg("请输入钻石数量");
+        }
         else {
             $("#L_title").val("");
             $("#L_content").val("");
             $('#fengmian').val("");
+            $('.article_zuan_span').val("");
             publish(title,content,images,diamond_amount)
         }
         
@@ -62,7 +64,14 @@ function publish(title,content,images,diamond_amount) {
         $("#L_title").val("");
         $("#L_content").val("");
         $('#fengmian').val("");
+        $('.article_zuan_span').val("");
         $(".main").find(".layui-select-title input").val("");
+        $('succ_after').show();
+        $('.main').prepend($('.succ_after'));
+        $('.succ_after').show();
+        $('.succ_after span').on('click',function(){
+            $('.succ_after').hide();
+        })
     });
 }
 //独立方法，

@@ -94,6 +94,10 @@
 		</script>
 
 <div class="main layui-clear">
+	<div class="succ_after">
+		<h1>发表成功！</h1>
+		<span>继续发表文章</span>
+	</div>
   <div class="layui-form layui-form-pane">
     <div>
       <div class="layui-form-item">
@@ -115,7 +119,7 @@
 			</a>
 			<img id="file_img" style="width: 200px;min-height: 50px;" src=""> -->
 			<div class="layui-input-block">
-				<textarea id="fengmian" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea feng-editor" style="height:60px;"></textarea>
+				<textarea id="fengmian" name="content" required lay-verify="required" placeholder="请选取封面" class="layui-textarea feng-editor" style="height:60px;"></textarea>
             </div>
 		</div>
 	</div>
@@ -123,7 +127,7 @@
 		<label class="layui-form-label">钻石数量</label>
 		<p>
 			<img src="../../statics/images/icon3.png">X
-			<span class="article_zuan_span"></span>
+			<input class="article_zuan_span" type="number" placeholder="钻石">
 		</p>
 	</div>
       <div class="layui-form-item">

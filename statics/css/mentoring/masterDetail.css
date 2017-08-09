@@ -393,7 +393,7 @@ body{
     line-height: 100px;
 }
 .article-btn button{
-    width: 80px;
+    width: 120px;
     line-height: 30px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -463,6 +463,16 @@ body{
     padding: 3px 10px;
     border-radius: 3px;
     cursor: pointer;
+}
+.zunshi-banner{
+    background-image: url(../../images/icon3.png);
+    background-repeat: no-repeat;
+    background-size: 14px;
+    background-position: center;
+    width: 16px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /*登录视图*/

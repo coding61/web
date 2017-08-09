@@ -78,7 +78,7 @@ define(function(require, exports, module) {
 		          $(".item-buy").mouseout(function(){
 		              var id = $(this).closest('li').attr('data-id');
 		              $(this).css("background-color","#fff");
-		              $(this).css("color", "#000");
+		              $(this).css("color", "#5a5a5a");
 		          });
 				  // 分页
 		          $('#pagination').jqPaginator({
@@ -107,11 +107,30 @@ define(function(require, exports, module) {
     }
 	// 检查是否需要购买
 	function checkForBuy(buy, price, articlePk) {
-		if (buy == "Yes") {
-			location.href = '../../cxyteam_forum/content.html?current_article_pk=' + articlePk;
-		} else if (buy == "No") {
-			buyArticle(price, articlePk);
-		}
+		Common.isLogin(function(token){
+			$.ajax({
+				type:'get',
+				url: Common.domain + "/teacher/teachers/" + teacherPk + "/",
+				headers:{
+					Authorization:"Token " + token
+				},
+				timeout:6000,
+				success:function(json){
+					if (json.ismyteacher == "Yes") {
+						if (buy == "Yes") {
+							location.href = '../../cxyteam_forum/content.html?current_article_pk=' + articlePk;
+						} else if (buy == "No") {
+							buyArticle(price, articlePk);
+						}
+					} else {
+						Common.dialog("尚未成为师徒，请先完成拜师");
+					}
+				},
+				error:function(xhr, textStatus){
+					exceptionHandling(xhr, textStatus);
+				}
+			})
+		})
 	}
 	// 购买文章
 	function buyArticle(price, articlePk) {
