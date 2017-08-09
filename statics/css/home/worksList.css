@@ -625,7 +625,7 @@ body{
 }
 .work-name .work-name-content{
     display: inline-block;
-    width: 50%;
+    width: 70%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
