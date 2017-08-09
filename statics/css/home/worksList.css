@@ -351,6 +351,7 @@ body{
 .main-view .works-list .works-content .work-name{
     bottom: 20px;
     font-size: 14px;
+    line-height: 18px;
 }
 .main-view .works-list .works-content .author-name{
     display: block;
@@ -608,10 +609,13 @@ body{
     font-size: 12px;
     color: #999;
     cursor: pointer;
-    padding-left: 13px;
+    padding-left: 17px;
     background-repeat: no-repeat;
-    background-position: left center;
+    background-position: left top;
     background-size: 12px;
+    line-height: 17px;
+    display: inline-block;
+    margin-top: 1px;
 }
 .work-name .likes-yes{
     background-image: url(../../images/works-center/likes-icon.png);
