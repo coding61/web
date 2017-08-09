@@ -12,6 +12,15 @@ $('.logo1').click(function() {
 $('.logo2').click(function() {
 	window.open("https://www.cxy61.com");
 })
+// 一键已读消息
+$('.hadRead').click(function() {
+	myAjax(basePath+"/message/messages/allread/","put",null,function(result) {
+		if (result) {
+			layer.msg("全部标记为已读成功");
+			setTimeout("window.location.reload()",2000);
+		}
+	})
+})
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		$('.avatar img').attr({src: result.avatar});//用户头像
