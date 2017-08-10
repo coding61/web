@@ -584,6 +584,16 @@ body{
     vertical-align: bottom;
     cursor: pointer;
 }
+.replies-list .drop-reply:after{
+    content: '\20';
+    display: block;
+    clear: both;
+}
+.replies-list .drop-reply span{
+    padding: 5px 15px;
+    cursor: pointer;
+    float: right;
+}
 
 /*分页*/
 .pagination {
