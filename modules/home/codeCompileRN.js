@@ -55,11 +55,12 @@ define(function(require, exports, module) {
             console.log(value);
             $.ajax({
                 type:"post",
-                url:Common.domain + "/compile/",
-                data:{
+                url: "/compile/",
+                data:JSON.stringify({
                     code:value,
                     language:Page.language
-                },
+                }),
+                contentType:"application/json",
                 timeout:6000,
                 success:function(json){
                     console.log(json);
@@ -87,11 +88,6 @@ define(function(require, exports, module) {
         clickEvent:function(){
             $(".result .run").click(function(){
                 Page.load(htmlEditor.getValue());
-            })
-
-            $(".result .close").click(function(){
-                // 关闭编辑器
-                window.parent.postMessage("closeCodeEdit", '*');
             })
         },
 
