@@ -90,7 +90,6 @@ function postDetail() {
 }
 
 $('.post_content').on('click','img',function () {
-
     ImgZoomIn($(this))
 })
 $('.post_reply').on('click','img',function () {
