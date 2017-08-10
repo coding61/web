@@ -151,6 +151,11 @@
 					<span class="reply-create-time">{{reply_time_fn($value.create_time)}}</span>
 				</div>
 				<pre class="reply-content">{{$value.content}}</pre>
+				{{if $value.ismyself == 'Yes'}}
+				<div class="drop-reply">
+					<span data-pk="{{$value.pk}}">删除</span>
+				</div>
+				{{/if}}
 			</li>
 			{{/each}}
 		</script>

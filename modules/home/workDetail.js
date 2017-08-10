@@ -99,6 +99,14 @@ define(function(require, exports, module) {
             $('.main-view').on('click', '.reply-form button', function(){
                 Mananger.replyFn();
             })
+
+            //删除评论
+            $('.main-view').on('click', '.drop-reply span', function(){
+                var this_ = $(this);
+                Common.bcAlert('确认删除此评论？', function(){
+                    Mananger.dropReply(this_.attr('data-pk'))
+                })
+            })
         }
 	}
 
@@ -355,6 +363,36 @@ define(function(require, exports, module) {
                             Mananger.getReplies(1, Mananger.pagination);
                             $('.reply-form input').val('');
                         });
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        dropReply: function(pk){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'DELETE',
+                    url: Common.domain + '/userinfo/myexercise_replies/' + pk + '/',
+                    headers:{
+                        'Authorization': 'Token ' + token
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.dialog('删除成功', function(){
+                            Mananger.getReplies(1, Mananger.pagination);
+                        })
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
