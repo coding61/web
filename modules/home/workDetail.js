@@ -300,7 +300,7 @@ define(function(require, exports, module) {
                             var html = ArtTemplate('reply-ul-template', json);
                             $('.reply-ul').html(html);
                             $('.replies-list > header').text(json.count + '条评论');
-                            (typeof callback == 'function' && json.count > 10) ? callback(json.count) : '';
+                            typeof callback == 'function' ? callback(json.count) : '';
                         } else {
                             $('.replies-list .reply-ul').html('<div style="padding: 30px; font-size: 16px; color: #666;">暂无评论<div>');
                         }
