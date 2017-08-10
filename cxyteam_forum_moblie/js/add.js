@@ -86,6 +86,7 @@ function publish(title,zoneId,typeId,content) {
 				//growNumAnimate(result);
 				// zuanNumAnimate();
 				//gradeAnimate(result);
+                layer.msg("发布成功");
 		       	setTimeout(function() {
 		        	window.postMessage(200)
 		        }, 200)	
