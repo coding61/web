@@ -61,8 +61,12 @@ function postDetail() {
 			if(postUserName==userName){
 				$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
 				if (result.status == 'unsolved') {
-					$('#forum_tag').append('<p class="solved" id="solved" style="color:#FF69B4">标记为已解决</p>');
-				} 
+					$('#forum_tag').append('<div><span class="solved" id="solved" style="color:#FF69B4">标记为已解决</span><span class="finish" id="finish" style="color:#FF69B4;margin-left: 20px;">关闭问题</span></div>');
+				}else if(result.status == 'solved'){
+                    $("#forum_tag").append('<div><span class="unsolved" id="unsolved">标记为未解决</span>');
+				}else if(result.status == 'finish'){
+                    $("#forum_tag").append('<div><span class="unsolved" id="unsolved">标记为未解决</span>');
+                }
 			}
 			if (result.collect) {
 				$(".collectBtn").attr({"src": 'img/hadCollect.png'});
@@ -173,6 +177,17 @@ $(document).on('click', '.solved', function(event) {
 	changePostStatus('solved');
 	
 });
+$(document).on("click",".finish",function(event){
+        event.preventDefault();
+        changePostStatus('finish');
+    })
+// 标记为未解决
+$(document).on("click",".unsolved",function(event){
+        event.preventDefault();
+        changePostStatus('unsolved');
+    })
+
+
 $(document).on('click', '.post_del', function(event) {
 	event.preventDefault();
 	delPost();
@@ -331,7 +346,7 @@ function postReplyMoreAdd() {
 	        },
 	        data:{"replies":replyId,"content":$("#copy_reply_content").val()},
 	        success: function(result) {
-	        
+
 				if(result){
 					layer.msg("回复成功");
 					setTimeout("window.location.reload()",100);
