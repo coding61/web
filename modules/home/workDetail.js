@@ -94,6 +94,11 @@ define(function(require, exports, module) {
             $('.main-view').on('click', '.play-btn button', function(){
                 window.open(Common.domain + '/userinfo/myexercise_show/' + work_pk + '/');
             })
+
+            //评论
+            $('.main-view').on('click', '.reply-form button', function(){
+                Mananger.replyFn();
+            })
         }
 	}
 
@@ -251,6 +256,105 @@ define(function(require, exports, module) {
                     success: function(json){
                         var html = ArtTemplate('main-view-template', json);
                         $('.main-view').html(html);
+                        Mananger.getReplies(1, Mananger.pagination);
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        getReplies: function(page, callback){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'GET',
+                    url: Common.domain + '/userinfo/myexercise_replies/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: {
+                        'myexercise': work_pk,
+                        'page': page
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        if (json.count > 0) {
+                            var html = ArtTemplate('reply-ul-template', json);
+                            $('.reply-ul').html(html);
+                            $('.replies-list > header').text(json.count + '条评论');
+                            (typeof callback == 'function' && json.count > 10) ? callback(json.count) : '';
+                        } else {
+                            $('.replies-list .reply-ul').html('<div style="padding: 30px; font-size: 16px; color: #666;">暂无评论<div>');
+                        }
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        pagination: function(all){
+            var total = Math.ceil(all / 10);
+            var visibleNum = total > 5 ? 5 : total;            
+            $.jqPaginator('#pagination', {
+                totalPages: parseInt(total),
+                visiblePages: parseInt(visibleNum),
+                currentPage: 1,
+                // first: '<li class="first"><a href="javascript:;">首页</a></li>',
+                prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
+                next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
+                // last: '<li class="last"><a href="javascript:;">末页</a></li>',
+                page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+                onPageChange: function(num, type) {
+                    if (type == "change") {
+                        Mananger.getReplies(num);
+                    }
+                }
+            });
+        },
+        replyFn: function(){
+            var content = $.trim($('.reply-form input').val());
+            if (!content) {
+                Common.dialog('请输入评论内容');
+                return
+            }
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/userinfo/myexercise_replies_create/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: {
+                        'myexercise': work_pk,
+                        'content': content
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.dialog('评论成功', function(){
+                            Mananger.getReplies(1, Mananger.pagination);
+                            $('.reply-form input').val('');
+                        });
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -336,6 +440,32 @@ define(function(require, exports, module) {
             return p;
         }
     }
+
+    ArtTemplate.helper('reply_time_fn', function(time){
+        var now_time = new Date().getTime();
+        var reply_time = new Date(time.split('T')[0] + ' ' + time.split('T')[1]).getTime();
+        if ((now_time - reply_time) / 1000 < 60) {
+            return '刚刚';
+        } else if ((now_time - reply_time) / 1000 < 300) {
+            return '1分钟前';
+        } else if ((now_time - reply_time) / 1000 < 600) {
+            return '5分钟前';
+        } else if ((now_time - reply_time) / 1000 < 1800) {
+            return '10分钟前';
+        } else if ((now_time - reply_time) / 1000 < 3600) {
+            return '30分钟前';
+        } else if ((now_time - reply_time) / 1000 < 7200) {
+            return '1小时前';
+        } else if ((now_time - reply_time) / 1000 < 21600) {
+            return '2小时前';
+        } else if ((now_time - reply_time) / 1000 < 86400) {
+            return '6小时前';
+        } else if ((now_time - reply_time) / 1000 < 172800) {
+            return '1天前';
+        } else  {
+            return time.split('T')[0];
+        }
+    })
 
 	Page.init();
 })
