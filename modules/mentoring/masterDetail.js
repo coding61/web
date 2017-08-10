@@ -291,10 +291,12 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
+                        Page.ismyteacher = json.ismyteacher == 'Yes' ? true : false;
                         if (json.ismyself == 'Yes') {
                             $('.middle-view p').text('个人中心');
                             $('title').text('个人中心')
                             sessionStorage.ismyself = 'Yes';
+                            Page.ismyteacher = true;
                         } else {
                             $('.middle-view p').text('教师详情');
                             sessionStorage.ismyself = 'No';
@@ -303,7 +305,6 @@ define(function(require, exports, module) {
                         $('.master-info .info-body').html(html);
 
                         $('.baishi-window .zuanshi-buy-num span').text(json.owner.name);
-                        Page.ismyteacher = json.ismyteacher == 'Yes' ? true : false;
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {

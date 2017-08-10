@@ -105,9 +105,9 @@
 						<p class="work-name">
 							<span class="work-name-content">{{$value.name ? $value.name : ''}}</span>
 							{{if $value.islike}}
-							<span class="likes likes-yes" data-pk="{{$value.pk}}" data-likes-num="{{$value.likes}}">{{$value.likes}}人</span>
+							<span class="likes likes-yes" data-pk="{{$value.pk}}" data-likes-num="{{$value.likes}}">{{$value.likes}}</span>
 							{{else}}
-							<span class="likes likes-no" data-pk="{{$value.pk}}" data-likes-num="{{$value.likes}}">{{$value.likes}}人</span>
+							<span class="likes likes-no" data-pk="{{$value.pk}}" data-likes-num="{{$value.likes}}">{{$value.likes}}</span>
 							{{/if}}
 						</p>
 						<p><span class="author-name">{{$value.owner ? $value.owner.name : ''}}</span><span class="create-time">{{$value.create_time ? $value.create_time.split('T')[0] : ''}}</span></p>

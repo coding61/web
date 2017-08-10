@@ -43,6 +43,24 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-tab .myTie{cursor: pointer;width: 100px;background-color: #009688;font-size: 14px;height: 38px;text-align: center;line-height: 38px;color: #fff;position: absolute;right: 20%;top: 0;}
 .jie-add1{position:absolute; right:10%; top:0; font-size:14px;}
 .jie-add{position:absolute; right:0; top:0; font-size:14px;}
+.hadRead{    
+    position: absolute;
+    right: 100px;
+    top: 0;
+    font-size: 14px;
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 18px;
+    background-color: #009688;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    opacity: .9;
+  }
 /* ·ÖÒ³ */
 .laypage-main,
 .laypage-main *{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
