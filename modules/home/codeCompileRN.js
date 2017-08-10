@@ -20,10 +20,10 @@ define(function(require, exports, module) {
                 var a = e.data;   
                 console.log(a);
 
-                htmlEditor.setOption("mode", editModes[a].mode);
-                htmlEditor.setValue("");
-                Page.language = editModes[a].language;
-                console.log(htmlEditor.getOption("mode"));
+                // htmlEditor.setOption("mode", editModes[a].mode);
+                // htmlEditor.setValue("");
+                // Page.language = editModes[a].language;
+                // console.log(htmlEditor.getOption("mode"));
 
             }, false); 
         },
