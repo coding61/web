@@ -1,6 +1,4 @@
-define(function(require, exports, module) {
-	var ArtTemplate = require("libs/template.js");
-	var Common = require('common/common.js');
+$(document).ready(function() {
     var htmlEditor;
     var editModes = {
         c:{mode:{name:"text/x-csrc"}, language:7},
@@ -76,14 +74,14 @@ define(function(require, exports, module) {
                 error:function(xhr, textStatus){
 
                     if (textStatus == "timeout") {
-                        Common.dialog("请求超时, 请稍后重试");
+                        // Common.dialog("请求超时, 请稍后重试");
                         return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else{
-                        Common.dialog('服务器繁忙');
+                        // Common.dialog('服务器繁忙');
                         return;
                     }
                     console.log(textStatus);
@@ -99,5 +97,6 @@ define(function(require, exports, module) {
     };
 
     Page.init();
-
 });
+
+
