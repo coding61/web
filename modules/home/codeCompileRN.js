@@ -19,6 +19,7 @@ define(function(require, exports, module) {
             window.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
+                Common.dialog(a);
 
                 // htmlEditor.setOption("mode", editModes[a].mode);
                 // htmlEditor.setValue("");
