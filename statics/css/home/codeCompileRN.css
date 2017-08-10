@@ -22,18 +22,22 @@ body{
     font-size: 16px;
 
     height: 90%;
+    height: calc(100% - 45px);
+    flex-direction: column;
 }
 .edits .html-edit{
 	height: 98%;
 	background: rgb(55, 56, 57);
     width: 100%;
-    width: 50%;
+    height: 50%;
 }
 .edits .compile-result{
     height: 98%;
     background: rgb(55, 56, 57);
     width: calc(50% - 10px);
     color: white;
+    width: 100%;
+    height: 50%;
 }
 .edits .html-edit .tag{
 	display: inline-block;
@@ -86,6 +90,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 10%;
+    height: 45px;
 }
 .result .run,
 .result .close{
