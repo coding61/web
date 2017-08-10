@@ -90,11 +90,10 @@ function postDetail() {
 }
 
 $('.post_content').on('click','img',function () {
-	console.log($(this))
+
     ImgZoomIn($(this))
 })
 $('.post_reply').on('click','img',function () {
-	console.log($(this))
 	ImgZoomIn($(this))
 })
 function ImgZoomIn (param) {
@@ -199,6 +198,33 @@ $(document).on('click', '.huifuDel', function(event) {
 	deleteReplyById(id);
 	
 });
+$(document).on("click",".collecttt .collectBtn",function(){
+        $.ajax({
+            url: basePath+"/collect/collection/",
+            type: "put",
+            headers: {
+                Authorization: 'Token ' + token
+            },
+            data:{"types": "posts","pk": postId},
+            success: function(result) {
+                if (result.message == '取消收藏') {
+                    $(".collectBtn").attr({"src": 'img/unCollect.png'});
+                    layer.msg(result.message);
+                } else if (result.message == '收藏成功') {
+                    $(".collectBtn").attr({"src": 'img/hadCollect.png'});
+                    layer.msg(result.message);
+                }
+            },
+            error:function(XMLHttpRequest){
+
+                if(XMLHttpRequest.status==403){
+                    layer.msg("请求异常");
+                }else{
+                    layer.msg("请求异常")
+                }
+            }
+        });
+    })
 //提交回帖
 $(document).on("click",".postReply_btn",function() {
 	var content=$("#copy_reply_content").val();
@@ -427,33 +453,7 @@ function deleteReplymoreById(replymoreId){
 		$(".replymore_"+replymoreId).remove();
 	});
 }
-$(document).on("click",".collectBtn",function(){
-	$.ajax({
-	        url: basePath+"/collect/collection/",
-	        type: "put",
-	        headers: {
-	            Authorization: 'Token ' + token
-	        },
-	        data:{"types": "posts","pk": postId},
-	        success: function(result) {
-				if (result.message == '取消收藏') {
-					$(".collectBtn").attr({"src": 'img/unCollect.png'});
-					layer.msg(result.message);
-				} else if (result.message == '收藏成功') {
-					$(".collectBtn").attr({"src": 'img/hadCollect.png'});
-					layer.msg(result.message);
-				}
-			},
-	        error:function(XMLHttpRequest){
-	        	
-	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("请求异常");
-	        	}else{
-	        		layer.msg("请求异常")
-	        	}
-	        }
-	    });	
-})
+
 //处理采纳
 function updateIsAccept(id,isAccept){
 	if(isAccept==1){//采纳
