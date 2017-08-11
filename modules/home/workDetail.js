@@ -359,10 +359,10 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        Common.dialog('评论成功', function(){
+                        // Common.dialog('评论成功', function(){
                             Mananger.getReplies(1, Mananger.pagination);
                             $('.reply-form input').val('');
-                        });
+                        // });
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -390,9 +390,9 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        Common.dialog('删除成功', function(){
+                        // Common.dialog('删除成功', function(){
                             Mananger.getReplies(1, Mananger.pagination);
-                        })
+                        // })
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
