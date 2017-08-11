@@ -43,6 +43,9 @@ $(document).ready(function() {
 function postDetail() {
 	$.ajax({
         url: basePath+"/forum/posts/"+postId+"/",
+        headers: {
+            Authorization: 'Token ' + token
+        },
         type: "get",
         data:null,
         success: function(result){
@@ -68,11 +71,12 @@ function postDetail() {
                     $("#forum_tag").append('<div><span class="unsolved" id="unsolved">标记为未解决</span>');
                 }
 			}
+
 			if (result.collect) {
-				alert(result.collect)
+
 				$(".collectBtn").attr("src", "img/hadCollect.png");
 			} else {
-                alert(result.collect)
+
 				$(".collectBtn").attr("src", "img/unCollect.png");
 			}
 			$(".replyCount").text((result.reply_count));
