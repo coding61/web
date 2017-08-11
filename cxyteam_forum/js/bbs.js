@@ -60,7 +60,11 @@ function bbsZone(){
 				if(v.newposts){
 					v.newposts.title = v.newposts.title.replace(/</g,'&lt;');
 					v.newposts.title = v.newposts.title.replace(/>/g,'&gt;');
-					var date =dealWithTime(v.newposts.create_time);
+					if (v.newposts.last_replied) {
+						var date =dealWithTime(v.newposts.last_replied);
+					} else {
+						var date =dealWithTime(v.newposts.create_time);
+					}
 					html+=	'<li class="titleHandle">'    
 						+ '<a href="detail.html?id='+v.newposts.pk+'&pk='+v.pk+'">'+v.newposts.title+'</a></li>'
 					    +'<li class="liveTime" title="'+date+'" data-lta-value="'+date+'"></li><li>'+v.newposts.author+'</li>';
