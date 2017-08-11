@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>编译器</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/codeCompileRN.css" />
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/codemirror.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/hint/show-hint.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/theme/base16-dark.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/theme/base16-light.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/theme/monokai.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/addon/foldgutter.css">
+		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/lint/lint.css">
+
+		<script src="../../libs/codeMirror/codemirror.js"></script>
+	    <script src="../../libs/codeMirror/hint/show-hint.js"></script>
+	    <script src="../../libs/codeMirror/hint/xml-hint.js"></script>
+	    <script src="../../libs/codeMirror/hint/html-hint.js"></script>
+
+	    <script src="../../libs/codeMirror/addon/active-line.js"></script>
+	    <script src="../../libs/codeMirror/addon/matchbrackets.js"></script>
+	    <script src="../../libs/codeMirror/addon/closebrackets.js"></script>
+	    <script src="../../libs/codeMirror/addon/closetag.js"></script>
+
+	    <script src="../../libs/codeMirror/addon/foldcode.js"></script>
+	    <script src="../../libs/codeMirror/addon/foldgutter.js"></script>
+	    <!-- <script src="../../libs/codeMirror/addon/brace-fold.js"></script> -->
+	    <script src="../../libs/codeMirror/addon/xml-fold.js"></script>
+	    <script src="../../libs/codeMirror/addon/indent-fold.js"></script>
+	    <!-- <script src="../../libs/codeMirror/addon/comment-fold.js"></script> -->
+
+	   <script src="../../libs/codeMirror/mode/clike.js"></script>
+	   <script src="../../libs/codeMirror/mode/python.js"></script>
+
+	    <style type="text/css">
+		    .CodeMirror {height: calc(100% - 31px);}
+		  </style>
+	</head>
+
+	<body>
+		<div class="edits">
+			<div class="html-edit">
+				<span class="tag">在线编译器</span>
+				<textarea class="edit" id="html-code"></textarea>
+			</div>
+			<div class="compile-result">
+				<span class="tag">运行结果</span>
+				<span class="content"></span>
+			</div>
+		</div>
+		
+		<div class="result">
+			<span class="run">运行</span>
+		</div>
+		<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../../modules/home/codeCompileRN1.js"></script>
+
+	</body>
+	<!-- <script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/codeCompileRN.js");
+	</script>
+ -->
+</html>
+

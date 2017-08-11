@@ -61,8 +61,12 @@ function postDetail() {
 			if(postUserName==userName){
 				$("#reply_detele").append('<p type="del" onclick="delPost()" class="post_del">删除此帖</p>');
 				if (result.status == 'unsolved') {
-					$('#forum_tag').append('<p class="solved" id="solved" style="color:#FF69B4">标记为已解决</p>');
-				} 
+					$('#forum_tag').append('<div><span class="solved" id="solved" style="color:#FF69B4">标记为已解决</span><span class="finish" id="finish" style="color:#FF69B4;margin-left: 20px;">关闭问题</span></div>');
+				}else if(result.status == 'solved'){
+                    $("#forum_tag").append('<div><span class="unsolved" id="unsolved">标记为未解决</span>');
+				}else if(result.status == 'finish'){
+                    $("#forum_tag").append('<div><span class="unsolved" id="unsolved">标记为未解决</span>');
+                }
 			}
 			if (result.collect) {
 				$(".collectBtn").attr({"src": 'img/hadCollect.png'});
@@ -86,11 +90,9 @@ function postDetail() {
 }
 
 $('.post_content').on('click','img',function () {
-	console.log($(this))
     ImgZoomIn($(this))
 })
 $('.post_reply').on('click','img',function () {
-	console.log($(this))
 	ImgZoomIn($(this))
 })
 function ImgZoomIn (param) {
@@ -173,6 +175,17 @@ $(document).on('click', '.solved', function(event) {
 	changePostStatus('solved');
 	
 });
+$(document).on("click",".finish",function(event){
+        event.preventDefault();
+        changePostStatus('finish');
+    })
+// 标记为未解决
+$(document).on("click",".unsolved",function(event){
+        event.preventDefault();
+        changePostStatus('unsolved');
+    })
+
+
 $(document).on('click', '.post_del', function(event) {
 	event.preventDefault();
 	delPost();
@@ -184,6 +197,33 @@ $(document).on('click', '.huifuDel', function(event) {
 	deleteReplyById(id);
 	
 });
+$(document).on("click",".collecttt .collectBtn",function(){
+        $.ajax({
+            url: basePath+"/collect/collection/",
+            type: "put",
+            headers: {
+                Authorization: 'Token ' + token
+            },
+            data:{"types": "posts","pk": postId},
+            success: function(result) {
+                if (result.message == '取消收藏') {
+                    $(".collectBtn").attr({"src": 'img/unCollect.png'});
+                    layer.msg(result.message);
+                } else if (result.message == '收藏成功') {
+                    $(".collectBtn").attr({"src": 'img/hadCollect.png'});
+                    layer.msg(result.message);
+                }
+            },
+            error:function(XMLHttpRequest){
+
+                if(XMLHttpRequest.status==403){
+                    layer.msg("请求异常");
+                }else{
+                    layer.msg("请求异常")
+                }
+            }
+        });
+    })
 //提交回帖
 $(document).on("click",".postReply_btn",function() {
 	var content=$("#copy_reply_content").val();
@@ -331,7 +371,7 @@ function postReplyMoreAdd() {
 	        },
 	        data:{"replies":replyId,"content":$("#copy_reply_content").val()},
 	        success: function(result) {
-	        
+
 				if(result){
 					layer.msg("回复成功");
 					setTimeout("window.location.reload()",100);
@@ -412,33 +452,7 @@ function deleteReplymoreById(replymoreId){
 		$(".replymore_"+replymoreId).remove();
 	});
 }
-$(document).on("click",".collectBtn",function(){
-	$.ajax({
-	        url: basePath+"/collect/collection/",
-	        type: "put",
-	        headers: {
-	            Authorization: 'Token ' + token
-	        },
-	        data:{"types": "posts","pk": postId},
-	        success: function(result) {
-				if (result.message == '取消收藏') {
-					$(".collectBtn").attr({"src": 'img/unCollect.png'});
-					layer.msg(result.message);
-				} else if (result.message == '收藏成功') {
-					$(".collectBtn").attr({"src": 'img/hadCollect.png'});
-					layer.msg(result.message);
-				}
-			},
-	        error:function(XMLHttpRequest){
-	        	
-	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("请求异常");
-	        	}else{
-	        		layer.msg("请求异常")
-	        	}
-	        }
-	    });	
-})
+
 //处理采纳
 function updateIsAccept(id,isAccept){
 	if(isAccept==1){//采纳

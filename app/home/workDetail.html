@@ -105,6 +105,59 @@
 					</div>
 				</section>
 			</div>
+			<section class="replies-list">
+				<header>0条评论</header>
+				<ul class="reply-ul">
+					<!-- <li>
+						<div class="reply-author">
+							<img src="https://pic2.zhimg.com/v2-eef749df943b30b0048254ce0d7fa37d_xl.jpg" alt="" width="50px" height="50px">
+							<span class="reply-author-name">无极剑圣</span>
+							<span class="reply-create-time">1小时前</span>
+						</div>
+						<pre class="reply-content">这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论</pre>
+					</li>
+					<li>
+						<div class="reply-author">
+							<img src="https://pic2.zhimg.com/v2-eef749df943b30b0048254ce0d7fa37d_xl.jpg" alt="" width="50px" height="50px">
+							<span class="reply-author-name">无极剑圣</span>
+							<span class="reply-create-time">1小时前</span>
+						</div>
+						<pre class="reply-content">这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论</pre>
+					</li>
+					<li>
+						<div class="reply-author">
+							<img src="https://pic2.zhimg.com/v2-eef749df943b30b0048254ce0d7fa37d_xl.jpg" alt="" width="50px" height="50px">
+							<span class="reply-author-name">无极剑圣</span>
+							<span class="reply-create-time">1小时前</span>
+						</div>
+						<pre class="reply-content">这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论</pre>
+					</li> -->
+				</ul>
+				<div style="text-align:center;width:100%;clear: both">
+				    <ul class="pagination" id="pagination"></ul>
+				</div>
+				<div class="reply-form">
+					<input type="text" placeholder="说点什么吧">
+					<button>评论</button>
+				</div>
+			</section>
+		</script>
+		<script type="text/html" id="reply-ul-template">
+			{{each results}}
+			<li>
+				<div class="reply-author">
+					<img src="{{$value.owner.avatar}}" alt="" width="50px" height="50px">
+					<span class="reply-author-name">{{$value.owner.name}}</span>
+					<span class="reply-create-time">{{reply_time_fn($value.create_time)}}</span>
+				</div>
+				<pre class="reply-content">{{$value.content}}</pre>
+				{{if $value.ismyself == 'Yes'}}
+				<div class="drop-reply">
+					<span data-pk="{{$value.pk}}">删除</span>
+				</div>
+				{{/if}}
+			</li>
+			{{/each}}
 		</script>
 
 		<!-- 登录窗口 -->
@@ -152,6 +205,7 @@
 	<script type="text/javascript" src="../../libs/sea.js"></script>
 	<script src="../../cxyteam_forum/js/plupload/js/plupload.full.min.js"></script>
 	<script src="../../cxyteam_forum/js/qiniu/dist/qiniu.min.js"></script>
+	<script type="text/javascript" src="../../libs/jqPaginator.min.js"></script>
 	<script>
 		var base = location.href.split("/app/")[0];
 		seajs.config({
