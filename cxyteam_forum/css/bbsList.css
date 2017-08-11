@@ -20,7 +20,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-list-li img{display: inline-block;width: 53px;height: 53px;float: left;margin-top: 9px;border-radius: 53px;}
 .fly-list-li .grade{left: 40px;position: absolute;margin-top: 65px;}
 .fly-list-li p{line-height: 40px; font-size: 12px; color: #999;}
-.fly-list-li p span{padding-right: 15px;margin-left:20px;}
+.fly-list-li p span{padding-right: 15px;margin-left:22px;}
 .fly-list-li p span a{color: #999;}
 .fly-list-avatar img{width: 45px; height: 45px; border-radius: 2px;}
 
