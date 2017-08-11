@@ -69,10 +69,10 @@ function postDetail() {
                 }
 			}
 			if (result.collect) {
-				alert(111)
+				alert(result.collect)
 				$(".collectBtn").attr("src", "img/hadCollect.png");
 			} else {
-                alert(222)
+                alert(result.collect)
 				$(".collectBtn").attr("src", "img/unCollect.png");
 			}
 			$(".replyCount").text((result.reply_count));
