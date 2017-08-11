@@ -145,7 +145,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 					    html +='</h2><p>'
 					    +'<span class="v_content">'+v.content+'</span>'
 						+'<span>'+name+'</span>'
-						+'<span class="liveTime"  title="'+dealWithTime(v.create_time)+'">'+dealWithTime(v.create_time)+'</span>'
+						+'<span class="liveTime"  title="'+dealWithTime(v.create_time)+'">'+dealWithTime(v.last_replied)+'</span>'
 						
 						+'<span class="fly-list-hint">'             
 						+'<i class="iconfont" title="回帖+回复"></i>'+(v.reply_count)          
