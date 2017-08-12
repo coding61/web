@@ -4,8 +4,8 @@ define(function(require, exports, module) {
     var htmlEditor, jsEditor, csEditor;
     var Page = {
         init:function(){
-            // Page.configEdit();
-            Page.configHtmlEdit();
+            Page.configEdit();
+            // Page.configHtmlEdit();
             Page.clickEvent();
 
         },
@@ -89,38 +89,42 @@ define(function(require, exports, module) {
             // }
         },
         configEdit:function(){
-            
-            /*
-            htmlEditor.on("update", function(Editor){
-                // console.log(Editor.getValue());
+            htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
+                mode: "text/html",
+                lineNumbers: true,
+                lineWrapping: true,
+                indentUnit:4,
+                styleActiveLine: true,
+                matchBrackets: true,
+                // autoCloseBrackets: true,
+                // autoCloseTags: true,
+                theme: "monokai",
+                // foldGutter: true,
+                // gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                gutters: ["CodeMirror-lint-markers"],
+                lint: true,
+                value: ""
+            });
+            htmlEditor.on('keypress', function() { 
+                htmlEditor.showHint(); //满足自动触发自动联想功能 
             });
 
-            htmlEditor.on("change", function(Editor, changes){
-                console.log(Editor.getValue());
-            })
-            */
+            if(localStorage.htmlCode){
+                // console.log(localStorage.htmlCode);
+                htmlEditor.setValue(localStorage.htmlCode);
+            }
 
-            // htmlEditor.on("blur", function(Editor){
-            //     // localStorage.htmlCode = Editor.getValue();
-            // })
+            htmlEditor.on("blur", function(Editor){
+                if (htmlEditor.getOption("mode") == "text/html") {
+                    //存 html
+                    localStorage.htmlCode = Editor.getValue();
+                }else if (htmlEditor.getOption("mode") == "javascript"){
+                    //存 js
+                    localStorage.jsCode = Editor.getValue();
+                }
+            }) 
 
-            // jsEditor.on("blur", function(Editor){
-            //     // localStorage.jsCode = Editor.getValue();
-            // })
-            
-            // if(localStorage.htmlCode){
-            //     // console.log(localStorage.htmlCode);
-            //     htmlEditor.setValue(localStorage.htmlCode);
-            // }
-            
-            // if(localStorage.jsCode){
-            //     // console.log(localStorage.jsCode);
-            //     jsEditor.setValue(localStorage.jsCode);
-            // }
-           
-            
-
-            // Page.addListen();
+            console.log(htmlEditor.getOption("mode"));
         },
         load:function(htmlValue, cssValue, jsValue){
             $.ajax({
@@ -179,15 +183,27 @@ define(function(require, exports, module) {
                     $(this).removeClass("unselect").addClass("select");
                     if ($(this).hasClass("htmlTag")) {
                         // 打开 html，关闭 js
-                        $(".edits .html-edit").show();
-                        $(".edits .js-edit").hide();
+                        // $(".edits .html-edit").show();
+                        // $(".edits .js-edit").hide();
 
-                        Page.configHtmlEdit();
+                        // Page.configHtmlEdit();
+                        var htmlValue  = localStorage.htmlCode ? localStorage.htmlCode:""
+                        htmlEditor.setOption("mode", "text/html");
+                        htmlEditor.setValue(htmlValue);
+
+                        console.log(htmlEditor.getOption("mode"));
+
                     }else if ($(this).hasClass("jsTag")) {
-                        $(".edits .html-edit").hide();
-                        $(".edits .js-edit").show();
+                        // $(".edits .html-edit").hide();
+                        // $(".edits .js-edit").show();
 
-                        Page.configJsEdit();
+                        // Page.configJsEdit();
+
+                        var jsValue  = localStorage.jsCode ? localStorage.jsCode:""
+                        htmlEditor.setOption("mode", "javascript");
+                        htmlEditor.setValue(jsValue);
+
+                        console.log(htmlEditor.getOption("mode"));
                     }
                 }
             })
@@ -196,6 +212,8 @@ define(function(require, exports, module) {
                 var htmlV = "";
                 var jsV = "";
                 var cssV = "";
+
+                /*
                 if ($(".js-edit").children().length == 2) {
                     jsV = jsEditor.getValue();
                 }
@@ -204,14 +222,11 @@ define(function(require, exports, module) {
                     htmlV = htmlEditor.getValue();
                 }
                 // console.log(htmlV);
+                */
 
+                htmlV = localStorage.htmlCode?localStorage.htmlCode:""
+                jsv = localStorage.jsCode?localStorage.jsCode:""
                 Page.load(htmlV, cssV, jsV);
-
-                // $(".code-result-shadow-view").show();
-                // // 关闭运行代码结果窗口
-                // $(".code-result .close img").unbind('click').click(function(){
-                //     $(".code-result-shadow-view").hide();
-                // })
 
             })
         },
