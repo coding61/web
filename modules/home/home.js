@@ -1276,6 +1276,8 @@ define(function(require, exports, module) {
                     Common.playMessageSoun2(url);  //播放钻石音效
                 }
             })
+
+
         },
         clickEventTotal:function(){
             $(".help").unbind('click').click(function(){
@@ -1373,6 +1375,26 @@ define(function(require, exports, module) {
             $(".header .works").unbind('click').click(function(){
                 window.open("worksList.html");
             })
+
+            //打开绑定窗口
+            $(".lock-phone").unbind('click').click(function(){
+                $(".helps-view").hide();
+                $(".phone-shadow-view").show();
+            })
+            // 获取手机验证码
+            $(".phone-view .get-code").unbind('click').click(function(){
+                // 获取手机验证码
+                Mananger.getPhoneCode();
+            })
+            // 手机绑定
+            $(".phone-view .submit").unbind('click').click(function(){
+                Mananger.lockPhone();
+            })
+            // 关闭绑定窗口
+            $(".phone-view .close img").unbind('click').click(function(){
+                $(".phone-shadow-view").hide();
+            })
+
             
         },
         requestNextData:function(actionText, pagenum){
@@ -2235,6 +2257,116 @@ define(function(require, exports, module) {
                     success:function(json){
                         var html = ArtTemplate("teams-brand-template", json.results);
                         $(".teams-brand").html(html);
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            // Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        getPhoneCode:function(){
+            var reg = /^1[0-9]{10}$/;
+            var phone = $(".phone-view .phone input").val();
+
+            if ($(".phone-view .get-code").html() == "获取验证码" && reg.test(phone)) {
+                // 发起获取验证码请求
+                Common.isLogin(function(token){
+                    $.ajax({
+                        type:"get",
+                        url:Common.domain + "/userinfo/bind_telephone_request/",
+                        headers:{
+                            Authorization:"Token " + token
+                        },
+                        data:{
+                            telephone:phone
+                        },
+                        timeout:6000,
+                        success:function(json){
+                            if (json.status == 0) {
+                                var time = 60;
+                                this.timer = setInterval(()=>{
+                                    --time;
+                                    if (time > 0) {
+                                        $(".phone-view .get-code").html(time+'s后重试');
+                                    }else{
+                                        $(".phone-view .get-code").html("获取验证码");
+                                        clearInterval(this.timer);
+                                    }
+                                },1000);
+                                }else if (json.detail) {
+                                    Common.dialog(json.detail);
+                                }
+                        },
+                        error:function(xhr, textStatus){
+                            if (textStatus == "timeout") {
+                                // Common.dialog("请求超时");
+                                return;
+                            }
+                            if (xhr.status == 404) {
+                                // Common.dialog("您没有团队");
+                                return;
+                            }else if (xhr.status == 400 || xhr.status == 403) {
+                                // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                                return;
+                            }else{
+                                // Common.dialog('服务器繁忙');
+                                return;
+                            }
+                            console.log(textStatus);
+                        }
+                    })
+                })
+            }else if (!reg.test(phone)) {
+                // 手机号不合法
+                Common.dialog("手机号不合法");
+            }
+        },
+        lockPhone:function(){
+            if ($(".phone-view .phone input").val() == "") {
+                Common.dialog("请输入手机号");
+                return
+            }
+            if ($(".phone-view .verify-code input").val() == "") {
+                Common.dialog("请输入验证码");
+                return
+            }
+            if ($(".phone-view .password input").val() == "") {
+                Common.dialog("请输入密码");
+                return
+            }
+            // 绑定手机
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/bind_telephone/",
+                    data:{
+                        telephone:$(".phone-view .phone input").val(),
+                        password:$(".phone-view .password input").val(),
+                        verification_code:$(".phone-view .verify-code input").val()
+                    },
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        if (json.token) {
+                            Common.dialog("绑定成功");
+                            $(".phone-shadow-view").hide();
+                        }
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
