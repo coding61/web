@@ -699,3 +699,19 @@ body{
     cursor:not-allowed
 }
 /*分页*/
+
+
+.likes-btn {
+    margin-left: 15px;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 12px;
+    padding-left: 18px;
+    cursor: pointer;
+}
+.likes-btn-yes{
+    background-image: url(../../images/works-center/likes-icon.png);
+}
+.likes-btn-no{
+    background-image: url(../../images/works-center/unlikes-icon.png);
+}
