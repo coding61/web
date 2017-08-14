@@ -83,6 +83,9 @@
 .postsTop {
   cursor: pointer;
 }
+.deletePost {
+  cursor: pointer;
+}
 .jie-add {
 	position:static;
 }
