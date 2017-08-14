@@ -125,7 +125,7 @@ define(function(require, exports, module) {
             }) 
 
             console.log(htmlEditor.getOption("mode"));
-            alert(htmlEditor.getOption("mode"));
+            // alert(htmlEditor.getOption("mode"));
         },
         load:function(htmlValue, cssValue, jsValue){
             $.ajax({
