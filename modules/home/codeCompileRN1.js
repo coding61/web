@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var domain = "/program_girl";
     var htmlEditor;
     var editModes = {
         c:{mode:{name:"text/x-csrc"}, language:7},
@@ -17,7 +18,7 @@ $(document).ready(function() {
             window.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
-                alert(JSON.stringify(a));
+                alert(a);
 
                 // htmlEditor.setOption("mode", editModes[a].mode);
                 // htmlEditor.setValue("");
@@ -48,6 +49,7 @@ $(document).ready(function() {
             // });
             // Page.addListen();
             console.log(htmlEditor.getOption("mode"));
+            alert("124");
         },
         load:function(value){
             console.log(value);
