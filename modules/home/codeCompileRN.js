@@ -16,10 +16,10 @@ define(function(require, exports, module) {
             Page.clickEvent();
 
             // 监听父窗口传过来的语言
-            window.addEventListener('message', function(e) {  
+            document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
-                alert(JSON.stringify(a));
+                alert(a);
 
                 // htmlEditor.setOption("mode", editModes[a].mode);
                 // htmlEditor.setValue("");
