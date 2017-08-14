@@ -117,9 +117,11 @@ $(document).ready(function() {
                 if (htmlEditor.getOption("mode") == "text/html") {
                     //存 html
                     localStorage.htmlCode = Editor.getValue();
+                    // console.log(localStorage.htmlCode);
                 }else if (htmlEditor.getOption("mode") == "javascript"){
                     //存 js
                     localStorage.jsCode = Editor.getValue();
+                    // console.log(localStorage.jsCode);
                 }
             }) 
 
@@ -192,6 +194,7 @@ $(document).ready(function() {
                         htmlEditor.setValue(htmlValue);
 
                         console.log(htmlEditor.getOption("mode"));
+                        console.log(localStorage.htmlCode);
 
                     }else if ($(this).hasClass("jsTag")) {
                         // $(".edits .html-edit").hide();
@@ -204,6 +207,7 @@ $(document).ready(function() {
                         htmlEditor.setValue(jsValue);
 
                         console.log(htmlEditor.getOption("mode"));
+                        console.log(localStorage.jsCode);
                     }
                 }
             })
@@ -225,7 +229,7 @@ $(document).ready(function() {
                 */
 
                 htmlV = localStorage.htmlCode?localStorage.htmlCode:""
-                jsv = localStorage.jsCode?localStorage.jsCode:""
+                jsV = localStorage.jsCode?localStorage.jsCode:""
                 Page.load(htmlV, cssV, jsV);
 
             })
