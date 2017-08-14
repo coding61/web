@@ -226,7 +226,7 @@ define(function(require, exports, module) {
                 */
 
                 htmlV = localStorage.htmlCode?localStorage.htmlCode:""
-                jsv = localStorage.jsCode?localStorage.jsCode:""
+                jsV = localStorage.jsCode?localStorage.jsCode:""
                 Page.load(htmlV, cssV, jsV);
 
             })
