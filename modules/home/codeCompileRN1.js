@@ -15,23 +15,23 @@ $(document).ready(function() {
             Page.clickEvent();
 
             // 监听父窗口传过来的语言
-            // window.addEventListener('message', function(e) {  
-            //     var a = e.data;   
-            //     console.log(a);
-            //     alert(a);
-
-            //     // htmlEditor.setOption("mode", editModes[a].mode);
-            //     // htmlEditor.setValue("");
-            //     // Page.language = editModes[a].language;
-            //     // console.log(htmlEditor.getOption("mode"));
-
-            // }, false); 
-
-            document.addEventListener('message', function(e) {
+            document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
                 alert(a);
-            })
+
+                // htmlEditor.setOption("mode", editModes[a].mode);
+                // htmlEditor.setValue("");
+                // Page.language = editModes[a].language;
+                // console.log(htmlEditor.getOption("mode"));
+
+            }, false); 
+
+            // document.addEventListener('message', function(e) {
+            //     var a = e.data;   
+            //     console.log(a);
+            //     alert(a);
+            // })
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
