@@ -197,11 +197,11 @@ function postDetail() {
 			$(".replyCount").text((result.reply_count));
 			$(".browseTime").text(result.browse_count);
 			 
-			 $(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
+			$(".detail-hits").append('<span style="color:#FF7200">'+result.types.name+'</span>');
+			if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
+			if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
 			if(localStorage.userName!=null&&postUserName==localStorage.userName){
 				$(".detail-hits").append('<span type="del" onclick="delPost()" class="post_del">删除</span>');
-				if(result.istop){$(".fly-tip-stick").css("display","inline-block");}
-				if(result.isessence){$(".fly-tip-jing").css("display","inline-block");}
 				if (result.status == 'unsolved') {
 					$(".wrap .page-title").append('<div class="changeStatus"><span class="solved" id="solved">标记为已解决</span><span class="finish" id="finish">关闭问题</span>');
 				} else if (result.status == 'solved') {
@@ -238,6 +238,11 @@ function postDetail() {
 					$(".detail-hits").append('<span onclick="canclePostsTop()" class="postsTop">取消置顶</span>');
 				} else {
 					$(".detail-hits").append('<span onclick="postsTop()" class="postsTop">置顶</span>');
+				}
+				if(localStorage.userName!=null&&postUserName==localStorage.userName) {
+
+				} else {
+					$(".detail-hits").append('<span onclick="delPost()" class="deletePost">删除</span>');
 				}
 			}
 			
@@ -553,11 +558,17 @@ function delPost(){
 			  myAjax(basePath+"/forum/posts/"+postId+"/","DELETE",null,function(result){
 			  	//console.log(result)
 //				  if(result==1){
-						// layer.msg("删除成功");
-						layer.close(index);
-						var currentExperience = parseInt($('.info .grade-value').text().split("/")[0])-5;
-						growNumAnimate(currentExperience);
-						setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
+						if (is_staff) {
+							layer.msg("删除成功");
+							setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
+						} else {
+							layer.close(index);
+							var currentExperience = parseInt($('.info .grade-value').text().split("/")[0])-5;
+							growNumAnimate(currentExperience);
+							setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
+						}				  
+						
+						
 //					}else{
 //						layer.msg("删除失败");
 //					}	
