@@ -10,13 +10,15 @@
 		<title>首页</title>
 
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
-		<link type="text/css" rel="stylesheet" href="../../statics/css/home/codeEditRN.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/codeEditRN1.css" />
 		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/codemirror.css">
 		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/hint/show-hint.css">
 		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/theme/base16-dark.css">
 		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/theme/monokai.css">
 		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/addon/foldgutter.css">
 		<link type="text/css" rel="stylesheet" href="../../libs/codeMirror/lint/lint.css">
+		
+		<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 
 		<script src="../../libs/codeMirror/codemirror.js"></script>
 	    <script src="../../libs/codeMirror/hint/show-hint.js"></script>
@@ -89,26 +91,7 @@
 				<iframe src="" frameborder="0"></iframe>
 			</div>
 		</div>
+		<script type="text/javascript" src="../../modules/home/codeEditRN1.js"></script>
 	</body>
-	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="../../libs/sea.js"></script>
-	
-	<script>
-		var base = location.href.split("/app/")[0];
-		seajs.config({
-				paths: {
-					"home": base + "/modules/home",
-					"libs": base + "/libs",
-					"common": base + "/modules/common"
-				},
-				alias: {
-					"template": "libs/template.js",
-					"common": "common/common.js"
-				}
-			})
-			// 加载入口模块
-		seajs.use("home/codeEditRN.js");
-	</script>
-
 </html>
 

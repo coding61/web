@@ -92,7 +92,15 @@
 				<header class="work-content-head">
 					<div class="work-title">
 						<p class="title-detail">{{name ? name : '未命名'}}</p>
-						<p class="author-detail"><span class="author-span">作者： {{owner.name ? owner.name : '匿名'}}</span><span>时间： {{create_time ? create_time.split('T')[0] : '未知'}}</span></p>
+						<p class="author-detail">
+							<span class="author-span">作者： {{owner.name ? owner.name : '匿名'}}</span>
+							<span>时间： {{create_time ? create_time.split('T')[0] : '未知'}}</span>
+							{{if islike}}
+							<span class="likes-btn likes-btn-yes" data-likes-num="{{likes}}">{{likes_(likes)}}</span>
+							{{else}}
+							<span class="likes-btn likes-btn-no" data-likes-num="{{likes}}">{{likes_(likes)}}</span>
+							{{/if}}
+						</p>
 					</div>
 					<div class="play-btn"><button>运行</button></div>
 				</header>
@@ -107,32 +115,7 @@
 			</div>
 			<section class="replies-list">
 				<header>0条评论</header>
-				<ul class="reply-ul">
-					<!-- <li>
-						<div class="reply-author">
-							<img src="https://pic2.zhimg.com/v2-eef749df943b30b0048254ce0d7fa37d_xl.jpg" alt="" width="50px" height="50px">
-							<span class="reply-author-name">无极剑圣</span>
-							<span class="reply-create-time">1小时前</span>
-						</div>
-						<pre class="reply-content">这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论</pre>
-					</li>
-					<li>
-						<div class="reply-author">
-							<img src="https://pic2.zhimg.com/v2-eef749df943b30b0048254ce0d7fa37d_xl.jpg" alt="" width="50px" height="50px">
-							<span class="reply-author-name">无极剑圣</span>
-							<span class="reply-create-time">1小时前</span>
-						</div>
-						<pre class="reply-content">这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论</pre>
-					</li>
-					<li>
-						<div class="reply-author">
-							<img src="https://pic2.zhimg.com/v2-eef749df943b30b0048254ce0d7fa37d_xl.jpg" alt="" width="50px" height="50px">
-							<span class="reply-author-name">无极剑圣</span>
-							<span class="reply-create-time">1小时前</span>
-						</div>
-						<pre class="reply-content">这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论这是一段评论</pre>
-					</li> -->
-				</ul>
+				<ul class="reply-ul"></ul>
 				<div style="text-align:center;width:100%;clear: both">
 				    <ul class="pagination" id="pagination"></ul>
 				</div>

@@ -107,6 +107,11 @@ define(function(require, exports, module) {
                     Mananger.dropReply(this_.attr('data-pk'))
                 })
             })
+
+            //点赞
+            $('.main-view').on('click', '.likes-btn', function(){
+                Mananger.likesFn($(this));
+            })
         }
 	}
 
@@ -359,10 +364,10 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        Common.dialog('评论成功', function(){
+                        // Common.dialog('评论成功', function(){
                             Mananger.getReplies(1, Mananger.pagination);
                             $('.reply-form input').val('');
-                        });
+                        // });
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -390,13 +395,57 @@ define(function(require, exports, module) {
                     },
                     timeout: 8000,
                     success: function(json){
-                        Common.dialog('删除成功', function(){
+                        // Common.dialog('删除成功', function(){
                             Mananger.getReplies(1, Mananger.pagination);
-                        })
+                        // })
                     },
                     error: function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        likesFn: function(this_){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type: 'POST',
+                    url: Common.domain + '/userinfo/myexercises/like/',
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    },
+                    data: {
+                        'myexercise': work_pk
+                    },
+                    timeout: 8000,
+                    success: function(json){
+                        Common.showToast(json.message);
+                        if (json.message == '点赞成功') {
+                            this_.removeClass('likes-btn-no').addClass('likes-btn-yes');
+                            this_.text(parseInt(this_.attr('data-likes-num')) + 1);
+                            this_.attr({
+                                'data-likes-num': parseInt(this_.attr('data-likes-num')) + 1
+                            });
+                        } else {
+                            this_.removeClass('likes-btn-yes').addClass('likes-btn-no');
+                            this_.text(parseInt(this_.attr('data-likes-num')) - 1)
+                            this_.attr({
+                                'data-likes-num': parseInt(this_.attr('data-likes-num')) - 1
+                            });
+                        }
+                    },
+                    error: function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时,请刷新");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -503,6 +552,9 @@ define(function(require, exports, module) {
         } else  {
             return time.split('T')[0];
         }
+    })
+    ArtTemplate.helper('likes_', function(likes){
+        return parseInt(likes) == 0 ? '赞' : likes;
     })
 
 	Page.init();
