@@ -15,7 +15,7 @@ $(document).ready(function() {
             Page.clickEvent();
 
             // 监听父窗口传过来的语言
-            document.addEventListener('message', function(e) {  
+            window.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
                 alert(a);
