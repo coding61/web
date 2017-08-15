@@ -2607,17 +2607,17 @@ define(function(require, exports, module) {
                     error:function(xhr, textStatus){
                         Common.hideLoading();
                         if (textStatus == "timeout") {
-                            // Common.dialog("请求超时");
+                            Common.dialog("请求超时,请重试");
                             return;
                         }
                         if (xhr.status == 404) {
                             // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
-                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            // Common.dialog('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
