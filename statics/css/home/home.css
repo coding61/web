@@ -1051,7 +1051,20 @@ body{
 
     padding-top: 15px;
 }
-
+.tips{
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 15px;
+}
+.tips span{
+    width: calc(100% - 58px);
+    display: inline-block;
+    text-align: justify;
+    font-size: 13px;
+    color: rgb(138,138,138);
+}
 .account-view .ui-login-input-view{
     width: 80%;
     height: 40px;
