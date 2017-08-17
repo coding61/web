@@ -2,6 +2,41 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
     var htmlEditor, jsEditor, csEditor;
+    var signs = [
+        "[",
+        "]",
+        "{",
+        "}",
+        "(",
+        ")",
+        "<",
+        ">",
+        "/",
+        "\\",
+        "'",
+        '"',
+        "-",
+        "_",
+        ":",
+        ";",
+        "$",
+        "#",
+        "%",
+        "^",
+        "@",
+        ".",
+        ",",
+        "?",
+        "!",
+        "*",
+        "+",
+        "=",
+        "|",
+        "~",
+        "¢",
+        "£",
+        "￥"
+    ]
     var Page = {
         init:function(){
             Page.configEdit();
@@ -114,7 +149,17 @@ define(function(require, exports, module) {
                 htmlEditor.setValue(localStorage.htmlCode);
             }
 
-            htmlEditor.on("blur", function(Editor){
+            // htmlEditor.on("blur", function(Editor){
+            //     if (htmlEditor.getOption("mode") == "text/html") {
+            //         //存 html
+            //         localStorage.htmlCode = Editor.getValue();
+            //     }else if (htmlEditor.getOption("mode") == "javascript"){
+            //         //存 js
+            //         localStorage.jsCode = Editor.getValue();
+            //     }
+            // }) 
+            htmlEditor.on("change", function(Editor, changes){
+                // console.log(Editor.getValue());
                 if (htmlEditor.getOption("mode") == "text/html") {
                     //存 html
                     localStorage.htmlCode = Editor.getValue();
@@ -122,7 +167,7 @@ define(function(require, exports, module) {
                     //存 js
                     localStorage.jsCode = Editor.getValue();
                 }
-            }) 
+            })
 
             console.log(htmlEditor.getOption("mode"));
             // alert(htmlEditor.getOption("mode"));
@@ -230,7 +275,51 @@ define(function(require, exports, module) {
                 Page.load(htmlV, cssV, jsV);
 
             })
+
+            Page.punctuationRelatedMethod();
+
         },
+        punctuationRelatedMethod:function(){
+            Page.punctuationsInit();
+            $(".insert-pun").click(function () {            
+                $(".punctuation-view").show();
+            })
+            $(".punctuation-view .close img").click(function(){
+                $(".punctuation-view").hide();
+            })
+            $(".punctuation").click(function(){
+                var item = $(this).html();
+                if (item == "&lt;") {
+                    item = "<";
+                }else if (item == "&gt;") {
+                    item = ">"
+                }
+                htmlEditor.replaceSelection(item);
+
+                // var value = htmlEditor.getValue();
+                // value+=item
+                // htmlEditor.setValue(value);
+            })
+        },
+        punctuationsInit:function(){
+            var html = "";
+            for (var i = 0; i < signs.length; i++) {
+                var item = signs[i];
+                html += '<span class="punctuation">'+item+'</span>'
+            }
+            $(".punctuations").html(html);
+
+            var btnW = $(".insert-pun").width();
+            var btnL = $(".insert-pun").offset().left;
+            var pvW = $(".punctuation-view").width();
+            
+            var left = btnL-(pvW-btnW)/2
+            left = ($(window).width() - pvW)/2
+
+            $(".punctuation-view").css({
+                left:left+ "px"
+            })
+        }
 
     };
 

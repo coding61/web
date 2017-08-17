@@ -9,6 +9,41 @@ define(function(require, exports, module) {
         cpp:{mode:{name:"text/x-c++src"}, language:7},
         python:{mode:{name: "text/x-cython", version: 2, singleLineStringErrors: false}, language:0}
     }
+    var signs = [
+        "[",
+        "]",
+        "{",
+        "}",
+        "(",
+        ")",
+        "<",
+        ">",
+        "/",
+        "\\",
+        "'",
+        '"',
+        "-",
+        "_",
+        ":",
+        ";",
+        "$",
+        "#",
+        "%",
+        "^",
+        "@",
+        ".",
+        ",",
+        "?",
+        "!",
+        "*",
+        "+",
+        "=",
+        "|",
+        "~",
+        "¢",
+        "£",
+        "￥"
+    ]
     var Page = {
         language:0,
         init:function(){
@@ -25,6 +60,15 @@ define(function(require, exports, module) {
                 htmlEditor.setValue("");
                 Page.language = editModes[a].language;
                 console.log(htmlEditor.getOption("mode"));
+                
+                var str = "";
+                if (a == "c") {
+                    str = "C 语言编译器" 
+                }else if (a == "python") {
+                    str = "Python 语言编译器"
+                }
+                $("title").html(str);
+                $(".html-edit .tag").html(str);
 
             }, false); 
         },
