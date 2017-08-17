@@ -1,14 +1,16 @@
-/* ���� */
+/* ¹«ÓÃ */
 body .iconfont{-webkit-text-stroke-width: 0;}
 /* Tip */
 .fly-tip{position: relative;}
 .fly-tip span{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
 .fly-tip span{height: 20px; line-height: 20px; padding: 0 5px; background-color: #999; color: #fff; font-size: 12px;}
 .fly-tip .fly-tip-stick{background-color: #393D49;}
-.fly-tip .fly-tip-jing{background-color: #c00;}
+/*为了悼念改颜色*/
+/*.fly-tip .fly-tip-jing{background-color: #c00;}*/
+.fly-tip .fly-tip-jing{background-color: #000000;}
 .fly-tip .fly-tip-jie{background-color: #8FCDA0;}
 
-/* �����б� */
+/* Ìû×ÓÁÐ±í */
 .fly-list .fly-list-li{position: relative; height:89px; margin-top: 8px; padding: 0 0 8px 30px; border-bottom: 1px solid #E9E9E9;}
 .fly-list-li .fly-list-avatar{position: absolute; left: 0; top: 0;}
 .fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 8px;margin-left: 20px;float: left;width:91%;}
@@ -33,7 +35,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-tab span{border:1px solid #009E94; border-right:none; font-size:0;}
 .fly-tab span a{ height: 36px; line-height: 36px; padding: 0 20px; border-right:1px solid #009E94; font-size:14px;}
 .fly-tab .tab-this{background-color:#009E94; color:#fff;}
-/* ���� */
+/* ËÑË÷ */
 .fly-search{position:relative; margin-left:10px; display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
 .fly-search input{padding-right: 30px;}
 .fly-search .icon-sousuo{position:absolute; right:10px; top:10px; color:#999; cursor:pointer;}
@@ -43,7 +45,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-tab .myTie{cursor: pointer;width: 100px;background-color: #009688;font-size: 14px;height: 38px;text-align: center;line-height: 38px;color: #fff;position: absolute;right: 20%;top: 0;}
 .jie-add1{position:absolute; right:10%; top:0; font-size:14px;}
 .jie-add{position:absolute; right:0; top:0; font-size:14px;}
-/* ��ҳ */
+/* ·ÖÒ³ */
 .laypage-main,
 .laypage-main *{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
 .laypage-main{margin: 20px 0; border: 1px solid #009E94; border-right: none; border-bottom: none; font-size: 0;}
@@ -56,7 +58,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 #pageDiv{
 	margin-top:20px;
 }
-/* ������豸 */
+/* ÊÊÅä¶àÉè±¸ */
 @media screen and (max-width: 1024px) {
   .main{width: auto;}
   img{max-width: 100%;}
@@ -159,8 +161,16 @@ body .iconfont{-webkit-text-stroke-width: 0;}
     color: #999;*/
     cursor: pointer;
 }
-.fly-tip .unsolved {
+/*为了悼念改颜色*/
+/*.fly-tip .unsolved {
     color: red;
+    background-color: #fcfcfc;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-left: 0px;
+}*/
+.fly-tip .unsolved {
+    color: #000000;
     background-color: #fcfcfc;
     font-size: 13px;
     margin-top: -2px;
