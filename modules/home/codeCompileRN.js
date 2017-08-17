@@ -67,8 +67,12 @@ define(function(require, exports, module) {
                 }else if (a == "python") {
                     str = "Python 语言编译器"
                 }
-                $("title").html(str);
-                $(".html-edit .tag").html(str);
+                var a = document.getElementsByClassName("html-edit")[0]
+                var b = a.firstElementChild
+                b.innerText=str
+                
+                // $("title").html(str);
+                // $(".html-edit .tag").html(str);
 
             }, false); 
         },
