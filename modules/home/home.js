@@ -817,7 +817,8 @@ define(function(require, exports, module) {
             }else{
                 // 弹出登录窗口
                 // 打开登录窗口
-                $(".login-shadow-view").show();
+                $(".phone-invite-shadow-view").show();
+                // $(".login-shadow-view").show();
                 Page.clickEvent();
             }
             Common.addCopyRight();   //添加版权标识
@@ -1215,30 +1216,6 @@ define(function(require, exports, module) {
                 $(".message-link-shadow-view").hide();
             })
 
-            // 关闭登录窗口
-            $(".login-view .close img").unbind('click').click(function(){
-                $(".login-shadow-view").hide();
-            })
-
-            // 登录按钮
-            $(".login-view .login").unbind('click').click(function(){
-                // 登录成功，请求数据
-                Mananger.login();
-            })
-
-            // 退出登录
-            $(".quit").unbind('click').click(function(){
-                Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
-                    localStorage.clear();
-                    window.location.reload();
-                })
-
-                // Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
-                //     localStorage.clear();
-                //     window.location.reload();
-                // })
-            })
-
             // logo 点击打开一个网站
             $(".header .logo2").unbind('click').click(function(){
                 window.open("https://www.cxy61.com");
@@ -1266,7 +1243,6 @@ define(function(require, exports, module) {
                 window.open("worksList.html");
             })
             
-
             // 消息音频播放
             $(".msg-view-parent .audio").unbind('click').click(function(){
                 console.log('cc');
@@ -1276,6 +1252,9 @@ define(function(require, exports, module) {
                     Common.playMessageSoun2(url);  //播放钻石音效
                 }
             })
+
+            
+            Page.clickEventLoginRelated();
         },
         clickEventTotal:function(){
             $(".help").unbind('click').click(function(){
@@ -1323,30 +1302,6 @@ define(function(require, exports, module) {
                 $(".find-help-shadow-view").hide();
             })
 
-
-            // 关闭登录窗口
-            $(".login-view .close img").unbind('click').click(function(){
-                $(".login-shadow-view").hide();
-            })
-
-            // 登录按钮
-            $(".login-view .login").unbind('click').click(function(){
-                // 登录成功，请求数据
-                Mananger.login();
-            })
-
-            // 退出登录
-            $(".quit").unbind('click').click(function(){
-                Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
-                    localStorage.clear();
-                    window.location.reload();
-                })
-                // Common.confirm("退出将会清空会话聊天缓存，是否要确定退出？", function(){
-                //      localStorage.clear();
-                //      window.location.reload();
-                // })
-            })
-
             // logo 点击打开一个网站
             $(".header .logo2").unbind('click').click(function(){
                 window.open("https://www.cxy61.com");
@@ -1373,7 +1328,185 @@ define(function(require, exports, module) {
             $(".header .works").unbind('click').click(function(){
                 window.open("worksList.html");
             })
+
+            Page.clickEventLoginRelated();
             
+        },
+        clickEventLoginRelated:function(){
+            // ------------------------------------------- I:以前的登录（废弃）
+            /*
+            // 关闭登录窗口
+            $(".login-view .close img").unbind('click').click(function(){
+                $(".login-shadow-view").hide();
+            })
+
+            // 登录按钮
+            $(".login-view .login").unbind('click').click(function(){
+                // 登录成功，请求数据
+                Mananger.login();
+            })
+            */
+            // 退出登录
+            $(".quit").unbind('click').click(function(){
+                Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+                    localStorage.clear();
+                    window.location.reload();
+                })
+            })
+            
+
+            // ---------------------------------------------II:新的登录
+            // --------------------------------1.绑定手机
+            //打开绑定窗口
+            $(".lock-phone").unbind('click').click(function(){
+                $(".helps-view").hide();
+                $(".phone-bind-shadow-view").show();
+            })
+            // 获取手机验证码
+            $(".phone-bind-view .get-code").unbind('click').click(function(){
+                // 获取手机验证码
+                Mananger.getPhoneCode($(".phone-bind-view"));
+            })
+            // 手机绑定
+            $(".phone-bind-view .bind-btn").unbind('click').click(function(){
+                Mananger.lockPhone($(".phone-bind-view"));
+            })
+            // 关闭绑定窗口
+            $(".phone-bind-view .close img").unbind('click').click(function(){
+                $(".phone-bind-shadow-view").hide();
+            })
+
+            // -------------------------------2.手机/邀请码登录
+            $(".phone-invite-view .tabs .tab").unbind('click').click(function(){
+                // 选择手机/邀请码登录
+                if ($(this).hasClass("unselect")) {
+                    $(".phone-invite-view .tabs .tab").removeClass("select").addClass("unselect");
+
+                    $(this).removeClass("unselect").addClass("select");
+                }
+                if ($(this).hasClass("phone")){
+                    $(".phone-account-view").css({display:"flex"})
+                    $(".invite-account-view").css({display:"none"})
+                    
+                }else if ($(this).hasClass("invite")) {
+                    $(".invite-account-view").css({display:"flex"})
+                    $(".phone-account-view").css({display:"none"})
+                }
+            })
+            
+            $(".phone-account-view .login-btn").unbind('click').click(function(){
+                // 手机号登录
+                Mananger.goLogin($(".phone-account-view"));
+            })
+            $(".invite-account-view .login-btn").unbind('click').click(function(){
+                // 邀请码登录
+                Mananger.goLogin($(".invite-account-view"));
+            })
+            
+            $(".phone-invite-view .go-reg").unbind('click').click(function(){
+                // 打开手机注册窗口
+                $(".phone-reg-shadow-view").show();
+                $(".phone-invite-shadow-view").hide();
+            })
+            $(".phone-invite-view .forgot-psd").unbind('click').click(function(){
+                // 打开找回密码窗口
+                // $(".find-password-shadow-view").show();
+            })
+
+
+            // -----------------------------3.手机注册
+            $(".phone-reg-view .close img").unbind('click').click(function(){
+                // 关闭手机注册窗口
+                $(".phone-reg-shadow-view").hide();
+                $(".phone-invite-shadow-view").show();
+            })
+            $(".phone-reg-view .get-code").unbind('click').click(function(){
+                // 获取手机验证码
+                Mananger.getPhoneCode($(".phone-reg-view"));
+            })
+            $(".phone-reg-view .reg-next-btn").unbind('click').click(function(){
+                // 注册下一步 btn
+                var this_ = $(".phone-reg-view");
+                if (this_.find(".phone").children("input").val() == "") {
+                    Common.dialog("请输入手机号");
+                    return
+                }
+                if (this_.find(".verify-code").children("input").val() == "") {
+                    Common.dialog("请输入验证码");
+                    return
+                }
+                if (this_.find(".password").children("input").val() == "") {
+                    Common.dialog("请输入密码");
+                    return
+                }
+
+                Mananger.phone = this_.find(".phone").children("input").val();
+                Mananger.code = this_.find(".verify-code").children("input").val();
+                Mananger.password = this_.find(".password").children("input").val();
+
+
+                // Mananger.regPhone($(".phone-reg-view"));
+                // 打开头像窗口
+                $(".choose-avatar-shadow-view").show();
+                $(".phone-reg-shadow-view").hide();
+
+                var width = $(window).width();
+                $(".ui-choose-avatar-view").css({
+                    "width":width*0.35+"px"
+                })
+                
+
+            })
+
+            // -----------------------------4.选择头像
+            $(".choose-avatar-view .close img").unbind('click').click(function(){
+                // 关闭选择头像窗口
+                $(".choose-avatar-shadow-view").hide();
+                $(".phone-reg-shadow-view").show();
+
+            })
+            
+            $(".choose-avatar-view .choose-avatar").unbind('click').click(function(){
+                $(".choose-avatar-view .avatars-view").css({
+                    display:"flex"
+                });
+            })
+
+            $(".choose-avatar-view .avatars .avatar").unbind('click').click(function(){
+                // 头像选择
+                var url = $(this).children("img").attr("src");
+                $(".choose-avatar-view .choose-avatar img").attr({src:url})
+            })
+            $(".choose-avatar-view .submit-avatar").unbind('click').click(function(){
+                $(".choose-avatar-view .avatars-view").css({
+                    display:"none"
+                });
+                Mananger.chooseAvatar = $(".choose-avatar-view .choose-avatar img").attr("src");
+            })
+            $(".choose-avatar-view .reg-btn").unbind('click').click(function(){
+                // 注册 btn
+                var nickname = $(".choose-avatar-view .nickname input").val();
+                if (nickname == "") {
+                    Common.dialog("请输入昵称");
+                    return
+                }
+                Mananger.regPhone(Mananger.phone, Mananger.code, Mananger.password, Mananger.chooseAvatar, nickname);
+            })
+
+
+            // -----------------------------4.找回密码
+            $(".find-password-view .close img").unbind('click').click(function(){
+                $(".find-password-shadow-view").hide();
+            })
+            $(".find-password-view .get-code").unbind('click').click(function(){
+                // 获取手机验证码
+                Mananger.getPhoneCode($(".find-password-view"));
+            })
+            $(".find-password-view .reset-psd-btn").unbind('click').click(function(){
+                // 重置密码 btn
+                Mananger.resetPassword($(".find-password-view"));
+            })
+        
         },
         requestNextData:function(actionText, pagenum){
             $.ajax({
@@ -1748,6 +1881,10 @@ define(function(require, exports, module) {
     };
     
     var Mananger = {
+        phone:"",
+        code:"",
+        password:"",
+        chooseAvatar:"https://static1.bcjiaoyu.com/avatars/1.png",
         login:function(){
             if($(".account-view .username input").val() == ""){
                 Common.dialog("请输入账号");
@@ -1804,7 +1941,8 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         Common.hideLoading();
-                        $(".login-shadow-view").hide();
+                        $(".phone-invite-shadow-view").hide();
+                        // $(".login-shadow-view").hide();
                         
                         /*
                         $(".header .avatar img").attr({src:json.avatar});
@@ -2177,7 +2315,7 @@ define(function(require, exports, module) {
             })
         },
         loadMyTeam:function(){
-             Common.isLogin(function(token){
+            Common.isLogin(function(token){
                 $.ajax({
                     type:'get',
                     url: Common.domain + "/userinfo/mygroup/",
@@ -2255,8 +2393,350 @@ define(function(require, exports, module) {
                     }
                 })
             })
-        }
-        
+        },
+        getPhoneCode:function(this_){
+            var reg = /^1[0-9]{10}$/;
+            var phone = this_.find(".phone").children("input").val();
+            
+            var url = "";
+            if (this_.find(".view-tag").html() == "注册") {
+                url = "/userinfo/telephone_signup_request/"
+            }else if (this_.find(".view-tag").html() == "绑定手机") {
+                url = "/userinfo/bind_telephone_request/"
+            }else if (this_.find(".view-tag").html() == "找回密码") {
+                url = "";
+            }
+
+            if (this_.find(".get-code").html() == "获取验证码" && reg.test(phone)) {
+                // 发起获取验证码请求
+                Common.isLogin(function(token){
+                    $.ajax({
+                        type:"get",
+                        url:Common.domain + url,
+                        headers:{
+                            Authorization:"Token " + token
+                        },
+                        data:{
+                            telephone:phone
+                        },
+                        timeout:6000,
+                        success:function(json){
+                            if (json.status == 0) {
+                                var time = 60;
+                                this.timer = setInterval(()=>{
+                                    --time;
+                                    if (time > 0) {
+                                        this_.find(".get-code").html(time+'s后重试');
+                                    }else{
+                                        this_.find(".get-code").html("获取验证码");
+                                        clearInterval(this.timer);
+                                    }
+                                },1000);
+                                }else if (json.detail) {
+                                    Common.dialog(json.detail);
+                                }
+                        },
+                        error:function(xhr, textStatus){
+                            if (textStatus == "timeout") {
+                                Common.dialog("请求超时");
+                                return;
+                            }
+                            if (xhr.status == 404) {
+                                Common.dialog("您没有团队");
+                                return;
+                            }else if (xhr.status == 400 || xhr.status == 403) {
+                                Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                                return;
+                            }else{
+                                Common.dialog('服务器繁忙');
+                                return;
+                            }
+                            console.log(textStatus);
+                        }
+                    })
+                })
+            }else if (!reg.test(phone)) {
+                // 手机号不合法
+                Common.dialog("手机号不合法");
+            }
+        },
+        lockPhone:function(this_){
+            // 绑定手机
+            if (this_.find(".phone").children("input").val() == "") {
+                Common.dialog("请输入手机号");
+                return
+            }
+            if (this_.find(".verify-code").children("input").val() == "") {
+                Common.dialog("请输入验证码");
+                return
+            }
+            if (this_.find(".password").children("input").val() == "") {
+                Common.dialog("请输入密码");
+                return
+            }
+            
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/bind_telephone/",
+                    data:{
+                        telephone:this_.find(".phone").children("input").val(),
+                        password:this_.find(".password").children("input").val(),
+                        verification_code:this_.find(".verify-code").children("input").val()
+                    },
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        if (json.token) {
+                            Common.dialog("绑定成功");
+                            this_.parent().hide();
+                        }
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            // Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        regPhone1:function(this_){
+            // 注册手机
+            if (this_.find(".phone").children("input").val() == "") {
+                Common.dialog("请输入手机号");
+                return
+            }
+            if (this_.find(".verify-code").children("input").val() == "") {
+                Common.dialog("请输入验证码");
+                return
+            }
+            if (this_.find(".password").children("input").val() == "") {
+                Common.dialog("请输入密码");
+                return
+            }
+            
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/telephone_signup/",
+                    data:{
+                        telephone:this_.find(".phone").children("input").val(),
+                        password:this_.find(".password").children("input").val(),
+                        verification_code:this_.find(".verify-code").children("input").val(),
+                        name:"",
+                        avatar:""
+                    },
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        if (json.token) {
+                            Common.dialog("注册成功");
+                            this_.parent().hide();
+                        }
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            // Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        regPhone:function(phone, code, password, url, nickname){
+            Common.showLoading();
+            // 注册手机
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/telephone_signup/",
+                    data:{
+                        telephone:phone,
+                        password:password,
+                        verification_code:code,
+                        name:nickname,
+                        avatar:url
+                    },
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        if (json.token) {
+                            // Common.dialog("注册成功");
+
+                            $(".choose-avatar-shadow-view").hide();
+
+                            localStorage.token = json.token;
+
+                            Mananger.getInfo();
+
+                            window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
+
+                            Mananger.loadMyTeam();  // 获取我的团队信息
+                            Mananger.loadTeamBrand();  //获取团队排行
+                        }
+                    },
+                    error:function(xhr, textStatus){
+                        Common.hideLoading();
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时,请重试");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            // Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        resetPassword:function(this_){
+            // 重置密码
+            if (this_.find(".phone").children("input").val() == "") {
+                Common.dialog("请输入手机号");
+                return
+            }
+            if (this_.find(".verify-code").children("input").val() == "") {
+                Common.dialog("请输入验证码");
+                return
+            }
+            if (this_.find(".password").children("input").val() == "") {
+                Common.dialog("请输入密码");
+                return
+            }
+            
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/bind_telephone/",
+                    data:{
+                        telephone:this_.find(".phone").children("input").val(),
+                        password:this_.find(".password").children("input").val(),
+                        verification_code:this_.find(".verify-code").children("input").val()
+                    },
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        if (json.token) {
+                            Common.dialog("修改密码成功");
+                            this_.parent().hide();
+                        }
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 404) {
+                            // Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                })
+            })
+        },
+        goLogin:function(this_){
+            if(this_.find(".username").children("input").val() == ""){
+                Common.dialog("请输入账号");
+                return;
+            }
+            if(this_.find(".password").children("input").val() == ""){
+                Common.dialog("请输入密码");
+                return;
+            }
+            var url = "",
+                data = {};
+            if (this_.attr("data-tag") == "invite") {
+                url = "/userinfo/invitation_code_login/"
+                data = {
+                    code:this_.find(".username").children("input").val(),
+                    password:this_.find(".password").children("input").val()
+                }
+            }else if (this_.attr("data-tag") == "phone") {
+                url = "/userinfo/telephone_login/"
+                data = {
+                    telephone:this_.find(".username").children("input").val(),
+                    password:this_.find(".password").children("input").val()
+                }
+            }
+
+            Common.showLoading();
+            $.ajax({
+                type:"post",
+                url:Common.domain + url,
+                data:data,
+                success:function(json){
+                    console.log(json);
+                    localStorage.token = json.token;
+
+                    Mananger.getInfo();
+
+                    window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
+
+                    Mananger.loadMyTeam();  // 获取我的团队信息
+                    Mananger.loadTeamBrand();  //获取团队排行
+                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
+                },
+                error:function(xhr, textStatus){
+                    Common.hideLoading();
+                    if (textStatus == "timeout") {
+                        Common.dialog("请求超时");
+                        return;
+                    }
+                    if (xhr.status == 400 || xhr.status == 403) {
+                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        return;
+                    }else{
+                        Common.dialog('服务器繁忙');
+                        return;
+                    }
+                }
+            })
+        } 
     }
     // ---------------------4.帮助方法
     var Util = {

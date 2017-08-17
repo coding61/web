@@ -73,14 +73,20 @@
 .btn-left{
 	float: right;
 }
-.post_del {
-
+/*为了悼念改颜色*/
+/*.post_del {
   color: #FF69B4;
+}*/
+.post_del {
+  color: #000000;
 }
 .postsEssence {
   cursor: pointer;
 }
 .postsTop {
+  cursor: pointer;
+}
+.deletePost {
   cursor: pointer;
 }
 .jie-add {

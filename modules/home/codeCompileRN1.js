@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var domain = "/program_girl";
     var htmlEditor;
     var editModes = {
         c:{mode:{name:"text/x-csrc"}, language:7},
@@ -14,17 +15,17 @@ $(document).ready(function() {
             Page.clickEvent();
 
             // 监听父窗口传过来的语言
-            window.addEventListener('message', function(e) {  
+            document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
-                alert(JSON.stringify(a));
+                alert(a);
 
                 // htmlEditor.setOption("mode", editModes[a].mode);
                 // htmlEditor.setValue("");
                 // Page.language = editModes[a].language;
                 // console.log(htmlEditor.getOption("mode"));
 
-            }, false); 
+            }, false);
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
@@ -48,6 +49,7 @@ $(document).ready(function() {
             // });
             // Page.addListen();
             console.log(htmlEditor.getOption("mode"));
+            // alert("124");
         },
         load:function(value){
             console.log(value);

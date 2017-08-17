@@ -15,16 +15,16 @@ define(function(require, exports, module) {
             Page.configEdit();
             Page.clickEvent();
 
-            // 监听父窗口传过来的语言
-            window.addEventListener('message', function(e) {  
+            // 监听RN传过来的语言
+            document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
-                alert(JSON.stringify(a));
+                // alert(a);
 
-                // htmlEditor.setOption("mode", editModes[a].mode);
-                // htmlEditor.setValue("");
-                // Page.language = editModes[a].language;
-                // console.log(htmlEditor.getOption("mode"));
+                htmlEditor.setOption("mode", editModes[a].mode);
+                htmlEditor.setValue("");
+                Page.language = editModes[a].language;
+                console.log(htmlEditor.getOption("mode"));
 
             }, false); 
         },
@@ -74,7 +74,7 @@ define(function(require, exports, module) {
                     // $(".run-result iframe").attr({src:url});
                 },
                 error:function(xhr, textStatus){
-
+                
                     if (textStatus == "timeout") {
                         Common.dialog("请求超时, 请稍后重试");
                         return;
@@ -86,12 +86,14 @@ define(function(require, exports, module) {
                         Common.dialog('服务器繁忙');
                         return;
                     }
+                    $(".compile-result .content").html("运行失败");
                     console.log(textStatus);
                 }
             })
         },
         clickEvent:function(){
             $(".result .run").click(function(){
+                $(".compile-result .content").html("运行结果加载中...");
                 Page.load(htmlEditor.getValue());
             })
         },

@@ -1,6 +1,5 @@
-define(function(require, exports, module) {
-	var ArtTemplate = require("libs/template.js");
-	var Common = require('common/common.js');
+$(document).ready(function() {
+    var domain = "/program_girl";
     var htmlEditor, jsEditor, csEditor;
     var Page = {
         init:function(){
@@ -118,9 +117,11 @@ define(function(require, exports, module) {
                 if (htmlEditor.getOption("mode") == "text/html") {
                     //存 html
                     localStorage.htmlCode = Editor.getValue();
+                    // console.log(localStorage.htmlCode);
                 }else if (htmlEditor.getOption("mode") == "javascript"){
                     //存 js
                     localStorage.jsCode = Editor.getValue();
+                    // console.log(localStorage.jsCode);
                 }
             }) 
 
@@ -130,7 +131,7 @@ define(function(require, exports, module) {
         load:function(htmlValue, cssValue, jsValue){
             $.ajax({
                 type:"post",
-                url:Common.domain + "/userinfo/exercise_create/",
+                url:domain + "/userinfo/exercise_create/",
                 data:{
                     html:htmlValue,
                     css:cssValue,
@@ -158,19 +159,19 @@ define(function(require, exports, module) {
                         $(".code-result-shadow-view").hide();
                     })
 
-                    window.postMessage(json.pk, "*");
+                    // window.postMessage(json.pk, "*");
                 },
                 error:function(xhr, textStatus){
 
                     if (textStatus == "timeout") {
-                        Common.dialog("请求超时, 请稍后重试");
+                        // Common.dialog("请求超时, 请稍后重试");
                         return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else{
-                        Common.dialog('服务器繁忙');
+                        // Common.dialog('服务器繁忙');
                         return;
                     }
                     console.log(textStatus);
@@ -193,6 +194,7 @@ define(function(require, exports, module) {
                         htmlEditor.setValue(htmlValue);
 
                         console.log(htmlEditor.getOption("mode"));
+                        console.log(localStorage.htmlCode);
 
                     }else if ($(this).hasClass("jsTag")) {
                         // $(".edits .html-edit").hide();
@@ -205,6 +207,7 @@ define(function(require, exports, module) {
                         htmlEditor.setValue(jsValue);
 
                         console.log(htmlEditor.getOption("mode"));
+                        console.log(localStorage.jsCode);
                     }
                 }
             })
