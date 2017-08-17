@@ -5,7 +5,7 @@ body{
 	width: 100%;
 	height: 100%;
     min-width: 960px;
-    background-color: #ffecf0;
+    background-color: #fff;
 }
 /*顶部状态*/
 .header{
@@ -13,7 +13,7 @@ body{
 	align-items: center;
 	justify-content: center;
 	flex-direction: row;
-    background: rgb(250, 80, 131);
+    background: #000;
     width: 900px;
     height: 50px;
     padding: 0 -webkit-calc((100% - 900px) / 2);
@@ -99,7 +99,7 @@ body{
     margin-right: 15px;
     border-radius: 3px;
     background-color: #fff;
-    color: rgb(250, 80, 131);
+    color: #000;
     cursor: pointer;
     font-size: 13px;
 }
@@ -314,12 +314,12 @@ body{
     width: 100px;
     line-height: 36px;
     border-radius: 5px;
-    background-color: #ff92b1;
+    background-color: #000;
     color: #fff;
     cursor: pointer;
 }
 .main-view .play-btn button:hover{
-    background-color: rgb(250, 80, 131);
+    background-color: #000;
 }
 .main-view .content-div{
     overflow: hidden;
@@ -352,7 +352,7 @@ body{
 /*登录视图*/
 .login-view .close{
     width: 35%;
-    background: #ff6b95;
+    background: #000;
     height: 35px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -446,10 +446,10 @@ body{
 }
 .login-view .account-view .login{
     padding: 5px 16px;
-    background: #ff6b95;
+    background: #000;
     border-radius: 5px;
     color: white;
-    border: solid 1px #e56c95;
+    border: solid 1px #000;
     margin-bottom: 15px;
     cursor: pointer;
 }
