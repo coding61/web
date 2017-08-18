@@ -8,7 +8,7 @@ body{
 }
 /*顶部状态*/
 .header{
-	background: #000;
+	background: rgb(250, 80, 131);
 	height: 40px;
 	width: 100%;
 	/*overflow: hidden;*/
@@ -84,7 +84,7 @@ body{
     margin-right: 30px;
     border-radius: 3px;
     background-color: #fff;
-    color: #000;
+    color: rgb(250, 80, 131);
     cursor: pointer;
     font-size: 13px;
 }
@@ -280,11 +280,11 @@ body{
 	justify-content: flex-start;
 }
 .main-view .left-view ul.menu li.readed{
-	color: #000;
+	color: rgb(250, 80, 131);
 }
 .main-view .left-view ul.menu li.reading{
 	color: white;
-	background-color: #000;
+	background-color: rgb(250, 80, 131);
 	border-radius: 20px;
 }
 .main-view .left-view ul.menu li.unread{
@@ -520,11 +520,11 @@ body{
     cursor: pointer;
 }
 .main-view .left-view .btns .actions .option.unselect{
-    color: #000;
+    color: rgb(250, 80, 131);
     background: white;
 }
 .main-view .left-view .btns .actions .option.select{
-    background: #000;
+    background: rgb(250, 80, 131);
     color: white;
 }
 .main-view .left-view .btns .actions .btn-wx-auth{
@@ -535,7 +535,7 @@ body{
     border-bottom-right-radius: 0px;
     padding-left: 15px;
     padding-right: 15px;
-    background: #000;
+    background: rgb(250, 80, 131);
     display: inline-block;
     margin-left: 5px;
     cursor: pointer;
@@ -678,7 +678,7 @@ body{
 .play-in-newwin{
     display: inline-block;
     padding: 3px 5px;
-    background-color: #000;
+    background-color: rgb(250, 80, 131);
     margin-left: 5px;
     color: #fff;
     border-radius: 3px;
@@ -835,10 +835,10 @@ body{
     margin-left: 10px;
 }
 .works-list .active{
-    color: #000;
+    color: rgb(250, 80, 131);
 }
 .works-list .active p span{
-    border-color: #000;
+    border-color: rgb(250,80,131);
     display: inline-block;
 }
 
@@ -884,8 +884,8 @@ body{
     border: none;
 }
 .save-new-work .save-btn{
-    background-color: #000;
+    background-color: #ff92b1;
 }
 .save-new-work .save-btn:hover{
-    background-color: #000;
+    background-color: rgb(250, 80, 131);
 }
