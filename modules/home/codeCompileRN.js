@@ -56,21 +56,21 @@ define(function(require, exports, module) {
                 console.log(a);
                 alert(a);
 
-                htmlEditor.setOption("mode", editModes[a].mode);
-                htmlEditor.setValue("");
-                Page.language = editModes[a].language;
-                console.log(htmlEditor.getOption("mode"));
+                // htmlEditor.setOption("mode", editModes[a].mode);
+                // htmlEditor.setValue("");
+                // Page.language = editModes[a].language;
+                // console.log(htmlEditor.getOption("mode"));
                 
-                var str = "";
-                if (a == "c") {
-                    str = "C 语言编译器" 
-                }else if (a == "python") {
-                    str = "Python 语言编译器"
-                }
-                var a = document.getElementsByClassName("html-edit")[0]
-                var b = a.firstElementChild
-                b.innerText=str
-                
+                // var str = "";
+                // if (a == "c") {
+                //     str = "C 语言编译器" 
+                // }else if (a == "python") {
+                //     str = "Python 语言编译器"
+                // }
+                // var b = document.getElementsByClassName("html-edit")[0]
+                // var c = b.firstElementChild
+                // c.innerText=str
+
                 // $("title").html(str);
                 // $(".html-edit .tag").html(str);
 
@@ -111,6 +111,7 @@ define(function(require, exports, module) {
                 contentType:"application/json",
                 timeout:6000,
                 success:function(json){
+                    Common.hideLoading();
                     console.log(json);
                     if (json.errors) {
                         $(".compile-result .content").html(json.errors);
@@ -122,7 +123,7 @@ define(function(require, exports, module) {
                     // $(".run-result iframe").attr({src:url});
                 },
                 error:function(xhr, textStatus){
-                
+                    Common.hideLoading();
                     if (textStatus == "timeout") {
                         Common.dialog("请求超时, 请稍后重试");
                         return;
@@ -141,6 +142,7 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             $(".result .run").click(function(){
+                Common.showLoading();
                 $(".compile-result .content").html("运行结果加载中...");
                 Page.load(htmlEditor.getValue());
             })
