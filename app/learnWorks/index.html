@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>综合练习</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<header class="head bg-orange">
+		<nav class="center-width">
+			<a href="#" class="nav-picture active">图片</a>
+			<a href="#" class="nav-article">文章</a>
+		</nav>
+	</header>
+
+	<div class="body center-width">
+		<section class="image">
+			<section class="banner">
+				<img src="http://resource.haorenao.cn/back.jpg" alt="">
+				<p class="my-world">
+					<span>我，你，世界</span><br /><span class="small-size">This is a pure world of my own</span>
+				</p>
+			</section>
+			<section class="img-list">
+				<img src="http://resource.haorenao.cn/whoami.jpg" alt="">
+				<img src="http://resource.haorenao.cn/whatido.jpg" alt="">
+				<img src="http://resource.haorenao.cn/wheretofind.jpeg" alt="">
+			</section>
+		</section>
+
+		<section class="article">
+			<article class="article-content">
+				<h1>你的编程老师：斌叔</h1>
+				<p>转眼间，在创办了好热闹并经营了几年后，斌叔已经34岁了。</p>
+				<p>在这几年里，斌叔学会了如何经营一个电商平台，如何营销，如何在细节下功夫，如何赢得客户。斌叔也学习到了很多以前的短板，文化，美学。日子逐渐又如水一般平静，斌叔又想再打破自己一次。</p>
+				<img src="http://blog.bcjiaoyu.com/wp-content/uploads/2017/05/tumblr_m1he5deilH1rn116do1_500.gif" alt="">
+				<p>斌叔在几年时间里去了很多地方，感受到了地区文化差异，更多的感受到了地区的贫富差距。这些差距在教育上体现尤其明显。在很多不发达地区，小朋友受到的教育远不如经济不发达地区。</p>
+				<p>但是，中国的互联网和基础设施已经非常发达了，即使在不发达地区的学校里，多数也都有网络覆盖。完全可以通过互联网，让发达地区的和不发达地区的小朋友使用共同的教材，共同的师资，来尽量抹平地区间的教育差距。</p>
+				<p>斌叔想教小朋友学编程，这可能是斌叔最能够做的事情。在确定了“儿童编程”这个方向后，斌叔发现，这个事情在美国已经有人在做了，而且已经做得不错。</p>
+				<p>奥巴马和全国的大概几十个小朋友一起叫他们学编程，他说，你们都要会编程，不能不会编程。然后有一个副总统就讲，你们不要碰到困难退缩，如果编程遇到苦难的话你一定要坚持，这个国家所有的人都应该会编程。</p>
+				<p>几乎现在所有的美国名流，包括科技公司的老总，老一辈的计算机科学家，体育明星，政界，教美国人，教小朋友编程。</p>
+				<p>经过一个很系统的研究之后，我发现一个很惊人的现象：美国和欧洲已经将儿童编程的课程放入小学里，在法国已经是法定的教程，美国是大部分、大概80%的小学都采购了儿童编程的教材。</p>
+				<p>斌叔感到很欣喜，这说明这个事情虽然很新，但却不是斌叔一个人在做。</p>
+				<footer>
+					<p>——斌叔</p>
+					<p>2017</p>
+				</footer>
+			</article>
+		</section>
+	</div>
+
+	<footer class="footer bg-orange">
+		<div class="center-width">
+			<p>作者：小仙女</p>
+		</div>
+	</footer>
+
+	<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+		$('.head .center-width a').click(function(){
+			var this_ = $(this);
+			if (!this_.hasClass('active')) {
+				$('.head .center-width .active').removeClass('active');
+				this_.addClass('active');
+				if (this_.hasClass('nav-picture')) {
+					$('.body .article').hide();
+					$('.body .image').show();
+				} else {
+					$('.body .image').hide();
+					$('.body .article').show();
+				}
+			}
+		})
+	</script>
+</body>
+</html>
