@@ -75,6 +75,7 @@ $(document).ready(function() {
                 contentType:"application/json",
                 timeout:6000,
                 success:function(json){
+                    // layer.closeAll('loading');
                     $("body").mLoading("hide");//隐藏loading组件
                     console.log(json);
                     if (json.errors) {
@@ -87,16 +88,17 @@ $(document).ready(function() {
                     // $(".run-result iframe").attr({src:url});
                 },
                 error:function(xhr, textStatus){
+                    // layer.closeAll('loading');
                     $("body").mLoading("hide");//隐藏loading组件
                     if (textStatus == "timeout") {
-                        // Common.dialog("请求超时, 请稍后重试");
+                        layer.alert("请求超时, 请稍后重试");
                         return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
-                        // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        layer.alert(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else{
-                        // Common.dialog('服务器繁忙');
+                        layer.alert('服务器繁忙');
                         return;
                     }
                     console.log(textStatus);
@@ -106,9 +108,10 @@ $(document).ready(function() {
         clickEvent:function(){
             $(".result .run").click(function(){
                 if (htmlEditor.getValue() == "") {
-                    // Common.dialog("请输入一些代码，再运行");
+                    layer.alert("请输入一些代码，再运行");
                     return
                 }
+                
                 $("body").mLoading("show"); //显示loading组件
                 
                 $(".compile-result .content").html("运行结果加载中...");
