@@ -10,18 +10,18 @@ define(function(require, exports, module) {
         python:{mode:{name: "text/x-cython", version: 2, singleLineStringErrors: false}, language:0}
     }
     var Page = {
+        lang:Common.getQueryString("lang"),
         language:0,
         init:function(){
             Page.configEdit();
             Page.clickEvent();
-
+            
+            /*
             // 监听RN传过来的语言
             document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
                 alert(a);
-
-                // Page.init();
 
                 // htmlEditor.setOption("mode", editModes[a].mode);
                 // htmlEditor.setValue("");
@@ -42,10 +42,21 @@ define(function(require, exports, module) {
                 // $(".html-edit .tag").html(str);
 
             }, false); 
+            */
+
+            var str = "";
+            if (Page.lang == "c") {
+                str = "C 语言编译器" 
+            }else if (Page.lang == "python") {
+                str = "Python 语言编译器"
+            }
+           
+            $("title").html(str);
+            $(".html-edit .tag").html(str);
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
-                mode: editModes.python.mode,
+                mode: editModes[Page.lang].mode,
                 lineNumbers: true,
                 lineWrapping: true,
                 indentUnit:4,
@@ -60,6 +71,7 @@ define(function(require, exports, module) {
                 lint: true,
                 value: ""
             });
+
             // htmlEditor.on('keypress', function() { 
             //     htmlEditor.showHint(); //满足自动触发自动联想功能 
             // });
