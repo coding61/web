@@ -26,6 +26,15 @@ define(function(require, exports, module) {
                 Page.language = editModes[a].language;
                 console.log(htmlEditor.getOption("mode"));
 
+                var str = "";
+                if (a == "c") {
+                    str = "C 语言编译器" 
+                }else if (a == "python") {
+                    str = "Python 语言编译器"
+                }
+                $("title").html(str);
+                $(".html-edit .tag").html(str);
+
             }, false); 
         },
         configEdit:function(){

@@ -19,12 +19,27 @@ define(function(require, exports, module) {
             document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
-                // alert(a);
+                alert(a);
 
-                htmlEditor.setOption("mode", editModes[a].mode);
-                htmlEditor.setValue("");
-                Page.language = editModes[a].language;
-                console.log(htmlEditor.getOption("mode"));
+                // Page.init();
+
+                // htmlEditor.setOption("mode", editModes[a].mode);
+                // htmlEditor.setValue("");
+                // Page.language = editModes[a].language;
+                // console.log(htmlEditor.getOption("mode"));
+                
+                // var str = "";
+                // if (a == "c") {
+                //     str = "C 语言编译器" 
+                // }else if (a == "python") {
+                //     str = "Python 语言编译器"
+                // }
+                // var b = document.getElementsByClassName("html-edit")[0]
+                // var c = b.firstElementChild
+                // c.innerText=str
+
+                // $("title").html(str);
+                // $(".html-edit .tag").html(str);
 
             }, false); 
         },
@@ -63,6 +78,7 @@ define(function(require, exports, module) {
                 contentType:"application/json",
                 timeout:6000,
                 success:function(json){
+                    Common.hideLoading();
                     console.log(json);
                     if (json.errors) {
                         $(".compile-result .content").html(json.errors);
@@ -74,7 +90,7 @@ define(function(require, exports, module) {
                     // $(".run-result iframe").attr({src:url});
                 },
                 error:function(xhr, textStatus){
-                
+                    Common.hideLoading();
                     if (textStatus == "timeout") {
                         Common.dialog("请求超时, 请稍后重试");
                         return;
@@ -93,6 +109,11 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             $(".result .run").click(function(){
+                if (htmlEditor.getValue() == "") {
+                    Common.dialog("请输入一些代码，再运行");
+                    return
+                }
+                Common.showLoading();
                 $(".compile-result .content").html("运行结果加载中...");
                 Page.load(htmlEditor.getValue());
             })
