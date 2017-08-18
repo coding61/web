@@ -18,7 +18,7 @@ $(document).ready(function() {
             document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
-                alert(a);
+                // alert(a);
 
                 // htmlEditor.setOption("mode", editModes[a].mode);
                 // htmlEditor.setValue("");
