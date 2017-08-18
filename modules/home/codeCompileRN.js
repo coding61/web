@@ -9,41 +9,7 @@ define(function(require, exports, module) {
         cpp:{mode:{name:"text/x-c++src"}, language:7},
         python:{mode:{name: "text/x-cython", version: 2, singleLineStringErrors: false}, language:0}
     }
-    var signs = [
-        "[",
-        "]",
-        "{",
-        "}",
-        "(",
-        ")",
-        "<",
-        ">",
-        "/",
-        "\\",
-        "'",
-        '"',
-        "-",
-        "_",
-        ":",
-        ";",
-        "$",
-        "#",
-        "%",
-        "^",
-        "@",
-        ".",
-        ",",
-        "?",
-        "!",
-        "*",
-        "+",
-        "=",
-        "|",
-        "~",
-        "¢",
-        "£",
-        "￥"
-    ]
+    
     var Page = {
         language:0,
         init:function(){
@@ -54,7 +20,7 @@ define(function(require, exports, module) {
             document.addEventListener('message', function(e) {  
                 var a = e.data;   
                 console.log(a);
-                alert(a);
+                alert("1");
 
                 // htmlEditor.setOption("mode", editModes[a].mode);
                 // htmlEditor.setValue("");
@@ -74,7 +40,12 @@ define(function(require, exports, module) {
                 // $("title").html(str);
                 // $(".html-edit .tag").html(str);
 
-            }, false); 
+            }); 
+            window.addEventListener('message', function(e){
+                var a = e.data;
+                console.log(a);
+                alert("2");
+            })
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
