@@ -6,8 +6,8 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-tip span{height: 20px; line-height: 20px; padding: 0 5px; background-color: #999; color: #fff; font-size: 12px;}
 .fly-tip .fly-tip-stick{background-color: #393D49;}
 /*为了悼念改颜色*/
-/*.fly-tip .fly-tip-jing{background-color: #c00;}*/
-.fly-tip .fly-tip-jing{background-color: #000000;}
+.fly-tip .fly-tip-jing{background-color: #c00;}
+/*.fly-tip .fly-tip-jing{background-color: #000000;}*/
 .fly-tip .fly-tip-jie{background-color: #8FCDA0;}
 
 /* Ìû×ÓÁÐ±í */
@@ -162,20 +162,20 @@ body .iconfont{-webkit-text-stroke-width: 0;}
     cursor: pointer;
 }
 /*为了悼念改颜色*/
-/*.fly-tip .unsolved {
+.fly-tip .unsolved {
     color: red;
     background-color: #fcfcfc;
     font-size: 13px;
     margin-top: -2px;
     margin-left: 0px;
-}*/
-.fly-tip .unsolved {
+}
+/*.fly-tip .unsolved {
     color: #000000;
     background-color: #fcfcfc;
     font-size: 13px;
     margin-top: -2px;
     margin-left: 0px;
-}
+}*/
 .fly-tip .solved {
     color: #999;
     background-color: #fcfcfc;

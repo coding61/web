@@ -74,12 +74,12 @@
 	float: right;
 }
 /*为了悼念改颜色*/
-/*.post_del {
-  color: #FF69B4;
-}*/
 .post_del {
-  color: #000000;
+  color: #FF69B4;
 }
+/*.post_del {
+  color: #000000;
+}*/
 .postsEssence {
   cursor: pointer;
 }
