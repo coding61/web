@@ -1,9 +1,9 @@
 /*
-    rgb(0,0,0),粉色
+    rgb(0,0,0),粉色rgb(250, 80, 131)
     rgb(0,0,0) 黑色
     小粉变小黑，大粉变大白
-    rgba(0,0,0,1) , 粉色,
-    rgba(0,0,0,1)
+    #ff6b95 , 粉色,#ff6b95
+    #ff6b95
 */
 html{
 	height: 100%;
@@ -15,7 +15,7 @@ body{
 }
 /*顶部状态*/
 .header{
-	background: rgb(0,0,0);
+	background: rgb(250, 80, 131);
 	height: 40px;
 	width: 100%;
 	/*overflow: hidden;*/
@@ -309,11 +309,11 @@ body{
 	justify-content: flex-start;
 }
 .main-view .left-view ul.menu li.readed{
-	color: rgb(0,0,0);
+	color: rgb(250, 80, 131);
 }
 .main-view .left-view ul.menu li.reading{
 	color: white;
-	background-color: rgb(0,0,0);
+	background-color: rgb(250, 80, 131);
 	border-radius: 20px;
 }
 .main-view .left-view ul.menu li.unread{
@@ -554,7 +554,7 @@ body{
     border-radius: 5px 5px 0 5px;
 }
 .main-view .left-view .chat .btn-wx-auth{
-	/*background: rgb(0,0,0);
+	/*background: rgb(250, 80, 131);
 	color: white;
 
 	height: 30px;
@@ -621,11 +621,11 @@ body{
     cursor: pointer;
 }
 .main-view .left-view .btns .actions .option.unselect{
-    color: rgb(0,0,0);
+    color: rgb(250, 80, 131);
     background: white;
 }
 .main-view .left-view .btns .actions .option.select{
-    background: rgb(0,0,0);
+    background: rgb(250, 80, 131);
     color: white;
 }
 .main-view .left-view .btns .actions .btn-wx-auth{
@@ -636,7 +636,7 @@ body{
     border-bottom-right-radius: 0px;
     padding-left: 15px;
     padding-right: 15px;
-    background: rgb(0,0,0);
+    background: rgb(250, 80, 131);
     display: inline-block;
     margin-left: 5px;
     cursor: pointer;
@@ -892,7 +892,7 @@ body{
 }
 .login-view .close{
     width: 35%;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 35px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -986,7 +986,7 @@ body{
 }
 .login-view .account-view .login{
     padding: 5px 16px;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     border-radius: 5px;
     color: white;
     border: solid 1px #e56c95;
@@ -1019,7 +1019,7 @@ body{
     background: #efefef;
 }
 .phone-invite-view .close{
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 35px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -1101,7 +1101,7 @@ body{
 }
 .login-btn .login{
     width: calc(100% - 58px);
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 35px;
     display: flex;
     align-items: center;
@@ -1153,7 +1153,7 @@ body{
 }
 .phone-reg-view .close{
     width: 35%;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 35px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -1220,7 +1220,7 @@ body{
 }
 .verify-code .get-code{
     width: calc((100% - 70px) / 2);
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 40px;
     color: white;
     line-height: 40px;
@@ -1236,7 +1236,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     border-radius: 4px;
     width: calc(80% - 70px);
     color: white;
@@ -1273,7 +1273,7 @@ body{
 }
 .choose-avatar-view .close{
     /*width: 35%;*/
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 35px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -1357,7 +1357,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     border-radius: 4px;
     width: calc(80% - 70px);
     color: white;
@@ -1404,7 +1404,7 @@ body{
 }
 .find-password-view .close{
     width: 35%;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 35px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -1471,7 +1471,7 @@ body{
 }
 .verify-code .get-code{
     width: calc((100% - 70px) / 2);
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 40px;
     color: white;
     line-height: 40px;
@@ -1487,7 +1487,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     border-radius: 4px;
     width: calc(80% - 70px);
     color: white;
@@ -1515,7 +1515,7 @@ body{
 }
 .phone-bind-view .close{
     width: 35%;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 35px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -1582,7 +1582,7 @@ body{
 }
 .verify-code .get-code{
     width: calc((100% - 70px) / 2);
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     height: 40px;
     color: white;
     line-height: 40px;
@@ -1598,7 +1598,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,1);
+    background: #ff6b95;
     border-radius: 4px;
     width: calc(80% - 70px);
     color: white;
