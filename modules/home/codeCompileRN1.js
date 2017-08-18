@@ -19,11 +19,23 @@ $(document).ready(function() {
                 var a = e.data;   
                 console.log(a);
                 // alert(a);
+                htmlEditor.setOption("mode", editModes[a].mode);
+                htmlEditor.setValue("");
+                Page.language = editModes[a].language;
+                console.log(htmlEditor.getOption("mode"));
+                
+                var str = "";
+                if (a == "c") {
+                    str = "C 语言编译器" 
+                }else if (a == "python") {
+                    str = "Python 语言编译器"
+                }
+                var b = document.getElementsByClassName("html-edit")[0]
+                var c = b.firstElementChild
+                c.innerText=str
 
-                // htmlEditor.setOption("mode", editModes[a].mode);
-                // htmlEditor.setValue("");
-                // Page.language = editModes[a].language;
-                // console.log(htmlEditor.getOption("mode"));
+                $("title").html(str);
+                $(".html-edit .tag").html(str);
 
             }, false);
         },
