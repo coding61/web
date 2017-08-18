@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     }
     var Page = {
         lang:Common.getQueryString("lang"),
-        language:editModes[Page.lang].language,
+        language:0,
         init:function(){
             Page.configEdit();
             Page.clickEvent();
@@ -53,6 +53,9 @@ define(function(require, exports, module) {
            
             $("title").html(str);
             $(".html-edit .tag").html(str);
+
+            Page.language = editModes[Common.getQueryString("lang").language];
+            console.log(Page.language);
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
@@ -79,7 +82,9 @@ define(function(require, exports, module) {
             console.log(htmlEditor.getOption("mode"));
         },
         load:function(value){
+
             console.log(value);
+            console.log("语言", Page.language);
             $.ajax({
                 type:"post",
                 url: "/compile/",
