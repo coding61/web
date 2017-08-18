@@ -54,7 +54,7 @@ define(function(require, exports, module) {
             $("title").html(str);
             $(".html-edit .tag").html(str);
 
-            Page.language = editModes[Common.getQueryString("lang").language];
+            Page.language = editModes[Common.getQueryString("lang")].language;
             console.log(Page.language);
         },
         configEdit:function(){
