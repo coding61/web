@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     }
     var Page = {
         lang:Common.getQueryString("lang"),
-        language:0,
+        language:editModes[Page.lang].language,
         init:function(){
             Page.configEdit();
             Page.clickEvent();
