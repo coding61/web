@@ -9,40 +9,39 @@ define(function(require, exports, module) {
         cpp:{mode:{name:"text/x-c++src"}, language:7},
         python:{mode:{name: "text/x-cython", version: 2, singleLineStringErrors: false}, language:0}
     }
-    
-    // 监听RN传过来的语言
-    document.addEventListener('message', function(e) {  
-        var a = e.data;   
-        console.log(a);
-        alert("1");
-
-        // Page.init();
-
-        // htmlEditor.setOption("mode", editModes[a].mode);
-        // htmlEditor.setValue("");
-        // Page.language = editModes[a].language;
-        // console.log(htmlEditor.getOption("mode"));
-        
-        // var str = "";
-        // if (a == "c") {
-        //     str = "C 语言编译器" 
-        // }else if (a == "python") {
-        //     str = "Python 语言编译器"
-        // }
-        // var b = document.getElementsByClassName("html-edit")[0]
-        // var c = b.firstElementChild
-        // c.innerText=str
-
-        // $("title").html(str);
-        // $(".html-edit .tag").html(str);
-
-    }); 
-
     var Page = {
         language:0,
         init:function(){
             Page.configEdit();
             Page.clickEvent();
+
+            // 监听RN传过来的语言
+            document.addEventListener('message', function(e) {  
+                var a = e.data;   
+                console.log(a);
+                alert(a);
+
+                // Page.init();
+
+                // htmlEditor.setOption("mode", editModes[a].mode);
+                // htmlEditor.setValue("");
+                // Page.language = editModes[a].language;
+                // console.log(htmlEditor.getOption("mode"));
+                
+                // var str = "";
+                // if (a == "c") {
+                //     str = "C 语言编译器" 
+                // }else if (a == "python") {
+                //     str = "Python 语言编译器"
+                // }
+                // var b = document.getElementsByClassName("html-edit")[0]
+                // var c = b.firstElementChild
+                // c.innerText=str
+
+                // $("title").html(str);
+                // $(".html-edit .tag").html(str);
+
+            }, false); 
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
