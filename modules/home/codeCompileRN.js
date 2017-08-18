@@ -16,6 +16,8 @@ define(function(require, exports, module) {
         console.log(a);
         alert("1");
 
+        Page.init();
+
         // htmlEditor.setOption("mode", editModes[a].mode);
         // htmlEditor.setValue("");
         // Page.language = editModes[a].language;
@@ -35,7 +37,7 @@ define(function(require, exports, module) {
         // $(".html-edit .tag").html(str);
 
     }); 
-            
+
     var Page = {
         language:0,
         init:function(){
@@ -108,6 +110,10 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             $(".result .run").click(function(){
+                if (htmlEditor.getValue() == "") {
+                    Common.dialog("请输入一些代码，再运行");
+                    return
+                }
                 Common.showLoading();
                 $(".compile-result .content").html("运行结果加载中...");
                 Page.load(htmlEditor.getValue());
@@ -116,6 +122,6 @@ define(function(require, exports, module) {
 
     };
 
-    Page.init();
+    // Page.init();
 
 });
