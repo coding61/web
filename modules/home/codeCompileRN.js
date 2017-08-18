@@ -16,7 +16,7 @@ define(function(require, exports, module) {
         console.log(a);
         alert("1");
 
-        Page.init();
+        // Page.init();
 
         // htmlEditor.setOption("mode", editModes[a].mode);
         // htmlEditor.setValue("");
@@ -122,6 +122,6 @@ define(function(require, exports, module) {
 
     };
 
-    // Page.init();
+    Page.init();
 
 });
