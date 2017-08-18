@@ -8,12 +8,37 @@ $(document).ready(function() {
         cpp:{mode:{name:"text/x-c++src"}, language:7},
         python:{mode:{name: "text/x-cython", version: 2, singleLineStringErrors: false}, language:0}
     }
+    function getQueryString(key){
+        var ls = location.search;
+        //var reg = eval("new RegExp('[a-zA-Z0-9]+=[^&]+&|[a-zA-Z0-9]+=[^&]+$','g')");
+        var reg = eval("new RegExp('[\?&]+(" + key + ")=[^&]+&|[\?&]+(" + key + ")=[^&]+$')");
+        var args = ls.match(reg);
+        if (args) {
+            return args[0].split("=")[1].replace(/&$/, "");
+        } else {
+            console.log(key + "不存在");
+            return null;
+        }
+    }
+
     var Page = {
+        lang:getQueryString("lang"),
         language:0,
         init:function(){
             Page.configEdit();
             Page.clickEvent();
-
+            
+            if (Page.lang) {
+                var str = "";
+                if (Page.lang == "c") {
+                    str = "C 语言编译器" 
+                }else if (Page.lang == "python") {
+                    str = "Python 语言编译器"
+                }
+               
+                $("title").html(str);
+                $(".html-edit .tag").html(str);
+            }
             // 监听父窗口传过来的语言
             document.addEventListener('message', function(e) {  
                 var a = e.data;   
@@ -41,7 +66,7 @@ $(document).ready(function() {
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
-                mode: editModes.python.mode,
+                mode: Page.lang?editModes[Page.lang].mode : editModes.python.mode,
                 lineNumbers: true,
                 lineWrapping: true,
                 indentUnit:4,
