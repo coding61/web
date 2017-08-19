@@ -33,6 +33,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 }
 .main-view .repl{
 	width: 100%;
@@ -45,4 +46,5 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 }

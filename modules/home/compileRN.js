@@ -3,7 +3,7 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js');
 
     var Page = {
-        token:null,
+        lang:Common.getQueryString("lang"),
         init:function(){
             Page.clickEvent();
         },
@@ -12,10 +12,19 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             $(".main-view .repl").click(function(){
-
+                var link = "https://repl.it/languages/" + Page.lang;
+                var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+                params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+                console.log(params);
+                window.open(link, '_blank', params);
             })
             $(".main-view .edit").click(function(){
-                
+                if (location.host == "develop.cxy61.com:8001") {
+                    var link = "http://"+location.host+"/app/home/codeCompileRN.html?lang=" + Page.lang;
+                }else{
+                    var link = "https://" + location.host + "/girl/app/home/codeCompileRN.html?lang=" + Page.lang;
+                }
+                location.href = link;
             })
         }
     };
