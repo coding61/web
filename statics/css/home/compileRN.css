@@ -1,0 +1,48 @@
+html{
+	height: 100%;
+}
+body{
+	width: 100%;
+	height: 100%;
+	background:#f2f1f1;
+
+	font-size: 0.15rem;
+}
+.header{
+	background: #ff6b95;
+	width: 100%;
+	height: 0.50rem;
+	font-size: 0.20rem;
+	color: white;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.main-view{
+	margin: 10% 5%;
+}
+.main-view .edit{
+	width: 100%;
+	height: 0.50rem;
+	border-radius: 0.20rem;
+	background: white;
+	color: #ff6b95;
+	margin-bottom: 10%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.main-view .repl{
+	width: 100%;
+	height: 0.50rem;
+	border-radius: 0.20rem;
+	background: #ff6b95;
+	color: white;
+	margin-bottom: 10%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
