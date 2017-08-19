@@ -38,6 +38,8 @@ $(document).ready(function() {
                
                 $("title").html(str);
                 $(".html-edit .tag").html(str);
+
+                Page.language = editModes[Page.lang].language;
             }
             // 监听父窗口传过来的语言
             document.addEventListener('message', function(e) {  
