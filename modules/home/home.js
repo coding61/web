@@ -2483,7 +2483,7 @@ define(function(require, exports, module) {
                         success:function(json){
                             if (json.status == 0) {
                                 var time = 60;
-                                this.timer = setInterval(()=>{
+                                this.timer = setInterval(function(){
                                     --time;
                                     if (time > 0) {
                                         this_.find(".get-code").html(time+'s后重试');
