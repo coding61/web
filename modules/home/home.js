@@ -1945,6 +1945,7 @@ define(function(require, exports, module) {
         code:"",
         password:"",
         chooseAvatar:"https://static1.bcjiaoyu.com/avatars/1.png",
+        timer:null,
         login:function(){
             if($(".account-view .username input").val() == ""){
                 Common.dialog("请输入账号");
@@ -2483,13 +2484,13 @@ define(function(require, exports, module) {
                         success:function(json){
                             if (json.status == 0) {
                                 var time = 60;
-                                this.timer = setInterval(function(){
+                                Mananger.timer = setInterval(function(){
                                     --time;
                                     if (time > 0) {
                                         this_.find(".get-code").html(time+'s后重试');
                                     }else{
                                         this_.find(".get-code").html("获取验证码");
-                                        clearInterval(this.timer);
+                                        clearInterval(Mananger.timer);
                                     }
                                 },1000);
                                 }else if (json.detail) {
@@ -2556,17 +2557,17 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            // Common.dialog("请求超时");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
                             // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
-                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            // Common.dialog('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
