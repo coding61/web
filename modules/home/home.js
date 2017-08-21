@@ -69,7 +69,11 @@ define(function(require, exports, module) {
                                         </div>\
                                     </div>';
                 }else{
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
+                    var linkType = "";
+                    if (item.linkType) {
+                        linkType = item.linkType
+                    }
+                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
                                         <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                         <div class="msg-view-parent">\
                                             <div class="msg-view">\
@@ -329,7 +333,11 @@ define(function(require, exports, module) {
                                                 </div>\
                                             </div>';
                         }else{
-                            questionHtml = '<div class="message link" data-link="'+item.link+'"> \
+                            var linkType = "";
+                            if (item.linkType) {
+                                linkType = item.linkType
+                            }
+                            questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
                                                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                                 <div class="msg-view-parent">\
                                                     <div class="msg-view">\
@@ -626,7 +634,11 @@ define(function(require, exports, module) {
                                                 </div>\
                                             </div>';
                         }else{
-                            questionHtml = '<div class="message link" data-link="'+item.link+'"> \
+                            var linkType = "";
+                            if (item.linkType) {
+                                linkType = item.linkType
+                            }
+                            questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
                                                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                                 <div class="msg-view-parent">\
                                                     <div class="msg-view">\
@@ -851,7 +863,11 @@ define(function(require, exports, module) {
                                         </div>\
                                     </div>';
                 }else{
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
+                    var linkType = "";
+                    if (item.linkType) {
+                        linkType = item.linkType
+                    }
+                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
                                         <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
                                         <div class="msg-view-parent">\
                                             <div class="msg-view">\
@@ -1122,6 +1138,7 @@ define(function(require, exports, module) {
             
 
             $(".message.link").unbind('click').click(function(){
+                var linkType = $(this).attr("data-link-type");
                 var link = $(this).attr("data-link");
                 if (link == "www.code.com") {
                     Util.openRightIframe("codeEdit");   //打开编辑器
@@ -1136,11 +1153,17 @@ define(function(require, exports, module) {
                     // 打开消息链接窗口
                     // $(".message-link-shadow-view .message-link #message-link-iframe").attr({src:"http://develop.cxy61.com:8001/s/course1/game7/2.html"});
                     // $(".message-link-shadow-view").show();
-
-                    var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
-                    params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
-                    console.log(params);
-                    window.open(link, '_blank', params);
+                    if (linkType) {
+                        //进行编辑器的选择
+                        Util.link = link;
+                        Util.linkType = linkType;
+                        $(".compile-shadow-view").show();
+                    }else{
+                        var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+                        params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+                        console.log(params);
+                        window.open(link, '_blank', params);
+                    }
                 }
             })
 
@@ -1252,8 +1275,45 @@ define(function(require, exports, module) {
                     Common.playMessageSoun2(url);  //播放钻石音效
                 }
             })
-
             
+            // compile-shadow-view 隐藏
+            $(".compile-shadow-view").unbind('click').click(function(){
+                $(".compile-shadow-view").hide();
+            })
+            // reply 编译器
+            $(".compile-view .repl").unbind('click').click(function(){
+                var link = Util.link;
+                var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+                params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+                console.log(params);
+                window.open(link, '_blank', params);
+
+                Util.link = "";
+                Util.linkType = "";
+                $(".compile-shadow-view").hide();
+            })
+
+            // 程序媛编译器
+            $(".compile-view .edit").unbind('click').click(function(){
+                var type = Util.linkType.split("www.compile.com/")[1];
+                if (location.host == "develop.cxy61.com:8001") {
+                    var url = "http://"+location.host+"/app/home/codeCompileRN.html?lang="
+                }else{
+                    var url = "https://"+location.host+"/girl/app/home/codeCompileRN.html?lang="
+                }
+                url = url + type;
+                
+                var link = url;
+                var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+                params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+                console.log(params);
+                window.open(link, '_blank', params);
+
+                Util.link = "";
+                Util.linkType = "";
+                $(".compile-shadow-view").hide();
+            })
+
             Page.clickEventLoginRelated();
         },
         clickEventTotal:function(){
@@ -2423,7 +2483,7 @@ define(function(require, exports, module) {
                         success:function(json){
                             if (json.status == 0) {
                                 var time = 60;
-                                this.timer = setInterval(()=>{
+                                this.timer = setInterval(function(){
                                     --time;
                                     if (time > 0) {
                                         this_.find(".get-code").html(time+'s后重试');
@@ -2740,6 +2800,8 @@ define(function(require, exports, module) {
     }
     // ---------------------4.帮助方法
     var Util = {
+        link:"",
+        linkType:"",
         waitTime:Common.getQueryString("wt")?10:1000,
         messageTime:Common.getQueryString("mt")?20:2000,
         storeData:function(){
