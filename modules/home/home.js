@@ -2491,6 +2491,7 @@ define(function(require, exports, module) {
                                     }else{
                                         this_.find(".get-code").html("获取验证码");
                                         clearInterval(Mananger.timer);
+                                        Mananger.timer = null;
                                     }
                                 },1000);
                                 }else if (json.detail) {
