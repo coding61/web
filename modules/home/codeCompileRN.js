@@ -103,10 +103,10 @@ define(function(require, exports, module) {
                     }else{
                         var str = json.output;
                     }
-                    str = desc.replace(/\r\n/g, "<br/>");
-                    str = desc.replace(/\n/g, "<br/>");
-                    str = desc.replace(/\ /g, "&nbsp"); //替换 空格
-                    str = desc.replace(/\t/g, "&nbsp&nbsp&nbsp&nbsp");
+                    str = str.replace(/\r\n/g, "<br/>");
+                    str = str.replace(/\n/g, "<br/>");
+                    str = str.replace(/\ /g, "&nbsp"); //替换 空格
+                    str = str.replace(/\t/g, "&nbsp&nbsp&nbsp&nbsp");
                     $(".compile-result .content").html(str);
                     // console.log(url);
 
