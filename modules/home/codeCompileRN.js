@@ -97,11 +97,17 @@ define(function(require, exports, module) {
                 success:function(json){
                     Common.hideLoading();
                     console.log(json);
+
                     if (json.errors) {
-                        $(".compile-result .content").html(json.errors);
+                        var str = json.errors;
                     }else{
-                        $(".compile-result .content").html(json.output);
+                        var str = json.output;
                     }
+                    str = desc.replace(/\r\n/g, "<br/>");
+                    str = desc.replace(/\n/g, "<br/>");
+                    str = desc.replace(/\ /g, "&nbsp"); //替换 空格
+                    str = desc.replace(/\t/g, "&nbsp&nbsp&nbsp&nbsp");
+                    $(".compile-result .content").html(str);
                     // console.log(url);
 
                     // $(".run-result iframe").attr({src:url});
