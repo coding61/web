@@ -1982,6 +1982,12 @@ define(function(require, exports, module) {
                         Common.dialog("请求超时");
                         return;
                     }
+                    if (xhr.status == 401) {
+                        //去登录
+                        localStorage.clear();
+                        window.location.reload();
+                        return;
+                    }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
@@ -2041,6 +2047,12 @@ define(function(require, exports, module) {
                         Common.hideLoading();
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -2139,6 +2151,12 @@ define(function(require, exports, module) {
                             Common.dialog("请求超时");
                             return;
                         }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
+                            return;
+                        }
                         if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
@@ -2189,6 +2207,12 @@ define(function(require, exports, module) {
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -2290,6 +2314,12 @@ define(function(require, exports, module) {
                             Common.dialog("请求超时");
                             return;
                         }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
+                            return;
+                        }
                         if (xhr.status == 400 || xhr.status == 403) {
                             // 重复领取，不奖励，接着走消息
                             // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -2364,6 +2394,12 @@ define(function(require, exports, module) {
                             Common.dialog("请求超时");
                             return;
                         }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
+                            return;
+                        }
                         if (xhr.status == 400 || xhr.status == 403) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
@@ -2392,6 +2428,12 @@ define(function(require, exports, module) {
 
                         if (textStatus == "timeout") {
                             // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 404) {
@@ -2438,6 +2480,12 @@ define(function(require, exports, module) {
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 404) {
@@ -2502,6 +2550,7 @@ define(function(require, exports, module) {
                                 Common.dialog("请求超时");
                                 return;
                             }
+
                             if (xhr.status == 404) {
                                 // Common.dialog("您没有团队");
                                 return;
@@ -2560,6 +2609,12 @@ define(function(require, exports, module) {
                             Common.dialog("请求超时");
                             return;
                         }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
+                            return;
+                        }
                         if (xhr.status == 404) {
                             // Common.dialog("您没有团队");
                             return;
@@ -2614,6 +2669,12 @@ define(function(require, exports, module) {
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 404) {
@@ -2671,6 +2732,12 @@ define(function(require, exports, module) {
                             Common.dialog("请求超时,请重试");
                             return;
                         }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
+                            return;
+                        }
                         if (xhr.status == 404) {
                             // Common.dialog("您没有团队");
                             return;
@@ -2720,6 +2787,12 @@ define(function(require, exports, module) {
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 404) {
@@ -2783,6 +2856,12 @@ define(function(require, exports, module) {
                     Common.hideLoading();
                     if (textStatus == "timeout") {
                         Common.dialog("请求超时");
+                        return;
+                    }
+                    if (xhr.status == 401) {
+                        //去登录
+                        localStorage.clear();
+                        window.location.reload();
                         return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
