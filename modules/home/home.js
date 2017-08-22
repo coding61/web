@@ -1470,7 +1470,7 @@ define(function(require, exports, module) {
             })
             $(".phone-invite-view .forgot-psd").unbind('click').click(function(){
                 // 打开找回密码窗口
-                // $(".find-password-shadow-view").show();
+                $(".find-password-shadow-view").show();
             })
 
 
@@ -2465,7 +2465,7 @@ define(function(require, exports, module) {
             }else if (this_.find(".view-tag").html() == "绑定手机") {
                 url = "/userinfo/bind_telephone_request/"
             }else if (this_.find(".view-tag").html() == "找回密码") {
-                url = "";
+                url = "/userinfo/reset_password_request/";
             }
 
             if (this_.find(".get-code").html() == "获取验证码" && reg.test(phone)) {
@@ -2474,9 +2474,6 @@ define(function(require, exports, module) {
                     $.ajax({
                         type:"get",
                         url:Common.domain + url,
-                        headers:{
-                            Authorization:"Token " + token
-                        },
                         data:{
                             telephone:phone
                         },
@@ -2494,9 +2491,11 @@ define(function(require, exports, module) {
                                         Mananger.timer = null;
                                     }
                                 },1000);
-                                }else if (json.detail) {
-                                    Common.dialog(json.detail);
-                                }
+                            }else if (json.detail) {
+                                Common.dialog(json.detail);
+                            }else if (json.message) {
+                                Common.dialog(json.message);
+                            }
                         },
                         error:function(xhr, textStatus){
                             if (textStatus == "timeout") {
@@ -2504,7 +2503,7 @@ define(function(require, exports, module) {
                                 return;
                             }
                             if (xhr.status == 404) {
-                                Common.dialog("您没有团队");
+                                // Common.dialog("您没有团队");
                                 return;
                             }else if (xhr.status == 400 || xhr.status == 403) {
                                 Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
@@ -2704,15 +2703,12 @@ define(function(require, exports, module) {
             
             Common.isLogin(function(token){
                 $.ajax({
-                    type:"post",
-                    url:Common.domain + "/userinfo/bind_telephone/",
+                    type:"put",
+                    url:Common.domain + "/userinfo/reset_password/",
                     data:{
                         telephone:this_.find(".phone").children("input").val(),
                         password:this_.find(".password").children("input").val(),
                         verification_code:this_.find(".verify-code").children("input").val()
-                    },
-                    headers:{
-                        Authorization:"Token " + token
                     },
                     timeout:6000,
                     success:function(json){
@@ -2723,17 +2719,17 @@ define(function(require, exports, module) {
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            // Common.dialog("请求超时");
+                            Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 404) {
                             // Common.dialog("您没有团队");
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
-                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else{
-                            // Common.dialog('服务器繁忙');
+                            Common.dialog('服务器繁忙');
                             return;
                         }
                         console.log(textStatus);
