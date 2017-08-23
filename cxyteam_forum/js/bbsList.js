@@ -114,10 +114,14 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 			if (url == '/forum/posts/') {
 				$.each(result.results,function(i,v){
 					// 替换'<'和'>'
-					v.content = v.content.replace(/</g,'&lt;');
-					v.content = v.content.replace(/>/g,'&gt;');
-					v.title = v.title.replace(/>/g,'&gt;');
-					v.title = v.title.replace(/</g,'&lt;');
+					if (v.content) {
+						v.content = v.content.replace(/</g,'&lt;');
+						v.content = v.content.replace(/>/g,'&gt;');
+					}
+					if (v.title) {
+						v.title = v.title.replace(/>/g,'&gt;');
+						v.title = v.title.replace(/</g,'&lt;');
+					}
 					var name='';
 					if(v.userinfo.name){
 						name=v.userinfo.name;
@@ -143,8 +147,10 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 							html+='<span class="fly-tip-jing">精帖</span> '
 						}          
 					    html +='</h2><p>'
-					    +'<span class="v_content">'+v.content+'</span>'
-						+'<span>'+name+'</span>'
+					    if (v.content) {
+					    	html+='<span class="v_content">'+v.content+'</span>'
+					    }
+						html+='<span>'+name+'</span>'
 						if (v.last_replied) {
 							html+='<span class="liveTime"  title="'+dealWithTime(v.create_time)+'">'+dealWithTime(v.last_replied)+'</span>'
 						} else {
@@ -160,10 +166,14 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 			else if (url == '/collect/collections/') {
 				$.each(result.results,function(i,v){
 					// 替换'<'和'>'
-					v.posts.content = v.posts.content.replace(/</g,'&lt;');
-					v.posts.content = v.posts.content.replace(/>/g,'&gt;');
-					v.posts.title = v.posts.title.replace(/>/g,'&gt;');
-					v.posts.title = v.posts.title.replace(/</g,'&lt;');
+					if (v.posts.content) {
+						v.posts.content = v.posts.content.replace(/</g,'&lt;');
+						v.posts.content = v.posts.content.replace(/>/g,'&gt;');
+					}
+					if (v.posts.title) {
+						v.posts.title = v.posts.title.replace(/>/g,'&gt;');
+						v.posts.title = v.posts.title.replace(/</g,'&lt;');
+					}
 					var name='';
 					if(v.posts.userinfo.name){
 						name=v.posts.userinfo.name;
@@ -182,8 +192,11 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 							html+='<span class="fly-tip-jing">精帖</span> '
 						}          
 					    html +='</h2><p>'
-					    +'<span class="v_content">'+v.posts.content+'</span>'
-						+'<span>'+name+'</span>'
+					    if (v.posts.content) {
+					    	html+='<span class="v_content">'+v.posts.content+'</span>'
+					    }
+				
+						html+='<span>'+name+'</span>'
 						+'<span class="liveTime"  title="'+dealWithTime(v.posts.create_time)+'">'+dealWithTime(v.posts.create_time)+'</span>'
 						
 						+'<span class="fly-list-hint">'             
