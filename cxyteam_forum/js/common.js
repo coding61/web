@@ -82,6 +82,13 @@ function myAjax2(url,type,data,success,async){
         }
   });
 }
+	// 统计页面浏览量
+	var _hmt = _hmt || [];
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?0e1f2afd2def9daf664e5504d146965a";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+
 function dealWithAvatar(url){
 	if(url!=null&&url.indexOf("*")>0){
 		url=url.substring(0,url.indexOf("*"));
