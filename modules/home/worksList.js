@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 	var Page = {
 		init: function(){
 			// 当前浏览器
-            if(Common.platform.isMobile){
+            if(Common.platform.isMobile && !Common.platform.iPad){
                 alert("请使用电脑打开");
                 return;
             }else if(!Common.platform.webKit){
