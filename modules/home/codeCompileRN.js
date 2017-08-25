@@ -75,6 +75,10 @@ define(function(require, exports, module) {
                 value: ""
             });
 
+            htmlEditor.on('keypress', function() { 
+                htmlEditor.showHint(); //满足自动触发自动联想功能 
+            });
+
             if (Page.lang == "python") {
                 htmlEditor.setValue("#!encoding: utf-8");
             }
