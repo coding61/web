@@ -59,7 +59,7 @@ define(function(require, exports, module) {
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
-                mode: editModes[Page.lang].mode.name,
+                mode: editModes[Page.lang].mode,
                 lineNumbers: true,
                 lineWrapping: true,
                 indentUnit:4,
@@ -73,10 +73,6 @@ define(function(require, exports, module) {
                 gutters: ["CodeMirror-lint-markers"],
                 lint: true,
                 value: ""
-            });
-
-            htmlEditor.on('keypress', function() { 
-                htmlEditor.showHint(); //满足自动触发自动联想功能 
             });
 
             if (Page.lang == "python") {
