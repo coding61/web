@@ -59,7 +59,7 @@ define(function(require, exports, module) {
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
-                mode: editModes[Page.lang].mode,
+                mode: editModes[Page.lang].mode.name,
                 lineNumbers: true,
                 lineWrapping: true,
                 indentUnit:4,
