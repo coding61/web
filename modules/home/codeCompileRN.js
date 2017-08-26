@@ -74,6 +74,7 @@ define(function(require, exports, module) {
                 lint: true,
                 inputStyle:"textarea",
                 cursorBlinkRate:0,
+                cursorHeight:1,
                 value: ""
             });
 
