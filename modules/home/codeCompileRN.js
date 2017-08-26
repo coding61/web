@@ -72,6 +72,7 @@ define(function(require, exports, module) {
                 // gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 gutters: ["CodeMirror-lint-markers"],
                 lint: true,
+                inputStyle:"textarea",
                 value: ""
             });
 
