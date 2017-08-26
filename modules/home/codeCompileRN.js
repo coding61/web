@@ -73,7 +73,7 @@ define(function(require, exports, module) {
                 gutters: ["CodeMirror-lint-markers"],
                 lint: true,
                 inputStyle:"textarea",
-                cursorBlinkRate:0,
+                cursorBlinkRate:-10,
                 cursorHeight:1,
                 value: ""
             });
