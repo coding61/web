@@ -735,11 +735,20 @@ body{
 .main-view .right-view img{
 	width: 100px;
 }
+.main-view .right-view .iframe-scroll{
+    width: 100%;
+    height: 100%;
+
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    display: none;  
+}
 .main-view .right-view iframe{
 	width: 100%;
 	height: 100%;
-	display: none;
+	/*display: none;*/
 }
+
 /*钻石效果*/
 .zuan-shadow-view,
 .up-grade-shadow-view
@@ -861,14 +870,28 @@ body{
     height: 15px;
     top: 10px;
 }
-.code-result-shadow-view .code-result iframe,
-.message-link-shadow-view .message-link iframe{
+.code-result-shadow-view .code-result .iframe-scroll,
+.message-link-shadow-view .message-link .iframe-scroll{
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;  
+
     width: 70%;
     height: 80%;
     background: white;
 }
-.message-link-shadow-view .message-link iframe{
+.message-link-shadow-view .message-link .iframe-scroll{
     width: 80%;
+}
+.code-result-shadow-view .code-result iframe,
+.message-link-shadow-view .message-link iframe{
+    /*width: 70%;
+    height: 80%;
+    background: white;*/
+    width: 100%;
+    height: 100%;
+}
+.message-link-shadow-view .message-link iframe{
+    /*width: 80%;*/
 }
 /***************************************I.以前的登录(废弃)*/
 .login-shadow-view{
