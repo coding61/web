@@ -58,6 +58,7 @@ define(function(require, exports, module) {
             console.log(Page.language);
         },
         configEdit:function(){
+            $("#html-code").attr({readonly:'readonly'})
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
                 mode: editModes[Page.lang].mode,
                 lineNumbers: true,
@@ -73,7 +74,6 @@ define(function(require, exports, module) {
                 gutters: ["CodeMirror-lint-markers"],
                 lint: true,
                 inputStyle:"textarea",
-                readOnly:'nocursor',
                 value: ""
             });
 
