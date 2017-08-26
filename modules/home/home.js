@@ -762,7 +762,7 @@ define(function(require, exports, module) {
                 if(a == "currentCourse"){
                     Util.courseProgressUI();   //更新课程进度
 
-                    $(".right-view iframe").hide();
+                    $(".right-view .iframe-scroll").hide();
                     $(".right-view>img").show();
                     if(localStorage.currentCourse == localStorage.oldCourse){
                         // 回到原来的课程继续
@@ -797,14 +797,14 @@ define(function(require, exports, module) {
                 }else if(a == "resetcurrentCourse"){
                     // 学完重学的时候
                     Util.courseProgressUI();   //更新课程进度
-                    $(".right-view iframe").hide();
+                    $(".right-view .iframe-scroll").hide();
                     $(".right-view>img").show();
                     $(".actions").html('<span class="btn-wx-auth restart bottom-animation">重新学习</span>');
                     Page.clickEvent();    //重新激活 action 点击事件
                 }else if(a == "loadCourses"){
 
                 }else if(a == "closeCodeEdit"){
-                    $(".right-view iframe").hide();
+                    $(".right-view .iframe-scroll").hide();
                     $(".right-view>img").show();
                 }else{
                     // 打开运行结果窗口，并赋值
@@ -3166,24 +3166,24 @@ define(function(require, exports, module) {
         openRightIframe:function(tag){
             if (tag == "img") {
                 $(".right-view>img").show();
-                $(".right-view iframe.courseList").hide();
-                $(".right-view iframe.codeEdit").hide();
-                $(".right-view iframe.codeCompile").hide();
+                $(".right-view .iframe-scroll.courseList").hide();
+                $(".right-view .iframe-scroll.codeEdit").hide();
+                $(".right-view .iframe-scroll.codeCompile").hide();
             }else if (tag == "courseList") {
                 $(".right-view>img").hide();
-                $(".right-view iframe.courseList").show();
-                $(".right-view iframe.codeEdit").hide();
-                $(".right-view iframe.codeCompile").hide();
+                $(".right-view .iframe-scroll.courseList").show();
+                $(".right-view .iframe-scroll.codeEdit").hide();
+                $(".right-view .iframe-scroll.codeCompile").hide();
             }else if (tag == "codeEdit") {
                 $(".right-view>img").hide();
-                $(".right-view iframe.courseList").hide();
-                $(".right-view iframe.codeEdit").show();
-                $(".right-view iframe.codeCompile").hide();
+                $(".right-view .iframe-scroll.courseList").hide();
+                $(".right-view .iframe-scroll.codeEdit").show();
+                $(".right-view .iframe-scroll.codeCompile").hide();
             }else if (tag == "codeCompile") {
                 $(".right-view>img").hide();
-                $(".right-view iframe.courseList").hide();
-                $(".right-view iframe.codeEdit").hide();
-                $(".right-view iframe.codeCompile").show();
+                $(".right-view .iframe-scroll.courseList").hide();
+                $(".right-view .iframe-scroll.codeEdit").hide();
+                $(".right-view .iframe-scroll.codeCompile").show();
             }
         }
     }
