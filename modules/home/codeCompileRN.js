@@ -58,7 +58,6 @@ define(function(require, exports, module) {
             console.log(Page.language);
         },
         configEdit:function(){
-            $("#html-code").attr({disabled:'disabled'})
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
                 mode: editModes[Page.lang].mode,
                 lineNumbers: true,
