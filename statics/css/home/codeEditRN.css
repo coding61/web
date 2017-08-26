@@ -146,6 +146,7 @@ body{
     flex-direction: column;
     background-color: red;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;  
 }
 .code-result-shadow-view .code-result .close{
     height: 35px;
@@ -170,6 +171,7 @@ body{
     background: white;
     width: 100%;
     height: calc(100% - 35px);
+    overflow: auto;
 }
 .punctuation-shadow-view{
     position: fixed;
