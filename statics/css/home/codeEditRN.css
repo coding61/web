@@ -145,6 +145,7 @@ body{
     height: 100%;
     flex-direction: column;
     background-color: red;
+    overflow: auto;
 }
 .code-result-shadow-view .code-result .close{
     height: 35px;
