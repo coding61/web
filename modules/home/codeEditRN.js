@@ -138,6 +138,7 @@ define(function(require, exports, module) {
                 // gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 gutters: ["CodeMirror-lint-markers"],
                 lint: true,
+                inputStyle:"textarea",
                 value: ""
             });
             htmlEditor.on('keypress', function() { 
@@ -312,12 +313,16 @@ define(function(require, exports, module) {
             var btnW = $(".insert-pun").width();
             var btnL = $(".insert-pun").offset().left;
             var pvW = $(".punctuation-view").width();
+            var pvH = $(".punctuation-view").height();
             
             var left = btnL-(pvW-btnW)/2
             left = ($(window).width() - pvW)/2
 
+            var top = ($(window).height() - pvH) / 2
+
             $(".punctuation-view").css({
-                left:left+ "px"
+                left:left+ "px",
+                top:top + "px"
             })
         }
 
