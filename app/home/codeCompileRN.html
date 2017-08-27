@@ -49,7 +49,7 @@
 
 
 	    <style type="text/css">
-		    .CodeMirror {height: calc(100% - 31px);}
+		    .CodeMirror {height: calc(100% - 41px);}
 			.CodeMirror-cursors .CodeMirror-cursor{
 		    	border-left: 2px solid rgb(0, 92,254);
 		    }
@@ -60,12 +60,25 @@
 	<body>
 		<div class="edits">
 			<div class="html-edit">
-				<span class="tag">在线编译器</span>
+				<div class="header-tag">
+					<span class="tag">在线编译器</span>
+					<span class="insert-pun">插入标点符号</span>
+				</div>
+				
 				<textarea class="edit" id="html-code"></textarea>
 			</div>
 			<div class="compile-result">
 				<span class="tag">运行结果</span>
 				<span class="content"></span>
+			</div>
+		</div>
+		<!-- 标点符号 -->
+		<div class="punctuation-view">
+			<div class="close">
+				<img src="../../statics/images/close.png">
+			</div>
+			<div class="punctuations">
+				
 			</div>
 		</div>
 		
