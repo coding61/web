@@ -1409,8 +1409,15 @@ define(function(require, exports, module) {
             // 退出登录
             $(".quit").unbind('click').click(function(){
                 Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
+
+                    var CourseMessageData = localStorage.CourseMessageData?localStorage.CourseMessageData:"";
+                    
                     localStorage.clear();
                     window.location.reload();
+
+                    if (CourseMessageData) {
+                        localStorage.CourseMessageData = JSON.stringify(array);
+                    }
                 })
             })
             
