@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<!-- <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" /> -->
+		<title>程序媛计划</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/editCourse.css" />
+	</head>
+
+	<body>
+	<!-- 头部信息 -->
+		<div class="header">
+			<div class="left-view">
+				<img class="logo1" style="height: 30px;" src="../../statics/images/logo2.png" />
+				<div class="right-line"></div>
+				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
+			</div>
+		
+		</div>
+
+		<div class="main-view">
+			<div class="left-view">
+				<!-- 会话区 -->
+				<div class="chat">
+					<!-- 消息区 -->
+					<div class="messages">
+						
+					</div>
+					<!-- 按钮区 -->
+					<div class="btns">
+						<div class="actions" style="display: none;">
+					
+						</div>
+						<div class="add" style="display: flex;justify-content: space-between;margin: 0 5px 5px;">
+							<img class="left-add" src="../../statics/images/editCourse/add1.png" alt="" style="width: 40px;height: 40px;margin-top: 30px;">
+							<input type="button" id="export" value="导出" style="display: none;" />
+							<img class="right-add" src="../../statics/images/editCourse/add1.png" alt="" style="width: 40px;height: 40px;margin-top: 30px;">
+						</div>
+					</div>
+					
+					<!-- 类型选择 -->
+					<ul class="message-types">
+						<li class="photo-msg" data-tag="photo">图片</li>
+						<li class="text-msg" data-tag="text">文本</li>
+						<li class="link-text-msg" data-tag="link-text">链接文本</li>
+					</ul>
+
+					<!-- 不同类型消息的输入 -->
+					<div class="message-input-view">
+						<div class="msg-header">
+							<span class="type">文本</span>
+							<img src="../../statics/images/close.png" style="cursor: pointer;">
+						</div>
+						<div class="input-view">
+							<input type="text" placeholder="链接文本的链接地址" />
+							<div id="upload-container">
+								<span id="uploadImg">上传图片</span>
+							</div>
+							<textarea placeholder="文本消息的内容"></textarea>
+							<span class="input-submit">确认</span>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<!-- 练习区 -->
+			<div class="right-view">
+				<img src="../../statics/images/icon.png" alt="">
+			</div>
+		</div>
+		
+		<!-- 寻找帮助 -->
+		<div class="find-help-shadow-view">
+			<div class="find-help-view">
+				<span>如需帮助，请使用学习论坛进行发帖，会有专人帮您解答。</span>
+			</div>
+		</div>
+		<!-- 钻石效果 -->
+        <div class="zuan-shadow-view">
+      		<div class="img">
+      			<img src="../../statics/images/zuan2.gif">
+      		</div>
+        </div>
+
+        <!-- 升级效果 -->
+        <div class="up-grade-shadow-view">
+        	<div class="img">
+        		<img src="../../statics/images/growup.gif" alt="">
+        	</div>
+        </div>
+		
+		<!-- 图片放大效果 -->
+        <div class="imgmsg-shadow-view">
+        	<div class="imgmsg">
+        		<div class="imgdiv">
+		        	<img src="" alt="" />
+        		</div>
+        	</div>
+        </div>
+		
+		<!-- 代码运行之后弹出的新窗口 -->
+		<div class="code-result-shadow-view">
+			<div class="code-result">
+				<div class="close">
+					<img src="../../statics/images/close.png">
+				</div>
+				<iframe src="" frameborder="0"></iframe>
+			</div>
+		</div>
+
+		<!-- 打开消息中带链接地址的窗口 -->
+		<div class="message-link-shadow-view">
+			<div class="message-link">
+				<div class="close">
+					<img src="../../statics/images/close.png">
+				</div>
+				<iframe id="message-link-iframe" src="" frameborder="0"></iframe>
+			</div>
+		</div>
+
+		<!-- 登录窗口 -->
+		<div class="login-shadow-view">
+			<div class="login-view">
+				<div style="font-size: 30px;margin-bottom: 25px;color: white; display: none;">邀请码、密码请到战队中查询</div>
+				<div class="close">
+					<img style="display: none;" src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="login-info">
+					<div class="login-info-view">
+						<div class="info"><span>邀请码请到微信公众号领取</span></div>
+						<div class="wx-code">
+							<img src="../../statics/images/code.png">
+						</div>
+					</div>
+					
+				</div>
+				<div class="account-view">
+					<div class="username">
+						<span>邀请码</span>
+						<input placeholder="邀请码" />
+					</div>
+					<div class="password">
+						<span>密码</span>
+						<input type="password" placeholder="密码" />
+					</div>
+					<span class="login">确定</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- 手机号/邀请码登录 -->
+		<div class="phone-invite-shadow-view">
+			<div class="phone-invite-view">
+				<div class="close ui-login-view">
+					<img style="display: none;" src="../../statics/images/close-w.png"/>
+				</div>
+
+				<div class="tabs ui-login-view">
+					<div class="tab unselect phone">手机号登录</div>
+					<div class="tab select invite">邀请码登录</div>
+				</div>
+				<!-- 手机登录 -->
+				<div class="account-view ui-login-view phone-account-view" data-tag="phone">
+					<div class="username ui-login-input-view">
+						<input class="ui-login-input" placeholder="请输入手机号" />
+					</div>
+					<div class="password ui-login-input-view">
+						<input class="ui-login-input" type="password" placeholder="请输入密码" />
+					</div>
+					<div class="tips">
+						<span>已有邀请码的用户，可以直接登陆，需要绑定手机请在问号里选择绑定</span>
+					</div>
+					<div class="login-btn">
+						<span class="login">登录</span>
+					</div>
+					
+					<div class="login-footer">
+						<span class="go-reg">立即注册</span>
+						<span class="login-footer-line">|</span>
+						<span class="forgot-psd">忘记密码</span>
+					</div>
+				</div>
+				<!-- 邀请码登录 -->
+				<div class="account-view ui-login-view invite-account-view" data-tag="invite">
+					<div class="username ui-login-input-view">
+						<input class="ui-login-input" placeholder="请输入邀请码" />
+					</div>
+					<div class="password ui-login-input-view">
+						<input class="ui-login-input" type="password" placeholder="请输入密码" />
+					</div>
+					<div class="login-btn">
+						<span class="login">登录</span>
+					</div>
+					
+				</div>
+
+			</div>
+		</div>
+		<!-- 手机注册 -->
+		<div class="phone-reg-shadow-view">
+			<div class="phone-reg-view">
+				<div class="close">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+				
+					<div class="phone-reg-account-view">
+						<div class="view-tag">注册</div>
+						<div class="phone">
+							<input placeholder=" 请输入手机号" />
+						</div>
+						<div class="verify-code">
+							<input type="text" placeholder="请输入验证码" />
+							<span class="get-code">获取验证码</span>
+						</div>
+						<div class="password">
+							<input type="password" placeholder="请输入密码" />
+						</div>
+						<div class="reg-next-btn">
+							<span class="reg-next">下一步</span>
+						</div>
+					</div>
+			</div>
+		</div>
+		<!-- 选择头像 -->
+		<div class="choose-avatar-shadow-view">
+			<div class="choose-avatar-view">
+				<div class="choose-avatar-view-s">
+					<div class="close ui-choose-avatar-view">
+						<img src="../../statics/images/close-w.png"/>
+					</div>
+					<div class="choose-avatar-account-view ui-choose-avatar-view">
+						<div class="view-tag">注册</div>
+						<div class="choose-avatar">
+							<span class="text">选择头像</span>
+							<img src="https://static1.bcjiaoyu.com/avatars/1.png">
+						</div>
+						<div class="nickname">
+							<input placeholder="请输入昵称" />
+						</div>
+						
+						<div class="reg-btn">
+							<span class="reg">完成</span>
+						</div>
+					</div>
+				
+					<div class="avatars-view">
+						<div class="avatars">
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/1.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/2.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/3.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/4.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/5.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/6.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/7.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/8.png">
+							</div>
+						</div>
+						<div class="submit-avatar">确定</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 找回密码 -->
+		<div class="find-password-shadow-view">
+			<div class="find-password-view">
+				<div class="close">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="find-password-account-view">
+					<div class="view-tag">找回密码</div>
+					<div class="phone">
+						<input placeholder=" 请输入手机号" />
+					</div>
+					<div class="verify-code">
+						<input type="text" placeholder="请输入验证码" />
+						<span class="get-code">获取验证码</span>
+					</div>
+					<div class="password">
+						<input type="password" placeholder="请输入新密码" />
+					</div>
+					<div class="reset-psd-btn">
+						<span class="reset-psd">确认修改密码</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 绑定手机 -->
+		<div class="phone-bind-shadow-view">
+			<div class="phone-bind-view">
+				<div class="close">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+
+				<div class="phone-bind-account-view">
+					<div class="view-tag">绑定手机</div>
+					<div class="phone">
+						<input placeholder=" 请输入手机号" />
+					</div>
+					<div class="verify-code">
+						<input type="text" placeholder="请输入验证码" />
+						<span class="get-code">获取验证码</span>
+					</div>
+					<div class="password">
+						<input type="password" placeholder="请设置密码" />
+					</div>
+					<div class="bind-btn">
+						<span class="bind">立即绑定</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 第一种（带链接的题<文字+图片>） -->
+		<script type="text/html" id="message-link-problem-template">
+			<div class="message link{{if item.animate}} left-animation{{/if}}" data-link="{{item.link}}"> 
+                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+                <div class="msg-view-parent">
+                    <div class="msg-view">
+                        <div class="link-text"> 
+                        	<div class="link-content-imgs">
+                        		{{if item.message}}
+	                        		<span class="link-content">{{item.message}}<br/></span>
+	                        	{{/if}}
+	                        	{{if item.imgs && item.imgs.length}}
+                     			<div class="link-imgs">
+                     				{{each item.imgs}}
+                     				<img src="{{$value}}" alt="">
+                     				{{/each}}
+                     			</div>
+                     			{{/if}}
+                        	</div>
+                 
+                            <span style="color: rgb(84, 180,225);">www.code.com</span>
+                        </div>
+                        <img class="arrow" src="../../statics/images/arrow.png" alt="">
+                    </div>
+                </div>
+            </div>
+		</script>
+		
+		<!-- 第二种（选择题<题目：文字+图片，选项：文字+图片>） -->
+		<script type="text/html" id="message-choice-problem-template">
+			<div class="message text{{if item.animate}} left-animation{{/if}}"> 
+                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+                <div class="msg-view-parent">
+                    <div class="msg-view">
+                    	<div class="problem-options">
+                    		<!-- 选择题的题目 -->
+                    		<div class="problem-content-imgs">
+                    			{{if item.message}}
+	                        		<span class="problem-content">{{item.message}}</span> 
+                        		{{/if}}
+                        		{{if item.imgs && item.imgs.length}}
+                        		<div class="problem-imgs">
+                        			{{each item.imgs}}
+                        			<img src="{{$value}}" alt="">
+                        			{{/each}}
+                        		</div>
+                        		{{/if}}
+                        	</div>
+			
+                        	<!-- 选择题下面的4个选项 -->
+                        	<div class="options">
+                        		{{each item.options}}
+                        		<div class="option">
+                            		<span class="order-letter">{{$value.content}}</span>
+                            		<div class="option-content-imgs">
+                            			{{if $value.message}}
+	                            			<span class="option-content">{{$value.message}}</span> 
+                            			{{/if}}
+                            			{{if $value.imgs && $value.imgs.length}}
+	                                		<div class="option-imgs">
+	                                			{{each $value.imgs}}
+		                             				<img src="{{$value}}" alt="">
+	                                			{{/each}}
+	                                		</div>
+	                                	{{/if}}
+                            		</div>
+                        		</div>
+                        		{{/each}}
+                        	</div>
+                    	</div>
+              
+                    </div>
+                </div>
+            </div>
+		</script>
+
+		<!-- 第三种（纯文本消息） -->
+		<script type="text/html" id="message-text-template">
+			<div class="message text" data-index="{{index}}"> 
+                <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" />
+                <div class="msg-view-parent">
+                    <div class="msg-view">
+                        <span class="content">{{item.message}}</span> 
+                    </div>
+                </div>
+            </div>
+		</script>
+
+		<!-- 第四种(纯图片消息) -->
+		<script type="text/html" id="message-img-template">
+			<div class="message img" data-index="{{index}}">
+	            <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" />
+	            <div class="msg-view-parent">
+	                <div class="msg-view">
+	                    <img class="msg"src="{{item.img}}">
+	                </div>
+	            </div>
+	        </div>
+		</script>
+
+		<!-- 第五种(链接消息) -->
+		<script type="text/html" id="message-link-template">
+			<div class="message link" data-link="{{item.link}}" data-index="{{index}}"> 
+				<img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" />
+				<div class="msg-view-parent">
+					<div class="msg-view">
+						<div class="link-text"> 
+							<span class="link-content">{{item.message}}<br/></span>
+							<span style="color: rgb(84, 180,225);">{{item.link}}</span>
+						</div>
+						<img class="arrow" src="../../statics/images/arrow.png" alt="">
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<!-- 第六种（用户回复） -->
+		<script type="text/html" id="answer-text-template">
+			<div class="answer" data-index="{{index}}">
+                <div class="msg-view">
+                    <span class="content">{{item.action}}</span>
+                </div>
+                <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" />
+            </div>
+		</script>
+		
+        
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<!-- <script type="text/javascript" src="../../libs/upload/plupload/moxie.js"></script> -->
+	<!-- <script type="text/javascript" src="../../libs/upload/plupload/moxie.min.js"></script> -->
+	<!-- <script type="text/javascript" src="../../libs/upload/plupload/plupload.dev.js"></script> -->
+	<script type="text/javascript" src="../../libs/upload/plupload/plupload.full.min.js"></script>
+	<!-- <script type="text/javascript" src="../../libs/upload/qiniu/qiniu.js"></script> -->
+	<script type="text/javascript" src="../../libs/upload/qiniu/qiniu.min.js"></script>
+	<script type="text/javascript" src="../../libs/files/FileSaver.js"></script>
+
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/editCourse.js?v=2.7");
+	</script>
+
+</html>
+
