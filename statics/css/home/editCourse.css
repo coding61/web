@@ -1,0 +1,2023 @@
+html{
+	height: 100%;
+}
+body{
+	width: 100%;
+	height: 100%;
+	background:white;
+}
+/*顶部状态*/
+.header{
+	background: rgb(250, 80, 131);
+	height: 40px;
+	width: 100%;
+	/*overflow: hidden;*/
+	font-size: 12px;
+	color: white;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+
+    height: 50px;
+    font-size: 15px;
+
+    padding: 0 2%;
+    width: 96%;
+
+}
+.header .center-view{
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 20px;
+    margin-left: 4%;
+
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.header .left-view{
+	display: flex;
+	flex: 1;
+
+    /*height: 30px;*/
+}
+.header .left-view .right-line{
+    border-right: solid 1px white;
+    height: 24px;
+    /* margin-top: 15px; */
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-flex;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.header .left-view .logo2{
+    cursor: pointer;
+}
+.header .left-view>span{
+	padding: 5px 10px;
+	background-color: rgba(0,0,0,0.4);
+	border-radius: 20px;
+	margin-left: 30%;
+
+    display: inline-flex;
+    align-items: center;
+}
+.header .left-view .msg img{
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    padding-right: 5px;
+}
+.header .right-view{
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+
+    /*height: 30px;*/
+    align-items: center;
+
+    justify-content: flex-end;
+
+    position: relative;
+}
+.header .right-view>span{
+	padding: 5px 10px;
+	background-color: rgba(0,0,0,0.4);
+	border-radius: 20px;
+	margin-right: 10%;
+
+    display: inline-flex;
+    align-items: center;
+}
+.header .right-view .luntan{
+    cursor: pointer;
+}
+.header .right-view .msg img{
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    padding-right: 5px;
+}
+.header .right-view .icon1,
+.header .right-view .icon2,
+.header .right-view .icon3,
+.header .right-view .icon4{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-right: 6%
+}
+
+.header .right-view .icon1>img,
+.header .right-view .icon2>img,
+.header .right-view .icon3>img{
+	height: 15px;
+	margin-right: 5px;
+
+    height: 20px;
+}
+.header .right-view .icon4>img{
+    height: 20px;
+    width: 20px;
+
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+
+.header .right-view .avatar{
+   margin-right: 2%;
+}
+.header .right-view .zuan.icon3{
+    margin-left: 5%;
+}
+.header .right-view .zuan.icon3>img{
+    margin-right: 2px;
+}
+.header .right-view .info-view{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.header .right-view .info-view .info{
+    margin-bottom: 2%;
+}
+.header .right-view .info-view .info .grade{
+    margin-right: 15px;
+    margin-right: 5%;
+}
+.header .right-view .progress{
+    background: white;
+    height: 7px;
+    position: relative;
+}
+.header .right-view .progress img{
+    position: absolute;
+    left: 0; 
+    top: 0; 
+    width: 58.5%;
+    height: 100%;
+}
+.header .right-view .quit{
+    /*margin-right: 5%;*/
+    cursor: pointer;
+}
+.header .item{
+    display: none;
+}
+/*团队成员等级*/
+.team-info{
+    position: absolute;
+    z-index: 100000;
+    background: rgb(229, 230, 231);
+    top: 50px;
+    color: #1a1a1a;
+    /*padding: 0 15px;*/
+    border: solid 1px #d2d2d2;
+    border-radius: 5px;
+    line-height: 30px;
+    left: 61%;
+    font-size: 13px;
+    /*display: none;*/
+    top: 38px;
+    display: none;
+}
+.team-info .team{
+    background: white;
+    padding: 0 15px;
+    margin-bottom: 4px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    /*border: solid 1px #d2d2d2;*/
+}
+.team-info .teams-brand{
+    padding: 0 15px;
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    /*border: solid 1px #d2d2d2;*/
+}
+.team .member{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #696969;
+    font-size: 12px;
+}
+.team .member .member-name{
+    display: flex;
+    align-items: center;
+}
+.team .member-name img.avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.team .member span.name {
+    width: 145px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.team .arrow{
+    position: absolute;
+    height: 9px;
+    top: -9px;
+    left: 50%;
+}
+.team-brand{
+    display: flex;
+    /*justify-content: space-between;*/
+    align-items: center;
+}
+.team-brand .name{
+    width: 145px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 30px;
+}
+.team-brand .zn{
+    display: inline-flex;
+    align-items: center;
+}
+.team-brand .zn .zuan{
+    margin-right: 2px;
+    width: 12px;
+}
+/*主要界面*/
+.main-view{
+	display: flex;
+	flex-direction: row;
+
+	margin:1% 2%;
+	height: 100%;
+    height: calc(96% - 50px);
+    height: calc(96% - 50px - 30px);
+	/*background-color: red;*/
+}
+.main-view .left-view{
+	width: 40%;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	/*background-color: blue;*/
+
+    width: 35%;
+    height: 100%;
+}
+.main-view .left-view ul.menu{
+	width: 30%;
+	height: 100%;
+	background-color: rgb(229, 230, 231);
+	border: solid 1px rgb(205, 206, 207);
+	border-radius: 5px;
+
+	overflow: auto;
+    display: none;
+}
+.main-view .left-view ul.menu li.kn{
+	width: 60%;
+	/*height: 40px;*/
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+.main-view .left-view ul.menu li.readed{
+	color: rgb(250, 80, 131);
+}
+.main-view .left-view ul.menu li.reading{
+	color: white;
+	background-color: rgb(250, 80, 131);
+	border-radius: 20px;
+}
+.main-view .left-view ul.menu li.unread{
+	color: rgb(135,136,137);
+}
+.main-view .left-view ul.menu li img{
+	margin-right: 10px;
+	width: 15px;
+}
+
+.main-view ul.courseProgress{
+    width: 10%;
+    height: 100%;
+    /*background-color: rgb(229, 230, 231);
+    border: solid 1px rgb(205, 206, 207);
+    border-radius: 5px;*/
+    overflow: auto;
+    display: none;
+
+    width: 8%;
+}
+.main-view ul.courseProgress .courseProgressView{
+    position: relative;
+    height: 100%;
+}
+.main-view ul.courseProgress li.cp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+
+    z-index: 13;
+    position: relative;
+
+    height: 30px;
+}
+.main-view ul.courseProgress li.cp img{
+    width: 12px;
+    height: 12px;
+}
+.main-view ul.courseProgress .studyp{
+    position: absolute;
+    top: 25px;
+    height: 0px;
+    width: 2px;
+    z-index: 12;
+    left: calc(50% - 1px);
+    /*background: red;*/
+
+    top: 15px;
+}
+.main-view ul.courseProgress .unstudyp{
+    position: absolute;
+    top: 25px;
+    height: 0px;
+    width: 2px;
+    z-index: 11;
+    left: calc(50% - 1px);
+    /*background: red;*/
+
+    top: 15px;
+}
+
+/*会话*/
+.main-view .left-view .chat{
+	width: 66%;
+	height: 100%;
+	margin-right: 2%;
+	background-color: rgb(229, 230, 231);
+	border: solid 1px rgb(205, 206, 207);
+	border-radius: 5px;
+
+    display: inline-flex;
+    justify-content: center;
+
+    flex-direction: column;
+    justify-content: flex-start;
+
+    position: relative;
+    width: 100%;
+
+    font-size: 16px;
+    /*width: 85%;*/
+
+}
+.main-view .left-view .chat .messages{
+	overflow: auto;
+	padding-bottom: 70px;
+	width: 100%;
+	/*height: 80%;*/
+    
+    padding-bottom: 0;
+    /*background: red;*/
+    height: calc(100% - 100px);
+}
+.main-view .left-view .chat .messages .loadAgoMore,
+.main-view .left-view .chat .messages .loadAgoNoMore{
+    color: gray;
+    text-align: center;
+    height: 25px;
+    margin-top: 10px;
+    line-height: 25px;
+    font-size: 14px;
+}
+.main-view .left-view .chat .messages .loadAgoMore{
+    cursor: pointer;
+}
+.main-view .left-view .chat .messages .loading-chat{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 20px;
+    overflow: hidden;
+    align-items: center;
+    /* justify-content: center; */
+    background: white;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    height: 30px;
+    width: 60px;
+    justify-content: center;
+}
+.main-view .left-view .chat .messages .loading-chat img{
+	height: 15px;
+}
+.main-view .left-view .chat .message.text,
+.main-view .left-view .chat .message.img,
+.main-view .left-view .chat .message.link{
+	display: inline-flex;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 20px;
+	overflow: hidden;
+
+	/*align-items: center;  
+    justify-content: flex-start;*/
+    width: calc(100% - 30px);
+
+    margin-right: 5px;
+    width: calc(100% - 10px);
+}
+.main-view .left-view .chat .message .msg-view-parent{
+    width: calc(100% - 90px);
+}
+.main-view .left-view .chat .message .msg-view-parent .audio{
+    width: 25px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+.main-view .left-view .chat .message .msg-view,
+.main-view .left-view .chat .answer .msg-view{
+    align-items: center;
+    justify-content: flex-start;
+    display: inline-flex;
+    width: calc(100% - 90px);
+}
+.main-view .left-view .chat .message .msg-view{
+    width: 100%;
+}
+.main-view .left-view .chat .answer .msg-view{
+    justify-content: flex-end;
+}
+.main-view .left-view .chat .message.img{
+    /*height: 100px;*/
+}
+/*加载的图片*/
+.main-view .left-view .chat .message.img img.msg{
+    width: 50%;
+    /*width: 70%;*/
+    /*display: none;*/
+}
+/*预加载的图片*/
+.main-view .left-view .chat .message.img .pre-msg{
+    width: 50%;
+    
+    background: #d2d2d2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-view .left-view .chat .message.link{
+	/*margin-right: 15px;*/
+    cursor: pointer;
+}
+.main-view .left-view .chat .message.text .content,
+.main-view .left-view .chat .message .link-text,
+.main-view .left-view .chat .message .problem-options{
+	background-color: white;
+	padding: 10px 15px;
+
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	line-height: 1.5em;
+	color: rgb(58, 59, 60);
+	/*font-family: serif;*/
+}
+.link-text .link-content{
+    
+}
+.link-text .link-imgs{
+    /*display: inline-flex;
+    justify-content: space-around;
+    align-items: center;*/
+}
+.link-text .link-imgs img{
+    /*width: 40px;*/
+    max-width: 100%;
+    /*border: solid 1px red;*/
+}
+/*问题选项*/
+.problem-options .problem-content{
+
+}
+.problem-options .problem-imgs{
+
+}
+.problem-options .problem-imgs img,
+.problem-options .option-imgs img{
+    max-width: 100%;
+    /*border: solid 1px red;*/
+}
+.problem-options .options{
+    border: solid 1px rgb(205, 206, 207);
+    /* box-shadow: 1px 1px 5px; */
+    /* background: blanchedalmond; */
+    /* margin: 5px; */
+    padding: 5px;
+    border-radius: 5px;
+}
+.options .option{
+    display: flex;
+    justify-content: space-between;
+}
+.options .option .order-letter{
+    width: 15px;
+    margin-right: 5px;
+}
+.options .option .option-content-imgs{
+    flex: 1;
+}
+
+
+.main-view .left-view .chat .message .arrow{
+	height: 15px;
+	margin-left: 15px;
+}
+.main-view .left-view .chat .message .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-right: 5px;
+}
+.main-view .left-view .chat .answer .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-left: 5px;
+}
+.main-view .left-view .chat .answer{
+	display: inline-flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    margin-left: 5px;
+    overflow: hidden;
+    /*align-items: center;*/
+    justify-content: flex-end;
+    width: calc(100% - 30px);
+
+    margin-right: 5px;
+    width: calc(100% - 10px);
+}
+.main-view .left-view .chat .answer .content{
+	background-color: #f0f0f0;
+    padding: 5px 15px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    line-height: 1.5em;
+    color: rgb(58, 59, 60);
+    color: gray;
+    border-radius: 5px 5px 0 5px;
+}
+.main-view .left-view .chat .btn-wx-auth{
+	/*background: rgb(250, 80, 131);
+	color: white;
+
+	height: 30px;
+	line-height: 30px;
+	border-radius: 5px;
+	border-bottom-right-radius: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
+
+	position: fixed;
+	bottom: 20px;
+
+    bottom: 70px;
+    margin-left: 8%;
+
+    margin-left: 11.5%;*/
+}
+.main-view .left-view .chat .help{	
+	/*height: 30px;
+    position: fixed;
+    display: inline-block;
+    bottom: 20px;
+    margin-left: 10%;
+
+    margin-left: 21.5%;*/
+}
+.main-view .left-view .chat .btns{
+    overflow: hidden;
+    width: 100%;
+    /*height: 20%;*/
+    /*background: blue;*/
+    position: relative;
+
+    position: absolute;
+    bottom: 0
+}
+.main-view .left-view .btns .actions{
+    /*background: yellow;*/
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    width: 93.5%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 6.5%;
+    margin-bottom: 15px;
+    margin-top: 8px;
+
+    height: 40px;
+    line-height: 40px;
+}
+.main-view .left-view .btns .actions .option{
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border-bottom-right-radius: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: inline-block;
+    margin-left: 5px;
+
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+}
+.main-view .left-view .btns .actions .option.unselect{
+    color: rgb(250, 80, 131);
+    background: white;
+}
+.main-view .left-view .btns .actions .option.select{
+    background: rgb(250, 80, 131);
+    color: white;
+}
+.main-view .left-view .btns .actions .btn-wx-auth{
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border-bottom-right-radius: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: rgb(250, 80, 131);
+    display: inline-block;
+    margin-left: 5px;
+    cursor: pointer;
+
+    height: 40px;
+    line-height: 40px;
+}
+.main-view .left-view .btns .help{
+    height: 30px;
+    display: block;
+    margin-left: 85%;
+    margin-bottom: 8px;
+
+    cursor: pointer;
+}
+.main-view .left-view .helps-view{
+    position: absolute;
+    bottom: 50px;
+    width: 20%;
+    background: white;
+    border: solid 1px #d2d2d2;
+    border-radius: 5px;
+    right: 5px;
+    font-size: 13px;
+    padding: 0 10px;
+    display: none;
+    font-size: 15px;
+}
+.main-view .left-view .helps-view>div{
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    letter-spacing: 1px;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+}
+.main-view .left-view .helps-view>div:hover{
+    color: rgb(84, 180,225);
+}
+.main-view .left-view .helps-view .change-course,
+.main-view .left-view .helps-view .lock-phone,
+/*.main-view .left-view .helps-view .find-help,*/
+.main-view .left-view .helps-view .zuan-ani{
+    border-bottom: solid 1px #d2d2d2;
+}
+.main-view .left-view .helps-view .arrow{
+    position: absolute;
+    right: 28%;
+}
+
+.sep-line{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #a6a6a6;
+    height: 40px;
+    line-height: 40px;
+}
+.sep-line .line{
+    width: 90%;
+    background-image: url(../../images/line.png);
+    background-size: 100%;
+    background-position: center;
+    height: 1px;
+
+    position:absolute;
+    left: 5%;
+    top: 19.5px;
+}
+.sep-line .title{
+    /*position: absolute;*/
+    padding-left: 10px;
+    padding-right: 10px;
+    background: red;
+    background: rgb(229, 230, 231);
+
+    z-index: 10000;
+}
+
+/*练习区*/
+.main-view .right-view{
+	width: 60%;
+	background-color: rgb(229, 230, 231);
+	border: solid 1px rgb(205, 206, 207);
+	border-radius: 5px;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+    width: 65%;
+    height: 100%;
+}
+.main-view .right-view img{
+	width: 100px;
+}
+.main-view .right-view iframe{
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+/*钻石效果*/
+.zuan-shadow-view,
+.up-grade-shadow-view
+{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.up-grade-shadow-view .img,
+.zuan-shadow-view .img{
+    width: 200px;
+    height: 200px;
+    /*background: red;*/
+    margin-left: calc(50% - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.up-grade-shadow-view .img img{
+    width: 200%;
+}
+.zuan-shadow-view .img img{
+    width: 100%;
+}
+/*升级效果*/
+
+/*经验值*/
+.grow-number-ani{
+    padding: 8px 15px;
+    /*background: white;*/
+    /*border-radius: 5px;*/
+    position: absolute;
+    bottom: 130px;
+    right: 20px;
+    font-size: 20px;
+    bottom: 50%;
+    font-family: -webkit-pictograph;
+    color: gray;
+}
+/*消息图片放大*/
+.imgmsg-shadow-view,
+.find-help-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.imgmsg-shadow-view .imgmsg,
+.find-help-shadow-view .find-help-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.imgmsg-shadow-view .imgmsg .imgdiv{
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    text-align: center;
+}
+.find-help-shadow-view .find-help-view span{
+    color: white;
+    font-size: 25px;
+    width: 50%;
+    letter-spacing: 2px;
+}
+/*代码运行窗口*/
+.code-result-shadow-view,
+.message-link-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.code-result-shadow-view .code-result,
+.message-link-shadow-view .message-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.code-result-shadow-view .code-result .close,
+.message-link-shadow-view .message-link .close{
+    height: 35px;
+    background: #ddd;
+    width: 70%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.message-link-shadow-view .message-link .close{
+    width: 80%;
+}
+.code-result-shadow-view .code-result .close img,
+.message-link-shadow-view .message-link .close img{
+    position: absolute;
+    right: 10px;
+
+    width: 15px;
+    height: 15px;
+    top: 10px;
+}
+.code-result-shadow-view .code-result iframe,
+.message-link-shadow-view .message-link iframe{
+    width: 70%;
+    height: 80%;
+    background: white;
+}
+.message-link-shadow-view .message-link iframe{
+    width: 80%;
+}
+/***************************************I.以前的登录(废弃)*/
+.login-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.login-shadow-view .login-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.login-view .close{
+    width: 35%;
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.login-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.login-view .login-info{
+    width: 31%;
+    background: #efefef;
+    padding: 1% 2%;
+}
+.login-info .login-info-view{
+    border: dashed 1px #a0a0a0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+.login-info .info{
+    padding: 10px;
+    color: #525252;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+.login-info .wx-code{
+    width: 80px;
+    height: 80px;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+}
+.login-info .wx-code img{
+    width: 100%;
+}
+.login-view .account-view{
+    width: 35%;
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+
+.login-view .account-view .username,
+.login-view .account-view .password{
+    width: 80%;
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-view .account-view .password{
+    margin-top: 0;
+}
+.username span,
+.password span{
+    margin-right: 10px;
+    letter-spacing: 2px;
+    color: #616161;
+
+    width: 60px;
+    display: inline-block;
+}
+.username input,
+.password input{
+    width: 75%;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.login-view .account-view .login{
+    padding: 5px 16px;
+    background: #ff6b95;
+    border-radius: 5px;
+    color: white;
+    border: solid 1px #e56c95;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+/**********************************************************II:新的登录*/
+/*************************************1.手机号/邀请码登录*/
+.phone-invite-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.phone-invite-shadow-view .phone-invite-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.ui-login-view{
+    width: 35%;
+    background: #efefef;
+}
+.phone-invite-view .close{
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.phone-invite-view .tabs{
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+}
+.tabs .tab{
+    flex: 1;
+    text-align: center;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+.tab.unselect{
+    background: rgb(211,211,211);
+    color: rgb(134,134,134);
+}
+.tab.select{
+    background: #efefef;
+    color: rgb(59,59,59);
+}
+
+.phone-invite-view .account-view{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+
+    padding-top: 15px;
+}
+.tips{
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 15px;
+}
+.tips span{
+    width: calc(100% - 58px);
+    display: inline-block;
+    text-align: justify;
+    font-size: 13px;
+    color: rgb(138,138,138);
+}
+.account-view .ui-login-input-view{
+    width: 80%;
+    height: 40px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.account-view .ui-login-input{
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding: 5px;
+    width: calc(100% - 70px);
+}
+.username>input{
+}
+.password>input{
+    
+}
+.login-btn{
+    width: 80%;
+    height: 40px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-btn .login{
+    width: calc(100% - 58px);
+    background: #ff6b95;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+    letter-spacing: 3px;
+    border-radius: 3px;
+
+    cursor: pointer;
+}
+.login-footer{
+    color: rgb(138,138,138);
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+.login-footer .go-reg{
+    padding-right: 5px;
+    cursor: pointer;
+}
+.login-footer .forgot-psd{
+    padding-left: 5px;
+    cursor: pointer;
+}
+.phone-invite-view .phone-account-view{
+    display:none;
+}
+.phone-invite-view .invite-account-view{
+    /*display:none;*/
+}
+/****************************************2.手机注册*/
+.phone-reg-shadow-view{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.phone-reg-shadow-view .phone-reg-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.phone-reg-view .close{
+    width: 35%;
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.phone-reg-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.phone-reg-view .phone-reg-account-view{
+    width: 35%;
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+.phone-reg-view .phone-reg-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.phone-reg-view .phone-reg-account-view .phone,
+.phone-reg-view .phone-reg-account-view .verify-code,
+.phone-reg-view .phone-reg-account-view .password{
+    width: 80%;
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.phone-reg-view .phone-reg-account-view .verify-code,
+.phone-reg-view .phone-reg-account-view .password{
+    margin-top: 0;
+}
+.phone input,
+.verify-code input,
+.password input{
+    width: 75%;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.verify-code input{
+    width: calc((100% - 70px) / 2);
+}
+.verify-code .get-code{
+    width: calc((100% - 70px) / 2);
+    background: #ff6b95;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.phone-reg-view .phone-reg-account-view .reg-next-btn{
+    width: 80%;
+    height: 20%;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(80% - 70px);
+    color: white;
+    cursor: pointer;
+}
+/*****************************************2.选择头像*/
+.choose-avatar-shadow-view{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.choose-avatar-shadow-view .choose-avatar-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.choose-avatar-view .choose-avatar-view-s{
+    /*width: 100%;*/
+    position: relative;
+    text-align: center;
+    margin: 0;
+}
+.ui-choose-avatar-view{
+    width: 35%;
+}
+.choose-avatar-view .close{
+    /*width: 35%;*/
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.choose-avatar-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.choose-avatar-view .choose-avatar-account-view{
+    /*width: 35%;*/
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+.choose-avatar-view .choose-avatar-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.choose-avatar-view .choose-avatar-account-view .choose-avatar{
+    width: 60px;
+    height: 60px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+}
+.choose-avatar-view .choose-avatar-account-view .choose-avatar img{
+    position: absolute;
+    top: 0px; 
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.choose-avatar-view .choose-avatar-account-view .nickname{
+    width: 80%;
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nickname input{
+    width: 75%;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.choose-avatar-view .choose-avatar-account-view .reg-btn{
+    width: 80%;
+    height: 20%;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(80% - 70px);
+    color: white;
+    cursor: pointer;
+}
+.choose-avatar-view .avatars-view{
+    position: absolute;
+    bottom: 0;
+    padding-top: 10px;
+    display: flex;
+    background: white;
+}
+.choose-avatar-view .avatars{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.choose-avatar-view .avatar{
+    width: 25%;
+    margin-bottom: 10px;
+}
+.choose-avatar-view .submit-avatar{
+    width: 60px;
+    font-size: 15px;
+    cursor: pointer;
+}
+/*****************************************3.找回密码*/
+.find-password-shadow-view{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.find-password-shadow-view .find-password-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.find-password-view .close{
+    width: 35%;
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.find-password-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.find-password-view .find-password-account-view{
+    width: 35%;
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+.find-password-view .find-password-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.find-password-view .find-password-account-view .phone,
+.find-password-view .find-password-account-view .verify-code,
+.find-password-view .find-password-account-view .password{
+    width: 80%;
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.find-password-view .find-password-account-view .verify-code,
+.find-password-view .find-password-account-view .password{
+    margin-top: 0;
+}
+.phone input,
+.verify-code input,
+.password input{
+    width: 75%;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.verify-code input{
+    width: calc((100% - 70px) / 2);
+}
+.verify-code .get-code{
+    width: calc((100% - 70px) / 2);
+    background: #ff6b95;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.find-password-view .find-password-account-view .reset-psd-btn{
+    width: 80%;
+    height: 20%;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(80% - 70px);
+    color: white;
+    cursor: pointer;
+}
+/*******************************************4.手机绑定*/
+.phone-bind-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.phone-bind-shadow-view .phone-bind-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.phone-bind-view .close{
+    width: 35%;
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.phone-bind-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.phone-bind-view .phone-bind-account-view{
+    width: 35%;
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+.phone-bind-view .phone-bind-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.phone-bind-view .phone-bind-account-view .phone,
+.phone-bind-view .phone-bind-account-view .verify-code,
+.phone-bind-view .phone-bind-account-view .password{
+    width: 80%;
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.phone-bind-view .phone-bind-account-view .verify-code,
+.phone-bind-view .phone-bind-account-view .password{
+    margin-top: 0;
+}
+.phone input,
+.verify-code input,
+.password input{
+    width: 75%;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.verify-code input{
+    width: calc((100% - 70px) / 2);
+}
+.verify-code .get-code{
+    width: calc((100% - 70px) / 2);
+    background: #ff6b95;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.phone-bind-view .phone-bind-account-view .bind-btn{
+    width: 80%;
+    height: 20%;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(80% - 70px);
+    color: white;
+    cursor: pointer;
+}
+.chat{
+    position: relative;
+}
+/****************************消息类型*/
+.message-input-view,
+ul.message-types{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: none;
+}
+ul.message-types li{
+    height: 40px;
+    border-bottom: solid #e1e1e1 1px;
+    text-align: center;
+    line-height: 40px;
+    width: 120px;
+    background: white;
+    width: 40%;
+}
+.message-input-view .msg-header{
+    height: 35px;
+    background: #F8F8F8;
+    width: 70%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 8px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    border-radius: 2px 2px 0 0;
+}
+.message-input-view .input-view{
+    width: 70%;
+    background: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 0 0 2px 2px;
+}
+.message-input-view .input-view input{
+    border: solid 1px #e1e1e1;
+    max-height: 60px;
+    min-height: 25px;
+    padding: 5px;
+    width: calc(100% - 11px);
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+.message-input-view .input-view textarea{
+    border: solid 1px #e1e1e1;
+    max-height: 180px;
+    min-height: 50px;
+    padding: 5px;
+    width: calc(100% - 11px);
+    color: #333;
+    font-size: 13px;
+}
+.input-view .input-submit{
+    color: #fff;
+    background: rgb(250, 80, 131);
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 15px;
+    border-radius: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+#upload-container{
+    padding-bottom: 8px;
+    text-align: left;
+    cursor: pointer;
+    display: none;
+}
+#upload-container #uploadImg{
+    background: #eee;
+    padding: 5px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    color: #333;
+    border: solid 1px #e1e1e1;
+    font-size: 13px;
+}
+#export{
+    /*background: #eee;
+    padding: 5px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    color: #333;
+    border: solid 1px #e1e1e1;
+    font-size: 13px;*/
+
+    width: 60px;
+    margin-top: 40px;
+}
+
+/*左边飞入动画*/
+@keyframes lefteaseinAnimate {
+   0% {
+      transform: translateX(-2000px);
+      opacity: 0;
+   }
+   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
+   100% {
+      transform: translateX(0px);
+      opacity: 1;
+   }
+   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+}
+
+@-webkit-keyframes lefteaseinAnimate {
+   0% {
+      -webkit-transform: translateX(-2000px);
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateX(0px);
+      opacity: 1;
+   }
+}
+
+@-o-keyframes lefteaseinAnimate {
+   0% {
+      -webkit-transform: translateX(-2000px);
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateX(0px);
+      opacity: 1;
+   }
+}
+
+@-ms-keyframes lefteaseinAnimate {
+   0% {
+      -webkit-transform: translateX(-2000px);
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateX(0px);
+      opacity: 1;
+   }
+}
+
+@-moz-keyframes lefteaseinAnimate {
+   0% {
+      -webkit-transform: translateX(-2000px);
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateX(0px);
+      opacity: 1;
+   }
+}
+
+.left-animation{
+   animation: lefteaseinAnimate 1s ease 1;
+   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
+   -webkit-animation: lefteaseinAnimate 1s ease 1;
+   -ms-animation: lefteaseinAnimate 1s ease 1;
+   -o-animation: lefteaseinAnimate 1s ease 1;
+   -moz-animation: lefteaseinAnimate 1s ease 1;
+   /*规定动画的最后状态为结束状态*/
+   animation-fill-mode: forwards;
+   -webkit-animation-fill-mode: forwards;
+   -o-animation-fill-mode: forwards;
+   -ms-animation-fill-mode: forwards;
+   -moz-animation-fill-mode: forwards;
+}
+
+/*底部进入动画*/
+@keyframes bottomeaseinAnimate {
+   0% {
+      transform: translateY(calc(100% + 40px));
+      opacity: 0;
+   }
+   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
+   100% {
+      transform: translateY(0);
+      opacity: 1;
+   }
+   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+}
+
+@-webkit-keyframes bottomeaseinAnimate {
+   0% {
+      -webkit-transform: translateY(calc(100% + 40px));
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateY(0);
+      opacity: 1;
+   }
+}
+
+@-o-keyframes bottomeaseinAnimate {
+   0% {
+      -webkit-transform: translateY(calc(100% + 40px));
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateY(0);
+      opacity: 1;
+   }
+}
+
+@-ms-keyframes bottomeaseinAnimate {
+   0% {
+      -webkit-transform: translateY(calc(100% + 40px));
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateY(0);
+      opacity: 1;
+   }
+}
+
+@-moz-keyframes bottomeaseinAnimate {
+   0% {
+      -webkit-transform: translateY(calc(100% + 40px));
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateY(0);
+      opacity: 1;
+   }
+}
+.bottom-animation{
+	animation: bottomeaseinAnimate 1s ease 1;
+   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
+   -webkit-animation: bottomeaseinAnimate 1s ease 1;
+   -ms-animation: bottomeaseinAnimate 1s ease 1;
+   -o-animation: bottomeaseinAnimate 1s ease 1;
+   -moz-animation: bottomeaseinAnimate 1s ease 1;
+   /*规定动画的最后状态为结束状态*/
+   animation-fill-mode: forwards;
+   -webkit-animation-fill-mode: forwards;
+   -o-animation-fill-mode: forwards;
+   -ms-animation-fill-mode: forwards;
+   -moz-animation-fill-mode: forwards;
+}
+
+/*渐入渐出*/
+@keyframes fadeIn {
+   0% {
+      transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
+   100% {
+      transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+   /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
+}
+
+@-webkit-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+
+}
+
+@-o-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-ms-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+
+@-moz-keyframes fadeIn {
+   0% {
+      -webkit-transform: translateY(calc(100% + 140px));
+      opacity: 0;
+   }
+   25%{
+      -webkit-transform: translateY(0);
+      opacity: 0.6;
+      font-size: 30px;
+   }
+   50%{
+     -webkit-transform: translateY(0);
+      opacity: 1;
+      font-size: 50px;
+      /*color: blue;*/
+   }
+   100% {
+      -webkit-transform: translateY(calc(100% - 140px));
+      opacity: 0;
+   }
+}
+.fadeInOut{
+    animation: fadeIn 2s ease 1;
+   /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
+   -webkit-animation: fadeIn 2s ease 1;
+   -ms-animation: fadeIn 2s ease 1;
+   -o-animation: fadeIn 2s ease 1;
+   -moz-animation: fadeIn 2s ease 1;
+   /*规定动画的最后状态为结束状态*/
+   animation-fill-mode: forwards;
+   -webkit-animation-fill-mode: forwards;
+   -o-animation-fill-mode: forwards;
+   -ms-animation-fill-mode: forwards;
+   -moz-animation-fill-mode: forwards;
+}
