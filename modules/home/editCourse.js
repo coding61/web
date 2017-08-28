@@ -2142,6 +2142,7 @@ define(function(require, exports, module) {
             if (array.length) {
                 Course.showContentInView(array, 0);
             }
+            Course.clickEvent();
         },
         openInputView:function(tag, tagHtml){
             $(".msg-header .type").html(tagHtml);
