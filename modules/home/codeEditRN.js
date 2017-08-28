@@ -141,9 +141,9 @@ define(function(require, exports, module) {
                 inputStyle:"textarea",
                 value: ""
             });
-            htmlEditor.on('keypress', function() { 
-                htmlEditor.showHint(); //满足自动触发自动联想功能 
-            });
+            // htmlEditor.on('keypress', function() { 
+            //     htmlEditor.showHint(); //满足自动触发自动联想功能 
+            // });
 
             if(localStorage.htmlCode){
                 // console.log(localStorage.htmlCode);
