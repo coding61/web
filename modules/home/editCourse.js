@@ -2137,12 +2137,22 @@ define(function(require, exports, module) {
     }
 
     var Course = {
+        index:-1,  //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
         init:function(){
+            $(".messages").html("");
             var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
             if (array.length) {
                 Course.showContentInView(array, 0);
+                $(".item").show();
+            }else{
+                $(".item").show();
             }
+
+            // window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+            // window.frames[0].postMessage("json", "*");
+
             Course.clickEvent();
+
         },
         openInputView:function(tag, tagHtml){
             $(".msg-header .type").html(tagHtml);
@@ -2211,10 +2221,53 @@ define(function(require, exports, module) {
                 Course.showContentInView(arr, i+1);
             }, 10)
         },
+        refreshAddMessage:function(){
+            // 当前元素后面的元素 index+1
+            // 当前元素的处理
+            if (tag == "action") {
+                // 当前元素后添加一个 action 用户回复消息
+                var dic1 = {index:Course.index, item:array[Course.index]};
+                var answerHtml = ArtTemplate("answer-text-template", dic1);
+                $(answerHtml).appendTo(".messages");
+
+            }else{
+                // 当前元素后面追加一个消息
+                var dic1 = {index:Course.index+1, item:array[Course.index+1]};
+                var questionHtml = ""
+                if (tag == "text") {
+                    questionHtml = ArtTemplate("message-text-template", dic1);
+                }else if (tag == "photo") {
+                    questionHtml = ArtTemplate("message-img-template", dic1)
+                }else if (tag == "link-text") {
+                    questionHtml = ArtTemplate("message-link-template", dic1);
+                }
+                $(questionHtml).appendTo(".messages");
+
+                if (array[Course.index+1].img) {
+                    try {
+                        Course.setImgHeight(array[Course.index+1].img);
+                    }
+                    catch(err){
+                         Common.dialog("图片格式不合法");
+                    }
+                }
+            }
+        },
+        refreshReduceMessage:function(){
+            // 当前元素删除
+            // 当前元素后面的元素 index-1
+        },
         clickEvent:function(){
             // console.log(1);
-            
+            $(".add .reset").unbind('click').click(function(){
+                // 清空数据重来
+                var array = [];
+                localStorage.CourseMessageData = JSON.stringify(array);
+                Course.init();  //刷新页面
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+            })
             $(".add .left-add").unbind('click').click(function(){
+                Course.index = -1;
                 $(".message-types").css({display:'flex'});
             })
             $(".add .right-add").unbind('click').click(function(){
@@ -2232,7 +2285,7 @@ define(function(require, exports, module) {
                 $(".message-input-view").css({display:"none"});
             })
             
-            // 添加内容
+            // 确认添加内容
             $(".input-view .input-submit").unbind('click').click(function(){
                 // 提交内容
                 var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
@@ -2240,6 +2293,7 @@ define(function(require, exports, module) {
 
                 var tag = $(".msg-header .type").attr("tag");
                 if (tag == "action") {
+                    /*
                     // 取出数组中最后一个元素,给最后一条消息加 action
                     dic = array[array.length - 1];
                     if (dic.action) {
@@ -2252,11 +2306,30 @@ define(function(require, exports, module) {
                         var answerHtml = ArtTemplate("answer-text-template", dic1);
                         $(answerHtml).appendTo(".messages");
                     }
+                    */
+                    if (Course.index == -1) {
+                        //最后一条消息添加 action
+                        dic = array[array.length - 1];
+                        dic["action"] = $(".input-view textarea").val();
+                    }else{
+                        // 当前消息添加 action
+                        dic = array[Course.index];
+                        dic["action"] = $(".input-view textarea").val();
+                    }
+
 
                 }else if (tag == "photo") {
                     dic["img"] = $(".input-view textarea").val();
-                    array.push(dic);
-
+                    if (Course.index == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(Course.index+1, 0, dic);  
+                    }
+                    
+                    
+                    /*
                     // 2.（图片消息）界面显示添加的内容
                     var dic1 = {index:array.length-1, item:dic};
                     var questionHtml = ArtTemplate("message-img-template", dic1);
@@ -2268,28 +2341,52 @@ define(function(require, exports, module) {
                     catch(err){
                          Common.dialog("图片格式不合法");
                     }
+                    */
 
                 }else if (tag == "text"){
                     dic["message"] = $(".input-view textarea").val();
-                    array.push(dic);
+                    if (Course.index == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(Course.index+1, 0, dic);
+                    }
+                    
 
+                    /*
                     // 3.（文本消息）界面显示添加的内容
                     var dic1 = {index:array.length-1, item:dic};
                     var questionHtml = ArtTemplate("message-text-template", dic1);
                     $(questionHtml).appendTo(".messages");
+                    */
 
                 }else if (tag == "link-text") {
                     dic["message"] = $(".input-view textarea").val();
                     dic["link"] = $(".input-view input").val();
-                    array.push(dic);
-
+                    if (Course.index == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(Course.index+1, 0, dic);
+                    }
+                    
+                    
+                    /*
                     // 4.（链接文本）界面显示添加的内容
                     var dic1 = {index:array.length-1, item:dic};
                     var questionHtml = ArtTemplate("message-link-template", dic1);
                     $(questionHtml).appendTo(".messages");
+                    */
                 }
                 localStorage.CourseMessageData = JSON.stringify(array);
+                
+                Course.init();  //1.刷新页面
 
+                // 2:刷新页面
+                // Course.refreshAddMessage();
+                
                 // 隐藏输入框
                 $(".message-input-view").css({display:'none'});
                 $(".input-view textarea").val("");
@@ -2298,6 +2395,8 @@ define(function(require, exports, module) {
 
                 // 滚动到最底部
                 $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
 
                 Course.clickDeleteEvent();
 
@@ -2319,23 +2418,24 @@ define(function(require, exports, module) {
         clickDeleteEvent:function(){
             // 删除消息内容
             $(".message .reduce").unbind('click').click(function(){
-                var index = $(this).parent().attr("data-index");
+                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                Course.index = $(this).parents(".message").attr("data-index");
+                // alert(Course.index);
+
+                var index = Course.index;
                 index = parseInt(index);
 
-                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
-                var item = array[index];
-                var originIndex = index,    //当前元素
-                    lastIndex = array.length; //最后一个元素
-                
-                if (item.action && index != 0) {
-                    //如果删掉的存在 action，则把 action 归到上一条消息
-                    array[index-1]["action"] = item.action;
-                }
-                array.splice(index, 1);  //删除当前元素 数据
+                array.splice(Course.index, 1);  //删除当前元素 数据
                 localStorage.CourseMessageData = JSON.stringify(array);
                 
-                // 方法1：刷新页面,
-                Course.showContentInView(array, 0);
+                // 方法1:刷新页面
+                Course.init();
+
+                // 方法2:刷新页面
+                // Course.refreshReduceMessage();
+                
+
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值
                 
                 /*
                 // 方法2：逐个更改
@@ -2367,9 +2467,18 @@ define(function(require, exports, module) {
 
                 localStorage.CourseMessageData = JSON.stringify(array);
                 $(this).parent().remove();
-                // alert(index);
+
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
 
             })
+
+            // 消息后面添加消息
+            $(".message .left-add").unbind('click').click(function(){
+                $(".message-types").css({display:'flex'});
+                Course.index = $(this).parents(".message").attr("data-index");
+                // alert(Course.index);
+            })
+
         },
         setImgHeight:function(url){
             // 给消息中的图片设高
