@@ -180,6 +180,9 @@ function postDetail() {
 			}
 			$(".post_title").text(result.title);
 			$(".post_user img").attr("src",dealWithAvatar(result.userinfo.avatar));
+			if (result.userinfo.is_staff) {
+				$('.manager').show();
+			}
 			$(".post_user .grade").text(result.userinfo.grade.current_name);
 			$(".post_user cite").prepend(result.userinfo.name);
 			$(".post_user cite em").text(dealWithTime(result.create_time));
@@ -263,17 +266,20 @@ function getReplys(page){
 		$.each(result.results,function(k,v){
 			_htm+='<li data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+'">'
 				+'<div class="detail-about detail-about-reply">'
-			  +'<a class="jie-user" href="javascript:void(0)">'
-			   +' <img src="'+dealWithAvatar(v.userinfo.avatar)+'" alt="">'
-			   +'<span class="reGrade">'+v.userinfo.grade.current_name+'</span>'
+			  	+'<a class="jie-user" href="javascript:void(0)">'
+			    +' <img src="'+dealWithAvatar(v.userinfo.avatar)+'" alt=""><div class="managergrade">'
+			    if (v.userinfo.is_staff) {
+			   		_htm+='<span class="replyManager">管理员</span>';
+			    }
+			    _htm+='<span class="reGrade">'+v.userinfo.grade.current_name+'</span></div>'
 			    +'<cite><i class="reply_name">'+v.userinfo.name+'</i></cite>'
-			  +'</a>'
-			 + '<div class="detail-hits reply_time">'
-			   +' <span>'+dealWithTime(v.create_time)+'</span>'
-			   +'<span class="liveTime">'+dealWithTime(v.create_time)+'</span>'
-			  +'</div>';
-			  // 隐藏
-			 //  if(v.adopt){
+			    +'</a>'
+			    + '<div class="detail-hits reply_time">'
+			    +' <span>'+dealWithTime(v.create_time)+'</span>'
+			    +'<span class="liveTime">'+dealWithTime(v.create_time)+'</span>'
+			    +'</div>';
+			    // 隐藏
+			//  if(v.adopt){
 				//   _htm+=' <i data-id="'+v.pk+'" class="iconfont icon-caina isAccept_active" title="最佳答案"></i>';
 				// }else{
 				// 	_htm+=' <i data-id="'+v.pk+'" class="iconfont icon-caina isAccept" title="最佳答案"></i>';
@@ -305,8 +311,11 @@ function getReplys(page){
 			$.each(v.replymore,function(k1,v1){
 				_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'"><div class="detail-about detail-about-reply">'
 		            +'<a class="jie-user" href="javascript:void(0)">'
-		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt="">'
-		            +'<span class="reGrade">'+v1.userinfo.grade.current_name+'</span>'
+		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt=""><div class="managergrade">'
+		            if (v.userinfo.is_staff) {
+				   		_htm+='<span class="replyManager">管理员</span>';
+				    }
+		            _htm+='<span class="reGrade">'+v1.userinfo.grade.current_name+'</span></div>'
 		            +' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
 		            +' </a>'
 		            +' <div class="detail-hits reply_time">'

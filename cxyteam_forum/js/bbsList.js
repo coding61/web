@@ -130,7 +130,10 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 					}
 					html+='<li class="fly-list-li">'
 						+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'">'
-						+'<span class="grade">'+v.userinfo.grade.current_name+'</span>'
+						if (v.userinfo.is_staff) {
+							html+='<span class="manager">管理员</span>'
+						}
+						html+='<span class="grade">'+v.userinfo.grade.current_name+'</span>'
 						+'<h2 class="fly-tip">'
 						if (v.status_display == '未解决') {
 							html+='<span class="unsolved">[未解决]</span>'
@@ -182,7 +185,10 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 					}
 					html+='<li class="fly-list-li">'
 						+'<img src="'+dealWithAvatar(v.posts.userinfo.avatar)+'">'
-						+'<span class="grade">'+v.posts.userinfo.grade.current_name+'</span>'
+						if (v.posts.userinfo.is_staff) {
+							html+='<span class="manager">管理员</span>'
+						}
+						html+='<span class="grade">'+v.posts.userinfo.grade.current_name+'</span>'
 						+'<h2 class="fly-tip">'          
 						+'<a href="detail.html?id='+v.posts.pk+'&pk='+getQueryString("id")+'">'+v.posts.title+'</a>'         
 						if(v.posts.istop){
