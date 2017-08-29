@@ -2148,10 +2148,9 @@ define(function(require, exports, module) {
                 $(".item").show();
             }
 
-            // window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
-            // window.frames[0].postMessage("json", "*");
-
             Course.clickEvent();
+
+            Common.addCopyRight();   //添加版权标识
 
         },
         openInputView:function(tag, tagHtml){
