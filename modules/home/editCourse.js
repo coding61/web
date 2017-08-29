@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
+    ArtTemplate.config("escape", false);
     
     // ----------------------------------1.默认数据
     var Default = {
@@ -2183,12 +2184,14 @@ define(function(require, exports, module) {
             var itemDic = {index:i, item:item};
             if (item.link) {
                 // 2.1是链接消息
+                item.message = Course.formatString(item.message);
                 questionHtml = ArtTemplate("message-link-template", itemDic);
             }else if(item.img){
                 // 2.2是图片消息
                 questionHtml = ArtTemplate("message-img-template", itemDic);
             }else{
                 // 2.3是文本消息
+                item.message = Course.formatString(item.message);
                 questionHtml = ArtTemplate("message-text-template", itemDic);
             }
 
@@ -2489,7 +2492,18 @@ define(function(require, exports, module) {
                     height: pH + "px"
                 })
             })
-        }
+        },
+        formatString:function(message){
+            // 方法1，捕获异常
+            try {
+               var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+               return msg
+            }
+            catch(err){
+                alert("消息组合格式有问题!");
+                return;
+            }
+        },
     }
     var filename = ''    //选择的文件的名字
     var uploader = Qiniu.uploader({
