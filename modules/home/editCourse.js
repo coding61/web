@@ -2150,7 +2150,7 @@ define(function(require, exports, module) {
 
             Course.clickEvent();
 
-            Common.addCopyRight();   //添加版权标识
+            // Common.addCopyRight();   //添加版权标识
 
         },
         openInputView:function(tag, tagHtml){
