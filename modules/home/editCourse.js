@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
+    ArtTemplate.config("escape", false);
     
     // ----------------------------------1.默认数据
     var Default = {
@@ -13,11 +14,7 @@ define(function(require, exports, module) {
                 success:function(json){
                     // console.log(json);
                     Page.index = 0;
-                    if(Default.olduser == true){
-                        Page.data = json.default;
-                    }else{
-                        Page.data = json.default;
-                    }
+                    Page.data = json.defaultProblem;
 
                     Default.load(Page.data, Page.index);
                 },
@@ -44,91 +41,44 @@ define(function(require, exports, module) {
         loadMessage:function(arr, i){
             var item = arr[i];
             var imgI = "i_"+ChatStroage.numbers;
-
+            
             var questionHtml = null;
-            if (item.link) {
-                // 带链接的
-                var text = "点击打开新网页"
-                if (item.link == "www.code.com") {
-                    text = "点击打开编辑器"
-                }else if (item.link.indexOf("www.compile.com") > -1) {
-                    text = "点击打开编译器"
-                }
-                if (item.audio) {
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
+            if (item.tag) {
+                // 1.是习题
+                if (item.link) {
+                    // 1.1是编程题
+                    var itemDic = {animate:true, item:item}
+                    questionHtml = ArtTemplate("message-link-problem-template", itemDic);
+
                 }else{
-                    var linkType = "";
-                    if (item.linkType) {
-                        linkType = item.linkType
-                    }
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                        </div>\
-                                    </div>';
+                    // 1.2是选择题
+                    var itemDic = {animate:true, item:item}
+                    questionHtml = ArtTemplate("message-choice-problem-template", itemDic);
                 }
-                
-            }else if(item.img){
-                // 图片
-                questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view-parent">\
-                                        <div class="msg-view">\
-                                            <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                            <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                        </div>\
-                                    </div>\
-                                </div>';
             }else{
-                // 文本
-                if (item.audio) {
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
+                // 2.普通消息
+                if (item.link) {
+                    // 2.1是链接消息
+                    var itemDic = {animate:true, item:item}
+                    questionHtml = ArtTemplate("message-link-template", itemDic);
+                }else if(item.img){
+                    // 2.2是图片消息
+                    var itemDic = {item:item, imgI:imgI}
+                    questionHtml = ArtTemplate("message-img-template", itemDic);
                 }else{
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                        </div>\
-                                    </div>';
+                    // 2.3是文本消息
+                    var itemDic = {animate:true, item:item}
+                    questionHtml = ArtTemplate("message-text-template", itemDic);
                 }
-                
+
             }
 
 
-            var actionHtml = null;
+            var actionHtml = "";
             if (item.action) {
                 if (item.exercises == true) {
                     // 如果是选择题，（多按钮）
-                    var optionHtml = null;
+                    var optionHtml = "";
                     for (var j = 0; j < item.action.length; j++) {
                         var option = item.action[j];
                         optionHtml += '<span class="option unselect">'+option.content+'</span>'
@@ -155,10 +105,10 @@ define(function(require, exports, module) {
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
             
-            
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
                 $("html,body").animate({scrollTop:$("html,body")[0].scrollHeight}, 300);
+                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
                 Page.clickEvent();
 
@@ -182,9 +132,6 @@ define(function(require, exports, module) {
                         
             if (item.action) {
                 // 存在行为按钮, 不继续执行, 存储当前下标
-                // Page.index = i;
-                // Util.storeData();
-                // console.log(Page.index);
                 console.log(i);
                 return;
             } else{
@@ -204,57 +151,6 @@ define(function(require, exports, module) {
         init:function(){
             // 加载缓存数据， 并展示出来
             var array = JSON.parse(localStorage.chatData)
-            
-            /*
-            // 一次取5条记录
-            for (var i = 0; i < array.length; i++) {
-                var item = array[i];
-                ChatStroage.load(array, i, array.length);
-            }
-            
-            // 判断存储的最后一个元素是否有 action
-            var item1 = array[array.length-1]
-            var actionHtml = "";
-            if (item1.action) {
-                if (item1.exercises == true) {
-                    // 如果是选择题，（多按钮）
-                    var optionHtml = "";
-                    for (var i = 0; i < item1.action.length; i++) {
-                        var option = item1.action[i];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                    }
-                    actionHtml += optionHtml
-                    actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
-
-                } else{
-                    // 单按钮
-                    if (item1.action == "点击微信登录") {
-                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+item1.action+'</span>'
-                    }else{
-                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+item1.action+'</span>'
-                    }
-                }
-            }else{
-                // 不含 action，取当前数据源中下一条数据
-
-            }
-
-            setTimeout(function(){
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-
-                $(".btns .actions").html(actionHtml);
-
-                // 取出上次的数据源，接着执行
-                Page.data = JSON.parse(localStorage.data);
-                Page.index = parseInt(localStorage.index);
-                Page.optionData = JSON.parse(localStorage.optionData);
-                Page.optionIndex = parseInt(localStorage.optionIndex);
-                Page.pagenum = parseInt(localStorage.pagenum);
-                
-                Page.clickEvent();
-            }, 800)   
-            */         
-
 
             // 加载存储数据中所有的数据（最新10个数据）
             var arr1 = [];
@@ -265,11 +161,6 @@ define(function(require, exports, module) {
             }
             arr1 = arr1.reverse();
             ChatStroage.load(arr1, 0, arr1.length)
-
-            // ChatStroage.initScroll(array, i, array.length);
-
-
-            // ChatStroage.load(array, 0, array.length);   //加载全部
         },
         load:function(arr, i, arrLen){
             var item = arr[i];
@@ -309,80 +200,33 @@ define(function(require, exports, module) {
                                     <img class="avatar" src="'+localStorage.avatar+'"/>\
                                   </div>';
                 }else{
-                    // 加载机器回复
-                    if (item.link) {
-                        // 带链接的
-                        var text = "点击打开新网页"
-                        if (item.link == "www.code.com") {
-                            text = "点击打开编辑器"
-                        }else if (item.link.indexOf("www.compile.com") > -1) {
-                            text = "点击打开编译器"
-                        }
-                        if (item.audio) {
-                            questionHtml = '<div class="message link" data-link="'+item.link+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
+                    // 左侧消息
+                    if (item.tag) {
+                        // 1.是习题
+                        if (item.link) {
+                            // 1.1是编程题
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-link-problem-template", itemDic);
+
                         }else{
-                            var linkType = "";
-                            if (item.linkType) {
-                                linkType = item.linkType
-                            }
-                            questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                </div>\
-                                            </div>';
+                            // 1.2是选择题
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-choice-problem-template", itemDic);
                         }
-                        
-                    }else if(item.img){
-                        // 图片
-                        questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view-parent">\
-                                                <div class="msg-view">\
-                                                    <img class="msg" id="'+imgI+'" src="'+item.img+'" data-src="../../statics/images/loading.gif" alt="" />\
-                                                    <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                                </div>\
-                                            </div>\
-                                        </div>';
                     }else{
-                        // 文本
-                        if (item.audio) {
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
+                        // 2.普通消息
+                        if (item.link) {
+                            // 2.1是链接消息
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-link-template", itemDic);
+                        }else if(item.img){
+                            // 2.2是图片消息
+                            var itemDic = {item:item, imgI:imgI}
+                            questionHtml = ArtTemplate("message-img-template", itemDic);
                         }else{
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" >\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                </div>\
-                                            </div>';
+                            // 2.3是文本消息
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-text-template", itemDic);
                         }
                     }
                 }
@@ -514,62 +358,6 @@ define(function(require, exports, module) {
                 }     
             })
         },
-        initScroll:function(array, i, arrLen){
-            
-            $('.messages').on('scroll',function(){
-                // div 滚动了
-                var top = $(".messages").scrollTop();  
-                var win = $(".messages")[0].scrollHeight;  
-                var doc = $(".messages").height();  
-                
-                if (top == 0) {
-                    //用户向上滚动查看以前的聊天信息
-                    console.log(top);
-                    
-                    //判断存储数据是否已全部加载完
-                    var chatData = JSON.parse(localStorage.chatData)
-                    if (ChatStroage.numbers<chatData.length){
-                        // ChatStroage.numbers = parseInt(ChatStroage.numbers) + ChatStroage.length;
-                        
-                        if(ChatStroage.loadMore == true){
-                            ChatStroage.loadMore = false;
-                            //存储数据源还没有加载完, 继续加载(靠后的10条数据)。 判断已加载数据个数与存储个数是否相同
-                            var arr1 = [];
-                            var originIndex = chatData.length-1-ChatStroage.numbers,
-                                lastIndex = chatData.length-1-ChatStroage.numbers-ChatStroage.length;
-                            for (var i = originIndex; i > lastIndex; i--) {
-                                if (chatData[i]) {
-                                    arr1.push(chatData[i]);
-                                }
-                            } 
-                            
-                            if(ChatStroage.timerAgo){
-                                return;
-                            }
-                            ChatStroage.timerAgo = setTimeout(function(){
-                                // 等待符号,加载上一组记录
-                                var loadingWHtml = null;
-                                loadingWHtml = '<div class="loading-chat">\
-                                                    <img src="../../statics/images/chat.gif" alt="">\
-                                                </div>';
-                                $(loadingWHtml).prependTo($(".messages"));
-
-                                ChatStroage.loadAgo(arr1, 0, arr1.length);
-                            })
-                        }
-                    }
-
-                }else{
-                    ChatStroage.loadMore = true;
-                    Page.clickEvent(); 
-
-                    if(ChatStroage.timerAgo){
-                        clearTimeout(ChatStroage.timerAgo);
-                        ChatStroage.timerAgo = null;
-                    }
-                }
-            });
-        },
         loadAgo:function(arr, i, arrLen){
             var item = arr[i];
             var imgI = "i_"+ChatStroage.numbers;
@@ -610,80 +398,33 @@ define(function(require, exports, module) {
                                     <img class="avatar" src="'+localStorage.avatar+'" />\
                                   </div>';
                 }else{
-                    // 加载机器回复
-                    if (item.link) {
-                        // 带链接的
-                        var text = "点击打开新网页"
-                        if (item.link == "www.code.com") {
-                            text = "点击打开编辑器"
-                        }else if (item.link.indexOf("www.compile.com") > -1) {
-                            text = "点击打开编译器"
-                        }
-                        if (item.audio) {
-                            questionHtml = '<div class="message link" data-link="'+item.link+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
+                    // 左侧消息
+                    if (item.tag) {
+                        // 1.是习题
+                        if (item.link) {
+                            // 1.1是编程题
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-link-problem-template", itemDic);
+
                         }else{
-                            var linkType = "";
-                            if (item.linkType) {
-                                linkType = item.linkType
-                            }
-                            questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                </div>\
-                                            </div>';
+                            // 1.2是选择题
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-choice-problem-template", itemDic);
                         }
-                        
-                    }else if(item.img){
-                        // 图片
-                        questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view-parent">\
-                                                <div class="msg-view">\
-                                                    <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                                    <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                                </div>\
-                                            </div>\
-                                        </div>';
                     }else{
-                        // 文本
-                        if (item.audio) {
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
+                        // 2.普通消息
+                        if (item.link) {
+                            // 2.1是链接消息
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-link-template", itemDic);
+                        }else if(item.img){
+                            // 2.2是图片消息
+                            var itemDic = {item:item, imgI:imgI}
+                            questionHtml = ArtTemplate("message-img-template", itemDic);
                         }else{
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent">\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                </div>\
-                                            </div>';
+                            // 2.3是文本消息
+                            var itemDic = {"animate":false, item:item}
+                            questionHtml = ArtTemplate("message-text-template", itemDic);
                         }
                     }
                 }
@@ -737,7 +478,7 @@ define(function(require, exports, module) {
             // alert(navigator.userAgent);
             // 判断浏览器内核
             // 当前浏览器
-            if(Common.platform.isMobile && !Common.platform.iPad){
+            if(Common.platform.isMobile){
                 alert("请使用电脑打开");
                 return;
             }else if(!Common.platform.webKit){
@@ -754,167 +495,58 @@ define(function(require, exports, module) {
             }else{
                 Page.load();
             }
-            // Util.platform();
-            
-            // 监听课程列表那里传过来的点击事件
-            window.addEventListener('message', function(e) {  
-                var a = e.data;   
-                if(a == "currentCourse"){
-                    Util.courseProgressUI();   //更新课程进度
-
-                    $(".right-view .iframe-scroll").hide();
-                    $(".right-view>img").show();
-                    if(localStorage.currentCourse == localStorage.oldCourse){
-                        // 回到原来的课程继续
-                        var actionHtml = "";
-                        var item = Page.data[Page.index];
-                        if (item.action) {
-                            if (item.exercises == true) {
-                                // 如果是选择题，（多按钮）
-                                var optionHtml = "";
-                                for (var j = 0; j < item.action.length; j++) {
-                                    var option = item.action[j];
-                                    optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                                }
-                                actionHtml += optionHtml
-                                actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
-
-                            } else{
-                                // 单按钮
-                                if (item.action == "点击选择课程") {
-                                    actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                                }else{
-                                    actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                                }
-                            }
-                        }
-                        $(".btns .actions").html(actionHtml);
-                    }else{
-                        // 改变 action 的状态(开始学习)
-                        $(".actions").html('<span class="btn-wx-auth begin bottom-animation">开始学习</span>');
-                    }
-                    Page.clickEvent();    //重新激活 action 点击事件
-                }else if(a == "resetcurrentCourse"){
-                    // 学完重学的时候
-                    Util.courseProgressUI();   //更新课程进度
-                    $(".right-view .iframe-scroll").hide();
-                    $(".right-view>img").show();
-                    $(".actions").html('<span class="btn-wx-auth restart bottom-animation">重新学习</span>');
-                    Page.clickEvent();    //重新激活 action 点击事件
-                }else if(a == "loadCourses"){
-
-                }else if(a == "closeCodeEdit"){
-                    $(".right-view .iframe-scroll").hide();
-                    $(".right-view>img").show();
-                }else{
-                    // 打开运行结果窗口，并赋值
-                    $(".code-result-shadow-view iframe").attr({src:a});
-                    $(".code-result-shadow-view").show();
-                }
-            }, false); 
-            
+        
         },
         load:function(){
 
-            // 判断用户是否登录
-            if(localStorage.token){
-                // 加载个人信息
-                Common.showLoading();
-                Mananger.getInfo();
+            // // 判断用户是否登录
+            // if(localStorage.token){
+            //     // 加载个人信息
+            //     Common.showLoading();
+            //     // Mananger.getInfo();
+            //     Page.clickEventTotal();
+            // }else{
+            //     // 弹出登录窗口
+            //     // 打开登录窗口
+            //     $(".phone-invite-shadow-view").show();
+            //     // $(".login-shadow-view").show();
+            //     Page.clickEvent();
+            // }
+            // Common.addCopyRight();   //添加版权标识
 
-                Mananger.loadMyTeam(); // 获取我的团队信息
-                Mananger.loadTeamBrand();  //获取团队排行
-
-                Page.clickEventTotal();
-            }else{
-                // 弹出登录窗口
-                // 打开登录窗口
-                $(".phone-invite-shadow-view").show();
-                // $(".login-shadow-view").show();
-                Page.clickEvent();
-            }
-            Common.addCopyRight();   //添加版权标识
         },
         loadMessage:function(arr, i, opt){
             var item = arr[i];
             var imgI = "i_"+ChatStroage.numbers;
 
             var questionHtml = null;
-            if (item.link) {
-                var text = "点击打开新网页"
-                if (item.link == "www.code.com") {
-                    text = "点击打开编辑器"
-                }else if (item.link.indexOf("www.compile.com") > -1) {
-                    text = "点击打开编译器"
-                }
-                // 带链接的
-                if (item.audio) {
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
-                }else{
-                    var linkType = "";
-                    if (item.linkType) {
-                        linkType = item.linkType
-                    }
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                        </div>\
-                                    </div>';
-                }
+            if (item.tag) {
+                // 1.是习题
+                if (item.link) {
+                    // 1.1是编程题
+                    var itemDic = {"animate":true, item:item}
+                    questionHtml = ArtTemplate("message-link-problem-template", itemDic);
 
-            }else if(item.img){
-                // 图片
-                questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view-parent">\
-                                        <div class="msg-view">\
-                                            <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                            <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                        </div>\
-                                    </div>\
-                                </div>';
-            }else{
-                // 文本
-                if (item.audio) {
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
                 }else{
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                        </div>\
-                                    </div>';
+                    // 1.2是选择题
+                    var itemDic = {"animate":true, item:item}
+                    questionHtml = ArtTemplate("message-choice-problem-template", itemDic);
                 }
-                
+            }else{
+                // 2.普通消息
+                if (item.link) {
+                    // 2.1是链接消息
+                    var itemDic = {"animate":true, item:item}
+                    questionHtml = ArtTemplate("message-link-template", itemDic);
+                }else if(item.img){
+                    // 2.2是图片消息
+                    var itemDic = {item:item, imgI:imgI}
+                    questionHtml = ArtTemplate("message-img-template", itemDic);
+                }else{
+                    // 2.3是文本消息
+                    var itemDic = {"animate":true, item:item}
+                    questionHtml = ArtTemplate("message-text-template", itemDic);
+                }
             }
 
 
@@ -1044,18 +676,6 @@ define(function(require, exports, module) {
                     
                 }else if($(this).hasClass("begin")){
                     // 开始学习，更换课程时，或者初次学习之旅时
-                    /*
-                    // 普通 action 按钮点击事件
-                    if ($(this).hasClass("exercise")) {
-                        // 点了习题的，提交答案的按钮
-                        var msg = Page.options.join(',');
-                        Page.options = [];
-                        Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                    }else{
-                        // 普通的 action 按钮
-                        Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
-                    }
-                    */
                     // 普通 action 按钮点击事件
                     Util.actionClickEvent($(this));
                 }else if($(this).hasClass("restart")){
@@ -1074,7 +694,7 @@ define(function(require, exports, module) {
                     }
 
                     if(item.record == true){
-                        // 打卡
+                        // 打卡, 提交试卷
                         var course = localStorage.oldCourse;
                         var courseIndex = localStorage.currentCourseIndex;
                         courseIndex = parseInt(courseIndex) + 1;
@@ -1086,33 +706,12 @@ define(function(require, exports, module) {
                             Common.dialog("本课程已结束，选择其它课程，再继续");
                             $(".loading-chat").remove();
                         }else{
-                            Mananger.updateExtent(course, courseIndex, $(this));   //更新学习进度
+                            Mananger.submitExam(1);   //提交试卷
                         }
 
                     }else{
-                        if(item.zuan_number || item.grow_number){
-                            // 奖励钻石，经验
-                            var course = localStorage.oldCourse;
-                            var courseIndex = localStorage.currentCourseIndex;
-                            courseIndex = parseInt(courseIndex) + 1;
-                            
-                            Mananger.addReward(course, courseIndex, item.chapter, item.grow_number, item. zuan_number, $(this));  //奖励钻石
-                        }else{
-                            /*
-                            // 普通 action 按钮点击事件
-                            if ($(this).hasClass("exercise")) {
-                                // 点了习题的，提交答案的按钮
-                                var msg = Page.options.join(',');
-                                Page.options = [];
-                                Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                            }else{
-                                // 普通的 action 按钮
-                                Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
-                            }
-                            */
-                            // 普通 action 按钮点击事件
-                            Util.actionClickEvent($(this));
-                        }
+                        // 普通 action 按钮点击事件
+                        Util.actionClickEvent($(this));
                     }
                 }
                 
@@ -1138,7 +737,6 @@ define(function(require, exports, module) {
             
 
             $(".message.link").unbind('click').click(function(){
-                var linkType = $(this).attr("data-link-type");
                 var link = $(this).attr("data-link");
                 if (link == "www.code.com") {
                     Util.openRightIframe("codeEdit");   //打开编辑器
@@ -1153,17 +751,11 @@ define(function(require, exports, module) {
                     // 打开消息链接窗口
                     // $(".message-link-shadow-view .message-link #message-link-iframe").attr({src:"http://develop.cxy61.com:8001/s/course1/game7/2.html"});
                     // $(".message-link-shadow-view").show();
-                    if (linkType) {
-                        //进行编辑器的选择
-                        Util.link = link;
-                        Util.linkType = linkType;
-                        $(".compile-shadow-view").show();
-                    }else{
-                        var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
-                        params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
-                        console.log(params);
-                        window.open(link, '_blank', params);
-                    }
+
+                    var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+                    params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+                    console.log(params);
+                    window.open(link, '_blank', params);
                 }
             })
 
@@ -1244,19 +836,6 @@ define(function(require, exports, module) {
                 window.open("https://www.cxy61.com");
             })
 
-            // 鼠标划过用户头像
-            $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
-                // $(".header .team-info").show();
-                Mananger.loadMyTeam(); // 获取我的团队信息
-                Mananger.loadTeamBrand();  //获取团队排行
-
-                Util.adjustTeaminfo();
-                $(".header .team-info").toggle();
-            }).unbind('mouseout').mouseout(function(){
-                // $(".header .team-info").show();
-                $(".header .team-info").toggle();
-            })
-
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
@@ -1275,45 +854,8 @@ define(function(require, exports, module) {
                     Common.playMessageSoun2(url);  //播放钻石音效
                 }
             })
+
             
-            // compile-shadow-view 隐藏
-            $(".compile-shadow-view").unbind('click').click(function(){
-                $(".compile-shadow-view").hide();
-            })
-            // reply 编译器
-            $(".compile-view .repl").unbind('click').click(function(){
-                var link = Util.link;
-                var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
-                params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
-                console.log(params);
-                window.open(link, '_blank', params);
-
-                Util.link = "";
-                Util.linkType = "";
-                $(".compile-shadow-view").hide();
-            })
-
-            // 程序媛编译器
-            $(".compile-view .edit").unbind('click').click(function(){
-                var type = Util.linkType.split("www.compile.com/")[1];
-                if (location.host == "develop.cxy61.com:8001") {
-                    var url = "http://"+location.host+"/app/home/codeCompileRN.html?lang="
-                }else{
-                    var url = "https://"+location.host+"/girl/app/home/codeCompileRN.html?lang="
-                }
-                url = url + type;
-                
-                var link = url;
-                var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
-                params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
-                console.log(params);
-                window.open(link, '_blank', params);
-
-                Util.link = "";
-                Util.linkType = "";
-                $(".compile-shadow-view").hide();
-            })
-
             Page.clickEventLoginRelated();
         },
         clickEventTotal:function(){
@@ -1367,19 +909,6 @@ define(function(require, exports, module) {
                 window.open("https://www.cxy61.com");
             })
 
-            // 鼠标划过用户头像
-            $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
-                // $(".header .team-info").show();
-                Mananger.loadMyTeam(); // 获取我的团队信息
-                Mananger.loadTeamBrand();  //获取团队排行
-                
-                Util.adjustTeaminfo();
-                $(".header .team-info").toggle();
-            }).unbind('mouseout').mouseout(function(){
-                // $(".header .team-info").show();
-                $(".header .team-info").toggle();
-            })
-
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbs.html");
@@ -1394,30 +923,11 @@ define(function(require, exports, module) {
         },
         clickEventLoginRelated:function(){
             // ------------------------------------------- I:以前的登录（废弃）
-            /*
-            // 关闭登录窗口
-            $(".login-view .close img").unbind('click').click(function(){
-                $(".login-shadow-view").hide();
-            })
-
-            // 登录按钮
-            $(".login-view .login").unbind('click').click(function(){
-                // 登录成功，请求数据
-                Mananger.login();
-            })
-            */
             // 退出登录
             $(".quit").unbind('click').click(function(){
                 Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
-
-                    var CourseMessageData = localStorage.CourseMessageData?localStorage.CourseMessageData:"";
-
                     localStorage.clear();
                     window.location.reload();
-
-                    if (CourseMessageData) {
-                        localStorage.CourseMessageData = CourseMessageData;
-                    }
                 })
             })
             
@@ -1476,7 +986,7 @@ define(function(require, exports, module) {
                 $(".phone-invite-shadow-view").hide();
             })
             $(".phone-invite-view .forgot-psd").unbind('click').click(function(){
-                // 打开找回密码窗口
+                // 打开找回密码窗口 
                 $(".find-password-shadow-view").show();
             })
 
@@ -1575,97 +1085,6 @@ define(function(require, exports, module) {
             })
         
         },
-        requestNextData:function(actionText, pagenum){
-            $.ajax({
-                type:'get',
-                url:"../../modules/common/data.json",
-                success:function(json){
-                    if (pagenum == 1) {
-                        if (json.first) {
-                            Page.index = 0;
-                            Page.data = json.first;
-                            Page.pagenum ++;
-                            
-                            Page.loadSepLine(Page.pagenum - 1);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-                        }else{
-                            Common.dialog('暂无数据');
-                            $(".loading-chat").remove();
-                            // $(".actions").show(); 
-                        }
-                    }else if (pagenum == 2) {
-                        if (json.second) {
-                            Page.index = 0;
-                            Page.data = json.second;
-                            Page.pagenum ++;
-                            
-                            Page.loadSepLine(Page.pagenum - 1);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-                        }else{
-                            Common.dialog('暂无数据');
-                            $(".loading-chat").remove();
-                            // $(".actions").show(); 
-                        }
-                    }else if (pagenum == 3) {
-                        if (json.third) {
-                            Page.index = 0;
-                            Page.data = json.third;
-                            Page.pagenum ++;
-                            
-                            Page.loadSepLine(Page.pagenum - 1);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-                        }else{
-                            Common.dialog('暂无数据');
-                            $(".loading-chat").remove();
-                            // $(".actions").show(); 
-                        }
-                    }
-                },
-                error:function(xhr, textStatus){
-
-                }
-            });
-        },
-        requestCourseNextData:function(actionText, course, courseIndex){
-            // 请求当前课程的节数据
-            $.ajax({
-                type:'get',
-                url:"../../modules/common/data.json",
-                success:function(json){
-                    var data = json[course];
-                    if (data) {
-                        if (data[courseIndex]) {
-                            //如果此课程此小节消息存在
-                            Page.index = 0;
-                            Page.data = data[courseIndex];
-                            
-                            if (course == "html_simple") {
-                                localStorage.htmlSimpleIndex = courseIndex;
-                            }else if (course == "css_simple") {
-                                localStorage.cssSimpleIndex = courseIndex;
-                            }else if (course == "javascript_simple") {
-                                localStorage.jsSimpleIndex = courseIndex;
-                            }else if (course == "python_simple") {
-                                localStorage.pythonSimpleIndex = courseIndex;
-                            }
-                            
-                            Page.loadSepLine(courseIndex);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-
-                        }else{
-                            Common.dialog("恭喜，您已经完成本课程的学习。您可以选择其它课程，再继续");
-                            $(".loading-chat").remove();
-                        }
-                    }else{
-                        Common.dialog("课程还未开放");
-                        $(".loading-chat").remove();
-                    }
-                },
-                error:function(xhr, textStatus){
-
-                }
-            });
-        },
         loadMessageWithData:function(actionText, arr, i, opt){
             if (actionText != "") {
                 // 去掉加载存储数据是节数据后没有 action，
@@ -1729,10 +1148,21 @@ define(function(require, exports, module) {
                     Page.optionIndex = 0;
                     Page.loadMessageWithData(actionText, Page.optionData, Page.optionIndex, true);   //true 用来区分，普通消息还是问题下的消息
                     
+                    // 答错了，创建记录
+                    // 创建知识点记录
+                    Mananger.createKonwRecord(item.tag, item.message, "unfinish");
                 }else{
                     Page.optionData = item.correct;
                     Page.optionIndex = 0;
                     Page.loadMessageWithData(actionText, Page.optionData, Page.optionIndex, true);
+                    
+                    // 答对了，奖励并记录
+                    // 奖励钻石，经验 
+                    if (item.zuan_number) {
+                        Mananger.addReward(item.tag, item.zuan_number, $(this));
+                    }
+                    // 创建知识点记录
+                    Mananger.createKonwRecord(item.tag, item.message, "finish");
                 }
             }else{
                 // 点了普通按钮
@@ -1758,7 +1188,6 @@ define(function(require, exports, module) {
                     // 先判断数组元素执行完了没有，完了发请求, 没有，对数组操作
                     if (!Page.data[Page.index + 1] || Page.data.length == Page.index + 1) {
                         // 已有数据源已显示完，重新请求数据， 并重新复制 Page.data, Page.index
-                        // Page.requestNextData(actionText, Page.pagenum);
 
                         // 请求当前课程的下一节课程
                         Page.requestCourseData(actionText, false);
@@ -1793,45 +1222,7 @@ define(function(require, exports, module) {
 
         },
         requestCourseData:function(actionText, flag){
-            // 请求课程数据
-            /*
-            if (localStorage.currentCourse) {
-
-                if (localStorage.currentCourse == "html_simple") {
-                    var htmlSimpleIndex = 0;
-                    if (localStorage.htmlSimpleIndex) {
-                        htmlSimpleIndex = localStorage.htmlSimpleIndex;
-                    }
-                    htmlSimpleIndex = parseInt(htmlSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, htmlSimpleIndex);
-                }else if (localStorage.currentCourse == "css_simple") {
-                    var cssSimpleIndex = 0;
-                    if (localStorage.cssSimpleIndex) {
-                        cssSimpleIndex = localStorage.cssSimpleIndex;
-                    }
-                    cssSimpleIndex = parseInt(cssSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, cssSimpleIndex);
-                }else if (localStorage.currentCourse == "javascript_simple") {
-                    var jsSimpleIndex = 1;
-                    if (localStorage.jsSimpleIndex) {
-                        jsSimpleIndex = localStorage.jsSimpleIndex;
-                    }
-                    jsSimpleIndex = parseInt(jsSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, jsSimpleIndex);
-                }else if (localStorage.currentCourse == "python_simple") {
-                    var pythonSimpleIndex = 1;
-                    if (localStorage.pythonSimpleIndex) {
-                        pythonSimpleIndex = localStorage.pythonSimpleIndex;
-                    }
-                    pythonSimpleIndex = parseInt(pythonSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, pythonSimpleIndex);
-                }
-            }else{
-                Common.dialog("请选择一个课程");
-                $(".loading-chat").remove();
-            }
-            */
-            
+    
             if(localStorage.currentCourse){
                 if (localStorage.oldCourse != localStorage.currentCourse) {
                     // 切换课程学习
@@ -1849,66 +1240,6 @@ define(function(require, exports, module) {
         },
         requestCategoryCourse:function(actionText, flag){
             Mananger.getCourseInfoWithPk(actionText, localStorage.oldCourse);
-
-            /*
-            if (localStorage.oldCourse == "html_simple") {
-                var htmlSimpleIndex = 0;
-                if (localStorage.htmlSimpleIndex) {
-                    htmlSimpleIndex = localStorage.htmlSimpleIndex;
-                }
-                htmlSimpleIndex = parseInt(htmlSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(htmlSimpleIndex == 1){
-                    }else{
-                        htmlSimpleIndex = htmlSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, htmlSimpleIndex);
-            }else if (localStorage.oldCourse == "css_simple") {
-                var cssSimpleIndex = 0;
-                if (localStorage.cssSimpleIndex) {
-                    cssSimpleIndex = localStorage.cssSimpleIndex;
-                }
-                cssSimpleIndex = parseInt(cssSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(cssSimpleIndex == 1){
-                    }else{
-                        cssSimpleIndex = cssSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, cssSimpleIndex);
-            }else if (localStorage.oldCourse == "javascript_simple") {
-                var jsSimpleIndex = 1;
-                if (localStorage.jsSimpleIndex) {
-                    jsSimpleIndex = localStorage.jsSimpleIndex;
-                }
-                jsSimpleIndex = parseInt(jsSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(jsSimpleIndex == 1){
-                    }else{
-                        jsSimpleIndex = jsSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, jsSimpleIndex);
-            }else if (localStorage.oldCourse == "python_simple") {
-                var pythonSimpleIndex = 1;
-                if (localStorage.pythonSimpleIndex) {
-                    pythonSimpleIndex = localStorage.pythonSimpleIndex;
-                }
-                pythonSimpleIndex = parseInt(pythonSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(pythonSimpleIndex == 1){
-                    }else{
-                        pythonSimpleIndex = pythonSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, pythonSimpleIndex);
-            }
-            */
         },
         loadSepLine:function(number){
             $(".loading-chat").remove();
@@ -1940,7 +1271,7 @@ define(function(require, exports, module) {
             var loadingWHtml = null;
             loadingWHtml = '<div class="loading-chat left-animation">\
                                 <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
+                            </div>';f
 
             $(loadingWHtml).appendTo(".messages");
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
@@ -1952,59 +1283,6 @@ define(function(require, exports, module) {
         code:"",
         password:"",
         chooseAvatar:"https://static1.bcjiaoyu.com/avatars/1.png",
-        timer:null,
-        login:function(){
-            if($(".account-view .username input").val() == ""){
-                Common.dialog("请输入账号");
-                return;
-            }
-            if($(".account-view .password input").val() == ""){
-                Common.dialog("请输入密码");
-                return;
-            }
-
-            Common.showLoading();
-            $.ajax({
-                type:"post",
-                url:Common.domain + "/userinfo/invitation_code_login/",
-                data:{
-                    code:$(".account-view .username input").val(),
-                    password:$(".account-view .password input").val()
-                },
-                success:function(json){
-                    console.log(json);
-                    localStorage.token = json.token;
-
-                    Mananger.getInfo();
-
-                    window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
-
-                    Mananger.loadMyTeam();  // 获取我的团队信息
-                    Mananger.loadTeamBrand();  //获取团队排行
-                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
-                },
-                error:function(xhr, textStatus){
-                    Common.hideLoading();
-                    if (textStatus == "timeout") {
-                        Common.dialog("请求超时");
-                        return;
-                    }
-                    if (xhr.status == 401) {
-                        //去登录
-                        localStorage.clear();
-                        window.location.reload();
-                        return;
-                    }
-                    if (xhr.status == 400 || xhr.status == 403) {
-                        Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                        return;
-                    }else{
-                        Common.dialog('服务器繁忙');
-                        return;
-                    }
-                }
-            })
-        },
         getInfo:function(){
             Common.isLogin(function(token){
                 $.ajax({
@@ -2016,50 +1294,28 @@ define(function(require, exports, module) {
                     success:function(json){
                         Common.hideLoading();
                         $(".phone-invite-shadow-view").hide();
-                        // $(".login-shadow-view").hide();
-                        
-                        /*
-                        $(".header .avatar img").attr({src:json.avatar});
-                        $(".header .info .grade").html(json.grade.current_name);
-                        $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
-                        $(".header .zuan span").html("x"+json.diamond);
-
-                        var percent = parseInt(json.experience)/parseInt(json.grade.next_all_experience)*$(".header .info-view").width();
-                        $(".header .progress img").css({
-                            width:percent
-                        })
-                        */
-                        Util.updateInfo(json);
-
+                    
+                        Util.updateInfo(json);     //更新用户信息
                         Util.courseProgressUI();   //更新课程进度
-                        
-                        
-                        // Mananger.loadMyTeam(); // 获取我的团队信息
-                        // window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
 
-
-                        // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
-                        if (localStorage.chatData) {
-                            if(localStorage.currentCourse){
-                                Mananger.getCourse(localStorage.currentCourse);  //更改缓存数据源后，加载会话消息
-                            }else{
-                                ChatStroage.init();
-                            }
-                        }else{
-                            Default.init();
-                        }
+                        Default.init();
+                        
+                        // // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
+                        // if (localStorage.chatData) {
+                        //     if(localStorage.currentCourse){
+                        //         Mananger.getCourse(localStorage.currentCourse);  //更改缓存数据源后，加载会话消息
+                        //     }else{
+                        //         ChatStroage.init();
+                        //     }
+                        // }else{
+                        //     Default.init();
+                        // }
 
                     },
                     error:function(xhr, textStatus){
                         Common.hideLoading();
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -2103,20 +1359,6 @@ define(function(require, exports, module) {
                             return;
                         }
                         
-                        /*
-                        // 方法2：捕获异常
-                        Util.catchJsonParseError(data.json).then(function(b){
-                            var array = b;
-                        }).catch(function(err){
-                            // console.log(err);
-                            $(".btn-wx-auth").attr({disabledImg:false});
-                            alert("数据格式有问题!");
-                            $(".loading-chat").remove();
-                            return;
-                        })
-                        */
-                        // var array = JSON.parse(data.json);
-                        
                         var courseIndex = data.learn_extent.last_lesson;
                         localStorage.currentCourseIndex = courseIndex;  //记录课程下标
                         courseIndex = parseInt(courseIndex);
@@ -2156,12 +1398,6 @@ define(function(require, exports, module) {
 
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -2216,12 +1452,6 @@ define(function(require, exports, module) {
                             // Common.dialog("请求超时");
                             return;
                         }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
-                            return;
-                        }
                         if (xhr.status == 400 || xhr.status == 403) {
                             // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
@@ -2234,26 +1464,7 @@ define(function(require, exports, module) {
                 
             })
         },
-        addReward:function(course, courseIndex, chapter, growNum, zuanNum, this_){
-            // 奖励
-            if (!chapter || chapter == "") {
-                //不发奖励请求
-                /*
-                // 普通 action 按钮点击事件
-                if (this_.hasClass("exercise")) {
-                    // 点了习题的，提交答案的按钮
-                    var msg = Page.options.join(',');
-                    Page.options = [];
-                    Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                }else{
-                    // 普通的 action 按钮
-                    Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
-                }
-                */
-                // 普通 action 按钮点击事件
-                Util.actionClickEvent(this_);
-                return;
-            }
+        addReward:function(kn, zuanNum, this_){
             Common.isLogin(function(token){
                 $.ajax({
                     type:"put",
@@ -2262,10 +1473,7 @@ define(function(require, exports, module) {
                         Authorization:"Token " + token
                     },
                     data:{
-                        course:course,
-                        lesson:courseIndex,
-                        chapter:chapter,
-                        experience_amount:growNum,
+                        knowledgepoint:kn,
                         diamond_amount:zuanNum
                     },
                     success:function(json){
@@ -2300,98 +1508,39 @@ define(function(require, exports, module) {
                         // 更新个人信息
                         Util.updateInfo(json);
                     
-                        /*    
-                        // 普通 action 按钮点击事件
-                        if (this_.hasClass("exercise")) {
-                            // 点了习题的，提交答案的按钮
-                            var msg = Page.options.join(',');
-                            Page.options = [];
-                            Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                        }else{
-                            // 普通的 action 按钮
-                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
-                        }
-                        */
                         // 普通 action 按钮点击事件
                         Util.actionClickEvent(this_);
                         
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
+                            // Common.dialog("请求超时");
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
                             // 重复领取，不奖励，接着走消息
-                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            /*
-                            // 普通 action 按钮点击事件
-                            if (this_.hasClass("exercise")) {
-                                // 点了习题的，提交答案的按钮
-                                var msg = Page.options.join(',');
-                                Page.options = [];
-                                Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                            }else{
-                                // 普通的 action 按钮
-                                Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
-                            }
-                            */
                             // 普通 action 按钮点击事件
                             Util.actionClickEvent(this_);
                             return;
                         }else{
-                            Common.dialog('服务器繁忙');
+                            // Common.dialog('服务器繁忙');
                             return;
                         }
                     }
                 })
             })
         },
-        updateExtent:function(course, courseIndex, this_){
-            // 学习进度
+        submitExam:function(pk){
+            // 提交试卷
             Common.isLogin(function(token){
                 $.ajax({
-                    type:"post",
-                    url:Common.domain + "/userinfo/update_learnextent/",
+                    type:"put",
+                    url:Common.domain + "/exercise/myexercises/"+pk+"/",
                     headers:{
                         Authorization:"Token " + token
                     },
-                    data:{
-                        course:course,
-                        lesson:courseIndex
-                    },
                     success:function(json){
-                        console.log(json);
-                        
-                        //记录当前课程的当前节下标
-                        // localStorage.currentCourseIndex = courseIndex;
-
-                        // // 记录学习下标
-                        // Util.setCourseIndex(course, courseIndex);
-
-                        Util.updateCourseProgress();   //更新课程进度
-                        
-                        /*
-                        // 普通 action 按钮点击事件
-                        if (this_.hasClass("exercise")) {
-                            // 点了习题的，提交答案的按钮
-                            var msg = Page.options.join(',');
-                            Page.options = [];
-                            Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                        }else{
-                            // 普通的 action 按钮
-                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
-                        }
-                        */
-                        // 普通 action 按钮点击事件
-                        Util.actionClickEvent(this_);
-                        
+                        Common.dialog("本次试卷作答完毕，请选择其它试卷继续!");
                     },
                     error:function(xhr, textStatus){
                         $(".btn-wx-auth").attr({disabledImg:false});
@@ -2399,12 +1548,6 @@ define(function(require, exports, module) {
                         
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 400 || xhr.status == 403) {
@@ -2418,107 +1561,48 @@ define(function(require, exports, module) {
                 })
             })
         },
-        loadMyTeam:function(){
+        createKonwRecord:function(kn, qTitle, status){
             Common.isLogin(function(token){
                 $.ajax({
-                    type:'get',
-                    url: Common.domain + "/userinfo/mygroup/",
+                    type:"post",
+                    url:Common.domain + "/exercise/myknowledgepoint_create/",
                     headers:{
                         Authorization:"Token " + token
                     },
-                    timeout:6000,
+                    data:{
+                        knowledgepoint:kn,
+                        question_title:qTitle,
+                        status:status
+                    },
                     success:function(json){
-                       var html = ArtTemplate("team-template", json);
-                       $(".header .team").html(html);
+                        console.log(json);
                     },
                     error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            // 重复领取，不奖励，接着走消息
+                            // 普通 action 按钮点击事件
+                            // Util.actionClickEvent(this_);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
 
-                        if (textStatus == "timeout") {
-                            // Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
-                            return;
-                        }
-                        if (xhr.status == 404) {
-                            // Common.dialog("您没有团队");
-                            return;
-                        }else if (xhr.status == 400 || xhr.status == 403) {
-                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            return;
-                        }else{
-                            // Common.dialog('服务器繁忙');
-                            return;
-                        }
-                        console.log(textStatus);
-                    }
-                })
-            })
-        },
-        loadTeamBrand:function(){
-            /*
-            var array = [
-                {name:'nozuonodie', diamond_amount:237},
-                {name:'nozuonodie', diamond_amount:230},
-                {name:'nozuonodie', diamond_amount:230},
-                {name:'nozuonodie', diamond_amount:230},
-                {name:'nozuonodie', diamond_amount:220},
-                {name:'nozuonodie', diamond_amount:210},
-                {name:'nozuonodie', diamond_amount:130}
-            ]
-            var html = ArtTemplate("teams-brand-template", array);
-            $(".teams-brand").html(html);
-            */
-            Common.isLogin(function(token){
-                $.ajax({
-                    type:"get",
-                    url:Common.domain + "/userinfo/groups/diamond/ranking/",
-                    headers:{
-                        Authorization:"Token " + token
-                    },
-                    timeout:15000,
-                    success:function(json){
-                        var html = ArtTemplate("teams-brand-template", json.results);
-                        $(".teams-brand").html(html);
-                    },
-                    error:function(xhr, textStatus){
-                        if (textStatus == "timeout") {
-                            // Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
-                            return;
-                        }
-                        if (xhr.status == 404) {
-                            // Common.dialog("您没有团队");
-                            return;
-                        }else if (xhr.status == 400 || xhr.status == 403) {
-                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            return;
-                        }else{
-                            // Common.dialog('服务器繁忙');
-                            return;
-                        }
-                        console.log(textStatus);
-                    }
-                })
-            })
-        },
         getPhoneCode:function(this_){
             var reg = /^1[0-9]{10}$/;
             var phone = this_.find(".phone").children("input").val();
             
             var url = "";
             if (this_.find(".view-tag").html() == "注册") {
-                url = "/userinfo/telephone_signup_request/"
-            }else if (this_.find(".view-tag").html() == "绑定手机") {
-                url = "/userinfo/bind_telephone_request/"
+                url = "/userinfo/signup_request/"
             }else if (this_.find(".view-tag").html() == "找回密码") {
                 url = "/userinfo/reset_password_request/";
             }
@@ -2529,35 +1613,34 @@ define(function(require, exports, module) {
                     $.ajax({
                         type:"get",
                         url:Common.domain + url,
+                        headers:{
+                            Authorization:"Token " + token
+                        },
                         data:{
-                            telephone:phone
+                            username:phone
                         },
                         timeout:6000,
                         success:function(json){
                             if (json.status == 0) {
                                 var time = 60;
-                                Mananger.timer = setInterval(function(){
+                                this.timer = setInterval(()=>{
                                     --time;
                                     if (time > 0) {
                                         this_.find(".get-code").html(time+'s后重试');
                                     }else{
                                         this_.find(".get-code").html("获取验证码");
-                                        clearInterval(Mananger.timer);
-                                        Mananger.timer = null;
+                                        clearInterval(this.timer);
                                     }
                                 },1000);
-                            }else if (json.detail) {
-                                Common.dialog(json.detail);
-                            }else if (json.message) {
-                                Common.dialog(json.message);
-                            }
+                                }else if (json.detail) {
+                                    Common.dialog(json.detail);
+                                }
                         },
                         error:function(xhr, textStatus){
                             if (textStatus == "timeout") {
                                 Common.dialog("请求超时");
                                 return;
                             }
-
                             if (xhr.status == 404) {
                                 // Common.dialog("您没有团队");
                                 return;
@@ -2577,145 +1660,24 @@ define(function(require, exports, module) {
                 Common.dialog("手机号不合法");
             }
         },
-        lockPhone:function(this_){
-            // 绑定手机
-            if (this_.find(".phone").children("input").val() == "") {
-                Common.dialog("请输入手机号");
-                return
-            }
-            if (this_.find(".verify-code").children("input").val() == "") {
-                Common.dialog("请输入验证码");
-                return
-            }
-            if (this_.find(".password").children("input").val() == "") {
-                Common.dialog("请输入密码");
-                return
-            }
-            
-            Common.isLogin(function(token){
-                $.ajax({
-                    type:"post",
-                    url:Common.domain + "/userinfo/bind_telephone/",
-                    data:{
-                        telephone:this_.find(".phone").children("input").val(),
-                        password:this_.find(".password").children("input").val(),
-                        verification_code:this_.find(".verify-code").children("input").val()
-                    },
-                    headers:{
-                        Authorization:"Token " + token
-                    },
-                    timeout:6000,
-                    success:function(json){
-                        if (json.token) {
-                            Common.dialog("绑定成功");
-                            this_.parent().hide();
-                        }
-                    },
-                    error:function(xhr, textStatus){
-                        if (textStatus == "timeout") {
-                            Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
-                            return;
-                        }
-                        if (xhr.status == 404) {
-                            // Common.dialog("您没有团队");
-                            return;
-                        }else if (xhr.status == 400 || xhr.status == 403) {
-                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            return;
-                        }else{
-                            Common.dialog('服务器繁忙');
-                            return;
-                        }
-                        console.log(textStatus);
-                    }
-                })
-            })
-        },
-        regPhone1:function(this_){
-            // 注册手机
-            if (this_.find(".phone").children("input").val() == "") {
-                Common.dialog("请输入手机号");
-                return
-            }
-            if (this_.find(".verify-code").children("input").val() == "") {
-                Common.dialog("请输入验证码");
-                return
-            }
-            if (this_.find(".password").children("input").val() == "") {
-                Common.dialog("请输入密码");
-                return
-            }
-            
-            Common.isLogin(function(token){
-                $.ajax({
-                    type:"post",
-                    url:Common.domain + "/userinfo/telephone_signup/",
-                    data:{
-                        telephone:this_.find(".phone").children("input").val(),
-                        password:this_.find(".password").children("input").val(),
-                        verification_code:this_.find(".verify-code").children("input").val(),
-                        name:"",
-                        avatar:""
-                    },
-                    headers:{
-                        Authorization:"Token " + token
-                    },
-                    timeout:6000,
-                    success:function(json){
-                        if (json.token) {
-                            Common.dialog("注册成功");
-                            this_.parent().hide();
-                        }
-                    },
-                    error:function(xhr, textStatus){
-                        if (textStatus == "timeout") {
-                            // Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
-                            return;
-                        }
-                        if (xhr.status == 404) {
-                            // Common.dialog("您没有团队");
-                            return;
-                        }else if (xhr.status == 400 || xhr.status == 403) {
-                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-                            return;
-                        }else{
-                            // Common.dialog('服务器繁忙');
-                            return;
-                        }
-                        console.log(textStatus);
-                    }
-                })
-            })
-        },
         regPhone:function(phone, code, password, url, nickname){
+            var dic = {
+                username:phone,
+                password:password,
+                verification_code:code,
+                userinfo:{
+                    name:nickname,
+                    avatar:url
+                }
+            };
             Common.showLoading();
             // 注册手机
             Common.isLogin(function(token){
                 $.ajax({
                     type:"post",
-                    url:Common.domain + "/userinfo/telephone_signup/",
-                    data:{
-                        telephone:phone,
-                        password:password,
-                        verification_code:code,
-                        name:nickname,
-                        avatar:url
-                    },
-                    headers:{
-                        Authorization:"Token " + token
-                    },
+                    url:Common.domain + "/userinfo/signup/",
+                    data:JSON.stringify(dic),
+                    contentType:"application/json",
                     timeout:6000,
                     success:function(json){
                         if (json.token) {
@@ -2728,21 +1690,12 @@ define(function(require, exports, module) {
                             Mananger.getInfo();
 
                             window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
-
-                            Mananger.loadMyTeam();  // 获取我的团队信息
-                            Mananger.loadTeamBrand();  //获取团队排行
                         }
                     },
                     error:function(xhr, textStatus){
                         Common.hideLoading();
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时,请重试");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 404) {
@@ -2780,7 +1733,7 @@ define(function(require, exports, module) {
                     type:"put",
                     url:Common.domain + "/userinfo/reset_password/",
                     data:{
-                        telephone:this_.find(".phone").children("input").val(),
+                        username:this_.find(".phone").children("input").val(),
                         password:this_.find(".password").children("input").val(),
                         verification_code:this_.find(".verify-code").children("input").val()
                     },
@@ -2794,12 +1747,6 @@ define(function(require, exports, module) {
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
-                            return;
-                        }
-                        if (xhr.status == 401) {
-                            //去登录
-                            localStorage.clear();
-                            window.location.reload();
                             return;
                         }
                         if (xhr.status == 404) {
@@ -2835,9 +1782,9 @@ define(function(require, exports, module) {
                     password:this_.find(".password").children("input").val()
                 }
             }else if (this_.attr("data-tag") == "phone") {
-                url = "/userinfo/telephone_login/"
+                url = "/userinfo/login/"
                 data = {
-                    telephone:this_.find(".username").children("input").val(),
+                    username:this_.find(".username").children("input").val(),
                     password:this_.find(".password").children("input").val()
                 }
             }
@@ -2854,21 +1801,11 @@ define(function(require, exports, module) {
                     Mananger.getInfo();
 
                     window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
-
-                    Mananger.loadMyTeam();  // 获取我的团队信息
-                    Mananger.loadTeamBrand();  //获取团队排行
-                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
                 },
                 error:function(xhr, textStatus){
                     Common.hideLoading();
                     if (textStatus == "timeout") {
                         Common.dialog("请求超时");
-                        return;
-                    }
-                    if (xhr.status == 401) {
-                        //去登录
-                        localStorage.clear();
-                        window.location.reload();
                         return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
@@ -2884,8 +1821,6 @@ define(function(require, exports, module) {
     }
     // ---------------------4.帮助方法
     var Util = {
-        link:"",
-        linkType:"",
         waitTime:Common.getQueryString("wt")?10:1000,
         messageTime:Common.getQueryString("mt")?20:2000,
         storeData:function(){
@@ -2957,7 +1892,7 @@ define(function(require, exports, module) {
             }
         },
         updateInfo:function(json){
-
+            /*
             Default.olduser = json.olduser;      //记录是新用户还是老用户
             localStorage.avatar = json.avatar.replace("http://", "https://");     //记录用户的头像
             localStorage.currentGrade = json.grade.current_name;    //记录当前等级
@@ -2977,6 +1912,13 @@ define(function(require, exports, module) {
                     width:percent
                 })
             }
+            */
+            localStorage.owner = json.owner;                                      //记录用户的 username
+            localStorage.avatar = json.avatar.replace("http://", "https://");     //记录用户的头像
+            $(".header .item").show();
+            $(".header .avatar img").attr({src:json.avatar.replace("http://", "https://")});
+            $(".header .nickname span").html(json.name);
+
         },
         adjustTeaminfo:function(){
             var a = $(".header .icon4").offset().left;
@@ -3173,28 +2115,482 @@ define(function(require, exports, module) {
         openRightIframe:function(tag){
             if (tag == "img") {
                 $(".right-view>img").show();
-                $(".right-view .iframe-scroll.courseList").hide();
-                $(".right-view .iframe-scroll.codeEdit").hide();
-                $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view iframe.courseList").hide();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.codeCompile").hide();
             }else if (tag == "courseList") {
                 $(".right-view>img").hide();
-                $(".right-view .iframe-scroll.courseList").show();
-                $(".right-view .iframe-scroll.codeEdit").hide();
-                $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view iframe.courseList").show();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.codeCompile").hide();
             }else if (tag == "codeEdit") {
                 $(".right-view>img").hide();
-                $(".right-view .iframe-scroll.courseList").hide();
-                $(".right-view .iframe-scroll.codeEdit").show();
-                $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view iframe.courseList").hide();
+                $(".right-view iframe.codeEdit").show();
+                $(".right-view iframe.codeCompile").hide();
             }else if (tag == "codeCompile") {
                 $(".right-view>img").hide();
-                $(".right-view .iframe-scroll.courseList").hide();
-                $(".right-view .iframe-scroll.codeEdit").hide();
-                $(".right-view .iframe-scroll.codeCompile").show();
+                $(".right-view iframe.courseList").hide();
+                $(".right-view iframe.codeEdit").hide();
+                $(".right-view iframe.codeCompile").show();
             }
         }
     }
 
-    Page.init();
+    var Course = {
+        index:-1,  //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
+        init:function(){
+            $(".messages").html("");
+            var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+            if (array.length) {
+                Course.showContentInView(array, 0);
+                $(".item").show();
+            }else{
+                $(".item").show();
+            }
+
+            Course.clickEvent();
+
+            // Common.addCopyRight();   //添加版权标识
+
+        },
+        openInputView:function(tag, tagHtml){
+            $(".msg-header .type").html(tagHtml);
+            $(".msg-header .type").attr({tag:tag});
+            if (tag == "photo") {
+                $(".input-view textarea").attr({placeholder:"图片消息地址"});
+                $(".input-view input").hide();
+                $(".input-view #upload-container").show();
+            }else if (tag == "text") {
+                $(".input-view textarea").attr({placeholder:"文本消息内容"});
+                $(".input-view input").hide();
+                $(".input-view #upload-container").hide();
+            }else if (tag == "link-text") {
+                $(".input-view textarea").attr({placeholder:"链接消息内容"});
+                $(".input-view input").show();
+                $(".input-view #upload-container").hide();
+            }else if (tag == "action") {
+                $(".input-view textarea").attr({placeholder:"回复按钮上的文字"})
+                $(".input-view input").hide();
+                $(".input-view #upload-container").hide();
+            }
+            $(".message-input-view").css({display:'flex'});
+        },
+        showContentInView:function(arr, i){
+            var item = arr[i];
+            var questionHtml = "",
+                answerHtml = "";
+
+            var itemDic = {index:i, item:item};
+            if (item.link) {
+                // 2.1是链接消息
+                item.message = Course.formatString(item.message);
+                questionHtml = ArtTemplate("message-link-template", itemDic);
+            }else if(item.img){
+                // 2.2是图片消息
+                questionHtml = ArtTemplate("message-img-template", itemDic);
+            }else{
+                // 2.3是文本消息
+                item.message = Course.formatString(item.message);
+                questionHtml = ArtTemplate("message-text-template", itemDic);
+            }
+
+            if (item.action) {
+                answerHtml = ArtTemplate("answer-text-template", itemDic);
+            }
+            $(questionHtml).appendTo(".messages");
+            $(answerHtml).appendTo(".messages");
+            
+            if (item.img) {
+                try {
+                    Course.setImgHeight(item.img);
+                }
+                catch(err){
+                    console.log("图片格式不合法");
+                }
+            }
+            
+            // 滚动到最底部
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+
+            // 点击事件
+            Course.clickEvent();
+
+            setTimeout(function(){
+                if (i+1 == arr.length) {
+                    return;
+                }
+                Course.showContentInView(arr, i+1);
+            }, 10)
+        },
+        refreshAddMessage:function(){
+            // 当前元素后面的元素 index+1
+            // 当前元素的处理
+            if (tag == "action") {
+                // 当前元素后添加一个 action 用户回复消息
+                var dic1 = {index:Course.index, item:array[Course.index]};
+                var answerHtml = ArtTemplate("answer-text-template", dic1);
+                $(answerHtml).appendTo(".messages");
+
+            }else{
+                // 当前元素后面追加一个消息
+                var dic1 = {index:Course.index+1, item:array[Course.index+1]};
+                var questionHtml = ""
+                if (tag == "text") {
+                    questionHtml = ArtTemplate("message-text-template", dic1);
+                }else if (tag == "photo") {
+                    questionHtml = ArtTemplate("message-img-template", dic1)
+                }else if (tag == "link-text") {
+                    questionHtml = ArtTemplate("message-link-template", dic1);
+                }
+                $(questionHtml).appendTo(".messages");
+
+                if (array[Course.index+1].img) {
+                    try {
+                        Course.setImgHeight(array[Course.index+1].img);
+                    }
+                    catch(err){
+                         Common.dialog("图片格式不合法");
+                    }
+                }
+            }
+        },
+        refreshReduceMessage:function(){
+            // 当前元素删除
+            // 当前元素后面的元素 index-1
+        },
+        clickEvent:function(){
+            // console.log(1);
+            $(".add .reset").unbind('click').click(function(){
+                // 清空数据重来
+                var array = [];
+                localStorage.CourseMessageData = JSON.stringify(array);
+                Course.init();  //刷新页面
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+            })
+            $(".add .left-add").unbind('click').click(function(){
+                Course.index = -1;
+                $(".message-types").css({display:'flex'});
+            })
+            $(".add .right-add").unbind('click').click(function(){
+                Course.openInputView("action", "按钮文本");
+            })
+            $(".message-types li").unbind('click').click(function(){
+                var tag = $(this).attr("data-tag");
+                var tagHtml = $(this).html();
+                Course.openInputView(tag, tagHtml);
+                $(".message-types").css({display:'none'});
+
+            })
+
+            $(".msg-header img").unbind('click').click(function(){
+                $(".message-input-view").css({display:"none"});
+            })
+            
+            // 确认添加内容
+            $(".input-view .input-submit").unbind('click').click(function(){
+                // 提交内容
+                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                var dic = {};       //当前消息
+
+                var tag = $(".msg-header .type").attr("tag");
+                if (tag == "action") {
+                    /*
+                    // 取出数组中最后一个元素,给最后一条消息加 action
+                    dic = array[array.length - 1];
+                    if (dic.action) {
+                        dic["action"] = $(".input-view textarea").val();
+                        $(".answer .content").html(dic.action);
+                    }else{
+                        dic["action"] = $(".input-view textarea").val();
+                        // 1.（用户回复）界面显示添加的内容
+                        var dic1 = {index:array.length-1, item:dic};
+                        var answerHtml = ArtTemplate("answer-text-template", dic1);
+                        $(answerHtml).appendTo(".messages");
+                    }
+                    */
+                    if (Course.index == -1) {
+                        //最后一条消息添加 action
+                        dic = array[array.length - 1];
+                        dic["action"] = $(".input-view textarea").val();
+                    }else{
+                        // 当前消息添加 action
+                        dic = array[Course.index];
+                        dic["action"] = $(".input-view textarea").val();
+                    }
+
+
+                }else if (tag == "photo") {
+                    dic["img"] = $(".input-view textarea").val();
+                    if (Course.index == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(Course.index+1, 0, dic);  
+                    }
+                    
+                    
+                    /*
+                    // 2.（图片消息）界面显示添加的内容
+                    var dic1 = {index:array.length-1, item:dic};
+                    var questionHtml = ArtTemplate("message-img-template", dic1);
+                    $(questionHtml).appendTo(".messages");
+                    
+                    try {
+                        Course.setImgHeight($(".input-view textarea").val());
+                    }
+                    catch(err){
+                         Common.dialog("图片格式不合法");
+                    }
+                    */
+
+                }else if (tag == "text"){
+                    dic["message"] = $(".input-view textarea").val();
+                    if (Course.index == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(Course.index+1, 0, dic);
+                    }
+                    
+
+                    /*
+                    // 3.（文本消息）界面显示添加的内容
+                    var dic1 = {index:array.length-1, item:dic};
+                    var questionHtml = ArtTemplate("message-text-template", dic1);
+                    $(questionHtml).appendTo(".messages");
+                    */
+
+                }else if (tag == "link-text") {
+                    dic["message"] = $(".input-view textarea").val();
+                    dic["link"] = $(".input-view input").val();
+                    if (Course.index == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(Course.index+1, 0, dic);
+                    }
+                    
+                    
+                    /*
+                    // 4.（链接文本）界面显示添加的内容
+                    var dic1 = {index:array.length-1, item:dic};
+                    var questionHtml = ArtTemplate("message-link-template", dic1);
+                    $(questionHtml).appendTo(".messages");
+                    */
+                }
+                localStorage.CourseMessageData = JSON.stringify(array);
+                
+                Course.init();  //1.刷新页面
+
+                // 2:刷新页面
+                // Course.refreshAddMessage();
+                
+                // 隐藏输入框
+                $(".message-input-view").css({display:'none'});
+                $(".input-view textarea").val("");
+                $(".input-view input").val("");
+
+
+                // 滚动到最底部
+                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+                Course.clickDeleteEvent();
+
+            })
+
+            $("#export").unbind('click').click(function(){
+                var content = localStorage.CourseMessageData;
+                var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
+    
+                // var content = JSON.prase(localStorage.CourseMessageData)
+                // var blob = new Blob([content], {type:"application/json;charset=utf-8"});
+                saveAs(blob, "course.json");//saveAs(blob,filename)
+
+            })
+            
+            Course.clickDeleteEvent();
+            
+        },
+        clickDeleteEvent:function(){
+            // 删除消息内容
+            $(".message .reduce").unbind('click').click(function(){
+                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                Course.index = $(this).parents(".message").attr("data-index");
+                // alert(Course.index);
+
+                var index = Course.index;
+                index = parseInt(index);
+
+                array.splice(Course.index, 1);  //删除当前元素 数据
+                localStorage.CourseMessageData = JSON.stringify(array);
+                
+                // 方法1:刷新页面
+                Course.init();
+
+                // 方法2:刷新页面
+                // Course.refreshReduceMessage();
+                
+
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值
+                
+                /*
+                // 方法2：逐个更改
+                // 如果当前元素存在 action 的话，则当前元素的 action 下标-1，当前元素的上一个元素的 action 删除（如果存在的话）
+                if (item.action && index != 0) {
+                    // 不是第一个元素
+                    $(".answer[data-index="+parseInt(index-1)+"]").remove();
+                    $(".answer[data-index="+index+"]").attr({"data-index":parseInt(index-1)});
+                    $(this).parent().remove();  //删除当前元素 
+                }else{
+                    // 是第一个元素
+                    $(".answer[data-index="+index+"]").remove();
+                    $(this).parent().remove();  //删除当前元素
+                }
+                for (var i = originIndex+1; i < lastIndex; i++) {
+                    // 更改当前元素后面所有的 data-index, -1
+                    $(".message[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
+                    $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
+                }
+                */
+
+            })
+            // 删除消息 action 内容
+            $(".answer .reduce").unbind('click').click(function(){
+                var index = $(this).parent().attr("data-index");
+                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                var item = array[index];
+                delete item["action"];   //删除此消息中的 action
+
+                localStorage.CourseMessageData = JSON.stringify(array);
+                $(this).parent().remove();
+
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+            })
+
+            // 消息后面添加消息
+            $(".message .left-add").unbind('click').click(function(){
+                $(".message-types").css({display:'flex'});
+                Course.index = $(this).parents(".message").attr("data-index");
+                // alert(Course.index);
+            })
+
+        },
+        setImgHeight:function(url){
+            // 给消息中的图片设高
+            // 给图片设高
+            var pW = $(".message.img").last().find(".msg-view").width() * 0.50;
+            Common.getPhotoWidthHeight(url, function(width, height){
+                var pH = pW * height / width;
+                $(".message.img").last().find('img.msg').css({
+                    height: pH + "px"
+                })
+            })
+        },
+        formatString:function(message){
+            // 方法1，捕获异常
+            try {
+               var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+               return msg
+            }
+            catch(err){
+                alert("消息组合格式有问题!");
+                return;
+            }
+        },
+    }
+    var filename = ''    //选择的文件的名字
+    var uploader = Qiniu.uploader({
+        runtimes: 'HTML5,flash,html4',                  //上传模式,依次退化
+        browse_button: 'uploadImg',                     //上传选择的点选按钮，**必需**
+        //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+        //uptoken : 'xxxxxxxxxxxxxx',
+        //save_key: true,        // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
+        domain: 'https://static1.bcjiaoyu.com',         //bucket 域名，下载资源时用到，**必需**
+        uptoken_func: function() {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url:Common.domain+"/upload/token/",
+                headers: {
+                    Authorization: "Token "+ "361e62b004a69a4610acf9f3a5b6f95eaabca3b"
+                },
+                data: {
+                    filename: filename ? filename : 'dfhu.png',
+                },
+                dataType: "json",
+                success: function(json) {
+                  upToken = json.token;
+                  upkey = json.key;
+                }
+              });
+              return upToken;
+        },
+        container: 'upload-container',                     //上传区域DOM ID，默认是browser_button的父元素，
+        max_file_size: '10mb',                        //最大文件体积限制
+        flash_swf_url: 'libs/upload/plupload/Moxie.swf',   //引入flash,相对路径
+        max_retries: 3,                                    //上传失败最大重试次数
+        get_new_uptoken: true,                             //设置上传文件的时候是否每次都重新获取新的token
+        dragdrop: true,                                    //开启可拖曳上传
+        // get_new_uptoken: false,                 
+        drop_element: 'upload-container',                  //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+        chunk_size: '4mb',                                 //分块上传时，每片的体积
+        multi_selection: false,                            //单个文件上传
+        auto_start: true,                                  //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+        mime_types: [
+            {title : "Image files", extensions : "jpg,gif,png,jpeg"},
+        ],
+        init: {
+               'FilesAdded': function(up, files) {
+                    plupload.each(files, function(file) {
+                        filename = file.name;
+                    });
+               },
+               'BeforeUpload': function(up, file) {
+                    // console.log(file);
+                    // console.log(file);
+                    //alert('e');
+                    // 每个文件上传前,处理相关的事情
+               },
+               'UploadProgress': function(up, file) {
+                    // console.log(file);
+                    // 每个文件上传时,处理相关的事情
+                    // $('.yes-btn').html('<img src="img/zone/loading.gif" style="height:20px;"/>').css('background','#e6e6e6');
+               },
+               'FileUploaded': function(up, file, info) {
+                    // console.log(file);
+                    // console.log(info);
+                    // $('.yes-btn').html('确认').css('background','#009688');
+                    var json = JSON.parse(info.response);
+                    // console.log(json.private_url);
+                    // console.log(json);
+                    $(".input-view textarea").val(json.private_url);
+               },
+               'Error': function(up, err, errTip) {
+                    Common.dialog("上传失败");
+                    // var $progressNumed = $(".progressNum .progressNumed").eq(0);
+                    //     $progressNumed.html($progressNumed.html() - 0 + 1);
+                    //     console.log(up);
+                    //     console.log(err);
+                    //     console.log(errTip);
+               },
+               'UploadComplete': function() {
+                    //队列文件处理完毕后,处理相关的事情
+               },
+               'Key': function(up, file) {
+                    var key = upkey;
+                    return key;
+                },
+          }
+      });
+
+    // Page.init();
+    Course.init();
 
 });

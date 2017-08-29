@@ -223,9 +223,15 @@
 			<!-- 练习区 -->
 			<div class="right-view">
 				<img src="../../statics/images/icon.png" alt="">
-				<iframe class="codeEdit" id="codeEdit" name="codeEdit" src="codeEdit.html?v=2.5" frameborder="0"></iframe>
-				<iframe class="courseList" id="courseList" name="courseList" src="courseList.html?v=2.5" frameborder="0"></iframe>
-				<iframe class="codeCompile" id="codeCompile" name="codeCompile" src="codeCompile.html" frameborder="0"></iframe>
+				<div class="iframe-scroll codeEdit">
+					<iframe class="codeEdit" id="codeEdit" name="codeEdit" src="codeEdit.html?v=2.5" frameborder="0"></iframe>
+				</div>
+				<div class="iframe-scroll courseList">
+					<iframe class="courseList" id="courseList" name="courseList" src="courseList.html?v=2.5" frameborder="0"></iframe>
+				</div>
+				<div class="iframe-scroll codeCompile">
+					<iframe class="codeCompile" id="codeCompile" name="codeCompile" src="codeCompile.html" frameborder="0"></iframe>
+				</div>
 			</div>
 		</div>
 		
@@ -264,7 +270,9 @@
 				<div class="close">
 					<img src="../../statics/images/close.png">
 				</div>
-				<iframe src="" frameborder="0"></iframe>
+				<div class="iframe-scroll">
+					<iframe src="" frameborder="0"></iframe>
+				</div>
 			</div>
 		</div>
 
@@ -274,7 +282,9 @@
 				<div class="close">
 					<img src="../../statics/images/close.png">
 				</div>
-				<iframe id="message-link-iframe" src="" frameborder="0"></iframe>
+				<div class="iframe-scroll">
+					<iframe id="message-link-iframe" src="" frameborder="0"></iframe>
+				</div>
 			</div>
 		</div>
 

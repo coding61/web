@@ -49,6 +49,9 @@
 
 	    <style type="text/css">
 		    .CodeMirror {height: calc(100%);}
+		    .CodeMirror-cursors .CodeMirror-cursor{
+		    	border-left: 2px solid rgb(0, 92,254);
+		    }
 		  </style>
 	</head>
 
@@ -56,6 +59,9 @@
 		<div class="tabs">
 			<div class="htmlTag tab select">HTML</div>
 			<div class="jsTag tab unselect">JavaScript</div>
+		</div>
+		<div class="insert-pun-view">
+			<span class="insert-pun">插入标点符号</span>
 		</div>
 		<div class="edits">
 			<div class="html-edit">
@@ -80,7 +86,7 @@
 		
 		<div class="result">
 			<span class="run">运行</span>
-			<span class="insert-pun">插入标点符号</span>
+			<!-- <span class="insert-pun">插入标点符号</span> -->
 			<!-- <span class="close">关闭编辑器</span> -->
 			<div class="run-result">
 				<iframe src="" frameborder="0" style="width: 100%;height: 100%;">
@@ -96,7 +102,9 @@
 				<div class="close">
 					<img src="../../statics/images/close.png">
 				</div>
-				<iframe src="" frameborder="0"></iframe>
+				<div class="iframe-scroll">
+					<iframe src="" frameborder="0"></iframe>
+				</div>
 			</div>
 		</div>
 	</body>
