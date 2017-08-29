@@ -312,7 +312,7 @@ function getReplys(page){
 				_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'"><div class="detail-about detail-about-reply">'
 		            +'<a class="jie-user" href="javascript:void(0)">'
 		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt=""><div class="managergrade">'
-		            if (v.userinfo.is_staff) {
+		            if (v1.userinfo.is_staff) {
 				   		_htm+='<span class="replyManager">管理员</span>';
 				    }
 		            _htm+='<span class="reGrade">'+v1.userinfo.grade.current_name+'</span></div>'
