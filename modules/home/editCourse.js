@@ -2223,41 +2223,61 @@ define(function(require, exports, module) {
                 Course.showContentInView(arr, i+1);
             }, 10)
         },
-        refreshAddMessage:function(){
+        refreshAddMessage:function(tag){
             // 当前元素后面的元素 index+1
+            var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];
+            var originIndex = Course.index == -1 ? parseInt(array.length-2):parseInt(Course.index)
+            for (var i = originIndex+1; i < array.length-1; i++) {
+                // 更改当前元素后面所有的 data-index, +1
+                $(".message[data-index="+i+"]").attr({"data-index":parseInt(i+1)});
+                $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i+1)});
+            }
+
             // 当前元素的处理
             if (tag == "action") {
                 // 当前元素后添加一个 action 用户回复消息
-                var dic1 = {index:Course.index, item:array[Course.index]};
+                var dic1 = {index:originIndex, item:array[originIndex]};
                 var answerHtml = ArtTemplate("answer-text-template", dic1);
-                $(answerHtml).appendTo(".messages");
+                $(".message[data-index="+originIndex+"]").after(answerHtml);
 
             }else{
                 // 当前元素后面追加一个消息
-                var dic1 = {index:Course.index+1, item:array[Course.index+1]};
+                var dic1 = {index:originIndex+1, item:array[originIndex+1]};
                 var questionHtml = ""
                 if (tag == "text") {
+
                     questionHtml = ArtTemplate("message-text-template", dic1);
                 }else if (tag == "photo") {
                     questionHtml = ArtTemplate("message-img-template", dic1)
                 }else if (tag == "link-text") {
                     questionHtml = ArtTemplate("message-link-template", dic1);
                 }
-                $(questionHtml).appendTo(".messages");
+                $(".message[data-index="+originIndex+"]").after(questionHtml);
 
-                if (array[Course.index+1].img) {
+                if (array[originIndex].img) {
                     try {
-                        Course.setImgHeight(array[Course.index+1].img);
+                        Course.setImgHeight(array[originIndex].img);
                     }
                     catch(err){
                          Common.dialog("图片格式不合法");
                     }
                 }
             }
+
+
         },
         refreshReduceMessage:function(){
             // 当前元素删除
+            $(".message[data-index="+Course.index+"]").remove();
+            $(".answer[data-index="+Course.index+"]").remove();
+
             // 当前元素后面的元素 index-1
+            var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];
+            for (var i = Course.index+1; i < array.length+1; i++) {
+                // 更改当前元素后面所有的 data-index, +1
+                $(".message[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
+                $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
+            }
         },
         clickEvent:function(){
             // console.log(1);
@@ -2292,6 +2312,7 @@ define(function(require, exports, module) {
                 // 提交内容
                 var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
                 var dic = {};       //当前消息
+                var originIndex = parseInt(Course.index);
 
                 var tag = $(".msg-header .type").attr("tag");
                 if (tag == "action") {
@@ -2309,25 +2330,25 @@ define(function(require, exports, module) {
                         $(answerHtml).appendTo(".messages");
                     }
                     */
-                    if (Course.index == -1) {
+                    if (originIndex == -1) {
                         //最后一条消息添加 action
                         dic = array[array.length - 1];
                         dic["action"] = $(".input-view textarea").val();
                     }else{
                         // 当前消息添加 action
-                        dic = array[Course.index];
+                        dic = array[originIndex];
                         dic["action"] = $(".input-view textarea").val();
                     }
 
 
                 }else if (tag == "photo") {
                     dic["img"] = $(".input-view textarea").val();
-                    if (Course.index == -1) {
+                    if (originIndex == -1) {
                         //最后一条消息
                         array.push(dic);
                     }else{
                         //当前消息之后
-                        array.splice(Course.index+1, 0, dic);  
+                        array.splice(originIndex+1, 0, dic);  
                     }
                     
                     
@@ -2347,12 +2368,12 @@ define(function(require, exports, module) {
 
                 }else if (tag == "text"){
                     dic["message"] = $(".input-view textarea").val();
-                    if (Course.index == -1) {
+                    if (originIndex == -1) {
                         //最后一条消息
                         array.push(dic);
                     }else{
                         //当前消息之后
-                        array.splice(Course.index+1, 0, dic);
+                        array.splice(originIndex+1, 0, dic);
                     }
                     
 
@@ -2366,12 +2387,12 @@ define(function(require, exports, module) {
                 }else if (tag == "link-text") {
                     dic["message"] = $(".input-view textarea").val();
                     dic["link"] = $(".input-view input").val();
-                    if (Course.index == -1) {
+                    if (originIndex == -1) {
                         //最后一条消息
                         array.push(dic);
                     }else{
                         //当前消息之后
-                        array.splice(Course.index+1, 0, dic);
+                        array.splice(originIndex+1, 0, dic);
                     }
                     
                     
@@ -2387,7 +2408,7 @@ define(function(require, exports, module) {
                 Course.init();  //1.刷新页面
 
                 // 2:刷新页面
-                // Course.refreshAddMessage();
+                // Course.refreshAddMessage(tag);
                 
                 // 隐藏输入框
                 $(".message-input-view").css({display:'none'});
@@ -2427,7 +2448,7 @@ define(function(require, exports, module) {
                 var index = Course.index;
                 index = parseInt(index);
 
-                array.splice(Course.index, 1);  //删除当前元素 数据
+                array.splice(index, 1);  //删除当前元素 数据
                 localStorage.CourseMessageData = JSON.stringify(array);
                 
                 // 方法1:刷新页面
