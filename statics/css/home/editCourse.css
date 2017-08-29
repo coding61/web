@@ -774,11 +774,12 @@ body{
 }
 .main-view .right-view img{
 	width: 100px;
+    display: none;
 }
 .main-view .right-view iframe{
 	width: 100%;
 	height: 100%;
-	display: none;
+	/*display: none;*/
 }
 /*钻石效果*/
 .zuan-shadow-view,
@@ -1748,7 +1749,26 @@ ul.message-types li{
     width: 60px;
     margin-top: 40px;
 }
+.item{
+    /*display: none;*/
+}
 
+.add-reduce-view{
+    display: inline-flex;
+    
+    justify-content: space-between;
+    align-items: center;
+    width: 70px;
+    margin-top: 10px;
+}
+.left-add{
+    width: 25px;
+    height: 25px;
+}
+.reduce{
+    width: 25px;
+    height: 25px;
+}
 /*左边飞入动画*/
 @keyframes lefteaseinAnimate {
    0% {
