@@ -152,7 +152,14 @@ ul.reply_mess>li .reply_txt {
 	text-indent: 0;
 }
 
-.post_user .grade{left: 22px;position: absolute;margin-top: 43px;}
+.post_user .manager {
+  display: none;
+  left: 22px;
+  position: absolute;
+  margin-top: 23px;
+  color: blue;
+}
+.post_user .grade{left: 22px;position: absolute;margin-top: 40px;}
 
 .wrap .changeStatus {
     position: absolute;
@@ -366,3 +373,12 @@ ul.reply_mess>li .reply_txt {
     width: 100%;
 }
 /*升级效果*/
+
+.detail-about .replyManager {
+  color: blue;
+}
+
+.detail-about .managergrade {
+  display: flex;
+  flex-direction: column;
+}
