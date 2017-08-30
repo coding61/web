@@ -2157,6 +2157,8 @@ define(function(require, exports, module) {
             if (array.length) {
                 totalDic[Course.lesson] = array
                 localStorage.CourseData = JSON.stringify(totalDic);
+                array = [];
+                localStorage.CourseMessageData = JSON.stringify(array);
             }
             if (totalDic[Course.lesson]) {
                 array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
