@@ -1411,12 +1411,16 @@ define(function(require, exports, module) {
                 Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
 
                     var CourseMessageData = localStorage.CourseMessageData?localStorage.CourseMessageData:"";
+                    var CourseData = localStorage.CourseData ? localStorage.CourseData : "";
 
                     localStorage.clear();
                     window.location.reload();
 
                     if (CourseMessageData) {
                         localStorage.CourseMessageData = CourseMessageData;
+                    }
+                    if (CourseData) {
+                        localStorage.CourseData = CourseData;
                     }
                 })
             })
