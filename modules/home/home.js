@@ -1265,6 +1265,15 @@ define(function(require, exports, module) {
             $(".header .works").unbind('click').click(function(){
                 window.open("worksList.html");
             })
+            // 手机 app
+            // $(".header .mobile-app").unbind('click').click(function(){
+            //     Util.adjustQrCode();
+            // })
+            $(".header .mobile-app").unbind('mouseover').mouseover(function(){
+                Util.adjustQrCode();
+            }).unbind('mouseout').mouseout(function(){
+                $(".qr-code-view").css({display:'none'});
+            })
             
             // 消息音频播放
             $(".msg-view-parent .audio").unbind('click').click(function(){
@@ -1387,6 +1396,16 @@ define(function(require, exports, module) {
             // 作品中心
             $(".header .works").unbind('click').click(function(){
                 window.open("worksList.html");
+            })
+
+            // 手机 app
+            // $(".header .mobile-app").unbind('click').click(function(){
+            //     Util.adjustQrCode();
+            // })
+            $(".header .mobile-app").unbind('mouseover').mouseover(function(){
+                Util.adjustQrCode();
+            }).unbind('mouseout').mouseout(function(){
+                $(".qr-code-view").css({display:'none'});
             })
 
             Page.clickEventLoginRelated();
@@ -2988,6 +3007,15 @@ define(function(require, exports, module) {
             var c = $(".header .team-info").width();
             $(".team-info").css({
                 left: (a-b-c/2) + "px"
+            })
+        },
+        adjustQrCode:function(){
+            var a = $(".mobile-app").offset().left;
+            var b = $(".mobile-app").width();
+            var c = $(".qr-code-view").width();
+            $(".qr-code-view").css({
+                left:(a - (c-b)/2)+"px",
+                display:'flex'
             })
         },
         zuanAnimate:function(number){
