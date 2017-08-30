@@ -2156,6 +2156,7 @@ define(function(require, exports, module) {
             // 默认展示第一节课的数据
             if (array.length) {
                 totalDic[Course.lesson] = array
+                localStorage.CourseData = JSON.stringify(totalDic);
             }
             if (totalDic[Course.lesson]) {
                 array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
