@@ -2155,7 +2155,10 @@ define(function(require, exports, module) {
             // 默认把以前的 CourseMessageData 归为第一节课,
             // 默认展示第一节课的数据
             if (array.length) {
-                dic[Course.lesson] = array
+                totalDic[Course.lesson] = array
+                localStorage.CourseData = JSON.stringify(totalDic);
+                array = [];
+                localStorage.CourseMessageData = JSON.stringify(array);
             }
             if (totalDic[Course.lesson]) {
                 array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
