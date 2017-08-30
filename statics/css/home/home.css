@@ -32,6 +32,8 @@ body{
     padding: 0 2%;
     width: 96%;
 
+    position: relative;
+
 }
 .header .center-view{
     padding: 5px 10px;
@@ -76,6 +78,24 @@ body{
     height: 20px;
     border-radius: 10px;
     padding-right: 5px;
+}
+.header .qr-code-view{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 50px;
+    background: white;
+    color: #333;
+    padding: 15px;
+    width: 135px;
+    display: none;
+}
+.qr-code-view img{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
 }
 .header .right-view{
 	display: flex;
