@@ -35,8 +35,10 @@ $(document).ready(function() {
                 lint: true,
                 value: ""
             });
-
-            htmlEditor.setValue(localStorage.CourseData);
+            
+            if (localStorage.CourseData) {
+                htmlEditor.setValue(localStorage.CourseData);
+            }
         }
     };
 
