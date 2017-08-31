@@ -2411,6 +2411,7 @@ define(function(require, exports, module) {
                 $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
                 
                 window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+                // jsonCourse.window.setEditorValue();                   // 传递值，
 
                 Course.clickDeleteEvent();
 
