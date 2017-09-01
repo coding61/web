@@ -729,7 +729,7 @@ body{
     font-size: 13px;
     padding: 0 10px;
     font-size: 15px;
-    max-height: 190px;
+    max-height: 360px;
     overflow-y: auto;
 }
 li.catalog.ui-border-top{
@@ -740,8 +740,8 @@ li.catalog.ui-border-bottom{
 }
 .course-menu-list li.catalog{
     cursor: pointer;
-    height: 30px;
-    line-height: 30px;
+    height: 35px;
+    line-height: 35px;
     width: 110px;
     overflow: hidden;
     cursor: pointer;
