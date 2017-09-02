@@ -1746,10 +1746,12 @@ define(function(require, exports, module) {
             }, Util.messageTime)
         },
         loadClickMessage:function(actionText, exercise){
-            if(localStorage.oldCourse != localStorage.currentCourse || localStorage.currentCourseIndex != Util.currentCatalogIndex){
-                //更换课程数据,  更换课节数据
-                Page.loadClickMessageCourse(actionText);
-                return;
+            if (localStorage.currentCourseIndex) {
+                if(localStorage.oldCourse != localStorage.currentCourse || localStorage.currentCourseIndex != Util.currentCatalogIndex){
+                    //更换课程数据,  更换课节数据
+                    Page.loadClickMessageCourse(actionText);
+                    return;
+                }
             }
            
             // 本课程继续学
