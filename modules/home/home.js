@@ -1024,9 +1024,7 @@ define(function(require, exports, module) {
             }
         },
         clickEvent:function(){
-            // Common.showLoadingPreImg();
-        
-            // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            // action 按钮点击
             $(".btn-wx-auth").unbind('click').click(function(){
                 
                 if($(this).attr('disabledImg') == "true"){
@@ -1042,23 +1040,18 @@ define(function(require, exports, module) {
                     // 打开选择课程窗口
                     Util.openRightIframe("courseList");
                     
+                }else if($(this).hasClass("catalogBegin")){
+                    // 普通 action 按钮点击事件
+                    Util.actionClickEvent($(this));
                 }else if($(this).hasClass("begin")){
                     // 开始学习，更换课程时，或者初次学习之旅时
-                    /*
-                    // 普通 action 按钮点击事件
-                    if ($(this).hasClass("exercise")) {
-                        // 点了习题的，提交答案的按钮
-                        var msg = Page.options.join(',');
-                        Page.options = [];
-                        Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                    }else{
-                        // 普通的 action 按钮
-                        Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
-                    }
-                    */
+                    // 课节目录重置为当前选中课程的进度
+                    Util.currentCatalogIndex = localStorage.currentCourseIndex;
                     // 普通 action 按钮点击事件
                     Util.actionClickEvent($(this));
                 }else if($(this).hasClass("restart")){
+                    // 课节目录重置为0
+                    Util.currentCatalogIndex = localStorage.currentCourseIndex;
                     // 课程完成，重新开始，课程未完成，重新开始
                     Page.loadClickMessageCourse($(this).html());
                 }else{
@@ -1118,7 +1111,7 @@ define(function(require, exports, module) {
                 
                 
             })
-            
+            // 选项按钮点击
             $(".option").unbind('click').click(function(){
                 // 选项点击
                 if ($(this).hasClass("unselect")) {
@@ -1136,7 +1129,7 @@ define(function(require, exports, module) {
                 console.log(Page.options);
             })
             
-
+            // 消息链接点击
             $(".message.link").unbind('click').click(function(){
                 var linkType = $(this).attr("data-link-type");
                 var link = $(this).attr("data-link");
@@ -1166,36 +1159,57 @@ define(function(require, exports, module) {
                     }
                 }
             })
-
+            // 消息文本点击
             $(".message.text").unbind('click').click(function(){
                 // $(".right-view iframe").hide();
                 // $(".right-view iframe").attr({src:""});
                 // $(".right-view>img").show();
             })
-
+            // 消息图片点击
             $(".message.img").unbind('click').click(function(){
                 var url = $(this).find('img.msg').attr('src');
                 $(".imgmsg img").attr({src:url});
                 $(".imgmsg-shadow-view").show();
             })
-
+            // 消息图片大图的点击
             $(".imgmsg-shadow-view").unbind('click').click(function(){
                 $(".imgmsg img").attr({src:""});
                 $(".imgmsg-shadow-view").hide();
             })
-
+            // 帮助点击
             $(".help").unbind('click').click(function(){
                 if($(".helps-view").css("display") == "none"){
                     $(".helps-view").show();
                 }else{
                     $(".helps-view").hide();
                 }
-                
+                $(".course-menu-view").hide();
             })
+            // 更换课程
             $(".helps-view .change-course").unbind('click').click(function(){
 
                 $(".helps-view").hide();
                 Util.openRightIframe("courseList");   //打开选择课程
+            })
+            // 课程目录 
+            $(".helps-view .course-menu").unbind('click').click(function(){
+                $(".helps-view").hide();
+                $(".course-menu-view").show();
+            })
+            // 课程目录点击事件
+            $("li.catalog").unbind('click').click(function(){
+                if ($(this).hasClass("select")) {
+                    return;
+                }
+                // action 按钮变为开始学习
+                $(".actions").html('<span class="btn-wx-auth catalogBegin bottom-animation">开始学习</span>');
+                // 隐藏目录列表
+                $(".course-menu-view").hide();
+                // 记录当前点击的目录的下标，和对象
+                Util.currentCatalogIndex = $(this).attr("data-index");
+                // 重新激活点击事件
+                Page.clickEvent();
+
             })
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
@@ -1265,6 +1279,12 @@ define(function(require, exports, module) {
             $(".header .works").unbind('click').click(function(){
                 window.open("worksList.html");
             })
+            // 手机 app
+            $(".header .mobile-app").unbind('mouseover').mouseover(function(){
+                Util.adjustQrCode();
+            }).unbind('mouseout').mouseout(function(){
+                $(".qr-code-view").css({display:'none'});
+            })
             
             // 消息音频播放
             $(".msg-view-parent .audio").unbind('click').click(function(){
@@ -1317,18 +1337,37 @@ define(function(require, exports, module) {
             Page.clickEventLoginRelated();
         },
         clickEventTotal:function(){
+            // 帮助点击
             $(".help").unbind('click').click(function(){
                 if($(".helps-view").css("display") == "none"){
                     $(".helps-view").show();
                 }else{
                     $(".helps-view").hide();
                 }
-                
             })
+            // 更换课程
             $(".helps-view .change-course").unbind('click').click(function(){
-
                 $(".helps-view").hide();
                 Util.openRightIframe("courseList");   //打开选择课程
+            })
+            // 课程目录
+            $(".helps-view .course-menu").unbind('click').click(function(){
+                $(".helps-view").hide();
+                $(".course-menu-view").show();
+            })
+            // 课程目录点击事件
+            $("li.catalog").unbind('click').click(function(){
+                if ($(this).hasClass("select")) {
+                    return;
+                }
+                // action 按钮变为开始学习
+                $(".actions").html('<span class="btn-wx-auth catalogBegin bottom-animation">开始学习</span>');
+                // 隐藏目录列表
+                $(".course-menu-view").hide();
+                // 记录当前点击的目录的下标，和对象
+                Util.currentCatalogIndex = $(this).attr("data-index");
+                // 重新激活点击事件
+                Page.clickEvent();
 
             })
             // 钻石动画
@@ -1389,6 +1428,16 @@ define(function(require, exports, module) {
                 window.open("worksList.html");
             })
 
+            // 手机 app
+            // $(".header .mobile-app").unbind('click').click(function(){
+            //     Util.adjustQrCode();
+            // })
+            $(".header .mobile-app").unbind('mouseover').mouseover(function(){
+                Util.adjustQrCode();
+            }).unbind('mouseout').mouseout(function(){
+                $(".qr-code-view").css({display:'none'});
+            })
+
             Page.clickEventLoginRelated();
             
         },
@@ -1411,12 +1460,16 @@ define(function(require, exports, module) {
                 Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
 
                     var CourseMessageData = localStorage.CourseMessageData?localStorage.CourseMessageData:"";
+                    var CourseData = localStorage.CourseData ? localStorage.CourseData : "";
 
                     localStorage.clear();
                     window.location.reload();
 
                     if (CourseMessageData) {
                         localStorage.CourseMessageData = CourseMessageData;
+                    }
+                    if (CourseData) {
+                        localStorage.CourseData = CourseData;
                     }
                 })
             })
@@ -1693,11 +1746,14 @@ define(function(require, exports, module) {
             }, Util.messageTime)
         },
         loadClickMessage:function(actionText, exercise){
-            if(localStorage.oldCourse != localStorage.currentCourse){
-                //更换课程数据
-                Page.loadClickMessageCourse(actionText);
-                return;
+            if (localStorage.currentCourseIndex) {
+                if(localStorage.oldCourse != localStorage.currentCourse || localStorage.currentCourseIndex != Util.currentCatalogIndex){
+                    //更换课程数据,  更换课节数据
+                    Page.loadClickMessageCourse(actionText);
+                    return;
+                }
             }
+           
             // 本课程继续学
             // $(".actions").hide(); 
             // 人工提问
@@ -1794,44 +1850,6 @@ define(function(require, exports, module) {
         },
         requestCourseData:function(actionText, flag){
             // 请求课程数据
-            /*
-            if (localStorage.currentCourse) {
-
-                if (localStorage.currentCourse == "html_simple") {
-                    var htmlSimpleIndex = 0;
-                    if (localStorage.htmlSimpleIndex) {
-                        htmlSimpleIndex = localStorage.htmlSimpleIndex;
-                    }
-                    htmlSimpleIndex = parseInt(htmlSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, htmlSimpleIndex);
-                }else if (localStorage.currentCourse == "css_simple") {
-                    var cssSimpleIndex = 0;
-                    if (localStorage.cssSimpleIndex) {
-                        cssSimpleIndex = localStorage.cssSimpleIndex;
-                    }
-                    cssSimpleIndex = parseInt(cssSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, cssSimpleIndex);
-                }else if (localStorage.currentCourse == "javascript_simple") {
-                    var jsSimpleIndex = 1;
-                    if (localStorage.jsSimpleIndex) {
-                        jsSimpleIndex = localStorage.jsSimpleIndex;
-                    }
-                    jsSimpleIndex = parseInt(jsSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, jsSimpleIndex);
-                }else if (localStorage.currentCourse == "python_simple") {
-                    var pythonSimpleIndex = 1;
-                    if (localStorage.pythonSimpleIndex) {
-                        pythonSimpleIndex = localStorage.pythonSimpleIndex;
-                    }
-                    pythonSimpleIndex = parseInt(pythonSimpleIndex) + 1;
-                    Page.requestCourseNextData(actionText, localStorage.currentCourse, pythonSimpleIndex);
-                }
-            }else{
-                Common.dialog("请选择一个课程");
-                $(".loading-chat").remove();
-            }
-            */
-            
             if(localStorage.currentCourse){
                 if (localStorage.oldCourse != localStorage.currentCourse) {
                     // 切换课程学习
@@ -1848,67 +1866,12 @@ define(function(require, exports, module) {
             }    
         },
         requestCategoryCourse:function(actionText, flag){
-            Mananger.getCourseInfoWithPk(actionText, localStorage.oldCourse);
-
-            /*
-            if (localStorage.oldCourse == "html_simple") {
-                var htmlSimpleIndex = 0;
-                if (localStorage.htmlSimpleIndex) {
-                    htmlSimpleIndex = localStorage.htmlSimpleIndex;
-                }
-                htmlSimpleIndex = parseInt(htmlSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(htmlSimpleIndex == 1){
-                    }else{
-                        htmlSimpleIndex = htmlSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, htmlSimpleIndex);
-            }else if (localStorage.oldCourse == "css_simple") {
-                var cssSimpleIndex = 0;
-                if (localStorage.cssSimpleIndex) {
-                    cssSimpleIndex = localStorage.cssSimpleIndex;
-                }
-                cssSimpleIndex = parseInt(cssSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(cssSimpleIndex == 1){
-                    }else{
-                        cssSimpleIndex = cssSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, cssSimpleIndex);
-            }else if (localStorage.oldCourse == "javascript_simple") {
-                var jsSimpleIndex = 1;
-                if (localStorage.jsSimpleIndex) {
-                    jsSimpleIndex = localStorage.jsSimpleIndex;
-                }
-                jsSimpleIndex = parseInt(jsSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(jsSimpleIndex == 1){
-                    }else{
-                        jsSimpleIndex = jsSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, jsSimpleIndex);
-            }else if (localStorage.oldCourse == "python_simple") {
-                var pythonSimpleIndex = 1;
-                if (localStorage.pythonSimpleIndex) {
-                    pythonSimpleIndex = localStorage.pythonSimpleIndex;
-                }
-                pythonSimpleIndex = parseInt(pythonSimpleIndex) + 1;
-                if(flag == true){
-                    // 重复加载本节/从头加载
-                    if(pythonSimpleIndex == 1){
-                    }else{
-                        pythonSimpleIndex = pythonSimpleIndex - 1;
-                    }
-                }
-                Page.requestCourseNextData(actionText, localStorage.oldCourse, pythonSimpleIndex);
+            if (localStorage.currentCourseIndex != Util.currentCatalogIndex) {
+                // 点击目录更换课节数据
+                Mananger.getCourseInfoWithPk(actionText, localStorage.oldCourse, true);
+            }else{
+                Mananger.getCourseInfoWithPk(actionText, localStorage.oldCourse, false);
             }
-            */
         },
         loadSepLine:function(number){
             $(".loading-chat").remove();
@@ -2073,7 +2036,8 @@ define(function(require, exports, module) {
                 })
             })
         },
-        getCourseInfoWithPk:function(actionText, course){
+        getCourseInfoWithPk:function(actionText, course, catalogChange){
+            // catalogChange， 是否点击目录切换的数据
             Common.isLogin(function(token){
                 $.ajax({
                     type:"get",
@@ -2103,24 +2067,19 @@ define(function(require, exports, module) {
                             return;
                         }
                         
-                        /*
-                        // 方法2：捕获异常
-                        Util.catchJsonParseError(data.json).then(function(b){
-                            var array = b;
-                        }).catch(function(err){
-                            // console.log(err);
-                            $(".btn-wx-auth").attr({disabledImg:false});
-                            alert("数据格式有问题!");
-                            $(".loading-chat").remove();
-                            return;
-                        })
-                        */
-                        // var array = JSON.parse(data.json);
-                        
                         var courseIndex = data.learn_extent.last_lesson;
-                        localStorage.currentCourseIndex = courseIndex;  //记录课程下标
-                        courseIndex = parseInt(courseIndex);
-
+                        if (catalogChange == true) {
+                            localStorage.currentCourseIndex = Util.currentCatalogIndex;
+                            Util.courseCatalogsInit(array);   //更新目录
+                            Util.courseProgressUI();          //更新课程进度
+                            Mananger.updateExtentWithCatalog(course, localStorage.currentCourseIndex);  //更新服务器的进度
+                        }else{
+                            localStorage.currentCourseIndex = courseIndex;  //记录课程下标
+                            Util.currentCatalogIndex = localStorage.currentCourseIndex;  //记录目录下标
+                            Util.courseCatalogsInit(array);
+                        }
+                        courseIndex = parseInt(localStorage.currentCourseIndex);
+                        
                         // 课程列表窗口, 当前课程的下标进度 data-course-index:
                         $("#courseList").contents().find(".course[data-category="+data.pk+"]").attr({"data-course-index":courseIndex});
                         
@@ -2197,6 +2156,9 @@ define(function(require, exports, module) {
                             return;
                         }
                         
+                        Util.currentCatalogIndex = localStorage.currentCourseIndex;  //记录目录下标
+                        Util.courseCatalogsInit(array);
+
                         var courseIndex = parseInt(localStorage.currentCourseIndex);
                         // 更改数据源
                         if(array[courseIndex+1]){
@@ -2353,6 +2315,38 @@ define(function(require, exports, module) {
                 })
             })
         },
+        updateExtentWithCatalog:function(course, courseIndex){
+            // 目录选择的时候，点开始学习更新服务器的进度
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/userinfo/update_learnextent/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        course:course,
+                        lesson:courseIndex
+                    },
+                    success:function(json){
+                        // console.log(json);
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            // Common.dialog("请求超时");
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            // Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            // Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
         updateExtent:function(course, courseIndex, this_){
             // 学习进度
             Common.isLogin(function(token){
@@ -2368,12 +2362,6 @@ define(function(require, exports, module) {
                     },
                     success:function(json){
                         console.log(json);
-                        
-                        //记录当前课程的当前节下标
-                        // localStorage.currentCourseIndex = courseIndex;
-
-                        // // 记录学习下标
-                        // Util.setCourseIndex(course, courseIndex);
 
                         Util.updateCourseProgress();   //更新课程进度
                         
@@ -2888,6 +2876,7 @@ define(function(require, exports, module) {
         linkType:"",
         waitTime:Common.getQueryString("wt")?10:1000,
         messageTime:Common.getQueryString("mt")?20:2000,
+        currentCatalogIndex:0,
         storeData:function(){
             // 存储实时数据的下标，数据源， 问题中信息下标
             localStorage.data = JSON.stringify(Page.data);
@@ -2985,6 +2974,36 @@ define(function(require, exports, module) {
             $(".team-info").css({
                 left: (a-b-c/2) + "px"
             })
+        },
+        adjustQrCode:function(){
+            var a = $(".mobile-app").offset().left;
+            var b = $(".mobile-app").width();
+            var c = $(".qr-code-view").width();
+            $(".qr-code-view").css({
+                left:(a - (c-b)/2)+"px",
+                display:'flex'
+            })
+        },
+        courseCatalogsInit:function(response){
+            if (response["catalogs"]) {
+                // 课程目录初始化
+                var catalogHtml = "";
+                console.log(response["catalogs"]);
+                for (var i = 0; i < response["catalogs"].length; i++) {
+                    if (i == parseInt(localStorage.currentCourseIndex)) {
+                        // 当前课节被选中
+                        response["catalogs"][i]["select"] = true
+                    }else{
+                        response["catalogs"][i]["select"] = false
+                    }
+                }
+                var catalogHtml = ArtTemplate("course-menu-list-template", response["catalogs"]);
+                $(".course-menu-list").html(catalogHtml);
+
+                $(".helps-view .course-menu").show();
+            }else{
+                $(".helps-view .course-menu").hide();
+            }
         },
         zuanAnimate:function(number){
             // 钻石出现，然后2秒后飞到右上角消失

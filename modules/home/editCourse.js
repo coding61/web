@@ -2139,20 +2139,35 @@ define(function(require, exports, module) {
 
     var Course = {
         index:-1,  //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
+        lesson:1,  //当前所选的课节下标
         init:function(){
+
+            Course.load();              //加载中间的会话列表
+            $(".lesson-list").html("");
+            Course.initLessonData();    //加载课程节数据
+
+        },
+        load:function(){
+            console.log("lesson", Course.lesson); 
             $(".messages").html("");
+            var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
             var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+            // 默认把以前的 CourseMessageData 归为第一节课,
+            // 默认展示第一节课的数据
             if (array.length) {
-                Course.showContentInView(array, 0);
-                $(".item").show();
-            }else{
-                $(".item").show();
+                totalDic[Course.lesson] = array
+                localStorage.CourseData = JSON.stringify(totalDic);
+                array = [];
+                localStorage.CourseMessageData = JSON.stringify(array);
+            }
+            if (totalDic[Course.lesson]) {
+                array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
             }
 
+            if (array.length) {
+                Course.showContentInView(array, 0);
+            }
             Course.clickEvent();
-
-            // Common.addCopyRight();   //添加版权标识
-
         },
         openInputView:function(tag, tagHtml){
             $(".msg-header .type").html(tagHtml);
@@ -2281,28 +2296,42 @@ define(function(require, exports, module) {
         },
         clickEvent:function(){
             // console.log(1);
-            $(".add .reset").unbind('click').click(function(){
-                // 清空数据重来
-                var array = [];
-                localStorage.CourseMessageData = JSON.stringify(array);
-                Course.init();  //刷新页面
-                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+            // 清空数据重来
+            $(".chat .add .reset").unbind('click').click(function(){
+                // 重置整个课程数据为空
+                Common.bcAlert("当前课程是否已完全编辑完？您保存好数据了吗？是否要开始一个新课程？", function(){
+                    var totalDic = {};
+                    localStorage.CourseData = JSON.stringify(totalDic);
+
+                    Course.init();  //刷新页面
+                    window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+                })
+                
             })
-            $(".add .left-add").unbind('click').click(function(){
+            // 打开类型选择框
+            $(".chat .add .left-add").unbind('click').click(function(){
                 Course.index = -1;
+                if (!$(".lesson").length) {
+                    Common.dialog("请先添加一个小节");
+                    return;
+                }
                 $(".message-types").css({display:'flex'});
             })
-            $(".add .right-add").unbind('click').click(function(){
-                Course.openInputView("action", "按钮文本");
-            })
+            
+            // 打开消息输入框
             $(".message-types li").unbind('click').click(function(){
                 var tag = $(this).attr("data-tag");
                 var tagHtml = $(this).html();
+                if (tag == "action" && !$(".message").length) {
+                    Common.dialog("请先输入一条消息");
+                    return;
+                }
                 Course.openInputView(tag, tagHtml);
                 $(".message-types").css({display:'none'});
 
             })
-
+            
+            // 关闭消息输入框
             $(".msg-header img").unbind('click').click(function(){
                 $(".message-input-view").css({display:"none"});
             })
@@ -2310,26 +2339,15 @@ define(function(require, exports, module) {
             // 确认添加内容
             $(".input-view .input-submit").unbind('click').click(function(){
                 // 提交内容
-                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+
+                // var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
                 var dic = {};       //当前消息
                 var originIndex = parseInt(Course.index);
 
                 var tag = $(".msg-header .type").attr("tag");
                 if (tag == "action") {
-                    /*
-                    // 取出数组中最后一个元素,给最后一条消息加 action
-                    dic = array[array.length - 1];
-                    if (dic.action) {
-                        dic["action"] = $(".input-view textarea").val();
-                        $(".answer .content").html(dic.action);
-                    }else{
-                        dic["action"] = $(".input-view textarea").val();
-                        // 1.（用户回复）界面显示添加的内容
-                        var dic1 = {index:array.length-1, item:dic};
-                        var answerHtml = ArtTemplate("answer-text-template", dic1);
-                        $(answerHtml).appendTo(".messages");
-                    }
-                    */
                     if (originIndex == -1) {
                         //最后一条消息添加 action
                         dic = array[array.length - 1];
@@ -2350,21 +2368,6 @@ define(function(require, exports, module) {
                         //当前消息之后
                         array.splice(originIndex+1, 0, dic);  
                     }
-                    
-                    
-                    /*
-                    // 2.（图片消息）界面显示添加的内容
-                    var dic1 = {index:array.length-1, item:dic};
-                    var questionHtml = ArtTemplate("message-img-template", dic1);
-                    $(questionHtml).appendTo(".messages");
-                    
-                    try {
-                        Course.setImgHeight($(".input-view textarea").val());
-                    }
-                    catch(err){
-                         Common.dialog("图片格式不合法");
-                    }
-                    */
 
                 }else if (tag == "text"){
                     dic["message"] = $(".input-view textarea").val();
@@ -2375,14 +2378,6 @@ define(function(require, exports, module) {
                         //当前消息之后
                         array.splice(originIndex+1, 0, dic);
                     }
-                    
-
-                    /*
-                    // 3.（文本消息）界面显示添加的内容
-                    var dic1 = {index:array.length-1, item:dic};
-                    var questionHtml = ArtTemplate("message-text-template", dic1);
-                    $(questionHtml).appendTo(".messages");
-                    */
 
                 }else if (tag == "link-text") {
                     dic["message"] = $(".input-view textarea").val();
@@ -2394,18 +2389,14 @@ define(function(require, exports, module) {
                         //当前消息之后
                         array.splice(originIndex+1, 0, dic);
                     }
-                    
-                    
-                    /*
-                    // 4.（链接文本）界面显示添加的内容
-                    var dic1 = {index:array.length-1, item:dic};
-                    var questionHtml = ArtTemplate("message-link-template", dic1);
-                    $(questionHtml).appendTo(".messages");
-                    */
                 }
-                localStorage.CourseMessageData = JSON.stringify(array);
                 
-                Course.init();  //1.刷新页面
+                totalDic[Course.lesson] = array;
+                localStorage.CourseData = JSON.stringify(totalDic);
+
+                // localStorage.CourseMessageData = JSON.stringify(array);
+                
+                Course.load();  //1.刷新会话列表
 
                 // 2:刷新页面
                 // Course.refreshAddMessage(tag);
@@ -2420,19 +2411,20 @@ define(function(require, exports, module) {
                 $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
                 
                 window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+                // jsonCourse.window.setEditorValue();                   // 传递值，
 
                 Course.clickDeleteEvent();
 
             })
-
+            
+            // 导出课程数据
             $("#export").unbind('click').click(function(){
-                var content = localStorage.CourseMessageData;
-                var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
+                // var content = localStorage.CourseMessageData;
+                // var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
     
-                // var content = JSON.prase(localStorage.CourseMessageData)
-                // var blob = new Blob([content], {type:"application/json;charset=utf-8"});
+                var content = JSON.prase(localStorage.CourseData)
+                var blob = new Blob([content], {type:"application/json;charset=utf-8"});
                 saveAs(blob, "course.json");//saveAs(blob,filename)
-
             })
             
             Course.clickDeleteEvent();
@@ -2441,68 +2433,158 @@ define(function(require, exports, module) {
         clickDeleteEvent:function(){
             // 删除消息内容
             $(".message .reduce").unbind('click').click(function(){
-                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+
+                // var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
                 Course.index = $(this).parents(".message").attr("data-index");
-                // alert(Course.index);
 
                 var index = Course.index;
                 index = parseInt(index);
-
                 array.splice(index, 1);  //删除当前元素 数据
-                localStorage.CourseMessageData = JSON.stringify(array);
+
+                totalDic[Course.lesson] = array;
+                localStorage.CourseData = JSON.stringify(totalDic);
+
+                // localStorage.CourseMessageData = JSON.stringify(array);
                 
                 // 方法1:刷新页面
-                Course.init();
+                Course.load();
 
                 // 方法2:刷新页面
                 // Course.refreshReduceMessage();
                 
-
                 window.frames["jsonCourse"].postMessage('json', '*'); // 传递值
-                
-                /*
-                // 方法2：逐个更改
-                // 如果当前元素存在 action 的话，则当前元素的 action 下标-1，当前元素的上一个元素的 action 删除（如果存在的话）
-                if (item.action && index != 0) {
-                    // 不是第一个元素
-                    $(".answer[data-index="+parseInt(index-1)+"]").remove();
-                    $(".answer[data-index="+index+"]").attr({"data-index":parseInt(index-1)});
-                    $(this).parent().remove();  //删除当前元素 
-                }else{
-                    // 是第一个元素
-                    $(".answer[data-index="+index+"]").remove();
-                    $(this).parent().remove();  //删除当前元素
-                }
-                for (var i = originIndex+1; i < lastIndex; i++) {
-                    // 更改当前元素后面所有的 data-index, -1
-                    $(".message[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
-                    $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
-                }
-                */
-
-            })
-            // 删除消息 action 内容
-            $(".answer .reduce").unbind('click').click(function(){
-                var index = $(this).parent().attr("data-index");
-                var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
-                var item = array[index];
-                delete item["action"];   //删除此消息中的 action
-
-                localStorage.CourseMessageData = JSON.stringify(array);
-                $(this).parent().remove();
-
-                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
-
             })
 
             // 消息后面添加消息
             $(".message .left-add").unbind('click').click(function(){
                 $(".message-types").css({display:'flex'});
                 Course.index = $(this).parents(".message").attr("data-index");
-                // alert(Course.index);
             })
 
         },
+        initLessonData:function(){
+            
+            var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+            for(var key in dic){
+                var lessonHtml = ""
+                if (key == Course.lesson) {
+                    //1节
+                    lessonHtml += '<li class="select lesson">'
+                }else{
+                    lessonHtml += '<li class="unselect lesson">'
+                }
+                lessonHtml += '<span>'+key+'</span>'
+                                +'<img src="../../statics/images/editCourse/reduce.png">'
+                            +'</li>';
+                $(lessonHtml).appendTo(".lesson-list");
+            }
+
+            Course.clickLessonEvent();
+
+        },
+        clickLessonEvent:function(){
+            // 关闭节数输入框
+            $(".lesson-input-header img").unbind('click').click(function(){
+                $(".lesson-input-view").css({display:'none'});
+            })
+
+            // 打开节数输入框
+            $(".lessons .add").unbind('click').click(function(){
+                $(".lesson-input-view").css({display:'flex'});
+            })
+
+            // 确认添加课节数
+            $(".lesson-submit").unbind('click').click(function(){
+                var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+
+                var str = $(".lesson-input input").val();
+                var r = /^\+?[1-9][0-9]*$/;　　//正整数
+                if (!r.test(str)) {
+                    Common.dialog("请输入一个正整数");
+                    return;
+                }
+                if (dic[str]) {
+                    Common.dialog("已经存在该节数");
+                    return;
+                }
+                var lessonHtml = ""
+                if (!$(".lesson").length) {
+                    //课节为0
+                    lessonHtml += '<li class="select lesson">'
+                }else{
+                    lessonHtml += '<li class="unselect lesson">'
+                }
+                lessonHtml += '<span>'+str+'</span>'
+                                +'<img src="../../statics/images/editCourse/reduce.png">'
+                            +'</li>';
+                $(lessonHtml).appendTo(".lesson-list");
+
+                $(".lesson-input-view").css({display:'none'});
+                $(".lesson-input input").val("");
+                // 节点击事件
+                $(".lesson").unbind('click').click(function(){
+                    Course.lesson = $(this).children("span").html();
+                    alert(Course.lesson);
+                })
+
+                // 存储节数字数据
+                var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                dic[str] = [];
+                localStorage.CourseData = JSON.stringify(dic);
+
+                // 通知右边的iframe 改变代码内容
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+            })
+
+            // 节点击事件
+            $(".lesson").unbind('click').click(function(e){
+                e.stopPropagation();
+                Course.lesson = $(this).children("span").html();
+                $(".lesson.select").removeClass("select").addClass("unselect");
+                $(this).removeClass("unselect").addClass("select");
+
+                // 改变中间的会话列表
+                Course.load();
+            })
+
+            // 节删除
+            $(".lesson img").unbind('click').click(function(e){
+                e.stopPropagation();
+                var this_ = $(this);
+                Common.bcAlert("您是否确定要删除本小节数据？可能会导致您的课程节下标不连续，是否继续？", function(){
+                    Course.deleteLesson(this_);
+                })
+            })
+        },
+        deleteLesson:function(this_){
+            var lessonNum = this_.parents(".lesson").children("span").html();
+            var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+            delete dic[lessonNum];
+            localStorage.CourseData = JSON.stringify(dic);
+
+            // 如果删除的刚好是选中,则默认lesson 中的第一个的课节
+            if (this_.parents(".lesson").hasClass("select")) {
+                this_.parents(".lesson").remove();
+                if (!$(".lesson").length) {
+                    Course.lesson = 1;
+                }else{
+                    $(".lesson").eq(0).addClass("select").removeClass("unselect");
+                    Course.lesson = $(".lesson").eq(0).children("span").html();
+                }
+            }else{
+                this_.parents(".lesson").remove();
+            }
+
+            // 刷新中间的会话列表
+            Course.load();
+
+            // 通知右边的iframe 改变代码内容
+            window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+        },
+
         setImgHeight:function(url){
             // 给消息中的图片设高
             // 给图片设高

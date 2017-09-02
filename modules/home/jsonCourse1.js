@@ -1,5 +1,5 @@
-define(function(require, exports, module) {
-    var htmlEditor, jsEditor, csEditor, editor_json;
+var htmlEditor;
+$(document).ready(function() {
     var Page = {
         init:function(){
             Page.configEdit();
@@ -18,18 +18,7 @@ define(function(require, exports, module) {
                 }
             }, false);
         },
-        setEditorValue:function(){
-            var value = localStorage.CourseData;
-            // var value = localStorage.CourseMessageData;
-            htmlEditor.setValue(value);
-        },
         configEdit:function(){
-            // var editor_json = CodeMirror.fromTextArea(document.getElementById("json-code"), {
-            //     lineNumbers: true,
-            //     mode: "application/json",
-            //     gutters: ["CodeMirror-lint-markers"],
-            //     lint: true
-            // });
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("json-code"), {
                 mode: "application/json",
                 lineNumbers: true,
@@ -46,11 +35,20 @@ define(function(require, exports, module) {
                 lint: true,
                 value: ""
             });
-
-            htmlEditor.setValue(localStorage.CourseData);
+            
+            if (localStorage.CourseData) {
+                htmlEditor.setValue(localStorage.CourseData);
+            }
         }
     };
 
     Page.init();
-
 });
+
+function setEditorValue(){
+    var value = localStorage.CourseData;
+    // var value = localStorage.CourseMessageData;
+    htmlEditor.setValue(value);
+    // console.log(111);
+}
+

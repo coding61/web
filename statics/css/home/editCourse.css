@@ -274,6 +274,8 @@ body{
 
     width: 35%;
     height: 100%;
+
+    position: relative;
 }
 .main-view .left-view ul.menu{
 	width: 30%;
@@ -372,9 +374,7 @@ body{
 
 /*会话*/
 .main-view .left-view .chat{
-	width: 66%;
 	height: 100%;
-	margin-right: 2%;
 	background-color: rgb(229, 230, 231);
 	border: solid 1px rgb(205, 206, 207);
 	border-radius: 5px;
@@ -386,7 +386,9 @@ body{
     justify-content: flex-start;
 
     position: relative;
-    width: 100%;
+    margin-left: 2%;
+    margin-right: 2%;
+    width: calc(96% - 80px);  /*80是节数*/
 
     font-size: 16px;
     /*width: 85%;*/
@@ -1768,6 +1770,125 @@ ul.message-types li{
 .reduce{
     width: 25px;
     height: 25px;
+}
+.lessons{
+    width: 80px;
+    background: red;
+
+    background-color: rgb(229, 230, 231);
+    border: solid 1px rgb(205, 206, 207);
+    border-radius: 5px;
+
+    /*display: inline-flex;
+    justify-content: center;
+
+    flex-direction: column;
+    justify-content: flex-start;*/
+
+    /*position: relative;*/
+    /*overflow: auto;*/
+    height: 100%;
+    overflow: hidden;
+}
+.lessons .add{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lessons .add .lesson-add{
+    width: 25px;
+    height: 25px;
+}
+.lesson-list{
+    width: 100%;
+    height: calc(100% - 40px);
+    overflow: auto;
+}
+li.lesson{
+    height: 50px;
+    border-bottom: solid 1px #e1e1e1;
+    background: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+}
+li.lesson.select{
+    color: rgb(250, 80, 131);
+}
+li.lesson.unselect{
+    color: #333;
+}
+li.lesson span{
+    height: 35px;
+    line-height: 35px;
+    font-size: 15px;
+    margin-right: 5px;
+}
+li.lesson img{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-left: 5px;
+}
+/***********课节输入框*/
+.lesson-input-view{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 10000;
+    display: none;
+}
+.lesson-input-view .lesson-input-header{
+    height: 35px;
+    background: #F8F8F8;
+    width: 70%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 8px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    border-radius: 2px 2px 0 0;
+}
+.lesson-input-view .lesson-input{
+    width: 70%;
+    background: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 0 0 2px 2px;
+}
+.lesson-input-view .lesson-input input{
+    border: solid 1px #e1e1e1;
+    max-height: 60px;
+    min-height: 25px;
+    padding: 5px;
+    width: calc(100% - 11px);
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+.lesson-input-view .lesson-input .lesson-submit{
+    color: #fff;
+    background: rgb(250, 80, 131);
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 15px;
+    border-radius: 5px;
+    margin-top: 5px;
+    cursor: pointer;
 }
 /*左边飞入动画*/
 @keyframes lefteaseinAnimate {

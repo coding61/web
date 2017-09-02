@@ -24,6 +24,7 @@
 			</div>
 			<span class="works center-view item">作品中心</span>
 			<span class="luntan center-view item">学习论坛</span>
+			<span class="mobile-app center-view item">手机 APP</span>
 			<div class="right-view">
 				<!-- <span class="luntan item">学习论坛</span> -->
 				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>获取了2颗钻石</span>
@@ -65,7 +66,12 @@
 					</div>
 				</div>
 			</div>
-
+			
+			<!-- 手机 app -->
+			<div class="qr-code-view">
+				<img src="../../statics/images/qrcode.png">
+				<span>为了方便您的学习，请下载手机 APP。</span>
+			</div>
 		</div>
 		<script type="text/html" id="team-template">
 			<img class="arrow" src="../../statics/images/arrow-d.png"/>
@@ -161,37 +167,7 @@
 				<div class="chat">
 					<!-- 消息区 -->
 					<div class="messages">
-						<!-- <div class="loading-chat">
-							<img src="../../statics/images/chat.gif" alt="">
-						</div>
 						
-						<div class="message text">
-							<span class="content">您好, 欢迎进入程序媛课堂</span>
-						</div>
-						<div class="message text">
-							<span class="content">您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂</span>
-						</div>
-						<div class="message text">
-							<span class="content">请授权微信登录</span>
-						</div>
-						<div class="message link">
-							<div class="link-text">
-								<span class="link-content">您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂;您好, 欢迎进入程序媛课堂<br/></span>
-								<span style="color: rgb(84, 180,225);">www.bcjiaoyu.com</span>
-							</div>
-							<img class="arrow" src="../../statics/images/arrow.png" alt="">
-						</div>
-						<div class="message img">
-							<div class="pre-img"><img src="../../statics/images/loading.gif" /></div>
-							<img src="../../statics/images/icons/icon1.gif" alt="">
-						</div>
-						<div class="answer">
-							<span class="content">微信登录</span>
-						</div> -->
-						<!-- <div class="sep-line">
-							<i class="line"></i>
-							<span class="title">第一节</span>
-						</div> -->
 					</div>
 					<!-- 按钮区 -->
 					<div class="btns">
@@ -203,12 +179,11 @@
 						</div>
 						<img class="help" src="../../statics/images/help2.png" alt="">
 					</div>
-					<!-- <span class="btn-wx-auth">点击微信登录</span> -->
 					
 					<!-- 悬浮帮助按钮 -->
-					<!-- <img class="help" src="../../statics/images/help2.png" alt=""> -->
 					<div class="helps-view">
 						<div class="change-course">更换课程</div>
+						<div class="course-menu">当前课程目录</div>
 						<div class="lock-phone">手机绑定</div>
 						<div class="find-help">寻找帮助</div>
 						<!-- <div class="zuan-ani">钻石动画</div> -->
@@ -217,6 +192,20 @@
 						<!-- <div class="contact-us">联系我们</div> -->
 						<img class="arrow" src="../../statics/images/arrow-w.png" />
 					</div>
+
+					<!-- 当前课程目录 -->
+					<div class="course-menu-view">
+						<ul class="course-menu-list">
+							
+						</ul>
+						<script type="text/html" id="course-menu-list-template">
+							{{each}}
+								<li data-index={{$index}} class="catalog{{if $index!=0}} ui-border-top{{/if}}{{if $value.select}} select{{else}} unselect{{/if}}">{{$index+1}}.{{$value.title}}</li>
+							{{/each}}
+						</script>
+						<img class="arrow" src="../../statics/images/arrow-w.png" />
+					</div>
+
 
 				</div>
 			</div>
