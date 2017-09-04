@@ -84,6 +84,8 @@ define(function(require, exports, module) {
                 str = "C 语言编译器" 
             }else if (Page.lang == "python") {
                 str = "Python 语言编译器"
+            }else if(Page.lang == "java"){
+                str = "Java 语言编译器"
             }else{
                 str = Page.lang + "语言编译器"
             }
