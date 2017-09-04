@@ -667,10 +667,11 @@ body{
 .main-view .left-view .btns .help{
     height: 30px;
     display: block;
-    margin-left: 85%;
+    /*margin-left: 85%;*/
     margin-bottom: 8px;
 
     cursor: pointer;
+    margin-left: 15px;
 }
 .main-view .left-view .helps-view{
     position: absolute;
@@ -679,11 +680,12 @@ body{
     background: white;
     border: solid 1px #d2d2d2;
     border-radius: 5px;
-    right: 5px;
+    /*right: 5px;*/
     font-size: 13px;
     padding: 0 10px;
     display: none;
     font-size: 15px;
+    left:5px;
 }
 .main-view .left-view .helps-view>div{
     height: 25px;
@@ -709,18 +711,20 @@ body{
 }
 .main-view .left-view .helps-view .arrow{
     position: absolute;
-    right: 28%;
+    /*right: 28%;*/
 }
 .course-menu-view{
     position: absolute;
     bottom: 50px;
-    right: 5px;
+    /*right: 5px;*/
     display: none;
+    left: 5px;
 }
 .course-menu-view .arrow{
     position: absolute;
     bottom: -10px;
-    right: 23%;
+    /*right: 23%;*/
+    left: 10px;
 }
 .course-menu-list{
     background: white;
