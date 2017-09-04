@@ -48,7 +48,10 @@ function bbsZone(){
 	var html='';
 	myAjax2(basePath+"/forum/sections/","get",null,function(result){
 		//console.log(result);
-		$.each(result.results,function(i,v){
+		if (result.next) {
+			getmoreSection(result.next.split("program_girl")[1], result.results);
+		} else {
+			$.each(result.results,function(i,v){
 			html+='<div class="col-xs-6 col-sm-6 bbsItem"><div class="media">'
 				+ '<a class="media-left media-middle" href="bbsList.html?id='+v.pk+'">'
 				+ '<img src="'+v.icon+'" alt="...">'
@@ -72,9 +75,52 @@ function bbsZone(){
 					html+='<li>暂无</li>'
 				}
 				html+= '</ul></div></div></div>';
-		})
-		$("#bbs").append(html);
-		liveTimeAgo();
+			})
+			$("#bbs").append(html);
+			liveTimeAgo();
+		}
+		
+	})
+}
+
+function getmoreSection(url, data) {
+	myAjax2(basePath+url,"get",null,function(result) {
+		$("#bbs").empty();
+		var html='';
+		for (var i = 0; i < result.results.length; i++) {
+			data.push(result.results[i]);
+		}
+		if (result.next) {
+			getmoreSection(result.next.split("program_girl")[1], data);
+		} else {
+			$.each(data, function(i,v){
+			html+='<div class="col-xs-6 col-sm-6 bbsItem"><div class="media">'
+				+ '<a class="media-left media-middle" href="bbsList.html?id='+v.pk+'">'
+				+ '<img src="'+v.icon+'" alt="...">'
+				+ '</a>'
+				+ '<div class="media-body"><h5 class="media-heading">'
+				+ '<a href="bbsList.html?id='+v.pk+'">'+v.name+'</a></h5>'
+				+ '<ul class="list-unstyled"><li>帖数：'+v.total+'</li></ul>'
+				+ '<ul class="list-unstyled lastUl">'
+				if(v.newposts){
+					v.newposts.title = v.newposts.title.replace(/</g,'&lt;');
+					v.newposts.title = v.newposts.title.replace(/>/g,'&gt;');
+					if (v.newposts.last_replied) {
+						var date =dealWithTime(v.newposts.last_replied);
+					} else {
+						var date =dealWithTime(v.newposts.create_time);
+					}
+					html+=	'<li class="titleHandle">'    
+						+ '<a href="detail.html?id='+v.newposts.pk+'&pk='+v.pk+'">'+v.newposts.title+'</a></li>'
+					    +'<li class="liveTime" title="'+date+'" data-lta-value="'+date+'"></li><li>'+v.newposts.author+'</li>';
+				}else{
+					html+='<li>暂无</li>'
+				}
+				html+= '</ul></div></div></div>';
+			})
+			$("#bbs").append(html);
+			liveTimeAgo();
+		}
 	})
 }
 
