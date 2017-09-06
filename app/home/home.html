@@ -25,6 +25,7 @@
 			<span class="works center-view item">作品中心</span>
 			<span class="luntan center-view item">学习论坛</span>
 			<span class="mobile-app center-view item">手机 APP</span>
+			<span class="code-online center-view item">在线编程</span>
 			<div class="right-view">
 				<!-- <span class="luntan item">学习论坛</span> -->
 				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>获取了2颗钻石</span>
@@ -72,6 +73,19 @@
 				<img src="../../statics/images/qrcode.png">
 				<span>为了方便您的学习，请下载手机 APP。</span>
 			</div>
+
+			<!-- 在线编程 -->
+			<div class="code-online-editors">
+				<img class="arrow" src="../../statics/images/arrow-d.png"/>
+				<div class="editors">
+					<span class="html editor">HTML/JavaScript</span>
+					<span class="c editor">C 语言</span>
+					<span class="python editor">Python 语言</span>
+					<span class="java editor">Java 语言</span>
+				</div>
+			</div>
+
+
 		</div>
 		<script type="text/html" id="team-template">
 			<img class="arrow" src="../../statics/images/arrow-d.png"/>
@@ -306,7 +320,16 @@
 				</div>
 			</div>
 		</div>
-
+		
+		<!-- 全球各个国家电话代码 -->
+		<script type="text/html" id="country-option-template">
+			{{each}}
+				<li class="country-option{{if $value.code==+86}} select{{/if}}" data-code="{{$value.code}}">
+					<span class="codeCty">{{$value.code}}</span>
+					<span class="country">{{$value.country}}</span>
+				</li>
+			{{/each}}
+		</script>
 		<!-- 手机号/邀请码登录 -->
 		<div class="phone-invite-shadow-view">
 			<div class="phone-invite-view">
@@ -321,6 +344,14 @@
 				<!-- 手机登录 -->
 				<div class="account-view ui-login-view phone-account-view" data-tag="phone">
 					<div class="username ui-login-input-view">
+						<div class="code-country">
+							<span>+86</span>
+							<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+						</div>
+						<ul class="country-options">
+							
+							
+						</ul>
 						<input class="ui-login-input" placeholder="请输入手机号" />
 					</div>
 					<div class="password ui-login-input-view">
@@ -365,6 +396,13 @@
 					<div class="phone-reg-account-view">
 						<div class="view-tag">注册</div>
 						<div class="phone">
+							<div class="code-country">
+								<span>+86</span>
+								<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+							</div>
+							<ul class="country-options">
+								
+							</ul>
 							<input placeholder=" 请输入手机号" />
 						</div>
 						<div class="verify-code">
@@ -443,6 +481,13 @@
 				<div class="find-password-account-view">
 					<div class="view-tag">找回密码</div>
 					<div class="phone">
+						<div class="code-country">
+							<span>+86</span>
+							<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+						</div>
+						<ul class="country-options">
+							
+						</ul>
 						<input placeholder=" 请输入手机号" />
 					</div>
 					<div class="verify-code">
@@ -469,6 +514,13 @@
 				<div class="phone-bind-account-view">
 					<div class="view-tag">绑定手机</div>
 					<div class="phone">
+						<div class="code-country">
+							<span>+86</span>
+							<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+						</div>
+						<ul class="country-options">
+							
+						</ul>
 						<input placeholder=" 请输入手机号" />
 					</div>
 					<div class="verify-code">

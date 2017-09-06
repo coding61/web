@@ -833,6 +833,8 @@ define(function(require, exports, module) {
                 // $(".login-shadow-view").show();
                 Page.clickEvent();
             }
+
+            Mananger.getCountryCode();   //初始化国家代码
             Common.addCopyRight();   //添加版权标识
         },
         loadMessage:function(arr, i, opt){
@@ -1285,6 +1287,31 @@ define(function(require, exports, module) {
             }).unbind('mouseout').mouseout(function(){
                 $(".qr-code-view").css({display:'none'});
             })
+            // 在线编辑器
+            $(".header .code-online").unbind('click').click(function(){
+                Util.adjustCodeEditorsOnline();
+            })
+            // 编辑器点击事件
+            $(".editors .editor").unbind('click').click(function(){
+                var url = ""
+                if (location.host == "develop.cxy61.com:8001") {
+                    url = "http://"+location.host + "/app"
+                }else{
+                    url = "https://"+location.host + "/girl/app"
+                }
+                if ($(this).hasClass("html")) {
+                    url = url + "/home/codeEditRN.html"
+                }else if ($(this).hasClass("c")) {
+                    url = url + "/home/compileRN.html?lang=c"
+                }else if ($(this).hasClass("python")) {
+                    url = url + "/home/compileRN.html?lang=python"
+                }else if ($(this).hasClass("java")) {
+                    url = url + "/home/compileRN.html?lang=java"
+                }
+                Util.openLink(url)
+                $(".code-online-editors").css({display:'none'})
+            })
+
             
             // 消息音频播放
             $(".msg-view-parent .audio").unbind('click').click(function(){
@@ -1427,15 +1454,35 @@ define(function(require, exports, module) {
             $(".header .works").unbind('click').click(function(){
                 window.open("worksList.html");
             })
-
             // 手机 app
-            // $(".header .mobile-app").unbind('click').click(function(){
-            //     Util.adjustQrCode();
-            // })
             $(".header .mobile-app").unbind('mouseover').mouseover(function(){
                 Util.adjustQrCode();
             }).unbind('mouseout').mouseout(function(){
                 $(".qr-code-view").css({display:'none'});
+            })
+            // 在线编辑器
+            $(".header .code-online").unbind('click').click(function(){
+                Util.adjustCodeEditorsOnline();
+            })
+            // 编辑器点击事件
+            $(".editors .editor").unbind('click').click(function(){
+                var url = ""
+                if (location.host == "develop.cxy61.com:8001") {
+                    url = "http://"+location.host + "/app"
+                }else{
+                    url = "https://"+location.host + "/girl/app"
+                }
+                if ($(this).hasClass("html")) {
+                    url = url + "/home/codeEditRN.html"
+                }else if ($(this).hasClass("c")) {
+                    url = url + "/home/compileRN.html?lang=c"
+                }else if ($(this).hasClass("python")) {
+                    url = url + "/home/compileRN.html?lang=python"
+                }else if ($(this).hasClass("java")) {
+                    url = url + "/home/compileRN.html?lang=java"
+                }
+                Util.openLink(url)
+                $(".code-online-editors").css({display:'none'})
             })
 
             Page.clickEventLoginRelated();
@@ -1625,6 +1672,23 @@ define(function(require, exports, module) {
             $(".find-password-view .reset-psd-btn").unbind('click').click(function(){
                 // 重置密码 btn
                 Mananger.resetPassword($(".find-password-view"));
+            })
+
+            // ----------------------------5.国家电话代码
+            // 国家代码
+            $(".code-country").unbind('click').click(function(){
+
+                $(".country-options").toggle();
+            })
+            // 默认是+86
+            $(".country-option").unbind('click').click(function(){
+                var code = $(this).attr("data-code");
+                Util.currentCountryCode = code;
+                $(".country-option.select").removeClass("select");
+                $(this).addClass("select");
+                $(".code-country span").html(code);
+
+                $(".country-options").hide();
             })
         
         },
@@ -2499,8 +2563,12 @@ define(function(require, exports, module) {
             })
         },
         getPhoneCode:function(this_){
-            var reg = /^1[0-9]{10}$/;
+            // var reg = /^[0-9]$/;
             var phone = this_.find(".phone").children("input").val();
+            if (Util.currentCountryCode != "+86") {
+                phone = Util.currentCountryCode + phone
+                // phone = encodeURI(phone)
+            }
             
             var url = "";
             if (this_.find(".view-tag").html() == "注册") {
@@ -2511,7 +2579,7 @@ define(function(require, exports, module) {
                 url = "/userinfo/reset_password_request/";
             }
 
-            if (this_.find(".get-code").html() == "获取验证码" && reg.test(phone)) {
+            if (this_.find(".get-code").html() == "获取验证码") {
                 // 发起获取验证码请求
                 Common.isLogin(function(token){
                     $.ajax({
@@ -2560,24 +2628,30 @@ define(function(require, exports, module) {
                         }
                     })
                 })
-            }else if (!reg.test(phone)) {
-                // 手机号不合法
-                Common.dialog("手机号不合法");
             }
         },
         lockPhone:function(this_){
             // 绑定手机
-            if (this_.find(".phone").children("input").val() == "") {
+            var phone = this_.find(".phone").children("input").val(),
+                veriCode = this_.find(".verify-code").children("input").val(),
+                password = this_.find(".password").children("input").val();
+
+            if (phone == "") {
                 Common.dialog("请输入手机号");
                 return
             }
-            if (this_.find(".verify-code").children("input").val() == "") {
+            if (veriCode == "") {
                 Common.dialog("请输入验证码");
                 return
             }
-            if (this_.find(".password").children("input").val() == "") {
+            if (password == "") {
                 Common.dialog("请输入密码");
                 return
+            }
+
+            if (Util.currentCountryCode != "+86") {
+                phone = Util.currentCountryCode + phone
+                // phone = encodeURIComponent(phone)
             }
             
             Common.isLogin(function(token){
@@ -2585,9 +2659,9 @@ define(function(require, exports, module) {
                     type:"post",
                     url:Common.domain + "/userinfo/bind_telephone/",
                     data:{
-                        telephone:this_.find(".phone").children("input").val(),
-                        password:this_.find(".password").children("input").val(),
-                        verification_code:this_.find(".verify-code").children("input").val()
+                        telephone:phone,
+                        password:password,
+                        verification_code:veriCode
                     },
                     headers:{
                         Authorization:"Token " + token
@@ -2627,17 +2701,26 @@ define(function(require, exports, module) {
         },
         regPhone1:function(this_){
             // 注册手机
-            if (this_.find(".phone").children("input").val() == "") {
+            var phone = this_.find(".phone").children("input").val(),
+                veriCode = this_.find(".verify-code").children("input").val(),
+                password = this_.find(".password").children("input").val();
+
+            if (phone== "") {
                 Common.dialog("请输入手机号");
                 return
             }
-            if (this_.find(".verify-code").children("input").val() == "") {
+            if (veriCode == "") {
                 Common.dialog("请输入验证码");
                 return
             }
-            if (this_.find(".password").children("input").val() == "") {
+            if (password == "") {
                 Common.dialog("请输入密码");
                 return
+            }
+
+            if (Util.currentCountryCode != "+86") {
+                phone = Util.currentCountryCode + phone
+                // phone = encodeURIComponent(phone)
             }
             
             Common.isLogin(function(token){
@@ -2645,9 +2728,9 @@ define(function(require, exports, module) {
                     type:"post",
                     url:Common.domain + "/userinfo/telephone_signup/",
                     data:{
-                        telephone:this_.find(".phone").children("input").val(),
-                        password:this_.find(".password").children("input").val(),
-                        verification_code:this_.find(".verify-code").children("input").val(),
+                        telephone:phone,
+                        password:password,
+                        verification_code:veriCode,
                         name:"",
                         avatar:""
                     },
@@ -2688,6 +2771,11 @@ define(function(require, exports, module) {
             })
         },
         regPhone:function(phone, code, password, url, nickname){
+            if (Util.currentCountryCode != "+86") {
+                phone = Util.currentCountryCode + phone
+                // phone = encodeURIComponent(phone)
+            }
+
             Common.showLoading();
             // 注册手机
             Common.isLogin(function(token){
@@ -2750,17 +2838,26 @@ define(function(require, exports, module) {
         },
         resetPassword:function(this_){
             // 重置密码
-            if (this_.find(".phone").children("input").val() == "") {
+            var phone = this_.find(".phone").children("input").val(),
+                veriCode = this_.find(".verify-code").children("input").val(),
+                password = this_.find(".password").children("input").val();
+
+            if (phone == "") {
                 Common.dialog("请输入手机号");
                 return
             }
-            if (this_.find(".verify-code").children("input").val() == "") {
+            if (veriCode == "") {
                 Common.dialog("请输入验证码");
                 return
             }
-            if (this_.find(".password").children("input").val() == "") {
+            if (password == "") {
                 Common.dialog("请输入密码");
                 return
+            }
+
+            if (Util.currentCountryCode != "+86") {
+                phone = Util.currentCountryCode + phone
+                // phone = encodeURIComponent(phone)
             }
             
             Common.isLogin(function(token){
@@ -2768,9 +2865,9 @@ define(function(require, exports, module) {
                     type:"put",
                     url:Common.domain + "/userinfo/reset_password/",
                     data:{
-                        telephone:this_.find(".phone").children("input").val(),
-                        password:this_.find(".password").children("input").val(),
-                        verification_code:this_.find(".verify-code").children("input").val()
+                        telephone:phone,
+                        password:password,
+                        verification_code:veriCode
                     },
                     timeout:6000,
                     success:function(json){
@@ -2806,11 +2903,14 @@ define(function(require, exports, module) {
             })
         },
         goLogin:function(this_){
-            if(this_.find(".username").children("input").val() == ""){
+            // 登录
+            var username = this_.find(".username").children("input").val(),
+                password = this_.find(".password").children("input").val();
+            if(username == ""){
                 Common.dialog("请输入账号");
                 return;
             }
-            if(this_.find(".password").children("input").val() == ""){
+            if(password == ""){
                 Common.dialog("请输入密码");
                 return;
             }
@@ -2819,15 +2919,22 @@ define(function(require, exports, module) {
             if (this_.attr("data-tag") == "invite") {
                 url = "/userinfo/invitation_code_login/"
                 data = {
-                    code:this_.find(".username").children("input").val(),
-                    password:this_.find(".password").children("input").val()
+                    code:username,
+                    password:password
                 }
             }else if (this_.attr("data-tag") == "phone") {
+
+                if (Util.currentCountryCode != "+86") {
+                    username = Util.currentCountryCode + username
+                    // username = encodeURIComponent(username)
+                }
+
                 url = "/userinfo/telephone_login/"
                 data = {
-                    telephone:this_.find(".username").children("input").val(),
-                    password:this_.find(".password").children("input").val()
+                    telephone:username,
+                    password:password
                 }
+
             }
 
             Common.showLoading();
@@ -2868,7 +2975,22 @@ define(function(require, exports, module) {
                     }
                 }
             })
-        } 
+        },
+        getCountryCode:function(){
+            $.ajax({
+                type:'get',
+                url:"../../modules/common/country.json",
+                success:function(json){
+                    var html = ArtTemplate("country-option-template", json);
+                    $(".country-options").html(html);
+                    
+                    Page.clickEventLoginRelated();
+                },
+                error:function(xhr, textStatus){
+                    console.log('error');
+                }
+            })
+        }
     }
     // ---------------------4.帮助方法
     var Util = {
@@ -2876,7 +2998,8 @@ define(function(require, exports, module) {
         linkType:"",
         waitTime:Common.getQueryString("wt")?10:1000,
         messageTime:Common.getQueryString("mt")?20:2000,
-        currentCatalogIndex:0,
+        currentCatalogIndex:0,     //当前目录的下标
+        currentCountryCode:"+86", 
         storeData:function(){
             // 存储实时数据的下标，数据源， 问题中信息下标
             localStorage.data = JSON.stringify(Page.data);
@@ -2983,6 +3106,24 @@ define(function(require, exports, module) {
                 left:(a - (c-b)/2)+"px",
                 display:'flex'
             })
+        },
+        adjustCodeEditorsOnline:function(){
+            var a = $(".code-online").offset().left;
+            var b = $(".code-online").width();
+            var c = $(".code-online-editors").width();
+
+            if ($(".code-online-editors").css("display") == "none") {
+                $(".code-online-editors").css({
+                    left:(a - (c-b)/2)+"px",
+                    display:'flex'
+                })
+            }else{
+                $(".code-online-editors").css({
+                    left:(a - (c-b)/2)+"px",
+                    display:'none'
+                })
+            }
+            
         },
         courseCatalogsInit:function(response){
             if (response["catalogs"]) {
@@ -3211,6 +3352,12 @@ define(function(require, exports, module) {
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").show();
             }
+        },
+        openLink:function(link){
+            var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+            params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+            console.log(params);
+            window.open(link, '_blank', params);
         }
     }
 
