@@ -2537,6 +2537,15 @@ define(function(require, exports, module) {
                     Course.load();
                 })
 
+                // 节删除
+                $(".lesson img").unbind('click').click(function(e){
+                    e.stopPropagation();
+                    var this_ = $(this);
+                    Common.bcAlert("您是否确定要删除本小节数据？可能会导致您的课程节下标不连续，是否继续？", function(){
+                        Course.deleteLesson(this_);
+                    })
+                })
+
                 // 存储节数字数据
                 var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
                 dic[str] = [];
