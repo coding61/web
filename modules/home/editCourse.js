@@ -2523,10 +2523,18 @@ define(function(require, exports, module) {
 
                 $(".lesson-input-view").css({display:'none'});
                 $(".lesson-input input").val("");
+
                 // 节点击事件
-                $(".lesson").unbind('click').click(function(){
+                $(".lesson").unbind('click').click(function(e){
+                    // Course.lesson = $(this).children("span").html();
+                    // alert(Course.lesson);
+                    e.stopPropagation();
                     Course.lesson = $(this).children("span").html();
-                    alert(Course.lesson);
+                    $(".lesson.select").removeClass("select").addClass("unselect");
+                    $(this).removeClass("unselect").addClass("select");
+
+                    // 改变中间的会话列表
+                    Course.load();
                 })
 
                 // 存储节数字数据
