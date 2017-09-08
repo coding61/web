@@ -751,6 +751,7 @@ body{
     /*right: 5px;*/
     display: none;
     left: 5px;
+    z-index: 10000;
 }
 .course-menu-view .arrow{
     position: absolute;
@@ -778,7 +779,7 @@ li.catalog.ui-border-bottom{
     cursor: pointer;
     height: 35px;
     line-height: 35px;
-    width: 110px;
+    width: 150px;
     overflow: hidden;
     cursor: pointer;
 }
