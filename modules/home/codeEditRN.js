@@ -150,21 +150,21 @@ define(function(require, exports, module) {
                 htmlEditor.setValue(localStorage.htmlCode);
             }
 
-            // htmlEditor.on("blur", function(Editor){
-            //     if (htmlEditor.getOption("mode") == "text/html") {
-            //         //存 html
-            //         localStorage.htmlCode = Editor.getValue();
-            //     }else if (htmlEditor.getOption("mode") == "javascript"){
-            //         //存 js
-            //         localStorage.jsCode = Editor.getValue();
-            //     }
-            // }) 
+            htmlEditor.on("blur", function(Editor){
+                if (htmlEditor.getOption("mode") == "text/html") {
+                    //存 html
+                    localStorage.htmlCode = Editor.getValue();
+                    alert(localStorage.htmlCode);
+                }else if (htmlEditor.getOption("mode") == "javascript"){
+                    //存 js
+                    localStorage.jsCode = Editor.getValue();
+                }
+            }) 
             htmlEditor.on("change", function(Editor, changes){
                 // console.log(Editor.getValue());
                 if (htmlEditor.getOption("mode") == "text/html") {
                     //存 html
                     localStorage.htmlCode = Editor.getValue();
-                    alert(localStorage.htmlCode);
                 }else if (htmlEditor.getOption("mode") == "javascript"){
                     //存 js
                     localStorage.jsCode = Editor.getValue();
