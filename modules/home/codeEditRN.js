@@ -164,6 +164,7 @@ define(function(require, exports, module) {
                 if (htmlEditor.getOption("mode") == "text/html") {
                     //存 html
                     localStorage.htmlCode = Editor.getValue();
+                    alert(localStorage.htmlCode);
                 }else if (htmlEditor.getOption("mode") == "javascript"){
                     //存 js
                     localStorage.jsCode = Editor.getValue();
