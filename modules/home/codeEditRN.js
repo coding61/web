@@ -184,6 +184,7 @@ define(function(require, exports, module) {
                 },
                 timeout:6000,
                 success:function(json){
+                    alert(JSON.stringify(json));
                     console.log(json);
                     // alert(json.pk)
                     // $(".run-result iframe").attr({src:url});
@@ -271,13 +272,13 @@ define(function(require, exports, module) {
                 // console.log(htmlV);
                 */
 
-                htmlV = localStorage.htmlCode?localStorage.htmlCode:"1"
+                htmlV = localStorage.htmlCode?localStorage.htmlCode:""
                 jsV = localStorage.jsCode?localStorage.jsCode:""
 
                 // alert(htmlEditor.getValue());
                 // alert(localStorage.htmlCode);
                 alert(htmlV);
-                // Page.load(htmlV, cssV, jsV);
+                Page.load(htmlV, cssV, jsV);
 
             })
 
