@@ -271,10 +271,12 @@ define(function(require, exports, module) {
                 // console.log(htmlV);
                 */
 
-                htmlV = localStorage.htmlCode?localStorage.htmlCode:""
+                htmlV = localStorage.htmlCode?localStorage.htmlCode:"1"
                 jsV = localStorage.jsCode?localStorage.jsCode:""
 
-                alert(htmlEditor.getValue());
+                // alert(htmlEditor.getValue());
+                // alert(localStorage.htmlCode);
+                alert(htmlV);
                 // Page.load(htmlV, cssV, jsV);
 
             })
