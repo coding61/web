@@ -273,7 +273,9 @@ define(function(require, exports, module) {
 
                 htmlV = localStorage.htmlCode?localStorage.htmlCode:""
                 jsV = localStorage.jsCode?localStorage.jsCode:""
-                Page.load(htmlV, cssV, jsV);
+
+                alert(htmlV);
+                // Page.load(htmlV, cssV, jsV);
 
             })
 
