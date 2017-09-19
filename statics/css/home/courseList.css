@@ -6,6 +6,59 @@ body{
 	height: 100%;
     background: rgb(229, 230, 231);
 }
+/**************************1.头部搜索框*/
+.header{
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 10px;
+}
+.header .search-course{
+    border: solid 1px rgb(205, 206, 207);
+    width: 120px;
+    width: 15%;
+    background: white;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    justify-content: space-between;
+}
+.search-course input{
+    border: none;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    font-size: 13px;
+    width: calc(100% - 30px);
+}
+.search-course img.search{
+    width: 20px; 
+    cursor: pointer;
+}
+.header .back{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    display: none;
+}
+.header .back span{
+
+}
+.header .back img{
+    
+}
+
+/**********************2.初始课程列表*/
+.search-courses-list{
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 1%;
+    padding-left: 0;
+    width: 100%;
+    display: none;
+}
 .courses{
     width: 100%;
     /*height: 100%;*/
@@ -121,7 +174,7 @@ body{
    width: 100%;
 }
 
-/*课程分类*/
+/***************************3.课程分类*/
 .category-view{
     padding-right: 8%;
     padding-left: 4%;
@@ -181,5 +234,166 @@ body{
     z-index: 10000;
 }
 
+/**********************4.详情/目录弹框*/
+.course-detail-catalogs-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.course-detail-catalogs-shadow-view .course-detail-catalogs-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.ui-catalogs-view{
+    width: 50%;
+    background: #efefef;
+}
+.course-detail-catalogs-view .close{
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.course-detail-catalogs-view .close img{
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+
+.course-detail-catalogs-view .tabs{
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+}
+.tabs .tab{
+    flex: 1;
+    text-align: center;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+.tab.unselect{
+    background: rgb(211,211,211);
+    color: rgb(134,134,134);
+}
+.tab.select{
+    background: #efefef;
+    color: rgb(59,59,59);
+}
+
+.ui-border-bottom-radius{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+/*************************课程详情*/
+.course-detail-view{
+    /*display: none;*/
+}
+.course-detail-view .top-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* width: 100%; */
+    margin-top: 15px;
+
+    position: relative;
+}
+.course-detail-view .top-view .avatar{
+    height: 60px;
+    margin-bottom: 15px;
+}
+.course-detail-view .top-view h3{
+    font-size: 16px;
+    height: 20px;
+    line-height: 20px;
+}
+.course-detail-view .top-view .numbers{
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    color: rgb(134,134,134);
+}
+.course-detail-view .desc-view{
+    margin: 15px;
+    color: #333;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: justify;
+    max-height: 80px;
+    overflow: auto;
+}
+.course-detail-view .bottom-view{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+.course-detail-view .bottom-view .start,
+.course-detail-view .bottom-view .continue,
+.course-detail-view .bottom-view .restart{
+    background: #ff6b95;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+
+/**********************课程目录*/
+.course-catalogs-view{
+    display: none;
+}
+.course-catalogs-view .catalogs{
+    color: #333;
+    font-size: 13px;
+    padding: 15px;
+    justify-content: space-between;
+    display: inline-flex;
+    flex-wrap: wrap;
+    max-height: 120px;
+    overflow: auto;
+}
+.course-catalogs-view .catalogs .catalog{
+    width: calc(50%);
+    height: 30px;
+    line-height: 30px;
+}
+/********************开始学习/重新学习*/
+.bottom-view{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /*margin-bottom: 15px;*/
+    margin-left: 15%;
+    margin-right: 15%;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+.bottom-view .start,
+.bottom-view .continue,
+.bottom-view .restart{
+    background: #ff6b95;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    cursor: pointer;
+}
 
 

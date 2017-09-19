@@ -39,6 +39,9 @@ $(document).ready(function() {
             if (localStorage.CourseData) {
                 htmlEditor.setValue(localStorage.CourseData);
             }
+            htmlEditor.on("change", function(Editor, changes){
+                localStorage.CourseData = Editor.getValue();
+            })
         }
     };
 
@@ -47,8 +50,6 @@ $(document).ready(function() {
 
 function setEditorValue(){
     var value = localStorage.CourseData;
-    // var value = localStorage.CourseMessageData;
     htmlEditor.setValue(value);
-    // console.log(111);
 }
 

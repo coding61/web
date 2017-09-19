@@ -13,34 +13,23 @@
 	</head>
 
 	<body>
-		<div class="courses">
-            <!-- <div class="course">
-                <h3>HTML5</h3>
-                <img src="../../statics/images/course/c2.png" />
-                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
-            </div>
-            <div class="course">
-            	<h3>CSS</h3>
-                <img src="../../statics/images/course/c4.png" />
-                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
-            </div>
-            <div class="course">
-            	<h3>JavaScript</h3>
-                <img src="../../statics/images/course/c3.png" />
-                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
-            </div>
-            <div class="course">
-            	<h3>Python</h3>
-                <img src="../../statics/images/course/c1.png" />
-                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
-            </div>
-            <div class="course">
-            	<h3>JavaScript</h3>
-                <img src="../../statics/images/course/c3.png" />
-                <span class="desc">简介:其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。</span>
-            </div> -->
-        </div>
+		<div class="header">
+			<div class="search-course">
+				<input placeholder="搜索课程"></input>
+				<img class="search" src="../../statics/images/search.png"/>
+			</div>
+			<div class="back">
+				<span>返回</span>
+				<!-- <img src="../../statics/images/back.png"> -->
+			</div>
+		</div>
+		
 
+		<!-- 初始课程列表 -->
+		<div class="courses">
+            
+        </div>
+		<!-- 初始课程列表模板 -->
         <script type="text/html" id="courses-template">
         	{{each}}
 	        	<div class="category-view">
@@ -104,6 +93,99 @@
 	        	
 	        {{/each}}
         </script>
+
+        <!-- 搜索课程结果列表 -->
+        <div class="search-courses-list">
+        	
+        </div>
+        <!-- 搜索课程结果列表模板 -->
+        <script type="text/html" id="search-courses-list-template">
+        	<div class="category-courses">
+        		{{each}}
+	        	<div class="course{{if $value.isopen == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}} data-course-total={{$value.total_lesson}}>
+	        		{{if $value.learn_extent.status == "finish"}}
+		                <img class="status" src="../../statics/images/course/icon1.png" />
+		            {{else if $value.learn_extent.status == "processing"}}
+		            	<img class="status" src="../../statics/images/course/icon2.png" />
+		            {{else}}
+		            {{/if}}
+		            {{if $value.isopen == false}}
+		            	<img class="status" src="../../statics/images/course/icon3.png"/> 
+		            {{/if}}
+	                <h3>{{$value.name}}</h3>
+	                <div class="avatar">
+	                	<img src="{{$value.images}}" />
+	                </div>
+	                <span class="desc">简介:{{$value.content}}</span>
+	            </div>
+        	{{/each}}
+        	</div>
+        </script>
+
+        <!-- 课程详情/目录弹框 -->
+		<div class="course-detail-catalogs-shadow-view">
+			<div class="course-detail-catalogs-view">
+				<div class="close ui-catalogs-view">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+
+				<div class="tabs ui-catalogs-view">
+					<div class="tab select course-detail">课程详情</div>
+					<div class="tab unselect course-catalogs">课程目录</div>
+				</div>
+				<!-- 课程详情 -->
+				<div class="course-detail-view ui-catalogs-view">
+					<div class="top-view">
+						<img class="avatar" src="https://static1.bcjiaoyu.com/c2.png">
+						<h3>CSS 基础</h3>
+						<div class="numbers">
+							<div class="total-grow">
+								<span class="text">总经验值:</span>
+								<span class="number">1000</span>
+							</div>
+							<div class="total-zuan">
+								<span class="text">总钻石数:</span>
+								<span class="number">1000</span>
+							</div>
+						</div>
+					</div>
+					<div class="desc-view">
+						<label>课程介绍:</label>
+						<span>其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。其主要目的是将互联网语义化。</span></div>
+					<!-- <div class="bottom-view">
+						<span class="start">开始学习</span>
+						<span class="restart">重新学习</span>
+					</div> -->
+				</div>
+				<!-- 课程目录 -->
+				<div class="course-catalogs-view ui-catalogs-view">
+					<div class="catalogs">
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+						<span class="catalog">1.Css课程</span>
+					</div>
+				</div>
+
+				<!-- 底部按钮 -->
+				<div class="bottom-view ui-catalogs-view ui-border-bottom-radius">
+					<span class="start">开始学习</span>
+					<!-- <span class="restart">重新学习</span> -->
+				</div>
+			</div>
+		</div>
+
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="../../libs/sea.js"></script>
