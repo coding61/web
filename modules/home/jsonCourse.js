@@ -13,14 +13,12 @@ define(function(require, exports, module) {
                 if(a == "json"){
                     console.log(1);
                     var value = localStorage.CourseData;
-                    // var value = localStorage.CourseMessageData;
                     htmlEditor.setValue(value);
                 }
             }, false);
         },
         setEditorValue:function(){
             var value = localStorage.CourseData;
-            // var value = localStorage.CourseMessageData;
             htmlEditor.setValue(value);
         },
         configEdit:function(){
@@ -48,6 +46,10 @@ define(function(require, exports, module) {
             });
 
             htmlEditor.setValue(localStorage.CourseData);
+
+            htmlEditor.on("change", function(Editor, changes){
+                localStorage.CourseData = Editor.getValue();
+            })
         }
     };
 
