@@ -4,6 +4,7 @@ $(document).ready(function() {
         init:function(){
             Page.configEdit();
             Page.addListen();
+            Page.clickEvent();
         },
         addListen:function(){
             // 监听课程列表那里传过来的点击事件
@@ -41,6 +42,11 @@ $(document).ready(function() {
             }
             htmlEditor.on("change", function(Editor, changes){
                 localStorage.CourseData = Editor.getValue();
+            })
+        },
+        clickEvent:function(){
+            $(".preview").click(function(){
+                window.open("previewCourse.html");
             })
         }
     };
