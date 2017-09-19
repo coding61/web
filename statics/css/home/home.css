@@ -695,6 +695,7 @@ body{
 
     height: 40px;
     line-height: 40px;
+    overflow: hidden;
 }
 .main-view .left-view .btns .help{
     height: 30px;
