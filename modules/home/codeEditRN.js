@@ -256,7 +256,7 @@ define(function(require, exports, module) {
                 }
             })
 
-            $(".result .run").click(function(){
+            $(".run").click(function(){
                 var htmlV = "";
                 var jsV = "";
                 var cssV = "";

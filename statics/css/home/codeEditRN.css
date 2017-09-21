@@ -1,3 +1,8 @@
+/*
+    #369ffb 蓝色
+    #ff6b95 粉色
+*/
+
 *{
     font-family: monospace;
 }
@@ -20,11 +25,11 @@ body{
     font-size: 15px;
 }
 .tabs .tab.unselect{
-    color: rgb(250, 80, 131);
+    color: #ff6b95;
     background-color: white;
 }
 .tabs .tab.select{
-    background-color: rgb(250, 80, 131);
+    background-color: #ff6b95;
     color: white;
 }
 .edits{
@@ -110,6 +115,7 @@ body{
     justify-content: flex-start;
     padding-left: 5px;
 }
+.btns span,
 .insert-pun-view .insert-pun,
 .result .run,
 .result .insert-pun,
@@ -126,6 +132,7 @@ body{
 
     margin-top: 0;
     cursor: pointer;
+    background: #ff6b95;
 }
 .result .run-result{
     height: calc(92% - 45px);
@@ -236,7 +243,7 @@ body{
     display: inline-block;
     margin: 10px;
 
-    background: rgb(250, 80, 131); */
+    background: #ff6b95; */
     color: white; 
     font-size: 17px;
 }
