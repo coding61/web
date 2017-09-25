@@ -2492,7 +2492,9 @@ define(function(require, exports, module) {
 
             // 打开节数输入框
             $(".lessons .add").unbind('click').click(function(){
-                $(".lesson-input-view").css({display:'flex'});
+                // $(".lesson-input-view").css({display:'flex'});
+
+                Course.newAddLesson();
             })
 
             // 确认添加课节数
@@ -2524,27 +2526,7 @@ define(function(require, exports, module) {
                 $(".lesson-input-view").css({display:'none'});
                 $(".lesson-input input").val("");
 
-                // 节点击事件
-                $(".lesson").unbind('click').click(function(e){
-                    // Course.lesson = $(this).children("span").html();
-                    // alert(Course.lesson);
-                    e.stopPropagation();
-                    Course.lesson = $(this).children("span").html();
-                    $(".lesson.select").removeClass("select").addClass("unselect");
-                    $(this).removeClass("unselect").addClass("select");
-
-                    // 改变中间的会话列表
-                    Course.load();
-                })
-
-                // 节删除
-                $(".lesson img").unbind('click').click(function(e){
-                    e.stopPropagation();
-                    var this_ = $(this);
-                    Common.bcAlert("您是否确定要删除本小节数据？可能会导致您的课程节下标不连续，是否继续？", function(){
-                        Course.deleteLesson(this_);
-                    })
-                })
+                Course.clickDeleteLessonEvent();
 
                 // 存储节数字数据
                 var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
@@ -2556,6 +2538,11 @@ define(function(require, exports, module) {
 
             })
 
+            Course.clickDeleteLessonEvent();
+
+        },
+        clickDeleteLessonEvent:function(){
+            /*
             // 节点击事件
             $(".lesson").unbind('click').click(function(e){
                 e.stopPropagation();
@@ -2573,6 +2560,28 @@ define(function(require, exports, module) {
                 var this_ = $(this);
                 Common.bcAlert("您是否确定要删除本小节数据？可能会导致您的课程节下标不连续，是否继续？", function(){
                     Course.deleteLesson(this_);
+                })
+            })
+            */
+
+            $(".lesson").unbind('click').click(function(e){
+                e.stopPropagation();
+                Course.lesson = $(this).children("span").html();
+                $(".lesson.select").removeClass("select").addClass("unselect");
+                $(this).removeClass("unselect").addClass("select");
+
+                console.log("course-lesson", Course.lesson);
+
+                // 改变中间的会话列表
+                Course.load();
+            })
+
+            // 节删除
+            $(".lesson img").unbind('click').click(function(e){
+                e.stopPropagation();
+                var this_ = $(this);
+                Common.bcAlert("您是否确定要删除本小节数据？", function(){
+                    Course.newDeleteLesson(this_);
                 })
             })
         },
@@ -2598,6 +2607,89 @@ define(function(require, exports, module) {
             // 刷新中间的会话列表
             Course.load();
 
+            // 通知右边的iframe 改变代码内容
+            window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+        },
+
+        newAddLesson:function(){
+            // --------1.改变 UI
+            var count = 0;
+            if (!$(".lesson").length){
+                // 长度为0时
+            }else{
+                count = $(".lesson").length;
+            }
+            
+            var lessonHtml = ""
+            if (count == 0) {
+                lessonHtml += '<li class="select lesson">'
+            }else{
+                lessonHtml += '<li class="unselect lesson">'
+            }
+            lessonHtml += '<span>'+parseInt(count+1)+'</span>'
+                        +'<img src="../../statics/images/editCourse/reduce.png">'
+                        +'</li>';
+            $(lessonHtml).appendTo(".lesson-list");
+            Course.clickDeleteLessonEvent();
+            
+            // --------2.改变存储数据
+            // 存储节数字数据
+            var key = String(parseInt(count+1));
+            var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+            dic[key] = [];
+            localStorage.CourseData = JSON.stringify(dic);
+            
+
+            // --------3.改变右侧 iframe
+            // 通知右边的iframe 改变代码内容
+            window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+        },
+        newDeleteLesson:function(this_){
+            var lessonNum = this_.parents(".lesson").children("span").html();
+            this_.parents(".lesson").remove();
+
+            // ------1.改变存储数据
+            var length = $(".lesson").length;
+            var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+            delete dic[lessonNum];  //删除当前课节数据
+
+            for (var i = 1; i <= length; i++) {
+                var key = String(i);
+                if (!dic[key]) {
+                    //不是最后一个元素时
+                    var nextKey = String(i+1);
+                    dic[key] = dic[nextKey];
+                    delete dic[nextKey];
+                }
+            }
+            localStorage.CourseData = JSON.stringify(dic);
+
+
+            // --------2.改变 UI
+            // 重新初始化节下标
+            if (!$(".lesson").length) {
+                Course.lesson = 1;
+            }else{
+                $(".lesson-list").html("");
+                for (var i = 0; i < length; i++) {
+                    var lessonHtml='<li class="unselect lesson">\
+                                        <span>'+parseInt(i+1)+'</span>\
+                                        <img src="../../statics/images/editCourse/reduce.png">\
+                                    </li>';
+                    $(lessonHtml).appendTo(".lesson-list");
+                }
+                $(".lesson").eq(0).addClass("select").removeClass("unselect");
+                Course.lesson = $(".lesson").eq(0).children("span").html();
+                console.log("course-lesson", Course.lesson);
+                Course.clickDeleteLessonEvent();
+            }
+
+
+            // --------3.刷新中间的会话列表
+            Course.load();
+
+
+            // --------4.改变右侧 iframe
             // 通知右边的iframe 改变代码内容
             window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
         },
