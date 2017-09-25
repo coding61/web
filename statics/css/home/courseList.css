@@ -366,7 +366,7 @@ body{
     justify-content: space-between;
     display: inline-flex;
     flex-wrap: wrap;
-    max-height: 120px;
+    max-height: 180px;
     overflow: auto;
 }
 .course-catalogs-view .catalogs .catalog{
