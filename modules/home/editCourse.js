@@ -2475,7 +2475,8 @@ define(function(require, exports, module) {
                 }else{
                     lessonHtml += '<li class="unselect lesson">'
                 }
-                lessonHtml += '<span>'+key+'</span>'
+                var str = "第"+key+"节";
+                lessonHtml += '<span data-lesson="'+key+'">'+str+'</span>'
                                 +'<img src="../../statics/images/editCourse/reduce.png">'
                             +'</li>';
                 $(lessonHtml).appendTo(".lesson-list");
@@ -2566,7 +2567,7 @@ define(function(require, exports, module) {
 
             $(".lesson").unbind('click').click(function(e){
                 e.stopPropagation();
-                Course.lesson = $(this).children("span").html();
+                Course.lesson = $(this).children("span").attr("data-lesson");
                 $(".lesson.select").removeClass("select").addClass("unselect");
                 $(this).removeClass("unselect").addClass("select");
 
@@ -2619,6 +2620,7 @@ define(function(require, exports, module) {
             }else{
                 count = $(".lesson").length;
             }
+            var str = "第"+parseInt(count+1)+"节";
             
             var lessonHtml = ""
             if (count == 0) {
@@ -2626,7 +2628,7 @@ define(function(require, exports, module) {
             }else{
                 lessonHtml += '<li class="unselect lesson">'
             }
-            lessonHtml += '<span>'+parseInt(count+1)+'</span>'
+            lessonHtml += '<span data-lesson="'+parseInt(count+1)+'">'+str+'</span>'
                         +'<img src="../../statics/images/editCourse/reduce.png">'
                         +'</li>';
             $(lessonHtml).appendTo(".lesson-list");
@@ -2645,7 +2647,7 @@ define(function(require, exports, module) {
             window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
         },
         newDeleteLesson:function(this_){
-            var lessonNum = this_.parents(".lesson").children("span").html();
+            var lessonNum = this_.parents(".lesson").children("span").attr("data-lesson");
             this_.parents(".lesson").remove();
 
             // ------1.改变存储数据
@@ -2672,14 +2674,15 @@ define(function(require, exports, module) {
             }else{
                 $(".lesson-list").html("");
                 for (var i = 0; i < length; i++) {
+                    var str = "第"+parseInt(i+1)+"节";
                     var lessonHtml='<li class="unselect lesson">\
-                                        <span>'+parseInt(i+1)+'</span>\
+                                        <span data-lesson="'+parseInt(i+1)+'">'+str+'</span>\
                                         <img src="../../statics/images/editCourse/reduce.png">\
                                     </li>';
                     $(lessonHtml).appendTo(".lesson-list");
                 }
                 $(".lesson").eq(0).addClass("select").removeClass("unselect");
-                Course.lesson = $(".lesson").eq(0).children("span").html();
+                Course.lesson = $(".lesson").eq(0).children("span").attr("data-lesson");
                 console.log("course-lesson", Course.lesson);
                 Course.clickDeleteLessonEvent();
             }
