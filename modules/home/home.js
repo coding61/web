@@ -1464,6 +1464,10 @@ define(function(require, exports, module) {
             $(".header .code-online").unbind('click').click(function(){
                 Util.adjustCodeEditorsOnline();
             })
+            // 创作课程
+            $(".header .edit-course").unbind('click').click(function(){
+                window.open("editCourse.html");
+            })
             // 编辑器点击事件
             $(".editors .editor").unbind('click').click(function(){
                 var url = ""
@@ -1484,6 +1488,7 @@ define(function(require, exports, module) {
                 Util.openLink(url)
                 $(".code-online-editors").css({display:'none'})
             })
+            
 
             Page.clickEventLoginRelated();
             
