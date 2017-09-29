@@ -253,6 +253,38 @@ body{
     margin-right: 2px;
     width: 12px;
 }
+.header-tips{
+    font-size: 15px;
+    color: gray;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 10px;
+    height: 20px;
+    overflow: hidden;
+}
+.header-tips .left-tips{
+    display: inline-block;
+    width: 35%;
+}
+.header-tips .left-tips .tip1{
+    width: 80px;
+    display: inline-block;
+    text-align: center;
+}
+.header-tips .left-tips .tip2{
+    width: calc(100% - 80px);
+    display: inline-block;
+    float: right;
+    text-align: center;
+}
+.header-tips .right-tips{
+    display: inline-block;
+    width: 65%;
+    float: right;
+    text-align: center;
+    overflow: auto;
+    height: 20px;
+}
 /*主要界面*/
 .main-view{
 	display: flex;
