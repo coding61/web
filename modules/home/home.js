@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
-	var Common = require('common/common.js?v=1.1');
+	var Common = require('common/common.js');
     var Utils = require('common/utils.js');
     
     // ----------------------------------1.默认数据
@@ -27,13 +27,8 @@ define(function(require, exports, module) {
             })
         },
         load:function(arr, i){
-            // 加载默认数据
             // 等待符号
-            var loadingWHtml = null;
-            loadingWHtml = '<div class="loading-chat left-animation">\
-                                <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
-            $(".messages").append(loadingWHtml);
+            Util.getLoadingHtml(true, false);
 
             setTimeout(function(){
                 // 2秒后加载信息
@@ -46,105 +41,25 @@ define(function(require, exports, module) {
             var imgI = "i_"+ChatStroage.numbers;
 
             var questionHtml = null;
+            // 1.普通消息
             if (item.link) {
-                // 带链接的
-                var text = "点击打开新网页"
-                if (item.link == "www.code.com") {
-                    text = "点击打开编辑器"
-                }else if (item.link.indexOf("www.compile.com") > -1) {
-                    text = "点击打开编译器"
+                // 1.1是链接消息
+                var itemDic = {animate:true, item:item, linkText:"点击打开新网页"}
+                if (item.news) {
+                    itemDic["linkText"] = "点击打开新闻";
                 }
-                if (item.audio) {
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
-                }else{
-                    var linkType = "";
-                    if (item.linkType) {
-                        linkType = item.linkType
-                    }
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                        </div>\
-                                    </div>';
-                }
-                
-            }else if(item.img){
-                // 图片
-                questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view-parent">\
-                                        <div class="msg-view">\
-                                            <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                            <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                        </div>\
-                                    </div>\
-                                </div>';
+                questionHtml = ArtTemplate("message-link-template", itemDic);
+            }else if (item.img) {
+                // 1.2是图片消息
+                var itemDic = {imgI:imgI, item:item}
+                questionHtml = ArtTemplate("message-img-template", itemDic);
             }else{
-                // 文本
-                if (item.audio) {
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
-                }else{
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                        </div>\
-                                    </div>';
-                }
-                
+                // 1.3是文本消息
+                var itemDic = {animate:true, item:item}
+                questionHtml = ArtTemplate("message-text-template", itemDic);
             }
 
-
-            var actionHtml = null;
-            if (item.action) {
-                if (item.exercises == true) {
-                    // 如果是选择题，（多按钮）
-                    var optionHtml = null;
-                    for (var j = 0; j < item.action.length; j++) {
-                        var option = item.action[j];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                    }
-                    actionHtml += optionHtml
-                    actionHtml += '<span class="btn-wx-auth">ok</span>';
-
-                } else{
-                    // 单按钮
-                    if (item.action == "点击选择课程") {
-                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                    }else{
-                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                    }
-                }
-            }
+            var actionHtml = Util.getActionHtml(item);
             
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
@@ -175,16 +90,14 @@ define(function(require, exports, module) {
             array.push(item)
             localStorage.chatData = JSON.stringify(array);
             
+            ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
 
-            // 存储下标
+            // 2.存储下标
             Page.index = i;
             Util.storeData();
                         
             if (item.action) {
                 // 存在行为按钮, 不继续执行, 存储当前下标
-                // Page.index = i;
-                // Util.storeData();
-                // console.log(Page.index);
                 console.log(i);
                 return;
             } else{
@@ -205,57 +118,6 @@ define(function(require, exports, module) {
             // 加载缓存数据， 并展示出来
             var array = JSON.parse(localStorage.chatData)
             
-            /*
-            // 一次取5条记录
-            for (var i = 0; i < array.length; i++) {
-                var item = array[i];
-                ChatStroage.load(array, i, array.length);
-            }
-            
-            // 判断存储的最后一个元素是否有 action
-            var item1 = array[array.length-1]
-            var actionHtml = "";
-            if (item1.action) {
-                if (item1.exercises == true) {
-                    // 如果是选择题，（多按钮）
-                    var optionHtml = "";
-                    for (var i = 0; i < item1.action.length; i++) {
-                        var option = item1.action[i];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                    }
-                    actionHtml += optionHtml
-                    actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
-
-                } else{
-                    // 单按钮
-                    if (item1.action == "点击微信登录") {
-                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+item1.action+'</span>'
-                    }else{
-                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+item1.action+'</span>'
-                    }
-                }
-            }else{
-                // 不含 action，取当前数据源中下一条数据
-
-            }
-
-            setTimeout(function(){
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-
-                $(".btns .actions").html(actionHtml);
-
-                // 取出上次的数据源，接着执行
-                Page.data = JSON.parse(localStorage.data);
-                Page.index = parseInt(localStorage.index);
-                Page.optionData = JSON.parse(localStorage.optionData);
-                Page.optionIndex = parseInt(localStorage.optionIndex);
-                Page.pagenum = parseInt(localStorage.pagenum);
-                
-                Page.clickEvent();
-            }, 800)   
-            */         
-
-
             // 加载存储数据中所有的数据（最新10个数据）
             var arr1 = [];
             for (var i = array.length - 1; i > array.length-1-ChatStroage.length; i--) {
@@ -265,28 +127,53 @@ define(function(require, exports, module) {
             }
             arr1 = arr1.reverse();
             ChatStroage.load(arr1, 0, arr1.length)
-
-            // ChatStroage.initScroll(array, i, array.length);
-
-
-            // ChatStroage.load(array, 0, array.length);   //加载全部
+        },
+        loadLineHtml:function(item){
+            var lineHtml = '<div class="sep-line"> \
+                                <i class="line"></i>\
+                                <span class="title">'+item.message+'</span>\
+                            </div>';
+            return lineHtml;
+        },
+        loadAnswerHtml:function(item){
+            var answerHtml = '<div class="answer"> \
+                                <div class="msg-view">\
+                                    <span class="content">'+Util.formatString(item.message)+'</span> \
+                                </div>\
+                                <img class="avatar" src="'+localStorage.avatar+'"/>\
+                              </div>';
+            return answerHtml;
         },
         load:function(arr, i, arrLen){
             var item = arr[i];
             var imgI = "i_"+ChatStroage.numbers;
 
             if (i >= arrLen) {
-                //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
-                ChatStroage.loadLastItem(arr, arrLen);
+                Common.isLogin(function(token){
+                    if (token) {
+                        if (localStorage.newsTime) {
+                            var oldTime = parseInt(localStorage.newsTime);
+                            var nowTime = (new Date()).valueOf();
+                            var times = nowTime - oldTime;
+                            var leave1=times%(24*3600*1000)
+                            var hours=Math.floor(leave1/(3600*1000))
+                            if (hours < 1) {
+                                // 不到1小时,不推送新闻
+                                ChatStroage.loadLastItem(arr, arrLen);   //加载最后一条信息
+                                return
+                            }
+                        }
+                        News.init();  //加载新闻
+                    }else{
+                        //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
+                        ChatStroage.loadLastItem(arr, arrLen);
+                    }
+                })
                 return;
             }
                 
             // 等待符号
-            var loadingWHtml = null;
-            loadingWHtml = '<div class="loading-chat">\
-                                <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
-            $(loadingWHtml).appendTo(".messages");
+            Util.getLoadingHtml(false, false);
             
             var answerHtml = null;
             var questionHtml = null;
@@ -294,96 +181,30 @@ define(function(require, exports, module) {
 
             if (item.line == true) {
                 // 加载节分割线
-                lineHtml = '<div class="sep-line"> \
-                                <i class="line"></i>\
-                                <span class="title">'+item.message+'</span>\
-                            </div>';
+                lineHtml = ChatStroage.loadLineHtml(item);
             }else{
                 // 加载消息
                 if (!item.question) {
                     // 加载人为回复
-                    answerHtml = '<div class="answer"> \
-                                    <div class="msg-view">\
-                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                    </div>\
-                                    <img class="avatar" src="'+localStorage.avatar+'"/>\
-                                  </div>';
+                    answerHtml = ChatStroage.loadAnswerHtml(item);
                 }else{
-                    // 加载机器回复
+                    // 左侧消息
+                    // 1.普通消息
                     if (item.link) {
-                        // 带链接的
-                        var text = "点击打开新网页"
-                        if (item.link == "www.code.com") {
-                            text = "点击打开编辑器"
-                        }else if (item.link.indexOf("www.compile.com") > -1) {
-                            text = "点击打开编译器"
+                        // 1.1是链接消息
+                        var itemDic = {animate:false, item:item, linkText:"点击打开新网页"}
+                        if (item.news) {
+                            itemDic["linkText"] = "点击打开新闻";
                         }
-                        if (item.audio) {
-                            questionHtml = '<div class="message link" data-link="'+item.link+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
-                        }else{
-                            var linkType = "";
-                            if (item.linkType) {
-                                linkType = item.linkType
-                            }
-                            questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                </div>\
-                                            </div>';
-                        }
-                        
-                    }else if(item.img){
-                        // 图片
-                        questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view-parent">\
-                                                <div class="msg-view">\
-                                                    <img class="msg" id="'+imgI+'" src="'+item.img+'" data-src="../../statics/images/loading.gif" alt="" />\
-                                                    <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                                </div>\
-                                            </div>\
-                                        </div>';
+                        questionHtml = ArtTemplate("message-link-template", itemDic);
+                    }else if (item.img) {
+                        // 1.2是图片消息
+                        var itemDic = {imgI:imgI, item:item}
+                        questionHtml = ArtTemplate("message-img-template", itemDic);
                     }else{
-                        // 文本
-                        if (item.audio) {
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
-                        }else{
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" >\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                </div>\
-                                            </div>';
-                        }
+                        // 1.3是文本消息
+                        var itemDic = {animate:false, item:item}
+                        questionHtml = ArtTemplate("message-text-template", itemDic);
                     }
                 }
             }
@@ -420,25 +241,17 @@ define(function(require, exports, module) {
             // 判断存储的最后一个元素是否有 action
             var item1 = array[arrLen-1]
             var actionHtml = "";
-            if (item1.action) {
-                if (item1.exercises == true) {
-                    // 如果是选择题，（多按钮）
-                    var optionHtml = "";
-                    for (var i = 0; i < item1.action.length; i++) {
-                        var option = item1.action[i];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                    }
-                    actionHtml += optionHtml
-                    actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
-
-                } else{
-                    // 单按钮
-                    if (item1.action == "点击选择课程") {
-                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item1.action)+'</span>'
-                    }else{
-                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item1.action)+'</span>'
+            if (item1.news) {
+                // 最后一条是新闻,找到前一条是 action 的
+                var array1 = array;
+                for (var i = 0; i < array1.length; i++) {
+                    if(array1[i].action){
+                        item1 = array1[i];
+                        actionHtml=Util.getActionHtml(item1);
                     }
                 }
+            }else if (item1.action) {
+                actionHtml=Util.getActionHtml(item1);
             }else{
                 
                 //当前存储元素加载完，之后，取数据源元素
@@ -503,72 +316,11 @@ define(function(require, exports, module) {
                     
                     ChatStroage.timerAgo = setTimeout(function(){
                         // 等待符号,加载上一组记录
-                        var loadingWHtml = null;
-                        loadingWHtml = '<div class="loading-chat">\
-                                            <img src="../../statics/images/chat.gif" alt="">\
-                                        </div>';
-                        $(loadingWHtml).prependTo($(".messages"));
-
+                        Util.getLoadingHtml(false, true);
                         ChatStroage.loadAgo(arr1, 0, arr1.length);
                     })
                 }     
             })
-        },
-        initScroll:function(array, i, arrLen){
-            
-            $('.messages').on('scroll',function(){
-                // div 滚动了
-                var top = $(".messages").scrollTop();  
-                var win = $(".messages")[0].scrollHeight;  
-                var doc = $(".messages").height();  
-                
-                if (top == 0) {
-                    //用户向上滚动查看以前的聊天信息
-                    console.log(top);
-                    
-                    //判断存储数据是否已全部加载完
-                    var chatData = JSON.parse(localStorage.chatData)
-                    if (ChatStroage.numbers<chatData.length){
-                        // ChatStroage.numbers = parseInt(ChatStroage.numbers) + ChatStroage.length;
-                        
-                        if(ChatStroage.loadMore == true){
-                            ChatStroage.loadMore = false;
-                            //存储数据源还没有加载完, 继续加载(靠后的10条数据)。 判断已加载数据个数与存储个数是否相同
-                            var arr1 = [];
-                            var originIndex = chatData.length-1-ChatStroage.numbers,
-                                lastIndex = chatData.length-1-ChatStroage.numbers-ChatStroage.length;
-                            for (var i = originIndex; i > lastIndex; i--) {
-                                if (chatData[i]) {
-                                    arr1.push(chatData[i]);
-                                }
-                            } 
-                            
-                            if(ChatStroage.timerAgo){
-                                return;
-                            }
-                            ChatStroage.timerAgo = setTimeout(function(){
-                                // 等待符号,加载上一组记录
-                                var loadingWHtml = null;
-                                loadingWHtml = '<div class="loading-chat">\
-                                                    <img src="../../statics/images/chat.gif" alt="">\
-                                                </div>';
-                                $(loadingWHtml).prependTo($(".messages"));
-
-                                ChatStroage.loadAgo(arr1, 0, arr1.length);
-                            })
-                        }
-                    }
-
-                }else{
-                    ChatStroage.loadMore = true;
-                    Page.clickEvent(); 
-
-                    if(ChatStroage.timerAgo){
-                        clearTimeout(ChatStroage.timerAgo);
-                        ChatStroage.timerAgo = null;
-                    }
-                }
-            });
         },
         loadAgo:function(arr, i, arrLen){
             var item = arr[i];
@@ -595,100 +347,33 @@ define(function(require, exports, module) {
 
             if (item.line == true) {
                 // 加载节分割线
-                lineHtml = '<div class="sep-line"> \
-                                <i class="line"></i>\
-                                <span class="title">'+item.message+'</span>\
-                            </div>';
+                lineHtml = ChatStroage.loadLineHtml(item);
             }else{
                 // 加载消息
                 if (!item.question) {
                     // 加载人为回复
-                    answerHtml = '<div class="answer"> \
-                                    <div class="msg-view">\
-                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                    </div>\
-                                    <img class="avatar" src="'+localStorage.avatar+'" />\
-                                  </div>';
+                    answerHtml = ChatStroage.loadAnswerHtml(item);
                 }else{
-                    // 加载机器回复
+                    // 左侧消息
+                    // 1.普通消息
                     if (item.link) {
-                        // 带链接的
-                        var text = "点击打开新网页"
-                        if (item.link == "www.code.com") {
-                            text = "点击打开编辑器"
-                        }else if (item.link.indexOf("www.compile.com") > -1) {
-                            text = "点击打开编译器"
+                        // 1.1是链接消息
+                        var itemDic = {animate:false, item:item, linkText:"点击打开新网页"}
+                        if (item.news) {
+                            itemDic["linkText"] = "点击打开新闻";
                         }
-                        if (item.audio) {
-                            questionHtml = '<div class="message link" data-link="'+item.link+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
-                        }else{
-                            var linkType = "";
-                            if (item.linkType) {
-                                linkType = item.linkType
-                            }
-                            questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent">\
-                                                    <div class="msg-view">\
-                                                        <div class="link-text"> \
-                                                            <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                            <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                        </div>\
-                                                        <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                                    </div>\
-                                                </div>\
-                                            </div>';
-                        }
-                        
-                    }else if(item.img){
-                        // 图片
-                        questionHtml = '<div class="message img">\
-                                            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                            <div class="msg-view-parent">\
-                                                <div class="msg-view">\
-                                                    <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                                    <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                                </div>\
-                                            </div>\
-                                        </div>';
+                        questionHtml = ArtTemplate("message-link-template", itemDic);
+                    }else if (item.img) {
+                        // 1.2是图片消息
+                        var itemDic = {imgI:imgI, item:item}
+                        questionHtml = ArtTemplate("message-img-template", itemDic);
                     }else{
-                        // 文本
-                        if (item.audio) {
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                    <img class="audio" src="../../statics/images/audio.png"/>\
-                                                </div>\
-                                            </div>';
-                        }else{
-                            questionHtml = '<div class="message text"> \
-                                                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                                <div class="msg-view-parent">\
-                                                    <div class="msg-view">\
-                                                        <span class="content">'+Util.formatString(item.message)+'</span> \
-                                                    </div>\
-                                                </div>\
-                                            </div>';
-                        }
+                        // 1.3是文本消息
+                        var itemDic = {animate:false, item:item}
+                        questionHtml = ArtTemplate("message-text-template", itemDic);
                     }
                 }
             }
-
 
             $(".loading-chat").remove();
             $(questionHtml).prependTo($(".messages"));
@@ -707,11 +392,7 @@ define(function(require, exports, module) {
             ChatStroage.timerAgo = setTimeout(function(){
                 // 加载上一条数据
                 // 等待符号
-                var loadingWHtml = null;
-                loadingWHtml = '<div class="loading-chat">\
-                                    <img src="../../statics/images/chat.gif" alt="">\
-                                </div>';
-                $(loadingWHtml).prependTo($(".messages"));
+                Util.getLoadingHtml(false, true);
 
                 ChatStroage.timerAgo=setTimeout(function(){
                     // 2秒后加载信息
@@ -721,6 +402,131 @@ define(function(require, exports, module) {
             
             // ChatStroage.loadAgo(arr, i+1, arrLen);
         },
+    }
+    var News = {
+        newsData:[],
+        newsIndex:0,
+        init:function(){
+            Util.getLoadingHtml(true, false);      //等待符号
+            var lastNewsId = localStorage.lastNewsId?localStorage.lastNewsId:0;
+            Mananger.loadNews(lastNewsId, false);  //请求新闻数据
+        },
+        loadMessage:function(arr, i){
+            var item = arr[i];
+            var imgI = "i_"+ChatStroage.numbers;
+
+            var questionHtml = null;
+            // 1.普通消息
+            if (item.link) {
+                // 1.1是链接消息
+                var itemDic = {animate:true, item:item, linkText:"点击打开新网页"}
+                if (item.news) {
+                    itemDic["linkText"] = "点击打开新闻";
+                }
+
+                questionHtml = ArtTemplate("message-link-template", itemDic);
+            }else if (item.img) {
+                // 1.2是图片消息
+                var itemDic = {imgI:imgI, item:item}
+                questionHtml = ArtTemplate("message-img-template", itemDic);
+            }else{
+                // 1.3是文本消息
+                var itemDic = {animate:true, item:item}
+                questionHtml = ArtTemplate("message-text-template", itemDic);
+            }
+
+            var actionHtml = Util.getActionHtml(item);
+            
+            $(".loading-chat").remove();
+            $(questionHtml).appendTo(".messages");
+            
+            if(item.img){
+                var a = "#"+imgI;
+                Util.setMessageImgHeight(item);  //给图片消息中图片设高
+                Common.showLoadingPreImg1(a);   //打开预加载图片
+            }
+            
+            setTimeout(function(){
+                $(".btns .actions").html(actionHtml);
+                $("html,body").animate({scrollTop:$("html,body")[0].scrollHeight}, 300);
+
+                Page.clickEvent();
+
+            }, 800)
+            
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+
+            // 1.存储数据(默认数据)
+            var array = [];
+            if (localStorage.chatData) {
+                array = JSON.parse(localStorage.chatData);
+            }
+            item['question'] = true;  //当前消息是否是机器回复
+            item['line'] = false;
+            array.push(item)
+            localStorage.chatData = JSON.stringify(array);
+
+            ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
+            
+            if (item.news) {
+                News.newsIndex = i;                 //记录新闻下标
+                localStorage.lastNewsId = item.pk;  //存储新闻的阅读下标
+            }else{
+                // 存储下标
+                Page.index = i;
+                Util.storeData();
+            }
+                        
+            if (item.action || item.hasAction) {
+                // 存在行为按钮, 不继续执行, 存储当前下标
+                // Page.index = i;
+                // Util.storeData();
+                // console.log(Page.index);
+                console.log(i);
+                return;
+            } else{
+                setTimeout(function(){
+                    // 加载下一条数据
+                    Util.getLoadingHtml(true, false);  //等待符号
+
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+
+                    setTimeout(function(){
+                        // 2秒后加载信息
+                        News.loadMessage(arr, i+1);
+                    }, Util.messageTime)
+                }, Util.waitTime)
+            }
+        },
+        clickNotLook:function(){
+            // 存储当前时间
+            var nowTime = (new Date()).valueOf();
+            localStorage.newsTime = nowTime;
+
+            $(".loading-chat").remove();
+            // 一开始有缓存信息，加载缓存信息的最后一个 action
+            var array = JSON.parse(localStorage.chatData);
+            ChatStroage.loadLastItem(array, array.length);
+        },
+        clickNextNews:function(){
+            //请求下一条新闻
+            if (News.newsData[News.newsIndex+1]) {
+                News.newsIndex = News.newsIndex+1;
+                
+                $(".actions").html(null);
+                // 加载下一条数据
+                Util.getLoadingHtml(true, false);  //等待符号
+                setTimeout(function(){
+                    // 2秒后加载信息
+                    News.loadMessage(News.newsData, News.newsIndex);
+                }, Util.messageTime)
+            }else{
+                $(".actions").html(null);
+                Util.getLoadingHtml(true, false);  //等待符号
+                var lastNewsId = localStorage.lastNewsId?localStorage.lastNewsId:0;
+                Mananger.loadNews(lastNewsId, true);  //请求新闻数据
+            }
+        } 
     }
     // ---------------------------3.正常请求数据
     var Page = {
@@ -768,26 +574,7 @@ define(function(require, exports, module) {
                         // 回到原来的课程继续
                         var actionHtml = "";
                         var item = Page.data[Page.index];
-                        if (item.action) {
-                            if (item.exercises == true) {
-                                // 如果是选择题，（多按钮）
-                                var optionHtml = "";
-                                for (var j = 0; j < item.action.length; j++) {
-                                    var option = item.action[j];
-                                    optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                                }
-                                actionHtml += optionHtml
-                                actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
-
-                            } else{
-                                // 单按钮
-                                if (item.action == "点击选择课程") {
-                                    actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                                }else{
-                                    actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                                }
-                            }
-                        }
+                        actionHtml = Util.getActionHtml(item);
                         $(".btns .actions").html(actionHtml);
                     }else{
                         // 改变 action 的状态(开始学习)
@@ -818,11 +605,10 @@ define(function(require, exports, module) {
 
             // 判断用户是否登录
             if(localStorage.token){
-                // 加载个人信息
+                
                 Common.showLoading();
-                Mananger.getInfo();
-
-                Mananger.loadMyTeam(); // 获取我的团队信息
+                Mananger.getInfo();        // 加载个人信息
+                Mananger.loadMyTeam();     // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
 
                 Page.clickEventTotal();
@@ -842,105 +628,25 @@ define(function(require, exports, module) {
             var imgI = "i_"+ChatStroage.numbers;
 
             var questionHtml = null;
+            // 1.普通消息
             if (item.link) {
-                var text = "点击打开新网页"
-                if (item.link == "www.code.com") {
-                    text = "点击打开编辑器"
-                }else if (item.link.indexOf("www.compile.com") > -1) {
-                    text = "点击打开编译器"
+                // 1.1是链接消息
+                var itemDic = {animate:true, item:item, linkText:"点击打开新网页"}
+                if (item.news) {
+                    itemDic["linkText"] = "点击打开新闻";
                 }
-                // 带链接的
-                if (item.audio) {
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
-                }else{
-                    var linkType = "";
-                    if (item.linkType) {
-                        linkType = item.linkType
-                    }
-                    questionHtml = '<div class="message link left-animation" data-link="'+item.link+'" data-link-type="'+linkType+'"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <div class="link-text"> \
-                                                    <span class="link-content">'+Util.formatString(item.message)+'<br/></span>\
-                                                    <span style="color: rgb(84, 180,225);">'+text+'</span>\
-                                                </div>\
-                                                <img class="arrow" src="../../statics/images/arrow.png" alt="">\
-                                            </div>\
-                                        </div>\
-                                    </div>';
-                }
-
-            }else if(item.img){
-                // 图片
-                questionHtml = '<div class="message img">\
-                                    <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                    <div class="msg-view-parent">\
-                                        <div class="msg-view">\
-                                            <img class="msg" id="'+imgI+'" src="'+item.img+'" alt="">\
-                                            <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>\
-                                        </div>\
-                                    </div>\
-                                </div>';
+                questionHtml = ArtTemplate("message-link-template", itemDic);
+            }else if (item.img) {
+                // 1.2是图片消息
+                var itemDic = {imgI:imgI, item:item}
+                questionHtml = ArtTemplate("message-img-template", itemDic);
             }else{
-                // 文本
-                if (item.audio) {
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent" data-audio-url="'+item.audio+'">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                            <img class="audio" src="../../statics/images/audio.png"/>\
-                                        </div>\
-                                    </div>';
-                }else{
-                    questionHtml = '<div class="message text left-animation"> \
-                                        <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />\
-                                        <div class="msg-view-parent">\
-                                            <div class="msg-view">\
-                                                <span class="content">'+Util.formatString(item.message)+'</span> \
-                                            </div>\
-                                        </div>\
-                                    </div>';
-                }
-                
+                // 1.3是文本消息
+                var itemDic = {animate:true, item:item}
+                questionHtml = ArtTemplate("message-text-template", itemDic);
             }
 
-
-            var actionHtml = "";
-            if (item.action) {
-                if (item.exercises == true) {
-                    // 如果是选择题，（多按钮）
-                    var optionHtml = "";
-                    for (var j = 0; j < item.action.length; j++) {
-                        var option = item.action[j];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                    }
-                    actionHtml += optionHtml
-                    actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
-
-                } else{
-                    // 单按钮
-                    if (item.action == "点击选择课程") {
-                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                    }else{
-                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                    }
-                }
-            }
+            var actionHtml = Util.getActionHtml(item);
             
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
@@ -973,28 +679,25 @@ define(function(require, exports, module) {
             localStorage.chatData = JSON.stringify(array);
 
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-
-            // 存储下标
-            if (opt == true) {
-                // 问题下的消息, 记录问题下消息的下标
-                Page.optionIndex = i;
-            }else{
-                // 普通消息
-                Page.index = i;
-            }
-            Util.storeData();
             
-            if (item.action) {
-                // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-                // // 存在行为按钮, 不继续执行
-                // if (opt == true) {
-                //     // 问题下的消息, 记录问题下消息的下标
-                //     Page.optionIndex = i;
-                // }else{
-                //     // 普通消息
-                //     Page.index = i;
-                // }
-                // Util.storeData();
+
+            if (item.news) {
+                // 存储新闻下标
+                News.newsIndex = i;                 //记录新闻下标
+                localStorage.lastNewsId = item.pk;  //存储新闻的阅读下标
+            }else{
+                // 存储下标
+                if (opt == true) {
+                    // 问题下的消息, 记录问题下消息的下标
+                    Page.optionIndex = i;
+                }else{
+                    // 普通消息
+                    Page.index = i;
+                }
+                Util.storeData();
+            }
+            
+            if (item.action || item.hasAction) {
                 console.log(i);
                 return;
             } else{
@@ -1002,11 +705,8 @@ define(function(require, exports, module) {
                     console.log(i);
                     // 加载下一条数据
                     // 等待符号
-                    var loadingWHtml = null;
-                    loadingWHtml = '<div class="loading-chat left-animation">\
-                                        <img src="../../statics/images/chat.gif" alt="">\
-                                    </div>';
-                    $(loadingWHtml).appendTo(".messages");
+                    Util.getLoadingHtml(true, false);
+
                     $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
                     setTimeout(function(){
@@ -1026,7 +726,7 @@ define(function(require, exports, module) {
             }
         },
         clickEvent:function(){
-            // action 按钮点击
+            // 动作按钮点击
             $(".btn-wx-auth").unbind('click').click(function(){
                 
                 if($(this).attr('disabledImg') == "true"){
@@ -1036,27 +736,32 @@ define(function(require, exports, module) {
                 console.log(111);
                 $(this).attr({disabledImg:"true"});
                 
-                
-                
                 if ($(this).hasClass("wx-auth")) {
-                    // 打开选择课程窗口
+                    //1. 打开选择课程窗口
                     Util.openRightIframe("courseList");
                     
                 }else if($(this).hasClass("catalogBegin")){
-                    // 普通 action 按钮点击事件
+                    //2. 普通 action 按钮点击事件
                     Util.actionClickEvent($(this));
                 }else if($(this).hasClass("begin")){
-                    // 开始学习，更换课程时，或者初次学习之旅时
+                    //3. 开始学习，更换课程时，或者初次学习之旅时
                     // 课节目录重置为当前选中课程的进度
                     Util.currentCatalogIndex = localStorage.currentCourseIndex;
                     // 普通 action 按钮点击事件
                     Util.actionClickEvent($(this));
                 }else if($(this).hasClass("restart")){
-                    // 课节目录重置为0
+                    //4. 课节目录重置为0
                     Util.currentCatalogIndex = localStorage.currentCourseIndex;
                     // 课程完成，重新开始，课程未完成，重新开始
                     Page.loadClickMessageCourse($(this).html());
+                }else if($(this).hasClass("notNews")){
+                    // 5.点了新闻暂时不看
+                    News.clickNotLook();
+                }else if($(this).hasClass("nextNews")){
+                    // 6.点了新闻下一条
+                    News.clickNextNews();
                 }else{
+                    // 7.普通按钮
                     // 当前课程的打卡及奖励
                     // 点击按钮，判断是打卡还是奖励钻石，及经验值
                     var item = null;
@@ -1093,18 +798,6 @@ define(function(require, exports, module) {
                             
                             Mananger.addReward(course, courseIndex, item.chapter, item.grow_number, item. zuan_number, $(this));  //奖励钻石
                         }else{
-                            /*
-                            // 普通 action 按钮点击事件
-                            if ($(this).hasClass("exercise")) {
-                                // 点了习题的，提交答案的按钮
-                                var msg = Page.options.join(',');
-                                Page.options = [];
-                                Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
-                            }else{
-                                // 普通的 action 按钮
-                                Page.loadClickMessage($(this).html(), false);  //false 代表普通按钮点击事件 
-                            }
-                            */
                             // 普通 action 按钮点击事件
                             Util.actionClickEvent($(this));
                         }
@@ -1178,6 +871,20 @@ define(function(require, exports, module) {
                 $(".imgmsg img").attr({src:""});
                 $(".imgmsg-shadow-view").hide();
             })
+            
+            // 消息音频播放
+            $(".msg-view-parent .audio").unbind('click').click(function(){
+                console.log('cc');
+                var url = $(this).parents('.msg-view-parent').attr("data-audio-url");
+                if (url) {
+                    // 'https://static1.bcjiaoyu.com/2.mp3'
+                    Common.playMessageSoun2(url);  //播放钻石音效
+                }
+            })
+            
+            Page.clickEventTotal();
+        },
+        clickEventTotal:function(){
             // 帮助点击
             $(".help").unbind('click').click(function(){
                 if($(".helps-view").css("display") == "none"){
@@ -1189,11 +896,10 @@ define(function(require, exports, module) {
             })
             // 更换课程
             $(".helps-view .change-course").unbind('click').click(function(){
-
                 $(".helps-view").hide();
                 Util.openRightIframe("courseList");   //打开选择课程
             })
-            // 课程目录 
+            // 课程目录
             $(".helps-view .course-menu").unbind('click').click(function(){
                 $(".helps-view").hide();
                 $(".course-menu-view").show();
@@ -1211,8 +917,8 @@ define(function(require, exports, module) {
                 Util.currentCatalogIndex = $(this).attr("data-index");
                 // 重新激活点击事件
                 Page.clickEvent();
-
             })
+
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
@@ -1222,7 +928,6 @@ define(function(require, exports, module) {
             // 联系我们
             $(".helps-view .contact-us").unbind('click').click(function(){
                 $(".helps-view").hide();
-                Common.playSoun('https://static1.bcjiaoyu.com/2.mp3');  //播放钻石音效
             })
             // 经验值
             $(".helps-view .grow-ani").unbind('click').click(function(){
@@ -1244,7 +949,7 @@ define(function(require, exports, module) {
             $(".find-help-shadow-view").unbind('click').click(function(){
                 $(".find-help-shadow-view").hide();
             })
-            
+
             // 关闭运行代码结果窗口
             $(".code-result .close img").unbind('click').click(function(){
                 $(".code-result-shadow-view").hide();
@@ -1265,62 +970,12 @@ define(function(require, exports, module) {
                 // $(".header .team-info").show();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
-
+                
                 Util.adjustTeaminfo();
                 $(".header .team-info").toggle();
             }).unbind('mouseout').mouseout(function(){
                 // $(".header .team-info").show();
                 $(".header .team-info").toggle();
-            })
-
-            // 学习论坛
-            $(".header .luntan").unbind('click').click(function(){
-                window.open("../../cxyteam_forum/bbs.html");
-            })
-            // 作品中心
-            $(".header .works").unbind('click').click(function(){
-                window.open("worksList.html");
-            })
-            // 手机 app
-            $(".header .mobile-app").unbind('mouseover').mouseover(function(){
-                Util.adjustQrCode();
-            }).unbind('mouseout').mouseout(function(){
-                $(".qr-code-view").css({display:'none'});
-            })
-            // 在线编辑器
-            $(".header .code-online").unbind('click').click(function(){
-                Util.adjustCodeEditorsOnline();
-            })
-            // 编辑器点击事件
-            $(".editors .editor").unbind('click').click(function(){
-                var url = ""
-                if (location.host == "develop.cxy61.com:8001") {
-                    url = "http://"+location.host + "/app"
-                }else{
-                    url = "https://"+location.host + "/girl/app"
-                }
-                if ($(this).hasClass("html")) {
-                    url = url + "/home/codeEditRN.html"
-                }else if ($(this).hasClass("c")) {
-                    url = url + "/home/compileRN.html?lang=c"
-                }else if ($(this).hasClass("python")) {
-                    url = url + "/home/compileRN.html?lang=python"
-                }else if ($(this).hasClass("java")) {
-                    url = url + "/home/compileRN.html?lang=java"
-                }
-                Util.openLink(url)
-                $(".code-online-editors").css({display:'none'})
-            })
-
-            
-            // 消息音频播放
-            $(".msg-view-parent .audio").unbind('click').click(function(){
-                console.log('cc');
-                var url = $(this).parents('.msg-view-parent').attr("data-audio-url");
-                if (url) {
-                    // 'https://static1.bcjiaoyu.com/2.mp3'
-                    Common.playMessageSoun2(url);  //播放钻石音效
-                }
             })
             
             // compile-shadow-view 隐藏
@@ -1359,91 +1014,6 @@ define(function(require, exports, module) {
                 Util.link = "";
                 Util.linkType = "";
                 $(".compile-shadow-view").hide();
-            })
-
-            Page.clickEventLoginRelated();
-        },
-        clickEventTotal:function(){
-            // 帮助点击
-            $(".help").unbind('click').click(function(){
-                if($(".helps-view").css("display") == "none"){
-                    $(".helps-view").show();
-                }else{
-                    $(".helps-view").hide();
-                }
-            })
-            // 更换课程
-            $(".helps-view .change-course").unbind('click').click(function(){
-                $(".helps-view").hide();
-                Util.openRightIframe("courseList");   //打开选择课程
-            })
-            // 课程目录
-            $(".helps-view .course-menu").unbind('click').click(function(){
-                $(".helps-view").hide();
-                $(".course-menu-view").show();
-            })
-            // 课程目录点击事件
-            $("li.catalog").unbind('click').click(function(){
-                if ($(this).hasClass("select")) {
-                    return;
-                }
-                // action 按钮变为开始学习
-                $(".actions").html('<span class="btn-wx-auth catalogBegin bottom-animation">开始学习</span>');
-                // 隐藏目录列表
-                $(".course-menu-view").hide();
-                // 记录当前点击的目录的下标，和对象
-                Util.currentCatalogIndex = $(this).attr("data-index");
-                // 重新激活点击事件
-                Page.clickEvent();
-
-            })
-            // 钻石动画
-            $(".helps-view .zuan-ani").unbind('click').click(function(){
-                $(".helps-view").hide();
-                Common.playSoun('https://static1.bcjiaoyu.com/Diamond%20Drop.wav');  //播放钻石音效
-                Util.zuanAnimate(2);
-            })
-            // 联系我们
-            $(".helps-view .contact-us").unbind('click').click(function(){
-                $(".helps-view").hide();
-            })
-            // 经验值
-            $(".helps-view .grow-ani").unbind('click').click(function(){
-                $(".helps-view").hide();
-                Util.growAnimate(2);
-            })
-            // 升级
-            $(".helps-view .up-grade-ani").unbind('click').click(function(){
-                $(".helps-view").hide();
-                Common.playSoun('https://static1.bcjiaoyu.com/level_up.mp3');  //播放经验音效
-                Util.gradeAnimate();
-            })
-            // 寻找帮助
-            $(".helps-view .find-help").unbind('click').click(function(){
-                $(".helps-view").hide();
-                $(".find-help-shadow-view").show();
-            })
-            // 关闭寻找帮助窗口
-            $(".find-help-shadow-view").unbind('click').click(function(){
-                $(".find-help-shadow-view").hide();
-            })
-
-            // logo 点击打开一个网站
-            $(".header .logo2").unbind('click').click(function(){
-                window.open("https://www.cxy61.com");
-            })
-
-            // 鼠标划过用户头像
-            $(".header .icon4.avatar").unbind('mouseover').mouseover(function(){
-                // $(".header .team-info").show();
-                Mananger.loadMyTeam(); // 获取我的团队信息
-                Mananger.loadTeamBrand();  //获取团队排行
-                
-                Util.adjustTeaminfo();
-                $(".header .team-info").toggle();
-            }).unbind('mouseout').mouseout(function(){
-                // $(".header .team-info").show();
-                $(".header .team-info").toggle();
             })
 
             // 学习论坛
@@ -1697,97 +1267,6 @@ define(function(require, exports, module) {
             })
         
         },
-        requestNextData:function(actionText, pagenum){
-            $.ajax({
-                type:'get',
-                url:"../../modules/common/data.json",
-                success:function(json){
-                    if (pagenum == 1) {
-                        if (json.first) {
-                            Page.index = 0;
-                            Page.data = json.first;
-                            Page.pagenum ++;
-                            
-                            Page.loadSepLine(Page.pagenum - 1);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-                        }else{
-                            Common.dialog('暂无数据');
-                            $(".loading-chat").remove();
-                            // $(".actions").show(); 
-                        }
-                    }else if (pagenum == 2) {
-                        if (json.second) {
-                            Page.index = 0;
-                            Page.data = json.second;
-                            Page.pagenum ++;
-                            
-                            Page.loadSepLine(Page.pagenum - 1);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-                        }else{
-                            Common.dialog('暂无数据');
-                            $(".loading-chat").remove();
-                            // $(".actions").show(); 
-                        }
-                    }else if (pagenum == 3) {
-                        if (json.third) {
-                            Page.index = 0;
-                            Page.data = json.third;
-                            Page.pagenum ++;
-                            
-                            Page.loadSepLine(Page.pagenum - 1);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-                        }else{
-                            Common.dialog('暂无数据');
-                            $(".loading-chat").remove();
-                            // $(".actions").show(); 
-                        }
-                    }
-                },
-                error:function(xhr, textStatus){
-
-                }
-            });
-        },
-        requestCourseNextData:function(actionText, course, courseIndex){
-            // 请求当前课程的节数据
-            $.ajax({
-                type:'get',
-                url:"../../modules/common/data.json",
-                success:function(json){
-                    var data = json[course];
-                    if (data) {
-                        if (data[courseIndex]) {
-                            //如果此课程此小节消息存在
-                            Page.index = 0;
-                            Page.data = data[courseIndex];
-                            
-                            if (course == "html_simple") {
-                                localStorage.htmlSimpleIndex = courseIndex;
-                            }else if (course == "css_simple") {
-                                localStorage.cssSimpleIndex = courseIndex;
-                            }else if (course == "javascript_simple") {
-                                localStorage.jsSimpleIndex = courseIndex;
-                            }else if (course == "python_simple") {
-                                localStorage.pythonSimpleIndex = courseIndex;
-                            }
-                            
-                            Page.loadSepLine(courseIndex);
-                            Page.loadMessageWithData(actionText, Page.data, Page.index, false);
-
-                        }else{
-                            Common.dialog("恭喜，您已经完成本课程的学习。您可以选择其它课程，再继续");
-                            $(".loading-chat").remove();
-                        }
-                    }else{
-                        Common.dialog("课程还未开放");
-                        $(".loading-chat").remove();
-                    }
-                },
-                error:function(xhr, textStatus){
-
-                }
-            });
-        },
         loadMessageWithData:function(actionText, arr, i, opt){
             if (actionText != "") {
                 // 去掉加载存储数据是节数据后没有 action，
@@ -1824,7 +1303,6 @@ define(function(require, exports, module) {
             }
            
             // 本课程继续学
-            // $(".actions").hide(); 
             // 人工提问
             var answerHtml ='<div class="answer"> \
                                 <div class="msg-view">\
@@ -1835,12 +1313,8 @@ define(function(require, exports, module) {
             $(answerHtml).appendTo(".messages");
             
             // 等待机器答复
-            var loadingWHtml = null;
-            loadingWHtml = '<div class="loading-chat left-animation">\
-                                <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
-
-            $(loadingWHtml).appendTo(".messages");
+            Util.getLoadingHtml(true, false);
+            
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
             
@@ -1883,8 +1357,6 @@ define(function(require, exports, module) {
                     // 先判断数组元素执行完了没有，完了发请求, 没有，对数组操作
                     if (!Page.data[Page.index + 1] || Page.data.length == Page.index + 1) {
                         // 已有数据源已显示完，重新请求数据， 并重新复制 Page.data, Page.index
-                        // Page.requestNextData(actionText, Page.pagenum);
-
                         // 请求当前课程的下一节课程
                         Page.requestCourseData(actionText, false);
                     }else{
@@ -1906,12 +1378,8 @@ define(function(require, exports, module) {
             $(answerHtml).appendTo(".messages");
             
             // 等待机器答复
-            var loadingWHtml = null;
-            loadingWHtml = '<div class="loading-chat left-animation">\
-                                <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
-
-            $(loadingWHtml).appendTo(".messages");
+            Util.getLoadingHtml(true, false);
+            
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
             
             Page.requestCourseData(actionText, true);  //true 代表课程更换了
@@ -1969,12 +1437,8 @@ define(function(require, exports, module) {
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
             
             // 等待机器答复
-            var loadingWHtml = null;
-            loadingWHtml = '<div class="loading-chat left-animation">\
-                                <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
-
-            $(loadingWHtml).appendTo(".messages");
+            Util.getLoadingHtml(true, false);
+            
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     };
@@ -2995,6 +2459,80 @@ define(function(require, exports, module) {
                     console.log('error');
                 }
             })
+        },
+        loadNews:function(lastId, isClickNext){
+            Common.isLogin(function(token){
+                if (token) {
+                    $.ajax({
+                        type:"get",
+                        url:Common.domain + "/news/news/?current_id="+lastId,
+                        success:function(json){
+                            json.results.sort(compare('pk'));
+                            var array = [];
+
+                            for (var i = 0; i < json.results.length; i++) {
+                                json.results[i]["news"] = true;     //是否是新闻消息
+                                var item = json.results[i];
+                                var dic1 = {"pk":item.pk, "news":true}, dic2 = {"pk":item.pk, "news":true};
+                                if (item.content) {
+                                    dic1["message"] = item.content
+                                }
+                                if (item.link) {
+                                    dic1["link"] = item.link
+                                }
+                                if (item.images) {
+                                    dic2["img"] = item.images
+                                    dic2["hasAction"] = true     //图片后紧跟新闻双按钮
+                                    array.push(dic1);
+                                    array.push(dic2);
+                                }else{
+                                    dic1["hasAction"] = true     //摘要后紧跟新闻双按钮
+                                    array.push(dic1);
+                                }
+                            }
+
+                            function compare(property){
+                                return function(a,b){
+                                    var value1 = a[property];
+                                    var value2 = b[property];
+                                    return value1 - value2;
+                                }
+                            }
+
+                            // array.sort(compare('pk'));
+                            console.log(array);
+
+                            News.newsData = array;
+                            News.newsIndex = 0;
+
+                            if (!News.newsData.length) {
+                                // 没有新闻数据
+                                if (!isClickNext) {
+                                    News.clickNotLook();       //1.第一次进入，加载最后一条数据
+                                }else{
+                                    Common.bcAlert("今日新闻推送已经完了，是否要开始学习？", function(){
+                                        News.clickNotLook();   //2.点下一条，加载最后一条数据
+                                    }, function(){
+                                        $(".loading-chat").remove();
+                                        var array = JSON.parse(localStorage.chatData);
+                                        var actionHtml = Util.getActionHtml(array[array.length-1]);
+                                        $(".btns .actions").html(actionHtml);
+                                        Page.clickEvent();
+                                    }, "确定", "取消");
+                                }
+                            }else{
+                                // 有数据，加载新闻信息 UI
+                                News.loadMessage(News.newsData, News.newsIndex);
+                            }
+                        },
+                        error:function(xhr, textStatus){
+                            News.clickNotLook();       //请求新闻事变的时候，直接加载最后一条
+                        }
+                    })
+                }else{
+                    console.log("token 为空，不加载新闻");
+                }
+            })
         }
     }
     // ---------------------4.帮助方法
@@ -3046,7 +2584,10 @@ define(function(require, exports, module) {
                 var url = item.img;
                 var pW = $(".message.img").last().find(".msg-view").width() * 0.50;
                 Common.getPhotoWidthHeight(url, function(width, height){
-                    var pH = pW * height / width;
+                    var pH = 100;
+                    if (width && height) {
+                        pH = pW * height / width;
+                    }
                     $(".message.img").last().find('img.msg').css({
                         height: pH + "px"
                     })
@@ -3063,7 +2604,10 @@ define(function(require, exports, module) {
                 var url = item.img;
                 var pW = $(".message.img").first().find(".msg-view").width() * 0.50;
                 Common.getPhotoWidthHeight(url, function(width, height){
-                    var pH = pW * height / width;
+                    var pH = 100;
+                    if (width && height) {
+                        pH = pW * height / width;
+                    }
                     $(".message.img").first().find('img.msg').css({
                         height: pH + "px"
                     })
@@ -3363,6 +2907,54 @@ define(function(require, exports, module) {
             params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
             console.log(params);
             window.open(link, '_blank', params);
+        },
+        getActionHtml:function(item){
+            var actionHtml = "";
+            if (item.hasAction) {
+                // 新闻
+                actionHtml = '<span class="btn-wx-auth bottom-animation notNews">暂时不看</span>\
+                            <span class="btn-wx-auth bottom-animation nextNews">下一条</span>';
+            }else if (item.action) {
+                if (item.exercises == true) {
+                    // 如果是选择题，（多按钮）
+                    var optionHtml = null;
+                    for (var j = 0; j < item.action.length; j++) {
+                        var option = item.action[j];
+                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
+                    }
+                    actionHtml += optionHtml
+                    actionHtml += '<span class="btn-wx-auth">ok</span>';
+
+                }else{
+                    // 单按钮
+                    if (item.action == "点击选择课程") {
+                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                    }else{
+                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                    }
+                }
+            }
+            return actionHtml;
+        },
+        getLoadingHtml:function(animate, before){
+            // animate，是否有动画， before 是在之前还是之后
+            var loadingWHtml = "";
+            if (animate == true) {
+                loadingWHtml = '<div class="loading-chat left-animation">\
+                                    <img src="../../statics/images/chat.gif" alt="">\
+                                </div>';
+            }else{
+                loadingWHtml = '<div class="loading-chat">\
+                                    <img src="../../statics/images/chat.gif" alt="">\
+                                </div>';
+            }
+            if (before) {
+                $(loadingWHtml).prependTo($(".messages"));
+            }else{
+                $(loadingWHtml).appendTo(".messages");
+            }
+
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     }
 
