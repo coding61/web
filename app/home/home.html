@@ -545,6 +545,129 @@
 				<div class="edit">程序媛编译器</div>
 			</div>
 		</div>
+
+		<!-- 第一种（带链接的题<文字+图片>） -->
+		<script type="text/html" id="message-link-problem-template">
+			<div class="message link{{if animate}} left-animation{{/if}}" data-link="{{item.link}}"{{if item.tag}} data-tag="{{item.tag}}" data-msg="{{item.message}}"{{/if}}> 
+                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+                <div class="msg-view-parent">
+                    <div class="msg-view">
+                        <div class="link-text"> 
+                        	<div class="link-content-imgs">
+                        		{{if item.message}}
+	                        		<span class="link-content">{{item.message}}<br/></span>
+	                        	{{/if}}
+	                        	{{if item.imgs && item.imgs.length}}
+                     			<div class="link-imgs">
+                     				{{each item.imgs}}
+                     				<img class="lazy-img" data-src="{{$value}}" src="../../statics/images/default.png" alt="">
+                     				{{/each}}
+                     			</div>
+                     			{{/if}}
+                        	</div>
+                 
+                            <span style="color: rgb(84, 180,225);">{{item.link}}</span>
+                        </div>
+                        <img class="arrow" src="../../statics/images/arrow.png" alt="">
+                    </div>
+                </div>
+            </div>
+		</script>
+		
+		<!-- 第二种（选择题<题目：文字+图片，选项：文字+图片>） -->
+		<script type="text/html" id="message-choice-problem-template">
+			<div class="message text{{if animate}} left-animation{{/if}}"> 
+                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+                <div class="msg-view-parent">
+                    <div class="msg-view">
+                    	<div class="problem-options">
+                    		<!-- 选择题的题目 -->
+                    		<div class="problem-content-imgs">
+                    			{{if item.message}}
+	                        		<span class="problem-content">{{item.message}}</span> 
+                        		{{/if}}
+                        		{{if item.imgs && item.imgs.length}}
+                        		<div class="problem-imgs">
+                        			{{each item.imgs}}
+                        			<img class="lazy-img" data-src="{{$value}}" src="../../statics/images/default.png" alt="">
+                        			{{/each}}
+                        		</div>
+                        		{{/if}}
+                        	</div>
+			
+                        	<!-- 选择题下面的4个选项 -->
+                        	<div class="options">
+                        		{{each item.options}}
+                        		<div class="option">
+                            		<span class="order-letter">{{$value.content}}</span>
+                            		<div class="option-content-imgs">
+                            			{{if $value.message}}
+	                            			<span class="option-content">{{$value.message}}</span> 
+                            			{{/if}}
+                            			{{if $value.imgs && $value.imgs.length}}
+	                                		<div class="option-imgs">
+	                                			{{each $value.imgs}}
+		                             				<img class="lazy-img" data-src="{{$value}}" src="../../statics/images/default.png" alt="">
+	                                			{{/each}}
+	                                		</div>
+	                                	{{/if}}
+                            		</div>
+                        		</div>
+                        		{{/each}}
+                        	</div>
+                    	</div>
+              
+                    </div>
+                </div>
+            </div>
+		</script>
+
+		<!-- 第三种（纯文本消息） -->
+		<script type="text/html" id="message-text-template">
+			<div class="message text{{if animate}} left-animation{{/if}}"> 
+                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+                <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
+                    <div class="msg-view">
+                        <span class="content">{{item.message}}</span> 
+                    </div>
+                    {{if item.audio}}
+		                <img class="audio" src="../../statics/images/audio.png"/>
+	                {{/if}}
+                </div>
+            </div>
+		</script>
+
+		<!-- 第四种(纯图片消息) -->
+		<script type="text/html" id="message-img-template">
+			<div class="message img">
+	            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+	            <div class="msg-view-parent">
+	                <div class="msg-view">
+	                    <img class="msg" id="{{imgI}}" src="{{item.img}}" alt="">
+	                    <div class="pre-msg"><img src="../../statics/images/loading.gif"/></div>
+	                </div>
+	            </div>
+	        </div>
+		</script>
+
+		<!-- 第五种(链接消息) -->
+		<script type="text/html" id="message-link-template">
+			<div class="message link{{if animate}} left-animation{{/if}}" data-link="{{item.link}}"> 
+				<img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+				<div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
+					<div class="msg-view">
+						<div class="link-text"> 
+							<span class="link-content">{{item.message}}<br/></span>
+							<span style="color: rgb(84, 180,225);">{{linkText}}</span>
+						</div>
+						<img class="arrow" src="../../statics/images/arrow.png" alt="">
+					</div>
+					{{if item.audio}}
+						<img class="audio" src="../../statics/images/audio.png"/>
+					{{/if}}
+				</div>
+			</div>
+		</script>
 		
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
