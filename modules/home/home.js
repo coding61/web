@@ -2958,7 +2958,7 @@ define(function(require, exports, module) {
                 $(loadingWHtml).appendTo(".messages");
             }
 
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     }
 
