@@ -1223,7 +1223,7 @@ define(function(require, exports, module) {
                 var url = $(this).children("img").attr("src");
                 $(".choose-avatar-view .choose-avatar img").attr({src:url})
             })
-            $(".choose-avatar-view .submit-avatar").unbind('click').click(function(){
+            $(".choose-avatar-view .submit-avatar .submit").unbind('click').click(function(){
                 $(".choose-avatar-view .avatars-view").css({
                     display:"none"
                 });
