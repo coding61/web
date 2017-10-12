@@ -149,6 +149,7 @@ define(function(require, exports, module) {
             var imgI = "i_"+ChatStroage.numbers;
 
             if (i >= arrLen) {
+                /*
                 Common.isLogin(function(token){
                     if (token) {
                         if (localStorage.newsTime) {
@@ -169,6 +170,9 @@ define(function(require, exports, module) {
                         ChatStroage.loadLastItem(arr, arrLen);
                     }
                 })
+                */
+                //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
+                ChatStroage.loadLastItem(arr, arrLen);
                 return;
             }
                 
@@ -1219,7 +1223,7 @@ define(function(require, exports, module) {
                 var url = $(this).children("img").attr("src");
                 $(".choose-avatar-view .choose-avatar img").attr({src:url})
             })
-            $(".choose-avatar-view .submit-avatar").unbind('click').click(function(){
+            $(".choose-avatar-view .submit-avatar .submit").unbind('click').click(function(){
                 $(".choose-avatar-view .avatars-view").css({
                     display:"none"
                 });

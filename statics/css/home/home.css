@@ -1509,6 +1509,15 @@ li.catalog.unselect{
 .choose-avatar-view .submit-avatar{
     width: 60px;
     font-size: 15px;
+    /*cursor: pointer;*/
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.choose-avatar-view .submit-avatar span{
+    padding: 10px 0;
     cursor: pointer;
 }
 /*****************************************3.找回密码*/
