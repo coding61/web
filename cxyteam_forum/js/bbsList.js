@@ -38,6 +38,77 @@ $('.jie-add1').unbind().click(function(){
 	}
 	
 });
+
+// 融云单聊
+var demo = angular.module("demo", ["RongWebIMWidget"]);
+demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebIMWidget, $http) {
+    $(document).on("click", '.fly-list-li img', function() {
+    	$scope.targetType = 1; //1：私聊 更多会话类型查看http://www.rongcloud.cn/docs/api/js/global.html#ConversationType
+	    $scope.targetId = 'opSbp1JARhmzgmez9yObTt9aSybs2';
+	    myAjax(basePath+"/im/user_get_token/","get",null,function(result) {
+	        if(result){
+	           //注意实际应用中 appkey 、 token 使用自己从融云服务器注册的。
+	            var config = {
+	                appkey: '8w7jv4qb7eqty',
+	                token: result.token,
+	                displayConversationList: false,
+	                style:{
+	                    left:3,
+	                    bottom:3,
+	                    width:430
+	                },
+	                onSuccess: function(id) {
+	                    $scope.user = id;
+	                    // document.title = '用户：' + id;
+	                    console.log('连接成功：' + id);
+	                    // 设置当前会话
+	                    WebIMWidget.setConversation(WebIMWidget.EnumConversationType.PRIVATE,$scope.targetId,"三十三");
+	                    //呈现会话面板
+	                    WebIMWidget.show();
+	                    $('.rongcloud-kefuChatBoxHide').hide();
+
+	                    //会话面板被关闭时
+	                    WebIMWidget.onClose = function() {
+	                      //do something
+	                      $('.rongcloud-kefuBtnBox').hide();
+	                    }
+	                    //接收到消息时
+	                    WebIMWidget.onReceivedMessage = function(message) {
+	                      //message 收到的消息
+	                    }
+	                },
+	                onError: function(error) {
+	                    console.log('连接失败：' + error);
+	                }
+	            };
+	            RongDemo.common(WebIMWidget, config, $scope);  
+	            // 用户信息设置
+	            WebIMWidget.setUserInfoProvider(function(targetId,obj){
+	                $http({
+	                    url: basePath + "/userinfo/whoami/",
+	                    headers: {
+	                        'Authorization': "Token " + localStorage.token
+	                    },
+	                    params:{
+	                        'userId': targetId
+	                    }
+	                }).success(function(rep){
+	                    if (rep) {
+	                        obj.onSuccess({userId: targetId, name: rep.name, portraitUri: rep.avatar})
+	                    }
+	                }).error(function(err) {
+
+	                })
+	            });
+	            
+	        }else{
+	        }
+	    })
+
+	});
+}]);
+
+
 //var basePath="http://10.144.238.71:8080/wodeworld/";
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
@@ -129,7 +200,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 						name=v.userinfo.owner;
 					}
 					html+='<li class="fly-list-li">'
-						+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'">'
+						+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'"ng-model="targetId"'+'>'
 						if (v.userinfo.is_staff) {
 							html+='<span class="manager">管理员</span>'
 						}

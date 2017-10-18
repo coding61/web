@@ -13,6 +13,9 @@ $('.logo1').click(function() {
 $('.logo2').click(function() {
 	window.open("https://www.cxy61.com");
 })
+$('.avatar .item').click(function() {
+	window.location.href = "./RongYun.html"
+})
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		$('.avatar img').attr({src: result.avatar});//用户头像
