@@ -345,3 +345,19 @@ body {
     height: 15px;
     margin-bottom: 5px;
 }
+.bc-alert-view .bc-alert-msg{
+    min-height: 100px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: solid 1px #e1e1e1;
+    color: #333;
+    font-size: 16px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 35% !important;
+    max-height: 300px;
+    overflow: auto;
+}

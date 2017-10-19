@@ -61,6 +61,10 @@ define(function(require, exports, module) {
                         }
                     })
 
+                    $('.verify').unbind('click').click(function() {
+                        $('.verify').hide();
+                    })
+
                     $('.item-more').unbind('click').click(function() {
                         pk = $(this).closest('li').attr('data-pk');
                         Page.showClubDetails(pk);
@@ -190,7 +194,10 @@ define(function(require, exports, module) {
                             $('.member-cut').show();
                             $('.member-cut').unbind('click').click(function() {
                                 var member_pk = $(this).closest('li').attr('data-pk');
-                                Page.deleteMember(member_pk, pk);
+                                var member_name = $(this).closest('li').attr('data-name');
+                                Common.bcAlert("确认提出参与者：" + member_name + "？", function(){
+                                    Page.deleteMember(member_pk, pk);
+                                })
                             })
 
                         })
