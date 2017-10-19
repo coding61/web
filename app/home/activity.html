@@ -30,10 +30,14 @@
         <div class="list-view"></div>
         <script type="text/html" id="list-template">
     		{{each}}
-				<li data-pk="{{$value.pk}}">
+				<li data-pk="{{$value.pk}}" data-name="{{$value.leader.name}}">
 					<div class="list-item">
 						<div class="item-info">
-							<div class="item-title">{{$value.name}}</div>
+							<div class="item-title">
+                                <img class="title-icon" src='../../statics/images/left_icon.png' />
+                                {{$value.name}}
+                                <img class="title-icon" src='../../statics/images/right_icon.png' />
+                            </div>
 							<div class="item-content">通告：{{$value.introduction}}</div>
                             <div class="item-more">查看详情 ></div>
 						</div>
@@ -62,10 +66,14 @@
         <div class="join-view"></div>
         <script type="text/html" id="join-template">
     		{{each}}
-				<li data-pk="{{$value.pk}}">
+				<li data-pk="{{$value.pk}}" data-name="{{$value.leader.name}}">
 					<div class="list-item">
 						<div class="item-info">
-							<div class="item-title">{{$value.name}}</div>
+							<div class="item-title">
+                                <img class="title-icon" src='../../statics/images/left_icon.png' />
+                                {{$value.name}}
+                                <img class="title-icon" src='../../statics/images/right_icon.png' />
+                            </div>
 							<div class="item-content">{{$value.introduction}}</div>
                             <div class="item-more">查看详情 ></div>
 						</div>
@@ -83,10 +91,14 @@
         <div class="push-view"></div>
         <script type="text/html" id="push-template">
     		{{each}}
-				<li data-pk="{{$value.pk}}">
+				<li data-pk="{{$value.pk}}" data-name="{{$value.leader.name}}">
 					<div class="list-item">
 						<div class="item-info">
-							<div class="item-title">{{$value.name}}</div>
+							<div class="item-title">
+                                <img class="title-icon" src='../../statics/images/left_icon.png' />
+                                {{$value.name}}
+                                <img class="title-icon" src='../../statics/images/right_icon.png' />
+                            </div>
 							<div class="item-content">{{$value.introduction}}</div>
                             <div class="item-more">查看详情 ></div>
 						</div>
@@ -106,6 +118,10 @@
                 <p>标题</p>
                 <input class="title-input"/>
             </div>
+            <div class="create-pw">
+                <p>密码</p>
+                <input class="password-input"/>
+            </div>
             <div class="create-content">
                 <p>通告</p>
                 <textarea class="content-input"></textarea>
@@ -115,7 +131,8 @@
 
         <div class="details-view">
             <div class="details-back"><</div>
-            <div class="details-title"></div>
+            <div class="details-title">
+            </div>
             <div class="details-edit">编辑</div>
             <div class="details-content"></div>
             <div class="details-member">
@@ -125,7 +142,7 @@
             <div class="member-list"></div>
             <script type="text/html" id="member-template">
         		{{each}}
-    				<li data-pk="{{$value.pk}}">
+    				<li data-pk="{{$value.pk}}" data-owner="{{$value.owner.owner}}" data-name="{{$value.owner.name}}">
     					<div class="member-item">
                             <img class="member-head" src={{$value.owner.avatar}} alt="" style="display: inline;">
                             <div class="member-name">{{$value.owner.name}}</div>

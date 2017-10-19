@@ -25,7 +25,6 @@ define(function(require, exports, module) {
             Page.clickEvent();
         },
         loadData:function(url) {
-            console.log(url);
             $.ajax({
                 type: "get",
                 url: url,
@@ -33,9 +32,12 @@ define(function(require, exports, module) {
                     Authorization: "Token " + token
                 },
                 success:function(json){
-                    console.log(json);
                     for (var i = 0; i < json.results.length; i++) {
                         data_list.push(json.results[i]);
+                    }
+                    if (json.next) {
+                        var parm = json.next.split('program_girl')[1];
+                        Page.loadData(Common.domain + parm);
                     }
                     var html = template('list-template', data_list);
                     $('.list-view').html(html);
@@ -80,8 +82,13 @@ define(function(require, exports, module) {
                     for (var i = 0; i < json.results.length; i++) {
                         data_list.push(json.results[i]);
                     }
+                    if (json.next) {
+                        var parm = json.next.split('program_girl')[1];
+                        Page.loadData(Common.domain + parm);
+                    }
                     var html = template('join-template', data_list);
                     $('.join-view').html(html);
+
                     $('.item-more').unbind('click').click(function() {
                         var pk = $(this).closest('li').attr('data-pk');
                         Page.showClubDetails(pk);
@@ -103,8 +110,14 @@ define(function(require, exports, module) {
                     for (var i = 0; i < json.results.length; i++) {
                         data_list.push(json.results[i]);
                     }
+                    if (json.next) {
+                        var parm = json.next.split('program_girl')[1];
+                        Page.loadData(Common.domain + parm);
+                    }
+
                     var html = template('push-template', data_list);
                     $('.push-view').html(html);
+
                     $('.item-more').unbind('click').click(function() {
                         var pk = $(this).closest('li').attr('data-pk');
                         Page.showClubDetails(pk);
@@ -146,7 +159,9 @@ define(function(require, exports, module) {
                     Authorization: "Token " + token
                 },
                 success:function(json){
-                    $('.details-title').html(json.name);
+                    $('.details-title').html(
+                        '<img class="title-icon" src="../../statics/images/left_icon.png"/>' + '&nbsp;' + json.name + '&nbsp;' + '<img class="title-icon" src="../../statics/images/right_icon.png"/>'
+                    );
                     $('.details-content').html("通告：" + json.introduction);
 
                     var arr = json.club_member;
@@ -161,9 +176,13 @@ define(function(require, exports, module) {
                     var html = template('member-template', arr);
                     $('.member-list').html(html);
 
+                    // 容云聊天要用的 name owner
                     $('.member-item').unbind('click').click(function() {
                         var member_pk = $(this).closest('li').attr('data-pk');
-                        alert(member_pk);
+                        var member_name = $(this).closest('li').attr('data-name');
+                        var member_owner = $(this).closest('li').attr('data-owner');
+                        console.log(member_name);
+                        console.log(member_owner);
                     })
                     if (json.isleader) {
                         $('.details-edit').show();
@@ -215,7 +234,7 @@ define(function(require, exports, module) {
             })
         },
         // 创建俱乐部
-        createClub:function(title, content) {
+        createClub:function(title, content, password) {
             $.ajax({
                 type: "post",
                 url: Common.domain + "/club/club_create/",
@@ -225,12 +244,13 @@ define(function(require, exports, module) {
                 data:{
                     'name': title,
                     'introduction': content,
-                    'password': '123456'
+                    'password': password
                 },
                 success:function(json){
                     Common.dialog(json.message);
                     $('.title-input').val('');
                     $('.content-input').val('');
+                    $('.password-input').val('');
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
@@ -290,12 +310,15 @@ define(function(require, exports, module) {
             $('.create-btn').click(function() {
                 var title = $('.title-input').val();
                 var content = $('.content-input').val();
+                var password = $('.password-input').val();
                 if (!title) {
                     Common.dialog('请输入标题');
                 } else if (!content) {
                     Common.dialog('请输入内容');
+                } else if (!password) {
+                    Common.dialog('请设置密码');
                 } else {
-                    Page.createClub(title, content);
+                    Page.createClub(title, content, password);
                 }
             })
         },

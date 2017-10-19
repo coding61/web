@@ -129,6 +129,10 @@ body {
     line-height: 40px;
     text-align: center;
     color: #EB6A99;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }
 .item-content {
     min-height: 80px;
@@ -205,23 +209,26 @@ body {
     border-radius: 10px;
     display: none;
 }
-.create-title {
+.create-title,
+.create-pw {
     min-width: 700px;
-    padding-top: 25px;
-    margin: 30px 45px 0 45px;
+    padding-top: 20px;
+    margin: 0px 45px;
     display: flex;
 }
-.create-title p {
+.create-title p,
+.create-pw p {
     line-height: 32px;
     margin: 0;
 }
-.title-input {
+.title-input,
+.password-input {
     margin-left: 15px;
     padding: 5px;
 }
 .create-content {
     min-width: 700px;
-    margin: 30px 45px 0 45px;
+    margin: 20px 45px;
     display: flex;
 }
 .create-content p {
@@ -270,6 +277,10 @@ body {
     text-align: center;
     padding: 20px;
     color: #EB6A99;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }
 .details-edit {
     float: right;
@@ -329,4 +340,8 @@ body {
     background: red;
     display: none;
     color: #fff;
+}
+.title-icon {
+    height: 15px;
+    margin-bottom: 5px;
 }
