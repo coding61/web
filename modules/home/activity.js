@@ -71,7 +71,7 @@ define(function(require, exports, module) {
                 }
             })
         },
-        loadJoinData:function() {
+        loadJoinData:function(url) {
             $.ajax({
                 type: "get",
                 url: Common.domain + "/club/myclub/?types=join",
@@ -84,7 +84,7 @@ define(function(require, exports, module) {
                     }
                     if (json.next) {
                         var parm = json.next.split('program_girl')[1];
-                        Page.loadData(Common.domain + parm);
+                        Page.loadJoinData(Common.domain + parm);
                     }
                     var html = template('join-template', data_list);
                     $('.join-view').html(html);
@@ -99,7 +99,7 @@ define(function(require, exports, module) {
                 }
             })
         },
-        loadPushData:function() {
+        loadPushData:function(url) {
             $.ajax({
                 type: "get",
                 url: Common.domain + "/club/myclub/?types=create",
@@ -112,7 +112,7 @@ define(function(require, exports, module) {
                     }
                     if (json.next) {
                         var parm = json.next.split('program_girl')[1];
-                        Page.loadData(Common.domain + parm);
+                        Page.loadPushData(Common.domain + parm);
                     }
 
                     var html = template('push-template', data_list);
@@ -275,13 +275,13 @@ define(function(require, exports, module) {
                         $('.activity-join').css({'background-color': '#EB6A99', 'color': '#fff'});
                         $('.list-view, .push-view, .create-view, .details-view').hide();
                         $('.join-view').show();
-                        Page.loadJoinData();
+                        Page.loadJoinData(join_url);
                         break;
                     case '2':
                         $('.activity-push').css({'background-color': '#EB6A99', 'color': '#fff'});
                         $('.list-view, .join-view, .create-view, .details-view').hide();
                         $('.push-view').show();
-                        Page.loadPushData();
+                        Page.loadPushData(push_url);
                         break;
                     case '3':
                         $('.activity-create').css({'background-color': '#EB6A99', 'color': '#fff'});
