@@ -218,8 +218,8 @@ body{
 }
 .header .right-view .progress img{
     position: absolute;
-    left: 0; 
-    top: 0; 
+    left: 0;
+    top: 0;
     width: 58.5%;
     height: 100%;
 }
@@ -457,7 +457,7 @@ body{
 	padding-bottom: 70px;
 	width: 100%;
 	/*height: 80%;*/
-    
+
     padding-bottom: 0;
     /*background: red;*/
     height: calc(100% - 100px);
@@ -503,7 +503,7 @@ body{
 	margin-right: 20px;
 	overflow: hidden;
 
-	/*align-items: center;  
+	/*align-items: center;
     justify-content: flex-start;*/
     width: calc(100% - 30px);
 
@@ -543,7 +543,7 @@ body{
 /*预加载的图片*/
 .main-view .left-view .chat .message.img .pre-msg{
     width: 50%;
-    
+
     background: #d2d2d2;
     display: flex;
     align-items: center;
@@ -625,7 +625,7 @@ body{
 
     margin-left: 11.5%;*/
 }
-.main-view .left-view .chat .help{	
+.main-view .left-view .chat .help{
 	/*height: 30px;
     position: fixed;
     display: inline-block;
@@ -736,7 +736,8 @@ body{
 .main-view .left-view .helps-view .change-course,
 .main-view .left-view .helps-view .course-menu,
 .main-view .left-view .helps-view .lock-phone,
-/*.main-view .left-view .helps-view .find-help,*/
+.main-view .left-view .helps-view .find-help,
+/*.main-view .left-view .helps-view .activty-list,*/
 .main-view .left-view .helps-view .zuan-ani{
     border-bottom: solid 1px #d2d2d2;
 }
@@ -828,7 +829,7 @@ li.catalog.unselect{
 	background-color: rgb(229, 230, 231);
 	border: solid 1px rgb(205, 206, 207);
 	border-radius: 5px;
-	
+
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -845,7 +846,7 @@ li.catalog.unselect{
 
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    display: none;  
+    display: none;
 }
 .main-view .right-view iframe{
 	width: 100%;
@@ -977,7 +978,7 @@ li.catalog.unselect{
 .code-result-shadow-view .code-result .iframe-scroll,
 .message-link-shadow-view .message-link .iframe-scroll{
     overflow: auto;
-    -webkit-overflow-scrolling: touch;  
+    -webkit-overflow-scrolling: touch;
 
     width: 70%;
     height: 80%;
@@ -1445,7 +1446,7 @@ li.catalog.unselect{
 }
 .choose-avatar-view .choose-avatar-account-view .choose-avatar img{
     position: absolute;
-    top: 0px; 
+    top: 0px;
     width: 60px;
     height: 60px;
     border-radius: 50%;

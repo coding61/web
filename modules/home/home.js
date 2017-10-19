@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
     var Utils = require('common/utils.js');
-    
+
     // ----------------------------------1.默认数据
     var Default = {
         olduser:false,
@@ -60,17 +60,17 @@ define(function(require, exports, module) {
             }
 
             var actionHtml = Util.getActionHtml(item);
-            
+
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
-            
+
             if(item.img){
                 var a = "#"+imgI;
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
-            
-            
+
+
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
                 $("html,body").animate({scrollTop:$("html,body")[0].scrollHeight}, 300);
@@ -78,7 +78,7 @@ define(function(require, exports, module) {
                 Page.clickEvent();
 
             }, 800)
-            
+
 
             // 1.存储数据(默认数据)
             var array = [];
@@ -89,13 +89,13 @@ define(function(require, exports, module) {
             item['line'] = false;
             array.push(item)
             localStorage.chatData = JSON.stringify(array);
-            
+
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
 
             // 2.存储下标
             Page.index = i;
             Util.storeData();
-                        
+
             if (item.action) {
                 // 存在行为按钮, 不继续执行, 存储当前下标
                 console.log(i);
@@ -112,12 +112,12 @@ define(function(require, exports, module) {
         numbers:0,    //已加载数据的个数
         length:50,   //默认一组加载多少个
         timer:null,
-        timerAgo:null,  
+        timerAgo:null,
         loadMore:true,  //上拉的时候判断是否可以继续上拉加载
         init:function(){
             // 加载缓存数据， 并展示出来
             var array = JSON.parse(localStorage.chatData)
-            
+
             // 加载存储数据中所有的数据（最新10个数据）
             var arr1 = [];
             for (var i = array.length - 1; i > array.length-1-ChatStroage.length; i--) {
@@ -175,10 +175,10 @@ define(function(require, exports, module) {
                 ChatStroage.loadLastItem(arr, arrLen);
                 return;
             }
-                
+
             // 等待符号
             Util.getLoadingHtml(false, false);
-            
+
             var answerHtml = null;
             var questionHtml = null;
             var lineHtml = null;
@@ -217,9 +217,9 @@ define(function(require, exports, module) {
             $(questionHtml).appendTo(".messages");
             $(answerHtml).appendTo(".messages");
             $(lineHtml).appendTo(".messages");
-            
+
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-            
+
             if(item.img){
                 // $('.lazy-img').imageloader();  //打开图片
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
@@ -241,7 +241,7 @@ define(function(require, exports, module) {
             Page.optionData = JSON.parse(localStorage.optionData);
             Page.optionIndex = parseInt(localStorage.optionIndex);
             Page.pagenum = parseInt(localStorage.pagenum);
-            
+
             // 判断存储的最后一个元素是否有 action
             var item1 = array[arrLen-1]
             var actionHtml = "";
@@ -257,7 +257,7 @@ define(function(require, exports, module) {
             }else if (item1.action) {
                 actionHtml=Util.getActionHtml(item1);
             }else{
-                
+
                 //当前存储元素加载完，之后，取数据源元素
                 // 不含 action，取当前数据源中下一条数据,知道遇到 含action的为止
                 if (Page.optionData == null || Page.optionData.length == Page.optionIndex + 1) {
@@ -277,7 +277,7 @@ define(function(require, exports, module) {
                     // ChatStroage.load(Page.optionData, Page.optionIndex, Page.optionData.length, true);
                 }
             }
-            
+
             ChatStroage.loadFirstItem();
 
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
@@ -285,10 +285,10 @@ define(function(require, exports, module) {
             setTimeout(function(){
                 // console.log(333);
                 $(".btns .actions").html(actionHtml);
-                Page.clickEvent();    
+                Page.clickEvent();
             }, 800)
-             
-            
+
+
         },
         loadFirstItem:function(){
             $(".loadAgoMore").remove();
@@ -301,7 +301,7 @@ define(function(require, exports, module) {
                 loadAgoMoreHtml = '<div class="loadAgoNoMore">已经到头了</div>';
             }
             $(loadAgoMoreHtml).prependTo(".messages");
-            
+
 
             $(".loadAgoMore").unbind('click').click(function(){
                 // $(".loadAgoMore").remove();
@@ -316,14 +316,14 @@ define(function(require, exports, module) {
                         if (chatData[i]) {
                             arr1.push(chatData[i]);
                         }
-                    } 
-                    
+                    }
+
                     ChatStroage.timerAgo = setTimeout(function(){
                         // 等待符号,加载上一组记录
                         Util.getLoadingHtml(false, true);
                         ChatStroage.loadAgo(arr1, 0, arr1.length);
                     })
-                }     
+                }
             })
         },
         loadAgo:function(arr, i, arrLen){
@@ -334,17 +334,17 @@ define(function(require, exports, module) {
                 // 重新赋值点击加载更多
                 ChatStroage.loadFirstItem();
                 $(".loading-chat").remove();
-                Page.clickEvent(); 
+                Page.clickEvent();
 
                 /*
                 ChatStroage.loadMore = true;
                 //已经执行过数组的最后一个元素（规定的前10条数据中的最后一条）
                 $(".loading-chat").remove();
-                Page.clickEvent(); 
+                Page.clickEvent();
                 */
                 return;
             }
-            
+
             var answerHtml = null;
             var questionHtml = null;
             var lineHtml = null;
@@ -383,15 +383,15 @@ define(function(require, exports, module) {
             $(questionHtml).prependTo($(".messages"));
             $(answerHtml).prependTo($(".messages"));
             $(lineHtml).prependTo($(".messages"));
-            
+
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-            
+
             if(item.img){
                 var a = "#"+imgI;
                 Util.setMessageImgHeightLoadAgo(item);  //给图片消息中图片设高
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
-            
+
 
             ChatStroage.timerAgo = setTimeout(function(){
                 // 加载上一条数据
@@ -403,7 +403,7 @@ define(function(require, exports, module) {
                     ChatStroage.loadAgo(arr, i+1, arrLen);
                 })
             })
-            
+
             // ChatStroage.loadAgo(arr, i+1, arrLen);
         },
     }
@@ -440,16 +440,16 @@ define(function(require, exports, module) {
             }
 
             var actionHtml = Util.getActionHtml(item);
-            
+
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
-            
+
             if(item.img){
                 var a = "#"+imgI;
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
-            
+
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
                 $("html,body").animate({scrollTop:$("html,body")[0].scrollHeight}, 300);
@@ -457,7 +457,7 @@ define(function(require, exports, module) {
                 Page.clickEvent();
 
             }, 800)
-            
+
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
             // 1.存储数据(默认数据)
@@ -471,7 +471,7 @@ define(function(require, exports, module) {
             localStorage.chatData = JSON.stringify(array);
 
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-            
+
             if (item.news) {
                 News.newsIndex = i;                 //记录新闻下标
                 localStorage.lastNewsId = item.pk;  //存储新闻的阅读下标
@@ -480,7 +480,7 @@ define(function(require, exports, module) {
                 Page.index = i;
                 Util.storeData();
             }
-                        
+
             if (item.action || item.hasAction) {
                 // 存在行为按钮, 不继续执行, 存储当前下标
                 // Page.index = i;
@@ -516,7 +516,7 @@ define(function(require, exports, module) {
             //请求下一条新闻
             if (News.newsData[News.newsIndex+1]) {
                 News.newsIndex = News.newsIndex+1;
-                
+
                 $(".actions").html(null);
                 // 加载下一条数据
                 Util.getLoadingHtml(true, false);  //等待符号
@@ -530,7 +530,7 @@ define(function(require, exports, module) {
                 var lastNewsId = localStorage.lastNewsId?localStorage.lastNewsId:0;
                 Mananger.loadNews(lastNewsId, true);  //请求新闻数据
             }
-        } 
+        }
     }
     // ---------------------------3.正常请求数据
     var Page = {
@@ -540,7 +540,7 @@ define(function(require, exports, module) {
         chatData:null,  //存储会话内容
         pagenum:1,    //请求数据分页
         options:[],  //记录选项
-        
+
         optionData:null,    //记录用户当前选了答案之后的数组会话
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
         init:function(){
@@ -565,10 +565,10 @@ define(function(require, exports, module) {
                 Page.load();
             }
             // Util.platform();
-            
+
             // 监听课程列表那里传过来的点击事件
-            window.addEventListener('message', function(e) {  
-                var a = e.data;   
+            window.addEventListener('message', function(e) {
+                var a = e.data;
                 if(a == "currentCourse"){
                     Util.courseProgressUI();   //更新课程进度
 
@@ -602,20 +602,23 @@ define(function(require, exports, module) {
                     $(".code-result-shadow-view iframe").attr({src:a});
                     $(".code-result-shadow-view").show();
                 }
-            }, false); 
-            
+            }, false);
+
         },
         load:function(){
 
             // 判断用户是否登录
             if(localStorage.token){
-                
+
                 Common.showLoading();
                 Mananger.getInfo();        // 加载个人信息
                 Mananger.loadMyTeam();     // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
 
                 Page.clickEventTotal();
+
+				$(".right-view>img").hide();
+				$(".right-view .iframe-scroll.activity").show();
             }else{
                 // 弹出登录窗口
                 // 打开登录窗口
@@ -651,15 +654,15 @@ define(function(require, exports, module) {
             }
 
             var actionHtml = Util.getActionHtml(item);
-            
+
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
-            
+
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
                 Page.clickEvent();
             }, 800)
-            
+
             if(item.img){
                 var a = "#"+imgI;
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
@@ -669,7 +672,7 @@ define(function(require, exports, module) {
                 var url = item.audio;
                 Common.playMessageSoun1(url);
             }
-            
+
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
             // 2.存储数据(当前消息是否是机器消息)
@@ -683,7 +686,7 @@ define(function(require, exports, module) {
             localStorage.chatData = JSON.stringify(array);
 
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-            
+
 
             if (item.news) {
                 // 存储新闻下标
@@ -700,7 +703,7 @@ define(function(require, exports, module) {
                 }
                 Util.storeData();
             }
-            
+
             if (item.action || item.hasAction) {
                 console.log(i);
                 return;
@@ -724,7 +727,7 @@ define(function(require, exports, module) {
                         }else{
                             Page.loadMessage(arr, i+1, opt);
                         }
-                        
+
                     }, Util.messageTime)
                 }, Util.waitTime)
             }
@@ -732,18 +735,18 @@ define(function(require, exports, module) {
         clickEvent:function(){
             // 动作按钮点击
             $(".btn-wx-auth").unbind('click').click(function(){
-                
+
                 if($(this).attr('disabledImg') == "true"){
                     console.log(000);
                     return;
-                } 
+                }
                 console.log(111);
                 $(this).attr({disabledImg:"true"});
-                
+
                 if ($(this).hasClass("wx-auth")) {
                     //1. 打开选择课程窗口
                     Util.openRightIframe("courseList");
-                    
+
                 }else if($(this).hasClass("catalogBegin")){
                     //2. 普通 action 按钮点击事件
                     Util.actionClickEvent($(this));
@@ -782,7 +785,7 @@ define(function(require, exports, module) {
                         var course = localStorage.oldCourse;
                         var courseIndex = localStorage.currentCourseIndex;
                         courseIndex = parseInt(courseIndex) + 1;
-                        
+
                         //判断是否是已经打过最后一节课
                         if(courseIndex > localStorage.currentCourseTotal){
                             //不打卡
@@ -799,7 +802,7 @@ define(function(require, exports, module) {
                             var course = localStorage.oldCourse;
                             var courseIndex = localStorage.currentCourseIndex;
                             courseIndex = parseInt(courseIndex) + 1;
-                            
+
                             Mananger.addReward(course, courseIndex, item.chapter, item.grow_number, item. zuan_number, $(this));  //奖励钻石
                         }else{
                             // 普通 action 按钮点击事件
@@ -807,8 +810,8 @@ define(function(require, exports, module) {
                         }
                     }
                 }
-                
-                
+
+
             })
             // 选项按钮点击
             $(".option").unbind('click').click(function(){
@@ -816,7 +819,7 @@ define(function(require, exports, module) {
                 if ($(this).hasClass("unselect")) {
                     //  选中，将选项放到数组中
                     $(this).removeClass("unselect").addClass("select");
-                    Page.options.push($(this).html()); 
+                    Page.options.push($(this).html());
                 }else if ($(this).hasClass("select")) {
                     // 取消选中
                     $(this).removeClass("select").addClass("unselect");
@@ -827,7 +830,7 @@ define(function(require, exports, module) {
                 Page.options.sort();
                 console.log(Page.options);
             })
-            
+
             // 消息链接点击
             $(".message.link").unbind('click').click(function(){
                 var linkType = $(this).attr("data-link-type");
@@ -875,7 +878,7 @@ define(function(require, exports, module) {
                 $(".imgmsg img").attr({src:""});
                 $(".imgmsg-shadow-view").hide();
             })
-            
+
             // 消息音频播放
             $(".msg-view-parent .audio").unbind('click').click(function(){
                 console.log('cc');
@@ -885,7 +888,7 @@ define(function(require, exports, module) {
                     Common.playMessageSoun2(url);  //播放钻石音效
                 }
             })
-            
+
             Page.clickEventTotal();
         },
         clickEventTotal:function(){
@@ -922,7 +925,12 @@ define(function(require, exports, module) {
                 // 重新激活点击事件
                 Page.clickEvent();
             })
-
+			$(".helps-view .activity-list").unbind('click').click(function(){
+                $(".helps-view").hide();
+				$(".right-view>img").hide();
+				$(".right-view .iframe-scroll.courseList").hide();
+				$(".right-view .iframe-scroll.activity").show();
+            })
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
@@ -974,14 +982,14 @@ define(function(require, exports, module) {
                 // $(".header .team-info").show();
                 Mananger.loadMyTeam(); // 获取我的团队信息
                 Mananger.loadTeamBrand();  //获取团队排行
-                
+
                 Util.adjustTeaminfo();
                 $(".header .team-info").toggle();
             }).unbind('mouseout').mouseout(function(){
                 // $(".header .team-info").show();
                 $(".header .team-info").toggle();
             })
-            
+
             // compile-shadow-view 隐藏
             $(".compile-shadow-view").unbind('click').click(function(){
                 $(".compile-shadow-view").hide();
@@ -1008,7 +1016,7 @@ define(function(require, exports, module) {
                     var url = "https://"+location.host+"/girl/app/home/codeCompileRN.html?lang="
                 }
                 url = url + type;
-                
+
                 var link = url;
                 var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
                 params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
@@ -1062,10 +1070,10 @@ define(function(require, exports, module) {
                 Util.openLink(url)
                 $(".code-online-editors").css({display:'none'})
             })
-            
+
 
             Page.clickEventLoginRelated();
-            
+
         },
         clickEventLoginRelated:function(){
             // ------------------------------------------- I:以前的登录（废弃）
@@ -1099,7 +1107,7 @@ define(function(require, exports, module) {
                     }
                 })
             })
-            
+
 
             // ---------------------------------------------II:新的登录
             // --------------------------------1.绑定手机
@@ -1133,13 +1141,13 @@ define(function(require, exports, module) {
                 if ($(this).hasClass("phone")){
                     $(".phone-account-view").css({display:"flex"})
                     $(".invite-account-view").css({display:"none"})
-                    
+
                 }else if ($(this).hasClass("invite")) {
                     $(".invite-account-view").css({display:"flex"})
                     $(".phone-account-view").css({display:"none"})
                 }
             })
-            
+
             $(".phone-account-view .login-btn").unbind('click').click(function(){
                 // 手机号登录
                 Mananger.goLogin($(".phone-account-view"));
@@ -1148,7 +1156,7 @@ define(function(require, exports, module) {
                 // 邀请码登录
                 Mananger.goLogin($(".invite-account-view"));
             })
-            
+
             $(".phone-invite-view .go-reg").unbind('click').click(function(){
                 // 打开手机注册窗口
                 $(".phone-reg-shadow-view").show();
@@ -1200,7 +1208,7 @@ define(function(require, exports, module) {
                 $(".ui-choose-avatar-view").css({
                     "width":width*0.35+"px"
                 })
-                
+
 
             })
 
@@ -1211,7 +1219,7 @@ define(function(require, exports, module) {
                 $(".phone-reg-shadow-view").show();
 
             })
-            
+
             $(".choose-avatar-view .choose-avatar").unbind('click').click(function(){
                 $(".choose-avatar-view .avatars-view").css({
                     display:"flex"
@@ -1269,7 +1277,7 @@ define(function(require, exports, module) {
 
                 $(".country-options").hide();
             })
-        
+
         },
         loadMessageWithData:function(actionText, arr, i, opt){
             if (actionText != "") {
@@ -1289,7 +1297,7 @@ define(function(require, exports, module) {
                 localStorage.chatData = JSON.stringify(array);
 
                 ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-                
+
                 $(".actions").html(null);
             }
 
@@ -1305,7 +1313,7 @@ define(function(require, exports, module) {
                     return;
                 }
             }
-           
+
             // 本课程继续学
             // 人工提问
             var answerHtml ='<div class="answer"> \
@@ -1315,13 +1323,13 @@ define(function(require, exports, module) {
                                 <img class="avatar" src="'+localStorage.avatar+'" />\
                             </div>';
             $(answerHtml).appendTo(".messages");
-            
+
             // 等待机器答复
             Util.getLoadingHtml(true, false);
-            
+
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
-            
+
             // 当前 message，
             var item = Page.data[Page.index];
             if (exercise == true) {
@@ -1331,7 +1339,7 @@ define(function(require, exports, module) {
                     Page.optionData = item.wrong;
                     Page.optionIndex = 0;
                     Page.loadMessageWithData(actionText, Page.optionData, Page.optionIndex, true);   //true 用来区分，普通消息还是问题下的消息
-                    
+
                 }else{
                     Page.optionData = item.correct;
                     Page.optionIndex = 0;
@@ -1364,10 +1372,10 @@ define(function(require, exports, module) {
                         // 请求当前课程的下一节课程
                         Page.requestCourseData(actionText, false);
                     }else{
-                        Page.loadMessageWithData(actionText, Page.data, Page.index+1, false);                
+                        Page.loadMessageWithData(actionText, Page.data, Page.index+1, false);
                     }
                 }
-                
+
             }
         },
         loadClickMessageCourse:function(actionText){
@@ -1380,12 +1388,12 @@ define(function(require, exports, module) {
                                 <img class="avatar" src="'+localStorage.avatar+'" />\
                             </div>';
             $(answerHtml).appendTo(".messages");
-            
+
             // 等待机器答复
             Util.getLoadingHtml(true, false);
-            
+
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
-            
+
             Page.requestCourseData(actionText, true);  //true 代表课程更换了
 
         },
@@ -1404,7 +1412,7 @@ define(function(require, exports, module) {
                 // 还从未有过选课
                 Common.dialog("请选择一个课程");
                 $(".loading-chat").remove();
-            }    
+            }
         },
         requestCategoryCourse:function(actionText, flag){
             if (localStorage.currentCourseIndex != Util.currentCatalogIndex) {
@@ -1439,14 +1447,14 @@ define(function(require, exports, module) {
             localStorage.chatData = JSON.stringify(array);
 
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
-            
+
             // 等待机器答复
             Util.getLoadingHtml(true, false);
-            
+
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     };
-    
+
     var Mananger = {
         phone:"",
         code:"",
@@ -1481,7 +1489,7 @@ define(function(require, exports, module) {
 
                     Mananger.loadMyTeam();  // 获取我的团队信息
                     Mananger.loadTeamBrand();  //获取团队排行
-                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
+                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件
                 },
                 error:function(xhr, textStatus){
                     Common.hideLoading();
@@ -1517,7 +1525,7 @@ define(function(require, exports, module) {
                         Common.hideLoading();
                         $(".phone-invite-shadow-view").hide();
                         // $(".login-shadow-view").hide();
-                        
+
                         /*
                         $(".header .avatar img").attr({src:json.avatar});
                         $(".header .info .grade").html(json.grade.current_name);
@@ -1532,13 +1540,13 @@ define(function(require, exports, module) {
                         Util.updateInfo(json);
 
                         Util.courseProgressUI();   //更新课程进度
-                        
-                        
+
+
                         // Mananger.loadMyTeam(); // 获取我的团队信息
                         // window.frames[1].postMessage('loadCourses', '*'); // 传递值，告知要获取课程信息
 
 
-                        // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认                        
+                        // 判断本地是否有缓存, 有就把缓存加载出来，否则加载默认
                         if (localStorage.chatData) {
                             if(localStorage.currentCourse){
                                 Mananger.getCourse(localStorage.currentCourse);  //更改缓存数据源后，加载会话消息
@@ -1590,7 +1598,7 @@ define(function(require, exports, module) {
                             $(".loading-chat").remove();
                             return;
                         }
-                        
+
                         // 方法1，捕获异常
                         try {
                            var array = JSON.parse(data.json);
@@ -1603,7 +1611,7 @@ define(function(require, exports, module) {
                             $(".loading-chat").remove();
                             return;
                         }
-                        
+
                         var courseIndex = data.learn_extent.last_lesson;
                         if (catalogChange == true) {
                             localStorage.currentCourseIndex = Util.currentCatalogIndex;
@@ -1616,16 +1624,16 @@ define(function(require, exports, module) {
                             Util.courseCatalogsInit(array);
                         }
                         courseIndex = parseInt(localStorage.currentCourseIndex);
-                        
+
                         // 课程列表窗口, 当前课程的下标进度 data-course-index:
                         $("#courseList").contents().find(".course[data-category="+data.pk+"]").attr({"data-course-index":courseIndex});
-                        
+
                         if(array){
                             if (array[courseIndex+1]) {
                                 //如果此课程此小节消息存在
                                 Page.index = 0;
                                 Page.data = array[courseIndex+1];
-                                
+
                                 Page.loadSepLine(courseIndex+1);
                                 Page.loadMessageWithData(actionText, Page.data, Page.index, false);
 
@@ -1644,7 +1652,7 @@ define(function(require, exports, module) {
                             Common.dialog("课程还未开放，敬请期待");
                             $(".loading-chat").remove();
                         }
-                        
+
                     },
                     error:function(xhr, textStatus){
                         $(".btn-wx-auth").attr({disabledImg:false});
@@ -1669,7 +1677,7 @@ define(function(require, exports, module) {
                         }
                     }
                 })
-                
+
             })
         },
         getCourse:function(course){
@@ -1692,7 +1700,7 @@ define(function(require, exports, module) {
                             alert("数据格式有问题!");
                             return;
                         }
-                        
+
                         Util.currentCatalogIndex = localStorage.currentCourseIndex;  //记录目录下标
                         Util.courseCatalogsInit(array);
 
@@ -1708,7 +1716,7 @@ define(function(require, exports, module) {
                             localStorage.optionIndex = Page.optionIndex;
                         }
                         ChatStroage.init();    //加载缓存会话消息
-                    
+
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -1730,7 +1738,7 @@ define(function(require, exports, module) {
                         }
                     }
                 })
-                
+
             })
         },
         addReward:function(course, courseIndex, chapter, growNum, zuanNum, this_){
@@ -1746,7 +1754,7 @@ define(function(require, exports, module) {
                     Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
                 }else{
                     // 普通的 action 按钮
-                    Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                    Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件
                 }
                 */
                 // 普通 action 按钮点击事件
@@ -1785,7 +1793,7 @@ define(function(require, exports, module) {
                             var growNum = parseInt(json.experience) - localStorage.currentExper;
                             Util.growAnimate(growNum);
                         }
-                        
+
 
                         if(localStorage.currentGrade != json.grade.current_name){
                             // 打开升级动画
@@ -1793,13 +1801,13 @@ define(function(require, exports, module) {
                                 Common.playSoun('https://static1.bcjiaoyu.com/level_up.mp3');  //播放经验音效
                                 Util.gradeAnimate();
                             }, 500);
-                            
+
                         }
 
                         // 更新个人信息
                         Util.updateInfo(json);
-                    
-                        /*    
+
+                        /*
                         // 普通 action 按钮点击事件
                         if (this_.hasClass("exercise")) {
                             // 点了习题的，提交答案的按钮
@@ -1808,12 +1816,12 @@ define(function(require, exports, module) {
                             Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
                         }else{
                             // 普通的 action 按钮
-                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件
                         }
                         */
                         // 普通 action 按钮点击事件
                         Util.actionClickEvent(this_);
-                        
+
                     },
                     error:function(xhr, textStatus){
                         if (textStatus == "timeout") {
@@ -1838,7 +1846,7 @@ define(function(require, exports, module) {
                                 Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
                             }else{
                                 // 普通的 action 按钮
-                                Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                                Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件
                             }
                             */
                             // 普通 action 按钮点击事件
@@ -1901,7 +1909,7 @@ define(function(require, exports, module) {
                         console.log(json);
 
                         Util.updateCourseProgress();   //更新课程进度
-                        
+
                         /*
                         // 普通 action 按钮点击事件
                         if (this_.hasClass("exercise")) {
@@ -1911,17 +1919,17 @@ define(function(require, exports, module) {
                             Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
                         }else{
                             // 普通的 action 按钮
-                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                            Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件
                         }
                         */
                         // 普通 action 按钮点击事件
                         Util.actionClickEvent(this_);
-                        
+
                     },
                     error:function(xhr, textStatus){
                         $(".btn-wx-auth").attr({disabledImg:false});
                         $(".loading-chat").remove();
-                        
+
                         if (textStatus == "timeout") {
                             Common.dialog("请求超时");
                             return;
@@ -2042,7 +2050,7 @@ define(function(require, exports, module) {
                 phone = Util.currentCountryCode + phone
                 // phone = encodeURI(phone)
             }
-            
+
             var url = "";
             if (this_.find(".view-tag").html() == "注册") {
                 url = "/userinfo/telephone_signup_request/"
@@ -2126,7 +2134,7 @@ define(function(require, exports, module) {
                 phone = Util.currentCountryCode + phone
                 // phone = encodeURIComponent(phone)
             }
-            
+
             Common.isLogin(function(token){
                 $.ajax({
                     type:"post",
@@ -2195,7 +2203,7 @@ define(function(require, exports, module) {
                 phone = Util.currentCountryCode + phone
                 // phone = encodeURIComponent(phone)
             }
-            
+
             Common.isLogin(function(token){
                 $.ajax({
                     type:"post",
@@ -2332,7 +2340,7 @@ define(function(require, exports, module) {
                 phone = Util.currentCountryCode + phone
                 // phone = encodeURIComponent(phone)
             }
-            
+
             Common.isLogin(function(token){
                 $.ajax({
                     type:"put",
@@ -2425,7 +2433,11 @@ define(function(require, exports, module) {
 
                     Mananger.loadMyTeam();  // 获取我的团队信息
                     Mananger.loadTeamBrand();  //获取团队排行
-                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件 
+                    // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件
+
+					window.frames[3].postMessage('loadClubs', '*'); // 通知活动页面
+					$(".right-view>img").hide();
+					$(".right-view .iframe-scroll.activity").show();
                 },
                 error:function(xhr, textStatus){
                     Common.hideLoading();
@@ -2456,7 +2468,7 @@ define(function(require, exports, module) {
                 success:function(json){
                     var html = ArtTemplate("country-option-template", json);
                     $(".country-options").html(html);
-                    
+
                     Page.clickEventLoginRelated();
                 },
                 error:function(xhr, textStatus){
@@ -2546,7 +2558,7 @@ define(function(require, exports, module) {
         waitTime:Common.getQueryString("wt")?10:1000,
         messageTime:Common.getQueryString("mt")?20:2000,
         currentCatalogIndex:0,     //当前目录的下标
-        currentCountryCode:"+86", 
+        currentCountryCode:"+86",
         storeData:function(){
             // 存储实时数据的下标，数据源， 问题中信息下标
             localStorage.data = JSON.stringify(Page.data);
@@ -2635,7 +2647,7 @@ define(function(require, exports, module) {
             $(".header .info .grade").html(json.grade.current_name);
             $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
             $(".header .zuan span").html("x"+json.diamond);
-            
+
             if(json.grade.current_all_experience != json.grade.next_all_experience){
                 var percent = (parseInt(json.experience)-parseInt(json.grade.current_all_experience))/(parseInt(json.grade.next_all_experience)-parseInt(json.grade.current_all_experience))*$(".header .info-view").width();
                 $(".header .progress img").css({
@@ -2676,7 +2688,7 @@ define(function(require, exports, module) {
                     display:'none'
                 })
             }
-            
+
         },
         courseCatalogsInit:function(response){
             if (response["catalogs"]) {
@@ -2723,13 +2735,13 @@ define(function(require, exports, module) {
                         "margin-top": ($(window).height() - 200) / 2 + "px",
                         opacity:1
                     })
-                    
+
                     $(".zuan span").html("x" + number);
 
                     $(".zuan").css({
                         transform:'scale(2)'
                     })
-                    
+
                     setTimeout(function(){
                         $(".zuan").css({
                             transform:'scale(1)'
@@ -2786,12 +2798,12 @@ define(function(require, exports, module) {
                 var cc = JSON.parse(str);
                 resolve(cc);
             })
-            
+
             return p;
         },
         courseProgressUI:function(){
             // 更新课程进度，
-            //1.有默认课程，数据的时候，加载 2.选择课程的时候加载 
+            //1.有默认课程，数据的时候，加载 2.选择课程的时候加载
             if (localStorage.currentCourse) {
                 var total = parseInt(localStorage.currentCourseTotal);
                 var studyN = parseInt(localStorage.currentCourseIndex);
@@ -2810,15 +2822,15 @@ define(function(require, exports, module) {
                                     <img src="../../statics/images/cp2.png" alt="" />\
                                 </li>'
                 }
-                
+
                 $(".courseProgressView .cp").remove();     //移除以前的所有进程
                 $(studyHtml).appendTo(".courseProgressView");
                 $(unStudyHtml).appendTo(".courseProgressView");
-                
+
                 var cp = $(".courseProgressView .cp").eq(0).height();
                 var unStudyH = cp * ($(".courseProgressView .cp").length-1);
                 var studyH = cp * ($(".courseProgressView .cp.study").length-1);
-                
+
                 $(".courseProgressView img.studyp").css({
                     height:studyH + "px"
                 })
@@ -2826,7 +2838,7 @@ define(function(require, exports, module) {
                     height:unStudyH + "px"
                 })
 
-                
+
                 $(".main-view").css({
                     "margin-left":0
                 })
@@ -2840,7 +2852,7 @@ define(function(require, exports, module) {
                     "margin-left":"2%"
                 })
                 $(".courseProgress").hide();
-                
+
                 $(".main-view .left-view .chat").css({
                     width:"calc(100%)"
                 })
@@ -2856,7 +2868,7 @@ define(function(require, exports, module) {
                 var cp = $(".courseProgressView .cp").eq(0).height();
                 var unStudyH = cp * ($(".courseProgressView .cp").length-1);
                 var studyH = cp * ($(".courseProgressView .cp.study").length-1);
-                
+
                 $(".courseProgressView img.studyp").css({
                     height:studyH + "px"
                 })
@@ -2880,7 +2892,7 @@ define(function(require, exports, module) {
                 Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
             }else{
                 // 普通的 action 按钮
-                Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件 
+                Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件
             }
         },
         openRightIframe:function(tag){
@@ -2889,21 +2901,31 @@ define(function(require, exports, module) {
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
+				$(".right-view .iframe-scroll.activity").hide();
             }else if (tag == "courseList") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").show();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
+				$(".right-view .iframe-scroll.activity").hide();
             }else if (tag == "codeEdit") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").show();
                 $(".right-view .iframe-scroll.codeCompile").hide();
+				$(".right-view .iframe-scroll.activity").hide();
             }else if (tag == "codeCompile") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").show();
+				$(".right-view .iframe-scroll.activity").hide();
+            }else if (tag == "activity") {
+                $(".right-view>img").hide();
+                $(".right-view .iframe-scroll.courseList").hide();
+                $(".right-view .iframe-scroll.codeEdit").hide();
+                $(".right-view .iframe-scroll.codeCompile").hide();
+				$(".right-view .iframe-scroll.activity").show();
             }
         },
         openLink:function(link){
