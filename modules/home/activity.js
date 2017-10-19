@@ -25,6 +25,7 @@ define(function(require, exports, module) {
             Page.clickEvent();
         },
         loadData:function(url) {
+            console.log(url);
             $.ajax({
                 type: "get",
                 url: url,
@@ -247,6 +248,7 @@ define(function(require, exports, module) {
                         $('.activity-list').css({'background-color': '#EB6A99', 'color': '#fff'});
                         $('.join-view, .push-view, .create-view, .details-view').hide();
                         $('.list-view').show();
+                        clubs_url = Common.domain + "/club/clubs/";
                         Page.loadData(clubs_url);
                         break;
                     case '1':
@@ -273,7 +275,14 @@ define(function(require, exports, module) {
             $('.search-btn').click(function() {
                 var key = $('.key-word').val();
                 if (key) {
-                    console.log('搜索',key);
+                    data_list = [];
+                    tag = '0';
+                    $('.activity-list').css({'background-color': '#EB6A99', 'color': '#fff'});
+                    $('.activity-join, .activity-push, .activity-create').css({'background-color': '#fff', 'color': '#000'});
+                    $('.join-view, .push-view, .create-view, .details-view').hide();
+                    $('.list-view').show();
+                    clubs_url = Common.domain + "/club/clubs/?name=" + key;
+                    Page.loadData(clubs_url);
                 } else {
                     Common.dialog('请输入关键字');
                 }
