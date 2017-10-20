@@ -307,7 +307,7 @@ define(function(require, exports, module) {
                 $('.pw-input').focus();
             })
 
-            $('.list-item').unbind('click').click(function() {
+            $('.item-info').unbind('click').click(function() {
                 pk = $(this).closest('li').attr('data-pk');
                 alert(pk);
             })
