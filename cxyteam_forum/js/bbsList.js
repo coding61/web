@@ -39,7 +39,6 @@ $('.jie-add1').unbind().click(function(){
 	
 });
 
-var bianliang = false;
 // 融云单聊
 var demo = angular.module("demo", ["RongWebIMWidget"]);
 demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebIMWidget, $http) {
