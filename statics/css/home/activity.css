@@ -380,3 +380,16 @@ body {
     max-height: 300px;
     overflow: auto;
 }
+.join-chat {
+    position: absolute;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #EB6A99;
+    right: 8%;
+    margin-top: -5px;
+}
