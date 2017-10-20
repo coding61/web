@@ -232,6 +232,7 @@ body {
 .password-input {
     margin-left: 15px;
     padding: 5px;
+    border: 1px solid #000;
 }
 .create-content {
     width: 85%;
@@ -244,6 +245,7 @@ body {
     margin: 0;
 }
 .content-input {
+    border: 1px solid #000;
     margin-left: 15px;
     min-width: 600px;
     min-height: 300px;
@@ -279,7 +281,7 @@ body {
     color: #EB6A99;
     border: 1px solid #EB6A99;
     text-align: center;
-    line-height: 25px;
+    line-height: 28px;
     margin: 10px 0 0 15px;
 }
 .details-title {
@@ -377,4 +379,17 @@ body {
     width: 35% !important;
     max-height: 300px;
     overflow: auto;
+}
+.join-chat {
+    position: absolute;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #EB6A99;
+    right: 8%;
+    margin-top: -5px;
 }

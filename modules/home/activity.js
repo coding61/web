@@ -20,10 +20,14 @@ define(function(require, exports, module) {
 
             Common.isLogin(function(token){
                 window.token = token ? token : localStorage.token;
+                if (token != "null") {
+                    Page.loadData(clubs_url);
+                }
             })
-            Page.loadData(clubs_url);
+
             Page.clickEvent();
         },
+        // 获取活动列表
         loadData:function(url) {
             $.ajax({
                 type: "get",
@@ -49,10 +53,11 @@ define(function(require, exports, module) {
                 }
             })
         },
+        // 获取加入的活动
         loadJoinData:function(url) {
             $.ajax({
                 type: "get",
-                url: Common.domain + "/club/myclub/?types=join",
+                url: url,
                 headers: {
                     Authorization: "Token " + token
                 },
@@ -62,6 +67,7 @@ define(function(require, exports, module) {
                     }
                     if (json.next) {
                         var parm = json.next.split('program_girl')[1];
+                        console.log(parm);
                         Page.loadJoinData(Common.domain + parm);
                     }
                     var html = template('join-template', data_list);
@@ -74,10 +80,11 @@ define(function(require, exports, module) {
                 }
             })
         },
+        // 获取发布的活动
         loadPushData:function(url) {
             $.ajax({
                 type: "get",
-                url: Common.domain + "/club/myclub/?types=create",
+                url: url,
                 headers: {
                     Authorization: "Token " + token
                 },
@@ -100,6 +107,7 @@ define(function(require, exports, module) {
                 }
             })
         },
+        // 活动详情视图
         showClubDetails:function(pk) {
             Page.loadClubDetails(pk);
             $('.list-view, .join-view, .push-view').hide();
@@ -123,6 +131,7 @@ define(function(require, exports, module) {
                 }
             })
         },
+        // 获取活动详情
         loadClubDetails:function(pk) {
             $.ajax({
                 type: "get",
@@ -148,34 +157,14 @@ define(function(require, exports, module) {
                     var html = template('member-template', arr);
                     $('.member-list').html(html);
 
-                    // 容云聊天要用的 name owner
-                    $('.member-item').unbind('click').click(function() {
-                        var member_pk = $(this).closest('li').attr('data-pk');
-                        var member_name = $(this).closest('li').attr('data-name');
-                        var member_owner = $(this).closest('li').attr('data-owner');
-                        console.log(member_name);
-                        console.log(member_owner);
-                    })
-                    if (json.isleader) {
-                        $('.details-edit').show();
-                        $('.details-edit').unbind('click').click(function() {
-                            $('.member-cut').show();
-                            $('.member-cut').unbind('click').click(function() {
-                                var member_pk = $(this).closest('li').attr('data-pk');
-                                var member_name = $(this).closest('li').attr('data-name');
-                                Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
-                                    Page.deleteMember(member_pk, pk);
-                                })
-                            })
-
-                        })
-                    }
+                    Page.detailsClickEvent(json);
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
                 }
             })
         },
+        // 踢出成员
         deleteMember:function(member_pk, club_pk) {
             $.ajax({
                 type: "get",
@@ -297,6 +286,7 @@ define(function(require, exports, module) {
                 }
             })
         },
+        // 列表模版中的点击
         templateClickEvent:function() {
             var pk;
             $('.item-join').unbind('click').click(function() {
@@ -309,9 +299,9 @@ define(function(require, exports, module) {
 
             $('.item-info').unbind('click').click(function() {
                 pk = $(this).closest('li').attr('data-pk');
-                title = $(this).closest('li').attr('data-title');
-
-                alert(title);
+                var title = $(this).closest('li').attr('data-title');
+                console.log(pk);
+                console.log(title);
             })
 
             $('.pw-confirm').unbind('click').click(function() {
@@ -333,6 +323,33 @@ define(function(require, exports, module) {
                 pk = $(this).closest('li').attr('data-pk');
                 Page.showClubDetails(pk);
             })
+        },
+        // 活动详情中的点击
+        detailsClickEvent:function(json) {
+            $('.join-chat').unbind('click').click(function() {
+                console.log(json.pk);
+                console.log(json.name);
+            })
+            $('.member-item').unbind('click').click(function() {
+                var member_pk = $(this).closest('li').attr('data-pk');
+                var member_name = $(this).closest('li').attr('data-name');
+                var member_owner = $(this).closest('li').attr('data-owner');
+                console.log(member_pk);
+                console.log(member_name);
+            })
+            if (json.isleader) {
+                $('.details-edit').show();
+                $('.details-edit').unbind('click').click(function() {
+                    $('.member-cut').show();
+                    $('.member-cut').unbind('click').click(function() {
+                        var member_pk = $(this).closest('li').attr('data-pk');
+                        var member_name = $(this).closest('li').attr('data-name');
+                        Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
+                            Page.deleteMember(member_pk, json.pk);
+                        })
+                    })
+                })
+            }
         },
         // 异常处理
         exceptionHandling:function(xhr, textStatus) {
