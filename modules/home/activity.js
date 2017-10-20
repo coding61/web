@@ -327,8 +327,10 @@ define(function(require, exports, module) {
         // 活动详情中的点击
         detailsClickEvent:function(json) {
             $('.join-chat').unbind('click').click(function() {
-                console.log(json.pk);
-                console.log(json.name);
+                $('.join-chat').attr({
+                    "name": json.name,
+                    "pk": json.pk
+                });
             })
             $('.member-item').unbind('click').click(function() {
                 var member_pk = $(this).closest('li').attr('data-pk');
