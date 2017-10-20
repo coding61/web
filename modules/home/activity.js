@@ -309,7 +309,9 @@ define(function(require, exports, module) {
 
             $('.item-info').unbind('click').click(function() {
                 pk = $(this).closest('li').attr('data-pk');
-                alert(pk);
+                title = $(this).closest('li').attr('data-title');
+
+                alert(title);
             })
 
             $('.pw-confirm').unbind('click').click(function() {
