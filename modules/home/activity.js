@@ -57,7 +57,7 @@ define(function(require, exports, module) {
         loadJoinData:function(url) {
             $.ajax({
                 type: "get",
-                url: Common.domain + "/club/myclub/?types=join",
+                url: url,
                 headers: {
                     Authorization: "Token " + token
                 },
@@ -67,6 +67,7 @@ define(function(require, exports, module) {
                     }
                     if (json.next) {
                         var parm = json.next.split('program_girl')[1];
+                        console.log(parm);
                         Page.loadJoinData(Common.domain + parm);
                     }
                     var html = template('join-template', data_list);
@@ -83,7 +84,7 @@ define(function(require, exports, module) {
         loadPushData:function(url) {
             $.ajax({
                 type: "get",
-                url: Common.domain + "/club/myclub/?types=create",
+                url: url,
                 headers: {
                     Authorization: "Token " + token
                 },
