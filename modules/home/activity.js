@@ -149,13 +149,13 @@ define(function(require, exports, module) {
                     $('.member-list').html(html);
 
                     // 容云聊天要用的 name owner
-                    // $('.member-item').unbind('click').click(function() {
-                    //     var member_pk = $(this).closest('li').attr('data-pk');
-                    //     var member_name = $(this).closest('li').attr('data-name');
-                    //     var member_owner = $(this).closest('li').attr('data-owner');
-                    //     console.log(member_name);
-                    //     console.log(member_owner);
-                    // })
+                    $('.member-item').unbind('click').click(function() {
+                        var member_pk = $(this).closest('li').attr('data-pk');
+                        var member_name = $(this).closest('li').attr('data-name');
+                        var member_owner = $(this).closest('li').attr('data-owner');
+                        console.log(member_name);
+                        console.log(member_owner);
+                    })
                     if (json.isleader) {
                         $('.details-edit').show();
                         $('.details-edit').unbind('click').click(function() {
@@ -307,12 +307,12 @@ define(function(require, exports, module) {
                 $('.pw-input').focus();
             })
 
-            // $('.item-info').unbind('click').click(function() {
-            //     pk = $(this).closest('li').attr('data-pk');
-            //     title = $(this).closest('li').attr('data-title');
+            $('.item-info').unbind('click').click(function() {
+                pk = $(this).closest('li').attr('data-pk');
+                title = $(this).closest('li').attr('data-title');
 
-            //     alert(title);
-            // })
+                alert(title);
+            })
 
             $('.pw-confirm').unbind('click').click(function() {
                 var pw = $(this).prev().val();
@@ -350,5 +350,4 @@ define(function(require, exports, module) {
         },
     };
     Page.init();
-
 });
