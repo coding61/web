@@ -42,33 +42,7 @@ define(function(require, exports, module) {
                     var html = template('list-template', data_list);
                     $('.list-view').html(html);
 
-                    var pk;
-                    $('.item-join').unbind('click').click(function() {
-                        $('.verify').hide();
-                        pk = $(this).closest('li').attr('data-pk');
-                        $(this).parent().parent().next().show();
-                        $('.pw-input').val('');
-                        $('.pw-input').focus();
-                    })
-
-                    $('.pw-confirm').unbind('click').click(function() {
-                        var pw = $(this).prev().val();
-                        if (pw) {
-                            Page.confirm(pk, pw);
-                            $('.verify').hide();
-                        } else {
-                            Common.dialog('请输入密码');
-                        }
-                    })
-
-                    $('.verify').unbind('click').click(function() {
-                        $('.verify').hide();
-                    })
-
-                    $('.item-more').unbind('click').click(function() {
-                        pk = $(this).closest('li').attr('data-pk');
-                        Page.showClubDetails(pk);
-                    })
+                    Page.templateClickEvent();
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
@@ -93,10 +67,7 @@ define(function(require, exports, module) {
                     var html = template('join-template', data_list);
                     $('.join-view').html(html);
 
-                    $('.item-more').unbind('click').click(function() {
-                        var pk = $(this).closest('li').attr('data-pk');
-                        Page.showClubDetails(pk);
-                    })
+                    Page.templateClickEvent();
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
@@ -122,10 +93,7 @@ define(function(require, exports, module) {
                     var html = template('push-template', data_list);
                     $('.push-view').html(html);
 
-                    $('.item-more').unbind('click').click(function() {
-                        var pk = $(this).closest('li').attr('data-pk');
-                        Page.showClubDetails(pk);
-                    })
+                    Page.templateClickEvent();
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
@@ -327,6 +295,41 @@ define(function(require, exports, module) {
                 } else {
                     Page.createClub(title, content, password);
                 }
+            })
+        },
+        templateClickEvent:function() {
+            var pk;
+            $('.item-join').unbind('click').click(function() {
+                $('.verify').hide();
+                pk = $(this).closest('li').attr('data-pk');
+                $(this).parent().parent().next().show();
+                $('.pw-input').val('');
+                $('.pw-input').focus();
+            })
+
+            $('.item-info').unbind('click').click(function() {
+                pk = $(this).closest('li').attr('data-pk');
+                alert(pk);
+            })
+
+            $('.pw-confirm').unbind('click').click(function() {
+                var pw = $(this).prev().val();
+                if (pw) {
+                    Page.confirm(pk, pw);
+                    $('.verify').hide();
+                } else {
+                    Common.dialog('请输入密码');
+                }
+            })
+
+            $('.verify').unbind('click').click(function() {
+                $('.verify').hide();
+            })
+
+            $('.item-more').unbind('click').click(function() {
+                event.stopPropagation();
+                pk = $(this).closest('li').attr('data-pk');
+                Page.showClubDetails(pk);
             })
         },
         // 异常处理
