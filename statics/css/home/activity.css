@@ -3,48 +3,37 @@ body {
     background-color: #E3E7E8;
 }
 .header-view {
+    width: 100%;
     min-width: 800px;
     height: 45px;
     margin: 22px 45px 30px 45px;
     display: flex;
 }
 .column-view {
+    width: 60%;
     min-width: 520px;
     height: 100%;
     display: flex;
 }
-.column-view .activity-list {
+.column-view .activity-list,
+.column-view .activity-join,
+.column-view .activity-push,
+.column-view .activity-create {
+    cursor:pointer;
+    width: calc(15% - 1px);
     min-width: 130px;
     height: 100%;
+    margin-left: 1px;
+    background-color: #FEFFFF;
     text-align: center;
-    background-color: #EB6A99;
     line-height: 45px;
+}
+.column-view .activity-list {
+    background-color: #EB6A99;
     border-radius: 5px 0 0 5px;
     color: #fff;
 }
-.column-view .activity-join {
-    min-width: 130px;
-    height: 100%;
-    margin-left: 1px;
-    background-color: #FEFFFF;
-    text-align: center;
-    line-height: 45px;
-}
-.column-view .activity-push {
-    min-width: 130px;
-    height: 100%;
-    margin-left: 1px;
-    background-color: #FEFFFF;
-    text-align: center;
-    line-height: 45px;
-}
 .column-view .activity-create {
-    min-width: 130px;
-    height: 100%;
-    margin-left: 1px;
-    background-color: #FEFFFF;
-    text-align: center;
-    line-height: 45px;
     border-radius: 0 5px 5px 0;
 }
 .search-view {
@@ -65,6 +54,7 @@ body {
     outline:medium;
 }
 .search-view .search-btn {
+    cursor:pointer;
     min-width: 60px;
     height: 100%;
     background-color: #CDCECF;
@@ -72,7 +62,9 @@ body {
     line-height: 45px;
     border-radius: 0 5px 5px 0;
 }
-.list-view {
+.list-view,
+.join-view,
+.push-view {
     width: 100%;
     min-width: 850px;
     flex-wrap: wrap;
@@ -96,11 +88,11 @@ body {
 }
 .verify {
     position: absolute;
-    width: 45%;
+    /*width: 45%;*/
     min-width: 380px;
-    min-height: 229px;
+    min-height: 231px;
     float: left;
-    margin: 0 0 40px 45px;
+    /*margin: 0 0 40px 45px;*/
     background-color: rgba(0, 0, 0, 0.6);
     /*filter: alpha(Opacity=60);
     -moz-opacity:0.6;
@@ -126,12 +118,14 @@ body {
     margin-top: 50px;
 }
 .pw-confirm {
+    cursor: pointer;
     border-top: 1px solid gray;
     margin-top: 40px;
     text-align: center;
     line-height: 40px;
 }
 .item-info {
+    cursor:pointer;
     padding: 10px;
     width: 45%;
     min-width: 380px;
@@ -158,6 +152,7 @@ body {
     overflow: hidden;
 }
 .item-more {
+    cursor:pointer;
     line-height: 40px;
     /*margin-right: 15px;*/
     margin-left: 77%;
@@ -168,7 +163,7 @@ body {
     min-width: 380px;
     display: flex;
     align-items: center;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 20px 10px 10px;
     border-top: 1px solid #E3E7E8;
 }
 .item-head {
@@ -177,7 +172,8 @@ body {
     border-radius: 15px;
 }
 .item-name {
-    width: 60px;
+    width: calc(40% - 40px);
+    min-width: 60px;
     margin-left: 5px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -185,11 +181,14 @@ body {
     overflow: hidden;
 }
 .item-num {
-    width: 140px;
+    width: 30%;
+    min-width: 100px;
     margin-left: 5px;
 }
 .item-join {
-    width: 99px;
+    cursor:pointer;
+    width: 30%;
+    min-width: 100px;
     height: 30px;
     color: #EB6A99;
     border: 1px solid #EB6A99;
@@ -199,23 +198,14 @@ body {
     background-color: #fff;
 }
 .item-joined {
-    width: 99px;
-    height: 30px;
+    cursor:pointer;
+    width: 30%;
+    min-width: 100px;
     color: #fff;
     border-radius: 5px;
     text-align: center;
     line-height: 30px;
     background-color: #EB6A99;
-}
-.join-view {
-    min-width: 800px;
-    flex-wrap: wrap;
-    display: flex;
-}
-.push-view {
-    min-width: 800px;
-    flex-wrap: wrap;
-    display: flex;
 }
 .create-view {
     min-width: 800px;
@@ -243,6 +233,7 @@ body {
     padding: 5px;
 }
 .create-content {
+    width: 85%;
     min-width: 700px;
     margin: 20px 45px;
     display: flex;
@@ -258,7 +249,8 @@ body {
     padding: 5px;
 }
 .create-btn {
-    width: 99px;
+    cursor: pointer;
+    width: 100px;
     height: 30px;
     color: #fff;
     border-radius: 5px;
@@ -268,6 +260,7 @@ body {
     margin: 20px 90px;
 }
 .details-view {
+    width: 90%;
     min-width: 800px;
     min-height: 500px;
     background: #fff;
@@ -276,15 +269,16 @@ body {
     display: none;
 }
 .details-back {
+    cursor:pointer;
     position: absolute;
     width: 30px;
     height: 30px;
-    font-size: 20px;
+    font-size: 25px;
     border-radius: 20px;
     color: #EB6A99;
     border: 1px solid #EB6A99;
     text-align: center;
-    line-height: 30px;
+    line-height: 25px;
     margin: 10px 0 0 15px;
 }
 .details-title {
@@ -299,17 +293,19 @@ body {
     overflow: hidden;
 }
 .details-edit {
+    cursor:pointer;
     float: right;
     margin: -45px 45px;
     display: none;
 }
 .details-content {
+    width: 90%;
     min-height: 200px;
     font-size: 16px;
     line-height: 32px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
+    /*-webkit-line-clamp: 6;*/
     overflow: hidden;
     margin: 0px 45px;
 }
@@ -324,6 +320,7 @@ body {
     margin-left: 40px;
 }
 .member-list {
+    width: 90%;
     min-width: 710px;
     flex-wrap: wrap;
     display: flex;
@@ -331,6 +328,7 @@ body {
     padding-bottom: 10px;
 }
 .member-head {
+    cursor:pointer;
     width: 30px;
     height: 30px;
     border-radius: 15px;
@@ -345,6 +343,7 @@ body {
     text-align: center;
 }
 .member-cut {
+    cursor:pointer;
     position: relative;
     margin-top: -60px;
     margin-left: 30px;
@@ -352,10 +351,11 @@ body {
     height: 15px;
     border-radius: 7.5px;
     text-align: center;
-    line-height: 15px;
+    line-height: 13px;
     background: red;
     display: none;
     color: #fff;
+    font-size: 13px;
 }
 .title-icon {
     height: 15px;
