@@ -307,12 +307,12 @@ define(function(require, exports, module) {
                 $('.pw-input').focus();
             })
 
-            $('.item-info').unbind('click').click(function() {
-                pk = $(this).closest('li').attr('data-pk');
-                title = $(this).closest('li').attr('data-title');
+            // $('.item-info').unbind('click').click(function() {
+            //     pk = $(this).closest('li').attr('data-pk');
+            //     title = $(this).closest('li').attr('data-title');
 
-                alert(title);
-            })
+            //     alert(title);
+            // })
 
             $('.pw-confirm').unbind('click').click(function() {
                 var pw = $(this).prev().val();

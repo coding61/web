@@ -145,66 +145,60 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
                             });
                         }
                     })
-                    // $('.item-info').unbind('click').click(function() {
-                    //     pk = $(this).closest('li').attr('data-pk');
-                    //     alert(pk);
-                    // })
+                    
                     // 活动页点击活动进行群聊
-                    // $('body').on("click",'.item-info',function() {
-                    //     var name = $(this).closest('li').attr('data-name');
-                    //     var targetId = $(this).closest('li').attr('data-owner');
-                    //     console.log(name);
-                    //     console.log(targetId);
-                    //     if (targetId == id) { //聊天对象是自己 不作处理
-                    //     } else {
-                    //         // 设置当前会话
-                    //         WebIMWidget.setConversation($scope.targetType,targetId,name);
-                    //         //呈现会话面板
-                    //         WebIMWidget.show();
-                    //         // 设置会话列表中的用户信息及会话窗口中他人用户信息
-                    //         WebIMWidget.setUserInfoProvider(function(targetId,obj){
-                    //             var localTalkList = {"userlist":[]};
-                    //             if (localStorage.localTalkList) {
-                    //                 localTalkList = JSON.parse(localStorage.localTalkList);
-                    //                 var user;
-                    //                 if (localTalkList && localTalkList.userlist.length > 0) {
-                    //                     localTalkList.userlist.forEach(function(item){
-                    //                         if(item.id==targetId){
-                    //                             user=item;
-                    //                         }
-                    //                     })
-                    //                 }
-                    //                 if(user){
-                    //                     // 拿本地会话列表遍历，如果列表不为空，如果targetId等于列表中item的id，则设置成item的信息，否则根据id获取用户信息，然后将用户信息添加到本地会话列表
-                    //                     console.log(targetId);
-                    //                     obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
-                    //                 }else{
-                    //                     // 根据id获取用户信息
-                    //                     $http({
-                    //                         url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-                    //                     }).success(function(rep){
-                    //                         obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
-                    //                         localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
-                    //                         localStorage.localTalkList = JSON.stringify(localTalkList);
-                    //                     }).error(function(err){
+                    $('body').on("click",'.item-info',function() {
+                        var pk = $(this).closest('li').attr('data-pk');
+                        var title = $(this).closest('li').attr('data-title');
+                        console.log(pk);
+                        console.log(title);
+                        // 设置当前会话
+                        WebIMWidget.setConversation($scope.targetType,targetId,name);
+                        //呈现会话面板
+                        WebIMWidget.show();
+                        // 设置会话列表中的用户信息及会话窗口中他人用户信息
+                        WebIMWidget.setUserInfoProvider(function(targetId,obj){
+                            var localTalkList = {"userlist":[]};
+                            if (localStorage.localTalkList) {
+                                localTalkList = JSON.parse(localStorage.localTalkList);
+                                var user;
+                                if (localTalkList && localTalkList.userlist.length > 0) {
+                                    localTalkList.userlist.forEach(function(item){
+                                        if(item.id==targetId){
+                                            user=item;
+                                        }
+                                    })
+                                }
+                                if(user){
+                                    // 拿本地会话列表遍历，如果列表不为空，如果targetId等于列表中item的id，则设置成item的信息，否则根据id获取用户信息，然后将用户信息添加到本地会话列表
+                                    console.log(targetId);
+                                    obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
+                                }else{
+                                    // 根据id获取用户信息
+                                    $http({
+                                        url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                                    }).success(function(rep){
+                                        obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
+                                        localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
+                                        localStorage.localTalkList = JSON.stringify(localTalkList);
+                                    }).error(function(err){
 
-                    //                     })
-                    //                 }
-                    //             } else {
-                    //                 // 根据id获取用户信息
-                    //                 $http({
-                    //                     url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-                    //                 }).success(function(rep){
-                    //                     obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
-                    //                     localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
-                    //                     localStorage.localTalkList = JSON.stringify(localTalkList);
-                    //                 }).error(function(err){
+                                    })
+                                }
+                            } else {
+                                // 根据id获取用户信息
+                                $http({
+                                    url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                                }).success(function(rep){
+                                    obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
+                                    localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
+                                    localStorage.localTalkList = JSON.stringify(localTalkList);
+                                }).error(function(err){
 
-                    //                 })                                      
-                    //             }
-                    //         });
-                    //     }
-                    // })
+                                })                                      
+                            }
+                        });
+                    })
                     
                     // 用户信息设置,设置自己的信息
                     WebIMWidget.setUserInfoProvider(function(targetId,obj){
