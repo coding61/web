@@ -1030,7 +1030,7 @@ define(function(require, exports, module) {
 
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
-                window.open("../../cxyteam_forum/bbs.html");
+                window.open("../../cxyteam_forum/bbsList.html");
             })
             // 作品中心
             $(".header .works").unbind('click').click(function(){

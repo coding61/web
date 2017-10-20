@@ -54,9 +54,11 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	}else{
 	}
 })
-myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
-	getPostByType(sessionStorage.typeId,null,sessionStorage.page,sessionStorage.searchPostContent,sessionStorage.myPost,null);
-});
+// myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
+// 	getPostByType(sessionStorage.typeId,null,sessionStorage.page,sessionStorage.searchPostContent,sessionStorage.myPost,null);
+// });
+
+getPostByType(null,null,sessionStorage.page,sessionStorage.searchPostContent,sessionStorage.myPost,null);
 
 function getQueryString(name) { 
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
@@ -150,7 +152,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 						if(v.isessence){
 							html+='<span class="fly-tip-jing">精帖</span> '
 						}          
-					    html +='</h2><p>'
+					    html +='</h2><h5>所属专区：'+v.section.name+'</h5><p>'
 					    if (v.content) {
 					    	html+='<span class="v_content">'+v.content+'</span>'
 					    }
@@ -236,30 +238,6 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 			})
 	
 }
-// 点击消息
-$(document).on("click", ".messageTitle", function() {
-	var messagePk = $(this).attr("message-pk");
-	$.ajax({
-		url: basePath+"/message/messages/"+messagePk+"/",
-		type: "get",
-		headers:{
-			Authorization: 'Token ' + localStorage.token
-		},
-		success: function(result){
-			console.log(result);
-			if (result) {
-				var p = result.url.split("cxyteam_forum/")[1];
-				window.location.href = p;
-			}
-		},
-		error: function(XMLHttpRequest){
-			console.log(XMLHttpRequest);
-			if (XMLHttpRequest.status == 403) {
-				layer.msg('该帖子已删除');
-			}
-		}
-	})
-})
 
 // 搜索
 $('.fly-tab .searchTiezi').click(function() {
@@ -282,19 +260,7 @@ $('.fly-tab .searchTiezi').click(function() {
 		getPostByType(-1,null,sessionStorage.page,searchContent);
 	}
 })
-// 我的帖子
-// $('.myTie').click(function() {
 
-// 	$('.fly-tab .searchinput').val('');
-// 	sessionStorage.removeItem("searchPostContent");
-// 	sessionStorage.removeItem("postStatus");
-// 	sessionStorage.page = 1;
-// 	sessionStorage.myPost = true;
-// 	$(".fly-tab-span a").each(function() {
-// 		$(this).removeClass("tab-this");
-// 	});
-// 	getPostByType(-1,null,sessionStorage.page,null,sessionStorage.myPost);
-// })
 // 我的下拉菜单选择
 function mySelectHadChange(mySelect) {
 	if (mySelect == 'myTie') {
@@ -341,60 +307,7 @@ function mySelectHadChange(mySelect) {
 		window.location.href = "message.html";
 	} 
 }
-// 获取我的收藏
-// function getMyCollect() {
-// 	myAjax(basePath+"/collect/collections/","get",null,function(result){
-// 		$("#bbsUl").empty();
-// 		var html="";
-// 		if(result.count>10){
-// 			$("#pagination").show();
-// 			$("#PageCount").val(result.count);
-// 			// if(page<=1){
-// 				loadpage();
-// 			// }
-// 		}else{
-// 			$("#pagination").hide();
-// 		}
-// 		if(result.results.length==0){
-// 			html='<p style="text-align:center;line-height:500px;color:#999;font-size:18px;letter-spacing:1px;">无收藏帖子</p>';
-// 		}
-// 		$.each(result.results,function(i,v){
-// 			// 替换'<'和'>'
-// 			v.posts.content = v.posts.content.replace(/</g,'&lt;');
-// 			v.posts.content = v.posts.content.replace(/>/g,'&gt;');
-// 			v.posts.title = v.posts.title.replace(/>/g,'&gt;');
-// 			v.posts.title = v.posts.title.replace(/</g,'&lt;');
-// 			var name='';
-// 			if(v.posts.userinfo.name){
-// 				name=v.posts.userinfo.name;
-// 			}else{
-// 				name=v.posts.userinfo.owner;
-// 			}
-// 			html+='<li class="fly-list-li">'
-// 				+'<img src="'+dealWithAvatar(v.posts.userinfo.avatar)+'">'
-// 				+'<span class="grade">'+v.posts.userinfo.grade.current_name+'</span>'
-// 				+'<h2 class="fly-tip">'          
-// 				+'<a href="detail.html?id='+v.posts.pk+'&pk='+getQueryString("id")+'">'+v.posts.title+'</a>'         
-// 				if(v.posts.istop){
-// 					html+='<span class="fly-tip-stick">置顶</span>'
-// 				}
-// 				if(v.posts.isessence){
-// 					html+='<span class="fly-tip-jing">精帖</span> '
-// 				}          
-// 			    html +='</h2><p>'
-// 			    +'<span class="v_content">'+v.posts.content+'</span>'
-// 				+'<span>'+name+'</span>'
-// 				+'<span class="liveTime"  title="'+dealWithTime(v.posts.create_time)+'">'+dealWithTime(v.posts.create_time)+'</span>'
-				
-// 				+'<span class="fly-list-hint">'             
-// 				+'<i class="iconfont" title="回帖+回复"></i>'+(v.posts.reply_count)          
-// 				+'<i class="iconfont" title="人气"></i>'+v.posts.browse_count        
-// 				+'</span></p></li>';
-// 		})
-// 		$("#bbsUl").append(html);
-// 		liveTimeAgo();
-// 	})
-// }
+
 // 返回论坛
 $('.jie-add').click(function() {
 	sessionStorage.removeItem("searchPostContent");
@@ -421,9 +334,9 @@ function initTypes(){
 	// 		$(".fly-tab-span").append('<a href="javascript:void(0);" data-pk="'+v.pk+'">'+v.name+'</a>');
 	// 	});
 		// 已解决状态
-		$(".fly-tab-span").append('<a class="solved">已解决</a>');
+		// $(".fly-tab-span").append('<a class="solved">已解决</a>');
 		// 未解决状态
-		$(".fly-tab-span").append('<a class="unsolved">未解决</a>');
+		// $(".fly-tab-span").append('<a class="unsolved">未解决</a>');
 	// },false);
 	
 	$(".fly-tab-span a").each(function() {
@@ -454,20 +367,22 @@ $('.fly-tab-span a').unbind().click(function(){
 		getPostByType(-1,null,sessionStorage.page);
 		pageId=-1;
 		sessionStorage.typeId = -1;
-	}else if($(this).attr('data-pk')==0){
-		sessionStorage.typeId = 0;
-		sessionStorage.removeItem("postStatus");
-		getPostByType(0,true,sessionStorage.page);
-		pageId=0;
-	}else if ($(this).attr('class') == 'solved') {
-		sessionStorage.postStatus = 'solved';
-		sessionStorage.removeItem("typeId");
-		getPostByType(null,null,sessionStorage.page,null,null,'solved');
-	}else if ($(this).attr('class') == 'unsolved') {
-		sessionStorage.postStatus = 'unsolved';
-		sessionStorage.removeItem("typeId");
-		getPostByType(null,null,sessionStorage.page,null,null,'unsolved');
-	}else{
+	}
+	// else if($(this).attr('data-pk')==0){
+	// 	sessionStorage.typeId = 0;
+	// 	sessionStorage.removeItem("postStatus");
+	// 	getPostByType(0,true,sessionStorage.page);
+	// 	pageId=0;
+	// }else if ($(this).attr('class') == 'solved') {
+	// 	sessionStorage.postStatus = 'solved';
+	// 	sessionStorage.removeItem("typeId");
+	// 	getPostByType(null,null,sessionStorage.page,null,null,'solved');
+	// }else if ($(this).attr('class') == 'unsolved') {
+	// 	sessionStorage.postStatus = 'unsolved';
+	// 	sessionStorage.removeItem("typeId");
+	// 	getPostByType(null,null,sessionStorage.page,null,null,'unsolved');
+	// }
+	else{
 		getPostByType($(this).attr('data-pk'),null,sessionStorage.page,sessionStorage.searchPostContent);
 		pageId=$(this).attr('data-pk');
 	} 

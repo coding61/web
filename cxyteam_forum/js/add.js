@@ -20,6 +20,7 @@ $('.logo1').click(function() {
 $('.logo2').click(function() {
 	window.open("https://www.cxy61.com");
 })
+// 返回论坛
 $('.jie-add1').click(function() {
 	sessionStorage.removeItem("myPost");
 	sessionStorage.removeItem("typeId");
@@ -27,7 +28,8 @@ $('.jie-add1').click(function() {
 	sessionStorage.removeItem("myCollect");
 	sessionStorage.removeItem("myMessage");
 	sessionStorage.removeItem("searchPostContent");
-	window.location.href="bbs.html";
+	// window.location.href="bbs.html";
+	window.location.href="bbsList.html";
 })
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
@@ -44,10 +46,10 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 })
 
 //获取当前社区
-var zoneName='';
-myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
-	zoneName=result.name;
-});
+// var zoneName='';
+// myAjax(basePath+"/forum/sections/"+zonePk+"/","GET",null,function(result) {
+// 	zoneName=result.name;
+// });
 //$(".zone_content").html('<option value="'+zonePk+'" class="layui-this">'+zoneName+'</option>');
 $(function() {
 	$(".publish").click(function() {
