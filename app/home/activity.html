@@ -12,9 +12,9 @@
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.7" />
 		<link type="text/css" rel="stylesheet" href="../../statics/css/home/activity.css?v=2.7" />
 
-        <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/jquery-rebox-0.1.0.css"/>
+        <!-- <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/jquery-rebox-0.1.0.css"/>
         <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/RongIMWidget.css"/>
-        <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/main.css"/>
+        <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/main.css"/> -->
 	</head>
 
 	<body>
@@ -157,32 +157,159 @@
     		</script>
         </div>
         <!-- 融云 -->
-        <div ng-app="demo" id="demo">
+        <!-- <div ng-app="demo" id="demo">
             <div  ng-controller="main" id="main-customer">
                 <rong-widget id="rong-abcdefg"></rong-widget>
+            </div>
+        </div> -->
+        <div class="rongBtn">
+            <span>最近联系人</span>
+            <div class="arrow"></div>
+        </div>
+        <div class="rongWai">
+            <div class="left">
+                <div class="leftTitle">
+                    <span>最近联系人</span>
+                    <div class="arrow"></div>
+                </div>
+                <!-- 联系人列表 -->
+                <div class="contactList">
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户1</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户2</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户3</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户1</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户2</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户3</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户1</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户2</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户3</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户1</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户2</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户3</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户1</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户2</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户3</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户1</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户2</span>
+                    </div>
+                    <div class="contactOne">
+                        <img src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0" style="width: 30px;height: 30px;border-radius: 30px">
+                        <span>用户3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="contacter">用户2</div>
+                <!-- 消息框 -->
+                <div class="message">
+                    <div class="messageLeft">
+                        <div class="time">15:06</div>
+                        <div class="messageItem">
+                            <img class="chatHeaderLeft" src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0">
+                            <span>用户1</span>
+                        </div>
+                        <div class="messageLeftContent">消息1</div>
+                    </div>
+                    <div class="messageRight">
+                        <div class="time">15:06</div>
+                        <div class="messageRightItem">
+                            <span>消息2</span>
+                            <img class="chatHeaderRight" src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0">
+                        </div>
+                    </div>
+                    <div class="messageLeft">
+                        <div class="time">15:06</div>
+                        <div class="messageItem">
+                            <img class="chatHeaderLeft" src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0">
+                            <span>用户1</span>
+                        </div>
+                        <div class="messageLeftContent">消息1</div>
+                    </div>
+                    <div class="messageRight">
+                        <div class="time">15:06</div>
+                        <div class="messageRightItem">
+                            <span>消息2</span>
+                            <img class="chatHeaderRight" src="http://wx.qlogo.cn/mmopen/Miayzv8oDnvAkFvJ5EyYKh6iaG4uXEIkna1YduZ48Ok66SU5ewJkK5gzqkdMJDHicGE8VJ1Qf8pcibAXPjtZUlRotxcSrEEszUbY/0">
+                        </div>
+                    </div>
+                </div>
+                <div class="sendMessage">
+                    <textarea class="textarea" placeholder="请输入"></textarea>
+                    <div class="send">发送</div>
+                </div>
             </div>
         </div>
 	</body>
 
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 
-    <script src="../../cxyteam_forum/res/angular-1.4.8.js"></script>
+    <!-- <script src="../../cxyteam_forum/res/angular-1.4.8.js"></script> -->
     <!-- 融云IMLib -->
     <script src="//cdn.ronghub.com/RongIMLib-2.2.5.min.js"></script>
     <script src="//cdn.ronghub.com/RongEmoji-2.2.5.min.js"></script>
-    <script src="//cdn.ronghub.com/Libamr-2.2.5.min.js"></script>
-    <script src="//cdn.ronghub.com/RongIMVoice-2.2.5.min.js"></script>
+    <!-- <script src="//cdn.ronghub.com/Libamr-2.2.5.min.js"></script>
+    <script src="//cdn.ronghub.com/RongIMVoice-2.2.5.min.js"></script> -->
 
     <!-- 上传插件 -->
-    <script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/plupload.full.min.js"></script>
-    <script type="text/javascript" src="../../cxyteam_forum/js/qiniu/src/qiniu.js"></script>
+    <!-- <script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/plupload.full.min.js"></script>
+    <script type="text/javascript" src="../../cxyteam_forum/js/qiniu/src/qiniu.js"></script> -->
 
     <!-- 增强体验插件 -->
-    <script src="../../cxyteam_forum/res/jquery-rebox-0.1.0.js"></script>
+    <!-- <script src="../../cxyteam_forum/res/jquery-rebox-0.1.0.js"></script> -->
 
     <!-- IM插件 -->
-    <script src="../../cxyteam_forum/res/RongIMWidget.js"></script>
-    <script src="../../cxyteam_forum/res/common.js"></script>
+    <!-- <script src="../../cxyteam_forum/res/RongIMWidget.js"></script>
+    <script src="../../cxyteam_forum/res/common.js"></script> -->
 
     <script type="text/javascript" src="../../libs/template.js"></script>
     <script type="text/javascript" src="../../libs/jqPaginator.min.js"></script>
@@ -203,5 +330,5 @@
 			// 加载入口模块
 		seajs.use("home/activity.js");
 	</script>
-    <script src="../../cxyteam_forum/js/RongYun.js"></script>
+    <!-- <script src="../../cxyteam_forum/js/RongYun2.js"></script> -->
 </html>
