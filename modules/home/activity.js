@@ -332,13 +332,13 @@ define(function(require, exports, module) {
                     "pk": json.pk
                 });
             // })
-            $('.member-item').unbind('click').click(function() {
-                var member_pk = $(this).closest('li').attr('data-pk');
-                var member_name = $(this).closest('li').attr('data-name');
-                var member_owner = $(this).closest('li').attr('data-owner');
-                console.log(member_pk);
-                console.log(member_name);
-            })
+            // $('.member-item').unbind('click').click(function() {
+            //     var member_pk = $(this).closest('li').attr('data-pk');
+            //     var member_name = $(this).closest('li').attr('data-name');
+            //     var member_owner = $(this).closest('li').attr('data-owner');
+            //     console.log(member_pk);
+            //     console.log(member_name);
+            // })
             if (json.isleader) {
                 $('.details-edit').show();
                 $('.details-edit').unbind('click').click(function() {
@@ -394,6 +394,12 @@ define(function(require, exports, module) {
                     userId = userInfo.userId;
                     alert("链接成功；userid=" + userInfo.userId);
                     // document.titie = ("链接成功；userid=" + userInfo.userId);
+                    $('.member-item').unbind('click').click(function() {
+                        var member_name = $(this).closest('li').attr('data-name');
+                        var member_owner = $(this).closest('li').attr('data-owner');
+                        var conversationtype = RongIMLib.ConversationType.PRIVATE;
+                        
+                    })
                 },
                 receiveNewMessage : function(message){
                     console.log(message);
