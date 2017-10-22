@@ -370,7 +370,7 @@ define(function(require, exports, module) {
     };
     Page.init();
 
-    startInit();
+    // startInit();
     function startInit() {
         $.ajax({
             url: Common.domain + "/im/user_get_token/",

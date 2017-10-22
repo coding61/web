@@ -408,7 +408,7 @@ body {
     align-items: center;
     cursor: pointer;
     color: white;
-    /*display: none;*/
+    display: none;
 }
 .rongBtn .arrow {
     background: url(../../../cxyteam_forum/images/icon.png) 0 0/50px auto no-repeat;
