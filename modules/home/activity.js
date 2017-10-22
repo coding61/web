@@ -394,12 +394,7 @@ define(function(require, exports, module) {
                     userId = userInfo.userId;
                     alert("链接成功；userid=" + userInfo.userId);
                     // document.titie = ("链接成功；userid=" + userInfo.userId);
-                    $('.member-item').unbind('click').click(function() {
-                        var member_name = $(this).closest('li').attr('data-name');
-                        var member_owner = $(this).closest('li').attr('data-owner');
-                        var conversationtype = RongIMLib.ConversationType.PRIVATE;
-                        
-                    })
+                    
                 },
                 receiveNewMessage : function(message){
                     console.log(message);
@@ -506,6 +501,12 @@ define(function(require, exports, module) {
             onSuccess: function(userId) {
                 callbacks.getCurrentUser && callbacks.getCurrentUser({userId:userId});
                 console.log("链接成功，用户id：" + userId);
+                $('.member-item').click(function() {
+                        var member_name = $(this).closest('li').attr('data-name');
+                        var member_owner = $(this).closest('li').attr('data-owner');
+                        var conversationtype = RongIMLib.ConversationType.PRIVATE;
+                        var targetId = member_owner; // 目标 Id，根据不同的 ConversationType，可能是用户 Id、讨论组 Id、群组 Id
+                    })
             },
             onTokenIncorrect: function() {
                 //console.log('token无效');
