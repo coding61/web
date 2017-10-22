@@ -115,7 +115,8 @@ $('.jie-add').click(function() {
 	sessionStorage.removeItem("postStatus");
 	sessionStorage.removeItem("myCollect");
 	sessionStorage.removeItem("myMessage");
-	window.location.href="bbs.html";
+	// window.location.href="bbs.html";
+	window.location.href="bbsList.html";
 })
 
 function exeData(num, type) {

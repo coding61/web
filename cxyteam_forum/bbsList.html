@@ -19,6 +19,10 @@
 		<link rel="stylesheet" href="css/nav.css">
 		<link rel="stylesheet" href="css/page.css">
 		<link rel="stylesheet" href="css/bbsList.css?v=1.0" />
+
+		<!-- <link rel="stylesheet" type="text/css" href="res/jquery-rebox-0.1.0.css"/>
+        <link rel="stylesheet" type="text/css" href="res/RongIMWidget.css"/>
+        <link rel="stylesheet" type="text/css" href="res/main.css"/> -->
 	</head>
 
 	<body>
@@ -29,123 +33,148 @@
                 </nav>
             </div> -->
         
-        <!-- 为了悼念改颜色 -->
-        <nav class="navWai" style="background-color: rgb(250, 80, 131);display: flex; align-items: center; padding: 0 2%;">
-        <!-- <nav class="navWai" style="background-color: #000000;display: flex; align-items: center; padding: 0 2%;"> -->
-			<div style="display: flex;flex: 1;">
-            	<img class="logo1" style="height: 30px;cursor: pointer;" src="../statics/images/logo2.png" />
-				<div class="right-line" style="border-right: solid 1px white;height: 24px;margin-left: 20px;margin-right: 20px;display: inline-flex;margin-top: 3px;margin-bottom: 3px;"></div>
-				<img class="logo2" style="height: 30px;cursor: pointer;" src="../statics/images/logo1.png"/>
-            </div>
-			
-			<div class="right-view">
-				<div class="icon4 avatar">
-					<img class="item" src="../statics/images/avatar.png" alt="">
-				</div>
-			
-				<div class="info-view">
-					<div class="info">
-						<span class="grade item">LV 青铜1</span>
-						<span class="grade-value item">500/854</span>
+	        <!-- 为了悼念改颜色 -->
+	        <nav class="navWai" style="background-color: rgb(250, 80, 131);display: flex; align-items: center; padding: 0 2%;">
+	        <!-- <nav class="navWai" style="background-color: #000000;display: flex; align-items: center; padding: 0 2%;"> -->
+				<div style="display: flex;flex: 1;">
+	            	<img class="logo1" style="height: 30px;cursor: pointer;" src="../statics/images/logo2.png" />
+					<div class="right-line" style="border-right: solid 1px white;height: 24px;margin-left: 20px;margin-right: 20px;display: inline-flex;margin-top: 3px;margin-bottom: 3px;"></div>
+					<img class="logo2" style="height: 30px;cursor: pointer;" src="../statics/images/logo1.png"/>
+	            </div>
+				
+				<div class="right-view">
+					<div class="icon4 avatar">
+						<img class="item" src="../statics/images/avatar.png" alt="">
 					</div>
-					<div class="progress item">
-						<img src="../statics/images/progress.png" alt="">
-					</div>
-				</div>
-
-				<div class="icon3 zuan">
-					<img class="item" src="../statics/images/icon3.png" alt="" />
-					<span class="item">x20</span>
-				</div>
-			</div>
-		</nav>
-		<div class="main layui-clear container">
-			<div class="wrap">
-				<div class="content" style="margin-right:0">
-					<div class="fly-tab"> 
-						<span class="fly-tab-span">          
-							<a href="javascript:void(0);" data-pk="-1">全部</a>    
-							<a href="javascript:void(0);"data-pk="0">精帖</a>         
-							<!--<a href="javascript:void(0);" onclick="getPostByType(1,1,10);">求助</a>
-							<a href="javascript:void(0);" onclick="getPostByType(2,1,10);">讨论</a> 
-							<a href="javascript:void(0);" onclick="getPostByType(3,1,10);">分享</a> 
-							<a href="javascript:void(0);" onclick="getPostByType(4,1,10);">随记</a>  -->          
-							                 
-						</span>
-						<!-- <form action="http://cn.bing.com/search" class="fly-search"> 
-							<i class="iconfont icon-sousuo"></i> 
-							<input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q"> 
-						</form> -->
-						<div class="searchT">
-							<input type="text" name="" class="searchinput" placeholder="请输入帖子主题">
-							<a class="searchTiezi">搜索</a>
+				
+					<div class="info-view">
+						<div class="info">
+							<span class="grade item">LV 青铜1</span>
+							<span class="grade-value item">500/854</span>
 						</div>
-						<!-- <a class="myTie">我的帖子</a> -->
-						<form class="selectTable" style="width: 100px;height: 38px;position: absolute;top: 0;right: 20%;">
-							<select id="cars" name="cars" onchange="mySelectHadChange(this.value)" style="width: 100%;height: 100%;background-color: #009688;color: white;font-size: 14px;cursor: pointer;">
-								<option value="my">我的</option>
-								<option value="myTie">我的帖子</option>
-								<option value="myCollect">我的收藏</option>
-								<option value="myMessage">我的消息</option>
-							</select>
-						</form>
-						<a class="layui-btn jie-add1">发布帖子</a>
-						<a class="layui-btn jie-add">返回论坛</a>
+						<div class="progress item">
+							<img src="../statics/images/progress.png" alt="">
+						</div>
 					</div>
-					<ul class="fly-list" id="bbsUl" style="min-height:996px;">
-						<!-- <li class="fly-list-li">
-							<a href="#" class="fly-list-avatar">
-								<img src="#" alt="贤心"></a>
-							<h2 class="fly-tip">            
-								<a href="#">layui 常见问题的处理和实用干货集锦</a>            
-								<span class="fly-tip-stick">置顶</span>            
-								<span class="fly-tip-jing">精帖</span>          
-							</h2>
-							<p> 
-								<span><a href="#">贤心</a></span> 
-								<span>5天前</span> 
-								<span>技术闲谈</span> 
-								<span class="fly-list-hint">               
-									<i class="iconfont" title="回答"></i>13              
-									<i class="iconfont" title="人气"></i> 1476            
-								</span> 
-							</p>
-						</li>
-						<li class="fly-list-li">
-							<a href="#" class="fly-list-avatar"> 
-								<img src="#" alt="贤心"></a>
-							<h2 class="fly-tip">            
-								<a href="#">LayIM 3.0 专业版 预计1周后发布，饱含深情的重大更新</a>            
-								<span class="fly-tip-stick">置顶</span>                      
-							</h2>
-							<p>
-								<span><a href="#">贤心</a></span> 
-								<span>7天前</span> 
-								<span>LayIM即时通讯</span> 
-								<span class="fly-list-hint">               
-									<i class="iconfont" title="回答"></i> 47              
-									<i class="iconfont" title="人气"></i> 2784            
-								</span> 
-							</p>
-						</li> -->
-					</ul>
-					<div style="text-align:center;clear:both;">
-						        <ul class="pagination" id="pagination">
-						        </ul>
-						        <input type="hidden"  id="PageCount" runat="server" />
-						        <input type="hidden" id="PageSize" runat="server" value="10" />
-						        <input type="hidden" id="countindex" runat="server" value="10"/>
-						        <!--设置最多显示的页码数 可以手动设置 默认为10-->
-						        <input type="hidden" id="visiblePages" runat="server" value="10" />
+
+					<div class="icon3 zuan">
+						<img class="item" src="../statics/images/icon3.png" alt="" />
+						<span class="item">x20</span>
 					</div>
-					<div style="text-align: center" id="pageDiv"></div>
+				</div>
+			</nav>
+			<div class="main layui-clear container">
+				<div class="wrap">
+					<div class="content" style="margin-right:0">
+						<div class="fly-tab"> 
+							<span class="fly-tab-span">          
+								<a href="javascript:void(0);" data-pk="-1">全部帖子</a>    
+								<!-- <a href="javascript:void(0);"data-pk="0">精帖</a>          -->
+								<!--<a href="javascript:void(0);" onclick="getPostByType(1,1,10);">求助</a>
+								<a href="javascript:void(0);" onclick="getPostByType(2,1,10);">讨论</a> 
+								<a href="javascript:void(0);" onclick="getPostByType(3,1,10);">分享</a> 
+								<a href="javascript:void(0);" onclick="getPostByType(4,1,10);">随记</a>  -->          
+								                 
+							</span>
+							<!-- <form action="http://cn.bing.com/search" class="fly-search"> 
+								<i class="iconfont icon-sousuo"></i> 
+								<input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q"> 
+							</form> -->
+							<div class="searchT">
+								<input type="text" name="" class="searchinput" placeholder="请输入帖子主题">
+								<a class="searchTiezi">搜索</a>
+							</div>
+							<!-- <a class="myTie">我的帖子</a> -->
+							<form class="selectTable" style="width: 100px;height: 38px;position: absolute;top: 0;right: 20%;right: 10%;">
+								<select id="cars" name="cars" onchange="mySelectHadChange(this.value)" style="width: 100%;height: 100%;background-color: #009688;color: white;font-size: 14px;cursor: pointer;">
+									<option value="my">我的</option>
+									<option value="myTie">我的帖子</option>
+									<option value="myCollect">我的收藏</option>
+									<option value="myMessage">我的消息</option>
+								</select>
+							</form>
+							<a class="layui-btn jie-add1">发布帖子</a>
+							<!-- <a class="layui-btn jie-add">返回论坛</a> -->
+						</div>
+						<ul class="fly-list" id="bbsUl" style="min-height:996px;">
+							<!-- <li class="fly-list-li">
+								<a href="#" class="fly-list-avatar">
+									<img src="#" alt="贤心"></a>
+								<h2 class="fly-tip">            
+									<a href="#">layui 常见问题的处理和实用干货集锦</a>            
+									<span class="fly-tip-stick">置顶</span>            
+									<span class="fly-tip-jing">精帖</span>          
+								</h2>
+								<p> 
+									<span><a href="#">贤心</a></span> 
+									<span>5天前</span> 
+									<span>技术闲谈</span> 
+									<span class="fly-list-hint">               
+										<i class="iconfont" title="回答"></i>13              
+										<i class="iconfont" title="人气"></i> 1476            
+									</span> 
+								</p>
+							</li>
+							<li class="fly-list-li">
+								<a href="#" class="fly-list-avatar"> 
+									<img src="#" alt="贤心"></a>
+								<h2 class="fly-tip">            
+									<a href="#">LayIM 3.0 专业版 预计1周后发布，饱含深情的重大更新</a>            
+									<span class="fly-tip-stick">置顶</span>                      
+								</h2>
+								<p>
+									<span><a href="#">贤心</a></span> 
+									<span>7天前</span> 
+									<span>LayIM即时通讯</span> 
+									<span class="fly-list-hint">               
+										<i class="iconfont" title="回答"></i> 47              
+										<i class="iconfont" title="人气"></i> 2784            
+									</span> 
+								</p>
+							</li> -->
+						</ul>
+						<div style="text-align:center;clear:both;">
+							        <ul class="pagination" id="pagination">
+							        </ul>
+							        <input type="hidden"  id="PageCount" runat="server" />
+							        <input type="hidden" id="PageSize" runat="server" value="10" />
+							        <input type="hidden" id="countindex" runat="server" value="10"/>
+							        <!--设置最多显示的页码数 可以手动设置 默认为10-->
+							        <input type="hidden" id="visiblePages" runat="server" value="10" />
+						</div>
+						<div style="text-align: center" id="pageDiv"></div>
+					</div>
 				</div>
 			</div>
+			<div class="footer"></div>
 		</div>
-		<div class="footer"></div>
-	</div>
+		<!-- 融云 -->
+        <!-- <div ng-app="demo" id="demo">
+            <div  ng-controller="main" id="main-customer">
+                <rong-widget id="rong-abcdefg"></rong-widget>
+            </div>
+        </div> -->
 	</body>
 	<script src="js/jquery-1.11.2.min.js"></script>
+
+	<!-- <script src="res/angular-1.4.8.js"></script> -->
+	<!-- 融云IMLib -->
+    <!-- <script src="//cdn.ronghub.com/RongIMLib-2.2.5.min.js"></script>
+    <script src="//cdn.ronghub.com/RongEmoji-2.2.5.min.js"></script>
+    <script src="//cdn.ronghub.com/Libamr-2.2.5.min.js"></script>
+    <script src="//cdn.ronghub.com/RongIMVoice-2.2.5.min.js"></script> -->
+
+    <!-- 上传插件 -->
+    <!-- <script type="text/javascript" src="js/plupload/js/plupload.full.min.js"></script>
+	<script type="text/javascript" src="js/qiniu/src/qiniu.js"></script> -->
+
+    <!-- 增强体验插件 -->
+    <!-- <script src="res/jquery-rebox-0.1.0.js"></script> -->
+
+    <!-- IM插件 -->
+    <!-- <script src="res/RongIMWidget.js"></script>
+    <script src="res/common.js"></script> -->
+
 	<script src="res/layui/layui.js"></script>
 	<script src="res/layui/layer/layer.js"></script>
    <!-- <script src="../js/global.js"></script>-->
@@ -154,4 +183,6 @@
     <!--<script type="text/javascript" src="../laypage/laypage.js"></script>-->
     <script src="js/common.js"></script>
     <script src="js/bbsList.js?v=1.2"></script>
+    <!-- <script src="js/RongYun.js"></script> -->
+
 </html>

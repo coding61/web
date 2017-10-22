@@ -169,7 +169,8 @@ function postDetail() {
 		if (result) {
 			zoneId=result.section.pk;
 			postUserName=result.userinfo.name;
-			$(".callbackToList").attr("href","bbsList.html?id="+zoneId);
+			// $(".callbackToList").attr("href","bbsList.html?id="+zoneId);
+			$(".callbackToList").attr("href","bbsList.html");
 			$(".postStatus").text("[" + result.status_display + "]");
 			if (result.status_display == '未解决') {
 				$(".postStatus").css({"color": 'red'});
@@ -568,12 +569,14 @@ function delPost(){
 //				  if(result==1){
 						if (is_staff) {
 							layer.msg("删除成功");
-							setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
+							// setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
+							setTimeout('window.location.href="bbsList.html"',1000);
 						} else {
 							layer.close(index);
 							var currentExperience = parseInt($('.info .grade-value').text().split("/")[0])-5;
 							growNumAnimate(currentExperience);
-							setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
+							// setTimeout('window.location.href="bbsList.html?id="+zoneId',1000);
+							setTimeout('window.location.href="bbsList.html"',1000);
 						}				  
 						
 						
