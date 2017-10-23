@@ -264,6 +264,9 @@ body {
 .title-input,
 .password-input {
     margin-left: 15px;
+	width: 250px;
+	font-size: 12px;
+	line-height: 24px;
     padding: 5px;
     border: 1px solid #000;
 }
