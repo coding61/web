@@ -297,12 +297,12 @@ define(function(require, exports, module) {
                 $('.pw-input').focus();
             })
 
-            // $('.item-info').unbind('click').click(function() {
-            //     pk = $(this).closest('li').attr('data-pk');
-            //     var title = $(this).closest('li').attr('data-title');
-            //     console.log(pk);
-            //     console.log(title);
-            // })
+            $('.item-info').unbind('click').click(function() {
+                pk = $(this).closest('li').attr('data-pk');
+                var title = $(this).closest('li').attr('data-title');
+                console.log(pk);
+                console.log(title);
+            })
 
             $('.pw-confirm').unbind('click').click(function() {
                 var pw = $(this).prev().val();
@@ -326,19 +326,19 @@ define(function(require, exports, module) {
         },
         // 活动详情中的点击
         detailsClickEvent:function(json) {
-            // $('.join-chat').unbind('click').click(function() {
+            $('.join-chat').unbind('click').click(function() {
                 $('.join-chat').attr({
                     "name": json.name,
                     "pk": json.pk
                 });
-            // })
-            // $('.member-item').unbind('click').click(function() {
-            //     var member_pk = $(this).closest('li').attr('data-pk');
-            //     var member_name = $(this).closest('li').attr('data-name');
-            //     var member_owner = $(this).closest('li').attr('data-owner');
-            //     console.log(member_pk);
-            //     console.log(member_name);
-            // })
+            })
+            $('.member-item').unbind('click').click(function() {
+                var member_pk = $(this).closest('li').attr('data-pk');
+                var member_name = $(this).closest('li').attr('data-name');
+                var member_owner = $(this).closest('li').attr('data-owner');
+                console.log(member_pk);
+                console.log(member_name);
+            })
             if (json.isleader) {
                 $('.details-edit').show();
                 $('.details-edit').unbind('click').click(function() {
@@ -897,4 +897,5 @@ define(function(require, exports, module) {
     ArtTemplate.helper('formatTime', function(value) {
         return new Date(value).toLocaleString();
     })
+
 });
