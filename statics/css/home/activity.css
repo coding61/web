@@ -424,18 +424,20 @@ body {
     bottom: 0; 
     left: 0; 
     background-color: rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    overflow: hidden;
 }
 .rongWai .left {
     width: 230px; 
     height: 470px;
-    background-color: white;
+    background-color: #fefefe;
 }
 .rongWai .right {
     width: 400px; 
     height: 470px;
     margin-left: 232px;
     margin-top: -470px;
-    background-color: white;
+    background-color: #fefefe;
     display: none;
 }
 .rongWai .left .leftTitle {
@@ -459,9 +461,9 @@ body {
     overflow-y: scroll;
     /*background-color: red;*/
 }
-.rongWai .left .contactList .contactOne {
-    width: 80%;
-    margin-left: 20%;
+.rongWai .left .contactList .contactItem {
+    width: 85%;
+    margin-left: 15%;
     height: 50px;
     line-height: 50px;
     border-bottom-color: #dcdcdc;
@@ -469,7 +471,7 @@ body {
     border-bottom-width: 1px;
     cursor: pointer;
 }
-.rongWai .left .contactList .contactOne>span {
+.rongWai .left .contactList .contactItem>span {
     margin-left: 10px;
 }
 .rongWai .right .contacter {
@@ -499,12 +501,15 @@ body {
     margin-left: 10px;
 }
 .rongWai .right .message .time {
-    width: 60px;
-    height: 25px;
-    line-height: 25px;
+    width: 180px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
-    margin-left: calc(50% - 30px);
+    margin-left: calc(50% - 90px);
     background-color: #f9fbfd;
+    font-size: 12px;
+    border-radius: 5px;
+    color: #888;
 }
 .rongWai .right .message .messageLeft .messageItem {
     margin-top: 20px;
@@ -532,14 +537,31 @@ body {
     border-top-color: #dcdcdc;
     border-top-style: solid;
     border-top-width: 1px;
+    background-color: #fefefe;
+}
+.rongWai .right .sendMessage .emoji {
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.rongWai .right .sendMessage .upload {
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    margin-left: 20px;
+    cursor: pointer;
 }
 .rongWai .right .sendMessage .textarea {
     width: calc(100% - 70px);
-    height: 100%;
+    height: calc(100% - 35px);
     text-indent: 20px;
     line-height: 35px;
     border: none;
     resize: none;
+    background-color: #fefefe;
+    font-size: 14px;
 }
 .rongWai .right .sendMessage .send {
     position: absolute;
@@ -547,10 +569,12 @@ body {
     bottom: 20px;
     background-color: #0099ff;
     width: 50px;
-    height: 30px;
-    line-height: 30px;
+    height: 26px;
+    line-height: 26px;
     text-align: center;
     color: white;
     cursor: pointer;
+    font-size: 12px;
+    border-radius: 5px;
 }
 /*******************yyy********************/

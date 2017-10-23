@@ -419,3 +419,42 @@ function loadpage() {
         }
     });
 }
+
+// 排行榜
+$(document).on("click",".nav .right-view .ranking", function() {
+	if (rankingHadClick) {
+		// 隐藏排名
+		$('.rankingView').hide();
+		rankingHadClick = false;
+	} else {
+		$('#loading').show();
+		// 显示排名
+		$('.rankingView').show();
+		var a = $(".ranking").offset().left;
+        var b = $(".right-view").offset().left;
+        var c = $(".rankingView").width();
+        $(".rankingView").css({
+            left: (a-b-c/2)+20 + "px"
+        })
+		rankingHadClick = true;
+		getRanking();
+	}
+})
+
+function getRanking() {
+	myAjax(basePath+"/userinfo/userinfo/diamond/ranking/","get",null,function(result) {
+		if(result){
+			$('.rankList').empty();
+			var html = template("rankList-template", result);
+			$('.rankList').html(html);
+			$('#loading').hide();
+			var a = $(".ranking").offset().left;
+            var b = $(".right-view").offset().left;
+            var c = $(".rankingView").width();
+            $(".rankingView").css({
+                left: (a-b-c/2)+20 + "px"
+            })
+		}else{
+		}
+	})
+}

@@ -371,6 +371,8 @@ define(function(require, exports, module) {
     Page.init();
 
     // startInit();
+    var myTargetId; //我的id
+    var conversationtype; //会话类型
     function startInit() {
         $.ajax({
             url: Common.domain + "/im/user_get_token/",
@@ -388,31 +390,59 @@ define(function(require, exports, module) {
                     RongIMLib.RongIMEmoji.init();
                     //instance.sendMessage
                     // registerMessage("PersonMessage");
+                    clickPersonOrGroup(); //点击头像或加入群聊
                 },
                 getCurrentUser : function(userInfo){
                     console.log(userInfo.userId);
                     userId = userInfo.userId;
-                    alert("链接成功；userid=" + userInfo.userId);
-                    // document.titie = ("链接成功；userid=" + userInfo.userId);
-                    $(document).on("click", '.member-item', function() {
-                        var member_name = $(this).closest('li').attr('data-name');
-                        var member_owner = $(this).closest('li').attr('data-owner');
-                        var conversationtype = RongIMLib.ConversationType.PRIVATE;
-                        var targetId = member_owner; // 目标 Id，根据不同的 ConversationType，可能是用户 Id、讨论组 Id、群组 Id
-                    })
+                    // alert("链接成功；userid=" + userInfo.userId);
+                    myTargetId = userInfo.userId;
+                    var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : false;
+                    if (contactJson) { //本地有没有账号记录
+                        if (contactJson[userInfo.userId]) { //有自己的记录
+                            for(item in contactJson[userInfo.userId]) {
+                                if (contactJson[userInfo.userId][item][3] == 0) {
+                                    $('.rongBtn .redPoint').show();
+                                    break;
+                                }
+                            }
+                        } else { //没有的话，创建一个自己空的记录
+                            contactJson[userInfo.userId] = {};
+                            localStorage.contactList = JSON.stringify(contactJson);
+                            var talkListJson = {};
+                            talkListJson[userInfo.userId] = {};
+                            localStorage.talkList = JSON.stringify(talkListJson);
+                        }
+                    } else { //没有账号记录的话，存一个自己空的记录
+                        var json = {};
+                        json[userInfo.userId] = {};
+                        localStorage.contactList = JSON.stringify(json);
+                         var talkListJson = {};
+                        talkListJson[userInfo.userId] = {};
+                        localStorage.talkList = JSON.stringify(talkListJson);
+                    }
+                    refreshContact();
                 },
                 receiveNewMessage : function(message){
-                    console.log(message);
+                    // console.log(message);
                     //判断是否有 @ 自己的消息
-                    var mentionedInfo = message.content.mentionedInfo || {};
-                    var ids = mentionedInfo.userIdList || [];
-                    for(var i=0; i < ids.length; i++){
-                        if( ids[i] == userId){
-                            alert("有人 @ 了你！");
-                        }
-                    }
-                    // showResult("show1",message);
-                    // messageOutput(message);
+                    // var mentionedInfo = message.content.mentionedInfo || {};
+                    // var ids = mentionedInfo.userIdList || [];
+                    // for(var i=0; i < ids.length; i++){
+                    //     if( ids[i] == userId){
+                    //         // alert("有人 @ 了你！");
+                    //     }
+                    // }
+                    refresh(message, 0, message.conversationType, function(){//消息和联系人存本地 0代表存未读
+                        // 如果融云窗口未打开
+                        if ($('.rongWai').css("display") == "none") { 
+                            $('.rongBtn .redPoint').show();
+                        } else {
+                            refreshMessage(); //刷新聊天窗口信息
+                        }    
+                    }); 
+                    
+                    
                 }
             };
             init(params,callbacks);
@@ -470,7 +500,11 @@ define(function(require, exports, module) {
 
                     case RongIMLib.ConnectionStatus["NETWORK_UNAVAILABLE"]:
                     case 3:
-                        console.log("网络不可用")
+                        console.log("网络不可用");
+                        // alert("网络不可用");
+                        if ($('.rongWai .right').css("display") == "block") {
+                            $('.rongWai .message').append('<p style="text-align: center;">连接已断开, 请刷新重试。</p>');
+                        }
                         break;
 
                     case RongIMLib.ConnectionStatus["CONNECTION_CLOSED"]:
@@ -518,25 +552,349 @@ define(function(require, exports, module) {
         });
     }
 
+    function clickPersonOrGroup() {
+        // 点头像单聊
+        $(document).on("click", '.member-item', function() {
+            // conversationtype = 
+            var member_name = $(this).closest('li').attr('data-name');
+            var member_owner = $(this).closest('li').attr('data-owner');
+            $('.rongWai').show();
+            $('.rongWai .right').show();
+            $('.rongWai .right .contacter').html(member_name); //设置当前会话
+            $('.rongWai .right .contacter').attr({"data-id": member_owner});
+            showMessageWindow(member_owner, RongIMLib.ConversationType.PRIVATE);
+        })
+        // 点击联系人
+        $(document).on("click", '.rongWai .contactItem', function() {
+            var name = $(this).children('.contactName').attr("data-id");
+            var owner = $(this).attr('data-id');
+            $('.rongWai').show();
+            $('.rongWai .right').show();
+            $('.rongWai .right .contacter').html(name); //设置当前会话
+            $('.rongWai .right .contacter').attr({"data-id": owner});
+            if ($(this).attr('data-type') == 'private') { //联系人为人
+                showMessageWindow(owner, RongIMLib.ConversationType.PRIVATE);
+            } else { //联系人为群
+                showMessageWindow(owner, RongIMLib.ConversationType.GROUP);
+            }  
+        })
+        // 点击加入群聊
+        $('.join-chat').unbind('click').click(function() {
+            var targetId = $(this).attr("pk");
+            var title = $(this).attr('name');
+            $('.rongWai').show();
+            $('.rongWai .right').show();
+            $('.rongWai .contacter').html(title);
+            $('.rongWai .right .contacter').attr({"data-id": targetId});
+            showMessageWindow(targetId, RongIMLib.ConversationType.GROUP);
+        })
+    }
+    // 显示会话窗口
+    function showMessageWindow(owner, conversationType) {
+        refreshMessage();
+        $('.send').unbind().click(function() { //点击发送
+            var textContent = $('.textarea').val();
+            if (textContent != '') {
+                var msg = new RongIMLib.TextMessage({content:textContent,extra:"附加信息"});
+                var conversationtype = conversationType; //单聊
+                var targetId = owner; // 目标 Id，根据不同的 ConversationType，可能是用户 Id、讨论组 Id、群组 Id
+                // 发送消息
+                RongIMClient.getInstance().sendMessage(conversationType, targetId, msg, {
+                    onSuccess: function (message) {
+                        //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
+                        console.log("Send successfully");
+                        //如果收到消息
+                        // if (message.senderUserId == message.targetId) {
 
+                        // } else { //发送消息
+                            var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                            $('.message').append(html);
+                            messageBottom();  
+                            $('.textarea').val('');
+                        // }
+                        refresh(message, 1, conversationtype); //消息和联系人存本地，1代表存已读
+                    },
+                    onError: function (errorCode,message) {
+                        var info = '';
+                        switch (errorCode) {
+                            case RongIMLib.ErrorCode.TIMEOUT:
+                                info = '超时';
+                                break;
+                            case RongIMLib.ErrorCode.UNKNOWN_ERROR:
+                                info = '未知错误';
+                                break;
+                            case RongIMLib.ErrorCode.REJECTED_BY_BLACKLIST:
+                                info = '在黑名单中，无法向对方发送消息';
+                                break;
+                            case RongIMLib.ErrorCode.NOT_IN_DISCUSSION:
+                                info = '不在讨论组中';
+                                break;
+                            case RongIMLib.ErrorCode.NOT_IN_GROUP:
+                                info = '不在群组中';
+                                break;
+                            case RongIMLib.ErrorCode.NOT_IN_CHATROOM:
+                                info = '不在聊天室中';
+                                break;
+                            default :
+                                info = x;
+                                break;
+                        }
+                        console.log('发送失败:' + info);
+                    }
+                });
+            } else {
+                alert("请输入内容");
+            }
+        })
+    }
+    //消息和联系人存本地
+    function refresh(message,status,conversationtype,callback) { //status 代表消息读取状态
+        if (message.senderUserId != myTargetId) { //收到消息
+            $.ajax({
+                url: Common.domain + "/userinfo/username_userinfo/?username=" + message.senderUserId
+            }).success(function(rep){
+                // 存联系人
+                var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : {};
+                // 存历史消息
+                var talkListJson = !!localStorage.talkList ? JSON.parse(localStorage.talkList) : {};
+                if (conversationtype == 1) {
+                    // 存联系人
+                    contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, rep.avatar, status, "private"];
+                    localStorage.contactList = JSON.stringify(contactJson);
+                    // typeof callback == 'function' ? callback() : '';
+                } else {
+                    $.ajax({
+                        url: Common.domain + "/club/club_detail/" + message.targetId + "/"
+                    }).success(function(rep) {
+                        // 存联系人
+                        contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, "https://static1.bcjiaoyu.com/groupHeader.jpg", status, "group"];
+                        localStorage.contactList = JSON.stringify(contactJson);
+                        
+                    }).error(function(err) {
+
+                    }) 
+                }
+                if (talkListJson[myTargetId][message.targetId]) { //判断有没有对方的聊天记录
+                    // talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content});
+                    if (message.messageType == "TextMessage") {
+                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}); 
+                    } else if (message.messageType == "ImageMessage") {
+                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}); 
+                    }
+                } else {
+                    // talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content}]; 
+                    if (message.messageType == "TextMessage") {
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}]; 
+                    } else if (message.messageType == "ImageMessage") {
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}]; 
+                    }
+                }
+                localStorage.talkList = JSON.stringify(talkListJson);
+                
+                typeof callback == 'function' ? callback() : '';
+
+            }).error(function() {
+
+            })
+        } else { //发送消息
+            $.ajax({
+                url: Common.domain + "/userinfo/username_userinfo/?username=" + message.senderUserId
+            }).success(function(rep){
+                // 存历史消息
+                var talkListJson = !!localStorage.talkList ? JSON.parse(localStorage.talkList) : {};
+                if (talkListJson[myTargetId][message.targetId]) { //判断有没有对方的聊天记录
+                    talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}});
+                } else {
+                    talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}]; 
+                }
+                localStorage.talkList = JSON.stringify(talkListJson);
+                if (conversationtype == 1) {
+                    $.ajax({
+                        url: Common.domain + "/userinfo/username_userinfo/?username=" + message.targetId
+                    }).success(function(rep){
+                        // 存联系人
+                        var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : {};
+                        // 存联系人
+                        contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, rep.avatar, status, "private"]; 
+                        localStorage.contactList = JSON.stringify(contactJson);
+                        refreshContact();
+                    }).error(function(err) {
+                        
+                    })
+                } else {
+                    // 存联系人
+                    var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : {};
+                    // 存联系人
+                    contactJson[myTargetId][message.targetId] = [message.targetId, $('.rongWai .contacter').text(), "https://static1.bcjiaoyu.com/groupHeader.jpg", status, "group"]; 
+                    localStorage.contactList = JSON.stringify(contactJson);
+                    refreshContact();
+                }
+               
+            }).error(function() {
+
+            })
+        }
+        
+    }
 
     // 点击最近联系人显示联系人列表
     $('.rongBtn').click(function() {
         $('.rongWai').show();
         $('.rongBtn').hide();
+        refreshMessage()
     })
+    // 刷新消息
+    function refreshMessage() {
+        var currentContact = $('.rongWai .contacter').attr("data-id");
+        if (currentContact != '') {
+            var contactJson = JSON.parse(localStorage.contactList);
+            for (item in contactJson[myTargetId]) {
+                if (item == currentContact) {
+                    contactJson[myTargetId][item][3] = 1;
+                    localStorage.contactList = JSON.stringify(contactJson);
+                    break;
+                }
+            }
+            // 刷新消息
+            var talkListJson = JSON.parse(localStorage.talkList);
+            $('.rongWai .message').empty();
+            var html = ArtTemplate("messageTemplate", talkListJson[myTargetId][currentContact]);
+            $('.rongWai .message').html(html);
+            messageBottom();
+        }
+        // 刷新联系人
+        refreshContact();
+    }
     // 点击最近联系人隐藏联系人列表
     $('.rongWai .leftTitle').click(function() {
         $('.rongBtn').show();
         $('.rongWai').hide();
+        refreshContact();
     })
-    // 点击联系人
-    $('.contactList .contactOne').click(function() {
-        $('.rongWai .right').show();
-        messageBottom();
-    })
+    
+    // 刷新联系人
+    function refreshContact() {
+        // 刷新联系人
+        var contactJson = JSON.parse(localStorage.contactList);
+        $('.rongWai .contactList').empty();
+        var html = ArtTemplate("contactTemplate", contactJson[myTargetId]);
+        $('.rongWai .contactList').html(html);
+        var i = 0;
+        for (item in contactJson[myTargetId]) {
+            if (contactJson[myTargetId][item][3] == 0) {
+                i++;
+                $('.rongBtn .redPoint').show();
+                break;
+            }
+        }
+        if (i == 0) {
+            $('.rongBtn .redPoint').hide();
+        }
+    }
+
+    // 上传图片
+    // var filename = ''    //选择的文件的名字
+    // var uploader = Qiniu.uploader({
+    //     runtimes: 'html5,flash,html4',    //上传模式,依次退化
+    //     browse_button: 'upLoad',       //上传选择的点选按钮，**必需**
+    //     // uptoken : '<Your upload token>', //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+    //     // unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK为自动生成上传成功后的key（文件名）。
+    //     // save_key: true,   // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK会忽略对key的处理
+    //     domain: 'https://static1.bcjiaoyu.com',   //bucket 域名，下载资源时用到，**必需**
+    //     uptoken_func: function(file) {
+    //         $.ajax({
+    //             async: false,
+    //             type: "POST",
+    //             url:Common.domain+"/upload/token/",
+    //             headers: {
+    //                 Authorization: "Token "+ localStorage.token
+    //             },
+    //             data: {
+    //                 filename: filename ? filename : 'dfhu.png',
+    //             },
+    //             dataType: "json",
+    //             success: function(json) {
+    //               upToken = json.token;
+    //               upkey = json.key;
+    //             }
+    //           });
+    //           return upToken;
+    //     },
+    //     get_new_uptoken: true,  //设置上传文件的时候是否每次都重新获取新的token
+    //     container: 'container',           //上传区域DOM ID，默认是browser_button的父元素，
+    //     // max_file_size: '100mb',           //最大文件体积限制
+    //     flash_swf_url: 'libs/upload/plupload/Moxie.swf',  //引入flash,相对路径
+    //     max_retries: 3,                   //上传失败最大重试次数
+    //     dragdrop: true,                   //开启可拖曳上传
+    //     drop_element: 'container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+    //     chunk_size: '4mb',                //分块上传时，每片的体积
+    //     auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+    //     filters : {
+    //        // Maximum file size
+    //        max_file_size : '10mb',
+    //        // Specify what files to browse for
+    //        mime_types: [
+    //                {title : "Image files", extensions : "jpg,gif,png,jpeg"},
+    //        ]
+    //     },
+    //     init: {
+    //         'FilesAdded': function(up, files) {
+    //             plupload.each(files, function(file) {
+    //                 // 文件添加进队列后,处理相关的事情
+    //                 filename = file.name;
+    //             });
+    //         },
+    //         'BeforeUpload': function(up, file) {
+    //                // 每个文件上传前,处理相关的事情
+    //         },
+    //         'UploadProgress': function(up, file) {
+    //                // 每个文件上传时,处理相关的事情
+    //         },
+    //         'FileUploaded': function(up, file, info) {
+    //                // 每个文件上传成功后,处理相关的事情
+    //                // 其中 info.response 是文件上传成功后，服务端返回的json，形式如
+    //                // {
+    //                //    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
+    //                //    "key": "gogopher.jpg"
+    //                //  }
+    //                // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+
+    //                // var domain = up.getOption('domain');
+    //                // var res = parseJSON(info.response);
+    //                // var sourceLink = domain + res.key; 获取上传成功后的文件的Url
+    //                alert(4);
+    //         },
+    //         'Error': function(up, err, errTip) {
+    //                //上传出错时,处理相关的事情
+    //                alert("上传失败");
+    //         },
+    //         'UploadComplete': function() {
+    //                //队列文件处理完毕后,处理相关的事情
+    //         },
+    //         'Key': function(up, file) {
+    //             // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+    //             // 该配置必须要在 unique_names: false , save_key: false 时才生效
+
+    //             var key = "";
+    //             // do something with key here
+    //             return key
+    //         }
+    //     }
+    // });
     // 聊天最新消息底部显示
     function messageBottom() {
-        $('.message').scrollTop($('.message').scrollTop() + 400);
+        // $('.message').scrollTop($('.message').scrollTop() + 400);
+        $('.message').scrollTop(document.getElementsByClassName('message')[0].scrollHeight);
     }
+
+    ArtTemplate.helper('isMe', function(value){
+        if (value == myTargetId) {
+            return true;
+        } else {
+            return false;
+        }
+    })
+    ArtTemplate.helper('formatTime', function(value) {
+        return new Date(value).toLocaleString();
+    })
 });
