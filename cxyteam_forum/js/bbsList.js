@@ -1,5 +1,6 @@
 //var token="f398c224a8a052bb9ba5fe278acb1128043bfd8e";
 var basePath="/program_girl";
+var rankingHadClick = false;
 var pageId=-1;
 var zoneId = getQueryString("id");
 $('.fly-tab .searchinput').val(sessionStorage.searchPostContent);
@@ -57,6 +58,23 @@ myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 // myAjax2(basePath+"/forum/sections/"+zoneId+"/","get",null,function(result){
 // 	getPostByType(sessionStorage.typeId,null,sessionStorage.page,sessionStorage.searchPostContent,sessionStorage.myPost,null);
 // });
+
+myAjax(basePath+"/message/messages/","get",{"types":"forum","status":"unread"},function(result){
+	if (result.count != 0) {
+		$('.message').show();
+		$('.message').html("您有"+result.count+"条消息未读！");
+		var width = $('.container').css("width");
+		var t = parseFloat(width)/2 + "px";
+		$('.message').css({"width":width,"marginLeft":"calc(50% - "+t+")"});
+	} else {
+		$('.message').hide();
+	}
+})
+
+// 点击消息
+$('.message').click(function() {
+	window.location.href = "message.html";
+})
 
 getPostByType(null,null,sessionStorage.page,sessionStorage.searchPostContent,sessionStorage.myPost,null);
 
@@ -421,7 +439,8 @@ function loadpage() {
 }
 
 // 排行榜
-$(document).on("click",".nav .right-view .ranking", function() {
+// $(document).on("click",".nav .right-view .ranking", function() {
+$('.ranking').click(function() {
 	if (rankingHadClick) {
 		// 隐藏排名
 		$('.rankingView').hide();

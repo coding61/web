@@ -189,7 +189,7 @@
                 </script>
             </div>
             <div class="right">
-                <div class="contacter" data-id=""></div>
+                <div class="contacter" data-id="" data-type=""></div>
                 <!-- 消息框 -->
                 <div class="message">
                 </div>
@@ -202,7 +202,7 @@
                                 {{if $value.content.textMessage}}
                                     <span>{{$value.content.textMessage}}</span>
                                 {{else if $value.content.imgMessage}}
-                                    <img style="max-width: 60px; max-height: 80px;" src="{{$value.content.imgMessage}}" alt="">
+                                    <img style="max-width: 300px; max-height: 150px;" src="{{$value.content.imgMessage}}" alt="">
                                 {{/if}}
                                 <img class="chatHeaderRight" src="{{$value.avatar}}">
                             </div>
@@ -217,7 +217,7 @@
                             {{if $value.content.textMessage}}
                                 <div class="messageLeftContent">{{$value.content.textMessage}}</div>
                             {{else if $value.content.imgMessage}}
-                                <div class="messageLeftContent"><img style="max-width: 60px; max-height: 80px;" src="{{$value.content.imgMessage}}" alt=""></div>
+                                <div class="messageLeftContent"><img style="max-width: 300px; max-height: 150px;" src="{{$value.content.imgMessage}}" alt=""></div>
                             {{/if}}
                         </div>
                         {{/if}}
@@ -225,8 +225,10 @@
                 </script>
                 <div class="sendMessage">
                     <div id="container" style="height: 35px; display: flex; align-items: center;">
-                        <img class="emoji" src="https://static1.bcjiaoyu.com/groupHeader.jpg">
-                        <img class="upload" id="upLoad" src="https://static1.bcjiaoyu.com/groupHeader.jpg">
+                        <img class="emoji" src="../../cxyteam_forum/images/emojiBtn.png">
+                        <div class="allEmoji">
+                        </div>
+                        <img class="upload" id="upLoad" src="../../cxyteam_forum/images/imgBtn.png">
                     </div>
                     <textarea class="textarea" placeholder="请输入"></textarea>
                     <div class="send">发送</div>
@@ -245,8 +247,8 @@
     <script src="//cdn.ronghub.com/RongIMVoice-2.2.5.min.js"></script> -->
 
     <!-- 上传插件 -->
-    <script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/plupload.full.min.js"></script>
-    <script type="text/javascript" src="../../cxyteam_forum/js/qiniu/src/qiniu.js"></script>
+    <script type="text/javascript" src="../../libs/upload/plupload/plupload.full.min.js"></script>
+    <script type="text/javascript" src="../../libs/upload/qiniu/qiniu.min.js"></script>
 
     <!-- 增强体验插件 -->
     <!-- <script src="../../cxyteam_forum/res/jquery-rebox-0.1.0.js"></script> -->
