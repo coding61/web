@@ -3,14 +3,14 @@ body {
     background-color: #E3E7E8;
 }
 .header-view {
-    width: 100%;
+    width: 91%;
     min-width: 800px;
     height: 45px;
-    margin: 22px 45px 30px 45px;
+    margin: 2.5% 4.5% 3%;
     display: flex;
 }
 .column-view {
-    width: 60%;
+	width: 65%;
     min-width: 520px;
     height: 100%;
     display: flex;
@@ -20,7 +20,7 @@ body {
 .column-view .activity-push,
 .column-view .activity-create {
     cursor:pointer;
-    width: calc(15% - 1px);
+    width: calc(25% - 1px);
     min-width: 130px;
     height: 100%;
     margin-left: 1px;
@@ -37,13 +37,14 @@ body {
     border-radius: 0 5px 5px 0;
 }
 .search-view {
-    width: 40%;
+    width: 30.5%;
     min-width: 240px;
     height: 100%;
-    margin-left: 45px;
+    margin-left: 4.5%;
     display: flex;
 }
 .search-view .key-word {
+	width: 100%;
     min-width: 180px;
     height: 100%;
     background-color: #FEFFFF;
@@ -66,7 +67,8 @@ body {
 .list-view,
 .join-view,
 .push-view {
-    width: 100%;
+	width: 95%;
+	margin-left: 4.5%;
     min-width: 850px;
     flex-wrap: wrap;
     display: flex;
@@ -74,16 +76,18 @@ body {
 .list-view li,
 .join-view li,
 .push-view li {
-    width: 45%;
+    width: 50%;
     min-width: 380px;
-    padding: 0 0 40px 45px;
-    margin-right: 20px;
+	padding-right: 4.5%;
+	padding-bottom: 4%;
+    /*padding: 0 0 40px 45px;*/
+    /*margin-right: 20px;*/
 }
 .list-item {
     /*width: 45%;*/
     /*min-width: 380px;*/
     min-height: 220px;
-    float: left;
+    /*float: left;*/
     background-color: #fff;
     border-radius: 5px;
 }
@@ -127,9 +131,9 @@ body {
 }
 .item-info {
     cursor:pointer;
-    padding: 10px;
-    width: 45%;
-    min-width: 380px;
+    padding: 20px 20px 10px 20px;
+    /*width: 45%;*/
+    /*min-width: 380px;*/
 }
 .item-title {
     font-size: 20px;
@@ -156,8 +160,9 @@ body {
     cursor:pointer;
     line-height: 40px;
     /*margin-right: 15px;*/
-    margin-left: 77%;
+    margin-left: 75%;
     color: gray;
+	text-align: right;
 }
 .item-footer {
     /*width: 45%;*/
@@ -180,11 +185,13 @@ body {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
+	color: gray;
 }
 .item-num {
     width: 30%;
     min-width: 100px;
     margin-left: 5px;
+	color: gray;
 }
 .item-join {
     cursor:pointer;
@@ -393,164 +400,3 @@ body {
     right: 8%;
     margin-top: -5px;
 }
-
-/*******************yyy********************/
-.rongBtn {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 230px;
-    height: 40px;
-    line-height: 40px;
-    background: url(../../../cxyteam_forum/images/webBg.png) 0 0/10px auto repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-    display: none;
-}
-.rongBtn .arrow {
-    background: url(../../../cxyteam_forum/images/icon.png) 0 0/50px auto no-repeat;
-    width: 20px;
-    height: 20px;
-    margin-left: 10px;
-}
-.rongWai {
-    display: none;
-    width: 632px; 
-    height: 470px; 
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
-    background-color: rgba(0, 0, 0, 0);
-}
-.rongWai .left {
-    width: 230px; 
-    height: 470px;
-    background-color: white;
-}
-.rongWai .right {
-    width: 400px; 
-    height: 470px;
-    margin-left: 232px;
-    margin-top: -470px;
-    background-color: white;
-    display: none;
-}
-.rongWai .left .leftTitle {
-    height: 40px;
-    line-height: 40px;
-    background: url(../../../cxyteam_forum/images/webBg.png) 0 0/10px auto repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-}
-.rongWai .left .arrow {
-    background: url(../../../cxyteam_forum/images/icon.png) 0 0/50px auto no-repeat;
-    width: 20px;
-    height: 20px;
-    margin-left: 10px;
-}
-.rongWai .left .contactList {
-    height: 100%;
-    overflow-y: scroll;
-    /*background-color: red;*/
-}
-.rongWai .left .contactList .contactOne {
-    width: 80%;
-    margin-left: 20%;
-    height: 50px;
-    line-height: 50px;
-    border-bottom-color: #dcdcdc;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    cursor: pointer;
-}
-.rongWai .left .contactList .contactOne>span {
-    margin-left: 10px;
-}
-.rongWai .right .contacter {
-    height: 40px;
-    line-height: 40px;
-    text-indent: 20px;
-    background: url(../../../cxyteam_forum/images/webBg.png) 0 0/10px auto repeat;
-    color: white;
-}
-.rongWai .right .message {
-    height: 300px;
-    /*background-color: burlywood;*/
-    padding-top: 10px;
-    padding-bottom: 10px;
-    overflow-y: scroll;
-}
-.rongWai .right .message .chatHeaderLeft {
-    width: 30px;
-    height: 30px;
-    border-radius: 30px;
-    margin-left: 20px;
-}
-.rongWai .right .message .chatHeaderRight {
-    width: 30px;
-    height: 30px;
-    border-radius: 30px;
-    margin-left: 10px;
-}
-.rongWai .right .message .time {
-    width: 60px;
-    height: 25px;
-    line-height: 25px;
-    text-align: center;
-    margin-left: calc(50% - 30px);
-    background-color: #f9fbfd;
-}
-.rongWai .right .message .messageLeft .messageItem {
-    margin-top: 20px;
-}
-.rongWai .right .message .messageLeft .messageItem>span {
-    margin-left: 10px;
-    color: #8e969f;
-}
-.rongWai .right .message .messageLeft .messageLeftContent {
-    text-indent: 60px;
-}
-.rongWai .right .message .messageRight {
-    margin-top: 10px;
-}
-.rongWai .right .message .messageRight .messageRightItem {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 10px;
-    padding-right: 20px;
-}
-
-.rongWai .right .sendMessage {
-    height: 130px;
-    border-top-color: #dcdcdc;
-    border-top-style: solid;
-    border-top-width: 1px;
-}
-.rongWai .right .sendMessage .textarea {
-    width: calc(100% - 70px);
-    height: 100%;
-    text-indent: 20px;
-    line-height: 35px;
-    border: none;
-    resize: none;
-}
-.rongWai .right .sendMessage .send {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    background-color: #0099ff;
-    width: 50px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    color: white;
-    cursor: pointer;
-}
-/*******************yyy********************/
