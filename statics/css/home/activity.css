@@ -108,29 +108,40 @@ body {
     z-index: 1;
     display: none;
     align-items: center;
-    padding-top: 10%;
+    padding-top: 8%;
 }
 .password {
-    margin: 0 auto;
-    width: 230px;
-    height: 160px;
-    /*margin-top: 30px;*/
+	margin: 0 auto;
+    width: 260px;
+    height: 175px;
+    /* margin-top: 30px; */
     background-color: #F1F2F3;
     z-index: 2;
     border-radius: 15px;
     text-align: center;
 }
+.password .p1 {
+	line-height: 16px;
+	padding-top: 20px;
+	color: gray;
+}
+.password .p2 {
+	line-height: 16px;
+	margin: -5px 0 15px 0;
+	color: gray;
+}
 .pw-input {
-    text-align: center;
+	text-align: center;
+    width: 190px;
+    height: 40px;
     margin: 0 auto;
-    margin-top: 50px;
 }
 .pw-confirm {
-    cursor: pointer;
-    border-top: 1px solid gray;
-    margin-top: 40px;
-    text-align: center;
-    line-height: 40px;
+	cursor: pointer;
+	border-top: 1px solid gray;
+	margin-top: 20px;
+	text-align: center;
+	line-height: 40px;
 }
 .item-info {
     cursor:pointer;
@@ -428,22 +439,22 @@ body {
 }
 .rongWai {
     display: none;
-    width: 632px; 
-    height: 470px; 
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
+    width: 632px;
+    height: 470px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, 0);
     border-radius: 5px;
     overflow: hidden;
 }
 .rongWai .left {
-    width: 230px; 
+    width: 230px;
     height: 470px;
     background-color: #fefefe;
 }
 .rongWai .right {
-    width: 400px; 
+    width: 400px;
     height: 470px;
     margin-left: 232px;
     margin-top: -470px;
@@ -588,4 +599,3 @@ body {
     border-radius: 5px;
 }
 /*******************yyy********************/
-
