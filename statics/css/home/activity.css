@@ -10,17 +10,16 @@ body {
     display: flex;
 }
 .column-view {
-	width: 65%;
-    min-width: 520px;
+	width: calc(50% - 2px);
+    min-width: 390px;
     height: 100%;
     display: flex;
 }
 .column-view .activity-list,
 .column-view .activity-join,
-.column-view .activity-push,
-.column-view .activity-create {
+.column-view .activity-push {
     cursor:pointer;
-    width: calc(25% - 1px);
+    width: calc(33.3% - 1px);
     min-width: 130px;
     height: 100%;
     margin-left: 1px;
@@ -29,23 +28,36 @@ body {
     line-height: 45px;
 }
 .column-view .activity-list {
+	margin-left: 0;
     background-color: #EB6A99;
     border-radius: 5px 0 0 5px;
     color: #fff;
 }
-.column-view .activity-create {
+.column-view .activity-push {
     border-radius: 0 5px 5px 0;
+}
+.activity-create {
+	cursor:pointer;
+    width: 10.5%;
+    min-width: 130px;
+    height: 100%;
+    background-color: #4AB9FB;
+	color: #fff;
+    text-align: center;
+    line-height: 45px;
+    margin-left: 4.5%;
+	border-radius: 5px;
 }
 .search-view {
     width: 30.5%;
-    min-width: 240px;
+    min-width: 220px;
     height: 100%;
     margin-left: 4.5%;
     display: flex;
 }
 .search-view .key-word {
 	width: 100%;
-    min-width: 180px;
+    min-width: 170px;
     height: 100%;
     background-color: #FEFFFF;
     text-align: left;
@@ -57,7 +69,7 @@ body {
 }
 .search-view .search-btn {
     cursor:pointer;
-    min-width: 60px;
+    min-width: 50px;
     height: 100%;
     background-color: #CDCECF;
     text-align: center;
