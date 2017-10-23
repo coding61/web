@@ -40,7 +40,6 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
                       //do something
                       // $('.rongcloud-kefuBtnBox').hide();
                     }
-
                     //接收到消息时
                     WebIMWidget.onReceivedMessage = function(message) {
                         //message 收到的消息
@@ -91,18 +90,81 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
                     }
                     // 活动详情点击头像进行单聊
                     $('body').on("click",'.member-item',function() {
-                        var name = $(this).closest('li').attr('data-name');
+                        // var name = $(this).closest('li').attr('data-name');
                         var targetId = $(this).closest('li').attr('data-owner');
-                        console.log(name);
+                        // console.log(name);
+                        // console.log(targetId);
+                        // $scope.targetType = 1;
+                        // if (targetId == id) { //聊天对象是自己 不作处理
+                        // } else {
+                        //     // 设置当前会话
+                        //     WebIMWidget.setConversation(Number($scope.targetType),targetId,name);
+                            
+                        //     // 设置会话列表中的用户信息及会话窗口中他人用户信息
+                        //     WebIMWidget.setUserInfoProvider(function(targetId,obj){
+                        //         var localTalkList = {"userlist":[]};
+                        //         if (localStorage.localTalkList) {
+                        //             localTalkList = JSON.parse(localStorage.localTalkList);
+                        //             var user;
+                        //             if (localTalkList && localTalkList.userlist.length > 0) {
+                        //                 localTalkList.userlist.forEach(function(item){
+                        //                     if(item.id==targetId){
+                        //                         user=item;
+                        //                     }
+                        //                 })
+                        //             }
+                        //             if(user){
+                        //                 // 拿本地会话列表遍历，如果列表不为空，如果targetId等于列表中item的id，则设置成item的信息，否则根据id获取用户信息，然后将用户信息添加到本地会话列表
+                        //                 console.log(targetId);
+                        //                 obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
+                        //             }else{
+                        //                 // 根据id获取用户信息
+                        //                 $http({
+                        //                     url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                        //                 }).success(function(rep){
+                        //                     obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
+                        //                     localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
+                        //                     localStorage.localTalkList = JSON.stringify(localTalkList);
+                        //                 }).error(function(err){
+
+                        //                 })
+                        //             }
+                        //         } else {
+                        //             // 根据id获取用户信息
+                        //             $http({
+                        //                 url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                        //             }).success(function(rep){
+                        //                 obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
+                        //                 localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
+                        //                 localStorage.localTalkList = JSON.stringify(localTalkList);
+                        //             }).error(function(err){
+
+                        //             })                                      
+                        //         }
+                        //     });
+                        //     //呈现会话面板
+                        //     WebIMWidget.show();
+                            
+                            if (!!targetId) {
+                                WebIMWidget.setConversation(Number($scope.targetType), targetId, "用户：" + targetId);
+                                WebIMWidget.show();
+                            }
+                        
+                        
+                    })
+                    // 活动页点击活动进行群聊
+                    $('body').on("click",'.join-chat',function() {
+                        var targetId = $(this).attr("pk");
+                        var title = $(this).attr('name');
                         console.log(targetId);
-                        if (targetId == id) { //聊天对象是自己 不作处理
-                        } else {
-                            // 设置当前会话
-                            WebIMWidget.setConversation($scope.targetType,targetId,name);
-                            //呈现会话面板
-                            WebIMWidget.show();
+                        console.log(title);
+                        $scope.targetType = 3;
+                        // 设置当前会话
+                        WebIMWidget.setConversation(Number($scope.targetType),targetId,title);
+                        
+                        if ($scope.targetType == 3) {
                             // 设置会话列表中的用户信息及会话窗口中他人用户信息
-                            WebIMWidget.setUserInfoProvider(function(targetId,obj){
+                            WebIMWidget.setGroupInfoProvider(function(targetId,obj){
                                 var localTalkList = {"userlist":[]};
                                 if (localStorage.localTalkList) {
                                     localTalkList = JSON.parse(localStorage.localTalkList);
@@ -117,95 +179,42 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
                                     if(user){
                                         // 拿本地会话列表遍历，如果列表不为空，如果targetId等于列表中item的id，则设置成item的信息，否则根据id获取用户信息，然后将用户信息添加到本地会话列表
                                         console.log(targetId);
-                                        obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
+                                        obj.onSuccess({id:user.id,name:user.name});
                                     }else{
                                         // 根据id获取用户信息
-                                        $http({
-                                            url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-                                        }).success(function(rep){
-                                            obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
-                                            localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
+                                        // $http({
+                                        //     url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                                        // }).success(function(rep){
+                                            obj.onSuccess({id:targetId,name:title})
+                                            localTalkList.userlist.push({id:targetId,name:title});
                                             localStorage.localTalkList = JSON.stringify(localTalkList);
-                                        }).error(function(err){
+                                        // }).error(function(err){
 
-                                        })
+                                        // })
                                     }
                                 } else {
                                     // 根据id获取用户信息
-                                    $http({
-                                        url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-                                    }).success(function(rep){
-                                        obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
-                                        localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
+                                    // $http({
+                                    //     url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                                    // }).success(function(rep){
+                                        obj.onSuccess({id:targetId,name:title})
+                                        localTalkList.userlist.push({id:targetId,name:title});
                                         localStorage.localTalkList = JSON.stringify(localTalkList);
-                                    }).error(function(err){
+                                    // }).error(function(err){
 
-                                    })                                      
+                                    // })                                      
                                 }
                             });
                         }
-                    })
-                    
-                    // 活动页点击活动进行群聊
-                    $('body').on("click",'.item-info',function() {
-                        var pk = $(this).closest('li').attr('data-pk');
-                        var title = $(this).closest('li').attr('data-title');
-                        console.log(pk);
-                        console.log(title);
-                        // 设置当前会话
-                        WebIMWidget.setConversation($scope.targetType,targetId,name);
-                        //呈现会话面板
-                        WebIMWidget.show();
-                        // 设置会话列表中的用户信息及会话窗口中他人用户信息
-                        WebIMWidget.setUserInfoProvider(function(targetId,obj){
-                            var localTalkList = {"userlist":[]};
-                            if (localStorage.localTalkList) {
-                                localTalkList = JSON.parse(localStorage.localTalkList);
-                                var user;
-                                if (localTalkList && localTalkList.userlist.length > 0) {
-                                    localTalkList.userlist.forEach(function(item){
-                                        if(item.id==targetId){
-                                            user=item;
-                                        }
-                                    })
-                                }
-                                if(user){
-                                    // 拿本地会话列表遍历，如果列表不为空，如果targetId等于列表中item的id，则设置成item的信息，否则根据id获取用户信息，然后将用户信息添加到本地会话列表
-                                    console.log(targetId);
-                                    obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
-                                }else{
-                                    // 根据id获取用户信息
-                                    $http({
-                                        url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-                                    }).success(function(rep){
-                                        obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
-                                        localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
-                                        localStorage.localTalkList = JSON.stringify(localTalkList);
-                                    }).error(function(err){
 
-                                    })
-                                }
-                            } else {
-                                // 根据id获取用户信息
-                                $http({
-                                    url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-                                }).success(function(rep){
-                                    obj.onSuccess({id:targetId,name:rep.name,portraitUri:rep.avatar})
-                                    localTalkList.userlist.push({id:targetId,name:rep.name,portraitUri:rep.avatar});
-                                    localStorage.localTalkList = JSON.stringify(localTalkList);
-                                }).error(function(err){
-
-                                })                                      
-                            }
-                        });
                     })
                     // 论坛详情点击头像进行聊天
                     $(document).on("click", '.fly-list-li img', function() {
                         var name = $(this).attr("name");
                         var targetId = $(this).attr("ng-model");
-             
+                        $scope.targetType = 1;
                         // 设置当前会话
-                        WebIMWidget.setConversation(WebIMWidget.EnumConversationType.PRIVATE,targetId,name);
+                        WebIMWidget.setConversation(Number($scope.targetType),targetId,name);
                         //呈现会话面板
                         WebIMWidget.show();
                         // 设置会话列表中的用户信息及会话窗口中他人用户信息
@@ -253,64 +262,70 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
                     });
                     
                     // 用户信息设置,设置自己的信息
-                    WebIMWidget.setUserInfoProvider(function(targetId,obj){
-                        if (setSelf) {
-                            var localTalkList = {"userlist":[]};
-                            if (localStorage.localTalkList) {
-                                localTalkList = JSON.parse(localStorage.localTalkList);
-                                var user;
-                                if (localTalkList && localTalkList.userlist.length > 0) {
-                                    localTalkList.userlist.forEach(function(item){
-                                        if(item.id==targetId){
-                                            user=item;
-                                        }
-                                        obj.onSuccess({id:item.id,name:item.name,portraitUri:item.portraitUri});
-                                    })
-                                }
-                                if(user){
-                                    // 拿本地会话列表遍历，如果列表不为空，如果targetId等于列表中item的id，则设置成item的信息，否则根据id获取用户信息，然后将用户信息添加到本地会话列表
-                                    console.log(targetId);
-                                    obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
-                                }else{
-                                    $http({
-                                        url: basePath + "/userinfo/whoami/",
-                                        headers: {
-                                            'Authorization': "Token " + localStorage.token
-                                        },
-                                        params:{
-                                            'userId': targetId
-                                        }
-                                    }).success(function(rep){
-                                        console.log(rep);
-                                        if (rep) {
-                                            obj.onSuccess({userId: targetId, name: rep.name, portraitUri: rep.avatar})
-                                        }
-                                    }).error(function(err) {
+                    // WebIMWidget.setUserInfoProvider(function(targetId,obj){
+                    //     if (setSelf) {
+                    //         var localTalkList = {"userlist":[]};
+                    //         if (localStorage.localTalkList) {
+                    //             localTalkList = JSON.parse(localStorage.localTalkList);
+                    //             var user;
+                    //             if (localTalkList && localTalkList.userlist.length > 0) {
+                    //                 localTalkList.userlist.forEach(function(item){
+                    //                     if(item.id==targetId){
+                    //                         user=item;
+                    //                     }
+                    //                     obj.onSuccess({id:item.id,name:item.name,portraitUri:item.portraitUri});
+                    //                 })
+                    //             }
+                    //             if(user){
+                    //                 // 拿本地会话列表遍历，如果列表不为空，如果targetId等于列表中item的id，则设置成item的信息，否则根据id获取用户信息，然后将用户信息添加到本地会话列表
+                    //                 console.log(targetId);
+                    //                 obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
+                    //             }else{
+                    //                 $http({
+                    //                     url: basePath + "/userinfo/whoami/",
+                    //                     headers: {
+                    //                         'Authorization': "Token " + localStorage.token
+                    //                     },
+                    //                     params:{
+                    //                         'userId': targetId
+                    //                     }
+                    //                 }).success(function(rep){
+                    //                     console.log(rep);
+                    //                     if (rep) {
+                    //                         obj.onSuccess({userId: targetId, name: rep.name, portraitUri: rep.avatar})
+                    //                     }
+                    //                 }).error(function(err) {
 
-                                    })
-                                }
-                            } else {
-                                $http({
-                                    url: basePath + "/userinfo/whoami/",
-                                    headers: {
-                                        'Authorization': "Token " + localStorage.token
-                                    },
-                                    params:{
-                                        'userId': targetId
-                                    }
-                                }).success(function(rep){
-                                    console.log(rep);
-                                    if (rep) {
-                                    // console.log(targetId);
-                                        obj.onSuccess({userId: targetId, name: rep.name, portraitUri: rep.avatar})
-                                    }
-                                }).error(function(err) {
+                    //                 })
+                    //             }
+                    //         } else {
+                    //             $http({
+                    //                 url: basePath + "/userinfo/whoami/",
+                    //                 headers: {
+                    //                     'Authorization': "Token " + localStorage.token
+                    //                 },
+                    //                 params:{
+                    //                     'userId': targetId
+                    //                 }
+                    //             }).success(function(rep){
+                    //                 console.log(rep);
+                    //                 if (rep) {
+                    //                 // console.log(targetId);
+                    //                     obj.onSuccess({userId: targetId, name: rep.name, portraitUri: rep.avatar})
+                    //                 }
+                    //             }).error(function(err) {
 
-                                })
-                            }
-                            setSelf = false;
-                        }
-                    });                 
+                    //             })
+                    //         }
+                    //         setSelf = false;
+                    //     }
+                    // });    
+                    // WebIMWidget.setUserInfoProvider(function(targetId, obj) {
+                    //     obj.onSuccess({
+                    //         name: "用户：" + targetId
+                    //     });
+                    // });
+             
                 },
                 onError: function(error) {
                     console.log('连接失败：' + error);

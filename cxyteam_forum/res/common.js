@@ -5,11 +5,21 @@
 window.RongDemo = {
     common: function (WebIMWidget, config, $scope) {
         WebIMWidget.init(config);
-
+        var basePath="/program_girl";
         WebIMWidget.setUserInfoProvider(function(targetId, obj) {
-            obj.onSuccess({
-                name: "用户：" + targetId
-            });
+            // 根据id获取用户信息
+            $.ajax({
+                url: basePath + "/userinfo/username_userinfo/?username=" + "opSbp1JARhmzgmez9yObTt9aSybs1",
+            }).success(function(rep){
+                console.log(rep);
+                obj.onSuccess({
+                    name: targetId,
+                    id: targetId,
+                    portraitUri: rep.avatar
+                });
+            }).error(function(err) {
+
+            })
         });
 
         WebIMWidget.setGroupInfoProvider(function(targetId, obj){
@@ -17,19 +27,6 @@ window.RongDemo = {
                 name:'群组：' + targetId
             });
         })
-
-        $scope.setconversation = function () {
-            if (!!$scope.targetId) {
-                WebIMWidget.setConversation(Number($scope.targetType), $scope.targetId, "用户：" + $scope.targetId);
-                WebIMWidget.show();
-            }
-        };
-
-        $scope.customerserviceId = "KEFU145914839332836";
-        $scope.setcustomerservice = function () {
-            WebIMWidget.setConversation(Number(RongIMLib.ConversationType.CUSTOMER_SERVICE), $scope.customerserviceId);
-            WebIMWidget.show();
-        }
 
         $scope.show = function() {
             WebIMWidget.show();
@@ -39,8 +36,16 @@ window.RongDemo = {
             WebIMWidget.hidden();
         };
 
-        WebIMWidget.show();
+        // WebIMWidget.show();
         
+
+        $('body').on("click",'.member-item',function() {
+            var targetId = $(this).closest('li').attr('data-owner');  
+            if (!!targetId) {
+                WebIMWidget.setConversation(Number($scope.targetType), targetId, "用户：" + targetId);
+                WebIMWidget.show();
+            }
+        })
 
         // 示例：获取 userinfo.json 中数据，根据 targetId 获取对应用户信息
         // WebIMWidget.setUserInfoProvider(function(targetId,obj){
