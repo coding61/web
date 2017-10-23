@@ -43,6 +43,9 @@
 	            </div>
 				
 				<div class="right-view">
+
+					<div class="ranking">排行榜</div>
+
 					<div class="icon4 avatar">
 						<img class="item" src="../statics/images/avatar.png" alt="">
 					</div>
@@ -61,6 +64,32 @@
 						<img class="item" src="../statics/images/icon3.png" alt="" />
 						<span class="item">x20</span>
 					</div>
+
+					<div class="rankingView">
+						<div id="loading"><img class="loadingImg" src="img/loading.gif" /></div>
+						<div style="width: 280px; height: 300px;overflow-x: hidden;overflow-y: scroll;margin-top: 10px;">
+							<img class="arrow" src="../statics/images/arrow-d.png">
+							<div class="rankList">
+								
+							</div>
+							<script type="text/html" id="rankList-template">
+								{{each results}}
+									{{if $index%2==0}}
+										<li class="item" style="height: 30px;padding-left: 10px;padding-right: 10px;position: relative;">
+											<span style="display: inline-block;width: calc(60%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
+											<span style="position: absolute;right: 10px; width: calc(34%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
+										</li>
+									{{else}}
+										<li class="item" style="height: 30px;background-color: #eeeeee;position: relative;padding-left: 10px;padding-right: 10px;">
+											<span style="display: inline-block;width: calc(60%);height: 30px;overflow: hidden;">{{$index+1}}.<img style="width: 25px;height: 25px;border-radius: 25px;" src="{{$value.avatar}}"><span>{{$value.name}}</span></span>
+											<span style="position: absolute;right: 10px; width: calc(34%);text-align: right;">{{$value.grade.current_name}}/{{$value.experience}}</span>
+										</li>
+									{{/if}}
+								{{/each}}
+							</script>
+						</div>
+					</div>
+					
 				</div>
 			</nav>
 			<div class="main layui-clear container">
@@ -68,7 +97,8 @@
 					<div class="content" style="margin-right:0">
 						<div class="fly-tab"> 
 							<span class="fly-tab-span">          
-								<a href="javascript:void(0);" data-pk="-1">全部帖子</a>    
+								<!-- <a href="javascript:void(0);" data-pk="-1">全部帖子</a>     -->
+								<a data-pk="-1">全部帖子</a> 
 								<!-- <a href="javascript:void(0);"data-pk="0">精帖</a>          -->
 								<!--<a href="javascript:void(0);" onclick="getPostByType(1,1,10);">求助</a>
 								<a href="javascript:void(0);" onclick="getPostByType(2,1,10);">讨论</a> 
