@@ -368,7 +368,7 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 15px;
-    margin: 10px;
+    margin: 10px 0 10px 15px;
 }
 .member-name {
     width: 60px;
