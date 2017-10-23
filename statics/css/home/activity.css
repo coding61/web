@@ -556,6 +556,18 @@ body {
     margin-left: 20px;
     cursor: pointer;
 }
+.rongWai .right .sendMessage .allEmoji {
+    position: absolute;
+    overflow: scroll;
+    width: 310px;
+    height: 200px;
+    background-color: white;
+    bottom: 36px;
+    display: none;
+}
+.rongWai .right .sendMessage .allEmoji span {
+    cursor: pointer;
+}
 .rongWai .right .sendMessage .upload {
     width: 25px;
     height: 25px;
