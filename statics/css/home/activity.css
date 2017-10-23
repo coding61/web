@@ -92,11 +92,13 @@ body {
     border-radius: 5px;
 }
 .verify {
-    position: absolute;
+    position: relative;
     /*width: 45%;*/
-    min-width: 380px;
-    min-height: 231px;
-    float: left;
+	margin-top: -241px;
+	min-width: 390px;
+	min-height: 241px;
+	min-width: 380px;
+    /*float: left;*/
     /*margin: 0 0 40px 45px;*/
     background-color: rgba(0, 0, 0, 0.6);
     /*filter: alpha(Opacity=60);
@@ -106,12 +108,13 @@ body {
     z-index: 1;
     display: none;
     align-items: center;
+    padding-top: 10%;
 }
 .password {
     margin: 0 auto;
     width: 230px;
     height: 160px;
-    margin-top: 30px;
+    /*margin-top: 30px;*/
     background-color: #F1F2F3;
     z-index: 2;
     border-radius: 15px;

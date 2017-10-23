@@ -297,12 +297,12 @@ define(function(require, exports, module) {
                 $('.pw-input').focus();
             })
 
-            // $('.item-info').unbind('click').click(function() {
-            //     pk = $(this).closest('li').attr('data-pk');
-            //     var title = $(this).closest('li').attr('data-title');
-            //     console.log(pk);
-            //     console.log(title);
-            // })
+            $('.item-info').unbind('click').click(function() {
+                pk = $(this).closest('li').attr('data-pk');
+                var title = $(this).closest('li').attr('data-title');
+                console.log(pk);
+                console.log(title);
+            })
 
             $('.pw-confirm').unbind('click').click(function() {
                 var pw = $(this).prev().val();
@@ -326,19 +326,19 @@ define(function(require, exports, module) {
         },
         // 活动详情中的点击
         detailsClickEvent:function(json) {
-            // $('.join-chat').unbind('click').click(function() {
+            $('.join-chat').unbind('click').click(function() {
                 $('.join-chat').attr({
                     "name": json.name,
                     "pk": json.pk
                 });
-            // })
-            // $('.member-item').unbind('click').click(function() {
-            //     var member_pk = $(this).closest('li').attr('data-pk');
-            //     var member_name = $(this).closest('li').attr('data-name');
-            //     var member_owner = $(this).closest('li').attr('data-owner');
-            //     console.log(member_pk);
-            //     console.log(member_name);
-            // })
+            })
+            $('.member-item').unbind('click').click(function() {
+                var member_pk = $(this).closest('li').attr('data-pk');
+                var member_name = $(this).closest('li').attr('data-name');
+                var member_owner = $(this).closest('li').attr('data-owner');
+                console.log(member_pk);
+                console.log(member_name);
+            })
             if (json.isleader) {
                 $('.details-edit').show();
                 $('.details-edit').unbind('click').click(function() {
@@ -369,174 +369,4 @@ define(function(require, exports, module) {
         },
     };
     Page.init();
-
-    // startInit();
-    function startInit() {
-        $.ajax({
-            url: Common.domain + "/im/user_get_token/",
-            headers: {
-                'Authorization': "Token " + localStorage.token
-            },
-        }).success(function(result){
-            var params = {
-                appKey : "8w7jv4qb7eqty",
-                token : result.token,
-            };
-            var userId = "";
-            var callbacks = {
-                getInstance : function(instance){
-                    RongIMLib.RongIMEmoji.init();
-                    //instance.sendMessage
-                    // registerMessage("PersonMessage");
-                },
-                getCurrentUser : function(userInfo){
-                    console.log(userInfo.userId);
-                    userId = userInfo.userId;
-                    alert("链接成功；userid=" + userInfo.userId);
-                    // document.titie = ("链接成功；userid=" + userInfo.userId);
-                    $(document).on("click", '.member-item', function() {
-                        var member_name = $(this).closest('li').attr('data-name');
-                        var member_owner = $(this).closest('li').attr('data-owner');
-                        var conversationtype = RongIMLib.ConversationType.PRIVATE;
-                        var targetId = member_owner; // 目标 Id，根据不同的 ConversationType，可能是用户 Id、讨论组 Id、群组 Id
-                    })
-                },
-                receiveNewMessage : function(message){
-                    console.log(message);
-                    //判断是否有 @ 自己的消息
-                    var mentionedInfo = message.content.mentionedInfo || {};
-                    var ids = mentionedInfo.userIdList || [];
-                    for(var i=0; i < ids.length; i++){
-                        if( ids[i] == userId){
-                            alert("有人 @ 了你！");
-                        }
-                    }
-                    // showResult("show1",message);
-                    // messageOutput(message);
-                }
-            };
-            init(params,callbacks);
-        })
-    }
-
-    function init(params, callbacks, modules){  
-        var appKey = params.appKey;
-        var token = params.token;
-        // var navi = params.navi || "";
-
-        modules = modules || {};
-        var RongIMLib = modules.RongIMLib || window.RongIMLib;
-        var RongIMClient = RongIMLib.RongIMClient;
-        var protobuf = modules.protobuf || null;
-
-        var config = {};
-
-        //私有云切换navi导航，私有云格式 '120.92.10.214:8888'
-        // if(navi !== ""){
-        //     config.navi = navi;
-        // }
-        //私有云切换api,私有云格式 '172.20.210.38:81:8888'
-        // var api = params.api || "";
-        // if(api !== ""){
-        //     config.api = api;
-        // }
-
-        //support protobuf url + function
-        if(protobuf != null){
-            config.protobuf = protobuf;
-        };
-        RongIMLib.RongIMClient.init(appKey,null,config);
-        var instance = RongIMClient.getInstance();
-        // 连接状态监听器
-        RongIMClient.setConnectionStatusListener({
-            onChanged: function (status) {
-                // console.log(status);
-                switch (status) {
-                    case RongIMLib.ConnectionStatus["CONNECTED"]:
-                    case 0:
-                        console.log("连接成功")
-                        callbacks.getInstance && callbacks.getInstance(instance);
-                        break;
-
-                    case RongIMLib.ConnectionStatus["CONNECTING"]:
-                    case 1:
-                        console.log("连接中")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["DISCONNECTED"]:
-                    case 2:
-                        console.log("当前用户主动断开链接")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["NETWORK_UNAVAILABLE"]:
-                    case 3:
-                        console.log("网络不可用")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["CONNECTION_CLOSED"]:
-                    case 4:
-                        console.log("未知原因，连接关闭")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["KICKED_OFFLINE_BY_OTHER_CLIENT"]:
-                    case 6:
-                        console.log("用户账户在其他设备登录，本机会被踢掉线")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["DOMAIN_INCORRECT"]:
-                    case 12:
-                        console.log("当前运行域名错误，请检查安全域名配置")
-                        break;
-                }
-            }
-        });
-        // 设置消息监听器
-        RongIMClient.setOnReceiveMessageListener({
-            // 接收到的消息
-            onReceived: function (message) {
-                // 判断消息类型
-                console.log("新消息: " + message.targetId);
-                console.log(message);
-                callbacks.receiveNewMessage && callbacks.receiveNewMessage(message);
-            }
-        });
-
-        //开始链接
-        RongIMClient.connect(token, {
-            onSuccess: function(userId) {
-                callbacks.getCurrentUser && callbacks.getCurrentUser({userId:userId});
-                console.log("链接成功，用户id：" + userId);
-                
-            },
-            onTokenIncorrect: function() {
-                //console.log('token无效');
-            },
-            onError:function(errorCode){
-              console.log("=============================================");
-              console.log(errorCode);
-            }
-        });
-    }
-
-
-
-    // 点击最近联系人显示联系人列表
-    $('.rongBtn').click(function() {
-        $('.rongWai').show();
-        $('.rongBtn').hide();
-    })
-    // 点击最近联系人隐藏联系人列表
-    $('.rongWai .leftTitle').click(function() {
-        $('.rongBtn').show();
-        $('.rongWai').hide();
-    })
-    // 点击联系人
-    $('.contactList .contactOne').click(function() {
-        $('.rongWai .right').show();
-        messageBottom();
-    })
-    // 聊天最新消息底部显示
-    function messageBottom() {
-        $('.message').scrollTop($('.message').scrollTop() + 400);
-    }
 });
