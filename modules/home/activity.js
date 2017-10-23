@@ -225,11 +225,12 @@ define(function(require, exports, module) {
         clickEvent:function(){
             $('.column').click(function() {
                 data_list = [];
-                $('.column').css({'background-color': '#FEFFFF','color': '#000'});
+                // $('.column').css({'background-color': '#FEFFFF','color': '#000'});
                 tag = $(this).attr('value');
                 switch(tag) {
                     case '0':
                         $('.activity-list').css({'background-color': '#EB6A99', 'color': '#fff'});
+						$('.activity-join, .activity-push').css({'background-color': '#FEFFFF','color': '#000'});
                         $('.join-view, .push-view, .create-view, .details-view').hide();
                         $('.list-view').show();
                         clubs_url = Common.domain + "/club/clubs/";
@@ -237,18 +238,21 @@ define(function(require, exports, module) {
                         break;
                     case '1':
                         $('.activity-join').css({'background-color': '#EB6A99', 'color': '#fff'});
+						$('.activity-list, .activity-push').css({'background-color': '#FEFFFF','color': '#000'});
                         $('.list-view, .push-view, .create-view, .details-view').hide();
                         $('.join-view').show();
                         Page.loadJoinData(join_url);
                         break;
                     case '2':
                         $('.activity-push').css({'background-color': '#EB6A99', 'color': '#fff'});
+						$('.activity-list, .activity-join').css({'background-color': '#FEFFFF','color': '#000'});
                         $('.list-view, .join-view, .create-view, .details-view').hide();
                         $('.push-view').show();
                         Page.loadPushData(push_url);
                         break;
                     case '3':
-                        $('.activity-create').css({'background-color': '#EB6A99', 'color': '#fff'});
+						$('.activity-list, .activity-join, .activity-push').css({'background-color': '#FEFFFF','color': '#000'});
+                        // $('.activity-create').css({'background-color': '#EB6A99', 'color': '#fff'});
                         $('.list-view, .join-view, .push-view, .details-view').hide();
                         $('.create-view').show();
                         break;
@@ -435,21 +439,21 @@ define(function(require, exports, module) {
                     // }
                     refresh(message, 0, message.conversationType, function(){//消息和联系人存本地 0代表存未读
                         // 如果融云窗口未打开
-                        if ($('.rongWai').css("display") == "none") { 
+                        if ($('.rongWai').css("display") == "none") {
                             $('.rongBtn .redPoint').show();
                         } else {
                             refreshMessage(); //刷新聊天窗口信息
-                        }    
-                    }); 
-                    
-                    
+                        }
+                    });
+
+
                 }
             };
             init(params,callbacks);
         })
     }
 
-    function init(params, callbacks, modules){  
+    function init(params, callbacks, modules){
         var appKey = params.appKey;
         var token = params.token;
         // var navi = params.navi || "";
@@ -540,7 +544,7 @@ define(function(require, exports, module) {
             onSuccess: function(userId) {
                 callbacks.getCurrentUser && callbacks.getCurrentUser({userId:userId});
                 console.log("链接成功，用户id：" + userId);
-                
+
             },
             onTokenIncorrect: function() {
                 //console.log('token无效');
@@ -555,7 +559,7 @@ define(function(require, exports, module) {
     function clickPersonOrGroup() {
         // 点头像单聊
         $(document).on("click", '.member-item', function() {
-            // conversationtype = 
+            // conversationtype =
             var member_name = $(this).closest('li').attr('data-name');
             var member_owner = $(this).closest('li').attr('data-owner');
             $('.rongWai').show();
@@ -576,7 +580,7 @@ define(function(require, exports, module) {
                 showMessageWindow(owner, RongIMLib.ConversationType.PRIVATE);
             } else { //联系人为群
                 showMessageWindow(owner, RongIMLib.ConversationType.GROUP);
-            }  
+            }
         })
         // 点击加入群聊
         $('.join-chat').unbind('click').click(function() {
@@ -609,7 +613,7 @@ define(function(require, exports, module) {
                         // } else { //发送消息
                             var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                             $('.message').append(html);
-                            messageBottom();  
+                            messageBottom();
                             $('.textarea').val('');
                         // }
                         refresh(message, 1, conversationtype); //消息和联系人存本地，1代表存已读
@@ -669,28 +673,28 @@ define(function(require, exports, module) {
                         // 存联系人
                         contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, "https://static1.bcjiaoyu.com/groupHeader.jpg", status, "group"];
                         localStorage.contactList = JSON.stringify(contactJson);
-                        
+
                     }).error(function(err) {
 
-                    }) 
+                    })
                 }
                 if (talkListJson[myTargetId][message.targetId]) { //判断有没有对方的聊天记录
                     // talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content});
                     if (message.messageType == "TextMessage") {
-                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}); 
+                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}});
                     } else if (message.messageType == "ImageMessage") {
-                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}); 
+                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}});
                     }
                 } else {
-                    // talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content}]; 
+                    // talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content}];
                     if (message.messageType == "TextMessage") {
-                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}]; 
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}];
                     } else if (message.messageType == "ImageMessage") {
-                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}]; 
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}];
                     }
                 }
                 localStorage.talkList = JSON.stringify(talkListJson);
-                
+
                 typeof callback == 'function' ? callback() : '';
 
             }).error(function() {
@@ -705,7 +709,7 @@ define(function(require, exports, module) {
                 if (talkListJson[myTargetId][message.targetId]) { //判断有没有对方的聊天记录
                     talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}});
                 } else {
-                    talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}]; 
+                    talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}];
                 }
                 localStorage.talkList = JSON.stringify(talkListJson);
                 if (conversationtype == 1) {
@@ -715,26 +719,26 @@ define(function(require, exports, module) {
                         // 存联系人
                         var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : {};
                         // 存联系人
-                        contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, rep.avatar, status, "private"]; 
+                        contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, rep.avatar, status, "private"];
                         localStorage.contactList = JSON.stringify(contactJson);
                         refreshContact();
                     }).error(function(err) {
-                        
+
                     })
                 } else {
                     // 存联系人
                     var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : {};
                     // 存联系人
-                    contactJson[myTargetId][message.targetId] = [message.targetId, $('.rongWai .contacter').text(), "https://static1.bcjiaoyu.com/groupHeader.jpg", status, "group"]; 
+                    contactJson[myTargetId][message.targetId] = [message.targetId, $('.rongWai .contacter').text(), "https://static1.bcjiaoyu.com/groupHeader.jpg", status, "group"];
                     localStorage.contactList = JSON.stringify(contactJson);
                     refreshContact();
                 }
-               
+
             }).error(function() {
 
             })
         }
-        
+
     }
 
     // 点击最近联系人显示联系人列表
@@ -771,7 +775,7 @@ define(function(require, exports, module) {
         $('.rongWai').hide();
         refreshContact();
     })
-    
+
     // 刷新联系人
     function refreshContact() {
         // 刷新联系人

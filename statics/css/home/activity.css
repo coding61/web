@@ -10,17 +10,16 @@ body {
     display: flex;
 }
 .column-view {
-	width: 65%;
-    min-width: 520px;
+	width: calc(50% - 2px);
+    min-width: 390px;
     height: 100%;
     display: flex;
 }
 .column-view .activity-list,
 .column-view .activity-join,
-.column-view .activity-push,
-.column-view .activity-create {
+.column-view .activity-push {
     cursor:pointer;
-    width: calc(25% - 1px);
+    width: calc(33.3% - 1px);
     min-width: 130px;
     height: 100%;
     margin-left: 1px;
@@ -29,23 +28,36 @@ body {
     line-height: 45px;
 }
 .column-view .activity-list {
+	margin-left: 0;
     background-color: #EB6A99;
     border-radius: 5px 0 0 5px;
     color: #fff;
 }
-.column-view .activity-create {
+.column-view .activity-push {
     border-radius: 0 5px 5px 0;
+}
+.activity-create {
+	cursor:pointer;
+    width: 10.5%;
+    min-width: 130px;
+    height: 100%;
+    background-color: #4AB9FB;
+	color: #fff;
+    text-align: center;
+    line-height: 45px;
+    margin-left: 4.5%;
+	border-radius: 5px;
 }
 .search-view {
     width: 30.5%;
-    min-width: 240px;
+    min-width: 220px;
     height: 100%;
     margin-left: 4.5%;
     display: flex;
 }
 .search-view .key-word {
 	width: 100%;
-    min-width: 180px;
+    min-width: 170px;
     height: 100%;
     background-color: #FEFFFF;
     text-align: left;
@@ -57,7 +69,7 @@ body {
 }
 .search-view .search-btn {
     cursor:pointer;
-    min-width: 60px;
+    min-width: 50px;
     height: 100%;
     background-color: #CDCECF;
     text-align: center;
@@ -108,29 +120,40 @@ body {
     z-index: 1;
     display: none;
     align-items: center;
-    padding-top: 10%;
+    padding-top: 8%;
 }
 .password {
-    margin: 0 auto;
-    width: 230px;
-    height: 160px;
-    /*margin-top: 30px;*/
+	margin: 0 auto;
+    width: 260px;
+    height: 175px;
+    /* margin-top: 30px; */
     background-color: #F1F2F3;
     z-index: 2;
     border-radius: 15px;
     text-align: center;
 }
+.password .p1 {
+	line-height: 16px;
+	padding-top: 20px;
+	color: gray;
+}
+.password .p2 {
+	line-height: 16px;
+	margin: -5px 0 15px 0;
+	color: gray;
+}
 .pw-input {
-    text-align: center;
+	text-align: center;
+    width: 190px;
+    height: 40px;
     margin: 0 auto;
-    margin-top: 50px;
 }
 .pw-confirm {
-    cursor: pointer;
-    border-top: 1px solid gray;
-    margin-top: 40px;
-    text-align: center;
-    line-height: 40px;
+	cursor: pointer;
+	border-top: 1px solid gray;
+	margin-top: 20px;
+	text-align: center;
+	line-height: 40px;
 }
 .item-info {
     cursor:pointer;
@@ -428,22 +451,22 @@ body {
 }
 .rongWai {
     display: none;
-    width: 632px; 
-    height: 470px; 
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
+    width: 632px;
+    height: 470px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, 0);
     border-radius: 5px;
     overflow: hidden;
 }
 .rongWai .left {
-    width: 230px; 
+    width: 230px;
     height: 470px;
     background-color: #fefefe;
 }
 .rongWai .right {
-    width: 400px; 
+    width: 400px;
     height: 470px;
     margin-left: 232px;
     margin-top: -470px;
@@ -588,4 +611,3 @@ body {
     border-radius: 5px;
 }
 /*******************yyy********************/
-
