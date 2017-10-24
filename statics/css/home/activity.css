@@ -386,6 +386,11 @@ body {
     padding: 15px 45px;
     margin: 5px;
 }
+.details-name,
+.details-num,
+.member-name {
+	color: gray;
+}
 .details-num {
     margin-left: 40px;
 }
