@@ -296,7 +296,7 @@ define(function(require, exports, module) {
             $('.item-join').unbind('click').click(function() {
                 $('.verify').hide();
                 pk = $(this).closest('li').attr('data-pk');
-                $(this).parent().parent().next().show();
+                $(this).parent().next().show();
                 $('.pw-input').val('');
                 $('.pw-input').focus();
             })
@@ -306,6 +306,10 @@ define(function(require, exports, module) {
                 var title = $(this).closest('li').attr('data-title');
                 console.log(pk);
                 console.log(title);
+            })
+
+			$('.password').unbind('click').click(function() {
+				event.stopPropagation();
             })
 
             $('.pw-confirm').unbind('click').click(function() {
@@ -582,7 +586,7 @@ define(function(require, exports, module) {
             } else { //联系人为群
                 $('.rongWai .right .contacter').attr({"data-type": "group"});
                 showMessageWindow(owner, RongIMLib.ConversationType.GROUP);
-            }  
+            }
             $('.allEmoji').hide();
         })
         // 点击加入群聊
@@ -628,7 +632,7 @@ define(function(require, exports, module) {
                     $('.message').append(html);
                 }
 
-                messageBottom();  
+                messageBottom();
                 $('.textarea').val('');
                 saveToLocal(message, 1, conversationType); //消息和联系人存本地，1代表存已读
             },
@@ -721,7 +725,7 @@ define(function(require, exports, module) {
                     }
                 } else {
                     if (message.messageType == "TextMessage") {
-                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}]; 
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}];
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}];
                     }
@@ -876,8 +880,8 @@ define(function(require, exports, module) {
                 var json = JSON.parse(info.response);
                 var targetId = $('.rongWai .contacter').attr("data-id");
                 var str = $('.rongWai .contacter').attr("data-type");
-                var image = new Image();  
-                image.src = json.url;  
+                var image = new Image();
+                image.src = json.url;
                 var imgBase64 = getBase64Image(image);
                 var msg = new RongIMLib.ImageMessage({content:imgBase64,imageUri:json.url});
                 if (str == "private") {
@@ -903,16 +907,16 @@ define(function(require, exports, module) {
     });
 
     //将图片转为base64
-    function getBase64Image(img) { 
-        var canvas = document.createElement("canvas");  
-        canvas.width = img.width;  
-        canvas.height = img.height;  
-        var ctx = canvas.getContext("2d");  
-        ctx.drawImage(img, 0, 0, img.width, img.height);  
-        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();  
-        var dataURL = canvas.toDataURL("image/"+ext);  
-        return dataURL;  
-    }  
+    function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+        var dataURL = canvas.toDataURL("image/"+ext);
+        return dataURL;
+    }
     // 显示所有表情
     $('.emoji').click(function() {
         if ($('.allEmoji').css("display") == "none") {
@@ -923,7 +927,7 @@ define(function(require, exports, module) {
             $('.allEmoji').show();
         } else {
             $('.allEmoji').hide();
-        } 
+        }
     })
     // 点击表情
     $(document).on('click', '.allEmoji span', function() {
