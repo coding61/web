@@ -401,7 +401,7 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "8w7jv4qb7eqty",
+                appKey : "82hegw5uhf50x",
                 token : result.token,
             };
             var userId = "";
