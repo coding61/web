@@ -434,7 +434,8 @@ body {
 .rongBtn {
     position: fixed;
     bottom: 0;
-    left: 0;
+    /*left: 0;*/
+    right: 0;
     width: 230px;
     height: 40px;
     line-height: 40px;
@@ -458,10 +459,12 @@ body {
     height: 470px;
     position: fixed;
     bottom: 0;
-    left: 0;
+    /*left: 0;*/
+    right: 0;
     background-color: rgba(0, 0, 0, 0);
     border-radius: 5px;
     overflow: hidden;
+    justify-content: flex-end;
 }
 .rongWai .left {
     width: 230px;
@@ -471,8 +474,9 @@ body {
 .rongWai .right {
     width: 400px;
     height: 470px;
-    margin-left: 232px;
-    margin-top: -470px;
+    /*margin-left: 232px;
+    margin-top: -470px;*/
+    margin-left: 2px;
     background-color: #fefefe;
     display: none;
 }
