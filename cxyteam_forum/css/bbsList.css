@@ -249,7 +249,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
     margin-right: 10%;
     color: white;
     font-size: 14px;
-    display: none;
+    /*display: none;*/
 }
 .rankingView {
     position: absolute;
