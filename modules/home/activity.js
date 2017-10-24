@@ -401,7 +401,8 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "82hegw5uhf50x",
+                appKey : "82hegw5uhf50x", //生产环境
+                // appKey: "8w7jv4qb7eqty", //开发环境
                 token : result.token,
             };
             var userId = "";
@@ -622,6 +623,7 @@ define(function(require, exports, module) {
         $(document).on("click", '.join-chat', function() {
             var targetId = $(this).attr("pk");
             var title = $(this).attr('name');
+            $('.rongWai').css({"display": "flex"});
             $('.rongWai').show();
             $('.rongWai .right').show();
             $('.rongWai .contacter').html(title);
