@@ -359,6 +359,8 @@ define(function(require, exports, module) {
                         })
                     })
                 })
+            } else {
+            	$('.details-edit').hide();
             }
         },
         // 异常处理
