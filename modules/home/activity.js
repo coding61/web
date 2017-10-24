@@ -705,7 +705,7 @@ define(function(require, exports, module) {
                     // 存联系人
                     contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, rep.avatar, status, "private"];
                     localStorage.contactList = JSON.stringify(contactJson);
-                    typeof callback == 'function' ? callback() : '';
+                    // typeof callback == 'function' ? callback() : '';
                 } else {
                     $.ajax({
                         url: Common.domain + "/club/club_detail/" + message.targetId + "/"
@@ -713,7 +713,7 @@ define(function(require, exports, module) {
                         // 存联系人
                         contactJson[myTargetId][message.targetId] = [message.targetId, rep.name, "https://static1.bcjiaoyu.com/groupHeader.jpg", status, "group"];
                         localStorage.contactList = JSON.stringify(contactJson);
-                        typeof callback == 'function' ? callback() : '';
+                        // typeof callback == 'function' ? callback() : '';
                     }).error(function(err) {
 
                     })
@@ -734,6 +734,7 @@ define(function(require, exports, module) {
                     }
                 }
                 localStorage.talkList = JSON.stringify(talkListJson);
+                typeof callback == 'function' ? callback() : '';
             }).error(function() {
 
             })
