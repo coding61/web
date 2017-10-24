@@ -266,7 +266,7 @@ define(function(require, exports, module) {
                     data_list = [];
                     tag = '0';
                     $('.activity-list').css({'background-color': '#EB6A99', 'color': '#fff'});
-                    $('.activity-join, .activity-push, .activity-create').css({'background-color': '#fff', 'color': '#000'});
+                    $('.activity-join, .activity-push').css({'background-color': '#fff', 'color': '#000'});
                     $('.join-view, .push-view, .create-view, .details-view').hide();
                     $('.list-view').show();
                     clubs_url = Common.domain + "/club/clubs/?name=" + key;
@@ -390,7 +390,7 @@ define(function(require, exports, module) {
         }
     }, 1000);
 
-    
+
     var myTargetId; //我的id
     // var conversationtype; //会话类型
     function startInit() {
@@ -419,7 +419,7 @@ define(function(require, exports, module) {
                     userId = userInfo.userId;
                     // alert("链接成功；userid=" + userInfo.userId);
                     // myTargetId = userInfo.userId;
-                    
+
                     refreshContact();
                 },
                 receiveNewMessage : function(message){
@@ -573,7 +573,7 @@ define(function(require, exports, module) {
                 onSuccess: function(userId) {
                     callbacks.getCurrentUser && callbacks.getCurrentUser({userId:userId});
                     console.log("链接成功，用户id：" + userId);
-                    
+
                 },
                 onTokenIncorrect: function() {
                     //console.log('token无效');
