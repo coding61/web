@@ -330,9 +330,10 @@ body {
     border: 1px solid #EB6A99;
     text-align: center;
     line-height: 28px;
-    margin: 10px 0 0 15px;
+    margin: 20px;
 }
 .details-title {
+	width: 70%;
     font-size: 20px;
     line-height: 40px;
     text-align: center;
@@ -342,6 +343,24 @@ body {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
+	margin: 0 auto;
+}
+.details-operate {
+	cursor:pointer;
+	position: absolute;
+    float: right;
+    /*margin: -45px 45px;*/
+    display: none;
+	width: 100px;
+    height: 30px;
+    color: #EB6A99;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #fff;
+	border: 1px solid #EB6A99;
+    right: 8%;
+    margin-top: -55px;
 }
 .details-edit {
     cursor:pointer;
@@ -366,6 +385,11 @@ body {
     border-top: 1px solid gray;
     padding: 15px 45px;
     margin: 5px;
+}
+.details-name,
+.details-num,
+.member-name {
+	color: gray;
 }
 .details-num {
     margin-left: 40px;
@@ -440,6 +464,64 @@ body {
     background-color: #EB6A99;
     right: 8%;
     margin-top: -5px;
+}
+.details-pw-shadow {
+	height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9000;
+	display: none;
+}
+.details-verify {
+    position: absolute;
+    width: 33%;
+	top: 25%;
+	left: 33%;
+	margin: 0 auto;
+	min-width: 240px;
+	min-height: 191px;
+    background-color: #F1F2F3;
+    border-radius: 5px;
+    z-index: 9001;
+	text-align: center;
+	padding-top: 30px;
+}
+.details-password {
+	margin: 0 auto;
+	width: 80%;
+    height: 175px;
+    margin-top: 30px;
+    background-color: #F1F2F3;
+    border-radius: 15px;
+
+}
+.details-password .p1 {
+	line-height: 16px;
+	padding-top: 20px;
+	color: gray;
+}
+.details-password .p2 {
+	line-height: 16px;
+	margin: -5px 0 15px 0;
+	color: gray;
+}
+.details-pw-input {
+	text-align: center;
+    width: 80%;
+    height: 40px;
+    margin: 0 auto;
+	font-size: 16px;
+}
+.details-pw-confirm {
+	cursor: pointer;
+	border-top: 1px solid gray;
+	margin-top: 20px;
+	text-align: center;
+	line-height: 40px;
 }
 
 /*******************yyy********************/
