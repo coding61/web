@@ -45,13 +45,13 @@
                             <img class="item-head" src={{$value.leader.avatar}} alt="" style="display: inline;">
                             <div class="item-name">{{$value.leader.name}}</div>
                             <div class="item-num">已报名：{{$value.member_number}}</div>
-                            {{if $value.isjoin == true}}
-                                <div class="item-joined">已参加</div>
-                            {{/if}}
-                            {{if $value.isjoin == false}}
-                                <div class="item-join">参加活动</div>
-                            {{/if}}
 						</div>
+						{{if $value.isjoin == true}}
+							<div class="item-joined">已参加</div>
+						{{/if}}
+						{{if $value.isjoin == false}}
+							<div class="item-join">参加活动</div>
+						{{/if}}
 					</div>
 					<div class="verify">
 						<div class="password">
@@ -83,8 +83,8 @@
                             <img class="item-head" src={{$value.leader.avatar}} alt="" style="display: inline;">
                             <div class="item-name">{{$value.leader.name}}</div>
                             <div class="item-num">已报名：{{$value.member_number}}</div>
-                            <div class="item-joined">已参加</div>
 						</div>
+						<div class="item-joined">已参加</div>
 					</div>
 				</li>
 			{{/each}}
@@ -108,8 +108,8 @@
                             <img class="item-head" src={{$value.leader.avatar}} alt="" style="display: inline;">
                             <div class="item-name">{{$value.leader.name}}</div>
                             <div class="item-num">已报名：{{$value.member_number}}</div>
-                            <div class="item-joined">已参加</div>
 						</div>
+						<div class="item-joined">已参加</div>
 					</div>
 				</li>
 			{{/each}}

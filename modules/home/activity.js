@@ -266,7 +266,7 @@ define(function(require, exports, module) {
                     data_list = [];
                     tag = '0';
                     $('.activity-list').css({'background-color': '#EB6A99', 'color': '#fff'});
-                    $('.activity-join, .activity-push, .activity-create').css({'background-color': '#fff', 'color': '#000'});
+                    $('.activity-join, .activity-push').css({'background-color': '#fff', 'color': '#000'});
                     $('.join-view, .push-view, .create-view, .details-view').hide();
                     $('.list-view').show();
                     clubs_url = Common.domain + "/club/clubs/?name=" + key;
@@ -296,7 +296,7 @@ define(function(require, exports, module) {
             $('.item-join').unbind('click').click(function() {
                 $('.verify').hide();
                 pk = $(this).closest('li').attr('data-pk');
-                $(this).parent().parent().next().show();
+                $(this).parent().next().show();
                 $('.pw-input').val('');
                 $('.pw-input').focus();
             })
@@ -306,6 +306,10 @@ define(function(require, exports, module) {
                 var title = $(this).closest('li').attr('data-title');
                 console.log(pk);
                 console.log(title);
+            })
+
+			$('.password').unbind('click').click(function() {
+				event.stopPropagation();
             })
 
             $('.pw-confirm').unbind('click').click(function() {
@@ -355,6 +359,8 @@ define(function(require, exports, module) {
                         })
                     })
                 })
+            } else {
+            	$('.details-edit').hide();
             }
         },
         // 异常处理
@@ -384,7 +390,7 @@ define(function(require, exports, module) {
         }
     }, 1000);
 
-    
+
     var myTargetId; //我的id
     // var conversationtype; //会话类型
     function startInit() {
@@ -413,7 +419,7 @@ define(function(require, exports, module) {
                     userId = userInfo.userId;
                     // alert("链接成功；userid=" + userInfo.userId);
                     // myTargetId = userInfo.userId;
-                    
+
                     refreshContact();
                 },
                 receiveNewMessage : function(message){
@@ -434,8 +440,6 @@ define(function(require, exports, module) {
                             refreshMessage(); //刷新聊天窗口信息
                         }
                     });
-
-
                 }
             };
             init(params,callbacks);
@@ -567,7 +571,7 @@ define(function(require, exports, module) {
                 onSuccess: function(userId) {
                     callbacks.getCurrentUser && callbacks.getCurrentUser({userId:userId});
                     console.log("链接成功，用户id：" + userId);
-                    
+
                 },
                 onTokenIncorrect: function() {
                     //console.log('token无效');
@@ -609,7 +613,7 @@ define(function(require, exports, module) {
             } else { //联系人为群
                 $('.rongWai .right .contacter').attr({"data-type": "group"});
                 showMessageWindow(owner, RongIMLib.ConversationType.GROUP);
-            }  
+            }
             $('.allEmoji').hide();
         })
         // 点击加入群聊
@@ -682,7 +686,7 @@ define(function(require, exports, module) {
                     }
                 }
 
-                messageBottom();  
+                messageBottom();
                 $('.textarea').val('');
                 saveToLocal(message, 1, conversationType); //消息和联系人存本地，1代表存已读
             },
@@ -791,7 +795,7 @@ define(function(require, exports, module) {
                     }
                 } else {
                     if (message.messageType == "TextMessage") {
-                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}]; 
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}];
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}];
                     }
@@ -943,8 +947,8 @@ define(function(require, exports, module) {
                 var json = JSON.parse(info.response);
                 var targetId = $('.rongWai .contacter').attr("data-id");
                 var str = $('.rongWai .contacter').attr("data-type");
-                var image = new Image();  
-                image.src = json.url;  
+                var image = new Image();
+                image.src = json.url;
                 var imgBase64 = getBase64Image(image);
                 var msg = new RongIMLib.ImageMessage({content:imgBase64,imageUri:json.url});
                 if (str == "private") {
@@ -994,6 +998,7 @@ define(function(require, exports, module) {
         $('.allEmoji').hide();
         refreshContact();
     })
+
     // 显示所有表情
     $('.emoji').click(function() {
         if ($('.allEmoji').css("display") == "none") {
@@ -1004,7 +1009,7 @@ define(function(require, exports, module) {
             $('.allEmoji').show();
         } else {
             $('.allEmoji').hide();
-        } 
+        }
     })
     // 点击表情
     $(document).on('click', '.allEmoji span', function() {
