@@ -374,7 +374,17 @@ define(function(require, exports, module) {
     };
     Page.init();
 
-    // startInit();
+    var checkToken = setInterval(function() {
+        if (localStorage.token) {
+            console.log("已登录");
+            startInit();
+            clearInterval(checkToken);
+        } else {
+            console.log("未登录");
+        }
+    }, 1000);
+
+    
     var myTargetId; //我的id
     // var conversationtype; //会话类型
     function startInit() {
@@ -390,41 +400,20 @@ define(function(require, exports, module) {
             };
             var userId = "";
             var callbacks = {
+                //连接融云成功回掉函数
                 getInstance : function(instance){
                     RongIMLib.RongIMEmoji.init();
                     //instance.sendMessage
                     // registerMessage("PersonMessage");
                     clickPersonOrGroup(); //点击头像或加入群聊
                 },
+
                 getCurrentUser : function(userInfo){
                     console.log(userInfo.userId);
                     userId = userInfo.userId;
                     // alert("链接成功；userid=" + userInfo.userId);
-                    myTargetId = userInfo.userId;
-                    var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : false;
-                    if (contactJson) { //本地有没有账号记录
-                        if (contactJson[userInfo.userId]) { //有自己的记录
-                            for(item in contactJson[userInfo.userId]) {
-                                if (contactJson[userInfo.userId][item][3] == 0) {
-                                    $('.rongBtn .redPoint').show();
-                                    break;
-                                }
-                            }
-                        } else { //没有的话，创建一个自己空的记录
-                            contactJson[userInfo.userId] = {};
-                            localStorage.contactList = JSON.stringify(contactJson);
-                            var talkListJson = {};
-                            talkListJson[userInfo.userId] = {};
-                            localStorage.talkList = JSON.stringify(talkListJson);
-                        }
-                    } else { //没有账号记录的话，存一个自己空的记录
-                        var json = {};
-                        json[userInfo.userId] = {};
-                        localStorage.contactList = JSON.stringify(json);
-                         var talkListJson = {};
-                        talkListJson[userInfo.userId] = {};
-                        localStorage.talkList = JSON.stringify(talkListJson);
-                    }
+                    // myTargetId = userInfo.userId;
+                    
                     refreshContact();
                 },
                 receiveNewMessage : function(message){
@@ -479,83 +468,120 @@ define(function(require, exports, module) {
         if(protobuf != null){
             config.protobuf = protobuf;
         };
-        RongIMLib.RongIMClient.init(appKey,null,config);
-        var instance = RongIMClient.getInstance();
-        // 连接状态监听器
-        RongIMClient.setConnectionStatusListener({
-            onChanged: function (status) {
-                // console.log(status);
-                switch (status) {
-                    case RongIMLib.ConnectionStatus["CONNECTED"]:
-                    case 0:
-                        console.log("连接成功")
-                        callbacks.getInstance && callbacks.getInstance(instance);
-                        break;
 
-                    case RongIMLib.ConnectionStatus["CONNECTING"]:
-                    case 1:
-                        console.log("连接中")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["DISCONNECTED"]:
-                    case 2:
-                        console.log("当前用户主动断开链接")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["NETWORK_UNAVAILABLE"]:
-                    case 3:
-                        console.log("网络不可用");
-                        // alert("网络不可用");
-                        if ($('.rongWai .right').css("display") == "block") {
-                            $('.rongWai .message').append('<p style="text-align: center;">连接已断开, 请刷新重试。</p>');
+        $.ajax({
+            url: Common.domain + "/userinfo/whoami/",
+            headers: {
+                'Authorization': "Token " + localStorage.token
+            },
+        }).success(function(result){
+            myTargetId = result.owner;
+            // 设置当前帐号的本地存储记录
+            var contactJson = !!localStorage.contactList ? JSON.parse(localStorage.contactList) : false;
+            if (contactJson) { //本地有没有账号记录
+                if (contactJson[result.owner]) { //有自己的记录
+                    for(item in contactJson[result.owner]) {
+                        if (contactJson[result.owner][item][3] == 0) {
+                            $('.rongBtn .redPoint').show();
+                            break;
                         }
-                        break;
-
-                    case RongIMLib.ConnectionStatus["CONNECTION_CLOSED"]:
-                    case 4:
-                        console.log("未知原因，连接关闭")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["KICKED_OFFLINE_BY_OTHER_CLIENT"]:
-                    case 6:
-                        console.log("用户账户在其他设备登录，本机会被踢掉线")
-                        break;
-
-                    case RongIMLib.ConnectionStatus["DOMAIN_INCORRECT"]:
-                    case 12:
-                        console.log("当前运行域名错误，请检查安全域名配置")
-                        break;
+                    }
+                } else { //没有的话，创建一个自己空的记录
+                    contactJson[result.owner] = {};
+                    localStorage.contactList = JSON.stringify(contactJson);
+                    var talkListJson = {};
+                    talkListJson[result.owner] = {};
+                    localStorage.talkList = JSON.stringify(talkListJson);
                 }
+            } else { //没有账号记录的话，存一个自己空的记录
+                var json = {};
+                json[result.owner] = {};
+                localStorage.contactList = JSON.stringify(json);
+                 var talkListJson = {};
+                talkListJson[result.owner] = {};
+                localStorage.talkList = JSON.stringify(talkListJson);
             }
-        });
-        // 设置消息监听器
-        RongIMClient.setOnReceiveMessageListener({
-            // 接收到的消息
-            onReceived: function (message) {
-                // 判断消息类型
-                console.log("新消息: " + message.targetId);
-                console.log(message);
-                callbacks.receiveNewMessage && callbacks.receiveNewMessage(message);
-            }
-        });
 
-        //开始链接
-        RongIMClient.connect(token, {
-            onSuccess: function(userId) {
-                callbacks.getCurrentUser && callbacks.getCurrentUser({userId:userId});
-                console.log("链接成功，用户id：" + userId);
+            RongIMLib.RongIMClient.init(appKey,null,config);
 
-            },
-            onTokenIncorrect: function() {
-                //console.log('token无效');
-            },
-            onError:function(errorCode){
-              console.log("=============================================");
-              console.log(errorCode);
-            }
-        });
+            var instance = RongIMClient.getInstance();
+            // 连接状态监听器
+            RongIMClient.setConnectionStatusListener({
+                onChanged: function (status) {
+                    // console.log(status);
+                    switch (status) {
+                        case RongIMLib.ConnectionStatus["CONNECTED"]:
+                        case 0:
+                            console.log("连接成功")
+                            callbacks.getInstance && callbacks.getInstance(instance);
+                            break;
+
+                        case RongIMLib.ConnectionStatus["CONNECTING"]:
+                        case 1:
+                            console.log("连接中")
+                            break;
+
+                        case RongIMLib.ConnectionStatus["DISCONNECTED"]:
+                        case 2:
+                            console.log("当前用户主动断开链接")
+                            break;
+
+                        case RongIMLib.ConnectionStatus["NETWORK_UNAVAILABLE"]:
+                        case 3:
+                            console.log("网络不可用");
+                            // alert("网络不可用");
+                            if ($('.rongWai .right').css("display") == "block") {
+                                $('.rongWai .message').append('<p style="text-align: center;">连接已断开, 请刷新重试。</p>');
+                            }
+                            break;
+
+                        case RongIMLib.ConnectionStatus["CONNECTION_CLOSED"]:
+                        case 4:
+                            console.log("未知原因，连接关闭")
+                            break;
+
+                        case RongIMLib.ConnectionStatus["KICKED_OFFLINE_BY_OTHER_CLIENT"]:
+                        case 6:
+                            console.log("用户账户在其他设备登录，本机会被踢掉线")
+                            break;
+
+                        case RongIMLib.ConnectionStatus["DOMAIN_INCORRECT"]:
+                        case 12:
+                            console.log("当前运行域名错误，请检查安全域名配置")
+                            break;
+                    }
+                }
+            });
+            // 设置消息监听器
+            RongIMClient.setOnReceiveMessageListener({
+                // 接收到的消息
+                onReceived: function (message) {
+                    // 判断消息类型
+                    console.log("新消息: " + message.targetId);
+                    console.log(message);
+                    callbacks.receiveNewMessage && callbacks.receiveNewMessage(message);
+                }
+            });
+            //开始链接
+            RongIMClient.connect(token, {
+                onSuccess: function(userId) {
+                    callbacks.getCurrentUser && callbacks.getCurrentUser({userId:userId});
+                    console.log("链接成功，用户id：" + userId);
+                    
+                },
+                onTokenIncorrect: function() {
+                    //console.log('token无效');
+                },
+                onError:function(errorCode){
+                  console.log("=============================================");
+                  console.log(errorCode);
+                }
+            });
+        }).error(function() {
+        })
     }
 
+    //点击头像或者加入群聊
     function clickPersonOrGroup() {
         // 点头像单聊
         $(document).on("click", '.member-item', function() {
@@ -610,7 +636,9 @@ define(function(require, exports, module) {
                 var targetId = owner; // 目标 Id，根据不同的 ConversationType，可能是用户 Id、讨论组 Id、群组 Id
                 sendMessage(conversationType, targetId, msg)
             } else {
-                alert("请输入内容");
+                // alert("请输入内容");
+                Common.bcAlert("请输入内容", function(){
+                })
             }
         })
     }
@@ -624,7 +652,7 @@ define(function(require, exports, module) {
                     var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                     $('.message').append(html);
                 } else if (message.messageType == "ImageMessage") {
-                    var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><img style="max-width: 300px; max-height: 150px;" src="'+message.content.imageUri+'"/img><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                    var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><img class="messageImg" style="max-width: 300px; max-height: 150px;" src="'+message.content.imageUri+'"/img><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                     $('.message').append(html);
                 }
 
@@ -658,6 +686,8 @@ define(function(require, exports, module) {
                         break;
                 }
                 console.log('发送失败:' + info);
+                Common.bcAlert('发送失败:' + info, function(){
+                })
             }
         });
     }
@@ -888,7 +918,7 @@ define(function(require, exports, module) {
             },
             'Error': function(up, err, errTip) {
                    //上传出错时,处理相关的事情
-                   alert("上传失败");
+                   console.log("上传失败");
             },
             'UploadComplete': function() {
                    //队列文件处理完毕后,处理相关的事情
@@ -932,6 +962,16 @@ define(function(require, exports, module) {
         // message = RongIMLib.RongIMEmoji.emojiToSymbol(message);
         $('.textarea').val($('.textarea').val() + message);
     })
+    // 点击消息中的图片进行放大
+    $(document).on("click", '.messageImg', function() {
+        $('.bigImage').attr({"src": $(this).attr("src")});
+        $('.bigImageWai').css({"display": "flex"});
+        $('.bigImageWai').show();
+    })
+    // 点击灰色蒙版大图消失
+    $(document).on("click", '.bigImageWai', function() {
+        $('.bigImageWai').hide();
+    })
     // 聊天最新消息底部显示
     function messageBottom() {
         // $('.message').scrollTop($('.message').scrollTop() + 400);
@@ -948,5 +988,7 @@ define(function(require, exports, module) {
     ArtTemplate.helper('formatTime', function(value) {
         return new Date(value).toLocaleString();
     })
-
+    ArtTemplate.helper('decodeEmoji', function(value) {
+        return RongIMLib.RongIMEmoji.emojiToSymbol(value);
+    })
 });
