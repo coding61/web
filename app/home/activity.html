@@ -190,7 +190,9 @@
                     {{each}}
                         {{if isMe($value.id)}}
                         <div class="messageRight">
+                            {{if $value.isShowTime}}
                             <div class="time">{{formatTime($value.sentTime)}}</div>
+                            {{/if}}
                             <div class="messageRightItem">
                                 {{if $value.content.textMessage}}
                                     <span>{{decodeEmoji($value.content.textMessage)}}</span>
@@ -202,7 +204,9 @@
                         </div>
                         {{else}}
                         <div class="messageLeft">
+                            {{if $value.isShowTime}}
                             <div class="time">{{formatTime($value.sentTime)}}</div>
+                            {{/if}}
                             <div class="messageItem">
                                 <img class="chatHeaderLeft" src="{{$value.avatar}}">
                                 <span>{{$value.name}}</span>

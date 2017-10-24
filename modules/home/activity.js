@@ -440,8 +440,6 @@ define(function(require, exports, module) {
                             refreshMessage(); //刷新聊天窗口信息
                         }
                     });
-
-
                 }
             };
             init(params,callbacks);
@@ -593,6 +591,7 @@ define(function(require, exports, module) {
         $(document).on("click", '.member-item', function() {
             var member_name = $(this).closest('li').attr('data-name');
             var member_owner = $(this).closest('li').attr('data-owner');
+            $('.rongWai').css({"display": "flex"});
             $('.rongWai').show();
             $('.rongWai .right').show();
             $('.rongWai .right .contacter').html(member_name); //设置当前会话
@@ -655,11 +654,36 @@ define(function(require, exports, module) {
                 //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
                 console.log("Send successfully");
                 if (message.messageType == "TextMessage") {
-                    var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
-                    $('.message').append(html);
+                    if (JSON.parse(localStorage.talkList)[myTargetId][targetId]) {
+                        var n = JSON.parse(localStorage.talkList)[myTargetId][targetId].length;
+                        var t1 = JSON.parse(localStorage.talkList)[myTargetId][targetId][n - 1].sentTime;
+                        var t2 = message.sentTime;
+                        if (minuteInterval(t1, t2)) {
+                            var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                        } else {
+                            var html = '<div class="messageRight"><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                        }
+                        $('.message').append(html);
+                    } else {
+                        var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                        $('.message').append(html);
+                    }
+                    
                 } else if (message.messageType == "ImageMessage") {
-                    var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><img class="messageImg" style="max-width: 300px; max-height: 150px;" src="'+message.content.imageUri+'"/img><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
-                    $('.message').append(html);
+                    if (JSON.parse(localStorage.talkList)[myTargetId][targetId]) {
+                        var n = JSON.parse(localStorage.talkList)[myTargetId][targetId].length;
+                        var t1 = JSON.parse(localStorage.talkList)[myTargetId][targetId][n - 1].sentTime;
+                        var t2 = message.sentTime;
+                        if (minuteInterval(t1, t2)) {
+                            var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><img class="messageImg" style="max-width: 300px; max-height: 150px;" src="'+message.content.imageUri+'"/img><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                        } else {
+                            var html = '<div class="messageRight"><div class="messageRightItem"><img class="messageImg" style="max-width: 300px; max-height: 150px;" src="'+message.content.imageUri+'"/img><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                        }
+                        $('.message').append(html);
+                    } else {
+                        var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><img class="messageImg" style="max-width: 300px; max-height: 150px;" src="'+message.content.imageUri+'"/img><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                        $('.message').append(html);
+                    }
                 }
 
                 messageBottom();
@@ -696,6 +720,19 @@ define(function(require, exports, module) {
                 })
             }
         });
+    }
+    // 计算分钟间隔是否大于3分钟
+    function minuteInterval(t1, t2) {
+        var t = t2 - t1;
+        var leave1=t%(24*3600*1000) ;
+        //计算相差分钟数  
+        var leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数  
+        var minutes=Math.floor(leave2/(60*1000)); 
+        if (minutes > 3) {
+            return true;
+        } else {
+            return false;
+        }
     }
     //消息和联系人存本地
     function saveToLocal(message,status,conversationType,callback) { //status 代表消息读取状态
@@ -792,12 +829,6 @@ define(function(require, exports, module) {
         }
     }
 
-    // 点击最近联系人显示联系人列表
-    $('.rongBtn').click(function() {
-        $('.rongWai').show();
-        $('.rongBtn').hide();
-        refreshMessage()
-    })
     // 刷新消息
     function refreshMessage() {
         var currentContact = $('.rongWai .contacter').attr("data-id");
@@ -812,6 +843,16 @@ define(function(require, exports, module) {
             }
             // 刷新消息
             var talkListJson = JSON.parse(localStorage.talkList);
+            if (talkListJson[myTargetId][currentContact]) {
+                talkListJson[myTargetId][currentContact][0].isShowTime = true;
+                for (var i = 0; i < talkListJson[myTargetId][currentContact].length-1; i++) {
+                    var time1 = talkListJson[myTargetId][currentContact][i].sentTime;
+                    var time2 = talkListJson[myTargetId][currentContact][i+1].sentTime;
+                    if (minuteInterval(time1, time2)) {
+                        talkListJson[myTargetId][currentContact][i+1].isShowTime = true;
+                    }
+                }
+            }
             $('.rongWai .message').empty();
             var html = ArtTemplate("messageTemplate", talkListJson[myTargetId][currentContact]);
             $('.rongWai .message').html(html);
@@ -820,13 +861,6 @@ define(function(require, exports, module) {
         // 刷新联系人
         refreshContact();
     }
-    // 点击最近联系人隐藏联系人列表
-    $('.rongWai .leftTitle').click(function() {
-        $('.rongBtn').show();
-        $('.rongWai').hide();
-        $('.allEmoji').hide();
-        refreshContact();
-    })
 
     // 刷新联系人
     function refreshContact() {
@@ -940,16 +974,31 @@ define(function(require, exports, module) {
     });
 
     //将图片转为base64
-    function getBase64Image(img) {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, img.width, img.height);
-        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
-        var dataURL = canvas.toDataURL("image/"+ext);
-        return dataURL;
-    }
+    function getBase64Image(img) { 
+        var canvas = document.createElement("canvas");  
+        canvas.width = img.width;  
+        canvas.height = img.height;  
+        var ctx = canvas.getContext("2d");  
+        ctx.drawImage(img, 0, 0, img.width, img.height);  
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();  
+        var dataURL = canvas.toDataURL("image/"+ext);  
+        return dataURL;  
+    }  
+    // 点击最近联系人显示联系人列表
+    $('.rongBtn').click(function() {
+        $('.rongWai').css({"display": "flex"});
+        $('.rongWai').show();
+        $('.rongBtn').hide();
+        refreshMessage()
+    })
+    // 点击最近联系人隐藏联系人列表
+    $('.rongWai .leftTitle').click(function() {
+        $('.rongBtn').show();
+        $('.rongWai').hide();
+        $('.allEmoji').hide();
+        refreshContact();
+    })
+
     // 显示所有表情
     $('.emoji').click(function() {
         if ($('.allEmoji').css("display") == "none") {
