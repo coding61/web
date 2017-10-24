@@ -1000,6 +1000,13 @@ define(function(require, exports, module) {
         $('.allEmoji').hide();
         refreshContact();
     })
+    // 点击X隐藏联系人列表
+    $('.rongWai .closeRongYun').click(function() {
+        $('.rongBtn').show();
+        $('.rongWai').hide();
+        $('.allEmoji').hide();
+        refreshContact();
+    })
 
     // 显示所有表情
     $('.emoji').click(function() {

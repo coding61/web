@@ -533,6 +533,17 @@ body {
     background: url(../../../cxyteam_forum/images/webBg.png) 0 0/10px auto repeat;
     color: white;
 }
+.rongWai .right .closeRongYun {
+    height: 40px;
+    line-height: 40px;
+    float: right;
+    margin-top: -40px;
+    color: white;
+    font-size: 16px;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+}
 .rongWai .right .message {
     height: 300px;
     /*background-color: burlywood;*/
