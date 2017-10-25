@@ -114,9 +114,8 @@ define(function(require, exports, module) {
             $('.details-view').show();
             $('.details-back').unbind('click').click(function() {
                 $('.details-title, .details-content, .details-name, .details-num').html('');
-                $('.details-view').hide();
+                $('.details-view, .details-operate').hide();
 				data_list = [];
-				console.log(tag);
                 switch (tag) {
                     case '0':
                         $('.list-view').show();
@@ -417,6 +416,11 @@ define(function(require, exports, module) {
                     "pk": json.pk
                 // });
             })
+			if (json.isjoin) {
+                $('.join-chat').show();
+            } else {
+            	$('.join-chat').hide();
+            }
             // $('.member-item').unbind('click').click(function() {
             //     var member_pk = $(this).closest('li').attr('data-pk');
             //     var member_name = $(this).closest('li').attr('data-name');
@@ -476,8 +480,8 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "82hegw5uhf50x", //生产环境
-                // appKey: "8w7jv4qb7eqty", //开发环境
+                // appKey : "82hegw5uhf50x", //生产环境
+                appKey: "8w7jv4qb7eqty", //开发环境
                 token : result.token,
             };
             var userId = "";
