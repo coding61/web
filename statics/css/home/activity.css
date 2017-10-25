@@ -316,7 +316,7 @@ body {
     min-width: 800px;
     min-height: 500px;
     background: #fff;
-    margin: 30px 45px 45px 45px;
+    margin: 30px 4.5% 45px 4.5%;
     border-radius: 10px;
     display: none;
 }
@@ -334,10 +334,11 @@ body {
     margin: 20px;
 }
 .details-title {
-	width: 70%;
+	/*width: calc(100% - 500px);*/
+	width: calc(100% - 300px);
     font-size: 20px;
     line-height: 40px;
-	height: 60px;
+	height: 70px;
     text-align: center;
     padding: 20px;
     color: #EB6A99;
@@ -361,8 +362,8 @@ body {
     line-height: 30px;
     background-color: #fff;
 	border: 1px solid #EB6A99;
-    right: 8%;
-    margin-top: -35px;
+    right: calc(4.5% + 45px);
+    margin-top: -45px;
 }
 .details-delete {
 	cursor:pointer;
@@ -378,8 +379,8 @@ body {
     line-height: 30px;
     background-color: #fff;
 	border: 1px solid #EB6A99;
-    right: calc(8% + 100px);
-    margin-top: -35px;
+    right: calc(4.5% + 145px);;
+    margin-top: -45px;
 }
 .details-edit {
     cursor:pointer;
@@ -395,11 +396,11 @@ body {
     line-height: 30px;
     background-color: #fff;
 	border: 1px solid #EB6A99;
-    right: 8%;
-    margin-top: -35px;
+    right: calc(4.5% + 45px);
+    margin-top: -45px;
 }
 .details-content {
-    width: 90%;
+    width: calc(100% - 90px);
     min-height: 200px;
     font-size: 16px;
     line-height: 32px;
@@ -407,7 +408,8 @@ body {
     -webkit-box-orient: vertical;
     /*-webkit-line-clamp: 6;*/
     overflow: hidden;
-    margin: 0px 45px;
+    margin: 10px 45px;
+	padding-bottom: 20px;
 }
 .details-member {
     display: flex;
@@ -430,7 +432,7 @@ body {
     flex-wrap: wrap;
     display: flex;
     margin: 0 45px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 .member-head {
     cursor:pointer;
@@ -492,7 +494,7 @@ body {
     text-align: center;
     line-height: 30px;
     background-color: #EB6A99;
-    right: 8%;
+    right: calc(4.5% + 45px);
     margin-top: -5px;
 }
 .details-pw-shadow {
