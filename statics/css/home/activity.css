@@ -177,7 +177,8 @@ body {
 .item-content {
     /*width: 45%;*/
     /*min-width: 360px;*/
-    min-height: 80px;
+	height: 80px;
+	min-height: 80px;
     font-size: 14px;
     line-height: 28px;
     display: -webkit-box;
