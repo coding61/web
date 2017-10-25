@@ -114,7 +114,7 @@ define(function(require, exports, module) {
             $('.details-view').show();
             $('.details-back').unbind('click').click(function() {
                 $('.details-title, .details-content, .details-name, .details-num').html('');
-                $('.details-view, .details-operate').hide();
+                $('.details-view, .details-operate, .details-delete').hide();
 				data_list = [];
                 switch (tag) {
                     case '0':
@@ -123,11 +123,11 @@ define(function(require, exports, module) {
                         break;
                     case '1':
                         $('.join-view').show();
-						Page.loadData(join_url);
+						Page.loadJoinData(join_url);
                         break;
                     case '2':
                         $('.push-view').show();
-						Page.loadData(push_url);
+						Page.loadPushData(push_url);
                         break;
                     default:
                         $('.list-view').show();
@@ -202,17 +202,37 @@ define(function(require, exports, module) {
                 }
             })
         },
-		// 踢出成员
-        deleteMember:function(member_pk, club_pk) {
+		// 删除活动
+        deleteClub:function(club_pk) {
             $.ajax({
-                type: "get",
-                url: Common.domain + "/club/delete_clubmember/" + member_pk + "/",
+                type: "delete",
+                url: Common.domain + "/club/clubs/" + club_pk + "/",
                 headers: {
                     Authorization: "Token " + token
                 },
                 success:function(json){
-					Common.dialog("成功踢出该成员");
-                    Page.loadClubDetails(club_pk);
+					Common.dialog("成功解散本活动");
+					$('.details-title, .details-content, .details-name, .details-num').html('');
+	                $('.details-view, .details-operate, .details-delete').hide();
+					data_list = [];
+	                switch (tag) {
+	                    case '0':
+	                        $('.list-view').show();
+							Page.loadData(clubs_url);
+	                        break;
+	                    case '1':
+							$('.join-view').show();
+							Page.loadJoinData(join_url);
+							break;
+						case '2':
+							$('.push-view').show();
+							Page.loadPushData(push_url);
+							break;
+	                    default:
+	                        $('.list-view').show();
+							Page.loadData(clubs_url);
+	                        break;
+	                }
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
@@ -269,6 +289,7 @@ define(function(require, exports, module) {
         clickEvent:function(){
             $('.column').click(function() {
                 data_list = [];
+				$('.details-operate, .details-delete').hide();
                 // $('.column').css({'background-color': '#FEFFFF','color': '#000'});
                 tag = $(this).attr('value');
                 switch(tag) {
@@ -427,17 +448,28 @@ define(function(require, exports, module) {
             //     var member_owner = $(this).closest('li').attr('data-owner');
             // })
             if (json.isleader) {
-                $('.details-edit').show();
+                $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
-                    $('.member-cut').show();
-                    $('.member-cut').unbind('click').click(function() {
-                        var member_pk = $(this).closest('li').attr('data-pk');
-                        var member_name = $(this).closest('li').attr('data-name');
-                        Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
-                            Page.deleteMember(member_pk, json.pk);
-                        })
-                    })
+					if ($('.details-edit').html() == '编辑') {
+						$('.details-edit').html('完成');
+						$('.member-cut').show();
+	                    $('.member-cut').unbind('click').click(function() {
+	                        var member_pk = $(this).closest('li').attr('data-pk');
+	                        var member_name = $(this).closest('li').attr('data-name');
+	                        Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
+	                            Page.deleteMember(member_pk, json.pk);
+	                        })
+	                    })
+					} else {
+						$('.details-edit').html('编辑');
+						$('.member-cut').hide();
+					}
                 })
+				$('.details-delete').unbind('click').click(function() {
+					Common.bcAlert("确认解散本活动？", function(){
+						Page.deleteClub(json.pk);
+					})
+				})
             } else {
             	$('.details-edit').hide();
             }
@@ -480,8 +512,8 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "82hegw5uhf50x", //生产环境
-                // appKey: "8w7jv4qb7eqty", //开发环境
+                // appKey : "82hegw5uhf50x", //生产环境
+                appKey: "8w7jv4qb7eqty", //开发环境
                 token : result.token,
             };
             var userId = "";
