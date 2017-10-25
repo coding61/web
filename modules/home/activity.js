@@ -397,7 +397,6 @@ define(function(require, exports, module) {
         },
         // 活动详情中的点击
         detailsClickEvent:function(json) {
-			console.log(json);
 			if (json.isjoin && !json.isleader) {
 				$('.details-operate').show();
 				$('.details-operate').html('退出活动');
@@ -448,6 +447,7 @@ define(function(require, exports, module) {
             //     var member_owner = $(this).closest('li').attr('data-owner');
             // })
             if (json.isleader) {
+				$('.details-title').css({'width': 'calc(100% - 500px)'});
                 $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
 					if ($('.details-edit').html() == '编辑') {
@@ -471,6 +471,7 @@ define(function(require, exports, module) {
 					})
 				})
             } else {
+				$('.details-title').css({'width': 'calc(100% - 300px)'});
             	$('.details-edit').hide();
             }
         },
