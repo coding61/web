@@ -696,7 +696,9 @@ body {
     color: #8e969f;
 }
 .rongWai .right .message .messageLeft .messageLeftContent {
-    text-indent: 60px;
+    /*text-indent: 60px;*/
+    padding-left: 60px;
+    padding-right: 60px;
 }
 .rongWai .right .message .messageRight {
     margin-top: 10px;
@@ -708,7 +710,9 @@ body {
     margin-top: 10px;
     padding-right: 20px;
 }
-
+.rongWai .right .message .messageRight .messageRightItem>span {
+    padding-left: 60px;
+}
 .rongWai .right .sendMessage {
     height: 130px;
     border-top-color: #dcdcdc;
