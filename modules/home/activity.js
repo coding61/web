@@ -513,8 +513,8 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "82hegw5uhf50x", //生产环境
-                // appKey: "8w7jv4qb7eqty", //开发环境
+                // appKey : "82hegw5uhf50x", //生产环境
+                appKey: "8w7jv4qb7eqty", //开发环境
                 token : result.token,
             };
             var userId = "";
@@ -772,10 +772,12 @@ define(function(require, exports, module) {
                         var n = JSON.parse(localStorage.talkList)[myTargetId][targetId].length;
                         var t1 = JSON.parse(localStorage.talkList)[myTargetId][targetId][n - 1].sentTime;
                         var t2 = message.sentTime;
+                        var conten = message.content.content.replace(/\r\n/g,"<BR>") ; 
+                        conten = message.content.content.replace(/\n/g,"<BR>");
                         if (minuteInterval(t1, t2)) {
-                            var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                            var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+conten+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                         } else {
-                            var html = '<div class="messageRight"><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                            var html = '<div class="messageRight"><div class="messageRightItem"><span>'+conten+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                         }
                         $('.message').append(html);
                     } else {
@@ -960,6 +962,11 @@ define(function(require, exports, module) {
             if (talkListJson[myTargetId][currentContact]) {
                 talkListJson[myTargetId][currentContact][0].isShowTime = true;
                 for (var i = 0; i < talkListJson[myTargetId][currentContact].length-1; i++) {
+                    // if (talkListJson[myTargetId][currentContact][i].content.textMessage) {
+                    //     var conten = talkListJson[myTargetId][currentContact][i].content.textMessage.replace(/\r\n/g,"<BR>") ; 
+                    //     conten = talkListJson[myTargetId][currentContact][i].content.textMessage.replace(/\n/g,"<BR>");
+                    //     talkListJson[myTargetId][currentContact][i].content.textMessage = conten;
+                    // }
                     var time1 = talkListJson[myTargetId][currentContact][i].sentTime;
                     var time2 = talkListJson[myTargetId][currentContact][i+1].sentTime;
                     if (minuteInterval(time1, time2)) {
