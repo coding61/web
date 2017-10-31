@@ -112,6 +112,8 @@ define(function(require, exports, module) {
             $('.list-view, .join-view, .push-view').hide();
             $('.details-view').show();
             $('.details-back').unbind('click').click(function() {
+				var html = template('member-template', []);
+				$('.member-list').html(html);
                 $('.details-title, .details-content, .details-name, .details-num').html('');
                 $('.details-view, .details-operate, .details-delete').hide();
 				data_list = [];
@@ -771,7 +773,7 @@ define(function(require, exports, module) {
                         var n = JSON.parse(localStorage.talkList)[myTargetId][targetId].length;
                         var t1 = JSON.parse(localStorage.talkList)[myTargetId][targetId][n - 1].sentTime;
                         var t2 = message.sentTime;
-                        var conten = message.content.content.replace(/\r\n/g,"<BR>") ; 
+                        var conten = message.content.content.replace(/\r\n/g,"<BR>") ;
                         conten = conten.replace(/\n/g,"<BR>");
                         if (minuteInterval(t1, t2)) {
                             var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+conten+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
