@@ -749,7 +749,9 @@ body {
 .rongWai .right .sendMessage .textarea {
     width: calc(100% - 70px);
     height: calc(100% - 35px);
-    text-indent: 20px;
+    /*text-indent: 20px;*/
+    padding-left: 20px;
+    padding-right: 20px;
     line-height: 35px;
     border: none;
     resize: none;

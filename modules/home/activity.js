@@ -6,7 +6,6 @@ define(function(require, exports, module) {
     var push_url  = Common.domain + "/club/myclub/?types=create"
     var data_list = [];
     var tag = null;
-
     var Page = {
         init:function(){
             // 监听登录
@@ -502,7 +501,7 @@ define(function(require, exports, module) {
         }
     }, 1000);
 
-
+    ArtTemplate.config("escape", false); //替换换行符模版配置
     var myTargetId; //我的id
     // var conversationtype; //会话类型
     function startInit() {
@@ -773,7 +772,7 @@ define(function(require, exports, module) {
                         var t1 = JSON.parse(localStorage.talkList)[myTargetId][targetId][n - 1].sentTime;
                         var t2 = message.sentTime;
                         var conten = message.content.content.replace(/\r\n/g,"<BR>") ; 
-                        conten = message.content.content.replace(/\n/g,"<BR>");
+                        conten = conten.replace(/\n/g,"<BR>");
                         if (minuteInterval(t1, t2)) {
                             var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+conten+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                         } else {
@@ -962,11 +961,6 @@ define(function(require, exports, module) {
             if (talkListJson[myTargetId][currentContact]) {
                 talkListJson[myTargetId][currentContact][0].isShowTime = true;
                 for (var i = 0; i < talkListJson[myTargetId][currentContact].length-1; i++) {
-                    // if (talkListJson[myTargetId][currentContact][i].content.textMessage) {
-                    //     var conten = talkListJson[myTargetId][currentContact][i].content.textMessage.replace(/\r\n/g,"<BR>") ; 
-                    //     conten = talkListJson[myTargetId][currentContact][i].content.textMessage.replace(/\n/g,"<BR>");
-                    //     talkListJson[myTargetId][currentContact][i].content.textMessage = conten;
-                    // }
                     var time1 = talkListJson[myTargetId][currentContact][i].sentTime;
                     var time2 = talkListJson[myTargetId][currentContact][i+1].sentTime;
                     if (minuteInterval(time1, time2)) {
@@ -1173,6 +1167,8 @@ define(function(require, exports, module) {
         return new Date(value).toLocaleString();
     })
     ArtTemplate.helper('decodeEmoji', function(value) {
-        return RongIMLib.RongIMEmoji.emojiToSymbol(value);
+        var conten = value.replace(/\r\n/g,"<BR>");
+        conten = conten.replace(/\n/g,"<BR>");
+        return RongIMLib.RongIMEmoji.emojiToSymbol(conten);
     })
 });
