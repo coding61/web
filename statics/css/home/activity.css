@@ -435,8 +435,10 @@ body {
     margin: 0 45px;
     padding-bottom: 20px;
 }
-.member-list li {
+.member-list li{
 	display: flex;
+	width: 60px;
+	height: 70px;
 }
 .member-item {
 	width: 60px;
