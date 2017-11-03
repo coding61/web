@@ -210,7 +210,10 @@
                                 {{else if $value.content.imgMessage}}
                                     <img class="messageImg" style="max-width: 300px; max-height: 150px;" src="{{$value.content.imgMessage}}" alt="">
                                 {{else if $value.content.voiceMessage}}
-                                    <audio controls="">语音消息</audio>
+                                    <span class="voice" style="cursor: pointer;">
+                                        <img class="au" data-voice="{{$value.content.voiceMessage}}" style="width: 24px; height: 24px;" src="../../cxyteam_forum/images/voice.png">
+                                    </span>
+                                    
                                 {{/if}}
                                 <img class="chatHeaderRight" src="{{$value.avatar}}">
                             </div>
@@ -229,7 +232,10 @@
                             {{else if $value.content.imgMessage}}
                                 <div class="messageLeftContent"><img class="messageImg" style="max-width: 300px; max-height: 150px;" src="{{$value.content.imgMessage}}" alt=""></div>
                             {{else if $value.content.voiceMessage}}
-                                <audio controls="" class="messageLeftContent">语音消息</audio>
+                                <span class="messageLeftContent voice" style="cursor: pointer;">
+                                    <img class="au" data-voice="{{$value.content.voiceMessage}}" style="width: 24px; height: 24px;" src="../../cxyteam_forum/images/voice.png">
+                                </span>
+                                
                             {{/if}}
                         </div>
                         {{/if}}
@@ -258,8 +264,8 @@
     <!-- 融云IMLib -->
     <script src="//cdn.ronghub.com/RongIMLib-2.2.5.min.js"></script>
     <script src="//cdn.ronghub.com/RongEmoji-2.2.5.min.js"></script>
-    <!-- <script src="//cdn.ronghub.com/Libamr-2.2.5.min.js"></script>
-    <script src="//cdn.ronghub.com/RongIMVoice-2.2.5.min.js"></script> -->
+    <script src="//cdn.ronghub.com/Libamr-2.2.5.min.js"></script>
+    <script src="//cdn.ronghub.com/RongIMVoice-2.2.5.min.js"></script>
 
     <!-- 上传插件 -->
     <script type="text/javascript" src="../../libs/upload/plupload/plupload.full.min.js"></script>
