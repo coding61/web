@@ -401,8 +401,8 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "82hegw5uhf50x", //生产环境
-                // appKey: "8w7jv4qb7eqty", //开发环境
+                // appKey : "82hegw5uhf50x", //生产环境
+                appKey: "8w7jv4qb7eqty", //开发环境
                 token : result.token,
             };
             var userId = "";
@@ -769,6 +769,8 @@ define(function(require, exports, module) {
                         talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}});
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}});
+                    } else if (message.messageType == "VoiceMessage") {
+                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"voiceMessage": message.content.content}});
                     }
                 } else {
                     // talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content}];
@@ -776,6 +778,8 @@ define(function(require, exports, module) {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}];
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}];
+                    } else if (message.messageType == "VoiceMessage") {
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"voiceMessage": message.content.content}}];
                     }
                 }
                 localStorage.talkList = JSON.stringify(talkListJson);
@@ -838,7 +842,7 @@ define(function(require, exports, module) {
             var contactJson = JSON.parse(localStorage.contactList);
             for (item in contactJson[myTargetId]) {
                 if (item == currentContact) {
-                    contactJson[myTargetId][item][3] = 1;
+                    contactJson[myTargetId][item][3] = 1; //设为已读
                     localStorage.contactList = JSON.stringify(contactJson);
                     break;
                 }

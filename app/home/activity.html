@@ -199,6 +199,8 @@
                                     <span>{{decodeEmoji($value.content.textMessage)}}</span>
                                 {{else if $value.content.imgMessage}}
                                     <img class="messageImg" style="max-width: 300px; max-height: 150px;" src="{{$value.content.imgMessage}}" alt="">
+                                {{else if $value.content.voiceMessage}}
+                                    <audio controls="">语音消息</audio>
                                 {{/if}}
                                 <img class="chatHeaderRight" src="{{$value.avatar}}">
                             </div>
@@ -216,6 +218,8 @@
                                 <div class="messageLeftContent">{{decodeEmoji($value.content.textMessage)}}</div>
                             {{else if $value.content.imgMessage}}
                                 <div class="messageLeftContent"><img class="messageImg" style="max-width: 300px; max-height: 150px;" src="{{$value.content.imgMessage}}" alt=""></div>
+                            {{else if $value.content.voiceMessage}}
+                                <audio controls="" class="messageLeftContent">语音消息</audio>
                             {{/if}}
                         </div>
                         {{/if}}
