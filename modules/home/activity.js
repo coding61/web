@@ -6,7 +6,6 @@ define(function(require, exports, module) {
     var push_url  = Common.domain + "/club/myclub/?types=create"
     var data_list = [];
     var tag = null;
-
     var Page = {
         init:function(){
             // 监听登录
@@ -112,21 +111,28 @@ define(function(require, exports, module) {
             Page.loadClubDetails(pk);
             $('.list-view, .join-view, .push-view').hide();
             $('.details-view').show();
-            $('.details-back').click(function() {
+            $('.details-back').unbind('click').click(function() {
+				var html = template('member-template', []);
+				$('.member-list').html(html);
                 $('.details-title, .details-content, .details-name, .details-num').html('');
-                $('.details-view').hide();
+                $('.details-view, .details-operate, .details-delete').hide();
+				data_list = [];
                 switch (tag) {
                     case '0':
                         $('.list-view').show();
+						Page.loadData(clubs_url);
                         break;
                     case '1':
                         $('.join-view').show();
+						Page.loadJoinData(join_url);
                         break;
                     case '2':
                         $('.push-view').show();
+						Page.loadPushData(push_url);
                         break;
                     default:
                         $('.list-view').show();
+						Page.loadData(clubs_url);
                         break;
                 }
             })
@@ -180,8 +186,62 @@ define(function(require, exports, module) {
                 }
             })
         },
+		// 退出活动
+        quitClub:function(club_pk) {
+            $.ajax({
+                type: "get",
+                url: Common.domain + "/club/quit_club/" + club_pk + "/",
+                headers: {
+                    Authorization: "Token " + token
+                },
+                success:function(json){
+					Common.dialog("成功退出该活动");
+					Page.loadClubDetails(club_pk);
+                },
+                error:function(xhr, textStatus){
+                    Page.exceptionHandling(xhr, textStatus);
+                }
+            })
+        },
+		// 删除活动
+        deleteClub:function(club_pk) {
+            $.ajax({
+                type: "delete",
+                url: Common.domain + "/club/clubs/" + club_pk + "/",
+                headers: {
+                    Authorization: "Token " + token
+                },
+                success:function(json){
+					Common.dialog("成功解散本活动");
+					$('.details-title, .details-content, .details-name, .details-num').html('');
+	                $('.details-view, .details-operate, .details-delete').hide();
+					data_list = [];
+	                switch (tag) {
+	                    case '0':
+	                        $('.list-view').show();
+							Page.loadData(clubs_url);
+	                        break;
+	                    case '1':
+							$('.join-view').show();
+							Page.loadJoinData(join_url);
+							break;
+						case '2':
+							$('.push-view').show();
+							Page.loadPushData(push_url);
+							break;
+	                    default:
+	                        $('.list-view').show();
+							Page.loadData(clubs_url);
+	                        break;
+	                }
+                },
+                error:function(xhr, textStatus){
+                    Page.exceptionHandling(xhr, textStatus);
+                }
+            })
+        },
         // 验证密码
-        confirm:function(pk, pw) {
+        confirm:function(pk, pw, tag) {
             $.ajax({
                 type: "get",
                 url: Common.domain + "/club/join_club/" + pk +"/?password=" + pw,
@@ -189,8 +249,13 @@ define(function(require, exports, module) {
                     Authorization: "Token " + token
                 },
                 success:function(json){
-                    data_list = [];
-                    Page.loadData(clubs_url);
+					Common.dialog('成功加入');
+					if (tag == 'list') {
+						data_list = [];
+	                    Page.loadData(clubs_url);
+					} else if (tag == 'details') {
+						Page.loadClubDetails(pk);
+					}
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
@@ -225,6 +290,7 @@ define(function(require, exports, module) {
         clickEvent:function(){
             $('.column').click(function() {
                 data_list = [];
+				$('.details-operate, .details-delete').hide();
                 // $('.column').css({'background-color': '#FEFFFF','color': '#000'});
                 tag = $(this).attr('value');
                 switch(tag) {
@@ -304,8 +370,6 @@ define(function(require, exports, module) {
             $('.item-info').unbind('click').click(function() {
                 pk = $(this).closest('li').attr('data-pk');
                 var title = $(this).closest('li').attr('data-title');
-                console.log(pk);
-                console.log(title);
             })
 
 			$('.password').unbind('click').click(function() {
@@ -315,7 +379,7 @@ define(function(require, exports, module) {
             $('.pw-confirm').unbind('click').click(function() {
                 var pw = $(this).prev().val();
                 if (pw) {
-                    Page.confirm(pk, pw);
+                    Page.confirm(pk, pw, 'list');
                     $('.verify').hide();
                 } else {
                     Common.dialog('请输入密码');
@@ -334,32 +398,85 @@ define(function(require, exports, module) {
         },
         // 活动详情中的点击
         detailsClickEvent:function(json) {
-            // $('.join-chat').unbind('click').click(function() {
-                $('.join-chat').attr({
-                    "name": json.name,
-                    "pk": json.pk
-                // });
-            })
-            // $('.member-item').unbind('click').click(function() {
-            //     var member_pk = $(this).closest('li').attr('data-pk');
-            //     var member_name = $(this).closest('li').attr('data-name');
-            //     var member_owner = $(this).closest('li').attr('data-owner');
-            //     console.log(member_pk);
-            //     console.log(member_name);
-            // })
+			var leader_pk = null,
+				leader_owner = null;
+			for (var i = json.club_member.length - 1; i >= 0; i--) {
+				if (json.club_member[i].leader) {
+					leader_pk = json.club_member[i].owner.pk;
+					leader_owner = json.club_member[i].owner.owner;
+					break;
+				}
+			}
+			// 聊天需要
+			$('.join-chat').attr({ "name": json.name, "pk": json.pk});
+			$('.join-owner').attr({ "owner": leader_owner, "pk": leader_pk});
+
+			if (json.isjoin && !json.isleader) {	// 加入但不是发起者
+				$('.join-owner').css({'right': 'calc(4.5% + 165px)'});
+				$('.join-chat').show();
+				$('.details-operate').show();
+				$('.details-operate').html('退出活动');
+				$('.details-operate').unbind('click').click(function() {
+					Common.bcAlert("确认退出该活动？", function(){
+						Page.quitClub(json.pk);
+					})
+	            })
+			} else if (!json.isjoin && !json.isleader){    // 未加入
+				$('.join-owner').css({'right': 'calc(4.5% + 45px)'});
+				$('.join-chat').hide();
+				$('.details-operate').show();
+				$('.details-operate').html('参与活动');
+				$('.details-operate').unbind('click').click(function() {
+					$('.details-pw-shadow').show();
+					$('.details-verify').unbind('click').click(function() {
+						event.stopPropagation();
+		            })
+		            $('.details-pw-confirm').unbind('click').click(function() {
+		                var pw = $('.details-pw-input').val();
+		                if (pw) {
+		                    Page.confirm(json.pk, pw, 'details');
+		                    $('.details-pw-shadow').hide();
+							$('.details-pw-input').val('');
+		                } else {
+		                    Common.dialog('请输入密码');
+		                }
+		            })
+		            $('.details-pw-shadow').unbind('click').click(function() {
+		                $('.details-pw-shadow').hide();
+		            })
+	            })
+			} else {
+				$('.details-operate').hide();
+			}
+
             if (json.isleader) {
-                $('.details-edit').show();
+				$('.join-owner').hide();
+				$('.details-title').css({'width': 'calc(100% - 500px)'});
+                $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
-                    $('.member-cut').show();
-                    $('.member-cut').unbind('click').click(function() {
-                        var member_pk = $(this).closest('li').attr('data-pk');
-                        var member_name = $(this).closest('li').attr('data-name');
-                        Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
-                            Page.deleteMember(member_pk, json.pk);
-                        })
-                    })
+					if ($('.details-edit').html() == '编辑') {
+						$('.details-edit').html('完成');
+						$('.member-cut').show();
+	                    $('.member-cut').unbind('click').click(function() {
+	                        var member_pk = $(this).closest('li').attr('data-pk');
+	                        var member_name = $(this).closest('li').attr('data-name');
+	                        Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
+	                            Page.deleteMember(member_pk, json.pk);
+	                        })
+	                    })
+					} else {
+						$('.details-edit').html('编辑');
+						$('.member-cut').hide();
+					}
                 })
+				$('.details-delete').unbind('click').click(function() {
+					Common.bcAlert("确认解散本活动？", function(){
+						Page.deleteClub(json.pk);
+					})
+				})
             } else {
+				$('.join-owner').show();
+				$('.details-title').css({'width': 'calc(100% - 300px)'});
             	$('.details-edit').hide();
             }
         },
@@ -390,7 +507,7 @@ define(function(require, exports, module) {
         }
     }, 1000);
 
-
+    ArtTemplate.config("escape", false); //替换换行符模版配置
     var myTargetId; //我的id
     // var conversationtype; //会话类型
     function startInit() {
@@ -410,7 +527,6 @@ define(function(require, exports, module) {
                 //连接融云成功回掉函数
                 getInstance : function(instance){
                     RongIMLib.RongIMEmoji.init();
-                    RongIMLib.RongIMVoice.init();
                     //instance.sendMessage
                     // registerMessage("PersonMessage");
                     clickPersonOrGroup(); //点击头像或加入群聊
@@ -661,17 +777,19 @@ define(function(require, exports, module) {
                         var n = JSON.parse(localStorage.talkList)[myTargetId][targetId].length;
                         var t1 = JSON.parse(localStorage.talkList)[myTargetId][targetId][n - 1].sentTime;
                         var t2 = message.sentTime;
+                        var conten = message.content.content.replace(/\r\n/g,"<BR>") ;
+                        conten = conten.replace(/\n/g,"<BR>");
                         if (minuteInterval(t1, t2)) {
-                            var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                            var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+conten+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                         } else {
-                            var html = '<div class="messageRight"><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
+                            var html = '<div class="messageRight"><div class="messageRightItem"><span>'+conten+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                         }
                         $('.message').append(html);
                     } else {
                         var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                         $('.message').append(html);
                     }
-                    
+
                 } else if (message.messageType == "ImageMessage") {
                     if (JSON.parse(localStorage.talkList)[myTargetId][targetId]) {
                         var n = JSON.parse(localStorage.talkList)[myTargetId][targetId].length;
@@ -728,9 +846,9 @@ define(function(require, exports, module) {
     function minuteInterval(t1, t2) {
         var t = t2 - t1;
         var leave1=t%(24*3600*1000) ;
-        //计算相差分钟数  
-        var leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数  
-        var minutes=Math.floor(leave2/(60*1000)); 
+        //计算相差分钟数
+        var leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
+        var minutes=Math.floor(leave2/(60*1000));
         if (minutes > 3) {
             return true;
         } else {
@@ -770,8 +888,6 @@ define(function(require, exports, module) {
                         talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}});
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}});
-                    } else if (message.messageType == "VoiceMessage") {
-                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"voiceMessage": message.content.content, duration: message.content.duration}});
                     }
                 } else {
                     // talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content}];
@@ -779,8 +895,6 @@ define(function(require, exports, module) {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}];
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}];
-                    } else if (message.messageType == "VoiceMessage") {
-                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"voiceMessage": message.content.content, duration: message.content.duration}}];
                     }
                 }
                 localStorage.talkList = JSON.stringify(talkListJson);
@@ -843,7 +957,7 @@ define(function(require, exports, module) {
             var contactJson = JSON.parse(localStorage.contactList);
             for (item in contactJson[myTargetId]) {
                 if (item == currentContact) {
-                    contactJson[myTargetId][item][3] = 1; //设为已读
+                    contactJson[myTargetId][item][3] = 1;
                     localStorage.contactList = JSON.stringify(contactJson);
                     break;
                 }
@@ -981,16 +1095,16 @@ define(function(require, exports, module) {
     });
 
     //将图片转为base64
-    function getBase64Image(img) { 
-        var canvas = document.createElement("canvas");  
-        canvas.width = img.width;  
-        canvas.height = img.height;  
-        var ctx = canvas.getContext("2d");  
-        ctx.drawImage(img, 0, 0, img.width, img.height);  
-        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();  
-        var dataURL = canvas.toDataURL("image/"+ext);  
-        return dataURL;  
-    }  
+    function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+        var dataURL = canvas.toDataURL("image/"+ext);
+        return dataURL;
+    }
     // 点击最近联系人显示联系人列表
     $('.rongBtn').click(function() {
         $('.rongWai').css({"display": "flex"});
@@ -1011,20 +1125,6 @@ define(function(require, exports, module) {
         $('.rongWai').hide();
         $('.allEmoji').hide();
         refreshContact();
-    })
-
-    // 点击语音消息
-    $(document).on('click', '.voice', function() {
-        var audioFile = $(this).children('.au').attr("data-voice");
-        var duration = audioFile.length/1024;
-        //预加载 + 播放
-        RongIMLib.RongIMVoice.preLoaded(audioFile, function(){
-            // 播放声音
-            RongIMLib.RongIMVoice.play(audioFile,duration);
-        });
-
-        //停止播放
-        // RongIMLib.RongIMVoice.stop(audioFile);
     })
 
     // 显示所有表情
@@ -1073,6 +1173,8 @@ define(function(require, exports, module) {
         return new Date(value).toLocaleString();
     })
     ArtTemplate.helper('decodeEmoji', function(value) {
-        return RongIMLib.RongIMEmoji.emojiToSymbol(value);
+        var conten = value.replace(/\r\n/g,"<BR>");
+        conten = conten.replace(/\n/g,"<BR>");
+        return RongIMLib.RongIMEmoji.emojiToSymbol(conten);
     })
 });
