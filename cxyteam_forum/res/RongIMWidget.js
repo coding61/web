@@ -591,7 +591,7 @@ var RongWebIMWidget;
                     msg.user = userinfo;
                     try {
                         RongIMLib.RongIMClient.getInstance().sendMessage(+$scope.conversation.targetType, $scope.conversation.targetId, msg, {
-                            onSuccess: function (retMessage) {
+                            onSuccess: function (retMessage) { //发送消息成功
                                 conversationListServer.updateConversations().then(function () {
                                 });
                             },
@@ -614,7 +614,7 @@ var RongWebIMWidget;
                     var content = _this.packDisplaySendMessage(im, RongWebIMWidget.MessageType.ImageMessage);
                     RongIMLib.RongIMClient.getInstance()
                         .sendMessage($scope.conversation.targetType, $scope.conversation.targetId, im, {
-                        onSuccess: function () {
+                        onSuccess: function () { //发送消息成功
                             conversationListServer.updateConversations().then(function () {
                             });
                         },

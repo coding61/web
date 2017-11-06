@@ -573,7 +573,6 @@ ul {
     vertical-align: middle;
     float: right;
     background-position: 0 -177px;
-    display: none;  // yyy修改 隐藏删除最近联系人按钮
 }
 
 
@@ -760,7 +759,6 @@ ul {
     /*border-bottom: 1px solid #e4e7ea;*/
     margin-bottom: 30px;
     height: 10px;
-    /*display: none; // yyy修改 隐藏历史消息按钮 */
 }
 
 .rongcloud-Messages-history b {

@@ -380,15 +380,15 @@ define(function(require, exports, module) {
     };
     Page.init();
 
-    var checkToken = setInterval(function() {
-        if (localStorage.token) {
-            console.log("已登录");
-            startInit();
-            clearInterval(checkToken);
-        } else {
-            console.log("未登录");
-        }
-    }, 1000);
+    // var checkToken = setInterval(function() {
+    //     if (localStorage.token) {
+    //         console.log("已登录");
+    //         startInit();
+    //         clearInterval(checkToken);
+    //     } else {
+    //         console.log("未登录");
+    //     }
+    // }, 1000);
 
 
     var myTargetId; //我的id
@@ -401,8 +401,8 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "82hegw5uhf50x", //生产环境
-                // appKey: "8w7jv4qb7eqty", //开发环境
+                // appKey : "82hegw5uhf50x", //生产环境
+                appKey: "8w7jv4qb7eqty", //开发环境
                 token : result.token,
             };
             var userId = "";
