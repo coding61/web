@@ -494,6 +494,7 @@ body {
     max-height: 300px;
     overflow: auto;
 }
+.join-owner,
 .join-chat {
     position: absolute;
     cursor: pointer;
@@ -506,6 +507,9 @@ body {
     background-color: #EB6A99;
     right: calc(4.5% + 45px);
     margin-top: -5px;
+}
+.join-owner {
+	right: calc(4.5% + 165px);
 }
 .details-pw-shadow {
 	height: 100%;

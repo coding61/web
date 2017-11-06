@@ -334,21 +334,61 @@ define(function(require, exports, module) {
         },
         // 活动详情中的点击
         detailsClickEvent:function(json) {
-            // $('.join-chat').unbind('click').click(function() {
-                $('.join-chat').attr({
-                    "name": json.name,
-                    "pk": json.pk
-                // });
-            })
-            // $('.member-item').unbind('click').click(function() {
-            //     var member_pk = $(this).closest('li').attr('data-pk');
-            //     var member_name = $(this).closest('li').attr('data-name');
-            //     var member_owner = $(this).closest('li').attr('data-owner');
-            //     console.log(member_pk);
-            //     console.log(member_name);
-            // })
+			var leader_pk = null,
+				leader_owner = null;
+			for (var i = json.club_member.length - 1; i >= 0; i--) {
+				if (json.club_member[i].leader) {
+					leader_pk = json.club_member[i].owner.pk;
+					leader_owner = json.club_member[i].owner.owner;
+					break;
+				}
+			}
+			// 聊天需要
+			$('.join-chat').attr({ "name": json.name, "pk": json.pk});
+			$('.join-owner').attr({ "owner": leader_owner, "pk": leader_pk});
+
+			if (json.isjoin && !json.isleader) {	// 加入但不是发起者
+				$('.join-owner').css({'right': 'calc(4.5% + 165px)'});
+				$('.join-chat').show();
+				$('.details-operate').show();
+				$('.details-operate').html('退出活动');
+				$('.details-operate').unbind('click').click(function() {
+					Common.bcAlert("确认退出该活动？", function(){
+						Page.quitClub(json.pk);
+					})
+	            })
+			} else if (!json.isjoin && !json.isleader){    // 未加入
+				$('.join-owner').css({'right': 'calc(4.5% + 45px)'});
+				$('.join-chat').hide();
+				$('.details-operate').show();
+				$('.details-operate').html('参与活动');
+				$('.details-operate').unbind('click').click(function() {
+					$('.details-pw-shadow').show();
+					$('.details-verify').unbind('click').click(function() {
+						event.stopPropagation();
+		            })
+		            $('.details-pw-confirm').unbind('click').click(function() {
+		                var pw = $('.details-pw-input').val();
+		                if (pw) {
+		                    Page.confirm(json.pk, pw, 'details');
+		                    $('.details-pw-shadow').hide();
+							$('.details-pw-input').val('');
+		                } else {
+		                    Common.dialog('请输入密码');
+		                }
+		            })
+		            $('.details-pw-shadow').unbind('click').click(function() {
+		                $('.details-pw-shadow').hide();
+		            })
+	            })
+			} else {
+				$('.details-operate').hide();
+			}
+
             if (json.isleader) {
-                $('.details-edit').show();
+				$('.join-owner').hide();
+				$('.details-title').css({'width': 'calc(100% - 500px)'});
+                $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
                     $('.member-cut').show();
                     $('.member-cut').unbind('click').click(function() {
@@ -360,6 +400,8 @@ define(function(require, exports, module) {
                     })
                 })
             } else {
+				$('.join-owner').show();
+				$('.details-title').css({'width': 'calc(100% - 300px)'});
             	$('.details-edit').hide();
             }
         },
@@ -579,7 +621,6 @@ define(function(require, exports, module) {
                     //console.log('token无效');
                 },
                 onError:function(errorCode){
-                  console.log("=============================================");
                   console.log(errorCode);
                 }
             });
@@ -671,7 +712,7 @@ define(function(require, exports, module) {
                         var html = '<div class="messageRight"><div class="time">'+ new Date(message.sentTime).toLocaleString()+'</div><div class="messageRightItem"><span>'+message.content.content+'</span><img class="chatHeaderRight" src="'+localStorage.avatar+'" /></div></div>';
                         $('.message').append(html);
                     }
-                    
+
                 } else if (message.messageType == "ImageMessage") {
                     if (JSON.parse(localStorage.talkList)[myTargetId][targetId]) {
                         var n = JSON.parse(localStorage.talkList)[myTargetId][targetId].length;
@@ -728,9 +769,9 @@ define(function(require, exports, module) {
     function minuteInterval(t1, t2) {
         var t = t2 - t1;
         var leave1=t%(24*3600*1000) ;
-        //计算相差分钟数  
-        var leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数  
-        var minutes=Math.floor(leave2/(60*1000)); 
+        //计算相差分钟数
+        var leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
+        var minutes=Math.floor(leave2/(60*1000));
         if (minutes > 3) {
             return true;
         } else {
@@ -981,16 +1022,16 @@ define(function(require, exports, module) {
     });
 
     //将图片转为base64
-    function getBase64Image(img) { 
-        var canvas = document.createElement("canvas");  
-        canvas.width = img.width;  
-        canvas.height = img.height;  
-        var ctx = canvas.getContext("2d");  
-        ctx.drawImage(img, 0, 0, img.width, img.height);  
-        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();  
-        var dataURL = canvas.toDataURL("image/"+ext);  
-        return dataURL;  
-    }  
+    function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+        var dataURL = canvas.toDataURL("image/"+ext);
+        return dataURL;
+    }
     // 点击最近联系人显示联系人列表
     $('.rongBtn').click(function() {
         $('.rongWai').css({"display": "flex"});
