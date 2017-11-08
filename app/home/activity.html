@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="demo">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
@@ -11,9 +11,12 @@
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.7" />
 		<link type="text/css" rel="stylesheet" href="../../statics/css/home/activity.css?v=2.7" />
+        <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/jquery-rebox-0.1.0.css"/>
+        <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/RongIMWidget.css"/>
+        <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/res/main.css"/>
 	</head>
 
-	<body>
+	<body ng-controller="main">
         <div class="header-view">
             <div class="column-view">
                 <div class="column activity-list" value=0>所有活动</div>
@@ -141,7 +144,7 @@
             <div class="details-member">
                 <div class="details-name"></div>
                 <div class="details-num"></div>
-				<div class="join-owner" owner="" pk="">联系发布者</div>
+				<div class="join-owner" owner="" pk="" name="">联系发布者</div>
 				<div class="join-chat" name="" pk="">加入群聊</div>
             </div>
             <div class="member-list"></div>
@@ -258,10 +261,15 @@
         <div class="bigImageWai" style="display: none; position: fixed; width: 100%; height: 100%; bottom: 0;left: 0; background-color: rgba(0, 0, 0, 0.6); align-items: center; justify-content: center;">
             <img class="bigImage" style="max-width: calc(100% - 20px);max-height: calc(100% - 20px);" src="">
         </div>
+
+        <!-- 融云插件 -->
+        <rong-widget></rong-widget>
+
 	</body>
 
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 
+    <script src="../../cxyteam_forum/res/angular-1.4.8.js"></script>
     <!-- 融云IMLib -->
     <script src="//cdn.ronghub.com/RongIMLib-2.2.5.min.js"></script>
     <script src="//cdn.ronghub.com/RongEmoji-2.2.5.min.js"></script>
@@ -271,6 +279,11 @@
     <!-- 上传插件 -->
     <script type="text/javascript" src="../../libs/upload/plupload/plupload.full.min.js"></script>
     <script type="text/javascript" src="../../libs/upload/qiniu/qiniu.min.js"></script>
+
+    <!-- IM插件 -->
+    <script src="../../cxyteam_forum/res/RongIMWidget.js"></script>
+    <script src="../../cxyteam_forum/res/common.js"></script>
+    <script src="../../cxyteam_forum/js/RongYun.js"></script>
 
     <script type="text/javascript" src="../../libs/template.js"></script>
     <script type="text/javascript" src="../../libs/jqPaginator.min.js"></script>
