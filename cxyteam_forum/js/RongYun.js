@@ -16,8 +16,8 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
         if(result){
            //注意实际应用中 appkey 、 token 使用自己从融云服务器注册的。
             var config = {
-                appkey: '8w7jv4qb7eqty',  //开发环境
-                // appkey: '82hegw5uhf50x',  //生产环境
+                // appkey: '8w7jv4qb7eqty',  //开发环境
+                appkey: '82hegw5uhf50x',  //生产环境
                 token: result.token,
                 displayConversationList: true,
                 style:{
