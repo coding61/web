@@ -11,7 +11,7 @@ window.RongDemo = {
             $.ajax({
                 url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
             }).success(function(rep){
-                console.log(rep);
+                // console.log(rep);
                 obj.onSuccess({
                     name: rep.name,
                     id: targetId,
