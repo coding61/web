@@ -23,9 +23,20 @@ window.RongDemo = {
         });
 
         WebIMWidget.setGroupInfoProvider(function(targetId, obj){
-            obj.onSuccess({
-                name:'群组：' + targetId
-            });
+            $.ajax({
+                url: basePath + "/club/club_detail/" + targetId + "/",
+                headers: {
+                    'Authorization': "Token " + localStorage.token
+                }
+            }).success(function(rep){
+                // console.log(rep);
+                obj.onSuccess({
+                    id: targetId,
+                    name:'群组：' + rep.name
+                });
+            }).error(function(err) {
+
+            })
         })
 
         $scope.show = function() {

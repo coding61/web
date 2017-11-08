@@ -593,6 +593,20 @@ var RongWebIMWidget;
                         RongIMLib.RongIMClient.getInstance().sendMessage(+$scope.conversation.targetType, $scope.conversation.targetId, msg, {
                             onSuccess: function (retMessage) { //发送消息成功
                                 conversationListServer.updateConversations().then(function () {
+                                    // 活动排序
+                                    if ($scope.conversation.targetType == 3) {
+                                        $.ajax({
+                                            type: "put",
+                                            url: "/program_girl/club/club_last_reply_time_update/" + retMessage.targetId + "/",
+                                            headers: {
+                                                'Authorization': "Token " + localStorage.token
+                                            },
+                                        }).success(function(result){
+                                            console.log("活动最后回复时间修改成功");
+                                        }).error(function(err){
+                                            console.log(err);
+                                        })
+                                    }
                                 });
                             },
                             onError: function (error) {
@@ -616,6 +630,20 @@ var RongWebIMWidget;
                         .sendMessage($scope.conversation.targetType, $scope.conversation.targetId, im, {
                         onSuccess: function () { //发送消息成功
                             conversationListServer.updateConversations().then(function () {
+                                // 活动排序
+                                if ($scope.conversation.targetType == 3) {
+                                    $.ajax({
+                                        type: "put",
+                                        url: "/program_girl/club/club_last_reply_time_update/" + retMessage.targetId + "/",
+                                        headers: {
+                                            'Authorization': "Token " + localStorage.token
+                                        },
+                                    }).success(function(result){
+                                        console.log("活动最后回复时间修改成功");
+                                    }).error(function(err){
+                                        console.log(err);
+                                    })
+                                }
                             });
                         },
                         onError: function () {
@@ -672,26 +700,51 @@ var RongWebIMWidget;
                     if (RongWebIMWidget.Helper.browser.msie && RongWebIMWidget.Helper.browser.version == "9.0")
                         return;
                     qiniuuploader && qiniuuploader.destroy();
+                    var filename = ''    //选择的文件的名字
                     qiniuuploader = Qiniu.uploader({
                         runtimes: 'html5,html4',
                         browse_button: 'upload-file',
                         container: 'funcPanel',
                         drop_element: 'inputMsg',
+                        flash_swf_url: 'libs/upload/plupload/Moxie.swf',
                         max_file_size: '100mb',
                         dragdrop: true,
                         chunk_size: '4mb',
-                        unique_names: true,
-                        uptoken: conversationServer._uploadToken,
-                        domain: UploadImageDomain,
-                        get_new_uptoken: false,
+                        unique_names: false,
+                        uptoken_func: function(file) {
+                            $.ajax({
+                                async: false,
+                                type: "POST",
+                                url:"/program_girl/upload/token/",
+                                headers: {
+                                    Authorization: "Token "+ localStorage.token
+                                },
+                                data: {
+                                    filename: filename ? filename : 'dfhu.png',
+                                },
+                                dataType: "json",
+                                success: function(json) {
+                                  uptoken = json.token;
+                                  upkey = json.key;
+                                }
+                            });
+                            return uptoken;
+                        }, 
+                        domain: "https://static1.bcjiaoyu.com",
+                        get_new_uptoken: true,
                         filters: {
                             mime_types: [{ title: "Image files", extensions: "jpg,gif,png,jpeg,bmp" }],
-                            prevent_duplicates: false
+                            // prevent_duplicates: false
+                            max_file_size : '10mb',
                         },
                         multi_selection: false,
                         auto_start: true,
                         init: {
                             'FilesAdded': function (up, files) {
+                                plupload.each(files, function(file) {
+                                    // 文件添加进队列后,处理相关的事情
+                                    filename = file.name;
+                                });
                             },
                             'BeforeUpload': function (up, file) {
                             },
@@ -704,22 +757,29 @@ var RongWebIMWidget;
                                     alert("请先选择一个会话目标。");
                                     return;
                                 }
-                                info = info.replace(/'/g, "\"");
+                                info = info.response.replace(/'/g, "\"");
                                 info = JSON.parse(info);
-                                RongIMLib.RongIMClient.getInstance()
-                                    .getFileUrl(RongIMLib.FileType.IMAGE, file.target_name, '', {
-                                    onSuccess: function (url) {
+                                // var fileTarget_name = file.id + ".png";
+                                // RongIMLib.RongIMClient.getInstance()
+                                //     .getFileUrl(RongIMLib.FileType.IMAGE, fileTarget_name, '', {
+                                //     onSuccess: function (url) {
                                         RongWebIMWidget.Helper.ImageHelper.getThumbnail(file.getNative(), 60000, function (obj, data) {
-                                            sendImageMessage(data, url.downloadUrl);
+                                            sendImageMessage(data, info.url);
                                         });
-                                    },
-                                    onError: function () {
-                                    }
-                                });
+                                    // },
+                                    // onError: function () {
+                                    // }
+                                // });
                             },
                             'Error': function (up, err, errTip) {
                                 console.log(err);
-                                updateUploadToken();
+                                // updateUploadToken();
+                            },
+                            'Key': function(up, file) {
+                                // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                                // 该配置必须要在 unique_names: false , save_key: false 时才生效
+                                var key = upkey;
+                                return key;
                             }
                         }
                     });

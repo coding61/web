@@ -565,6 +565,7 @@ ul {
     line-height: 1.rongcloud-5;
     font-size: 12px;
     margin-top: 10px;
+    display: none;  //隐藏删除联系人按钮
 }
 
 .rongcloud-no-remind {
