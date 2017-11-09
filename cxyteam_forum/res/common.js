@@ -32,7 +32,7 @@ window.RongDemo = {
                 // console.log(rep);
                 obj.onSuccess({
                     id: targetId,
-                    name:'群组：' + rep.name
+                    name: rep.name
                 });
             }).error(function(err) {
 
