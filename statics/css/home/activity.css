@@ -166,7 +166,7 @@ body {
 }
 .item-title {
     height: 40px;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 40px;
     text-align: center;
     color: #EB6A99;
@@ -475,8 +475,8 @@ body {
     font-size: 13px;
 }
 .title-icon {
-    height: 15px;
-    margin-bottom: 5px;
+    height: 10px;
+    margin-bottom: 3px;
 }
 .bc-alert-view .bc-alert-msg{
     min-height: 100px;
