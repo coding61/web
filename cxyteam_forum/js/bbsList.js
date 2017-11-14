@@ -155,6 +155,13 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 							html+='<span class="manager">管理员</span>'
 						}
 						html+='<span class="grade">'+v.userinfo.grade.current_name+'</span>'
+						if (v.userinfo.top_rank && v.userinfo.top_rank =='Top10') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;background-image: url(img/top10@2x.png);width: 57px;height: 22px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top50') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;background-image: url(img/top50@2x.png);width: 57px;height: 22px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top100') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;background-image: url(img/top100@2x.png);width: 57px;height: 22px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						}
 						+'<h2 class="fly-tip">'
 						if (v.status_display == '未解决') {
 							html+='<span class="unsolved">[未解决]</span>'
