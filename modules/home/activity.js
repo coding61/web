@@ -114,7 +114,7 @@ define(function(require, exports, module) {
             $('.details-view').show();
             $('.details-back').click(function() {
                 $('.details-title, .details-content, .details-name, .details-num').html('');
-                $('.details-view').hide();
+                $('.details-view, .details-delete').hide();
                 switch (tag) {
                     case '0':
                         $('.list-view').show();
@@ -141,9 +141,15 @@ define(function(require, exports, module) {
                 },
                 success:function(json){
                     $('.details-title').html(
-                        '<img class="title-icon" src="../../statics/images/left_icon.png"/>' + '&nbsp;' + json.name + '&nbsp;' + '<img class="title-icon" src="../../statics/images/right_icon.png"/>'
+						 json.name
+                        // '<img class="title-icon" src="../../statics/images/left_icon.png"/>' + '&nbsp;' + json.name + '&nbsp;' + '<img class="title-icon" src="../../statics/images/right_icon.png"/>'
                     );
-                    $('.details-content').html("通告：" + json.introduction);
+
+					json.introduction = json.introduction.replace(/\r\n/g,"<br>");
+					json.introduction = json.introduction.replace(/\n/g,"</br>");
+					// ArtTemplate.config("escape", false);
+
+                    $('.details-content').html('通告：' + json.introduction);
 
                     var arr = json.club_member;
                     for (var i = arr.length - 1; i >= 0; i--) {
@@ -389,7 +395,7 @@ define(function(require, exports, module) {
 
             if (json.isleader) {
 				$('.join-owner').hide();
-				$('.details-title').css({'width': 'calc(100% - 500px)'});
+				// $('.details-title').css({'width': 'calc(100% - 500px)'});
                 $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
                     $('.member-cut').show();
