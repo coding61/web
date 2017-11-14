@@ -112,7 +112,7 @@ define(function(require, exports, module) {
             Page.loadClubDetails(pk);
             $('.list-view, .join-view, .push-view').hide();
             $('.details-view').show();
-            $('.details-back').click(function() {
+            $('.details-back').unbind('click').click(function() {
 				var html = template('member-template', []);
 				$('.member-list').html(html);
                 $('.details-title, .details-content, .details-name, .details-num').html('');
@@ -388,7 +388,7 @@ define(function(require, exports, module) {
             $('.pw-confirm').unbind('click').click(function() {
                 var pw = $(this).prev().val();
                 if (pw) {
-                    Page.confirm(pk, pw);
+                    Page.confirm(pk, pw, 'list');
                     $('.verify').hide();
                 } else {
                     Common.dialog('请输入密码');
