@@ -224,7 +224,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 						} else if (v.posts.userinfo.top_rank && v.posts.userinfo.top_rank =='Top100') {
 							html+='<div class="top" style="position: absolute;margin-top: 100px;background-image: url(img/top100@2x.png);width: 57px;height: 22px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
 						}
-						+'<h2 class="fly-tip">'          
+						html+='<h2 class="fly-tip">'          
 						+'<a href="detail.html?id='+v.posts.pk+'&pk='+getQueryString("id")+'">'+v.posts.title+'</a>'         
 						if(v.posts.istop){
 							html+='<span class="fly-tip-stick">置顶</span>'
@@ -232,7 +232,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 						if(v.posts.isessence){
 							html+='<span class="fly-tip-jing">精帖</span> '
 						}          
-					    html +='</h2><p>'
+					    html +='</h2><h5>所属专区：'+v.posts.section.name+'</h5><p>'
 					    if (v.posts.content) {
 					    	html+='<span class="v_content">'+v.posts.content+'</span>'
 					    }
