@@ -462,7 +462,7 @@ define(function(require, exports, module) {
 
             if (json.isleader) {
 				$('.join-owner').hide();
-				$('.details-title').css({'width': 'calc(100% - 500px)'});
+				// $('.details-title').css({'width': 'calc(100% - 500px)'});
                 $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
 					if ($('.details-edit').html() == '编辑') {
@@ -487,7 +487,7 @@ define(function(require, exports, module) {
 				})
             } else {
 				$('.join-owner').show();
-				$('.details-title').css({'width': 'calc(100% - 300px)'});
+				// $('.details-title').css({'width': 'calc(100% - 300px)'});
             	$('.details-edit').hide();
             }
         },
