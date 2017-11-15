@@ -7,8 +7,25 @@
     margin-right: calc(5%);
     position: relative;
 }
+.navWai .navTopWai {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 20px;
+    display: none;
+}
+.navWai .navTopWai .navTop {
+    width: 75px;
+    height: 20px;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
 .avatar{
    margin-right: 2%;
+   margin-left: 10px;
 }
 .avatar .item {
     height: 25px;
@@ -159,8 +176,26 @@ ul.reply_mess>li .reply_txt {
   margin-top: 23px;
   color: blue;
 }
-.post_user .grade{left: 22px;position: absolute;margin-top: 40px;}
+/*.post_user .grade{left: 22px;position: absolute;margin-top: 40px;}*/
+.post_user .grade{
+  left: 15px;
+  position: absolute;
+  margin-top: 40px;
+  width: 46px;
+  text-align: center;
+}
 
+.post_user .top {
+    /*display: none;*/
+    margin-top: 10px;
+    width: 75px;
+     /*height: 20px; */
+    /* background-image: url(../img/top10@2x.png); */
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    margin-left: -12px;
+}
 .wrap .changeStatus {
     position: absolute;
     right: 20px;
@@ -376,9 +411,11 @@ ul.reply_mess>li .reply_txt {
 
 .detail-about .replyManager {
   color: blue;
+  width: 46px;
 }
 
 .detail-about .managergrade {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
