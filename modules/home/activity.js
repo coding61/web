@@ -112,21 +112,28 @@ define(function(require, exports, module) {
             Page.loadClubDetails(pk);
             $('.list-view, .join-view, .push-view').hide();
             $('.details-view').show();
-            $('.details-back').click(function() {
+            $('.details-back').unbind('click').click(function() {
+				var html = template('member-template', []);
+				$('.member-list').html(html);
                 $('.details-title, .details-content, .details-name, .details-num').html('');
-                $('.details-view').hide();
+                $('.details-view, .details-operate, .details-delete').hide();
+				data_list = [];
                 switch (tag) {
                     case '0':
                         $('.list-view').show();
+						Page.loadData(clubs_url);
                         break;
                     case '1':
                         $('.join-view').show();
+						Page.loadJoinData(join_url);
                         break;
                     case '2':
                         $('.push-view').show();
+						Page.loadPushData(push_url);
                         break;
                     default:
                         $('.list-view').show();
+						Page.loadData(clubs_url);
                         break;
                 }
             })
@@ -141,9 +148,15 @@ define(function(require, exports, module) {
                 },
                 success:function(json){
                     $('.details-title').html(
-                        '<img class="title-icon" src="../../statics/images/left_icon.png"/>' + '&nbsp;' + json.name + '&nbsp;' + '<img class="title-icon" src="../../statics/images/right_icon.png"/>'
+						 json.name
+                        // '<img class="title-icon" src="../../statics/images/left_icon.png"/>' + '&nbsp;' + json.name + '&nbsp;' + '<img class="title-icon" src="../../statics/images/right_icon.png"/>'
                     );
-                    $('.details-content').html("通告：" + json.introduction);
+
+					json.introduction = json.introduction.replace(/\r\n/g,"<br>");
+					json.introduction = json.introduction.replace(/\n/g,"</br>");
+					// ArtTemplate.config("escape", false);
+
+                    $('.details-content').html('通告：' + json.introduction);
 
                     var arr = json.club_member;
                     for (var i = arr.length - 1; i >= 0; i--) {
@@ -180,8 +193,62 @@ define(function(require, exports, module) {
                 }
             })
         },
+		// 退出活动
+        quitClub:function(club_pk) {
+            $.ajax({
+                type: "get",
+                url: Common.domain + "/club/quit_club/" + club_pk + "/",
+                headers: {
+                    Authorization: "Token " + token
+                },
+                success:function(json){
+					Common.dialog("成功退出该活动");
+					Page.loadClubDetails(club_pk);
+                },
+                error:function(xhr, textStatus){
+                    Page.exceptionHandling(xhr, textStatus);
+                }
+            })
+        },
+		// 删除活动
+        deleteClub:function(club_pk) {
+            $.ajax({
+                type: "delete",
+                url: Common.domain + "/club/clubs/" + club_pk + "/",
+                headers: {
+                    Authorization: "Token " + token
+                },
+                success:function(json){
+					Common.dialog("成功解散本活动");
+					$('.details-title, .details-content, .details-name, .details-num').html('');
+	                $('.details-view, .details-operate, .details-delete').hide();
+					data_list = [];
+	                switch (tag) {
+	                    case '0':
+	                        $('.list-view').show();
+							Page.loadData(clubs_url);
+	                        break;
+	                    case '1':
+							$('.join-view').show();
+							Page.loadJoinData(join_url);
+							break;
+						case '2':
+							$('.push-view').show();
+							Page.loadPushData(push_url);
+							break;
+	                    default:
+	                        $('.list-view').show();
+							Page.loadData(clubs_url);
+	                        break;
+	                }
+                },
+                error:function(xhr, textStatus){
+                    Page.exceptionHandling(xhr, textStatus);
+                }
+            })
+        },
         // 验证密码
-        confirm:function(pk, pw) {
+		confirm:function(pk, pw, tag) {
             $.ajax({
                 type: "get",
                 url: Common.domain + "/club/join_club/" + pk +"/?password=" + pw,
@@ -189,8 +256,13 @@ define(function(require, exports, module) {
                     Authorization: "Token " + token
                 },
                 success:function(json){
-                    data_list = [];
-                    Page.loadData(clubs_url);
+					Common.dialog('成功加入');
+					if (tag == 'list') {
+						data_list = [];
+	                    Page.loadData(clubs_url);
+					} else if (tag == 'details') {
+						Page.loadClubDetails(pk);
+					}
                 },
                 error:function(xhr, textStatus){
                     Page.exceptionHandling(xhr, textStatus);
@@ -225,6 +297,7 @@ define(function(require, exports, module) {
         clickEvent:function(){
             $('.column').click(function() {
                 data_list = [];
+				$('.details-operate, .details-delete').hide();
                 // $('.column').css({'background-color': '#FEFFFF','color': '#000'});
                 tag = $(this).attr('value');
                 switch(tag) {
@@ -315,7 +388,7 @@ define(function(require, exports, module) {
             $('.pw-confirm').unbind('click').click(function() {
                 var pw = $(this).prev().val();
                 if (pw) {
-                    Page.confirm(pk, pw);
+                    Page.confirm(pk, pw, 'list');
                     $('.verify').hide();
                 } else {
                     Common.dialog('请输入密码');
@@ -389,21 +462,32 @@ define(function(require, exports, module) {
 
             if (json.isleader) {
 				$('.join-owner').hide();
-				$('.details-title').css({'width': 'calc(100% - 500px)'});
+				// $('.details-title').css({'width': 'calc(100% - 500px)'});
                 $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
-                    $('.member-cut').show();
-                    $('.member-cut').unbind('click').click(function() {
-                        var member_pk = $(this).closest('li').attr('data-pk');
-                        var member_name = $(this).closest('li').attr('data-name');
-                        Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
-                            Page.deleteMember(member_pk, json.pk);
-                        })
-                    })
+					if ($('.details-edit').html() == '编辑') {
+						$('.details-edit').html('完成');
+						$('.member-cut').show();
+	                    $('.member-cut').unbind('click').click(function() {
+	                        var member_pk = $(this).closest('li').attr('data-pk');
+	                        var member_name = $(this).closest('li').attr('data-name');
+	                        Common.bcAlert("确认踢出参与者：" + member_name + "？", function(){
+	                            Page.deleteMember(member_pk, json.pk);
+	                        })
+	                    })
+					} else {
+						$('.details-edit').html('编辑');
+						$('.member-cut').hide();
+					}
                 })
+				$('.details-delete').unbind('click').click(function() {
+					Common.bcAlert("确认解散本活动？", function(){
+						Page.deleteClub(json.pk);
+					})
+				})
             } else {
 				$('.join-owner').show();
-				$('.details-title').css({'width': 'calc(100% - 300px)'});
+				// $('.details-title').css({'width': 'calc(100% - 300px)'});
             	$('.details-edit').hide();
             }
         },

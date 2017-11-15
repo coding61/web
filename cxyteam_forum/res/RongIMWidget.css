@@ -175,7 +175,8 @@ ul {
     padding: 0;
 }
 .rongcloud-kefuListBox{
-    width: 194px;
+    /*width: 194px;*/
+    width: 210px;
     height: 470px;
     position: absolute;
     /*bottom: 0px;*/
@@ -209,7 +210,8 @@ ul {
     position: absolute;
     top:0px;
     bottom: 0px;
-    width: 194px;
+    /*width: 194px;*/
+    width: 210px;
     border-radius: 4px;
 }
 .rongcloud-kefuListBox.rongcloud-both .rongcloud-kefuList{

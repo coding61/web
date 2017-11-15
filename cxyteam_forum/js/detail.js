@@ -55,6 +55,16 @@ $(document).on("click",".jie-add1",function() {
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		localStorage.userName=result.name;
+		if (result.top_rank && result.top_rank == 'Top10') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top10.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top50') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top50.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top100') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top100.png)"});
+		}
 		$('.avatar img').attr({src: result.avatar});//用户头像
 		$('.info .grade').html(result.grade.current_name);//用户段位等级
 		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
@@ -142,6 +152,8 @@ $(document).on("click",".question_reply",function(){
 		+'<div>';
 	$(".layui-form-pane .fly-edit").remove();
 	$(this).parent().after(htm);
+	var per = $(this).parent().parent().children('.detail-about-reply').children('.jie-user').children('cite').children('.reply_name').text();
+	$("#copy_reply_content").val("@"+per+" ");
 	my_init();
 });
 //处理空白点击
@@ -185,6 +197,13 @@ function postDetail() {
 				$('.manager').show();
 			}
 			$(".post_user .grade").text(result.userinfo.grade.current_name);
+			if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top10') {
+				$('.post_user .top').css({"height": "20px", "background-image": "url(../cxyteam_forum/img/top10.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top50') {
+				$('.post_user .top').css({"height": "20px", "background-image": "url(../cxyteam_forum/img/top50.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top100') {
+				$('.post_user .top').css({"height": "20px","background-image": "url(../cxyteam_forum/img/top100.png)"});
+			}
 			$(".post_user cite").prepend(result.userinfo.name);
 			$(".post_user cite em").text(dealWithTime(result.create_time));
 			hasCollect = result.collect;
@@ -272,8 +291,17 @@ function getReplys(page){
 			    if (v.userinfo.is_staff) {
 			   		_htm+='<span class="replyManager">管理员</span>';
 			    }
-			    _htm+='<span class="reGrade">'+v.userinfo.grade.current_name+'</span></div>'
-			    +'<cite><i class="reply_name">'+v.userinfo.name+'</i></cite>'
+			    _htm+='<span class="reGrade" style="width: 46px">'+v.userinfo.grade.current_name+'</span>'
+			    if (v.userinfo.top_rank && v.userinfo.top_rank =='Top10') {
+					_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top50') {
+					_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top100') {
+					_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+				} else {
+					_htm+='</div>'
+				}
+			    _htm+='<cite><i class="reply_name">'+v.userinfo.name+'</i></cite>'
 			    +'</a>'
 			    + '<div class="detail-hits reply_time">'
 			    +' <span>'+dealWithTime(v.create_time)+'</span>'
@@ -316,10 +344,19 @@ function getReplys(page){
 		            if (v1.userinfo.is_staff) {
 				   		_htm+='<span class="replyManager">管理员</span>';
 				    }
-		            _htm+='<span class="reGrade">'+v1.userinfo.grade.current_name+'</span></div>'
-		            +' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
+		            _htm+='<span class="reGrade" style="width: 46px">'+v1.userinfo.grade.current_name+'</span>'
+		            if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top10') {
+						_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top50') {
+						_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top100') {
+						_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					} else {
+						_htm+='</div>'
+					}
+		            _htm+=' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
 		            +' </a>'
-		            +' <div class="detail-hits reply_time">'
+		            +' <div class="detail-hits reply_time" style="left: 80px">'
 		            +'<span class="liveTime"  title="'+dealWithTime(v1.create_time)+'">'+dealWithTime(v1.create_time)+'</span>'
 		            +' </div>'
 					+'</div>'

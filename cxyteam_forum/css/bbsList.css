@@ -26,7 +26,14 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 
 .fly-list-li a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
 .fly-list-li img{display: inline-block;width: 53px;height: 53px;float: left;margin-top: 9px;border-radius: 53px;}
-.fly-list-li .grade{left: 40px;position: absolute;margin-top: 83px;}
+/*.fly-list-li .grade{left: 40px;position: absolute;margin-top: 83px;}*/
+.fly-list-li .grade{
+  left: 30px;
+  position: absolute;
+  margin-top: 83px;
+  width: 53px;
+  text-align: center;
+}
 .fly-list-li .manager{
   left: 40px;
   position: absolute;
@@ -115,6 +122,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 }
 .avatar{
    margin-right: 2%;
+   margin-left: 10px;
 }
 .avatar .item {
     height: 25px;
@@ -276,4 +284,21 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .loadingImg {
     width: 50px;
     height: 50px;
+}
+
+.navWai .navTopWai {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 20px;
+    display: none;
+}
+.navWai .navTopWai .navTop {
+    width: 75px;
+    height: 20px;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
 }

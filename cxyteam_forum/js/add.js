@@ -33,6 +33,16 @@ $('.jie-add1').click(function() {
 })
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
+		if (result.top_rank && result.top_rank == 'Top10') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top10.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top50') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top50.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top100') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top100.png)"});
+		}
 		$('.avatar img').attr({src: result.avatar});//用户头像
 		$('.info .grade').html(result.grade.current_name);//用户段位等级
 		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
