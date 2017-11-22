@@ -38,7 +38,7 @@ define(function(require, exports, module) {
     ]
     var htmlEditor;
     var editModes = {
-        c:{mode:{name:"text/x-csrc"}, language:7},
+        c:{mode:{name:"text/x-csrc"}, language:16},
         oc:{mode:{name:"text/x-objectivec"}, language:12},
         java:{mode:{name:"text/x-java"}, language:8},
         cpp:{mode:{name:"text/x-c++src"}, language:7},
@@ -123,7 +123,25 @@ define(function(require, exports, module) {
             //     htmlEditor.showHint(); //满足自动触发自动联想功能 
             // });
             // Page.addListen();
-            console.log(htmlEditor.getOption("mode"));
+
+            htmlEditor.on("change", function(Editor, changes){
+                console.log(Editor.getValue());
+                var mode = htmlEditor.getOption("mode")["name"];
+                var editValue = Editor.getValue();
+                console.log(mode, editValue);
+                if (mode == "text/x-cython") {
+                    //python
+                    if(editValue.indexOf("input")>-1 || Editor.getValue().indexOf("raw_input") > -1){
+                        Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
+                    }
+                }else if (mode == "text/x-csrc"){
+                    //c
+                    if(editValue.indexOf("scanf")>-1){
+                        Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
+                    }
+                }
+            })
+            // console.log(htmlEditor.getOption("mode"));
         },
         load:function(value){
 
