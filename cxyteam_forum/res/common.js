@@ -6,20 +6,45 @@ window.RongDemo = {
     common: function (WebIMWidget, config, $scope) {
         WebIMWidget.init(config);
         var basePath="/program_girl";
-        WebIMWidget.setUserInfoProvider(function(targetId, obj) {
-            // 根据id获取用户信息
-            $.ajax({
-                url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-            }).success(function(rep){
-                // console.log(rep);
-                obj.onSuccess({
-                    name: rep.name,
-                    id: targetId,
-                    portraitUri: rep.avatar
-                });
-            }).error(function(err) {
+        var userlist = []; //用来存用户信息
 
-            })
+        WebIMWidget.setUserInfoProvider(function(targetId, obj) {
+            if (userlist.length != 0) {
+                var user;
+                userlist.forEach(function(item) {
+                    if (item.id == targetId) {
+                        user = item;
+                    }
+                })
+                if (user) {
+                    obj.onSuccess({name: user.name, id: user.id, portraitUri: user.portraitUri});
+                } else {
+                    // 根据id获取用户信息
+                    $.ajax({
+                        url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                    }).success(function(rep){
+                        // console.log(rep);
+                        var userJson = {"id": targetId,"name": rep.name, "portraitUri": rep.avatar};
+                        userlist.push(userJson); //存用户信息
+                        obj.onSuccess({name: rep.name, id: targetId, portraitUri: rep.avatar});
+                    }).error(function(err) {
+
+                    })
+                }
+            } else {
+                // 根据id获取用户信息
+                $.ajax({
+                    url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                }).success(function(rep){
+                    // console.log(rep);
+                    var userJson = {"id": targetId,"name": rep.name, "portraitUri": rep.avatar};
+                    userlist.push(userJson); //存用户信息
+                    obj.onSuccess({name: rep.name, id: targetId, portraitUri: rep.avatar});
+                }).error(function(err) {
+
+                })
+            }
+            
         });
 
         WebIMWidget.setGroupInfoProvider(function(targetId, obj){

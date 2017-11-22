@@ -16,8 +16,8 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
         if(result){
            //注意实际应用中 appkey 、 token 使用自己从融云服务器注册的。
             var config = {
-                // appkey: '8w7jv4qb7eqty',  //开发环境
-                appkey: '82hegw5uhf50x',  //生产环境
+                appkey: '8w7jv4qb7eqty',  //开发环境
+                // appkey: '82hegw5uhf50x',  //生产环境
                 token: result.token,
                 displayConversationList: true,
                 style:{
@@ -88,20 +88,20 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
                     })
 
                     // 设置用户信息
-                    WebIMWidget.setUserInfoProvider(function(targetId, obj) {
-                        // 根据id获取用户信息
-                        $http({
-                            url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
-                        }).success(function(rep){
-                            obj.onSuccess({
-                                id:targetId,
-                                name: rep.name,
-                                portraitUri: rep.avatar
-                            });
-                        }).error(function(err){
+                    // WebIMWidget.setUserInfoProvider(function(targetId, obj) {
+                    //     // 根据id获取用户信息
+                    //     $http({
+                    //         url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                    //     }).success(function(rep){
+                    //         obj.onSuccess({
+                    //             id:targetId,
+                    //             name: rep.name,
+                    //             portraitUri: rep.avatar
+                    //         });
+                    //     }).error(function(err){
 
-                        })
-                    });
+                    //     })
+                    // });
                 },
                 onError: function(error) {
                     console.log('连接失败：' + error);
