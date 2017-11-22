@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>论坛</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.7" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/share/forum.css?v=2.7" />
+	</head>
+
+	<body>
+		<div class="nav">
+            竞赛答题
+        </div>
+        <div class="details"></div>
+        <script type="text/html" id="details-template">
+            {{each}}
+                <li data-pk="{{$value.pk}}">
+                    <div class="item-content">{{$value.title}}</div>
+                    <div class="answer">提交答案</div>
+                </li>
+            {{/each}}
+        </script>
+
+        <div class="footer">
+            <img style="width: 40px; height: 40px; margin: 11px 20px;" src="../../statics/images/share_logo.png">
+            <div style="height: 40px; margin-top: 11px;">
+                <div style="font-size: 16px; color: #fff;">程序媛</div>
+                <div style="font-size: 14px; color: #fff;">让更多女性学会编程</div>
+            </div>
+            <div class="download">打开</div>
+        </div>
+	</body>
+
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../libs/template.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"share": base + "/modules/share",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("share/forum.js");
+	</script>
+</html>
