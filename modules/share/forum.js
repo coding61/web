@@ -1,116 +1,98 @@
-define(function(require, exports, module) {
-	var ArtTemplate = require("libs/template.js");
-	var Common = require('common/common.js');
-	var pk = Common.getQueryString("pk");
+var basePath="/program_girl";
+var postPk=getQueryString("pk");
+var replyPage = 1;
 
-    var Page = {
-        init:function(){
-			$('.download').click(function() {
-				Page.download();
-			})
-            // Page.loadClubDetails(pk);
-            Page.loadCompeteDetails(pk)
-        },
+initDetail();
+function initDetail(){
+	postDetail();
+}
+function postDetail() {
+	myAjax(basePath+"/forum/posts/"+postPk+"/","get",null,function(result) {
+		console.log(result);
+		if (result) {
+			$(".forum-status").text("[" + result.status_display + "]");
+			if (result.status_display == '未解决') {
+				$(".forum-status").css({"color": 'red'});
+			} else if (result.status_display == '已解决') {
+				$(".forum-status").css({"color": '#777'});
+			} else if (result.status_display == '已关闭') {
+				$(".forum-status").css({"color": '#777'});
+			}
+			$(".forum-title").text(result.title);
 
-        // 获取活动详情
-        loadClubDetails:function(pk) {
-            $.ajax({
-                type: "get",
-                url: Common.domain + "/club/club_detail/" + pk + "/",
-                headers: {
-                },
-                success:function(json){
-                    for (var i = 0; i < json.club_member.length; i++) {
-                        if (json.club_member[i].leader) {
-                            json.leader_name = json.club_member[i].owner.name;
-                            break;
-                        }
-                    }
+			$(".left-view .head").attr("src",dealWithAvatar(result.userinfo.avatar));
+			$(".left-view .grade").text(result.userinfo.grade.current_name);
+			$(".right-view .name").text(result.userinfo.name);
+			$(".right-view .time").text(dealWithTime(result.create_time));
+			$(".right-view .type").text("[" + result.types.name +"]");
 
-                    var dataList = [];
-                    dataList.push(json);
-                    var html = template('details-template', dataList);
-                    $('.details').html(html);
+			// if (result.userinfo.is_staff) {
+			// 	$('.manager').show();
+			// }forum-content
+			if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top10') {
+				$('.post-user .top').css({"height": "20px", "background-image": "url(../../cxyteam_forum/img/top10.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top50') {
+				$('.post-user .top').css({"height": "20px", "background-image": "url(../../cxyteam_forum/img/top50.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top100') {
+				$('.post-user .top').css({"height": "20px","background-image": "url(../../cxyteam_forum/img/top100.png)"});
+			}
 
-                    json.introduction = json.introduction.replace(/\r\n/g,"<br>");
-					json.introduction = json.introduction.replace(/\n/g,"");
-                    $('.item-content').html(json.introduction);
-					$('.item-connect, .item-more').click(function() {
-						Page.download();
-					})
-                },
-                error:function(xhr, textStatus){
-                    Page.exceptionHandling(xhr, textStatus);
-                }
-            })
-        },
+			$('.forum-content').each(function(){
+			    $(this).html(this_fly.content(result.content));
+			});
 
-        loadCompeteDetails:function(pk) {
-            $.ajax({
-                type: "get",
-                url: Common.domain + "/contest/" + pk + "/question",
-                headers: {
-                },
-                success:function(json){
-                    if (json.results.length == 0) {
-                        alert('该竞赛下暂无题目');
-                    } else {
-                        // 可能有多个题目，但目前还未设计对应 UI，先展示一个题目
-                        var dataList = [];
-                        dataList.push(json.results[0]);
-                        var html = template('details-template', dataList);
-                        $('.details').html(html);
-                        $('.answer').click(function() {
-    						Page.download();
-    					})
+			$(".forum-reply").text("回帖数量（" + result.reply_count + "）");
 
-                        var question = null;
-                        question = json.results[0].title.replace(/\r\n/g,"<br>");
-    					question = json.results[0].title.replace(/\n/g,"</br>");
-                        $('.item-content').html(question);
-                    }
-                },
-                error:function(xhr, textStatus){
-                    Page.exceptionHandling(xhr, textStatus);
-                }
-            })
-        },
-
-        // 异常处理
-        exceptionHandling:function(xhr, textStatus) {
-    		if (textStatus == "timeout") {
-    			Common.dialog("请求超时");
-    			return;
-    		}
-    		if (xhr.status == 400 || xhr.status == 403) {
-    			Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
-    			return;
-    		}else{
-    			Common.dialog('服务器繁忙');
-    			return;
-    		}
-        },
-
-		download: function () {
-	        if (Page.checkIsAppleDevice()) {
-	            window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
-	        } else {
-	            alert('安卓版本正在开发中...');
-	        }
-	    },
-
-		checkIsAppleDevice: function() {
-	        var u = navigator.userAgent, app = navigator.appVersion;
-	        var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-	        var iPad = u.indexOf('iPad') > -1;
-	        var iPhone = u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1;
-	        if (ios || iPad || iPhone) {
-	            return true;
-	        } else {
-	            return false;
-	        }
-	    }
-    };
-    Page.init();
-
-});
+			getReplys(replyPage);//获取评论回复
+		} else {
+			layer.msg('请求异常');
+		}
+	})
+}
+function getReplys(page){
+	myAjax2(basePath+"/forum/replies/","get",{"posts":postPk,"page":page},function(result) {
+		if (page == 1) {
+			$("#jieda").empty();
+		}
+		console.log(result);
+		var _htm="";
+		// 改的要死了
+		$.each(result.results,function(k,v){
+			_htm+='<li style="border: 1px solid red !important" data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+'">'
+				+'<div class="reply-userinfo">'
+				+	'<div class="left-view">'
+				+		'<img class="head" src=' + dealWithAvatar(v.userinfo.avatar) + '>'
+				+		'<div class="grade">' + v.userinfo.grade.current_name + '</div>'
+			    +	'</div>'
+				+	'<div class="right-view">'
+				+ 		'<div style="width: 100%; height: 50px; margin-top: 10px;">'
+				+ 			'<div class="name">' + v.userinfo.name + '</div>'
+				+ 			'<div class="time">' + dealWithTime(v.create_time) + '</div>'
+				+ 		'</div>'
+				+ 	'</div>'
+				+'</div>'
+				+'<div class="detail-body forum-content">'
+				+	this_fly.content(v.content)
+				+'</div>'
+				+'<div class="reply_content">'
+				+	'<ul jieda photos class="reply_mess">';
+						$.each(v.replymore,function(k1,v1){
+							_htm+=' <li style="background: #f2f3f4;" class="jieda-daan replymore_'+v1.pk+'">'
+								+'<div class="name">' + v1.userinfo.name + '</div>'
+				            	+'<span class="liveTime"  title="'+dealWithTime(v1.create_time)+'">'+dealWithTime(v1.create_time)+'</span>'
+				            	+'<div class="detail-body forum-content">'
+				            	+	this_fly.content(v1.content)
+				            	+'</div>'
+				            	+'</li >';
+						});
+			_htm+=	'</ul>'
+				+'</div>'
+				+'</li>';
+		});
+		$("#jieda").append(_htm);
+		liveTimeAgo();
+		if (result.next) {
+			$("#jieda").append('<a class="moreReply">点击加载更多</a>');
+		}
+	});
+}
