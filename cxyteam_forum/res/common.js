@@ -48,20 +48,45 @@ window.RongDemo = {
         });
 
         WebIMWidget.setGroupInfoProvider(function(targetId, obj){
-            $.ajax({
-                url: basePath + "/club/club_detail/" + targetId + "/",
-                headers: {
-                    'Authorization': "Token " + localStorage.token
-                }
-            }).success(function(rep){
-                // console.log(rep);
-                obj.onSuccess({
-                    id: targetId,
-                    name: rep.name
-                });
-            }).error(function(err) {
+            if (userlist.length != 0) {
+                var user;
+                userlist.forEach(function(item) {
+                    if (item.id == targetId) {
+                        user = item;
+                    }
+                })
+                if (user) {
+                    obj.onSuccess({name: user.name, id: user.id});
+                } else {
+                    $.ajax({
+                        url: basePath + "/club/club_detail/" + targetId + "/",
+                        headers: {
+                            'Authorization': "Token " + localStorage.token
+                        }
+                    }).success(function(rep){
+                        // console.log(rep);
+                        var userJson = {"id": targetId,"name": rep.name};
+                        userlist.push(userJson); //存用户信息
+                        obj.onSuccess({id: targetId, name: rep.name});
+                    }).error(function(err) {
 
-            })
+                    })
+                }
+            } else {
+                $.ajax({
+                    url: basePath + "/club/club_detail/" + targetId + "/",
+                    headers: {
+                        'Authorization': "Token " + localStorage.token
+                    }
+                }).success(function(rep){
+                    // console.log(rep);
+                    var userJson = {"id": targetId,"name": rep.name};
+                    userlist.push(userJson); //存用户信息
+                    obj.onSuccess({id: targetId, name: rep.name});
+                }).error(function(err) {
+
+                })
+            }
         })
 
         $scope.show = function() {
