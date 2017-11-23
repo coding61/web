@@ -143,11 +143,11 @@ define(function(require, exports, module) {
             })
             */
             // console.log(htmlEditor.getOption("mode"));
-            var mode = htmlEditor.getOption("mode")["name"];
-            if (mode == "text/x-cython" || mode == "text/x-csrc") {
-                //python, c
-                Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
-            }
+            // var mode = htmlEditor.getOption("mode")["name"];
+            // if (mode == "text/x-cython" || mode == "text/x-csrc") {
+            //     //python, c
+            //     Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
+            // }
         },
         load:function(value){
 
