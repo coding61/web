@@ -1688,6 +1688,22 @@ var RongWebIMWidget;
                                         }(con, data[i]));
                                     }
                                     break;
+                                    // *************系统消息 按照单聊方式设置用户信息****************//
+                                case RongIMLib.ConversationType.SYSTEM:
+                                    if (RongWebIMWidget.Helper.checkType(_this.providerdata.getUserInfo) == "function") {
+                                        (function (a, b) {
+                                            _this.providerdata.getUserInfo(a.targetId, {
+                                                onSuccess: function (data) {
+                                                    a.title = data.name;
+                                                    a.portraitUri = data.portraitUri;
+                                                    b.conversationTitle = data.name;
+                                                    b.portraitUri = data.portraitUri;
+                                                }
+                                            });
+                                        }(con, data[i]));
+                                    }
+                                    break;
+                                    // *************系统消息 按照单聊方式设置用户信息****************//
                                 case RongIMLib.ConversationType.GROUP:
                                     if (RongWebIMWidget.Helper.checkType(_this.providerdata.getGroupInfo) == "function") {
                                         (function (a, b) {
