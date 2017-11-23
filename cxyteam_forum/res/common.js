@@ -19,10 +19,14 @@ window.RongDemo = {
                 if (user) {
                     obj.onSuccess({name: user.name, id: user.id, portraitUri: user.portraitUri});
                 } else {
+                    var id = targetId;
+                    if (targetId.indexOf("+") != -1) {
+                        id = "%2b" + id.substr(1)
+                    }
                     // 根据id获取用户信息
                     $.ajax({
                         async: false,
-                        url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                        url: basePath + "/userinfo/username_userinfo/?username=" + id,
                     }).success(function(rep){
                         // console.log(rep);
                         var userJson = {"id": targetId,"name": rep.name, "portraitUri": rep.avatar};
@@ -35,10 +39,14 @@ window.RongDemo = {
                 }
             } else {
                 var userlist = {"result":[]};
+                var id = targetId;
+                if (targetId.indexOf("+") != -1) {
+                    id = "%2b" + id.substr(1)
+                }
                 // 根据id获取用户信息
                 $.ajax({
                     async: false,
-                    url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
+                    url: basePath + "/userinfo/username_userinfo/?username=" + id,
                 }).success(function(rep){
                     // console.log(rep);
                     

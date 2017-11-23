@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+ 	<title>论坛</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="../../cxyteam_forum/bootstrap3.3.5/css/bootstrap.min.css" />
+  	<link rel="stylesheet" type="text/css" href="../../cxyteam_forum/bootstrap3.3.5/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="../../cxyteam_forum/res/layui/css/layui.css">
+  	<link rel="stylesheet" href="../../cxyteam_forum/res/css/global.css">
+  	<link rel="stylesheet" href="../../cxyteam_forum/css/nav.css">
+  	<link rel="stylesheet" href="../../statics/css/share/forum.css">
+
+  	<script src="../../cxyteam_forum/js/jquery-1.11.2.min.js"></script>
+  	<script src="../../cxyteam_forum/res/layui/layui.js"></script>
+  	<script src="../../cxyteam_forum/res/layui/layer/layer.js"></script>
+  	<script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/moxie.min.js"></script>
+  	<script type="text/javascript" src="../../cxyteam_forum/js/plupload/js/plupload.full.min.js"></script>
+  	<script type="text/javascript" src="../../cxyteam_forum/js/qiniu/src/qiniu.js"></script>
+
+  	<script src="../../cxyteam_forum/js/jquery.liveTimeAgo.js"></script>
+  	<script src="../../cxyteam_forum/js/common.js?v=1.0"></script>
+  	<script src="../../modules/share/forum.js?v=1.2"></script>
+  	<script>
+	  	var this_fly;
+	  	layui.cache.user = {
+	    	username: '游客'
+	    	,uid: -1
+	    	,avatar: '../../cxyteam_forum/res/images/avatar/00.jpg'
+	    	,experience: 83
+	    	,sex: '男'
+	  	};
+	  	layui.config({
+	    	version: "1.0.0"
+	    	,base: '../../cxyteam_forum/res/mods/'
+	  	}).extend({
+	    	fly: 'index'
+	  	}).use('fly', function(){
+	    	this_fly = layui.fly;
+	    	//如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+	    	initDetail();
+	  	});
+  	</script>
+</head>
+<body>
+	<div class="share-nav">
+		<div class="collect" style="position: absolute; right: 50px;top: 0;width:40px;height: 40px;">
+			<img style="width: 20px;height: 20px;" src="../../statics/images/collect.png">
+		</div>
+		<div class="comment" style="position: absolute; right: 10px;top: 0;width:40px;height: 40px;">
+			<img style="width: 20px;height: 18px;" src="../../statics/images/comment.png">
+		</div>
+	</div>
+	<div class="content-detail">
+		<div class="title-view">
+			<div class="forum-status"></div>
+			<div class="forum-title"></div>
+		</div>
+		<div class="userinfo">
+			<div class="left-view">
+				<img class="head">
+				<div class="grade"></div>
+			</div>
+			<div class="right-view">
+				<div style="width: 100%; height: 50px; margin-top: 10px;">
+					<div class="name"></div>
+					<div class="time"></div>
+				</div>
+				<div class="type"></div>
+			</div>
+		</div>
+		<div class="detail-body forum-content"></div>
+		<h2 class="forum-reply">回帖数量（0）</h2>
+		<!-- 这代码改的脑瓜银子生疼，改不动了😂 -->
+		<ul class="reply-view" id="reply"></ul>
+	</div>
+	<div class="share-footer">
+		<img style="width: 40px; height: 40px; margin: 11px 20px;" src="../../statics/images/share_logo.png">
+		<div style="height: 40px; margin-top: 11px;">
+			<div style="font-size: 16px; color: #fff;">程序媛</div>
+			<div style="font-size: 14px; color: #fff;">让更多女性学会编程</div>
+		</div>
+		<div class="download">打开</div>
+	</div>
+</body>
+</html>
