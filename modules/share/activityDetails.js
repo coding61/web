@@ -6,7 +6,7 @@ define(function(require, exports, module) {
     var Page = {
         init:function(){
 			$('.download').click(function() {
-				Page.download();
+				Common.download();
 			})
             Page.loadClubDetails(pk);
         },
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
 					json.introduction = json.introduction.replace(/\n/g,"");
                     $('.item-content').html(json.introduction);
 					$('.item-connect, .item-more').click(function() {
-						Page.download();
+						Common.download();
 					})
                 },
                 error:function(xhr, textStatus){
@@ -58,28 +58,7 @@ define(function(require, exports, module) {
     			Common.dialog('服务器繁忙');
     			return;
     		}
-        },
-
-		download: function () {
-	        if (Page.checkIsAppleDevice()) {
-	            window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
-	        } else {
-	            alert('安卓版本正在开发中...');
-	        }
-	    },
-
-		checkIsAppleDevice: function() {
-	        var u = navigator.userAgent, app = navigator.appVersion;
-	        var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-	        var iPad = u.indexOf('iPad') > -1;
-	        var iPhone = u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1;
-	        if (ios || iPad || iPhone) {
-	            return true;
-	        } else {
-	            return false;
-	        }
-	    }
+        }
     };
     Page.init();
-
 });
