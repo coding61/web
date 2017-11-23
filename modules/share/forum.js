@@ -110,23 +110,3 @@ function getReplys(page){
 		})
 	});
 }
-
-function download() {
-	if (checkIsAppleDevice()) {
-		window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
-	} else {
-		alert('安卓版本正在开发中...');
-	}
-}
-
-function checkIsAppleDevice() {
-	var u = navigator.userAgent, app = navigator.appVersion;
-	var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-	var iPad = u.indexOf('iPad') > -1;
-	var iPhone = u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1;
-	if (ios || iPad || iPhone) {
-		return true;
-	} else {
-		return false;
-	}
-}
