@@ -1,0 +1,132 @@
+var basePath="/program_girl";
+var postPk=getQueryString("pk");
+var replyPage = 1;
+
+initDetail();
+function initDetail(){
+	$(".collect, .comment, .download").click(function(){
+		download();
+	})
+	postDetail();
+}
+function postDetail() {
+	myAjax(basePath+"/forum/posts/"+postPk+"/","get",null,function(result) {
+		if (result) {
+			$(".forum-status").text("[" + result.status_display + "]");
+			if (result.status_display == '未解决') {
+				$(".forum-status").css({"color": 'red'});
+			} else if (result.status_display == '已解决') {
+				$(".forum-status").css({"color": '#777'});
+			} else if (result.status_display == '已关闭') {
+				$(".forum-status").css({"color": '#777'});
+			}
+			$(".forum-title").text(result.title);
+
+			$(".left-view .head").attr("src",dealWithAvatar(result.userinfo.avatar));
+			$(".left-view .grade").text(result.userinfo.grade.current_name);
+			$(".right-view .name").text(result.userinfo.name);
+			$(".right-view .time").text(dealWithTime(result.create_time));
+			$(".right-view .type").text("[" + result.types.name +"]");
+
+			// if (result.userinfo.is_staff) {
+			// 	$('.manager').show();
+			// }forum-content
+			if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top10') {
+				$('.post-user .top').css({"height": "20px", "background-image": "url(../../cxyteam_forum/img/top10.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top50') {
+				$('.post-user .top').css({"height": "20px", "background-image": "url(../../cxyteam_forum/img/top50.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top100') {
+				$('.post-user .top').css({"height": "20px","background-image": "url(../../cxyteam_forum/img/top100.png)"});
+			}
+
+			$('.forum-content').each(function(){
+			    $(this).html(this_fly.content(result.content));
+			});
+
+			$(".forum-reply").text("回帖数量（" + result.reply_count + "）");
+
+			getReplys(replyPage);//获取评论回复
+		} else {
+			layer.msg('请求异常');
+		}
+	})
+}
+function getReplys(page){
+	myAjax2(basePath+"/forum/replies/","get",{"posts":postPk,"page":page},function(result) {
+		if (page == 1) {
+			$("#reply").empty();
+		}
+		var _htm="";
+		// 改的要死了
+		$.each(result.results,function(k,v){
+			_htm+='<li data-id="'+v.pk+'" class="reply-item">'
+				+'<div class="reply-userinfo">'
+				+	'<div class="reply-left-view">'
+				+		'<img class="reply-head" src=' + dealWithAvatar(v.userinfo.avatar) + '>'
+				+		'<div class="reply-grade">' + v.userinfo.grade.current_name + '</div>'
+			    +	'</div>'
+				+	'<div class="reply-right-view">'
+				+ 		'<div style="width: 100%; height: 50px; margin-top: 10px;">'
+				+ 			'<div class="name">' + v.userinfo.name + '</div>'
+				+			'<div style="display: flex;">'
+				+	 			'<div class="time">' + dealWithTime(v.create_time) + '</div>'
+				+   			'<div class="comment" style="width:40px; height: 26px;">'
+				+					'<img style="width: 20px;height: 18px;" src="../../statics/images/comment.png">'
+				+   			'</div>'
+				+			'</div>'
+				+ 		'</div>'
+				+ 	'</div>'
+				+'</div>'
+				+'<div class="detail-body reply-forum-content">'
+				+	this_fly.content(v.content)
+				+'</div>'
+				+'<div class="reply-content">'
+				+	'<ul class="reply-more">';
+						$.each(v.replymore,function(k1,v1){
+							_htm+=' <li style="background: #f2f3f4;" class="reply-more-'+v1.pk+'">'
+								+'<div style="display:flex;">'
+								+	'<div class="reply-name">' + v1.userinfo.name + '</div>'
+				            	+	'<span class="reply-time">'+dealWithTime(v1.create_time)+'</span>'
+								+   '<div class="comment" style="width:40px; height: 26px;">'
+								+		'<img style="width: 20px;height: 18px;" src="../../statics/images/comment.png">'
+								+   '</div>'
+								+'</div>'
+				            	+'<div class="reply-more-content">'
+				            	+	this_fly.content(v1.content)
+				            	+'</div>'
+				            	+'</li >';
+						});
+			_htm+=	'</ul>'
+				+'</div>'
+				+'</li>';
+		});
+		$("#reply").append(_htm);
+		liveTimeAgo();
+		if (result.next) {
+			$("#reply").append('<div class="more" style="width: 100%; text-align: center; background: #eee;">下载客户端查看更多评论</div>');
+		}
+		$(".head, .forum-content, .reply-head, .reply-forum-content, .reply-more-content, .comment, .more").unbind("click").click(function() {
+			download();
+		})
+	});
+}
+
+function download() {
+	if (checkIsAppleDevice()) {
+		window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
+	} else {
+		alert('安卓版本正在开发中...');
+	}
+}
+
+function checkIsAppleDevice() {
+	var u = navigator.userAgent, app = navigator.appVersion;
+	var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+	var iPad = u.indexOf('iPad') > -1;
+	var iPhone = u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1;
+	if (ios || iPad || iPhone) {
+		return true;
+	} else {
+		return false;
+	}
+}
