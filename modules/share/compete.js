@@ -21,19 +21,29 @@ define(function(require, exports, module) {
                     if (json.results.length == 0) {
                         alert('该竞赛下暂无题目');
                     } else {
+						var test = {
+							title: '想在HTML中实现加粗的效果，下面哪个答案正确？\r\n\r\nA) <p>粗</p>\r\nB) <b>粗</b>\r\nC) <c>粗</c>\r\nD) <d>粗</d>'
+						}
                         // 可能有多个题目，但目前还未设计对应 UI，先展示一个题目
                         var dataList = [];
-                        dataList.push(json.results[0]);
+						// dataList.push(test);
+						dataList.push(json.results[0]);
                         var html = template('details-template', dataList);
                         $('.details').html(html);
                         $('.answer').click(function() {
     						Common.download();
     					})
 
-                        var question = null;
-                        question = json.results[0].title.replace(/\r\n/g,"<br>");
-    					question = json.results[0].title.replace(/\n/g,"</br>");
-                        $('.item-content').html(question);
+                        // var question = null;
+                        // question = json.results[0].title.replace(/\r\n/g,"<br>");
+    					// question = json.results[0].title.replace(/\n/g,"</br>");
+						// // question = test.title.replace(/\r\n/g,"<br>");
+    					// // question = test.title.replace(/\n/g,"</br>");
+                        // $('.item-content').html(question);
+
+						// 解析换行符号后，设置题目文字，会将其他 html 解析，改为使用 this_fly
+						// $('.item-content').html(this_fly.content(test.title));
+						$('.item-content').html(this_fly.content(json.results[0].title));
                     }
                 },
                 error:function(xhr, textStatus){
