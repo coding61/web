@@ -1,0 +1,39 @@
+.monkey {
+	position: absolute;
+	right: 50px;
+	width: 123px;
+	height: 80px;
+}
+#monkey1 {
+	top: 150px;
+}
+#monkey2 {
+	top: 250px;
+}
+#monkey3 {
+	top: 350px;
+}
+#monkey4 {
+	top: 450px;
+	/*width: 125px;*/
+}
+#monkey5 {
+	top: 550px;
+	/*width: 122px;*/
+}
+
+#monkey{
+	top: 50px;
+	background:url("../../images/monkey/monkey-laugh.png") -153px -10px;
+}
+button{
+	margin-left: 10px;
+	margin-top: 50px;
+	background: #eee;
+    padding: 5px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    color: #333;
+    border: solid 1px #e1e1e1;
+    font-size: 13px;
+}
