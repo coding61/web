@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>猴子动画</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/monkeyAnimation.css" />
+	</head>
+
+	<body>
+		<div class="monkey" id="monkey1"></div>
+		<div class="monkey" id="monkey2"></div>
+		<div class="monkey" id="monkey3"></div>
+		<div class="monkey" id="monkey4"></div>
+		<div class="monkey" id="monkey5"></div>
+		<div class="monkey" id="monkey"></div>
+
+		<button class="item1">笑</button>
+		<button class="item2">点头</button>
+		<button class="item3">快速摇头</button>
+		<button class="item4">说话</button>
+		<button class="item5">摇头</button>
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script type="text/javascript" src="../../libs/animation/animation.min.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"home": base + "/modules/home",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("home/monkeyAnimation.js");
+	</script>
+
+</html>
+
