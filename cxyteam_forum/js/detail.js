@@ -364,7 +364,7 @@ function getReplys(page){
 		            +this_fly.content(v1.content)
 		            +'</div>'
 		            +'<div class="jieda-reply" style="text-align:right;">'
-		           // +'<span type="reply"  class="question_reply" data-user-id="'+v1.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复</span>';
+		           +'<span type="reply"  class="question_reply" data-user-id="'+v1.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复</span>';
 		           /* +'<span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
 		            /*+'<div class="jieda-admin">'*/
 		           /* +' <span type="edit">编辑</span>'*/
