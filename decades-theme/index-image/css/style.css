@@ -435,7 +435,7 @@ button:active,
 
 .woebot-icon {
     width: 150px;
-    
+    border-radius: 150px;
 }
 
 
@@ -2221,4 +2221,56 @@ footer {
 		padding-right: 15px;
 	}
 	
+}
+
+/****************************yyy******************************/
+/*二维码*/
+.header .qr-code-view{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 50px;
+    background: white;
+    color: #333;
+    padding: 15px;
+    width: 135px;
+    display: none;
+}
+.qr-code-view img{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+}
+/*编辑器*/
+.code-online-editors{
+    position: absolute;
+    top: 50px;
+    z-index: 10;
+    left: 618px;
+    display: flex;
+    justify-content: center;
+    display: none;
+}
+.code-online-editors img.arrow{
+    position: absolute;
+    height: 9px;
+    top: -8px;
+}
+.code-online-editors .editors{
+    border: solid 1px #d2d2d2;
+    padding: 10px;
+    border-radius: 3px;
+    background: white;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+}
+.code-online-editors .editors .editor{
+    padding-right: 12px;
+    cursor: pointer;
+}
+.code-online-editors .editors .editor:hover{
+    color: rgb(84, 180,225);
 }
