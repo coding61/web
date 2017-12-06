@@ -250,12 +250,13 @@ function postDetail() {
 					$('.finish').addClass("had-click").siblings().removeClass("had-click");
 				}
 			}
-			$(".detail-hits").append('<span onclick="dashang()" data-id="'+result.userinfo.owner+'" data-postPk="'+result.pk+'" class="dashang" style="cursor: pointer;">打赏</span>');
-			if (result.play_reward.play_reward_number == 1) {
-				$('.postDashang').html(result.play_reward.play_reward_pople[0] + "已打赏");
-			} else if (result.play_reward.play_reward_number > 1) {
-				$('.postDashang').html(result.play_reward.play_reward_pople[0] + "等人已打赏");
-			}
+			// 打赏帖子
+			// $(".detail-hits").append('<span onclick="dashang()" data-id="'+result.userinfo.owner+'" data-postPk="'+result.pk+'" class="dashang" style="cursor: pointer;">打赏</span>');
+			// if (result.play_reward.play_reward_number == 1) {
+			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "已打赏");
+			// } else if (result.play_reward.play_reward_number > 1) {
+			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "等人已打赏");
+			// }
 			
 			if (is_staff) {
 				if (result.isessence) {
@@ -326,8 +327,8 @@ function getReplys(page){
 			+'</div>'
 			+'<div class="jieda-reply" style="text-align:right;">'
 			/* +' <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
-			_htm+='<span type="reply" class="question_reply" data-user-id="'+v.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复('+v.replymore.length+')</span>'
-			+'<span onclick=dashangHuitie("'+v.userinfo.owner+'",'+v.pk+') data-id="'+v.userinfo.owner+'" data-postPk="'+v.pk+'" class="dashangHuitie">打赏</span>';
+			_htm+='<span type="reply" class="question_reply" data-user-id="'+v.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复('+v.replymore.length+')</span>';
+			// +'<span onclick=dashangHuitie("'+v.userinfo.owner+'",'+v.pk+') data-id="'+v.userinfo.owner+'" data-postPk="'+v.pk+'" class="dashangHuitie">打赏</span>';
 			 /* +'<div class="jieda-admin">'*/
 			  /* +' <span type="edit">编辑</span>'*/
 			  if(localStorage.userName!=null&&(v.userinfo.name==localStorage.userName)){
@@ -342,13 +343,13 @@ function getReplys(page){
 	    	// 	}
 		    // }
 			/*  +'</div>'*/
-			if (v.play_reward.play_reward_number == 1) {
-				var dashang = v.play_reward.play_reward_pople[0] + "已打赏";
-				_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
-			} else if (v.play_reward.play_reward_number > 1) {
-				var dashang = v.play_reward.play_reward_pople[0] + "等人已打赏"
-				_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
-			}
+			// if (v.play_reward.play_reward_number == 1) {
+			// 	var dashang = v.play_reward.play_reward_pople[0] + "已打赏";
+			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			// } else if (v.play_reward.play_reward_number > 1) {
+			// 	var dashang = v.play_reward.play_reward_pople[0] + "等人已打赏"
+			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			// }
 			_htm+='</div>'
 			+'<div class="reply_content">'
 			+'<ul jieda photos class="reply_mess">';

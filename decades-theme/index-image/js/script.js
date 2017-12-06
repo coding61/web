@@ -430,10 +430,14 @@ $(document).ready(function () {
         location.href = "../../app/home/activity.html";
     })
     // 手机APP
-    $(".link5").unbind('mouseover').mouseover(function(){
-        Util.adjustQrCode();
-    }).unbind('mouseout').mouseout(function(){
-        $(".qr-code-view").css({display:'none'});
+    // $(".link5").unbind('mouseover').mouseover(function(){
+    //     Util.adjustQrCode();
+    // }).unbind('mouseout').mouseout(function(){
+    //     $(".qr-code-view").css({display:'none'});
+    // })
+    // 手机App 跳到应用宝地址
+    $('.link5').click(function() {
+        window.open("http://sj.qq.com/myapp/detail.htm?apkName=com.cxy61.girls");
     })
     // 在线编程
     $('.link6').click(function() {
