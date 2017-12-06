@@ -32,21 +32,21 @@ $(document).ready(function () {
 
 //	============================= Sticky nav menu =============================
 
-    var scrollOffset = 100,
-        header =  $("header"),
-        root = $(window);
+    // var scrollOffset = 100,
+    //     header =  $("header"),
+    //     root = $(window);
 
-    root.on("scroll", function () {
-        if (root.scrollTop() < scrollOffset) {
+    // root.on("scroll", function () {
+    //     if (root.scrollTop() < scrollOffset) {
 			
-            header.removeClass("stuck");
+    //         header.removeClass("stuck");
 			
-        } else {
+    //     } else {
 			
-            header.addClass("stuck");
+    //         header.addClass("stuck");
 			
-        }
-    });
+    //     }
+    // });
 
 	
 
@@ -375,6 +375,90 @@ $(document).ready(function () {
             });
         }
     });
+
+    // ---------------------4.帮助方法
+    var Util = {
+        adjustCodeEditorsOnline:function(){
+            var a = $(".code-online").offset().left;
+            var b = $(".code-online").width();
+            var c = $(".code-online-editors").width();
+
+            if ($(".code-online-editors").css("display") == "none") {
+                $(".code-online-editors").css({
+                    left:(a - (c-b)/2)+"px",
+                    display:'flex'
+                })
+            }else{
+                $(".code-online-editors").css({
+                    left:(a - (c-b)/2)+"px",
+                    display:'none'
+                })
+            }
+
+        },
+        adjustQrCode:function(){
+            var a = $(".mobile-app").offset().left;
+            var b = $(".mobile-app").width();
+            var c = $(".qr-code-view").width();
+            $(".qr-code-view").css({
+                left:(a - (c-b)/2)+"px",
+                display:'flex'
+            })
+        },
+        openLink:function(link){
+            var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
+            params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
+            console.log(params);
+            window.open(link, '_blank', params);
+        }
+    }
+    // 点击顶部链接
+    // 开始学习
+    $('.link1').click(function() {
+        location.href = "../../app/home/home.html";
+    })
+    // 作品中心
+    $('.link2').click(function() {
+        location.href = "../../app/home/worksList.html";
+    })
+    // 学习论坛
+    $('.link3').click(function() {
+        location.href = "../../cxyteam_forum/bbsList.html";
+    })
+    // 活动竞赛
+    $('.link4').click(function() {
+        location.href = "../../app/home/activity.html";
+    })
+    // 手机APP
+    $(".link5").unbind('mouseover').mouseover(function(){
+        Util.adjustQrCode();
+    }).unbind('mouseout').mouseout(function(){
+        $(".qr-code-view").css({display:'none'});
+    })
+    // 在线编程
+    $('.link6').click(function() {
+        Util.adjustCodeEditorsOnline();
+    })
+    // 编辑器点击事件
+    $(".editors .editor").unbind('click').click(function(){
+        var url = ""
+        if (location.host == "develop.cxy61.com:8001") {
+            url = "http://"+location.host + "/app"
+        }else{
+            url = "https://"+location.host + "/girl/app"
+        }
+        if ($(this).hasClass("html")) {
+            url = url + "/home/codeEditRN.html"
+        }else if ($(this).hasClass("c")) {
+            url = url + "/home/compileRN.html?lang=c"
+        }else if ($(this).hasClass("python")) {
+            url = url + "/home/compileRN.html?lang=python"
+        }else if ($(this).hasClass("java")) {
+            url = url + "/home/compileRN.html?lang=java"
+        }
+        Util.openLink(url)
+        $(".code-online-editors").css({display:'none'})
+    })
     // 点击媒体跳转链接
     $('.col-md-3').click(function() {
         var tag = $(this).attr("data-pk");
