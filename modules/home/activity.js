@@ -282,7 +282,7 @@ define(function(require, exports, module) {
                     'introduction': content,
                     'password': password,
 					'ispunch': false,
-    				'punch_days': 0,
+    				'punch_days': 0
                 },
                 success:function(json){
                     Common.dialog(json.message);

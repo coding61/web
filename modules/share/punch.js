@@ -5,8 +5,8 @@ var name=getQueryString("name");
 var head=getQueryString("head");
 console.log(name);
 console.log(head);
-initDetail();
-function initDetail(){
+myInitDetail();
+function myInitDetail(){
 	$(".pk-btn, .comment, .download").click(function(){
 		download();
 	})
