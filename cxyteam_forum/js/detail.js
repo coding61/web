@@ -250,6 +250,14 @@ function postDetail() {
 					$('.finish').addClass("had-click").siblings().removeClass("had-click");
 				}
 			}
+			// 打赏帖子
+			// $(".detail-hits").append('<span onclick="dashang()" data-id="'+result.userinfo.owner+'" data-postPk="'+result.pk+'" class="dashang" style="cursor: pointer;">打赏</span>');
+			// if (result.play_reward.play_reward_number == 1) {
+			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "已打赏");
+			// } else if (result.play_reward.play_reward_number > 1) {
+			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "等人已打赏");
+			// }
+			
 			if (is_staff) {
 				if (result.isessence) {
 					$(".detail-hits").append('<span onclick="canclePostsEssence()" class="postsEssence">取消加精</span>');
@@ -320,6 +328,7 @@ function getReplys(page){
 			+'<div class="jieda-reply" style="text-align:right;">'
 			/* +' <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
 			_htm+='<span type="reply" class="question_reply" data-user-id="'+v.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复('+v.replymore.length+')</span>';
+			// +'<span onclick=dashangHuitie("'+v.userinfo.owner+'",'+v.pk+') data-id="'+v.userinfo.owner+'" data-postPk="'+v.pk+'" class="dashangHuitie">打赏</span>';
 			 /* +'<div class="jieda-admin">'*/
 			  /* +' <span type="edit">编辑</span>'*/
 			  if(localStorage.userName!=null&&(v.userinfo.name==localStorage.userName)){
@@ -334,7 +343,14 @@ function getReplys(page){
 	    	// 	}
 		    // }
 			/*  +'</div>'*/
-			    _htm+='</div>'
+			// if (v.play_reward.play_reward_number == 1) {
+			// 	var dashang = v.play_reward.play_reward_pople[0] + "已打赏";
+			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			// } else if (v.play_reward.play_reward_number > 1) {
+			// 	var dashang = v.play_reward.play_reward_pople[0] + "等人已打赏"
+			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			// }
+			_htm+='</div>'
 			+'<div class="reply_content">'
 			+'<ul jieda photos class="reply_mess">';
 			$.each(v.replymore,function(k1,v1){
@@ -364,7 +380,7 @@ function getReplys(page){
 		            +this_fly.content(v1.content)
 		            +'</div>'
 		            +'<div class="jieda-reply" style="text-align:right;">'
-		           // +'<span type="reply"  class="question_reply" data-user-id="'+v1.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复</span>';
+		           +'<span type="reply"  class="question_reply" data-user-id="'+v1.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复</span>';
 		           /* +'<span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
 		            /*+'<div class="jieda-admin">'*/
 		           /* +' <span type="edit">编辑</span>'*/
@@ -387,6 +403,97 @@ function getReplys(page){
 		}
 	});
 }
+var dashangTag;
+var replyOwner;
+var replyPk;
+// 打赏帖子
+function dashang() {
+	dashangTag = "post";
+	$('.dashang_amount').css({"display": "flex"});
+}
+// 打赏回帖 
+function dashangHuitie(id, pk) {
+	dashangTag = "reply";
+	$('.dashang_amount').css({"display": "flex"});
+	replyOwner = id;
+	replyPk = pk;
+}
+// 打赏数量确定
+function dsAmountSure() {
+	var amount = $('.dashang_amount input').val();
+	if (amount == "") {
+		layer.msg("请输入打赏钻石数量");
+	} else {
+		$('.dashang_amount input').val("");
+		$('.dashang_amount').css({"display": "none"});
+		var data = null;
+		// 打赏帖子
+		if (dashangTag == "post") {
+			var id = $('.dashang').attr("data-id");
+			var pk = $('.dashang').attr("data-postPk");
+			data = {amount: parseInt(amount), to_username: id, posts: parseInt(pk)};
+			if (localStorage.token && localStorage.token != null && localStorage.token != '') {
+				$.ajax({
+					url: basePath+"/userinfo/play_reward/",
+					type: "post",
+					headers: {
+		                Authorization: "Token " + localStorage.token,
+		                "Content-Type": "application/json"
+		            },
+		            data: JSON.stringify(data),
+		            success:function(json){
+		                if (json.message == "打赏成功") {
+		                	layer.msg("打赏成功");
+		                	setTimeout("window.location.reload()",2000);
+		                }
+		            },
+		            error:function(xhr, textStatus){
+		            	console.log(xhr);
+		            	if (xhr.responseJSON.status == -4) {
+		            		layer.msg(xhr.responseJSON.message);
+		            	}
+		            }
+				})
+			} else {
+				layer.msg("请先登录");
+			}
+		} else if (dashangTag == "reply"){ //打赏回帖
+			data = {amount: parseInt(amount), to_username: replyOwner, replies: parseInt(replyPk)};
+			if (localStorage.token && localStorage.token != null && localStorage.token != '') {
+				$.ajax({
+					url: basePath+"/userinfo/play_reward/",
+					type: "post",
+					headers: {
+		                Authorization: "Token " + localStorage.token,
+		                "Content-Type": "application/json"
+		            },
+		            data: JSON.stringify(data),
+		            success:function(json){
+		                if (json.message == "打赏成功") {
+		                	layer.msg("打赏成功");
+		                	setTimeout("window.location.reload()",2000);
+		                }
+		            },
+		            error:function(xhr, textStatus){
+		            	if (xhr.responseJSON.status == -4) {
+		            		layer.msg(xhr.responseJSON.message);
+		            	}
+		            }
+				})
+			} else {
+				layer.msg("请先登录");
+			}
+		}
+	}
+	
+}
+// 打赏数量取消
+function dsAmountCancel() {
+	console.log("打赏数量取消");
+	$('.dashang_amount input').val("");
+	$('.dashang_amount').css({"display": "none"});
+}
+
 // 管理员加精
 function postsEssence() {
 	myAjax(basePath+"/forum/posts_essence/"+postId+"/","put",null,function(result) {
