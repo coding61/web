@@ -15,7 +15,7 @@ function myInitDetail(){
 }
 
 function getUserInfo() {
-	myAjax(basePath + '/userinfo/username_userinfo/?username=' + username,"get",null,function(result) {
+	myAjaxInShare(basePath + '/userinfo/username_userinfo/?username=' + username,"get",null,function(result) {
 		if (result) {
             $('.name').html(result.name);
             $('.head').attr('src',result.avatar);
@@ -26,7 +26,7 @@ function getUserInfo() {
 }
 
 function getRecord() {
-	myAjax(basePath + '/club/myclub_punch/' + String(pk) + '/?username=' + username,"get",null,function(result) {
+	myAjaxInShare(basePath + '/club/myclub_punch/' + String(pk) + '/?username=' + username,"get",null,function(result) {
 		if (result) {
             todayCount = result.my_punch ? result.my_punch.today_punch : 0;
             totalCount = result.my_punch ? result.my_punch.all_punch : 0;

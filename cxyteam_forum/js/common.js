@@ -82,6 +82,23 @@ function myAjax2(url,type,data,success,async){
         }
   });
 }
+function myAjaxInShare(url,type,data,success,async){
+    $.ajax({
+        url: url,
+        type: type,
+        async:async==null?true:async,
+        data:data,
+        success: success,
+        error:function(XMLHttpRequest){
+            console.log(XMLHttpRequest.status)
+            if(XMLHttpRequest.status==403){
+                layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+            }else{
+                layer.msg("请求异常")
+            }
+        }
+    });
+}
 	// 统计页面浏览量
 	var _hmt = _hmt || [];
 	var hm = document.createElement("script");

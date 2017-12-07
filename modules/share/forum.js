@@ -10,7 +10,7 @@ function initDetail(){
 	postDetail();
 }
 function postDetail() {
-	myAjax(basePath+"/forum/posts/"+postPk+"/","get",null,function(result) {
+	myAjaxInShare(basePath+"/forum/posts/"+postPk+"/","get",null,function(result) {
 		if (result) {
 			$(".forum-status").text("[" + result.status_display + "]");
 			if (result.status_display == '未解决') {
@@ -52,7 +52,7 @@ function postDetail() {
 	})
 }
 function getReplys(page){
-	myAjax2(basePath+"/forum/replies/","get",{"posts":postPk,"page":page},function(result) {
+	myAjaxInShare(basePath+"/forum/replies/","get",{"posts":postPk,"page":page},function(result) {
 		if (page == 1) {
 			$("#reply").empty();
 		}
