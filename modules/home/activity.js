@@ -280,7 +280,9 @@ define(function(require, exports, module) {
                 data:{
                     'name': title,
                     'introduction': content,
-                    'password': password
+                    'password': password,
+					'ispunch': false,
+    				'punch_days': 0,
                 },
                 success:function(json){
                     Common.dialog(json.message);
