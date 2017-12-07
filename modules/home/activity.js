@@ -271,6 +271,7 @@ define(function(require, exports, module) {
         },
         // 创建俱乐部
         createClub:function(title, content, password) {
+			console.log(token);
             $.ajax({
                 type: "post",
                 url: Common.domain + "/club/club_create/",
@@ -281,7 +282,7 @@ define(function(require, exports, module) {
                     'name': title,
                     'introduction': content,
                     'password': password,
-					'ispunch': false,
+					'ispunch': 'False',
     				'punch_days': 0
                 },
                 success:function(json){
@@ -291,6 +292,9 @@ define(function(require, exports, module) {
                     $('.password-input').val('');
                 },
                 error:function(xhr, textStatus){
+					console.log(xhr);
+					console.log(textStatus);
+
                     Page.exceptionHandling(xhr, textStatus);
                 }
             })
