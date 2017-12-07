@@ -425,6 +425,8 @@ button:active,
 .woebot-holder {
     text-align: center;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .woebot-holder h1 {
@@ -862,7 +864,8 @@ ul.main-nav-inner {
 .main-nav-inner li a {
     color: #fff;
     display: block;
-    font-size: 12px;
+    /*font-size: 12px;*/
+    font-size: 24px;
     font-weight: 600;
     line-height: 90px;
     text-transform: uppercase;
@@ -888,7 +891,8 @@ ul.main-nav-inner {
 }
 
 .header.stuck .main-nav-inner li a {
-    color: #afafaf;
+    /*color: #afafaf;*/
+    color: black;
     line-height: 70px;
 }
 

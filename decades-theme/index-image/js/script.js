@@ -417,6 +417,10 @@ $(document).ready(function () {
     $('.link1').click(function() {
         location.href = "../../app/home/home.html";
     })
+    // 开始学习蓝色按钮
+    $('.startStudyBtn').click(function() {
+        location.href = "../../app/home/home.html";
+    })
     // 作品中心
     $('.link2').click(function() {
         location.href = "../../app/home/worksList.html";
