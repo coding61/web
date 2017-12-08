@@ -1,12 +1,54 @@
+html {
+	height: 100%;
+}
 body {
+	height: 100%;
 	width: 100%;
     background-color: #E3E7E8;
+}
+.header{
+	background: rgb(250, 80, 131);
+	height: 40px;
+	width: 100%;
+	/*overflow: hidden;*/
+	font-size: 12px;
+	color: white;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+
+    height: 50px;
+    font-size: 15px;
+
+    padding: 0 5%;
+    /*width: 96%;*/
+
+}
+.header .left-view{
+	display: flex;
+	flex: 1;
+
+    /*height: 30px;*/
+}
+.header .left-view .right-line{
+    border-right: solid 1px white;
+    height: 24px;
+    /* margin-top: 15px; */
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-flex;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.header .left-view .logo2{
+    cursor: pointer;
 }
 .header-view {
     width: 91%;
     min-width: 800px;
     height: 45px;
-    margin: 2.5% 4.5% 4%;
+    margin: 2.5% 4.5% 45px;
     display: flex;
 }
 .column-view {
@@ -86,11 +128,12 @@ body {
     min-width: 840px;
     flex-wrap: wrap;
     display: flex;
+	padding-bottom: 20px;
 }
 .list-view li,
 .join-view li,
 .push-view li {
-    width: 33.3%;
+    width: 25%;
     min-width: 280px;
 	padding-right: 4.5%;
 	padding-bottom: 4%;
@@ -257,11 +300,12 @@ body {
 	width: 91%;
 	margin-left: 4.5%;
 	min-width: 840px;
-    min-height: 500px;
+    min-height: 580px;
     background: #fff;
     /*margin: 30px 45px 45px 45px;*/
     border-radius: 10px;
     display: none;
+	height: calc(100% - 260px);
 }
 .create-title,
 .create-pw {
@@ -289,6 +333,8 @@ body {
     min-width: 700px;
     margin: 20px 45px;
     display: flex;
+	flex: 1;
+	height: calc(100% - 300px);
 }
 .create-content p {
     line-height: 32px;
@@ -300,6 +346,8 @@ body {
     min-width: 600px;
     min-height: 300px;
     padding: 5px;
+    width: 70%;
+	height: 100%;
 }
 .create-btn {
     cursor: pointer;
@@ -568,6 +616,27 @@ body {
 	margin-top: 20px;
 	text-align: center;
 	line-height: 40px;
+}
+.punch-view {
+	display: flex;
+	padding-top: 20px;
+	margin: 0px 90px;
+}
+.punch-btn {
+	cursor: pointer;
+	width: 100px;
+	height: 30px;
+	color: #fff;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 30px;
+	background-color: #aaa;
+	/* #EB6A99; */
+	/* margin: 20px 90px; */
+}
+.punch-input {
+	display: none;
+    margin-left: 40px;
 }
 
 /*******************yyy********************/

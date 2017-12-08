@@ -617,8 +617,8 @@ define(function(require, exports, module) {
 
                 Page.clickEventTotal();
 
-				$(".right-view>img").hide();
-				$(".right-view .iframe-scroll.activity").show();
+				$(".right-view>img").show();
+				// $(".right-view .iframe-scroll.activity").hide();
             }else{
                 // 弹出登录窗口
                 // 打开登录窗口
@@ -925,12 +925,12 @@ define(function(require, exports, module) {
                 // 重新激活点击事件
                 Page.clickEvent();
             })
-			$(".helps-view .activity-list").unbind('click').click(function(){
-                $(".helps-view").hide();
-				$(".right-view>img").hide();
-				$(".right-view .iframe-scroll.courseList").hide();
-				$(".right-view .iframe-scroll.activity").show();
-            })
+			// $(".helps-view .activity-list").unbind('click').click(function(){
+            //     $(".helps-view").hide();
+			// 	$(".right-view>img").hide();
+			// 	$(".right-view .iframe-scroll.courseList").hide();
+			// 	$(".right-view .iframe-scroll.activity").show();
+            // })
             // 钻石动画
             $(".helps-view .zuan-ani").unbind('click').click(function(){
                 $(".helps-view").hide();
@@ -1031,6 +1031,9 @@ define(function(require, exports, module) {
             // 学习论坛
             $(".header .luntan").unbind('click').click(function(){
                 window.open("../../cxyteam_forum/bbsList.html");
+            })
+			$(".header .activity").unbind('click').click(function(){
+                window.open("activity.html");
             })
             // 作品中心
             $(".header .works").unbind('click').click(function(){
@@ -2436,8 +2439,8 @@ define(function(require, exports, module) {
                     // Page.loadClickMessage("点击微信登录", false);  //false 代表普通按钮点击事件
 
 					window.frames[3].postMessage('loadClubs', '*'); // 通知活动页面
-					$(".right-view>img").hide();
-					$(".right-view .iframe-scroll.activity").show();
+					$(".right-view>img").show();
+					// $(".right-view .iframe-scroll.activity").show();
                 },
                 error:function(xhr, textStatus){
                     Common.hideLoading();
@@ -2901,7 +2904,7 @@ define(function(require, exports, module) {
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
-				$(".right-view .iframe-scroll.activity").hide();
+				// $(".right-view .iframe-scroll.activity").hide();
             }else if (tag == "courseList") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").show();
