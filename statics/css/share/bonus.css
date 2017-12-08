@@ -67,15 +67,19 @@ body {
     position: relative;
     display: flex;
     width: 90%;
-    height: 20%;
+    /*height: 20%;*/
+    height: 150px;
     background: #FF6B93;
     margin-left: 5%;
 }
 .info {
     flex: 1;
     height: 100px;
+    margin-top: 25px;
 }
 .qrcode {
+    margin-top: 25px;
+    margin-right: 15px;
     width: 100px;
     height: 100px;
 }
