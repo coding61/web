@@ -175,11 +175,13 @@ function logout(){
 
 // 分享页判断设备，跳转下载
 function download() {
-	if (checkIsAppleDevice()) {
-		window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
-	} else {
-		alert('安卓版本正在开发中...');
-	}
+	// 应用宝
+	window.location.href = "http://sj.qq.com/myapp/detail.htm?apkName=com.cxy61.girls";
+	// if (checkIsAppleDevice()) {
+	// 	window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
+	// } else {
+	// 	alert('安卓版本正在开发中...');
+	// }
 }
 
 function checkIsAppleDevice() {
