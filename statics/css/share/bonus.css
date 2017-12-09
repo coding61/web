@@ -42,25 +42,36 @@ body {
 .bonus,
 .diamond {
     color: #FF6B93;
-    text-align: right;
-    flex: 7;
+    text-align: center;
     font-size: 36px;
     line-height: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .unit {
+    text-align: center;
     color: #FF6B93;
-    flex: 6;
     font-size: 16px;
     /* line-height: 73px; */
     margin-top: 30px;
 }
 .right {
     width: 50%;
-    margin: 5% 5% 5% 0;
+    margin-top: 5%;
+}
+.right p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
 }
 .left {
     width: 50%;
-    margin: 5% 0% 5% 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     border-right: 1px solid #ccc;
 }
 .bottom {

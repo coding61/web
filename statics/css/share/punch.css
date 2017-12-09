@@ -33,6 +33,13 @@ body {
     height: 100%;
     text-align: center;
 }
+.record-today p,
+.record-total p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .record-text {
     color: yellow;
     width: 50%;
@@ -46,6 +53,10 @@ body {
     font-size: 36px;
     width: 50%;
     text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .info {
     height: calc(100% - 220px);
