@@ -7,6 +7,10 @@ define(function(require, exports, module) {
     var data_list = [];
     var tag = null;
 
+	// $('.activity-list, .activity-join, .activity-push').css({'background-color': '#FEFFFF','color': '#000'});
+	// $('.list-view, .join-view, .push-view, .details-view').hide();
+	// $('.create-view').show();
+
     var Page = {
         init:function(){
             // 监听登录
@@ -270,7 +274,7 @@ define(function(require, exports, module) {
             })
         },
         // 创建俱乐部
-        createClub:function(title, content, password) {
+        createClub:function(title, content, password, punch, days) {
 			console.log(token);
             $.ajax({
                 type: "post",
@@ -282,8 +286,8 @@ define(function(require, exports, module) {
                     'name': title,
                     'introduction': content,
                     'password': password,
-					'ispunch': 'False',
-    				'punch_days': 0
+					'ispunch': punch,
+    				'punch_days': days
                 },
                 success:function(json){
                     Common.dialog(json.message);
@@ -354,10 +358,23 @@ define(function(require, exports, module) {
                     Common.dialog('请输入关键字');
                 }
             })
+			$('.punch-btn').click(function() {
+				if ($('.punch-btn').html() == '不打卡') {
+					$('.punch-btn').html('打卡');
+					$('.punch-btn').css({'background-color': '#EB6A99'});
+					$('.punch-input').show();
+				} else {
+					$('.punch-btn').html('不打卡')
+					$('.punch-btn').css({'background-color': '#aaa'});
+					$('.punch-input').hide();
+				}
+            })
             $('.create-btn').click(function() {
                 var title = $('.title-input').val();
                 var content = $('.content-input').val();
                 var password = $('.password-input').val();
+				var punch = $('.punch-btn').html() == '打卡' ? 'True' : 'False';
+				var days = 0;
                 if (!title) {
                     Common.dialog('请输入标题');
                 } else if (!content) {
@@ -365,10 +382,30 @@ define(function(require, exports, module) {
                 } else if (!password) {
                     Common.dialog('请设置密码');
                 } else {
-                    Page.createClub(title, content, password);
+					if (punch == 'True') {
+						days = $('.punch-input').val();
+						// 打卡日期不合法
+						if (!Page.checkPunchDays(days)) { return }
+					}
+					Page.createClub(title, content, password, punch, Number(days));
                 }
             })
         },
+		checkPunchDays:function(days) {
+			if (!days) {
+				Common.dialog('请输入打卡天数');
+			} else {
+				if (!isNaN(Number(days))) {
+					if (parseInt(days, 10) === Number(days)) {
+						if (Number(days) >= 5 && Number(days) <= 30) {
+							// Common.dialog(Number(days));
+							return true;
+						} else { Common.dialog('打卡日期限制为 5 ～ 30') }
+					} else { Common.dialog('请输入一个正整数') }
+				} else { Common.dialog('请输入一个数字') }
+			}
+			return false;
+		},
         // 列表模版中的点击
         templateClickEvent:function() {
             var pk;

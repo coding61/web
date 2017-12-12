@@ -1,123 +1,96 @@
-.nav {
-    align-self: center;
-    width: 100%;
-    height: 40px;
-    background-color: rgb(250, 80, 131);
-    color: #fff !important;
-    font-size: 17px;
-    text-align: center;
-    line-height: 40px;
-    position: fixed;
+html,
+body {
+    height: 100%;
+    background-color: #FFEFF4;
 }
-.details {
-    padding-top: 40px;
-    padding-bottom: 62px;
+.top {
+    position: relative;
+    width: 90%;
+    height: 50%;
     background: #fff;
-    margin-bottom: 20px;
+    margin-left: 5%;
+    margin-top: 20%;
 }
-.item-title {
-    height: 40px;
-    font-size: 16px;
-    line-height: 40px;
-    text-align: center;
-    color: #EB6A99;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    padding: 0 10px;
-}
-.item-content {
-    width: calc(100% - 20px);
-    min-height: 200px;
-    font-size: 15px;
-    line-height: 28px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    /* -webkit-line-clamp: 6; */
-    overflow: hidden;
-    margin-left: 10px;
-    padding-bottom: 20px;
-}
-
-.item-name {
-    width: calc(100% - 100px);
-    line-height: 40px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-     -webkit-line-clamp: 1;
-    overflow: hidden;
-}
-.item-connect {
-    width: 90px;
-    line-height: 40px;
-    text-align: right;
-    padding-right: 5px;
-}
-.item-more {
-    width: 10px;
-    height: 40px;
-    display: flex;
-}
-.item-num {
-    width: 100%;
-    line-height: 30px;
-    margin-left: 10px;
-    margin-top: 5px;
-    color: gray;
-}
-.member-list {
-    width: calc(100% - 20px);
-    margin-left: 10px;
-    display: flex;
-    flex-wrap: wrap;
-}
-.member-info {
-    width: 16.6%;
-    margin-top: 20px;
-    padding-left: 10px;
-}
-.member-head {
-    /*width: calc(100% - 10px);*/
-    width: 100%;
-}
-.member-name {
-    width: 100%;
-    line-height: 32px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    color: gray;
-}
-.footer {
-    width: 100%;
-    height: 62px;
-    background-color: #52A3F8;
-    position: fixed;
-    bottom: 0;
-    display: flex;
-}
-.download {
-    width: 70px;
-    height: 30px;
-    background-color: #fff;
-    border-radius: 5px;
-    margin-top: 16px;
+.head {
     position: absolute;
-    right: 20px;
-    text-align: center;
-    line-height: 30px;
-    color: #52A3F8;
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    top: -35px;
+    left: calc(50% - 35px);
 }
-.answer {
-    width: calc(100% - 20px);
-    height: 40px;
-    margin-left: 10px;
-    border-radius: 5px;
-    background: rgb(250, 80, 131);
-    color: #fff;
-    font-size: 16px;
+.name {
+    display: block;
+    padding-top: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
     text-align: center;
-    line-height: 40px;
+    /* color: #fff; */
+    font-size: 15px;
+    line-height: 30px;
+    margin-top: 5px;
+}
+.center {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    height: 50%;
+    width: 100%;
+}
+.bonus,
+.diamond {
+    color: #FF6B93;
+    text-align: center;
+    font-size: 36px;
+    line-height: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.unit {
+    text-align: center;
+    color: #FF6B93;
+    font-size: 16px;
+    /* line-height: 73px; */
+    margin-top: 30px;
+}
+.right {
+    width: 50%;
+    margin-top: 5%;
+}
+.right p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+.left {
+    width: 50%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-right: 1px solid #ccc;
+}
+.bottom {
+    position: relative;
+    display: flex;
+    width: 90%;
+    /*height: 20%;*/
+    height: 150px;
+    background: #FF6B93;
+    margin-left: 5%;
+}
+.info {
+    flex: 1;
+    height: 100px;
+    margin-top: 25px;
+}
+.qrcode {
+    margin-top: 25px;
+    margin-right: 15px;
+    width: 100px;
+    height: 100px;
 }
