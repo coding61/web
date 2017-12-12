@@ -159,18 +159,56 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 					}else{
 						name=v.userinfo.owner;
 					}
-					html+='<li class="fly-list-li">'
-						+'<img src="'+dealWithAvatar(v.userinfo.avatar)+'"ng-model="'+v.userinfo.owner+'"name="'+v.userinfo.name+'">'
+					if (v.userinfo.props.length != 0) {
+						var tag = false;
+					    // 装饰帖子背景道具
+						for (var i = 0; i < v.userinfo.props.length; i++) {
+							if (v.userinfo.props[i].status == 1) { //已使用
+								if (v.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+									if (v.userinfo.props[i].exchange_product.category_detail.action == "background") { //帖子背景道具
+										tag = true;
+										html+='<li class="fly-list-li '+v.userinfo.props[i].exchange_product.category_detail.style+'">'
+									}
+								}
+							}
+						}
+						if (tag == false) {
+							html+='<li class="fly-list-li">'
+						}
+					} else {
+						html+='<li class="fly-list-li">'
+					}
+					// html+='<li class="fly-list-li">'
+						html+='<img src="'+dealWithAvatar(v.userinfo.avatar)+'"ng-model="'+v.userinfo.owner+'"name="'+v.userinfo.name+'">'
+						if (v.userinfo.props.length != 0) {
+							var tag = false;
+						    // 装饰头像道具
+							for (var i = 0; i < v.userinfo.props.length; i++) {
+								if (v.userinfo.props[i].status == 1) { //已使用
+									if (v.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+										if (v.userinfo.props[i].exchange_product.category_detail.action == "avatar") { //头像道具
+											tag = true;
+											html+='<div class="'+v.userinfo.props[i].exchange_product.category_detail.style+'" style="width:100px;height:100px;border-radius:100px;position: absolute;margin-left: -8px;"></div>'
+										}
+									}
+								}
+							}
+							// if (tag = false) {
+							// 	html+='<div class="" style="width:100px;height:100px;border-radius:100px;position: absolute;margin-left: -8px;"></div>'
+							// }
+						} else {
+							// html+='<div class="" style="width:100px;height:100px;border-radius:100px;position: absolute;margin-left: -8px;"></div>'
+						}
 						if (v.userinfo.is_staff) {
 							html+='<span class="manager">管理员</span>'
 						}
 						html+='<span class="grade">'+v.userinfo.grade.current_name+'</span>'
 						if (v.userinfo.top_rank && v.userinfo.top_rank =='Top10') {
-							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top10.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+							html+='<div class="top" style="position: absolute;margin-top: 133px;margin-left: -11px;background-image: url(img/top10.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
 						} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top50') {
-							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top50.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+							html+='<div class="top" style="position: absolute;margin-top: 133px;margin-left: -11px;background-image: url(img/top50.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
 						} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top100') {
-							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top100.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+							html+='<div class="top" style="position: absolute;margin-top: 133px;margin-left: -11px;background-image: url(img/top100.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
 						}
 						html+='<h2 class="fly-tip">'
 						if (v.status_display == '未解决') {
@@ -221,18 +259,56 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 					}else{
 						name=v.posts.userinfo.owner;
 					}
-					html+='<li class="fly-list-li">'
-						+'<img src="'+dealWithAvatar(v.posts.userinfo.avatar)+'">'
+					if (v.posts.userinfo.props.length != 0) {
+						var tag = false;
+					    // 装饰帖子背景道具
+						for (var i = 0; i < v.posts.userinfo.props.length; i++) {
+							if (v.posts.userinfo.props[i].status == 1) { //已使用
+								if (v.posts.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+									if (v.posts.userinfo.props[i].exchange_product.category_detail.action == "background") { //帖子背景道具
+										tag = true;
+										html+='<li class="fly-list-li '+v.posts.userinfo.props[i].exchange_product.category_detail.style+'">'
+									}
+								}
+							}
+						}
+						if (tag == false) {
+							html+='<li class="fly-list-li">'
+						}
+					} else {
+						html+='<li class="fly-list-li">'
+					}
+					// html+='<li class="fly-list-li">'
+						html+='<img src="'+dealWithAvatar(v.posts.userinfo.avatar)+'">'
+						if (v.posts.userinfo.props.length != 0) {
+							var tag = false;
+						    // 装饰头像道具
+							for (var i = 0; i < v.posts.userinfo.props.length; i++) {
+								if (v.posts.userinfo.props[i].status == 1) { //已使用
+									if (v.posts.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+										if (v.posts.userinfo.props[i].exchange_product.category_detail.action == "avatar") { //头像道具
+											tag = true;
+											html+='<div class="'+v.posts.userinfo.props[i].exchange_product.category_detail.style+'" style="width:100px;height:100px;border-radius:100px;position: absolute;margin-left: -8px;"></div>'
+										}
+									}
+								}
+							}
+							// if (tag = false) {
+							// 	html+='<div class="" style="width:100px;height:100px;border-radius:100px;position: absolute;margin-left: -8px;"></div>'
+							// }
+						} else {
+							// html+='<div class="" style="width:100px;height:100px;border-radius:100px;position: absolute;margin-left: -8px;"></div>'
+						}
 						if (v.posts.userinfo.is_staff) {
 							html+='<span class="manager">管理员</span>'
 						}
 						html+='<span class="grade">'+v.posts.userinfo.grade.current_name+'</span>'
 						if (v.posts.userinfo.top_rank && v.posts.userinfo.top_rank =='Top10') {
-							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top10.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+							html+='<div class="top" style="position: absolute;margin-top: 133px;margin-left: 0px;background-image: url(img/top10.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
 						} else if (v.posts.userinfo.top_rank && v.posts.userinfo.top_rank =='Top50') {
-							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top50.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+							html+='<div class="top" style="position: absolute;margin-top: 133px;margin-left: 0px;background-image: url(img/top50.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
 						} else if (v.posts.userinfo.top_rank && v.posts.userinfo.top_rank =='Top100') {
-							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top100.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+							html+='<div class="top" style="position: absolute;margin-top: 133px;margin-left: 0px;background-image: url(img/top100.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
 						}
 						html+='<h2 class="fly-tip">'          
 						+'<a href="detail.html?id='+v.posts.pk+'&pk='+getQueryString("id")+'">'+v.posts.title+'</a>'         

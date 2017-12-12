@@ -171,30 +171,36 @@ ul.reply_mess>li .reply_txt {
 
 .post_user .manager {
   display: none;
-  left: 22px;
+  /*left: 22px;*/
+  left: 32px;
   position: absolute;
-  margin-top: 23px;
+  /*margin-top: 23px;*/
+  margin-top: 43px;
   color: blue;
 }
 /*.post_user .grade{left: 22px;position: absolute;margin-top: 40px;}*/
 .post_user .grade{
-  left: 15px;
+  /*left: 15px;*/
+  left: 25px;
   position: absolute;
-  margin-top: 40px;
+  /*margin-top: 40px;*/
+  margin-top: 60px;
   width: 46px;
   text-align: center;
 }
 
 .post_user .top {
     /*display: none;*/
-    margin-top: 10px;
+    /*margin-top: 10px;*/
+    margin-top: 30px;
     width: 75px;
      /*height: 20px; */
     /* background-image: url(../img/top10@2x.png); */
     background-size: contain;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    margin-left: -12px;
+    /*margin-left: -12px;*/
+    margin-left: -4px;
 }
 .wrap .changeStatus {
     position: absolute;
@@ -411,11 +417,13 @@ ul.reply_mess>li .reply_txt {
 
 .detail-about .replyManager {
   color: blue;
-  width: 46px;
+  /*width: 46px;*/
+  width: 70px;
 }
 
 .detail-about .managergrade {
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-top: 5px;
 }
