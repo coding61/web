@@ -7,6 +7,10 @@ define(function(require, exports, module) {
     var data_list = [];
     var tag = null;
 
+	// $('.activity-list, .activity-join, .activity-push').css({'background-color': '#FEFFFF','color': '#000'});
+	// $('.list-view, .join-view, .push-view, .details-view').hide();
+	// $('.create-view').show();
+
     var Page = {
         init:function(){
             // 监听登录
@@ -113,6 +117,8 @@ define(function(require, exports, module) {
             $('.list-view, .join-view, .push-view').hide();
             $('.details-view').show();
             $('.details-back').unbind('click').click(function() {
+				var html = template('member-template', []);
+				$('.member-list').html(html);
                 $('.details-title, .details-content, .details-name, .details-num').html('');
                 $('.details-view, .details-operate, .details-delete').hide();
 				data_list = [];
@@ -146,9 +152,15 @@ define(function(require, exports, module) {
                 },
                 success:function(json){
                     $('.details-title').html(
-                        '<img class="title-icon" src="../../statics/images/left_icon.png"/>' + '&nbsp;' + json.name + '&nbsp;' + '<img class="title-icon" src="../../statics/images/right_icon.png"/>'
+						 json.name
+                        // '<img class="title-icon" src="../../statics/images/left_icon.png"/>' + '&nbsp;' + json.name + '&nbsp;' + '<img class="title-icon" src="../../statics/images/right_icon.png"/>'
                     );
-                    $('.details-content').html("通告：" + json.introduction);
+
+					json.introduction = json.introduction.replace(/\r\n/g,"<br>");
+					json.introduction = json.introduction.replace(/\n/g,"</br>");
+					// ArtTemplate.config("escape", false);
+
+                    $('.details-content').html('通告：' + json.introduction);
 
                     var arr = json.club_member;
                     for (var i = arr.length - 1; i >= 0; i--) {
@@ -240,7 +252,7 @@ define(function(require, exports, module) {
             })
         },
         // 验证密码
-        confirm:function(pk, pw, tag) {
+		confirm:function(pk, pw, tag) {
             $.ajax({
                 type: "get",
                 url: Common.domain + "/club/join_club/" + pk +"/?password=" + pw,
@@ -262,7 +274,8 @@ define(function(require, exports, module) {
             })
         },
         // 创建俱乐部
-        createClub:function(title, content, password) {
+        createClub:function(title, content, password, punch, days) {
+			console.log(token);
             $.ajax({
                 type: "post",
                 url: Common.domain + "/club/club_create/",
@@ -272,7 +285,9 @@ define(function(require, exports, module) {
                 data:{
                     'name': title,
                     'introduction': content,
-                    'password': password
+                    'password': password,
+					'ispunch': punch,
+    				'punch_days': days
                 },
                 success:function(json){
                     Common.dialog(json.message);
@@ -281,6 +296,9 @@ define(function(require, exports, module) {
                     $('.password-input').val('');
                 },
                 error:function(xhr, textStatus){
+					console.log(xhr);
+					console.log(textStatus);
+
                     Page.exceptionHandling(xhr, textStatus);
                 }
             })
@@ -340,10 +358,23 @@ define(function(require, exports, module) {
                     Common.dialog('请输入关键字');
                 }
             })
+			$('.punch-btn').click(function() {
+				if ($('.punch-btn').html() == '不打卡') {
+					$('.punch-btn').html('打卡');
+					$('.punch-btn').css({'background-color': '#EB6A99'});
+					$('.punch-input').show();
+				} else {
+					$('.punch-btn').html('不打卡')
+					$('.punch-btn').css({'background-color': '#aaa'});
+					$('.punch-input').hide();
+				}
+            })
             $('.create-btn').click(function() {
                 var title = $('.title-input').val();
                 var content = $('.content-input').val();
                 var password = $('.password-input').val();
+				var punch = $('.punch-btn').html() == '打卡' ? 'True' : 'False';
+				var days = 0;
                 if (!title) {
                     Common.dialog('请输入标题');
                 } else if (!content) {
@@ -351,10 +382,30 @@ define(function(require, exports, module) {
                 } else if (!password) {
                     Common.dialog('请设置密码');
                 } else {
-                    Page.createClub(title, content, password);
+					if (punch == 'True') {
+						days = $('.punch-input').val();
+						// 打卡日期不合法
+						if (!Page.checkPunchDays(days)) { return }
+					}
+					Page.createClub(title, content, password, punch, Number(days));
                 }
             })
         },
+		checkPunchDays:function(days) {
+			if (!days) {
+				Common.dialog('请输入打卡天数');
+			} else {
+				if (!isNaN(Number(days))) {
+					if (parseInt(days, 10) === Number(days)) {
+						if (Number(days) >= 5 && Number(days) <= 30) {
+							// Common.dialog(Number(days));
+							return true;
+						} else { Common.dialog('打卡日期限制为 5 ～ 30') }
+					} else { Common.dialog('请输入一个正整数') }
+				} else { Common.dialog('请输入一个数字') }
+			}
+			return false;
+		},
         // 列表模版中的点击
         templateClickEvent:function() {
             var pk;
@@ -369,6 +420,8 @@ define(function(require, exports, module) {
             $('.item-info').unbind('click').click(function() {
                 pk = $(this).closest('li').attr('data-pk');
                 var title = $(this).closest('li').attr('data-title');
+                console.log(pk);
+                console.log(title);
             })
 
 			$('.password').unbind('click').click(function() {
@@ -397,7 +450,24 @@ define(function(require, exports, module) {
         },
         // 活动详情中的点击
         detailsClickEvent:function(json) {
-			if (json.isjoin && !json.isleader) {
+			var leader_pk = null,
+				leader_owner = null;
+                leader_name = null;
+			for (var i = json.club_member.length - 1; i >= 0; i--) {
+				if (json.club_member[i].leader) {
+					leader_pk = json.club_member[i].owner.pk;
+					leader_owner = json.club_member[i].owner.owner;
+                    leader_name = json.club_member[i].owner.name;
+					break;
+				}
+			}
+			// 聊天需要
+			$('.join-chat').attr({ "name": json.name, "pk": json.pk});
+			$('.join-owner').attr({ "owner": leader_owner, "pk": leader_pk, "name": leader_name});
+
+			if (json.isjoin && !json.isleader) {	// 加入但不是发起者
+				$('.join-owner').css({'right': 'calc(4.5% + 165px)'});
+				$('.join-chat').show();
 				$('.details-operate').show();
 				$('.details-operate').html('退出活动');
 				$('.details-operate').unbind('click').click(function() {
@@ -405,7 +475,9 @@ define(function(require, exports, module) {
 						Page.quitClub(json.pk);
 					})
 	            })
-			} else if (!json.isjoin && !json.isleader){
+			} else if (!json.isjoin && !json.isleader){    // 未加入
+				$('.join-owner').css({'right': 'calc(4.5% + 45px)'});
+				$('.join-chat').hide();
 				$('.details-operate').show();
 				$('.details-operate').html('参与活动');
 				$('.details-operate').unbind('click').click(function() {
@@ -430,24 +502,10 @@ define(function(require, exports, module) {
 			} else {
 				$('.details-operate').hide();
 			}
-            // $('.join-chat').unbind('click').click(function() {
-                $('.join-chat').attr({
-                    "name": json.name,
-                    "pk": json.pk
-                // });
-            })
-			if (json.isjoin) {
-                $('.join-chat').show();
-            } else {
-            	$('.join-chat').hide();
-            }
-            // $('.member-item').unbind('click').click(function() {
-            //     var member_pk = $(this).closest('li').attr('data-pk');
-            //     var member_name = $(this).closest('li').attr('data-name');
-            //     var member_owner = $(this).closest('li').attr('data-owner');
-            // })
+
             if (json.isleader) {
-				$('.details-title').css({'width': 'calc(100% - 500px)'});
+				$('.join-owner').hide();
+				// $('.details-title').css({'width': 'calc(100% - 500px)'});
                 $('.details-edit, .details-delete').show();
                 $('.details-edit').unbind('click').click(function() {
 					if ($('.details-edit').html() == '编辑') {
@@ -471,7 +529,8 @@ define(function(require, exports, module) {
 					})
 				})
             } else {
-				$('.details-title').css({'width': 'calc(100% - 300px)'});
+				$('.join-owner').show();
+				// $('.details-title').css({'width': 'calc(100% - 300px)'});
             	$('.details-edit').hide();
             }
         },
@@ -492,16 +551,15 @@ define(function(require, exports, module) {
     };
     Page.init();
 
-    var checkToken = setInterval(function() {
-        if (localStorage.token) {
-            console.log("已登录");
-            startInit();
-            clearInterval(checkToken);
-        } else {
-            console.log("未登录");
-        }
-    }, 1000);
-
+    // var checkToken = setInterval(function() {
+    //     if (localStorage.token) {
+    //         console.log("已登录");
+    //         startInit();
+    //         clearInterval(checkToken);
+    //     } else {
+    //         console.log("未登录");
+    //     }
+    // }, 1000);
 
     var myTargetId; //我的id
     // var conversationtype; //会话类型
@@ -513,8 +571,8 @@ define(function(require, exports, module) {
             },
         }).success(function(result){
             var params = {
-                appKey : "82hegw5uhf50x", //生产环境
-                // appKey: "8w7jv4qb7eqty", //开发环境
+                // appKey : "82hegw5uhf50x", //生产环境
+                appKey: "8w7jv4qb7eqty", //开发环境
                 token : result.token,
             };
             var userId = "";
@@ -522,6 +580,7 @@ define(function(require, exports, module) {
                 //连接融云成功回掉函数
                 getInstance : function(instance){
                     RongIMLib.RongIMEmoji.init();
+                    RongIMLib.RongIMVoice.init();
                     //instance.sendMessage
                     // registerMessage("PersonMessage");
                     clickPersonOrGroup(); //点击头像或加入群聊
@@ -690,7 +749,6 @@ define(function(require, exports, module) {
                     //console.log('token无效');
                 },
                 onError:function(errorCode){
-                  console.log("=============================================");
                   console.log(errorCode);
                 }
             });
@@ -881,6 +939,8 @@ define(function(require, exports, module) {
                         talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}});
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}});
+                    } else if (message.messageType == "VoiceMessage") {
+                        talkListJson[myTargetId][message.targetId].push({"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"voiceMessage": message.content.content, duration: message.content.duration}});
                     }
                 } else {
                     // talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": message.content.content}];
@@ -888,6 +948,8 @@ define(function(require, exports, module) {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"textMessage": message.content.content}}];
                     } else if (message.messageType == "ImageMessage") {
                         talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"imgMessage": message.content.imageUri}}];
+                    } else if (message.messageType == "VoiceMessage") {
+                        talkListJson[myTargetId][message.targetId] = [{"id": message.senderUserId, "name": rep.name, "avatar": rep.avatar, "sentTime": message.sentTime, "content": {"voiceMessage": message.content.content, duration: message.content.duration}}];
                     }
                 }
                 localStorage.talkList = JSON.stringify(talkListJson);
@@ -950,7 +1012,7 @@ define(function(require, exports, module) {
             var contactJson = JSON.parse(localStorage.contactList);
             for (item in contactJson[myTargetId]) {
                 if (item == currentContact) {
-                    contactJson[myTargetId][item][3] = 1;
+                    contactJson[myTargetId][item][3] = 1; //设为已读
                     localStorage.contactList = JSON.stringify(contactJson);
                     break;
                 }
@@ -1118,6 +1180,20 @@ define(function(require, exports, module) {
         $('.rongWai').hide();
         $('.allEmoji').hide();
         refreshContact();
+    })
+
+    // 点击语音消息
+    $(document).on('click', '.voice', function() {
+        var audioFile = $(this).children('.au').attr("data-voice");
+        var duration = audioFile.length/1024;
+        //预加载 + 播放
+        RongIMLib.RongIMVoice.preLoaded(audioFile, function(){
+            // 播放声音
+            RongIMLib.RongIMVoice.play(audioFile,duration);
+        });
+
+        //停止播放
+        // RongIMLib.RongIMVoice.stop(audioFile);
     })
 
     // 显示所有表情

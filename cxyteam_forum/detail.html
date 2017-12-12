@@ -66,6 +66,10 @@
     </div>
     
     <div class="right-view">
+      <div class="navTopWai">
+        <div class="navTop"></div>
+      </div>
+      
       <div class="icon4 avatar">
         <img class="item" src="../statics/images/avatar.png" alt="">
       </div>
@@ -111,7 +115,8 @@
         </a>
         <span class="manager">管理员</span>
         <span class="grade"></span>
-        <div class="detail-hits" data-id="">
+        <div class="top"></div>
+        <div class="detail-hits" data-id="" style="top: 25px">
          <!--  <span style="color:#FF7200">悬赏：20飞吻</span> -->
           <!-- <span class="jie-admin" type="edit"><a href="jvascript:void(0)">编辑此贴</a></span> -->
         </div>
@@ -119,6 +124,7 @@
       
       <div class="detail-body post_content" style="margin-bottom: 20px;word-break: break-all;">
       </div>
+      <div class="postDashang" style="color: #999;"></div>
       <h2 class="page-title">回帖数量<span>（<em id="jiedaCount">0</em>）</span> </h2>
 
       <ul class="jieda photos post_reply" id="jieda">
@@ -166,6 +172,25 @@
 <div class="up-grade-shadow-view">
   <div class="img">
     <img src="../statics/images/growup.gif" alt="">
+  </div>
+</div>
+
+<!-- 打赏数量 -->
+<div class="dashang_amount" style="position: fixed;
+    top: calc(50%);
+    left: calc(25%);
+    width: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    display: none;">
+  <input placeholder="请输入你要打赏的钻石数" type="" name="">
+  <div style="margin-top: 20px;justify-content: center;display: flex;">
+    <button onclick="dsAmountSure()" style="width: 50px;">确定</button>
+    <button onclick="dsAmountCancel()" style="margin-left: 20px;width: 50px;">取消</button>
   </div>
 </div>
 <!-- <div id="reply_textarea" hidden>

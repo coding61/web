@@ -1,12 +1,54 @@
+html {
+	height: 100%;
+}
 body {
+	height: 100%;
 	width: 100%;
     background-color: #E3E7E8;
+}
+.header{
+	background: rgb(250, 80, 131);
+	height: 40px;
+	width: 100%;
+	/*overflow: hidden;*/
+	font-size: 12px;
+	color: white;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+
+    height: 50px;
+    font-size: 15px;
+
+    padding: 0 5%;
+    /*width: 96%;*/
+
+}
+.header .left-view{
+	display: flex;
+	flex: 1;
+
+    /*height: 30px;*/
+}
+.header .left-view .right-line{
+    border-right: solid 1px white;
+    height: 24px;
+    /* margin-top: 15px; */
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-flex;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.header .left-view .logo2{
+    cursor: pointer;
 }
 .header-view {
     width: 91%;
     min-width: 800px;
     height: 45px;
-    margin: 2.5% 4.5% 4%;
+    margin: 2.5% 4.5% 45px;
     display: flex;
 }
 .column-view {
@@ -86,11 +128,12 @@ body {
     min-width: 840px;
     flex-wrap: wrap;
     display: flex;
+	padding-bottom: 20px;
 }
 .list-view li,
 .join-view li,
 .push-view li {
-    width: 33.3%;
+    width: 25%;
     min-width: 280px;
 	padding-right: 4.5%;
 	padding-bottom: 4%;
@@ -165,7 +208,8 @@ body {
     /*min-width: 380px;*/
 }
 .item-title {
-    font-size: 20px;
+    height: 40px;
+    font-size: 14px;
     line-height: 40px;
     text-align: center;
     color: #EB6A99;
@@ -256,11 +300,12 @@ body {
 	width: 91%;
 	margin-left: 4.5%;
 	min-width: 840px;
-    min-height: 500px;
+    min-height: 580px;
     background: #fff;
     /*margin: 30px 45px 45px 45px;*/
     border-radius: 10px;
     display: none;
+	height: calc(100% - 260px);
 }
 .create-title,
 .create-pw {
@@ -288,6 +333,8 @@ body {
     min-width: 700px;
     margin: 20px 45px;
     display: flex;
+	flex: 1;
+	height: calc(100% - 300px);
 }
 .create-content p {
     line-height: 32px;
@@ -299,6 +346,8 @@ body {
     min-width: 600px;
     min-height: 300px;
     padding: 5px;
+    width: 70%;
+	height: 100%;
 }
 .create-btn {
     cursor: pointer;
@@ -319,34 +368,34 @@ body {
     margin: 30px 4.5% 45px 4.5%;
     border-radius: 10px;
     display: none;
+	height: calc(100% - 260px);
 }
 .details-back {
     cursor:pointer;
     position: absolute;
     width: 30px;
     height: 30px;
-    font-size: 25px;
+    font-size: 20px;
     border-radius: 20px;
     color: #EB6A99;
     border: 1px solid #EB6A99;
     text-align: center;
-    line-height: 28px;
+    line-height: 27px;
     margin: 20px;
 }
 .details-title {
 	/*width: calc(100% - 500px);*/
-	width: calc(100% - 300px);
-    font-size: 20px;
-    line-height: 40px;
-	height: 70px;
+	width: calc(100% - 110px);
+	font-size: 20px;
+	line-height: 40px;
+	height: 80px;
     text-align: center;
     padding: 20px;
     color: #EB6A99;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
 	margin: 0 auto;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .details-operate {
 	cursor:pointer;
@@ -363,9 +412,10 @@ body {
     background-color: #fff;
 	border: 1px solid #EB6A99;
     right: calc(4.5% + 45px);
-    margin-top: -45px;
+    /*margin-top: -45px;*/
 }
 .details-delete {
+	display: none;
 	cursor:pointer;
 	position: absolute;
     float: right;
@@ -380,7 +430,7 @@ body {
     background-color: #fff;
 	border: 1px solid #EB6A99;
     right: calc(4.5% + 145px);;
-    margin-top: -45px;
+    /*margin-top: -45px;*/
 }
 .details-edit {
     cursor:pointer;
@@ -397,18 +447,19 @@ body {
     background-color: #fff;
 	border: 1px solid #EB6A99;
     right: calc(4.5% + 45px);
-    margin-top: -45px;
+    /*margin-top: -45px;*/
 }
 .details-content {
     width: calc(100% - 90px);
     min-height: 200px;
+	height: 50%;
     font-size: 16px;
     line-height: 32px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     /*-webkit-line-clamp: 6;*/
     overflow: hidden;
-    margin: 10px 45px;
+    margin: 40px 45px;
 	padding-bottom: 20px;
 }
 .details-member {
@@ -434,6 +485,15 @@ body {
     margin: 0 45px;
     padding-bottom: 20px;
 }
+.member-list li{
+	display: flex;
+	width: 60px;
+	height: 70px;
+}
+.member-item {
+	width: 60px;
+	height: 70px;
+}
 .member-head {
     cursor:pointer;
     width: 30px;
@@ -452,8 +512,8 @@ body {
 .member-cut {
     cursor:pointer;
     position: relative;
-    margin-top: -60px;
-    margin-left: 30px;
+	margin-top: 5px;
+	margin-left: -25px;
     width: 15px;
     height: 15px;
     border-radius: 7.5px;
@@ -465,8 +525,8 @@ body {
     font-size: 13px;
 }
 .title-icon {
-    height: 15px;
-    margin-bottom: 5px;
+    height: 10px;
+    margin-bottom: 3px;
 }
 .bc-alert-view .bc-alert-msg{
     min-height: 100px;
@@ -484,6 +544,7 @@ body {
     max-height: 300px;
     overflow: auto;
 }
+.join-owner,
 .join-chat {
     position: absolute;
     cursor: pointer;
@@ -496,6 +557,9 @@ body {
     background-color: #EB6A99;
     right: calc(4.5% + 45px);
     margin-top: -5px;
+}
+.join-owner {
+	right: calc(4.5% + 165px);
 }
 .details-pw-shadow {
 	height: 100%;
@@ -555,6 +619,27 @@ body {
 	text-align: center;
 	line-height: 40px;
 }
+.punch-view {
+	display: flex;
+	padding-top: 20px;
+	margin: 0px 90px;
+}
+.punch-btn {
+	cursor: pointer;
+	width: 100px;
+	height: 30px;
+	color: #fff;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 30px;
+	background-color: #aaa;
+	/* #EB6A99; */
+	/* margin: 20px 90px; */
+}
+.punch-input {
+	display: none;
+    margin-left: 40px;
+}
 
 /*******************yyy********************/
 .rongBtn {
@@ -571,7 +656,7 @@ body {
     align-items: center;
     cursor: pointer;
     color: white;
-    /*display: none;*/
+    display: none;
 }
 .rongBtn .arrow {
     background: url(../../../cxyteam_forum/images/icon.png) 0 0/50px auto no-repeat;
@@ -696,7 +781,9 @@ body {
     color: #8e969f;
 }
 .rongWai .right .message .messageLeft .messageLeftContent {
-    text-indent: 60px;
+    /*text-indent: 60px;*/
+    padding-left: 60px;
+    padding-right: 60px;
 }
 .rongWai .right .message .messageRight {
     margin-top: 10px;
@@ -708,7 +795,9 @@ body {
     margin-top: 10px;
     padding-right: 20px;
 }
-
+.rongWai .right .message .messageRight .messageRightItem>span {
+    padding-left: 60px;
+}
 .rongWai .right .sendMessage {
     height: 130px;
     border-top-color: #dcdcdc;
@@ -745,7 +834,9 @@ body {
 .rongWai .right .sendMessage .textarea {
     width: calc(100% - 70px);
     height: calc(100% - 35px);
-    text-indent: 20px;
+    /*text-indent: 20px;*/
+    padding-left: 20px;
+    padding-right: 20px;
     line-height: 35px;
     border: none;
     resize: none;

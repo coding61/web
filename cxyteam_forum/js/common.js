@@ -4,9 +4,9 @@ if(/Mobile/i.test(navigator.userAgent)){
 }
 dealWithLogin();
 function getQueryString(name) { //解析地址栏
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
-	var r = window.location.search.substr(1).match(reg); 
-	if (r != null) return unescape(r[2]); return null; 
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) return unescape(r[2]); return null;
 }
 //时间处理（处理.0）
 function dealWithTime(time){
@@ -60,7 +60,7 @@ function myAjax(url,type,data,success,async){
 	        		layer.msg("请求异常")
 	        	}
 	        }
-	    });	
+	    });
 	}else{
 	 	layer.msg("请先登录");
 	}
@@ -82,11 +82,28 @@ function myAjax2(url,type,data,success,async){
         }
   });
 }
+function myAjaxInShare(url,type,data,success,async){
+    $.ajax({
+        url: url,
+        type: type,
+        async:async==null?true:async,
+        data:data,
+        success: success,
+        error:function(XMLHttpRequest){
+            console.log(XMLHttpRequest.status)
+            if(XMLHttpRequest.status==403){
+                layer.msg("当前未解决的帖子数量过多，请先标记它们为已解决或已完成");
+            }else{
+                layer.msg("请求异常")
+            }
+        }
+    });
+}
 	// 统计页面浏览量
 	var _hmt = _hmt || [];
 	var hm = document.createElement("script");
 	hm.src = "https://hm.baidu.com/hm.js?0e1f2afd2def9daf664e5504d146965a";
-	var s = document.getElementsByTagName("script")[0]; 
+	var s = document.getElementsByTagName("script")[0];
 	s.parentNode.insertBefore(hm, s);
 
 function dealWithAvatar(url){
@@ -98,44 +115,44 @@ function dealWithAvatar(url){
 	}
 	return url;
 }
-//JS操作cookies方法! 
+//JS操作cookies方法!
 
-//写cookies 
+//写cookies
 
-function setCookie(name,value) 
-{ 
-    var Days = 30; 
-    var exp = new Date(); 
-    exp.setTime(exp.getTime() + Days*24*60*60*1000); 
-    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString(); 
-} 
+function setCookie(name,value)
+{
+    var Days = 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
 
-//读取cookies 
-function getCookie(name) 
-{ 
+//读取cookies
+function getCookie(name)
+{
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
- 
+
     if(arr=document.cookie.match(reg)){
     	var v=arr[2];
     	 if (v != null && v != "" && v != "undefined")
             return decodeURIComponent(v);
     	return "";
     }
- 
-         
-    else 
-        return null; 
-} 
 
-//删除cookies 
-function delCookie(name) 
-{ 
-    var exp = new Date(); 
-    exp.setTime(exp.getTime() - 1); 
-    var cval=getCookie(name); 
-    if(cval!=null) 
+
+    else
+        return null;
+}
+
+//删除cookies
+function delCookie(name)
+{
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCookie(name);
+    if(cval!=null)
         document.cookie= name + "="+cval+";expires="+exp.toGMTString()+";path=/";
-} 
+}
 //处理登录信息
 
 function dealWithLogin(){
@@ -145,7 +162,7 @@ function dealWithLogin(){
 	}else{
 		$(".login-inner").append('<a href="/static/html/login-reg/login.html" class="login-btn btn-normal bgc-bright">登陆</a>&nbsp;'
 							+'<a href="/static/html/login-reg/reg.html" class="reg-btn btn-normal bgc-orange">注册</a>');
-		
+
 	}
 }
 function logout(){
@@ -156,3 +173,25 @@ function logout(){
 	dealWithLogin();
 }
 
+// 分享页判断设备，跳转下载
+function download() {
+	// 应用宝
+	window.location.href = "http://sj.qq.com/myapp/detail.htm?apkName=com.cxy61.girls";
+	// if (checkIsAppleDevice()) {
+	// 	window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
+	// } else {
+	// 	alert('安卓版本正在开发中...');
+	// }
+}
+
+function checkIsAppleDevice() {
+	var u = navigator.userAgent, app = navigator.appVersion;
+	var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+	var iPad = u.indexOf('iPad') > -1;
+	var iPhone = u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1;
+	if (ios || iPad || iPhone) {
+		return true;
+	} else {
+		return false;
+	}
+}

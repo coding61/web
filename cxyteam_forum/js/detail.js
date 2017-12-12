@@ -55,6 +55,16 @@ $(document).on("click",".jie-add1",function() {
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
 		localStorage.userName=result.name;
+		if (result.top_rank && result.top_rank == 'Top10') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top10.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top50') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top50.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top100') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top100.png)"});
+		}
 		$('.avatar img').attr({src: result.avatar});//用户头像
 		$('.info .grade').html(result.grade.current_name);//用户段位等级
 		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
@@ -142,6 +152,8 @@ $(document).on("click",".question_reply",function(){
 		+'<div>';
 	$(".layui-form-pane .fly-edit").remove();
 	$(this).parent().after(htm);
+	var per = $(this).parent().parent().children('.detail-about-reply').children('.jie-user').children('cite').children('.reply_name').text();
+	$("#copy_reply_content").val("@"+per+" ");
 	my_init();
 });
 //处理空白点击
@@ -185,6 +197,13 @@ function postDetail() {
 				$('.manager').show();
 			}
 			$(".post_user .grade").text(result.userinfo.grade.current_name);
+			if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top10') {
+				$('.post_user .top').css({"height": "20px", "background-image": "url(../cxyteam_forum/img/top10.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top50') {
+				$('.post_user .top').css({"height": "20px", "background-image": "url(../cxyteam_forum/img/top50.png)"});
+			} else if (result.userinfo.top_rank && result.userinfo.top_rank == 'Top100') {
+				$('.post_user .top').css({"height": "20px","background-image": "url(../cxyteam_forum/img/top100.png)"});
+			}
 			$(".post_user cite").prepend(result.userinfo.name);
 			$(".post_user cite em").text(dealWithTime(result.create_time));
 			hasCollect = result.collect;
@@ -231,6 +250,14 @@ function postDetail() {
 					$('.finish').addClass("had-click").siblings().removeClass("had-click");
 				}
 			}
+			// 打赏帖子
+			// $(".detail-hits").append('<span onclick="dashang()" data-id="'+result.userinfo.owner+'" data-postPk="'+result.pk+'" class="dashang" style="cursor: pointer;">打赏</span>');
+			// if (result.play_reward.play_reward_number == 1) {
+			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "已打赏");
+			// } else if (result.play_reward.play_reward_number > 1) {
+			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "等人已打赏");
+			// }
+			
 			if (is_staff) {
 				if (result.isessence) {
 					$(".detail-hits").append('<span onclick="canclePostsEssence()" class="postsEssence">取消加精</span>');
@@ -272,8 +299,17 @@ function getReplys(page){
 			    if (v.userinfo.is_staff) {
 			   		_htm+='<span class="replyManager">管理员</span>';
 			    }
-			    _htm+='<span class="reGrade">'+v.userinfo.grade.current_name+'</span></div>'
-			    +'<cite><i class="reply_name">'+v.userinfo.name+'</i></cite>'
+			    _htm+='<span class="reGrade" style="width: 46px">'+v.userinfo.grade.current_name+'</span>'
+			    if (v.userinfo.top_rank && v.userinfo.top_rank =='Top10') {
+					_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top50') {
+					_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top100') {
+					_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+				} else {
+					_htm+='</div>'
+				}
+			    _htm+='<cite><i class="reply_name">'+v.userinfo.name+'</i></cite>'
 			    +'</a>'
 			    + '<div class="detail-hits reply_time">'
 			    +' <span>'+dealWithTime(v.create_time)+'</span>'
@@ -292,6 +328,7 @@ function getReplys(page){
 			+'<div class="jieda-reply" style="text-align:right;">'
 			/* +' <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
 			_htm+='<span type="reply" class="question_reply" data-user-id="'+v.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复('+v.replymore.length+')</span>';
+			// +'<span onclick=dashangHuitie("'+v.userinfo.owner+'",'+v.pk+') data-id="'+v.userinfo.owner+'" data-postPk="'+v.pk+'" class="dashangHuitie">打赏</span>';
 			 /* +'<div class="jieda-admin">'*/
 			  /* +' <span type="edit">编辑</span>'*/
 			  if(localStorage.userName!=null&&(v.userinfo.name==localStorage.userName)){
@@ -306,7 +343,14 @@ function getReplys(page){
 	    	// 	}
 		    // }
 			/*  +'</div>'*/
-			    _htm+='</div>'
+			// if (v.play_reward.play_reward_number == 1) {
+			// 	var dashang = v.play_reward.play_reward_pople[0] + "已打赏";
+			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			// } else if (v.play_reward.play_reward_number > 1) {
+			// 	var dashang = v.play_reward.play_reward_pople[0] + "等人已打赏"
+			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			// }
+			_htm+='</div>'
 			+'<div class="reply_content">'
 			+'<ul jieda photos class="reply_mess">';
 			$.each(v.replymore,function(k1,v1){
@@ -316,10 +360,19 @@ function getReplys(page){
 		            if (v1.userinfo.is_staff) {
 				   		_htm+='<span class="replyManager">管理员</span>';
 				    }
-		            _htm+='<span class="reGrade">'+v1.userinfo.grade.current_name+'</span></div>'
-		            +' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
+		            _htm+='<span class="reGrade" style="width: 46px">'+v1.userinfo.grade.current_name+'</span>'
+		            if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top10') {
+						_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top50') {
+						_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top100') {
+						_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					} else {
+						_htm+='</div>'
+					}
+		            _htm+=' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
 		            +' </a>'
-		            +' <div class="detail-hits reply_time">'
+		            +' <div class="detail-hits reply_time" style="left: 80px">'
 		            +'<span class="liveTime"  title="'+dealWithTime(v1.create_time)+'">'+dealWithTime(v1.create_time)+'</span>'
 		            +' </div>'
 					+'</div>'
@@ -327,7 +380,7 @@ function getReplys(page){
 		            +this_fly.content(v1.content)
 		            +'</div>'
 		            +'<div class="jieda-reply" style="text-align:right;">'
-		           // +'<span type="reply"  class="question_reply" data-user-id="'+v1.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复</span>';
+		           +'<span type="reply"  class="question_reply" data-user-id="'+v1.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复</span>';
 		           /* +'<span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
 		            /*+'<div class="jieda-admin">'*/
 		           /* +' <span type="edit">编辑</span>'*/
@@ -350,6 +403,97 @@ function getReplys(page){
 		}
 	});
 }
+var dashangTag;
+var replyOwner;
+var replyPk;
+// 打赏帖子
+function dashang() {
+	dashangTag = "post";
+	$('.dashang_amount').css({"display": "flex"});
+}
+// 打赏回帖 
+function dashangHuitie(id, pk) {
+	dashangTag = "reply";
+	$('.dashang_amount').css({"display": "flex"});
+	replyOwner = id;
+	replyPk = pk;
+}
+// 打赏数量确定
+function dsAmountSure() {
+	var amount = $('.dashang_amount input').val();
+	if (amount == "") {
+		layer.msg("请输入打赏钻石数量");
+	} else {
+		$('.dashang_amount input').val("");
+		$('.dashang_amount').css({"display": "none"});
+		var data = null;
+		// 打赏帖子
+		if (dashangTag == "post") {
+			var id = $('.dashang').attr("data-id");
+			var pk = $('.dashang').attr("data-postPk");
+			data = {amount: parseInt(amount), to_username: id, posts: parseInt(pk)};
+			if (localStorage.token && localStorage.token != null && localStorage.token != '') {
+				$.ajax({
+					url: basePath+"/userinfo/play_reward/",
+					type: "post",
+					headers: {
+		                Authorization: "Token " + localStorage.token,
+		                "Content-Type": "application/json"
+		            },
+		            data: JSON.stringify(data),
+		            success:function(json){
+		                if (json.message == "打赏成功") {
+		                	layer.msg("打赏成功");
+		                	setTimeout("window.location.reload()",2000);
+		                }
+		            },
+		            error:function(xhr, textStatus){
+		            	console.log(xhr);
+		            	if (xhr.responseJSON.status == -4) {
+		            		layer.msg(xhr.responseJSON.message);
+		            	}
+		            }
+				})
+			} else {
+				layer.msg("请先登录");
+			}
+		} else if (dashangTag == "reply"){ //打赏回帖
+			data = {amount: parseInt(amount), to_username: replyOwner, replies: parseInt(replyPk)};
+			if (localStorage.token && localStorage.token != null && localStorage.token != '') {
+				$.ajax({
+					url: basePath+"/userinfo/play_reward/",
+					type: "post",
+					headers: {
+		                Authorization: "Token " + localStorage.token,
+		                "Content-Type": "application/json"
+		            },
+		            data: JSON.stringify(data),
+		            success:function(json){
+		                if (json.message == "打赏成功") {
+		                	layer.msg("打赏成功");
+		                	setTimeout("window.location.reload()",2000);
+		                }
+		            },
+		            error:function(xhr, textStatus){
+		            	if (xhr.responseJSON.status == -4) {
+		            		layer.msg(xhr.responseJSON.message);
+		            	}
+		            }
+				})
+			} else {
+				layer.msg("请先登录");
+			}
+		}
+	}
+	
+}
+// 打赏数量取消
+function dsAmountCancel() {
+	console.log("打赏数量取消");
+	$('.dashang_amount input').val("");
+	$('.dashang_amount').css({"display": "none"});
+}
+
 // 管理员加精
 function postsEssence() {
 	myAjax(basePath+"/forum/posts_essence/"+postId+"/","put",null,function(result) {

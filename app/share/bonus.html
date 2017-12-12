@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>奖学金</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=2.7" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/share/bonus.css?v=2.7" />
+	</head>
+
+	<body>
+		<div class="top">
+			<img class="head" src="../../statics/images/share_logo.png"/>
+			<div class="name"></div>
+			<div style="font-size: 20px; text-align: center; margin-top: calc(40% - 100px);">我在程序媛学习编程获得了</div>
+			<div class="center" style="display: flex;">
+				<div class="left">
+					<p style="text-align: center;">
+						<span class="bonus"></span>
+						<span class="unit">元</span>
+					</p>
+					<div style="text-align: center;color:#656565">奖学金</div>
+				</div>
+				<div class="right">
+					<p style="text-align: center;">
+						<span class="diamond"></span>
+						<span class="unit">颗</span>
+					</p>
+					<div style="text-align: center;color:#656565">钻石</div>
+				</div>
+			</div>
+		</div>
+		<div class="bottom">
+			<div class="info">
+				<div style="color: #fff;letter-spacing: 5px;font-size: 13px;text-align: center;line-height: 26px;">长按识别二维码下载</div>
+				<div style="text-align: center;color: #fff;letter-spacing: 5px;font-size: 26px;line-height: 52px;">程序媛</div>
+				<div style="color: #fff;letter-spacing: 5px;font-size: 13px;text-align: center;line-height: 26px;">快来和我一起学习吧</div>
+			</div>
+			<img class="qrcode" src="http://a.app.qq.com/o/image/microQr.png?pkgName=com.cxy61.girls"/>
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../libs/template.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"share": base + "/modules/share",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("share/bonus.js");
+	</script>
+</html>

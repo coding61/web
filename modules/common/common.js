@@ -23,7 +23,7 @@ define(function(require, exports, module) {
 		// scope = "snsapi_userinfo";
 		// href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectUri+"&response_type=code&scope="+scope+"&state=STATE#wechat_redirect"
 		// location.href = href;
-		
+
 		// return href;
 	}
 	exports.authWXLogin = function(url){
@@ -141,24 +141,24 @@ define(function(require, exports, module) {
 		$(".message.img").each(function(){
 			var img = new Image();
 			img.src = $(this).find("img.msg").attr('src');
-			
-			if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数 
+
+			if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数
 				$(this).find("img.msg").show();  //打开加载的图片，关闭预加载
 				$(this).find(".pre-msg").hide();
-				return; // 直接返回，不用再处理onload事件 
-			} 
-			img.onload = function(){ //图片下载完毕时异步调用callback函数。 
+				return; // 直接返回，不用再处理onload事件
+			}
+			img.onload = function(){ //图片下载完毕时异步调用callback函数。
 				$(this).find("img.msg").show();  //打开加载的图片，关闭预加载
 				$(this).find(".pre-msg").hide();
-			}; 
+			};
 
 			var this_ = $(this);
-			this_.find("img.msg").error(function() {  
-			    $(this).hide();  
+			this_.find("img.msg").error(function() {
+			    $(this).hide();
 			    this_.find(".pre-msg").children('img').attr({src:"../../statics/images/error.png"});
 				this_.find(".pre-msg").show();
 			});
-			
+
 		})
 	}
 	// 预加载图片的隐藏
@@ -166,30 +166,30 @@ define(function(require, exports, module) {
 		/*
 		var img = new Image();
 		img.src = $(b).attr("src");
-		
-		if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数 
+
+		if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数
 			$(b).show();
 			$(b).parents('.msg-view').find('.pre-msg').hide();
-			return; // 直接返回，不用再处理onload事件 
-		} 
+			return; // 直接返回，不用再处理onload事件
+		}
 		img.onload = function(){ //图片下载完毕时异步调用callback函数。
-			$(b).show(); 
+			$(b).show();
 			$(b).parents('.msg-view').find('.pre-msg').hide();
-		}; 
+		};
 		img.error = function(){
 			$(b).hide();
 			$(b).parents('.msg-view').find('.pre-msg').show();
 			$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
 		}*/
-		
-		
+
+
 		if(b.complete){
 			$(b).show();
 			$(b).parents('.msg-view').find('.pre-msg').hide();
-			return; // 直接返回，不用再处理onload事件 
+			return; // 直接返回，不用再处理onload事件
 		}
 		$(b).bind('load', function(){
-			$(b).show(); 
+			$(b).show();
 			$(b).parents('.msg-view').find('.pre-msg').hide();
 		})
 		$(b).bind('error', function(){
@@ -197,7 +197,7 @@ define(function(require, exports, module) {
 			$(b).parents('.msg-view').find('.pre-msg').show();
 			$(b).parents('.msg-view').find('.pre-msg').children('img').attr({src:"../../statics/images/error.png"});
 		})
-		
+
 		/*
 		var imgdefereds=[];
 		var dfd=$.Deferred();
@@ -218,10 +218,10 @@ define(function(require, exports, module) {
 			},1000);
 	 	}
 		imgdefereds.push(dfd);
-			
+
 		$.when.apply(null,imgdefereds).done(function(){
 			// callback && callback.call(null);
-			$(b).show(); 
+			$(b).show();
 			$(b).parents('.msg-view').find('.pre-msg').hide();
 		});
 		*/
@@ -288,7 +288,7 @@ define(function(require, exports, module) {
 		playSouns.status = true;
 		playSouns.queue = [];
 		playSouns.queueLength = 0;
-		
+
 		if($("body").find("audio").length <= 0){
 			var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
 			$( "body" ).append( strAudio );
@@ -308,7 +308,7 @@ define(function(require, exports, module) {
 				audio.play();
 		    }
 		}
-		
+
 	}
 	exports.playMessageSoun1 = function(url){
 
@@ -333,9 +333,9 @@ define(function(require, exports, module) {
 							}else{
 								console.log(2222)
 							}
-						    
+
 						}, 0)
-						
+
 					});
 				}
 			}
@@ -364,7 +364,7 @@ define(function(require, exports, module) {
 							var pp = audio.play();
 							playPromiseFunc(pp);
 						})
-						
+
 						/*
 				    	playPromise.then(_ => {
 					      // Automatic playback started!
@@ -444,7 +444,7 @@ define(function(require, exports, module) {
 		exports.bcCancelCB = cancelCallback;
 		textSubmit = textSubmit ? textSubmit : "确&nbsp定";
 		textCancel = textCancel ? textCancel : "取&nbsp消";
-		
+
 		if(! $(".bc-alert-shadow-view").length){
 			var html = '<div class="bc-alert-shadow-view">\
 							<div class="bc-alert-view">\
@@ -482,7 +482,7 @@ define(function(require, exports, module) {
 	exports.bcSubmitCB = function(){};
 	exports.bcCancelCB = function(){};
 
-	
+
 	exports.changePhotoSrc = function(url, fx){
 		var new_url = null;
 		var width = null;
@@ -518,11 +518,11 @@ define(function(require, exports, module) {
 		var array = str1.split('-');  //[45x36, w1000]
 		width = array[0].split('x')[0];
 		height = array[0].split('x')[1];
-		
+
 		fx(width, height);
 
 	}
-	
+
 	exports.showLoadingDivImage = function(flag){
 		$(".loading-image").css({"background-color":"gray"});
 		$('.loading-image .loading-image-complete').each(function(){
@@ -602,7 +602,7 @@ define(function(require, exports, module) {
 			height = $(window).height();
 			$(waitingHtml).appendTo("body");
 		}
-		
+
 		if (c) {
 			$(".waitloading").css({
 				"width":"60px",
@@ -731,7 +731,7 @@ define(function(require, exports, module) {
 			return false;
 		}
 	}
-	
+
 	exports.showToast = function(text, bot, fx) {
 		showToastControler.queue.push(text);
 		var bottom = bot ? bot + "px" : "40px";
@@ -791,7 +791,7 @@ define(function(require, exports, module) {
 
 	if (exports.isApp()) {
 //		location.href = "aichashuo://start_load/";
-		
+
 	} else {
 		$(".tabbar").show();
 		$("header").show();
@@ -998,7 +998,7 @@ define(function(require, exports, module) {
 		var u = navigator.userAgent,
 			app = navigator.appVersion;
 		return {
-			//移动终端浏览器版本信息 
+			//移动终端浏览器版本信息
 			trident: u.indexOf('Trident') > -1, //IE内核
 			presto: u.indexOf('Presto') > -1, //opera内核
 			webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
@@ -1012,13 +1012,13 @@ define(function(require, exports, module) {
 			isMobile:u.indexOf('Mobile') > -1   //是否为手机
 		};
 	}();
-	
+
 	exports.isLogin = function(fx, type) {
 		if (exports.isApp()) {
 			AppBridge.getValue("login_token", function(key, token) {
 				if (!token.match(/[0-9a-z]{40}/g)) {
 					if (type == "notLogin") {
-						
+
 					} else {
 						if (fx) {
 							fx("null");
@@ -1032,7 +1032,7 @@ define(function(require, exports, module) {
 				}
 			});
 		} else {
-			
+
 			if(window.localStorage){
 				var token = localStorage.token?localStorage.token:"";
 			}else{
@@ -1040,7 +1040,7 @@ define(function(require, exports, module) {
 			}
 			if (!token.match(/[0-9a-z]{40}/g)) {
 				if (type == "notLogin") {
-					
+
 				} else {
 					if (fx) {
 						fx("null");
@@ -1084,14 +1084,14 @@ define(function(require, exports, module) {
 				error: function(xhr, textStatus) {
 					if (textStatus == "timeout") {
 						exports.showToast("服务器开小差了");
-					}	
+					}
 					exports.dialog(JSON.parse(xhr.responseText).detail);
 					console.log(textStatus);
 				}
 			});
 		},"notLogin")
 	};
-	
+
 	exports.tabBar = {
 		currentId:null,
 		init:function(cid){
@@ -1114,11 +1114,35 @@ define(function(require, exports, module) {
 			});
 		}
 	};
+
+	// 分享页判断设备，跳转下载
+	exports.download = function() {
+		// 应用宝
+		window.location.href = "http://sj.qq.com/myapp/detail.htm?apkName=com.cxy61.girls";
+		// if (exports.checkIsAppleDevice()) {
+		// 	window.location.href = "https://itunes.apple.com/us/app/%E7%A8%8B%E5%BA%8F%E5%AA%9B-%E8%AE%A9%E6%9B%B4%E5%A4%9A%E5%A5%B3%E6%80%A7%E5%AD%A6%E4%BC%9A%E7%BC%96%E7%A8%8B/id1273955617?l=es&mt=8";
+		// } else {
+		// 	alert('安卓版本正在开发中...');
+		// }
+	};
+
+	exports.checkIsAppleDevice = function() {
+		var u = navigator.userAgent, app = navigator.appVersion;
+		var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+		var iPad = u.indexOf('iPad') > -1;
+		var iPhone = u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1;
+		if (ios || iPad || iPhone) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 	// 统计页面浏览量
 	var _hmt = _hmt || [];
 	var hm = document.createElement("script");
 	hm.src = "https://hm.baidu.com/hm.js?0e1f2afd2def9daf664e5504d146965a";
-	var s = document.getElementsByTagName("script")[0]; 
+	var s = document.getElementsByTagName("script")[0];
 	s.parentNode.insertBefore(hm, s);
 
 
@@ -1129,7 +1153,7 @@ define(function(require, exports, module) {
 			history.back();
 		});
 	})();
-	
+
 	$.ajaxSetup({
         statusCode: {
             401: function () {

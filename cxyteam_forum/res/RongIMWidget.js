@@ -589,10 +589,81 @@ var RongWebIMWidget;
                     var msg = RongIMLib.TextMessage.obtain(con);
                     var userinfo = new RongIMLib.UserInfo(providerdata.currentUserInfo.userId, providerdata.currentUserInfo.name, providerdata.currentUserInfo.portraitUri);
                     msg.user = userinfo;
+                    // ************************发送消息 更新本地用户信息*******************//
+                    if ($scope.conversation.targetType == 1) {
+                        var id = $scope.conversation.targetId;
+                        if ($scope.conversation.targetId.indexOf("+") != -1) {
+                            id = "%2b" + id.substr(1)
+                        }
+                        $.ajax({
+                            async: false,
+                            url: "/program_girl/userinfo/username_userinfo/?username=" + id,
+                        }).success(function(rep){
+                            // console.log(rep);
+                            if (localStorage.userlist) {
+                                var userlist = JSON.parse(localStorage.userlist);
+                                for (var i = 0; i < userlist.result.length; i++) {
+                                    if (userlist.result[i].id == $scope.conversation.targetId) {
+                                        userlist.result[i].name = rep.name;
+                                        userlist.result[i].portraitUri = rep.avatar;
+                                        localStorage.userlist = JSON.stringify(userlist);
+                                    }
+                                }
+                            } else {
+                                var userlist = {"result":[]};
+                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name, "portraitUri": rep.avatar};
+                                userlist.result.push(userJson); //存用户信息
+                                localStorage.userlist = JSON.stringify(userlist);
+                            }
+                        }).error(function(err) {
+
+                        })
+                    } else if ($scope.conversation.targetType == 3) {
+                        $.ajax({
+                            async: false,
+                            url: "/program_girl/club/club_detail/" + $scope.conversation.targetId + "/",
+                            headers: {
+                                'Authorization': "Token " + localStorage.token
+                            }
+                        }).success(function(rep){
+                            // console.log(rep);
+                            if (localStorage.userlist) {
+                                var userlist = JSON.parse(localStorage.userlist);
+                                for (var i = 0; i < userlist.result.length; i++) {
+                                    if (userlist.result[i].id == $scope.conversation.targetId) {
+                                        userlist.result[i].name = rep.name;
+                                        localStorage.userlist = JSON.stringify(userlist);
+                                    }
+                                }
+                            } else {
+                                var userlist = {"result":[]};
+                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name};
+                                userlist.result.push(userJson); //存用户信息
+                                localStorage.userlist = JSON.stringify(userlist);
+                            }
+                        }).error(function(err) {
+
+                        })
+                    }
+                    // ************************发送消息 更新本地用户信息*******************//
                     try {
                         RongIMLib.RongIMClient.getInstance().sendMessage(+$scope.conversation.targetType, $scope.conversation.targetId, msg, {
-                            onSuccess: function (retMessage) {
+                            onSuccess: function (retMessage) { //发送消息成功
                                 conversationListServer.updateConversations().then(function () {
+                                    if ($scope.conversation.targetType == 3) {
+                                        // 活动排序
+                                        $.ajax({
+                                            type: "put",
+                                            url: "/program_girl/club/club_last_reply_time_update/" + retMessage.targetId + "/",
+                                            headers: {
+                                                'Authorization': "Token " + localStorage.token
+                                            },
+                                        }).success(function(result){
+                                            console.log("活动最后回复时间修改成功");
+                                        }).error(function(err){
+                                            console.log(err);
+                                        })
+                                    }
                                 });
                             },
                             onError: function (error) {
@@ -612,10 +683,81 @@ var RongWebIMWidget;
                 function sendImageMessage(content, imageUrl) {
                     var im = RongIMLib.ImageMessage.obtain(content, imageUrl);
                     var content = _this.packDisplaySendMessage(im, RongWebIMWidget.MessageType.ImageMessage);
+                    // ************************发送消息 更新本地用户信息*******************//
+                    if ($scope.conversation.targetType == 1) {
+                        var id = $scope.conversation.targetId;
+                        if ($scope.conversation.targetId.indexOf("+") != -1) {
+                            id = "%2b" + id.substr(1)
+                        }
+                        $.ajax({
+                            async: false,
+                            url: "/program_girl/userinfo/username_userinfo/?username=" + id,
+                        }).success(function(rep){
+                            // console.log(rep);
+                            if (localStorage.userlist) {
+                                var userlist = JSON.parse(localStorage.userlist);
+                                for (var i = 0; i < userlist.result.length; i++) {
+                                    if (userlist.result[i].id == $scope.conversation.targetId) {
+                                        userlist.result[i].name = rep.name;
+                                        userlist.result[i].portraitUri = rep.avatar;
+                                        localStorage.userlist = JSON.stringify(userlist);
+                                    }
+                                }
+                            } else {
+                                var userlist = {"result":[]};
+                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name, "portraitUri": rep.avatar};
+                                userlist.result.push(userJson); //存用户信息
+                                localStorage.userlist = JSON.stringify(userlist);
+                            }
+                        }).error(function(err) {
+
+                        })
+                    } else if ($scope.conversation.targetType == 3) {
+                        $.ajax({
+                            async: false,
+                            url: "/program_girl/club/club_detail/" + $scope.conversation.targetId + "/",
+                            headers: {
+                                'Authorization': "Token " + localStorage.token
+                            }
+                        }).success(function(rep){
+                            // console.log(rep);
+                            if (localStorage.userlist) {
+                                var userlist = JSON.parse(localStorage.userlist);
+                                for (var i = 0; i < userlist.result.length; i++) {
+                                    if (userlist.result[i].id == $scope.conversation.targetId) {
+                                        userlist.result[i].name = rep.name;
+                                        localStorage.userlist = JSON.stringify(userlist);
+                                    }
+                                }
+                            } else {
+                                var userlist = {"result":[]};
+                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name};
+                                userlist.result.push(userJson); //存用户信息
+                                localStorage.userlist = JSON.stringify(userlist);
+                            }
+                        }).error(function(err) {
+
+                        })
+                    }
+                    // ************************发送消息 更新本地用户信息*******************//
                     RongIMLib.RongIMClient.getInstance()
                         .sendMessage($scope.conversation.targetType, $scope.conversation.targetId, im, {
-                        onSuccess: function () {
+                        onSuccess: function () { //发送消息成功
                             conversationListServer.updateConversations().then(function () {
+                                // 活动排序
+                                if ($scope.conversation.targetType == 3) {
+                                    $.ajax({
+                                        type: "put",
+                                        url: "/program_girl/club/club_last_reply_time_update/" + retMessage.targetId + "/",
+                                        headers: {
+                                            'Authorization': "Token " + localStorage.token
+                                        },
+                                    }).success(function(result){
+                                        console.log("活动最后回复时间修改成功");
+                                    }).error(function(err){
+                                        console.log(err);
+                                    })
+                                }
                             });
                         },
                         onError: function () {
@@ -672,26 +814,51 @@ var RongWebIMWidget;
                     if (RongWebIMWidget.Helper.browser.msie && RongWebIMWidget.Helper.browser.version == "9.0")
                         return;
                     qiniuuploader && qiniuuploader.destroy();
+                    var filename = ''    //选择的文件的名字
                     qiniuuploader = Qiniu.uploader({
                         runtimes: 'html5,html4',
                         browse_button: 'upload-file',
                         container: 'funcPanel',
                         drop_element: 'inputMsg',
+                        flash_swf_url: 'libs/upload/plupload/Moxie.swf',
                         max_file_size: '100mb',
                         dragdrop: true,
                         chunk_size: '4mb',
-                        unique_names: true,
-                        uptoken: conversationServer._uploadToken,
-                        domain: UploadImageDomain,
-                        get_new_uptoken: false,
+                        unique_names: false,
+                        uptoken_func: function(file) {
+                            $.ajax({
+                                async: false,
+                                type: "POST",
+                                url:"/program_girl/upload/token/",
+                                headers: {
+                                    Authorization: "Token "+ localStorage.token
+                                },
+                                data: {
+                                    filename: filename ? filename : 'dfhu.png',
+                                },
+                                dataType: "json",
+                                success: function(json) {
+                                  uptoken = json.token;
+                                  upkey = json.key;
+                                }
+                            });
+                            return uptoken;
+                        }, 
+                        domain: "https://static1.bcjiaoyu.com",
+                        get_new_uptoken: true,
                         filters: {
                             mime_types: [{ title: "Image files", extensions: "jpg,gif,png,jpeg,bmp" }],
-                            prevent_duplicates: false
+                            // prevent_duplicates: false
+                            max_file_size : '10mb',
                         },
                         multi_selection: false,
                         auto_start: true,
                         init: {
                             'FilesAdded': function (up, files) {
+                                plupload.each(files, function(file) {
+                                    // 文件添加进队列后,处理相关的事情
+                                    filename = file.name;
+                                });
                             },
                             'BeforeUpload': function (up, file) {
                             },
@@ -704,22 +871,29 @@ var RongWebIMWidget;
                                     alert("请先选择一个会话目标。");
                                     return;
                                 }
-                                info = info.replace(/'/g, "\"");
+                                info = info.response.replace(/'/g, "\"");
                                 info = JSON.parse(info);
-                                RongIMLib.RongIMClient.getInstance()
-                                    .getFileUrl(RongIMLib.FileType.IMAGE, file.target_name, '', {
-                                    onSuccess: function (url) {
+                                // var fileTarget_name = file.id + ".png";
+                                // RongIMLib.RongIMClient.getInstance()
+                                //     .getFileUrl(RongIMLib.FileType.IMAGE, fileTarget_name, '', {
+                                //     onSuccess: function (url) {
                                         RongWebIMWidget.Helper.ImageHelper.getThumbnail(file.getNative(), 60000, function (obj, data) {
-                                            sendImageMessage(data, url.downloadUrl);
+                                            sendImageMessage(data, info.url);
                                         });
-                                    },
-                                    onError: function () {
-                                    }
-                                });
+                                    // },
+                                    // onError: function () {
+                                    // }
+                                // });
                             },
                             'Error': function (up, err, errTip) {
                                 console.log(err);
-                                updateUploadToken();
+                                // updateUploadToken();
+                            },
+                            'Key': function(up, file) {
+                                // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                                // 该配置必须要在 unique_names: false , save_key: false 时才生效
+                                var key = upkey;
+                                return key;
                             }
                         }
                     });
@@ -1522,6 +1696,22 @@ var RongWebIMWidget;
                                         }(con, data[i]));
                                     }
                                     break;
+                                    // *************系统消息 按照单聊方式设置用户信息****************//
+                                case RongIMLib.ConversationType.SYSTEM:
+                                    if (RongWebIMWidget.Helper.checkType(_this.providerdata.getUserInfo) == "function") {
+                                        (function (a, b) {
+                                            _this.providerdata.getUserInfo(a.targetId, {
+                                                onSuccess: function (data) {
+                                                    a.title = data.name;
+                                                    a.portraitUri = data.portraitUri;
+                                                    b.conversationTitle = data.name;
+                                                    b.portraitUri = data.portraitUri;
+                                                }
+                                            });
+                                        }(con, data[i]));
+                                    }
+                                    break;
+                                    // *************系统消息 按照单聊方式设置用户信息****************//
                                 case RongIMLib.ConversationType.GROUP:
                                     if (RongWebIMWidget.Helper.checkType(_this.providerdata.getGroupInfo) == "function") {
                                         (function (a, b) {
@@ -1624,7 +1814,8 @@ var RongWebIMWidget;
         }
         return ProductInfo;
     })();
-    var eleConversationListWidth = 195, eleminbtnHeight = 50, eleminbtnWidth = 195, spacing = 3;
+    // var eleConversationListWidth = 195, eleminbtnHeight = 50, eleminbtnWidth = 195, spacing = 3;
+    var eleConversationListWidth = 210, eleminbtnHeight = 50, eleminbtnWidth = 195, spacing = 3;
     var WebIMWidget = (function () {
         function WebIMWidget($q, conversationServer, conversationListServer, providerdata, widgetConfig, RongIMSDKServer, $log) {
             this.$q = $q;
@@ -1820,6 +2011,92 @@ var RongWebIMWidget;
                 onReceived: function (data) {
                     _this.$log.debug(data);
                     var msg = RongWebIMWidget.Message.convert(data);
+                    // ************************接收消息 更新本地用户信息*******************//
+                    // if (data.content.user) {
+                    //     if (data.conversationType == 1) {
+                    //         var id = data.senderUserId;
+                    //         if (data.senderUserId.indexOf("+") != -1) {
+                    //             id = "%2b" + id.substr(1)
+                    //         }
+                    //         $.ajax({
+                    //             async: false,
+                    //             url: "/program_girl/userinfo/username_userinfo/?username=" + id,
+                    //         }).success(function(rep){
+                    //             // console.log(rep);
+                    //             if (localStorage.userlist) {
+                    //                 var userlist = JSON.parse(localStorage.userlist);
+                    //                 for (var i = 0; i < userlist.result.length; i++) {
+                    //                     if (userlist.result[i].id == data.senderUserId) {
+                    //                         userlist.result[i].name = rep.name;
+                    //                         userlist.result[i].portraitUri = rep.avatar;
+                    //                         localStorage.userlist = JSON.stringify(userlist);
+                    //                     }
+                    //                 }
+                    //             } else {
+                    //                 var userlist = {"result":[]};
+                    //                 var userJson = {"id": data.senderUserId,"name": rep.name, "portraitUri": rep.avatar};
+                    //                 userlist.result.push(userJson); //存用户信息
+                    //                 localStorage.userlist = JSON.stringify(userlist);
+                    //             }
+                    //         }).error(function(err) {
+
+                    //         })
+                    //     } else if (data.conversationType == 3) {
+                    //         var id = data.senderUserId;
+                    //         if (data.senderUserId.indexOf("+") != -1) {
+                    //             id = "%2b" + id.substr(1)
+                    //         }
+                    //         $.ajax({
+                    //             async: false,
+                    //             url: "/program_girl/userinfo/username_userinfo/?username=" + id,
+                    //         }).success(function(rep){
+                    //             // console.log(rep);
+                    //             if (localStorage.userlist) {
+                    //                 var userlist = JSON.parse(localStorage.userlist);
+                    //                 for (var i = 0; i < userlist.result.length; i++) {
+                    //                     if (userlist.result[i].id == data.senderUserId) {
+                    //                         userlist.result[i].name = rep.name;
+                    //                         userlist.result[i].portraitUri = rep.avatar;
+                    //                         localStorage.userlist = JSON.stringify(userlist);
+                    //                     }
+                    //                 }
+                    //             } else {
+                    //                 var userlist = {"result":[]};
+                    //                 var userJson = {"id": data.senderUserId,"name": rep.name, "portraitUri": rep.avatar};
+                    //                 userlist.result.push(userJson); //存用户信息
+                    //                 localStorage.userlist = JSON.stringify(userlist);
+                    //             }
+                    //         }).error(function(err) {
+
+                    //         })
+                    //         $.ajax({
+                    //             async: false,
+                    //             url: "/program_girl/club/club_detail/" + data.targetId + "/",
+                    //             headers: {
+                    //                 'Authorization': "Token " + localStorage.token
+                    //             }
+                    //         }).success(function(rep){
+                    //             // console.log(rep);
+                    //             if (localStorage.userlist) {
+                    //                 var userlist = JSON.parse(localStorage.userlist);
+                    //                 for (var i = 0; i < userlist.result.length; i++) {
+                    //                     if (userlist.result[i].id == data.targetId) {
+                    //                         userlist.result[i].name = rep.name;
+                    //                         localStorage.userlist = JSON.stringify(userlist);
+                    //                     }
+                    //                 }
+                    //             } else {
+                    //                 var userlist = {"result":[]};
+                    //                 var userJson = {"id": data.targetId,"name": rep.name};
+                    //                 userlist.result.push(userJson); //存用户信息
+                    //                 localStorage.userlist = JSON.stringify(userlist);
+                    //             }
+                    //         }).error(function(err) {
+
+                    //         })
+                    //     }
+                    // }
+                    // ************************接收消息 更新本地用户信息*******************//
                     if (RongWebIMWidget.Helper.checkType(_this.providerdata.getUserInfo) == "function" && msg.content && !data.content.user) {
                         _this.providerdata.getUserInfo(msg.senderUserId, {
                             onSuccess: function (data) {

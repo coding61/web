@@ -44,6 +44,16 @@ $('.jie-add1').unbind().click(function(){
 //var basePath="http://www.wodeworld.cn:8080/wodeworld3.0/";
 myAjax(basePath+"/userinfo/whoami/","get",null,function(result) {
 	if(result){
+		if (result.top_rank && result.top_rank == 'Top10') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top10.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top50') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top50.png)"});
+		} else if (result.top_rank && result.top_rank == 'Top100') {
+			$('.navTopWai').show();
+			$('.navTop').css({"background-image": "url(../cxyteam_forum/img/top100.png)"});
+		}
 		$('.avatar img').attr({src: result.avatar});//用户头像
 		$('.info .grade').html(result.grade.current_name);//用户段位等级
 		$('.info .grade-value').html(result.experience + '/' + result.grade.next_all_experience);
@@ -155,7 +165,14 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 							html+='<span class="manager">管理员</span>'
 						}
 						html+='<span class="grade">'+v.userinfo.grade.current_name+'</span>'
-						+'<h2 class="fly-tip">'
+						if (v.userinfo.top_rank && v.userinfo.top_rank =='Top10') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top10.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top50') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top50.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top100') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top100.png);width: 75px;height: 25px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						}
+						html+='<h2 class="fly-tip">'
 						if (v.status_display == '未解决') {
 							html+='<span class="unsolved">[未解决]</span>'
 						} else if (v.status_display == '已解决') {
@@ -210,7 +227,14 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 							html+='<span class="manager">管理员</span>'
 						}
 						html+='<span class="grade">'+v.posts.userinfo.grade.current_name+'</span>'
-						+'<h2 class="fly-tip">'          
+						if (v.posts.userinfo.top_rank && v.posts.userinfo.top_rank =='Top10') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top10.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						} else if (v.posts.userinfo.top_rank && v.posts.userinfo.top_rank =='Top50') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top50.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						} else if (v.posts.userinfo.top_rank && v.posts.userinfo.top_rank =='Top100') {
+							html+='<div class="top" style="position: absolute;margin-top: 100px;margin-left: -11px;background-image: url(img/top100.png);width: 75px;height: 20px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div>'
+						}
+						html+='<h2 class="fly-tip">'          
 						+'<a href="detail.html?id='+v.posts.pk+'&pk='+getQueryString("id")+'">'+v.posts.title+'</a>'         
 						if(v.posts.istop){
 							html+='<span class="fly-tip-stick">置顶</span>'
@@ -218,7 +242,7 @@ function getPostByType(typeId,essence,page,keyword,myposts,status){
 						if(v.posts.isessence){
 							html+='<span class="fly-tip-jing">精帖</span> '
 						}          
-					    html +='</h2><p>'
+					    html +='</h2><h5>所属专区：'+v.posts.section.name+'</h5><p>'
 					    if (v.posts.content) {
 					    	html+='<span class="v_content">'+v.posts.content+'</span>'
 					    }
