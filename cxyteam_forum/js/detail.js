@@ -334,7 +334,7 @@ function getReplys(page){
 			_htm+='<li data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+'">'
 			_htm+='<div class="detail-about detail-about-reply">'
 			  	+'<a class="jie-user" href="javascript:void(0)">'
-			    +'<img src="'+dealWithAvatar(v.userinfo.avatar)+'" alt="" style="margin-top: 7px;margin-left: 7px;">';
+			    +'<img src="'+dealWithAvatar(v.userinfo.avatar)+'" alt="" style="margin-top: 15px;margin-left: 15px;">';
 			    if (v.userinfo.props.length != 0) {
 			    	var tag = false;
 				    // 装饰头像道具
@@ -343,7 +343,7 @@ function getReplys(page){
 							if (v.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
 								if (v.userinfo.props[i].exchange_product.category_detail.action == "avatar") { //头像道具
 									tag = true;
-									_htm+='<div class="'+v.userinfo.props[i].exchange_product.category_detail.style+'" style="width:70px;height:70px;border-radius:70px;position: absolute;left: 0;top: 0;"></div>'
+									_htm+='<div class="'+v.userinfo.props[i].exchange_product.category_detail.style+'" style="width:100px;height:100px;border-radius:100px;position: absolute;left: 0;top: 0;"></div>'
 								}
 							}
 						}
@@ -359,13 +359,13 @@ function getReplys(page){
 			    if (v.userinfo.is_staff) {
 			   		_htm+='<span class="replyManager">管理员</span>';
 			    }
-			    _htm+='<span class="reGrade" style="width: 70px">'+v.userinfo.grade.current_name+'</span>'
+			    _htm+='<span class="reGrade" style="width: 100px">'+v.userinfo.grade.current_name+'</span>'
 			    if (v.userinfo.top_rank && v.userinfo.top_rank =='Top10') {
-					_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -8px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top50') {
-					_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -8px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top100') {
-					_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -8px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 				} else {
 					_htm+='</div>'
 				}
@@ -436,7 +436,7 @@ function getReplys(page){
 				_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'">'
 				_htm+='<div class="detail-about detail-about-reply">'
 		            +'<a class="jie-user" href="javascript:void(0)">'
-		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt="" style="margin-top: 7px;margin-left: 7px;">';
+		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt="" style="margin-top: 15px;margin-left: 15px;">';
 
 		            if (v1.userinfo.props.length != 0) {
 		            	var tag = false;
@@ -446,7 +446,7 @@ function getReplys(page){
 								if (v1.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
 									if (v1.userinfo.props[i].exchange_product.category_detail.action == "avatar") { //头像道具
 										tag = true;
-										_htm+='<div class="'+v1.userinfo.props[i].exchange_product.category_detail.style+'" style="width:70px;height:70px;border-radius:70px;position: absolute;left: 0;top: 0;"></div>'
+										_htm+='<div class="'+v1.userinfo.props[i].exchange_product.category_detail.style+'" style="width:100px;height:100px;border-radius:100px;position: absolute;left: 0;top: 0;"></div>'
 									}
 								}
 							}
@@ -464,13 +464,13 @@ function getReplys(page){
 		            if (v1.userinfo.is_staff) {
 				   		_htm+='<span class="replyManager">管理员</span>';
 				    }
-		            _htm+='<span class="reGrade" style="width: 70px">'+v1.userinfo.grade.current_name+'</span>'
+		            _htm+='<span class="reGrade" style="width: 100px">'+v1.userinfo.grade.current_name+'</span>'
 		            if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top10') {
-						_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -8px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+						_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top50') {
-						_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -8px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+						_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top100') {
-						_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -8px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+						_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 					} else {
 						_htm+='</div>'
 					}
