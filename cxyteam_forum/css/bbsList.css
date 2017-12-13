@@ -3,7 +3,8 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 /* Tip */
 .fly-tip{position: relative;}
 .fly-tip span{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
-.fly-tip span{height: 20px; line-height: 20px; padding: 0 5px; background-color: #999; color: #fff; font-size: 12px;}
+/*.fly-tip span{height: 20px; line-height: 20px; padding: 0 5px; background-color: #999; color: #fff; font-size: 12px;}*/
+.fly-tip span{height: 20px; line-height: 20px; padding: 0 5px;color: #fff; font-size: 12px;}
 .fly-tip .fly-tip-stick{background-color: #393D49;}
 /*为了悼念改颜色*/
 .fly-tip .fly-tip-jing{background-color: #c00;}
@@ -11,37 +12,47 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 .fly-tip .fly-tip-jie{background-color: #8FCDA0;}
 
 /* Ìû×ÓÁÐ±í */
-.fly-list .fly-list-li{position: relative; height:125px; margin-top: 8px; padding: 0 0 8px 30px; border-bottom: 1px solid #E9E9E9;}
+.fly-list .fly-list-li{position: relative; height:155px; margin-top: 8px; padding: 0 0 8px 30px; border-bottom: 1px solid #E9E9E9;}
 .fly-list-li .fly-list-avatar{position: absolute; left: 0; top: 0;}
-.fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 8px;margin-left: 20px;float: left;width:91%;}
+/*.fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 8px;margin-left: 20px;float: left;width:91%;}*/
+.fly-list-li h2{line-height: 26px; font-size: 0;margin-top: 8px;left: 30px;float: left;width:91%;}
 .fly-list-li h5{
     position: relative;
     display: inline-block;
-    left: 20px;
-    top: 17px;
+    /*left: 20px;*/
+    left: 30px;
+    /*top: 17px;*/
+    top: 27px;
 }
 .fly-list-li h2 *{display: inline-block; *display: inline; *zoom: 1; vertical-align: top;}
 .fly-list-li h2 a{max-width: 70%; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;color:#666; font-size: 16px;}
 .fly-list-li h2 span{position: relative; top: 3px; margin-left: 5px;}
 
 .fly-list-li a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
-.fly-list-li img{display: inline-block;width: 53px;height: 53px;float: left;margin-top: 9px;border-radius: 53px;}
+/*.fly-list-li img{display: inline-block;width: 53px;height: 53px;float: left;margin-top: 9px;border-radius: 53px;}*/
+.fly-list-li img{display: inline-block;width: 70px;height: 70px;float: left;margin-top: 16px;margin-left: 7px; border-radius: 70px;}
 /*.fly-list-li .grade{left: 40px;position: absolute;margin-top: 83px;}*/
 .fly-list-li .grade{
-  left: 30px;
+  /*left: 30px;*/
+  left: 35px;
   position: absolute;
-  margin-top: 83px;
-  width: 53px;
+  /*margin-top: 83px;*/
+  margin-top: 123px;
+  width: 70px;
   text-align: center;
 }
 .fly-list-li .manager{
-  left: 40px;
+  /*left: 40px;*/
+  left: 53px;
   position: absolute;
-  margin-top: 65px;
+  /*margin-top: 65px;*/
+  margin-top: 105px;
   color: blue;
 }
-.fly-list-li p{line-height: 60px; font-size: 12px; color: #999;}
-.fly-list-li p span{padding-right: 15px;margin-left:22px;margin-top: 15px;display: inline-block;}
+/*.fly-list-li p{line-height: 60px; font-size: 12px; color: #999;}*/
+.fly-list-li p{line-height: 60px; font-size: 12px; color: #999;margin-top: 20px;}
+/*.fly-list-li p span{padding-right: 15px;margin-left:22px;margin-top: 15px;display: inline-block;}*/
+.fly-list-li p span{padding-right: 15px;margin-left:32px;margin-top: 15px;display: inline-block;}
 .fly-list-li p span a{color: #999;}
 .fly-list-avatar img{width: 45px; height: 45px; border-radius: 2px;}
 
@@ -190,7 +201,7 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 /*为了悼念改颜色*/
 .fly-tip .unsolved {
     color: red;
-    background-color: #fcfcfc;
+    /*background-color: #fcfcfc;*/
     font-size: 13px;
     margin-top: -2px;
     margin-left: 0px;
@@ -204,14 +215,14 @@ body .iconfont{-webkit-text-stroke-width: 0;}
 }*/
 .fly-tip .solved {
     color: #999;
-    background-color: #fcfcfc;
+    /*background-color: #fcfcfc;*/
     font-size: 13px;
     margin-top: -2px;
     margin-left: 0px;
 }
 .fly-tip .finish {
     color: #999;
-    background-color: #fcfcfc;
+    /*background-color: #fcfcfc;*/
     font-size: 13px;
     margin-top: -2px;
     margin-left: 0px;
