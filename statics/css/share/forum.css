@@ -24,6 +24,7 @@ body {
     text-align: center;
     line-height: 40px;
     position: fixed;
+    z-index: 100;
 }
 .content-detail {
     margin-top: 40px;
@@ -60,38 +61,52 @@ body {
     background: #fff;
 }
 .left-view {
-    width: 90px;
+    width: 100px;
     height: 100px;
 }
 .reply-left-view {
-    width: 90px;
+    width: 100px;
     height: 80px;
 }
 .head {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
+    width: 42px;
+    height: 42px;
+    border-radius: 21px;
+    margin-top: 9px;
+    margin-left: 9px;
+    background: #ccc;
+}
+.head-bg {
+    width: 60px;
+    height: 60px;
     margin-top: 10px;
     margin-left: 20px;
-    background: #ccc;
+    background-size: cover;
 }
 .reply-head {
     width: 35px;
     height: 35px;
     border-radius: 17.5px;
-    margin-top: 10px;
-    margin-left: 27.5px;
+    margin-top: 7.5px;
+    margin-left: 7.5px;
     background: #ccc;
 }
+.reply-head-bg {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 27.5px;
+    background-size: cover;
+}
 .grade {
-    width: 90px;
+    width: 100px;
     margin-top: 5px;
     font-size: 15px;
     text-align: center;
     color: rgb(250, 80, 131);
 }
 .reply-grade {
-    width: 90px;
+    width: 100px;
     /*margin-top: 5px;*/
     font-size: 12px;
     text-align: center;
@@ -100,12 +115,12 @@ body {
 .right-view {
     width: calc(100% - 100px);
     height: 100px;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 .reply-right-view {
     width: calc(100% - 100px);
     height: 80px;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 .name {
     width: 100%;

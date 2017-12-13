@@ -12,6 +12,30 @@ function initDetail(){
 function postDetail() {
 	myAjaxInShare(basePath+"/forum/posts/"+postPk+"/","get",null,function(result) {
 		if (result) {
+			// 头像边框、背景色
+			var head = null,
+			 	background = null;
+			if (result.userinfo.props.length != 0) {
+				var arr = result.userinfo.props;
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i].action == 'background' && arr[i].status == 1) {
+						if (arr[i].exchange_product.category_detail.desc) {
+							background = arr[i].exchange_product.category_detail.desc;
+						}
+					} else if (arr[i].action == 'avatar' && arr[i].status == 1) {
+						if (arr[i].exchange_product.image) {
+							head = arr[i].exchange_product.image;
+						}
+					}
+				}
+			}
+			if (head) {
+				$('.head-bg').css({"background-image": "url(" + head + ")"});
+			}
+			if (background) {
+				$('.userinfo').css({"background-color": background});
+			}
+
 			$(".forum-status").text("[" + result.status_display + "]");
 			if (result.status_display == '未解决') {
 				$(".forum-status").css({"color": 'red'});
@@ -59,10 +83,30 @@ function getReplys(page){
 		var _htm="";
 		// 改的要死了
 		$.each(result.results,function(k,v){
+			var head = null,
+				background = null;
+			if (v.userinfo.props.length != 0) {
+				var arr = v.userinfo.props;
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i].action == 'background' && arr[i].status == 1) {
+						if (arr[i].exchange_product.category_detail.desc) {
+							background = arr[i].exchange_product.category_detail.desc;
+						}
+					} else if (arr[i].action == 'avatar' && arr[i].status == 1) {
+						if (arr[i].exchange_product.image) {
+							head = arr[i].exchange_product.image;
+						}
+					}
+				}
+			}
+			head = head ? '"background-image: url(' + head + ')"' : "";
+
 			_htm+='<li data-id="'+v.pk+'" class="reply-item">'
-				+'<div class="reply-userinfo">'
+				+'<div class="reply-userinfo" style="background-color: ' + background +  ' ">'
 				+	'<div class="reply-left-view">'
-				+		'<img class="reply-head" src=' + dealWithAvatar(v.userinfo.avatar) + '>'
+				+ 		'<div class="reply-head-bg" style=' + head + '>'
+				+			'<img class="reply-head" src=' + dealWithAvatar(v.userinfo.avatar) + '>'
+				+ 		'</div>'
 				+		'<div class="reply-grade">' + v.userinfo.grade.current_name + '</div>'
 			    +	'</div>'
 				+	'<div class="reply-right-view">'
