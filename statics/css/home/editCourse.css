@@ -489,8 +489,6 @@ body{
 }
 .main-view .left-view .chat .message .msg-view-parent .audio{
     width: 25px;
-    margin-left: 5px;
-    margin-top: 5px;
 }
 .main-view .left-view .chat .message .msg-view,
 .main-view .left-view .chat .answer .msg-view{
@@ -1684,7 +1682,8 @@ body{
 }
 /****************************消息类型*/
 .message-input-view,
-ul.message-types{
+ul.message-types,
+ul.audio-types{
     position: absolute;
     left: 0;
     top:0;
@@ -1697,7 +1696,8 @@ ul.message-types{
     flex-direction: column;
     display: none;
 }
-ul.message-types li{
+ul.message-types li,
+ul.audio-types li{
     height: 40px;
     border-bottom: solid #e1e1e1 1px;
     text-align: center;
@@ -1762,6 +1762,7 @@ ul.message-types li{
     cursor: pointer;
     display: none;
 }
+#upload-container #uploadAudio,
 #upload-container #uploadImg{
     background: #eee;
     padding: 5px 8px;
@@ -1770,7 +1771,27 @@ ul.message-types li{
     color: #333;
     border: solid 1px #e1e1e1;
     font-size: 13px;
+    display: none;
 }
+#audio-record-view{
+    margin-bottom: 10px;
+    display: none;
+}
+#audio-record-view #audio-record{
+    display: flex;
+    justify-content: space-between;
+}
+#audio-record #audio-record-start,
+#audio-record #audio-record-stop{
+    background: #eee;
+    padding: 5px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    /*color: #333;*/
+    border: solid 1px #e1e1e1;
+    font-size: 13px;
+}
+
 #export{
     /*background: #eee;
     padding: 5px 8px;
@@ -1792,16 +1813,18 @@ ul.message-types li{
     
     justify-content: space-between;
     align-items: center;
-    width: 70px;
+    /*width: 70px;*/
     margin-top: 10px;
 }
 .left-add{
     width: 25px;
     height: 25px;
+    margin-right: 10px;
 }
 .reduce{
     width: 25px;
     height: 25px;
+    margin-right: 10px;
 }
 .lessons{
     width: 80px;
