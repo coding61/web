@@ -49,34 +49,39 @@ define(function(require, exports, module) {
                 $(".input-view #upload-container #uploadImg").css({display:'inline-block'});
 
                 $("#audio-record-view").hide();
+                $("#log").show();
             }else if (tag == "text") {
                 //纯文本
                 $(".input-view textarea").attr({placeholder:"文本消息内容"});
                 $(".input-view input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
+                $("#log").hide();
             }else if (tag == "link-text") {
                 //链接文本
                 $(".input-view textarea").attr({placeholder:"链接消息内容"});
                 $(".input-view input").show();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
+                $("#log").hide();
             }else if (tag == "action") {
                 //action 文本
                 $(".input-view textarea").attr({placeholder:"回复按钮上的文字"})
                 $(".input-view input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
+                $("#log").hide();
             }else if (tag == "record") {
                 //录制音频
                 $(".input-view textarea").attr({placeholder:"消息音频地址"});
                 $(".input-view input").hide();
                 $(".input-view #upload-container").show();
 
-                $(".input-view #upload-container #uploadAudio").css({display:'inline-block'});
+                $(".input-view #upload-container #uploadAudio").hide();
                 $(".input-view #upload-container #uploadImg").hide();
 
                 $("#audio-record-view").show();
+                $("#log").show();
             }else if (tag == "local") {
                 //本地音频
                 $(".input-view textarea").attr({placeholder:"消息音频地址"});
@@ -87,6 +92,7 @@ define(function(require, exports, module) {
                 $(".input-view #upload-container #uploadImg").hide();
 
                 $("#audio-record-view").hide();
+                $("#log").show();
             }
             $(".message-input-view").css({display:'flex'});
         },
@@ -320,7 +326,7 @@ define(function(require, exports, module) {
                 $(".message-input-view").css({display:'none'});
                 $(".input-view textarea").val("");
                 $(".input-view input").val("");
-
+                $("#log").html("");
 
                 // 滚动到最底部
                 $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
@@ -724,11 +730,13 @@ define(function(require, exports, module) {
                     // console.log(file);
                     //alert('e');
                     // 每个文件上传前,处理相关的事情
+                    __log("上传处理中...")
                },
                'UploadProgress': function(up, file) {
                     // console.log(file);
                     // 每个文件上传时,处理相关的事情
                     // $('.yes-btn').html('<img src="img/zone/loading.gif" style="height:20px;"/>').css('background','#e6e6e6');
+                    __log("上传中...")
                },
                'FileUploaded': function(up, file, info) {
                     // console.log(file);
@@ -738,9 +746,11 @@ define(function(require, exports, module) {
                     // console.log(json.private_url);
                     // console.log(json);
                     $(".input-view textarea").val(json.private_url);
+                    __log("上传完成")
                },
                'Error': function(up, err, errTip) {
-                    Common.dialog("上传失败");
+                    // Common.dialog("上传失败");
+                    __log("上传失败")
                     // var $progressNumed = $(".progressNum .progressNumed").eq(0);
                     //     $progressNumed.html($progressNumed.html() - 0 + 1);
                     //     console.log(up);
@@ -816,11 +826,13 @@ define(function(require, exports, module) {
                     // console.log(file);
                     //alert('e');
                     // 每个文件上传前,处理相关的事情
+                    __log("上传处理中...")
                },
                'UploadProgress': function(up, file) {
                     // console.log(file);
                     // 每个文件上传时,处理相关的事情
                     // $('.yes-btn').html('<img src="img/zone/loading.gif" style="height:20px;"/>').css('background','#e6e6e6');
+                    __log("上传中...")
                },
                'FileUploaded': function(up, file, info) {
                     // console.log(file);
@@ -830,9 +842,11 @@ define(function(require, exports, module) {
                     // console.log(json.private_url);
                     // console.log(json);
                     $(".input-view textarea").val(json.private_url);
+                    __log("上传完成")
                },
                'Error': function(up, err, errTip) {
-                    Common.dialog("上传失败");
+                    __log("上传失败")
+                    // Common.dialog("上传失败");
                     // var $progressNumed = $(".progressNum .progressNumed").eq(0);
                     //     $progressNumed.html($progressNumed.html() - 0 + 1);
                     //     console.log(up);
@@ -849,4 +863,12 @@ define(function(require, exports, module) {
           }
       });
 
+    function __log(e, data) {
+        if (log.innerHTML) {
+            log.innerHTML += "\n" + e + " " + (data || '');
+        }else{
+            log.innerHTML += e + " " + (data || '');
+        }
+        $("#log").animate({scrollTop:$("#log")[0].scrollHeight}, 20);
+    }
 });

@@ -9,8 +9,16 @@ window.onload = function(text) {
         return null;
     }
 
-    var lesson = GetCookie('lesson');
-    var authToken = GetCookie('Token');
+    //获取一个随机数
+    var min = 0x1;
+    var max = 0xffffffff;
+    function getInstanceId() {                                      
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return (Math.floor(Math.random() * (max - min + 1)) + min).toString(16);
+    }  
+
+    var lesson = getInstanceId();
 
     /* EasyRTC 配置项、初始化函数 */
     var webrtcRecorder = null;
@@ -19,11 +27,14 @@ window.onload = function(text) {
     var stopBtn = document.getElementById("audio-record-stop");
     startBtn.addEventListener("click", function( event ) {
         audioId.play();
+        startBtn.disabled=true;
         stopBtn.disabled = false;
     }, false);
 
     stopBtn.addEventListener("click", function( event ) {
         audioId.pause();
+        startBtn.disabled=false;
+        stopBtn.disabled = true;
     }, false);
 
     easyrtc.setSocketUrl(location.origin, null);
@@ -69,7 +80,7 @@ window.onload = function(text) {
         // 开始记录
         if (webrtcRecorder == null) {
             webrtcRecorder = easyrtc.recordToBlob(easyrtc.getLocalStream(), uploadBlob);
-            $('#upload-status').text('Recording...');
+            __log("录制中...");
             console.log(webrtcRecorder);
         }
     }
@@ -84,7 +95,7 @@ window.onload = function(text) {
     /* 上传音频到服务器 */
     function uploadBlob(blob) {
         var fileType = 'audio';
-        var fileName = 'audio.opus';
+        var fileName = 'audio.mp3';
 
         var formData = new FormData();
         formData.append('file-type', fileType);
@@ -93,11 +104,15 @@ window.onload = function(text) {
         formData.append('lesson-pk', lesson);
         formData.append('record-type', 'lesson');
 
-        xhr('/server/upload/', formData, function (fName) {
+        xhr('/program_girl/upload/upload_media/', formData, function (fName) {
             console.log(Date() + " fName: " + fName);
-            $('#upload-status').text('Upload Finished.');
+            // console.log(JSON.parse(fName).url);
+            var url = "https://www.cxy61.com" + JSON.parse(fName).url
+            $(".input-view textarea").val(url);
+            __log("上传成功");
+            
         }, function() {
-            $('#upload-status').text('Upload Failure.');
+            __log("上传失败");
         });
 
         function xhr(url, data, callback, errorCallback) {
@@ -110,12 +125,70 @@ window.onload = function(text) {
                 } else if (request.status == 400 && errorCallback) {
                     errorCallback();
                 } else {
-                    $('#upload-status').text('Upload...');
+                    __log("上传中...");
                 }
             };
-            request.open('PUT', url);
-            request.setRequestHeader('Authorization', 'Token ' + authToken);
+            request.open('POST', url);
             request.send(data);
         }
     }
+    function __log(e, data) {
+        if (log.innerHTML) {
+            log.innerHTML += "\n" + e + " " + (data || '');
+        }else{
+            log.innerHTML += e + " " + (data || '');
+        }
+        $("#log").animate({scrollTop:$("#log")[0].scrollHeight}, 20);
+    }
+    var Loading = {
+        init:function(parent){
+            var html = '<div class="waitloadingShadow">\
+                    <div class="waitloading">\
+                        <img src="../../statics/images/loading.gif"/>\
+                        <p></p>\
+                        </div></div>'
+            if (parent) {
+                $(html).appendTo(parent);
+            }else{
+                $(html).appendTo("body");
+            }
+            $(".waitloadingShadow").css({
+                position: 'absolute',
+                left: 0,
+                top:0,
+                width: '100%',
+                height: '100%',
+                'background-color': 'rgba(0, 0, 0, 0.6)',
+                display: 'flex',
+                'align-items': 'center',
+                'justify-content': 'center',
+                'flex-direction': 'column',
+                'z-index':'10000',
+                display:'none'
+            })
+            $(".waitloading").css({
+                background: '#f8f8f8',
+                'border-radius': '5px',
+                'font-size': '13px',
+                padding: '20px 30px',
+                'text-align': 'center'
+            })
+        },
+        msg:function(text){
+            $(".waitloadingShadow p").html(text);
+        },
+        hide:function(){
+            $(".waitloadingShadow").css({display:'none'});
+        },
+        show:function(text, callback){
+            $(".waitloadingShadow").css({display:'flex'});
+            if (text) {
+                $(".waitloadingShadow p").html(text);
+            }
+            if (callback) {
+                callback();
+            }
+        },
+    }
+    // Loading.init(".chat");
 }
