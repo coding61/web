@@ -107,7 +107,8 @@ window.onload = function(text) {
         xhr('/program_girl/upload/upload_media/', formData, function (fName) {
             console.log(Date() + " fName: " + fName);
             // console.log(JSON.parse(fName).url);
-            var url = "https://www.cxy61.com" + JSON.parse(fName).url
+            // var url = "https://www.cxy61.com" + JSON.parse(fName).url
+            var url = "https://app.bcjiaoyu.com" + JSON.parse(fName).url
             $(".input-view textarea").val(url);
             __log("上传成功");
             
