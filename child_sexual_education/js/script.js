@@ -376,6 +376,12 @@ $(document).ready(function () {
         }
     });
 
+    // 统计页面浏览量
+    var _hmt = _hmt || [];
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?11a4ed911c9eed52f13e75b90cbed1c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
 
     
 });
