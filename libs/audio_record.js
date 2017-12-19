@@ -108,7 +108,13 @@ window.onload = function(text) {
             console.log(Date() + " fName: " + fName);
             // console.log(JSON.parse(fName).url);
             // var url = "https://www.cxy61.com" + JSON.parse(fName).url
-            var url = "https://app.bcjiaoyu.com" + JSON.parse(fName).url
+            var domain = "https://www.cxy61.com";
+            if (location.host.indexOf("bcjiaoyu.com") > -1) {
+                domain = "https://app.bcjiaoyu.com"
+            }else{
+                domain = "https://www.cxy61.com";
+            }
+            var url = domain + JSON.parse(fName).url
             $(".input-view textarea").val(url);
             __log("上传成功");
             
