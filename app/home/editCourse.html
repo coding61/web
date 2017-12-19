@@ -229,7 +229,7 @@
 			<div class="message text" data-index="{{index}}"> 
                 <!-- <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" /> -->
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg">
-                <div class="msg-view-parent">
+                <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
                         <span class="content">{{item.message}}</span> 
                     </div>
@@ -237,6 +237,7 @@
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
                         <img class="audio" src="../../statics/images/audio.png"/>
+                        {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
                 </div>
             </div>
@@ -265,7 +266,7 @@
 			<div class="message link" data-link="{{item.link}}" data-index="{{index}}"> 
 				<!-- <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" /> -->
 				<img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg">
-				<div class="msg-view-parent">
+				<div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
 					<div class="msg-view">
 						<div class="link-text"> 
 							<span class="link-content">{{item.message}}<br/></span>
@@ -278,6 +279,7 @@
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
                     	<img class="audio" src="../../statics/images/audio.png"/>
+                    	{{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
 				</div>
 			</div>

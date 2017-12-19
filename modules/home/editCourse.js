@@ -414,7 +414,13 @@ define(function(require, exports, module) {
                 $(".audio-types").css({display:'flex'});
                 Course.index = $(this).parents(".message").attr("data-index");
             })
-
+            //播放音频
+            $(".message .audio-play").unbind('click').click(function(){
+                var url = $(this).parents('.msg-view-parent').attr("data-audio-url");
+                if (url) {
+                    Common.playMessageSoun2(url);  //播放音频
+                }
+            })
 
         },
         initLessonData:function(){
