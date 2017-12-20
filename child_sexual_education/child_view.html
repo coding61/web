@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		
+		<!--=== Mobile specific metas ===-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<!--=== Page title ===-->
+		<title>孩子看的</title>
+		
+		<!--=== CSS ===-->
+		
+		<!--=== Bootstrap ===-->
+		<link href="css/bootstrap.css" rel="stylesheet">
+		
+		<!--=== Plugins ===-->
+		
+		<!--=== ionicons ===-->
+		<link rel="stylesheet" href="plugins/ionicons/css/ionicons.css">
+		
+		<!--=== owl carousel ===-->
+		<link rel="stylesheet" href="plugins/owlcarousel/owl.carousel.css">
+		
+		<!--=== animate ===-->
+		<link rel="stylesheet" href="plugins/animate.css">
+		
+		<!--=== magnific-popup ===-->
+		<link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
+		
+		<!-- Theme styles -->
+		<link rel="stylesheet" href="css/child_view.css">
+		<link rel="stylesheet" href="css/animation.css">
+
+		<style type="text/css">
+			@media (min-width: 768px) {
+			    .section-title {
+			        width: 768px;
+			    }
+			}
+			@media (min-width: 992px) {
+			    .section-title {
+			        width: 970px;
+			    }
+			}
+			@media (min-width: 1200px) {
+			    .section-title {
+			        width: 1170px;
+			    }
+			}
+		</style>
+		
+	</head>
+
+	
+	<!--=== start body ===-->
+	<body>
+	
+		<!--=== start page-wrapper ===-->
+		<div class="page-wrapper">
+
+			<div class="preloader">
+				<div class="loader">
+					<img src="img/assets/preloader.gif" alt="">
+				</div>
+			</div>
+
+			<div class="page-header">
+			
+				<header class="header stuck">
+					<div class="container">
+				    
+					    <!--=== start logo ===-->
+						<div class="logo" style="height: 70px;line-height: 70px;">
+							<!-- <a href="">Decades</a> -->
+							<img style="max-width: 130px;" src="images/img_top.png">
+						</div>
+						<!--=== end logo ===-->
+						
+						<!--=== start mobile-menu ===-->
+						<div class="mobile-menu">
+							<a href=""><i class="ion-android-menu"></i></a>
+						</div>
+						<!--=== end mobile-menu ===-->
+						
+						<!--=== start main-nav ===-->
+						<div class="main-nav">
+							<ul class="main-nav-inner">
+								<li><a class="home" style="color: rgb(179, 179, 179);font-size: 20px;cursor: pointer;">首页</a></li>
+								<li><a class="parentView" style="color: rgb(179, 179, 179);font-size: 20px;cursor: pointer;">家长看的</a></li>
+								<li><a class="childView" style="color: rgb(92, 96, 99);font-size: 20px;cursor: pointer;">孩子看的</a></li>
+								<li><a class="quit" style="color: rgb(179, 179, 179);font-size: 20px;cursor: pointer;">退出</a></li>
+							</ul>
+						</div>
+						<!--=== end main-nav ===-->
+						
+					</div>
+					<!--=== end container ===-->
+					
+				</header>
+				
+			</div>
+
+			<main class="page-content">
+
+				<section id="two" class="section-padding">
+					<div class="section-title" style="text-align: left;margin-bottom: 0">
+						<h3 class="esseyartical"><span style="padding-bottom: 5px;border-bottom: solid 3px rgb(104, 104, 104);color: rgb(84, 84, 84);">精选文章</span></h3>
+					</div>
+
+					<div class="container mb-80 message">
+					</div>
+					<script type="text/html" id="message-template">
+						{{each}}
+							<div class="row" style="background-color: white;padding: 20px;margin-top: 20px;">
+								<div class="col-md-2">
+									<div class="mockup">
+										<img src={{$value.images}} class="mockup-front wow fadeInUp" data-wow-delay="0.4s"  alt="" style="margin: 0 auto;" />
+									</div>
+								</div>
+								<div class="col-md-8">
+									<div class="mockup-text mb-sm-80 mb-xs-65 wow fadeInUp" data-wow-delay="0.2s" style="padding-top: 0;padding-bottom: 0;">
+										<h3 class="mb-0" style="text-align: left;color: rgb(84, 84, 84);">{{$value.title}}</h3>
+										<p style="font-size: 18px;color: rgb(143, 143, 143);text-align: left;line-height: 30px;">{{$value.content}}</p>
+									</div>
+								</div>
+								<div class="col-md-2" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+									{{if $value.islike}}
+										<img class="heart" data-pk={{$value.pk}} src="images/zan.png" style="cursor: pointer;">
+									{{else}}
+									 	<img class="heart" data-pk={{$value.pk}} src="images/no_zan.png" style="cursor: pointer;">
+									 {{/if}}
+									<div style="font-size: 17px;color: rgb(143, 143, 143);">{{$value.like.length}}人点赞</div>
+								</div>
+							</div>
+						{{/each}}
+					</script>
+				</section>
+				
+			</main>
+
+		</div>
+		<!--=== end page-wrapper ===-->
+		
+		<!--jquery-->
+		<script src="js/jquery.js"></script>
+		
+		<!--bootstrap-->
+		<script src="js/bootstrap.js"></script>
+		
+		<!-- Include individual files as needed -->
+		
+		<!-- Plugins -->
+		
+		<!--singlePageNav-->
+		<script src="plugins/jquery.singlePageNav.js"></script>
+		
+		<!--parallax-->
+		<script src="plugins/parallax.js"></script> 
+		
+		<!--ajaxchimp-->
+		<script src="plugins/jquery.ajaxchimp.js"></script>
+		
+		<!--particles-->
+		<script src="plugins/particles.js"></script> 
+		
+		<!--wow-->
+		<script src="plugins/wow.js"></script>
+		
+		<!--magnific-popup-->
+		<script src="plugins/magnific-popup/jquery.magnific-popup.js"></script>
+		
+		<!--owl.carousel-->
+		<script src="plugins/owlcarousel/owl.carousel.js"></script>
+		
+		<!-- google map -->
+		<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script src="js/map.js"></script> -->
+		
+		<!-- theme script -->
+		<!-- <script src="js/newsletter.js"></script> -->
+		<script type="text/javascript" src="../../libs/template.js"></script>
+		<script src="js/child_view.js"></script>
+		
+		
+	</body>
+	<!--=== end body ===-->
+	
+</html>
