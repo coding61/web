@@ -33,6 +33,32 @@
 		<!-- Theme styles -->
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/animation.css">
+
+		<style type="text/css">
+			@media (max-width: 991px) {
+				.ui-login-view, .phone-reg-view .close, .phone-reg-view .phone-reg-account-view, .find-password-view .close, .find-password-view .find-password-account-view, .choose-avatar-view-s, .choose-avatar-view .close {
+			        width: 90%;
+			    }
+			    .bc-alert-view .bc-alert-btns, .bc-alert-view .bc-alert-msg {
+			    	width: 70%;
+			    }
+			}
+			@media (min-width: 768px) {
+			    .ui-login-view, .phone-reg-view .close, .phone-reg-view .phone-reg-account-view, .find-password-view .close, .find-password-view .find-password-account-view, .choose-avatar-view-s, .choose-avatar-view .close {
+			        width: 50%;
+			    }
+			}
+			@media (min-width: 992px) {
+			    .ui-login-view, .phone-reg-view .close, .phone-reg-view .phone-reg-account-view, .find-password-view .close, .find-password-view .find-password-account-view, .choose-avatar-view-s, .choose-avatar-view .close {
+			        width: 45%;
+			    }
+			}
+			@media (min-width: 1200px) {
+			    .ui-login-view, .phone-reg-view .close, .phone-reg-view .phone-reg-account-view, .find-password-view .close, .find-password-view .find-password-account-view, .choose-avatar-view-s, .choose-avatar-view .close {
+			        width: 35%;
+			    }
+			}
+		</style>
 		
 	</head>
 	
@@ -42,63 +68,41 @@
 		<!--=== start page-wrapper ===-->
 		<div class="page-wrapper">
 
-			<!--=====================
-				start preloader
-			=====================-->
 			<div class="preloader">
 				<div class="loader">
 					<img src="img/assets/preloader.gif" alt="">
 				</div>
 			</div>
-			<!--=====================
-				end preloader
-			=====================-->
-		
-			<!--=====================
-				start page-header
-			=====================-->
+
 			<div class="page-header">
-			
-			<!--=====================
-				start header
-			=====================-->
+
 				<header class="header stuck">
 					<div class="container">
 				    
-					    <!--=== start logo ===-->
 						<div class="logo" style="height: 70px;line-height: 70px;">
 							<!-- <a href="">Decades</a> -->
 							<img style="max-width: 130px;" src="images/img_top.png">
 						</div>
-						<!--=== end logo ===-->
-						
+
 						<!--=== start mobile-menu ===-->
 						<div class="mobile-menu">
 							<a href=""><i class="ion-android-menu"></i></a>
 						</div>
 						<!--=== end mobile-menu ===-->
 						
-						<!--=== start main-nav ===-->
 						<div class="main-nav">
 							<ul class="main-nav-inner">
-								<li><a href="#intro" style="color: #666;font-size: 20px;">首页</a></li>
-								<li><a href="#features" style="color: #666;font-size: 20px;">家长看的</a></li>
-								<li><a href="#showcase" style="color: #666;font-size: 20px;">孩子看的</a></li>
+								<li><a class="home" style="color: rgb(92, 96, 99);font-size: 20px;cursor: pointer;">首页</a></li>
+								<li><a class="parentView" style="color: rgb(179, 179, 179);font-size: 20px;cursor: pointer;">家长看的</a></li>
+								<li><a class="childView" style="color: rgb(179, 179, 179);font-size: 20px;cursor: pointer;">孩子看的</a></li>
+								<li><a class="quit" style="color: rgb(179, 179, 179);font-size: 20px;cursor: pointer;">退出</a></li>
 							</ul>
 						</div>
-						<!--=== end main-nav ===-->
 						
 					</div>
-					<!--=== end container ===-->
 					
 				</header>
-			<!--=====================
-				end header
-			=====================-->
-			
-			<!--=====================
-				start intro
-			=====================-->
+
 				<section id="intro" class="intro parallax" data-parallax="scroll" data-image-src="images/bg_one.png">
 				
 					<div class="container">
@@ -106,40 +110,25 @@
 						
 							<div class="col-md-6" style="width: 100%;">
 						    
-							    <!--=== start intro-content ===-->
 								<div class="intro-content wow fadeInUp" data-wow-delay="0.2s" style="padding-bottom: 0;padding-top: 200px;">
 								
 									<h1 class="text-white" style="font-size: 72px;line-height: 72px;">让我们一起来保护孩子</h1>
 									<p class="text-white mb-25" style="margin-top: 35px;font-size: 36px;line-height: 36px;">儿童性教育——保护孩子最好的办法</p>
 									
 								</div>
-								<!--=== end intro-content ===-->
 								
 							</div>
-							<!--=== end col ===-->
 
 						</div>
-						<!--=== end row ===-->
 						
 					</div>
-					<!--=== end container ===-->
 					
 				</section>
-			<!--=====================
-				end intro
-			=====================-->
 				
 			</div>
-			<!--=====================
-				end page-header
-			=====================-->
-			
-			<!--=====================
-				start page-content
-			=====================-->
+
 			<main class="page-content">
 
-				
 				<section id="two" class="section-padding">
 					<div class="section-title">
 						<h2>儿童被性侵现状的形势严峻</h2>
@@ -240,7 +229,6 @@
 				</section>
 
 
-				
 				<section id="four" class="section-padding">
 				
 					<div class="section-title">
@@ -340,33 +328,241 @@
 					</div>
 
 				</section>
-				
 
-
-				<!--=====================
-					start team
-				=====================-->
 				<section id="team" class="section-padding" style="background-image: url(images/bg_three.png);background-position: center;background-size: cover;">
 				
-					<!--=== start section-title ===-->
 					<div class="section-title" style="margin-bottom: 0;">
 						<h3 style="color: white;">青少年法律援助热线：010-63835845/ 010-63913995</h3>
 						<h3 style="color: white;">本网站内容由志愿者提供</h3>
 					</div>
-					<!--=== end section-title ===-->
 
 				</section>
-				<!--=====================
-					end team
-				=====================-->
 
 			</main>
-			<!--=====================
-				end page-content
-			=====================-->
 			
 		</div>
 		<!--=== end page-wrapper ===-->
+
+		
+
+		<!-- 全球各个国家电话代码 -->
+		<script type="text/html" id="country-option-template">
+			{{each}}
+				<li class="country-option{{if $value.code==+86}} select{{/if}}" data-code="{{$value.code}}">
+					<span class="codeCty">{{$value.code}}</span>
+					<span class="country">{{$value.country}}</span>
+				</li>
+			{{/each}}
+		</script>
+		<!-- 手机号/邀请码登录 -->
+		<div class="phone-invite-shadow-view">
+			<div class="phone-invite-view">
+				<div class="close ui-login-view">
+					<img style="display: none;" src="../../statics/images/close-w.png"/>
+				</div>
+
+				<div class="tabs ui-login-view">
+					<div class="tab unselect phone">手机号登录</div>
+					<div class="tab select invite">邀请码登录</div>
+				</div>
+				<!-- 手机登录 -->
+				<div class="account-view ui-login-view phone-account-view" data-tag="phone">
+					<div class="username ui-login-input-view">
+						<div class="code-country">
+							<span>+86</span>
+							<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+						</div>
+						<ul class="country-options">
+
+
+						</ul>
+						<input class="ui-login-input" placeholder="请输入手机号" />
+					</div>
+					<div class="password ui-login-input-view">
+						<input class="ui-login-input" type="password" placeholder="请输入密码" />
+					</div>
+					<div class="tips">
+						<span>已有邀请码用户，可以直接登陆，建议登陆后在问号里绑定手机，方便找回密码！</span>
+					</div>
+					<div class="login-btn">
+						<span class="login">登录</span>
+					</div>
+
+					<div class="login-footer">
+						<span class="go-reg">立即注册</span>
+						<span class="login-footer-line">|</span>
+						<span class="forgot-psd">忘记密码</span>
+					</div>
+				</div>
+				<!-- 邀请码登录 -->
+				<div class="account-view ui-login-view invite-account-view" data-tag="invite">
+					<div class="username ui-login-input-view">
+						<input class="ui-login-input" placeholder="请输入邀请码" />
+					</div>
+					<div class="password ui-login-input-view">
+						<input class="ui-login-input" type="password" placeholder="请输入密码" />
+					</div>
+					<div class="login-btn">
+						<span class="login">登录</span>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!-- 手机注册 -->
+		<div class="phone-reg-shadow-view">
+			<div class="phone-reg-view">
+				<div class="close">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+
+					<div class="phone-reg-account-view">
+						<div class="view-tag">注册</div>
+						<div class="phone">
+							<div class="code-country">
+								<span>+86</span>
+								<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+							</div>
+							<ul class="country-options">
+
+							</ul>
+							<input placeholder=" 请输入手机号" />
+						</div>
+						<div class="verify-code">
+							<input type="text" placeholder="请输入验证码" />
+							<span class="get-code">获取验证码</span>
+						</div>
+						<div class="password">
+							<input type="password" placeholder="请输入密码" />
+						</div>
+						<div class="reg-next-btn">
+							<span class="reg-next">下一步</span>
+						</div>
+					</div>
+			</div>
+		</div>
+		<!-- 选择头像 -->
+		<div class="choose-avatar-shadow-view">
+			<div class="choose-avatar-view">
+				<div class="close ui-choose-avatar-view">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="choose-avatar-view-s">
+					
+					<div class="choose-avatar-account-view ui-choose-avatar-view">
+						<div class="view-tag">注册</div>
+						<div class="choose-avatar">
+							<span class="text">选择头像</span>
+							<img src="https://static1.bcjiaoyu.com/avatars/1.png">
+						</div>
+						<div class="nickname">
+							<input placeholder="请输入昵称" />
+						</div>
+
+						<div class="reg-btn">
+							<span class="reg">完成</span>
+						</div>
+					</div>
+
+					<div class="avatars-view">
+						<div class="avatars">
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/1.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/2.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/3.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/4.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/5.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/6.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/7.png">
+							</div>
+							<div class="avatar">
+								<img src="https://static1.bcjiaoyu.com/avatars/8.png">
+							</div>
+						</div>
+						<div class="submit-avatar">
+							<span class="submit">确定</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 找回密码 -->
+		<div class="find-password-shadow-view">
+			<div class="find-password-view">
+				<div class="close">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+				<div class="find-password-account-view">
+					<div class="view-tag">找回密码</div>
+					<div class="phone">
+						<div class="code-country">
+							<span>+86</span>
+							<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+						</div>
+						<ul class="country-options">
+
+						</ul>
+						<input placeholder=" 请输入手机号" />
+					</div>
+					<div class="verify-code">
+						<input type="text" placeholder="请输入验证码" />
+						<span class="get-code">获取验证码</span>
+					</div>
+					<div class="password">
+						<input type="password" placeholder="请输入新密码" />
+					</div>
+					<div class="reset-psd-btn">
+						<span class="reset-psd">确认修改密码</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 绑定手机 -->
+		<div class="phone-bind-shadow-view">
+			<div class="phone-bind-view">
+				<div class="close">
+					<img src="../../statics/images/close-w.png"/>
+				</div>
+
+				<div class="phone-bind-account-view">
+					<div class="view-tag">绑定手机</div>
+					<div class="phone">
+						<div class="code-country">
+							<span>+86</span>
+							<img src="../../statics/images/arrow_d1.png" style="width: 20px;">
+						</div>
+						<ul class="country-options">
+
+						</ul>
+						<input placeholder=" 请输入手机号" />
+					</div>
+					<div class="verify-code">
+						<input type="text" placeholder="请输入验证码" />
+						<span class="get-code">获取验证码</span>
+					</div>
+					<div class="password">
+						<input type="password" placeholder="请设置密码" />
+					</div>
+					<div class="bind-btn">
+						<span class="bind">立即绑定</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		
 		<!--jquery-->
 		<script src="js/jquery.js"></script>
@@ -405,8 +601,8 @@
 		
 		<!-- theme script -->
 		<script src="js/newsletter.js"></script>
+		<script type="text/javascript" src="../../libs/template.js"></script>
 		<script src="js/script.js"></script>
-		
 		
 	</body>
 	<!--=== end body ===-->
