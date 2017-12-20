@@ -493,12 +493,12 @@ $(document).ready(function () {
                 },
                 success:function(json){
                     if (json.message == "已点赞") {
-                        alert("成功点赞");
+                        // alert("成功点赞");
                         img.attr({"src": "images/zan.png"});
                         var likeCount = parseInt(img.next().text().split("人")[0]) + 1;
                         img.next().html(likeCount + "人点赞");
                     } else if (json.message == "已取消点赞") {
-                        alert("已取消点赞");
+                        // alert("已取消点赞");
                         img.attr({"src": "images/no_zan.png"});
                         var likeCount = parseInt(img.next().text().split("人")[0]) - 1;
                         img.next().html(likeCount + "人点赞");
