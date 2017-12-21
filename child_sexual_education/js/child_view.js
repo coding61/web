@@ -1114,7 +1114,8 @@ $(document).ready(function () {
         $(".country-options").toggle();
     })
     // 默认是+86
-    $(".country-option").unbind('click').click(function(){
+    // $(".country-option").unbind('click').click(function(){
+    $(document).on("click", ".country-option", function() {
         var code = $(this).attr("data-code");
         Util.currentCountryCode = code;
         $(".country-option.select").removeClass("select");
