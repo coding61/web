@@ -930,7 +930,7 @@ $(document).ready(function () {
                     $('.phone-invite-shadow-view').hide();
                     $('body').css({'position': 'relative'});
                     $('.quit').show();
-                    getArticles(1);
+                    window.location.reload();
                 },
                 error:function(xhr, textStatus){
                     // Common.hideLoading();
