@@ -75,7 +75,7 @@
 					    <!--=== start logo ===-->
 						<div class="logo" style="height: 70px;line-height: 70px;">
 							<!-- <a href="">Decades</a> -->
-							<img style="max-width: 130px;" src="images/img_top.png">
+							<img src="images/img_top.png">
 						</div>
 						<!--=== end logo ===-->
 						
@@ -107,7 +107,7 @@
 
 				<section id="two" class="section-padding">
 					<div class="section-title" style="text-align: left;margin-bottom: 0">
-						<h3 class="esseyartical"><span style="padding-bottom: 5px;border-bottom: solid 3px rgb(104, 104, 104);color: rgb(84, 84, 84);">精选文章</span></h3>
+						<h3 class="esseyartical"><span style="padding-bottom: 5px;border-bottom: solid 3px rgb(104, 104, 104);color: rgb(84, 84, 84);">给家长看的</span></h3>
 					</div>
 
 					<div class="container mb-80 message">
@@ -115,15 +115,15 @@
 					<script type="text/html" id="message-template">
 						{{each}}
 							<div class="row" style="background-color: white;padding: 20px;margin-top: 20px;">
-								<div class="col-md-2">
+								<div class="col-md-2" style="display: none;">
 									<div class="mockup">
 										<img src={{$value.images}} class="mockup-front wow fadeInUp" data-wow-delay="0.4s"  alt="" style="margin: 0 auto;" />
 									</div>
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-10">
 									<div class="mockup-text mb-sm-80 mb-xs-65 wow fadeInUp" data-wow-delay="0.2s" style="padding-top: 0;padding-bottom: 0;">
 										<h3 class="mb-0" style="text-align: left;color: rgb(84, 84, 84);">{{$value.title}}</h3>
-										<p style="font-size: 18px;color: rgb(143, 143, 143);text-align: left;line-height: 30px;">{{$value.content}}</p>
+										<p style="font-size: 14px;color: rgb(143, 143, 143);text-align: left;line-height: 30px;">{{$value.content}}</p>
 									</div>
 								</div>
 								<div class="col-md-2" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
