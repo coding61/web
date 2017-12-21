@@ -39,11 +39,11 @@ $(document).ready(function () {
     root.on("scroll", function () {
         if (root.scrollTop() < scrollOffset) {
 			
-            header.removeClass("stuck");
+            // header.removeClass("stuck");
 			
         } else {
 			
-            header.addClass("stuck");
+            // header.addClass("stuck");
 			
         }
     });

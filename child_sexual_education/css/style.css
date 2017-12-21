@@ -2014,10 +2014,10 @@ footer {
         color: #606060
     }
 	
-    .header.stuck {
+    /*.header.stuck {
         height: 60px;
         background-color: #fff
-    }
+    }*/
 	
     .header.stuck .logo a {
         line-height: 60px;
