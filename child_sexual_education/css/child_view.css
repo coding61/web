@@ -2220,6 +2220,802 @@ footer {
 	
 }
 
+/*************************************1.手机号/邀请码登录*/
+.phone-invite-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.phone-invite-shadow-view .phone-invite-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.ui-login-view{
+    width: 35%;
+    background: #efefef;
+}
+.phone-invite-view .close{
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    opacity: 1;
+}
+.phone-invite-view .tabs{
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+}
+.tabs .tab{
+    flex: 1;
+    text-align: center;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+.tab.unselect{
+    background: rgb(211,211,211);
+    color: rgb(134,134,134);
+}
+.tab.select{
+    background: #efefef;
+    color: rgb(59,59,59);
+}
+
+.phone-invite-view .account-view{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+
+    padding-top: 15px;
+}
+.tips{
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 15px;
+}
+.tips span{
+    width: calc(100% - 58px);
+    display: inline-block;
+    text-align: justify;
+    font-size: 13px;
+    color: rgb(138,138,138);
+}
+.account-view .ui-login-input-view{
+    /*width: 80%;*/
+    width: calc(90%);
+    height: 40px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.account-view .ui-login-input{
+    /*height: calc(100% - 12px);*/
+    border:solid 1px #b7b7b7;
+    padding: 5px;
+    width: calc(100% - 70px);
+}
+.account-view .username>input{
+}
+.account-view .password>input{
+}
+
+.login-btn{
+    width: calc(80%);
+    height: 40px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-btn .login{
+    width: calc(100% - 58px);
+    background: #ff6b95;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+    letter-spacing: 3px;
+    border-radius: 3px;
+
+    cursor: pointer;
+}
+.login-footer{
+    color: rgb(138,138,138);
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+.login-footer .go-reg{
+    padding-right: 5px;
+    cursor: pointer;
+}
+.login-footer .forgot-psd{
+    padding-left: 5px;
+    cursor: pointer;
+}
+.phone-invite-view .phone-account-view{
+    display:none;
+}
+.phone-invite-view .invite-account-view{
+    /*display:none;*/
+}
+/****************************************2.手机注册*/
+.phone-reg-shadow-view{
+    height: 100%;
+    width: calc(100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.phone-reg-shadow-view .phone-reg-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.phone-reg-view .close{
+    width: calc(35%);
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    opacity: 1;
+}
+.phone-reg-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.phone-reg-view .phone-reg-account-view{
+    width: calc(35%);
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+.phone-reg-view .phone-reg-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.phone-reg-view .phone-reg-account-view .phone,
+.phone-reg-view .phone-reg-account-view .verify-code,
+.phone-reg-view .phone-reg-account-view .password{
+    width: calc(90%);
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.phone-reg-view .phone-reg-account-view .verify-code,
+.phone-reg-view .phone-reg-account-view .password{
+    margin-top: 0;
+}
+.phone input,
+.verify-code input,
+.password input{
+    width: calc(75%);
+    /*height: calc(100% - 12px);*/
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.verify-code input{
+    width: calc((100% - 70px) / 2);
+}
+.verify-code .get-code{
+    width: calc((100% - 70px) / 2);
+    background: #ff6b95;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.phone-reg-view .phone-reg-account-view .reg-next-btn{
+    width: calc(80%);
+    height: 20%;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(80% - 70px);
+    color: white;
+    cursor: pointer;
+}
+/*****************************************2.选择头像*/
+.choose-avatar-shadow-view{
+    height: 100%;
+    width: calc(100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.choose-avatar-shadow-view .choose-avatar-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100%);
+    height: 100%;
+    flex-direction: column;
+}
+.choose-avatar-view .choose-avatar-view-s{
+    /*width: 100%;*/
+    position: relative;
+    text-align: center;
+    margin: 0;
+}
+.ui-choose-avatar-view{
+    /*width: 35%;*/
+}
+.choose-avatar-view .close{
+    /*width: 35%;*/
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: calc(100%);
+    opacity: 1;
+}
+.choose-avatar-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.choose-avatar-view .choose-avatar-account-view{
+    /*width: 35%;*/
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    /*display: flex;
+    flex-direction: column;
+    align-items: center;*/
+    font-size: 16px;
+    padding-bottom: 20px;
+}
+.choose-avatar-view .choose-avatar-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 20px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.choose-avatar-view .choose-avatar-account-view .choose-avatar{
+    width: 60px;
+    height: 60px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    position: relative;
+    margin-left: calc(49% - 30px);
+}
+.choose-avatar-view .choose-avatar-account-view .choose-avatar img{
+    position: absolute;
+    top: 0px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.choose-avatar-view .choose-avatar-account-view .nickname{
+    /*width: 80%;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nickname input{
+    width: calc(75%);
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.choose-avatar-view .choose-avatar-account-view .reg-btn{
+    /*width: 80%;*/
+    height: 20%;
+    height: 35px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(100% - 70px);
+    margin-left: 35px;
+    color: white;
+    cursor: pointer;
+}
+.choose-avatar-view .avatars-view{
+    position: absolute;
+    bottom: 0;
+    /*top: 156px;*/
+    padding-top: 10px;
+    display: flex;
+    background: white;
+    width: calc(100%);
+}
+.choose-avatar-view .avatars{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.choose-avatar-view .avatar{
+    width: calc(25%);
+    margin-bottom: 20px;
+}
+.choose-avatar-view .submit-avatar{
+    width: calc(60px);
+    font-size: 15px;
+    /*cursor: pointer;*/
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.choose-avatar-view .submit-avatar span{
+    padding: 10px 0;
+    cursor: pointer;
+}
+/*****************************************3.找回密码*/
+.find-password-shadow-view{
+    height: 100%;
+    width: calc(100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.find-password-shadow-view .find-password-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100%);
+    height: 100%;
+    flex-direction: column;
+}
+.find-password-view .close{
+    width: calc(35%);
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    opacity: 1;
+}
+.find-password-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.find-password-view .find-password-account-view{
+    width: calc(35%);
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    padding-bottom: 30px;
+}
+.find-password-view .find-password-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.find-password-view .find-password-account-view .phone,
+.find-password-view .find-password-account-view .verify-code,
+.find-password-view .find-password-account-view .password{
+    width: calc(90%);
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.find-password-view .find-password-account-view .verify-code,
+.find-password-view .find-password-account-view .password{
+    margin-top: 0;
+}
+.phone input,
+.verify-code input,
+.password input{
+    width: calc(75%);
+    /*height: calc(100% - 12px);*/
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.verify-code input{
+    width: calc((100% - 70px) / 2);
+}
+.verify-code .get-code{
+    width: calc((100% - 70px) / 2);
+    background: #ff6b95;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.find-password-view .find-password-account-view .reset-psd-btn{
+    width: calc(80%);
+    height: 20%;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(80% - 70px);
+    color: white;
+    cursor: pointer;
+}
+/*******************************************4.手机绑定*/
+.phone-bind-shadow-view{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: calc(100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    display: none;
+}
+.phone-bind-shadow-view .phone-bind-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100%);
+    height: 100%;
+    flex-direction: column;
+}
+.phone-bind-view .close{
+    width: calc(35%);
+    background: #ff6b95;
+    height: 35px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.phone-bind-view .close img{
+    position: absolute;
+    right: 10px;
+}
+.phone-bind-view .phone-bind-account-view{
+    width: calc(35%);
+    background: #efefef;
+    /*height: 40%;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+.phone-bind-view .phone-bind-account-view .view-tag{
+    color: rgb(59,59,59);
+    padding-top: 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+.phone-bind-view .phone-bind-account-view .phone,
+.phone-bind-view .phone-bind-account-view .verify-code,
+.phone-bind-view .phone-bind-account-view .password{
+    width: calc(80%);
+    /*background: blue;*/
+    height: 20%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.phone-bind-view .phone-bind-account-view .verify-code,
+.phone-bind-view .phone-bind-account-view .password{
+    margin-top: 0;
+}
+.phone input,
+.verify-code input,
+.password input{
+    width: calc(75%);
+    /*height: calc(100% - 12px);*/
+    border:solid 1px #b7b7b7;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding: 5px;
+
+    width: calc(100% - 70px);
+}
+.verify-code input{
+    width: calc((100% - 70px) / 2);
+}
+.verify-code .get-code{
+    width: calc((100% - 70px) / 2);
+    background: #ff6b95;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.phone-bind-view .phone-bind-account-view .bind-btn{
+    width: calc(80%);
+    height: 20%;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff6b95;
+    border-radius: 4px;
+    width: calc(80% - 70px);
+    color: white;
+    cursor: pointer;
+}
+/***********************************5.国家电话代码*/
+.find-password-view .phone input,
+.phone-bind-view .phone input,
+.phone-reg-view .phone input,
+.phone-invite-view .phone-account-view .username input{
+    width: calc(100% - 140px);
+}
+.code-country{
+    width: 65px;
+    background: white;
+    height: calc(100% - 2px);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border: solid 1px #b7b7b7;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.find-password-view .phone,
+.phone-bind-view .phone,
+.phone-reg-view .phone,
+.phone-invite-view .phone-account-view .username{
+    position: relative;
+}
+.country-options{
+    position: absolute;
+    background: white;
+    width: 100px;
+    border: solid 1px #b7b7b7;
+    top: 40px;
+    z-index: 10000;
+    left: 28px;
+    border-top: none;
+    overflow: auto;
+    height: 200px;
+    width: 150px;
+    padding: 0;
+    display: none;
+}
+.country-option{
+    height: 40px;
+    line-height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    font-size: 15px;
+}
+.country-option:hover{
+    background-color: rgb(250, 80, 131);
+    color: white;
+}
+.country-option.select{
+    background-color: rgb(250, 80, 131);
+    color: white;
+}
+.country-option .codeCty{
+    width: 50px;
+    display: inline-block;
+    padding-left: 10px;
+}
+
+/************dialog**************/
+
+.ui-dialog {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    z-index: 10005;
+}
+
+.ui-dialog.is-visible {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.ui-dialog-container {
+    position: relative;
+    width: calc(80%);
+    max-width: 400px;
+    margin: 4em auto;
+    background: #fff;
+    border-radius: .25em .25em .4em .4em;
+    text-align: center;
+    /*  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);*/
+    -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+    -ms-transform: translateY(-40px);
+    -o-transform: translateY(-40px);
+    transform: translateY(-40px);
+    /* Force Hardware Acceleration in WebKit */
+    -webkit-backface-visibility: hidden;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.ui-dialog-container p {
+    padding: 3em 1em;
+    color: #333;
+    overflow: auto;
+    max-height: 300px;
+}
+
+#close-dialog {
+    height: 50px;
+    line-height: 50px;
+    background: #fafafa;
+    color: #00aefd;
+    display: block;
+    width: 100%;
+    border-radius: 0em 0em .4em .4em;
+    border-top: solid 1px #e1e1e1;
+    cursor: pointer;
+}
+
+.is-visible .ui-dialog-container {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+}
+
+@media only screen and (min-width: 1170px) {
+    .ui-dialog-container {
+        margin: 8em auto;
+    }
+}
+
+.loading {
+    width: 60px;
+    height: 60px;
+    background-image: url(../../statics/images/loading.gif);
+    background-size: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 3px #999;
+    position: fixed;
+    z-index: 10005;
+}
+
+#mask {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: calc(100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+}
+
 /****************************** yyy ****************************/
 
 /*bc 程序媛网站 alert 弹框*/
@@ -2228,7 +3024,7 @@ footer {
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
     background-color: rgba(0, 0, 0, 0.6);
-    width: 100%;
+    width: calc(100%);
     position: fixed;
     left: 0;
     top: 0;
@@ -2239,12 +3035,12 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: calc(100%);
     height: 100%;
     flex-direction: column;
 }
 .bc-alert-view .bc-alert-msg{
-    width: 35%;
+    width: calc(35%);
     min-height: 100px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -2261,7 +3057,7 @@ footer {
     overflow: auto;
 }
 .bc-alert-view .bc-alert-btns{
-    width: 35%;
+    width: calc(35%);
     background: white;
     border: solid 1px #e1e1e1;
     border-top: none;
