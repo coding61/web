@@ -518,6 +518,7 @@ $(document).ready(function () {
             // 弹出登录窗口
             // 打开登录窗口
             $(".phone-invite-shadow-view").show();
+            $('body').css({'position': 'fixed', 'width': '100%'});
             getCountry();
         }
     })
@@ -927,6 +928,7 @@ $(document).ready(function () {
                     localStorage.token = json.token;
                     hideLoading();
                     $('.phone-invite-shadow-view').hide();
+                    $('body').css({'position': 'relative'});
                     $('.quit').show();
                     getArticles(1);
                 },
