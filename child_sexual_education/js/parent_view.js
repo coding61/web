@@ -435,23 +435,25 @@ $(document).ready(function () {
         // 判断有无token
         if (localStorage.token) {
             var j = {"Authorization": "Token " + localStorage.token};
-            // 获取文章
-            $.ajax({
-                url: "/program_girl/child/articles/?show_type=show_parent&page=" + page,
-                type: "get",
-                headers: j,
-                success:function(json){
-                    var html = template("message-template", json.results);
-                    $('.message').append(html);
-                    circle.loadMore = true;
-                    circle.initScroll();
-                },
-                error:function(xhr, textStatus){
-                }
-            })
+            
         } else {
-            location.href = "index.html";
+            // location.href = "index.html";
+            var j = null;
         }
+        // 获取文章
+        $.ajax({
+            url: "/program_girl/child/articles/?show_type=show_parent&page=" + page,
+            type: "get",
+            headers: j,
+            success:function(json){
+                var html = template("message-template", json.results);
+                $('.message').append(html);
+                circle.loadMore = true;
+                circle.initScroll();
+            },
+            error:function(xhr, textStatus){
+            }
+        })
     }
 
     var circle = {
