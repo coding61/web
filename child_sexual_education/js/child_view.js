@@ -402,8 +402,8 @@ $(document).ready(function () {
     } else {
         // 弹出登录窗口
         // 打开登录窗口
-        $(".phone-invite-shadow-view").show();
-        getCountry();
+        // $(".phone-invite-shadow-view").show();
+        // getCountry();
     }
 
     function bcAlert(text) {
@@ -527,6 +527,7 @@ $(document).ready(function () {
             getCountry();
         }
     })
+    
     function getCountry() {
         // 国家电话代码
         $.ajax({
