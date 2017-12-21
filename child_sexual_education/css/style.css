@@ -911,11 +911,12 @@ ul.main-nav-inner {
     padding-bottom: 175px;
 }
 
-.intro-content h1 {
+/**********************yyy************************/
+/*.intro-content h1 {
     text-transform: none;
     font-size: 35px;
-}
-
+}*/
+/*********************yyy*************************/
 .intro-mockup {
     position: relative;
 }
