@@ -450,8 +450,8 @@ $(document).ready(function () {
             
         } else {
             // location.href = "index.html";
-            // var j = null;
-            var j = {"Authorization": "Token " + localStorage.token};
+            var j = null;
+            // var j = {"Authorization": "Token " + localStorage.token};
         }
         // 获取文章
         $.ajax({
@@ -933,6 +933,7 @@ $(document).ready(function () {
                     hideLoading();
                     $('.phone-invite-shadow-view').hide();
                     $('.quit').show();
+                    getArticles(1);
                 },
                 error:function(xhr, textStatus){
                     // Common.hideLoading();
@@ -1119,9 +1120,6 @@ $(document).ready(function () {
 
         $(".country-options").hide();
     })
-
-
-
 
     
 
