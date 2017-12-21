@@ -395,6 +395,15 @@ $(document).ready(function () {
         // Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
         bcAlert("确定退出？")
     })
+    // 跳转链接
+    $(document).on("click", ".message .row .jump", function() {
+        var url = $(this).attr("data-link");
+        if (url) {
+            window.open(url);
+        } else {
+
+        }
+    })
 
     // // 判断用户是否登录
     if(localStorage.token){
