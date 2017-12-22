@@ -991,7 +991,15 @@ define(function(require, exports, module) {
             $(".helps-view .look-learn-result").unbind('click').click(function(){
                 // location.href = "learnResult.html?course=" + localStorage.currentCourse;
                 // 打开学习成果窗口
-                var url = "learnResult.html?course=" + localStorage.currentCourse;
+                if(location.host == "develop.cxy61.com:8001"){
+                    var url = "https://develop.cxy61.com:8001/app/home/learnResult.html?course=" + localStorage.currentCourse;
+                }else if(location.host == "app.bcjiaoyu.com"){
+                    var url = "https://app.bcjiaoyu.com/girl/app/home/learnResult.html?course=" + localStorage.currentCourse;
+                }else if(location.host == "www.cxy61.com"){
+                    var url = "https://www.cxy61.com/girl/app/home/learnResult.html?course=" + localStorage.currentCourse;
+                }else{
+                    var url = "https://app.bcjiaoyu.com/girl/app/home/learnResult.html?course=" + localStorage.currentCourse;
+                }
                 $("#third-site-iframe").attr({src:url});
                 $(".third-site-shadow-view").show();
             })
