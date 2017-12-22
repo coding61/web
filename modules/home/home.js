@@ -863,7 +863,7 @@ define(function(require, exports, module) {
                         }
 
                     }else{
-                        if(item.zuan_number || item.grow_number){
+                        if(item.hasOwnProperty("zuan_number") || item.hasOwnProperty("grow_number")){
                             // 奖励钻石，经验
                             var course = localStorage.oldCourse;
                             var courseIndex = localStorage.currentCourseIndex;
