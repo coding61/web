@@ -79,7 +79,9 @@ define(function(require, exports, module) {
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
-
+            if(item.tag){
+                $('.lazy-img').imageloader();
+            }
 
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
@@ -240,12 +242,13 @@ define(function(require, exports, module) {
             ChatStroage.numbers = parseInt(ChatStroage.numbers) + 1;  //计算已加载的数据个数
 
             if(item.img){
-                // $('.lazy-img').imageloader();  //打开图片
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
                 var a = "#"+imgI;
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
-
+            if(item.tag){
+                $('.lazy-img').imageloader();
+            }
 
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 20);
 
@@ -420,6 +423,9 @@ define(function(require, exports, module) {
                 Util.setMessageImgHeightLoadAgo(item);  //给图片消息中图片设高
                 Common.showLoadingPreImg1(a);   //打开预加载图片
             }
+            if(item.tag){
+                $('.lazy-img').imageloader();
+            }
 
 
             ChatStroage.timerAgo = setTimeout(function(){
@@ -486,6 +492,9 @@ define(function(require, exports, module) {
                 var a = "#"+imgI;
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
                 Common.showLoadingPreImg1(a);   //打开预加载图片
+            }
+            if(item.tag){
+                $('.lazy-img').imageloader();
             }
 
             setTimeout(function(){
@@ -719,6 +728,9 @@ define(function(require, exports, module) {
             if (item.audio) {
                 var url = item.audio;
                 Common.playMessageSoun1(url);
+            }
+            if(item.tag){
+                $('.lazy-img').imageloader();
             }
 
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
