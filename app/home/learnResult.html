@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+		<meta charset="utf-8">
+		<meta name="description" content="专业老师一对一教学。游戏化关卡式教学，减轻课程中老师讲授时间，着重师生互动，学生实践，营造轻松快乐的学习氛围。以编程作为切入点启发学生创造力，逻辑思维能力。同时甄选数十种进口儿童机器人产品，融入编程教学课堂中，让所有孩子有机会快乐学习计算机科学。">
+		<meta name="keywords" content="儿童在线教程, 一对一视频, 儿童编程, 橙旭园 儿童编程与机器人">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>学生自适应学习</title>
+		<link rel="stylesheet" href="../../statics/css/common/common.css">
+		<link rel="stylesheet" type="text/css" href="../../statics/css/home/learnResult.css">
+</head>
+<body id="body">
+	<div class="student_list">
+		<img id="list_img" src="../../statics/images/adapt-group.png" alt="列表">
+		<p id="list_text">课程列表</p>
+		<div id="student_course_list" class="student_list_content">
+		</div>
+	</div>
+
+	<div class="course_list" id="course-list" style="display: block;">
+		<h2 id="course_title" style="display: none;">信息学奥赛HTML</h2>
+		<h3 id="course_intro" style="display: none;">本课程共7节课，50个知识点</h3>
+		<div class="mark" style="margin-top: 20px;">
+			<h3 style="display: none;">您已学习了<span id="course_already" style="color: rgb(107, 180, 245);">9</span>个知识点，继续加油哦！</h3>
+			<div class="studyImg">
+				<div class="state_0"></div>
+				<span>未测试</span>
+				<div class="state_1"></div>
+				<span>未通过</span>
+				<div class="state_2"></div>
+				<span>已通过</span>
+			</div>
+		</div>
+		<div id="course_list_content">
+			
+		</div>
+	</div>
+	<script type="text/html" id="course_data_template">
+		{{each}}
+		<div class="course_data">
+			<span>第{{TheTitle $value.lesson}}节</span>
+			{{each $value.exercises}}
+				<div class="states{{if $value.status=="untest"}} state_0{{else if $value.status=="wrong"}} state_1{{else}} state_2{{/if}}" statename="{{$value.tag}}">{{$index}}</div>
+			{{/each}}
+		</div>
+		{{/each}}
+	</script>
+	<script src="../../libs/jquery-2.1.4.min.js"></script>
+	<script src="../../libs/sea.js"></script>
+	<script>
+		var base = location.origin;
+	  	seajs.config({
+			paths:{
+			  	"home":base+"/modules/home",
+			  	"libs":base+"/libs",
+			  	"common":base+"/modules/common"
+			},
+			alias: {
+				"template": "libs/template.js",
+				"common":"common/common.js"
+			},
+		})
+		// 加载入口模块
+		seajs.use("home/learnResult.js");
+	</script>
+</body>
+</html>
