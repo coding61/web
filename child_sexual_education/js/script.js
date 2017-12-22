@@ -381,6 +381,10 @@ $(document).ready(function () {
     $('.childView').click(function() {
         location.href = "child_view.html";
     })
+    // 程序媛计划
+    $('.cxyplan').click(function() {
+        location.href = "../../decades-theme/index-image/index.html";
+    })
     // 退出
     $('.quit').click(function() {
         // Common.bcAlert("退出将会清空会话聊天缓存，是否要确定退出？", function(){
