@@ -43,7 +43,7 @@
 		<div class="course_data">
 			<span>第{{TheTitle $value.lesson}}节</span>
 			{{each $value.exercises}}
-				<div class="states{{if $value.status=="untest"}} state_0{{else if $value.status=="wrong"}} state_1{{else}} state_2{{/if}}" statename="{{$value.tag}}">{{$index}}</div>
+				<div class="states{{if $value.status=="untest"}} state_0{{else if $value.status=="wrong"}} state_1{{else}} state_2{{/if}}" statename="{{$value.tag}}">{{$index+1}}</div>
 			{{/each}}
 		</div>
 		{{/each}}
