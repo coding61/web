@@ -383,7 +383,7 @@ $(document).ready(function () {
     })
     // 程序媛计划
     $('.cxyplan').click(function() {
-        location.href = "../../decades-theme/index-image/index.html";
+        location.href = "../decades-theme/index-image/index.html";
     })
     // 退出
     $('.quit').click(function() {
