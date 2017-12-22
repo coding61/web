@@ -1459,7 +1459,6 @@ define(function(require, exports, module) {
                     Page.optionIndex = 0;
                     Page.optionDataAnswer = "wrong";   //标识是错误答案数组还是正确答案数组
                     Page.loadMessageWithData(actionText, Page.optionData, Page.optionIndex, true);   //true 用来区分，普通消息还是问题下的消息
-
                 }else{
                     Page.optionData = item.correct;
                     Page.optionIndex = 0;
@@ -1957,6 +1956,42 @@ define(function(require, exports, module) {
                             return;
                         }else{
                             Common.dialog('服务器繁忙');
+                            return;
+                        }
+                    }
+                })
+            })
+        },
+        addRewardOnlyTagProblem:function(course, courseIndex, tag, status){
+            Common.isLogin(function(token){
+                $.ajax({
+                    type:"put",
+                    url:Common.domain + "/userinfo/add_reward/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        course:course,
+                        lesson:courseIndex,
+                        tag:tag,
+                        status:status
+                    },
+                    success:function(json){
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            return;
+                        }
+                        if (xhr.status == 401) {
+                            //去登录
+                            localStorage.clear();
+                            window.location.reload();
+                            return;
+                        }
+                        if (xhr.status == 400 || xhr.status == 403) {
+                            // 普通 action 按钮点击事件
+                            return;
+                        }else{
                             return;
                         }
                     }
@@ -3062,6 +3097,21 @@ define(function(require, exports, module) {
                 var msg = Page.options.join(',');
                 Page.options = [];
                 Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+                
+                /*
+                //点 ok 按钮时，判断如果带 tag，通知服务器答对还是答错了
+                var item = Page.data[Page.index];
+                if(item.hasOwnProperty("tag")){
+                    var course = localStorage.oldCourse;
+                    var courseIndex = localStorage.currentCourseIndex;
+                    courseIndex = parseInt(courseIndex) + 1;
+                    if(msg == item.answer){
+                        Mananger.addRewardOnlyTagProblem(course, courseIndex, item.tag, "right");  //对了
+                    }else{
+                        Mananger.addRewardOnlyTagProblem(course, courseIndex, item.tag, "wrong");  //错了
+                    }
+                }
+                */
             }else{
                 // 普通的 action 按钮
                 Page.loadClickMessage(this_.html(), false);  //false 代表普通按钮点击事件

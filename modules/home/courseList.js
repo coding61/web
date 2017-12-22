@@ -419,7 +419,7 @@ define(function(require, exports, module) {
                         Util.continueStudy(this_);
                     },
                     error:function(xhr, textStatus){
-                        Page.errorDeal(xhr, textStatus);
+                        Page.errorDeal(xhr, textStatus, "start");
                     }
                 })
             })
@@ -443,18 +443,22 @@ define(function(require, exports, module) {
                         Util.restartStudy(this_);
                     },
                     error:function(xhr, textStatus){
-                        Page.errorDeal(xhr, textStatus);
+                        Page.errorDeal(xhr, textStatus, "reset");
                     }
                 })
             })
         },
-        errorDeal:function(xhr, textStatus){
+        errorDeal:function(xhr, textStatus, flag){
             if (textStatus == "timeout") {
                 Common.dialog("请求超时");
                 return;
             }
             if (xhr.status == 400 || xhr.status == 403) {
-                Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                if(flag == "start"){
+                    Util.continueStudy(Page.this_);
+                }else{
+                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                }
                 return;
             }else{
                 Common.dialog('服务器繁忙');
