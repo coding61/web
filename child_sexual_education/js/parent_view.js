@@ -1002,6 +1002,11 @@ $(document).ready(function () {
         }
     })
 
+    $(".phone-invite-view .close img").unbind('click').click(function(){
+        // 关闭手机/邀请码登录窗口
+        $(".phone-invite-shadow-view").hide();
+    })
+
     $(".phone-account-view .login-btn").unbind('click').click(function(){
         // 手机号登录
         Mananger.goLogin($(".phone-account-view"));
