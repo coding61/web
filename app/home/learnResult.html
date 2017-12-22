@@ -51,7 +51,8 @@
 	<script src="../../libs/jquery-2.1.4.min.js"></script>
 	<script src="../../libs/sea.js"></script>
 	<script>
-		var base = location.origin;
+		// var base = location.origin;
+		var base = location.href.split("/app/")[0];
 	  	seajs.config({
 			paths:{
 			  	"home":base+"/modules/home",
