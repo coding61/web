@@ -209,7 +209,7 @@ define(function(require, exports, module) {
                     if(item.tag){
                         // 1.1带 tag 的自适应题    
                         if(item.link){
-                            var itemDic = {animate:true, item:item}
+                            var itemDic = {animate:false, item:item}
                             questionHtml = ArtTemplate("message-link-problem-template", itemDic);
                         }else{                     
                             var itemDic = {animate:false, item:item}
@@ -386,7 +386,7 @@ define(function(require, exports, module) {
                     if(item.tag){
                         // 1.1带 tag 的自适应题
                         if(item.link){
-                            var itemDic = {animate:true, item:item}
+                            var itemDic = {animate:false, item:item}
                             questionHtml = ArtTemplate("message-link-problem-template", itemDic);
                         }else{                         
                             var itemDic = {animate:false, item:item}
