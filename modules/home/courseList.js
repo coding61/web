@@ -127,91 +127,12 @@ define(function(require, exports, module) {
                 var dic = {"category":category, courses:categoryCourses};
                 array.push(dic);
             }
-            // console.log(array);
+            console.log(array);
 
             var html = ArtTemplate("courses-template", array);
             $(".courses").html(html);
 
             Page.clickEvent();
-        },
-        load:function(){
-            // status， 用户学习课程进度状态；open：课程是否开放；like：用户是否想学该课程；like_number:想学该课程的人数
-            var array = [
-                {
-                    "pk":"html_simple",
-                    "name":"HTML5",
-                    "images":"../../statics/images/course/c2.png",
-                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "learn_extent":{
-                        "status":"processing",
-                    },
-                    "open":true,
-                    "like":true, 
-                    "like_number":2056        
-                },
-                {
-                    "pk":"css_simple",
-                    "name":"CSS",
-                    "images":"../../statics/images/course/c4.png",
-                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "learn_extent":{
-                        "status":"unbegin",
-                    },
-                    "open":true,
-                    "like":true, 
-                    "like_number":2056    
-                },
-                {
-                    "pk":"javascript_simple",
-                    "name":"JavaScript",
-                    "images":"../../statics/images/course/c3.png",
-                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "learn_extent":{
-                        "status":"unbegin",
-                    },
-                    "open":false,
-                    "like":true, 
-                    "like_number":2056    
-                },
-                {
-                    "pk":"python_simple",
-                    "name":"Python",
-                    "images":"../../statics/images/course/c1.png",
-                    "content":"其主要的目标是将互联网语义化，一边更好地被人类和机器阅读。",
-                    "learn_extent":{
-                        "status":"unbegin",
-                        "last_lesson":0
-                    },
-                    "open":false,
-                    "like":false, 
-                    "like_number":3056    
-                }
-            ]
-            var html = ArtTemplate("courses-template", array);
-            $(".courses").html(html);
-
-            Page.clickEvent();
-        },
-        requestData:function(course, courseIndex){
-            $.ajax({
-                type:'get',
-                url:"../../modules/common/data.json",
-                success:function(json){
-                    var data = json.course;
-                    if (data && data.courseIndex) {
-                        //如果此课程此小节消息存在
-                        localStorage.data = JSON.stringify(data.courseIndex);
-                        localStorage.index = 0;
-                        localStorage.optionData = JSON.stringify(null);
-                        localStorage.optionIndex = 0;
-                    }else{
-                        Common.dialog("课程还未开放");
-                    }
-                },
-                error:function(xhr, textStatus){
-
-                }
-            });
         },
         updateExtent:function(course, courseIndex){
             // 学习进度
@@ -362,43 +283,6 @@ define(function(require, exports, module) {
                 var pk = $(this).attr("data-category");
                 Page.this_ = $(this);
                 Page.getCourse(pk);
-                
-
-                /*
-                if ($(this).attr("data-status") == "finish") {
-                    // Common.dialog("当前课程已经学完了");
-                    // return
-                    var this_ = $(this);
-
-                    Common.bcAlert("你是否确定要再学一遍?", function(){
-                        // 更改服务器进度
-                        var course = this_.attr('data-category');
-                        Page.updateExtent(course, 0);
-
-                        this_.attr({"data-status":"processing"});
-                        this_.find(".status").attr({src:"../../statics/images/course/icon2.png"})
-                        this_.attr({"data-course-index":0});
-                        
-                        localStorage.currentCourse = this_.attr("data-category");            //当前课程
-                        localStorage.currentCourseIndex = this_.attr("data-course-index");   //当前课程节下标
-                        localStorage.currentCourseTotal = this_.attr("data-course-total");    //当前课程总节数
-                        window.parent.postMessage("resetcurrentCourse", '*');
-
-                    })
-                }else if($(this).attr("data-status") == "processing"){
-                    var this_ = $(this);
-                    Common.bcAlert("此课程已经开始学习，请选择重新开始学习，还是继续上次学习？", function(){
-                        Util.restartStudy(this_);
-                    }, function(){
-                        Util.continueStudy(this_);
-                    }, "重新开始", "继续上次");
-                    
-                }else{
-                    var this_ = $(this);
-                    Util.continueStudy(this_);
-                }
-                */
-
             })
             
             // 想学习
@@ -465,22 +349,7 @@ define(function(require, exports, module) {
 
             // 开始学习点击
             $(".bottom-view .start").unbind('click').click(function(){
-                $(".course-detail-catalogs-shadow-view").hide();
-                var this_ = Page.this_;
-                if (this_.attr("data-status") == "finish") {
-                    Common.bcAlert("你是否确定要再学一遍?", function(){
-                        // 更改服务器进度
-                        Util.restartStudy(this_);
-                    })
-                }else if(this_.attr("data-status") == "processing"){
-                    Common.bcAlert("此课程已经开始学习，请选择重新开始学习，还是继续上次学习？", function(){
-                        Util.restartStudy(this_);
-                    }, function(){
-                        Util.continueStudy(this_);
-                    }, "重新开始", "继续上次");
-                }else{
-                    Util.continueStudy(this_);
-                }
+                Page.beginResetContinueEvent();
             })
 
             // 继续学习点击
@@ -492,8 +361,109 @@ define(function(require, exports, module) {
                 
             })
         },
-        test:function(){
-            console.log(123);
+        beginResetContinueEvent:function(){
+            $(".course-detail-catalogs-shadow-view").hide();
+            var this_ = Page.this_;
+            var pk = this_.attr("data-category");
+            if (this_.attr("data-status") == "finish") {
+                Common.bcAlert("你是否确定要再学一遍?", function(){
+                    // 学完了，重新学习
+                    if (this_.attr("data-course-isAdapt") == "true") {
+                        console.log("点了自适应课程", pk);
+                        Page.resetAdaptCourse(this_, pk);
+                    }else{
+                        console.log("点了普通课程", pk);
+                        Util.restartStudy(this_);
+                    }
+                })
+            }else if(this_.attr("data-status") == "processing"){
+                // 学习中，重新开始，继续
+                Common.bcAlert("此课程已经开始学习，请选择重新开始学习，还是继续上次学习？", function(){
+                    if (this_.attr("data-course-isAdapt") == "true") {
+                        console.log("点了自适应课程", pk);
+                        Page.resetAdaptCourse(this_, pk);
+                    }else{
+                        console.log("点了普通课程", pk);
+                        Util.restartStudy(this_);
+                    }
+                }, function(){
+                    Util.continueStudy(this_);
+                }, "重新开始", "继续上次");
+            }else{
+                // 第一次学习
+                if (this_.attr("data-course-isAdapt") == "true") {
+                    console.log("点了自适应课程", pk);
+                    Page.startAdaptCourse(this_, pk);
+                }else{
+                    console.log("点了普通课程", pk);
+                    Util.continueStudy(this_);
+                }
+            }    
+        },
+        startAdaptCourse:function(this_, pk){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    return;
+                }
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/course/begin_mycourse/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        course:pk
+                    },
+                    success:function(json){
+                        console.log(json);
+                        Util.continueStudy(this_);
+                    },
+                    error:function(xhr, textStatus){
+                        Page.errorDeal(xhr, textStatus, "start");
+                    }
+                })
+            })
+        },
+        resetAdaptCourse:function(this_, pk){
+            Common.isLogin(function(token){
+                if (token == "null") {
+                    return;
+                }
+                $.ajax({
+                    type:"post",
+                    url:Common.domain + "/course/reset_mycourse/",
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        course:pk
+                    },
+                    success:function(json){
+                        console.log(json);
+                        Util.restartStudy(this_);
+                    },
+                    error:function(xhr, textStatus){
+                        Page.errorDeal(xhr, textStatus, "reset");
+                    }
+                })
+            })
+        },
+        errorDeal:function(xhr, textStatus, flag){
+            if (textStatus == "timeout") {
+                Common.dialog("请求超时");
+                return;
+            }
+            if (xhr.status == 400 || xhr.status == 403) {
+                if(flag == "start"){
+                    Util.continueStudy(Page.this_);
+                }else{
+                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                }
+                return;
+            }else{
+                Common.dialog('服务器繁忙');
+                return;
+            }
         }
     };
 
@@ -516,9 +486,10 @@ define(function(require, exports, module) {
             
             //存储当前学习的课程题目
             // localStorage.setItem("currentCourse", $(this).attr("data-category"));
-            localStorage.currentCourse = this_.attr("data-category");            //当前课程
-            localStorage.currentCourseIndex = this_.attr("data-course-index");   //当前课程节下标
-            localStorage.currentCourseTotal = this_.attr("data-course-total");    //当前课程总节数
+            localStorage.currentCourse = this_.attr("data-category");               //当前课程
+            localStorage.currentCourseIndex = this_.attr("data-course-index");      //当前课程节下标
+            localStorage.currentCourseTotal = this_.attr("data-course-total");      //当前课程总节数
+            localStorage.currentCourseIsAdapt = this_.attr("data-course-isAdapt");  //当前课程是否是自适应课程
             window.parent.postMessage("currentCourse", '*');
         },
         restartStudy:function(this_){
@@ -537,9 +508,10 @@ define(function(require, exports, module) {
             this_.find(".status").attr({src:"../../statics/images/course/icon2.png"})
             this_.attr({"data-course-index":0});
             
-            localStorage.currentCourse = this_.attr("data-category");            //当前课程
-            localStorage.currentCourseIndex = this_.attr("data-course-index");   //当前课程节下标
-            localStorage.currentCourseTotal = this_.attr("data-course-total");    //当前课程总节数
+            localStorage.currentCourse = this_.attr("data-category");               //当前课程
+            localStorage.currentCourseIndex = this_.attr("data-course-index");      //当前课程节下标
+            localStorage.currentCourseTotal = this_.attr("data-course-total");      //当前课程总节数
+            localStorage.currentCourseIsAdapt = this_.attr("data-course-isAdapt");  //当前课程是否是自适应课程
             window.parent.postMessage("resetcurrentCourse", '*');
         }
     }
