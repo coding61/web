@@ -37,6 +37,10 @@ define(function(require, exports, module) {
             Course.clickEvent();
         },
         openInputView:function(tag, tagHtml){
+            if (tag=="problem") {
+                $(".problem-types").css({display:'flex'});
+                return;
+            }
             $(".msg-header .type").html(tagHtml);
             $(".msg-header .type").attr({tag:tag});
             if (tag == "photo") {
@@ -112,9 +116,12 @@ define(function(require, exports, module) {
                 answerHtml = "";
 
             var itemDic = {index:i, item:item};
-            if (item.link) {
-                // 2.1是链接消息
+            if(item.tag){
+                // 1.自适应习题
                 item.message = Course.formatString(item.message);
+                questionHtml = ArtTemplate("message-choice-problem-template", itemDic);
+            }else if (item.link) {
+                // 2.1是链接消息
                 questionHtml = ArtTemplate("message-link-template", itemDic);
             }else if(item.img){
                 // 2.2是图片消息
@@ -242,6 +249,25 @@ define(function(require, exports, module) {
                     Common.dialog("请先输入一条消息");
                     return;
                 }
+                //增加习题判断
+                var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+                var dic = {};       //当前消息
+                var originIndex = parseInt(Course.index);
+
+                //当前消息加动作按钮
+                if (originIndex == -1) {
+                    //最后一条消息添加 action
+                    dic = array[array.length - 1];
+                }else{
+                    // 当前消息添加 action
+                    dic = array[originIndex];
+                }
+                if (tag == "action" && dic.exercises == true) {
+                    Common.dialog("这是习题，无法添加 action 文本");
+                    return;
+                }
+
                 Course.openInputView(tag, tagHtml);
                 $(".message-types").css({display:'none'});
 
@@ -252,7 +278,7 @@ define(function(require, exports, module) {
                 $(".message-input-view").css({display:"none"});
                 $(".audio-input-view").css({display:"none"});
             })
-            
+
             // 确认添加内容
             $(".input-view .input-submit").unbind('click').click(function(){
                 // 提交内容
@@ -371,6 +397,216 @@ define(function(require, exports, module) {
                 //3.结束录制
                 // Utils.stopRecord($(this));
             })
+
+            // ---------------选择题相关
+             // 打开选择题种类选择框
+            $(".problem-types li").unbind('click').click(function(){
+                var tag = $(this).attr("data-tag"),
+                    tagHtml = $(this).html();
+
+                $(".problem-question-view").css({display:'flex'})
+                $(".problem-question-view .problem-header .type").html(tagHtml);
+
+                if (tag == "adapt") {
+                    //打开自适应题框
+                    $(".problem-girl-content-view").hide();
+                    $(".problem-adapt-content-view").show();
+                }else{
+                    //打开程序媛题框
+                    $(".problem-girl-content-view").show();
+                    $(".problem-adapt-content-view").hide();
+                }
+                $(".problem-types").css({display:'none'});
+            })
+            // 关闭选择题填写窗口
+            $(".problem-header img").unbind('click').click(function(){
+                $(this).parent().parent().css({display:'none'});
+            })
+            // 确认添加选择题
+            $(".problem-submit").unbind('click').click(function(){
+                // 提交内容
+                var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+
+                var dic = {};       //当前消息
+                var originIndex = parseInt(Course.index);
+
+                if ($(this).parent().hasClass("problem-adapt-content-view")) {
+                    //自适应
+                    var msg3 = $('.problem-adapt-content-view .question-view textarea[name="text"]').val(),
+                        photo3 = $('.problem-adapt-content-view .question-view textarea[name="photos"]').val(),
+                        options3 = $(".problem-adapt-content-view .options-view textarea").val(),
+                        action3 = $(".problem-adapt-content-view .action-view textarea").val(),
+                        answer3 = $(".problem-adapt-content-view .right-answer-choose input").val(),
+                        wrong3 = $(".problem-adapt-content-view .wrongAnswerMsgView textarea").val(),
+                        right3 = $(".problem-adapt-content-view .rightAnswerMsgView textarea").val();
+
+                    if(!answer3 || !action3 || !options3){
+                        Common.dialog("有必填项没填");
+                        return
+                    }
+                    if (!msg3 && !photo3) {
+                        Common.dialog("文字描述、图片描述至少要有一项不为空");
+                        return;
+                    }
+                    try {
+                        options3 = JSON.parse(options3)
+                        action3 = JSON.parse(action3)
+                        photo3 = photo3?JSON.parse(photo3):[]
+                        wrong3 = wrong3?JSON.parse(wrong3):[]
+                        right3 = right3?JSON.parse(right3):[]
+                    }
+                    catch(err){
+                        alert("数据格式有问题!");
+                        return;
+                    }
+                    dic["tag"] = "1";
+                    dic["exercises"] = true;
+                    dic["message"] = msg3;
+                    dic["imgs"] = photo3;
+                    dic["options"] = options3;
+                    dic["action"] = action3;
+                    dic["answer"] = answer3;
+                    dic["wrong"] = wrong3;
+                    dic["correct"] = right3;
+
+                }else if ($(this).parent().hasClass("problem-girl-content-view")) {
+                    //程序媛
+                    var msg1 = $(".problem-girl-content-view .question-view textarea").val(),
+                        action1 = $(".problem-girl-content-view .action-view textarea").val(),
+                        answer1 = $(".problem-girl-content-view .right-answer-choose input").val(),
+                        wrong1 = $(".problem-girl-content-view .wrongAnswerMsgView textarea").val(),
+                        right1 = $(".problem-girl-content-view .rightAnswerMsgView textarea").val();
+                    if(!msg1 || !action1 || !answer1){
+                        Common.dialog("有必填项没填");
+                        return;
+                    }
+                    try {
+                        action1 = JSON.parse(action1)
+                        wrong1 = wrong1?JSON.parse(wrong1):[]
+                        right1 = right1?JSON.parse(right1):[]
+                    }
+                    catch(err){
+                        alert("数据格式有问题!");
+                        return;
+                    }
+                    dic["exercises"] = true;
+                    dic["message"] = msg1;
+                    dic["action"] = action1;
+                    dic["answer"] = answer1;
+                    dic["wrong"] = wrong1;
+                    dic["correct"] = right1;
+                }
+                if(dic.exercises){
+                    if (originIndex == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(originIndex+1, 0, dic);
+                    }
+                }
+                // console.log(dic);
+                
+                totalDic[Course.lesson] = array;
+                localStorage.CourseData = JSON.stringify(totalDic);
+
+                
+                Course.load();  //1.刷新会话列表
+                
+                // 隐藏输入框
+                $(".problem-question-view").css({display:'none'});
+                $('.problem-view textarea[class="reset"]').val("");
+                $('.problem-view input[class="reset"]').val("");
+                $("#log1").html("");
+                $("#log2").html("");
+
+                // // 滚动到最底部
+                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+                Course.clickDeleteEvent();
+            })
+
+            // 打开自适应选项框
+            $(".options-view .option-add").unbind('click').click(function(){
+                $(".problem-option-view").css({display:'flex'});
+            })
+            // 确认添加自适应某个选项
+            $(".option-submit").unbind('click').click(function(){
+                var msg2 = $('.problem-option-view textarea[name="text"]').val(),
+                    content2 = $(".problem-option-view input").val(),
+                    photo2 = $('.problem-option-view textarea[name="photos"]').val();
+                if(!msg2 && !photo2){
+                    Common.dialog("文字描述、图片描述至少要有一项不为空");
+                    return;
+                }
+                var options2 = $(".problem-adapt-content-view .options-view textarea").val(),
+                    actions2 = $(".problem-adapt-content-view .action-view textarea").val();
+                try {
+                    options2 = options2?JSON.parse(options2):[]
+                    actions2 = actions2?JSON.parse(actions2):[]
+                    photo2 = photo2?JSON.parse(photo2):[]
+                }
+                catch(err){
+                    alert("数据格式有问题!");
+                    return;
+                }
+                if (!content2) {
+                    Common.dialog("必填项未填写");
+                    return
+                }
+            
+                var dic = {}
+                dic["message"] = msg2
+                dic["imgs"] = photo2
+                dic["content"] = content2
+                options2.push(dic);
+                $(".problem-adapt-content-view .options-view textarea").val(JSON.stringify(options2))
+
+                var dic1 = {}
+                dic1["type"] = "text"
+                dic1["content"] = content2
+                actions2.push(dic1)
+                $(".problem-adapt-content-view .action-view textarea").val(JSON.stringify(actions2))
+
+                $(".problem-option-view").css({display:'none'});
+                // https://static1.bcjiaoyu.com/0854865591cb522edde1cdb8bdc0b752_k.gif-120x120
+            })
+            // 打开选项按钮输入框
+            $(".action-add").unbind('click').click(function(){
+                if($(this).parent().parent().hasClass("problem-girl-content-view")){
+                    //程序媛
+                    $(this).next().show();
+                    $(this).hide();
+                }
+            })
+            //  确认添加某个选项按钮
+            $("#action-add-submit").unbind('click').click(function(){
+                if($(this).parents(".action-view").parent().hasClass("problem-girl-content-view")){
+                    //程序媛
+                    var actions4 = $(".problem-girl-content-view .action-view textarea").val()
+                    try {
+                        actions4 = actions4?JSON.parse(actions4):[]
+                    }
+                    catch(err){
+                        alert("数据格式有问题!");
+                        return;
+                    }
+
+                    var content4 = $(this).parent().find("input").val();
+                    var dic = {}
+                    dic["type"] = "text"
+                    dic["content"] = content4
+                    actions4.push(dic)
+                    $(".problem-girl-content-view .action-view textarea").val(JSON.stringify(actions4))
+
+                    $(this).parent().prev().show();
+                    $(this).parent().hide();
+                }
+            })
+            
             
             Course.clickDeleteEvent();
             
@@ -679,6 +915,23 @@ define(function(require, exports, module) {
             }
         },
     }
+    Course.init();
+
+    //模板帮助方法 
+    ArtTemplate.helper('TheMessage', function(message){
+        try {
+           var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+           return msg
+        }
+        catch(err){
+            return message;
+        }
+    });
+    
+    QiniuForUpload();
+
+    /*
+    // uploadImg（图片）
     var filename = ''    //选择的文件的名字
     var uploader = Qiniu.uploader({
         runtimes: 'HTML5,flash,html4',                  //上传模式,依次退化
@@ -773,8 +1026,7 @@ define(function(require, exports, module) {
           }
       });
 
-    Course.init();
-
+    // uploadAudio (音频)
     var filename = ''    //选择的文件的名字
     var uploader = Qiniu.uploader({
         runtimes: 'HTML5,flash,html4',                  //上传模式,依次退化
@@ -877,4 +1129,6 @@ define(function(require, exports, module) {
         }
         $("#log").animate({scrollTop:$("#log")[0].scrollHeight}, 20);
     }
+    */
+    
 });
