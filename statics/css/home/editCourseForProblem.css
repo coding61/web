@@ -36,7 +36,7 @@ ul.problem-types li{
 }
 .problem-girl-content-view{
     width: 70%;
-    height: 200px;
+    height: 80%;
     background: white;
     padding: 8px;
     border-radius: 0 0 2px 2px;
@@ -45,7 +45,7 @@ ul.problem-types li{
 }
 .problem-adapt-content-view{
     width: 70%;
-    height: 200px;
+    height: 80%;
     background: white;
     padding: 8px;
     border-radius: 0 0 2px 2px;
@@ -53,7 +53,7 @@ ul.problem-types li{
 }
 .option-input-view{
     width: 70%;
-    height: 200px;
+    height: 80%;
     background: white;
     padding: 8px;
     border-radius: 0 0 2px 2px;
