@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
+    ArtTemplate.config("escape", false);
     
     // ---------------------------3.正常请求数据
     var Page = {
@@ -13,6 +14,7 @@ define(function(require, exports, module) {
         
         optionData:null,    //记录用户当前选了答案之后的数组会话
         optionIndex:0,   //记录用户当前选了答案之后的数组会话下标
+        optionDataAnswer:"",  //标识是错误答案数组还是正确答案数组
         numbers:0,
 
         currentCourseIndex:1,      //当前课程的课节
@@ -37,9 +39,21 @@ define(function(require, exports, module) {
 
             var questionHtml = null;
             // 1.普通消息
-            if (item.link) {
+            if(item.tag){
+                // 1.1带 tag 的自适应题
+                if(item.link){
+                    var itemDic = {animate:true, item:item}
+                    questionHtml = ArtTemplate("message-link-problem-template", itemDic);
+                }else{                         
+                    var itemDic = {animate:true, item:item}
+                    questionHtml = ArtTemplate("message-choice-problem-template", itemDic);
+                }
+            }else if (item.link) {
                 // 1.1是链接消息
-                var itemDic = {animate:true, item:item}
+                var itemDic = {animate:true, item:item, linkText:"点击打开新网页"}
+                if (item.news) {
+                    itemDic["linkText"] = "点击打开新闻";
+                }
                 questionHtml = ArtTemplate("message-link-template", itemDic);
             }else if (item.img) {
                 // 1.2是图片消息
@@ -51,36 +65,16 @@ define(function(require, exports, module) {
                 questionHtml = ArtTemplate("message-text-template", itemDic);
             }
 
-            var actionHtml = "";
-            if (item.action) {
-                if (item.exercises == true) {
-                    // 如果是选择题，（多按钮）
-                    var optionHtml = "";
-                    for (var j = 0; j < item.action.length; j++) {
-                        var option = item.action[j];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
-                    }
-                    actionHtml += optionHtml
-                    actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
+            var actionHtml = Util.getActionHtml(item);
 
-                } else{
-                    // 单按钮
-                    if (item.action == "点击选择课程") {
-                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                    }else{
-                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
-                    }
-                }
-            }
-            
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
-            
+
             setTimeout(function(){
                 $(".btns .actions").html(actionHtml);
                 Page.clickEvent();
             }, 800)
-            
+
             if(item.img){
                 var a = "#"+imgI;
                 Util.setMessageImgHeight(item);  //给图片消息中图片设高
@@ -90,7 +84,10 @@ define(function(require, exports, module) {
                 var url = item.audio;
                 Common.playMessageSoun1(url);
             }
-            
+            if(item.tag){
+                $('.lazy-img').imageloader();
+            }
+
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
 
@@ -114,11 +111,8 @@ define(function(require, exports, module) {
                     console.log(i);
                     // 加载下一条数据
                     // 等待符号
-                    var loadingWHtml = null;
-                    loadingWHtml = '<div class="loading-chat left-animation">\
-                                        <img src="../../statics/images/chat.gif" alt="">\
-                                    </div>';
-                    $(loadingWHtml).appendTo(".messages");
+                    Util.getLoadingHtml(true, false);
+
                     $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
                     setTimeout(function(){
@@ -128,11 +122,12 @@ define(function(require, exports, module) {
                             // 选项执行完了， 执行下一条消息, 并重置问题下消息数组及下标
                             Page.optionData = null;
                             Page.optionIndex = 0;
+                            Page.optionDataAnswer = "";
                             Page.loadMessage(Page.data, Page.index+1, false);
                         }else{
                             Page.loadMessage(arr, i+1, opt);
                         }
-                        
+
                     }, Util.messageTime)
                 }, Util.waitTime)
             }
@@ -140,11 +135,11 @@ define(function(require, exports, module) {
         clickEvent:function(){
             // 动作按钮点击
             $(".btn-wx-auth").unbind('click').click(function(){
-                
+
                 if($(this).attr('disabledImg') == "true"){
                     console.log(000);
                     return;
-                } 
+                }
                 console.log(111);
                 $(this).attr({disabledImg:"true"});
                 
@@ -195,12 +190,33 @@ define(function(require, exports, module) {
                 $(".imgmsg img").attr({src:url});
                 $(".imgmsg-shadow-view").show();
             })
+            // 链接问题图片点击
+            $(".link-imgs img").unbind('click').click(function(e){
+                e.stopPropagation();
+                var url = $(this).attr('src');
+                $(".imgmsg img").attr({src:url});
+                $(".imgmsg-shadow-view").show();
+            })
+            // 选择题题目图片点击
+            $(".problem-imgs img").unbind('click').click(function(e){
+                e.stopPropagation();
+                var url = $(this).attr('src');
+                $(".imgmsg img").attr({src:url});
+                $(".imgmsg-shadow-view").show();
+            })
+            // 选择题选项图片点击
+            $(".option-imgs img").unbind('click').click(function(e){
+                e.stopPropagation();
+                var url = $(this).attr('src');
+                $(".imgmsg img").attr({src:url});
+                $(".imgmsg-shadow-view").show();
+            })
             // 大图点击
             $(".imgmsg-shadow-view").unbind('click').click(function(){
                 $(".imgmsg img").attr({src:""});
                 $(".imgmsg-shadow-view").hide();
             })
-            
+
             // 消息音频播放
             $(".msg-view-parent .audio").unbind('click').click(function(){
                 console.log('cc');
@@ -285,15 +301,11 @@ define(function(require, exports, module) {
             $(answerHtml).appendTo(".messages");
             
             // 等待机器答复
-            var loadingWHtml = null;
-            loadingWHtml = '<div class="loading-chat left-animation">\
-                                <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
+            Util.getLoadingHtml(true, false);
 
-            $(loadingWHtml).appendTo(".messages");
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
 
-            
+
             // 当前 message，
             var item = Page.data[Page.index];
             if (exercise == true) {
@@ -302,11 +314,12 @@ define(function(require, exports, module) {
                     // 错误答案
                     Page.optionData = item.wrong;
                     Page.optionIndex = 0;
+                    Page.optionDataAnswer = "wrong";   //标识是错误答案数组还是正确答案数组
                     Page.loadMessageWithData(actionText, Page.optionData, Page.optionIndex, true);   //true 用来区分，普通消息还是问题下的消息
-                    
                 }else{
                     Page.optionData = item.correct;
                     Page.optionIndex = 0;
+                    Page.optionDataAnswer = "right";   //标识是错误答案数组还是正确答案数组
                     Page.loadMessageWithData(actionText, Page.optionData, Page.optionIndex, true);
                 }
             }else{
@@ -318,6 +331,7 @@ define(function(require, exports, module) {
                         var cc = Page.optionData[Page.optionIndex];   //取出选项最后一个元素
                         Page.optionData = null;
                         Page.optionIndex = 0;
+                        Page.optionDataAnswer = ""
                         if(cc.again == true){
                             // 重做一遍习题
                             Page.loadMessageWithData(actionText, Page.data, Page.index, false);
@@ -333,7 +347,6 @@ define(function(require, exports, module) {
                     // 先判断数组元素执行完了没有，完了发请求, 没有，对数组操作
                     if (!Page.data[Page.index + 1] || Page.data.length == Page.index + 1) {
                         // 已有数据源已显示完，重新请求数据， 并重新复制 Page.data, Page.index
-
                         // 请求当前课程的下一节课程
                         Page.requestCourseNextLessonData();
                     }else{
@@ -373,16 +386,12 @@ define(function(require, exports, module) {
             Page.numbers = parseInt(Page.numbers) + 1;  //计算已加载的数据个数
             
             // 等待机器答复
-            var loadingWHtml = null;
-            loadingWHtml = '<div class="loading-chat left-animation">\
-                                <img src="../../statics/images/chat.gif" alt="">\
-                            </div>';
+            Util.getLoadingHtml(true, false);
 
-            $(loadingWHtml).appendTo(".messages");
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     };
-    
+
     var Mananger = {
         phone:"",
         code:"",
@@ -1145,6 +1154,7 @@ define(function(require, exports, module) {
             localStorage.index = Page.index;
             localStorage.optionData = JSON.stringify(Page.optionData);
             localStorage.optionIndex = Page.optionIndex;
+            localStorage.optionDataAnswer = JSON.stringify(Page.optionDataAnswer);
             localStorage.pagenum = Page.pagenum;
         },
         setCourseIndex:function(course, courseIndex){
@@ -1180,7 +1190,10 @@ define(function(require, exports, module) {
                 var url = item.img;
                 var pW = $(".message.img").last().find(".msg-view").width() * 0.50;
                 Common.getPhotoWidthHeight(url, function(width, height){
-                    var pH = pW * height / width;
+                    var pH = 100;
+                    if (width && height) {
+                        pH = pW * height / width;
+                    }
                     $(".message.img").last().find('img.msg').css({
                         height: pH + "px"
                     })
@@ -1197,7 +1210,10 @@ define(function(require, exports, module) {
                 var url = item.img;
                 var pW = $(".message.img").first().find(".msg-view").width() * 0.50;
                 Common.getPhotoWidthHeight(url, function(width, height){
-                    var pH = pW * height / width;
+                    var pH = 100;
+                    if (width && height) {
+                        pH = pW * height / width;
+                    }
                     $(".message.img").first().find('img.msg').css({
                         height: pH + "px"
                     })
@@ -1221,7 +1237,7 @@ define(function(require, exports, module) {
             $(".header .info .grade").html(json.grade.current_name);
             $(".header .info .grade-value").html(json.experience+"/"+json.grade.next_all_experience);
             $(".header .zuan span").html("x"+json.diamond);
-            
+
             if(json.grade.current_all_experience != json.grade.next_all_experience){
                 var percent = (parseInt(json.experience)-parseInt(json.grade.current_all_experience))/(parseInt(json.grade.next_all_experience)-parseInt(json.grade.current_all_experience))*$(".header .info-view").width();
                 $(".header .progress img").css({
@@ -1262,7 +1278,7 @@ define(function(require, exports, module) {
                     display:'none'
                 })
             }
-            
+
         },
         courseCatalogsInit:function(response){
             if (response["catalogs"]) {
@@ -1309,13 +1325,13 @@ define(function(require, exports, module) {
                         "margin-top": ($(window).height() - 200) / 2 + "px",
                         opacity:1
                     })
-                    
+
                     $(".zuan span").html("x" + number);
 
                     $(".zuan").css({
                         transform:'scale(2)'
                     })
-                    
+
                     setTimeout(function(){
                         $(".zuan").css({
                             transform:'scale(1)'
@@ -1372,12 +1388,12 @@ define(function(require, exports, module) {
                 var cc = JSON.parse(str);
                 resolve(cc);
             })
-            
+
             return p;
         },
         courseProgressUI:function(){
             // 更新课程进度，
-            //1.有默认课程，数据的时候，加载 2.选择课程的时候加载 
+            //1.有默认课程，数据的时候，加载 2.选择课程的时候加载
             if (localStorage.currentCourse) {
                 var total = parseInt(localStorage.currentCourseTotal);
                 var studyN = parseInt(localStorage.currentCourseIndex);
@@ -1396,15 +1412,15 @@ define(function(require, exports, module) {
                                     <img src="../../statics/images/cp2.png" alt="" />\
                                 </li>'
                 }
-                
+
                 $(".courseProgressView .cp").remove();     //移除以前的所有进程
                 $(studyHtml).appendTo(".courseProgressView");
                 $(unStudyHtml).appendTo(".courseProgressView");
-                
+
                 var cp = $(".courseProgressView .cp").eq(0).height();
                 var unStudyH = cp * ($(".courseProgressView .cp").length-1);
                 var studyH = cp * ($(".courseProgressView .cp.study").length-1);
-                
+
                 $(".courseProgressView img.studyp").css({
                     height:studyH + "px"
                 })
@@ -1412,7 +1428,7 @@ define(function(require, exports, module) {
                     height:unStudyH + "px"
                 })
 
-                
+
                 $(".main-view").css({
                     "margin-left":0
                 })
@@ -1426,7 +1442,7 @@ define(function(require, exports, module) {
                     "margin-left":"2%"
                 })
                 $(".courseProgress").hide();
-                
+
                 $(".main-view .left-view .chat").css({
                     width:"calc(100%)"
                 })
@@ -1442,7 +1458,7 @@ define(function(require, exports, module) {
                 var cp = $(".courseProgressView .cp").eq(0).height();
                 var unStudyH = cp * ($(".courseProgressView .cp").length-1);
                 var studyH = cp * ($(".courseProgressView .cp.study").length-1);
-                
+
                 $(".courseProgressView img.studyp").css({
                     height:studyH + "px"
                 })
@@ -1497,9 +1513,68 @@ define(function(require, exports, module) {
             params += 'width='+screen.width*0.60 +',height='+screen.height*0.90+',top='+screen.height*0.05+',left='+screen.width*0.40;
             console.log(params);
             window.open(link, '_blank', params);
+        },
+        getActionHtml:function(item){
+            var actionHtml = "";
+            if (item.hasAction) {
+                // 新闻
+                actionHtml = '<span class="btn-wx-auth bottom-animation notNews">暂时不看</span>\
+                            <span class="btn-wx-auth bottom-animation nextNews">下一条</span>';
+            }else if (item.action) {
+                if (item.exercises == true) {
+                    // 如果是选择题，（多按钮）
+                    var optionHtml = "";
+                    for (var j = 0; j < item.action.length; j++) {
+                        var option = item.action[j];
+                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
+                    }
+                    actionHtml += optionHtml
+                    actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
+
+                }else{
+                    // 单按钮
+                    if (item.action == "点击选择课程") {
+                        actionHtml = '<span class="btn-wx-auth wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                    }else{
+                        actionHtml = '<span class="btn-wx-auth bottom-animation">'+Util.formatString(item.action)+'</span>'
+                    }
+                }
+            }
+            return actionHtml;
+        },
+        getLoadingHtml:function(animate, before){
+            // animate，是否有动画， before 是在之前还是之后
+            var loadingWHtml = "";
+            if (animate == true) {
+                loadingWHtml = '<div class="loading-chat left-animation">\
+                                    <img src="../../statics/images/chat.gif" alt="">\
+                                </div>';
+            }else{
+                loadingWHtml = '<div class="loading-chat">\
+                                    <img src="../../statics/images/chat.gif" alt="">\
+                                </div>';
+            }
+            if (before) {
+                $(loadingWHtml).prependTo($(".messages"));
+            }else{
+                $(loadingWHtml).appendTo(".messages");
+            }
+
+            // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     }
-
+    //模板帮助方法 
+    ArtTemplate.helper('TheMessage', function(message){
+        try {
+           var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+           console.log(msg);
+           return msg
+        }
+        catch(err){
+            console.log(error);
+            return message;
+        }
+    });
     Page.init();
 
 });

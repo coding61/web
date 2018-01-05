@@ -553,7 +553,8 @@ body{
     cursor: pointer;
 }
 .main-view .left-view .chat .message.text .content,
-.main-view .left-view .chat .message .link-text{
+.main-view .left-view .chat .message .link-text,
+.main-view .left-view .chat .message .problem-options{
 	background-color: white;
 	padding: 10px 15px;
 
@@ -564,6 +565,53 @@ body{
 	color: rgb(58, 59, 60);
 	/*font-family: serif;*/
 }
+.link-text .link-content{
+    
+}
+.link-text .link-imgs{
+    /*display: inline-flex;
+    justify-content: space-around;
+    align-items: center;*/
+}
+.link-text .link-imgs img{
+    /*width: 40px;*/
+    max-width: 100%;
+    /*border: solid 1px red;*/
+}
+/*问题选项*/
+.problem-options .problem-content{
+
+}
+.problem-options .problem-imgs{
+
+}
+.problem-options .problem-imgs img,
+.problem-options .option-imgs img{
+    max-width: 100%;
+    height: 80px;
+    /*border: solid 1px red;*/
+}
+.problem-options .options{
+    border: solid 1px rgb(205, 206, 207);
+    /* box-shadow: 1px 1px 5px; */
+    /* background: blanchedalmond; */
+    /* margin: 5px; */
+    padding: 5px;
+    border-radius: 5px;
+}
+.options .option{
+    display: flex;
+    justify-content: space-between;
+}
+.options .option .order-letter{
+    width: 15px;
+    margin-right: 5px;
+}
+.options .option .option-content-imgs{
+    flex: 1;
+}
+
+
 .main-view .left-view .chat .message .arrow{
 	height: 15px;
 	margin-left: 15px;
@@ -736,7 +784,9 @@ body{
 .main-view .left-view .helps-view .course-menu,
 .main-view .left-view .helps-view .lock-phone,
 /*.main-view .left-view .helps-view .find-help,*/
-.main-view .left-view .helps-view .zuan-ani{
+/*.main-view .left-view .helps-view .activty-list,*/
+.main-view .left-view .helps-view .zuan-ani,
+.main-view .left-view .helps-view .ui-bottom-line{
     border-bottom: solid 1px #d2d2d2;
 }
 .main-view .left-view .helps-view .course-menu{
@@ -932,6 +982,7 @@ li.catalog.unselect{
 }
 /*代码运行窗口*/
 .code-result-shadow-view,
+.third-site-shadow-view,
 .message-link-shadow-view{
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
@@ -944,6 +995,7 @@ li.catalog.unselect{
     display: none;
 }
 .code-result-shadow-view .code-result,
+.third-site-shadow-view .third-site-view,
 .message-link-shadow-view .message-link{
     display: flex;
     align-items: center;
@@ -953,6 +1005,7 @@ li.catalog.unselect{
     flex-direction: column;
 }
 .code-result-shadow-view .code-result .close,
+.third-site-shadow-view .third-site-view .close,
 .message-link-shadow-view .message-link .close{
     height: 35px;
     background: #ddd;
@@ -965,6 +1018,7 @@ li.catalog.unselect{
     width: 80%;
 }
 .code-result-shadow-view .code-result .close img,
+.third-site-shadow-view .third-site-view .close img,
 .message-link-shadow-view .message-link .close img{
     position: absolute;
     right: 10px;
@@ -974,9 +1028,10 @@ li.catalog.unselect{
     top: 10px;
 }
 .code-result-shadow-view .code-result .iframe-scroll,
+.third-site-shadow-view .third-site-view .iframe-scroll,
 .message-link-shadow-view .message-link .iframe-scroll{
     overflow: auto;
-    -webkit-overflow-scrolling: touch;  
+    -webkit-overflow-scrolling: touch;
 
     width: 70%;
     height: 80%;
@@ -986,6 +1041,7 @@ li.catalog.unselect{
     width: 80%;
 }
 .code-result-shadow-view .code-result iframe,
+.third-site-shadow-view .third-site-view iframe,
 .message-link-shadow-view .message-link iframe{
     /*width: 70%;
     height: 80%;
