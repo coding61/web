@@ -663,6 +663,13 @@ define(function(require, exports, module) {
         initLessonData:function(){
             
             var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+            var hasCatalogs = true;
+            var catalogs = dic["catalogs"]?dic["catalogs"]:[];
+            if(!dic.hasOwnProperty("catalogs")){
+                //初始化这个 catalogs
+                hasCatalogs = false
+            }
+
             for(var key in dic){
                 if(key == "catalogs") continue;
                 var lessonHtml = ""
@@ -678,7 +685,19 @@ define(function(require, exports, module) {
                                 +'<img class="edit" src="../../statics/images/editCourse/edit.png"></div>'
                             +'</li>';
                 $(lessonHtml).appendTo(".lesson-list");
+
+                if(!hasCatalogs){
+                    //初始化这个 catalogs
+                    var catalog = {"title":str}
+                    catalogs.push(catalog);
+                    dic["catalogs"] = catalogs;
+                    localStorage.CourseData = JSON.stringify(dic);
+                    // --------3.改变右侧 iframe
+                    // 通知右边的iframe 改变代码内容
+                    window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+                }
             }
+
 
             Course.clickLessonEvent();
 
