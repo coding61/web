@@ -1862,13 +1862,13 @@ ul.audio-types li{
     overflow: auto;
 }
 li.lesson{
-    height: 50px;
+    /*height: 50px;*/
     border-bottom: solid 1px #e1e1e1;
     background: white;
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: space-around;*/
     cursor: pointer;
 }
 li.lesson.select{
@@ -1882,6 +1882,14 @@ li.lesson span{
     line-height: 35px;
     font-size: 15px;
     margin-right: 5px;
+    overflow: hidden;
+    display: block;
+}
+li.lesson .imgs{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 30px;
 }
 li.lesson img{
     width: 20px;

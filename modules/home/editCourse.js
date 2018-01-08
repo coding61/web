@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var Course = {
         index:-1,  //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
         lesson:1,  //当前所选的课节下标
+        catalogLesson:1,  //当前编辑的课节目录的下标
         init:function(){
 
             Course.load();              //加载中间的会话列表
@@ -663,6 +664,7 @@ define(function(require, exports, module) {
             
             var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
             for(var key in dic){
+                if(key == "catalogs") continue;
                 var lessonHtml = ""
                 if (key == Course.lesson) {
                     //1节
@@ -672,7 +674,8 @@ define(function(require, exports, module) {
                 }
                 var str = "第"+key+"节";
                 lessonHtml += '<span data-lesson="'+key+'">'+str+'</span>'
-                                +'<img src="../../statics/images/editCourse/reduce.png">'
+                                +'<div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">'
+                                +'<img class="edit" src="../../statics/images/editCourse/edit.png"></div>'
                             +'</li>';
                 $(lessonHtml).appendTo(".lesson-list");
             }
@@ -681,6 +684,7 @@ define(function(require, exports, module) {
 
         },
         clickLessonEvent:function(){
+            /*
             // 关闭节数输入框
             $(".lesson-input-header img").unbind('click').click(function(){
                 $(".lesson-input-view").css({display:'none'});
@@ -715,7 +719,8 @@ define(function(require, exports, module) {
                     lessonHtml += '<li class="unselect lesson">'
                 }
                 lessonHtml += '<span>'+str+'</span>'
-                                +'<img src="../../statics/images/editCourse/reduce.png">'
+                                +'<div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">'
+                                +'<img class="edit" src="../../statics/images/editCourse/edit.png"></div>'
                             +'</li>';
                 $(lessonHtml).appendTo(".lesson-list");
 
@@ -727,6 +732,40 @@ define(function(require, exports, module) {
                 // 存储节数字数据
                 var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
                 dic[str] = [];
+                localStorage.CourseData = JSON.stringify(dic);
+
+                // 通知右边的iframe 改变代码内容
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+            })
+            */
+
+            // 1.添加课节
+            $(".lessons .add").unbind('click').click(function(){
+                Course.newAddLesson();
+            })
+            // 2.关闭课程目录输入框
+            $(".lesson-input-header img").unbind('click').click(function(){
+                $(".lesson-input-view").css({display:'none'});
+            })
+            // 3.确认添加课程目录
+            $(".lesson-submit").unbind('click').click(function(){
+                var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                var catalogs = dic["catalogs"]?dic["catalogs"]:[];
+                
+                var str = $(".lesson-input input").val();
+                
+                var lessonTitle = {"title":str}
+                console.log("正在编辑的目录课节下标是:", Course.catalogLesson);
+                catalogs[parseInt(Course.catalogLesson)-1] = lessonTitle;
+
+                $(".lesson-input-view").css({display:'none'});
+                $(".lesson-input input").val("");
+
+                Course.clickDeleteLessonEvent();
+
+                // 存储节目录标题
+                dic["catalogs"] = catalogs;
                 localStorage.CourseData = JSON.stringify(dic);
 
                 // 通知右边的iframe 改变代码内容
@@ -773,12 +812,25 @@ define(function(require, exports, module) {
             })
 
             // 节删除
-            $(".lesson img").unbind('click').click(function(e){
+            $(".lesson img.delete").unbind('click').click(function(e){
                 e.stopPropagation();
                 var this_ = $(this);
                 Common.bcAlert("您是否确定要删除本小节数据？", function(){
                     Course.newDeleteLesson(this_);
                 })
+            })
+            // 节编辑
+            $(".lesson img.edit").unbind('click').click(function(e){
+                e.stopPropagation();
+                Course.catalogLesson = $(this).parents(".lesson").children("span").attr("data-lesson");
+
+                $(".lesson-input-view").css({display:'flex'});
+
+                var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                var catalogs = dic["catalogs"]?dic["catalogs"]:[];
+                var title = catalogs[parseInt(Course.catalogLesson)-1]["title"];
+                $(".lesson-input input").val(title);
+                
             })
         },
         deleteLesson:function(this_){
@@ -824,7 +876,8 @@ define(function(require, exports, module) {
                 lessonHtml += '<li class="unselect lesson">'
             }
             lessonHtml += '<span data-lesson="'+parseInt(count+1)+'">'+str+'</span>'
-                        +'<img src="../../statics/images/editCourse/reduce.png">'
+                        +'<div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">'
+                        +'<img class="edit" src="../../statics/images/editCourse/edit.png"><div>'
                         +'</li>';
             $(lessonHtml).appendTo(".lesson-list");
             Course.clickDeleteLessonEvent();
@@ -834,6 +887,11 @@ define(function(require, exports, module) {
             var key = String(parseInt(count+1));
             var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
             dic[key] = [];
+            //存储目录
+            var catalog = {"title":str},
+                catalogs = dic["catalogs"]?dic["catalogs"]:[];
+            catalogs.push(catalog);
+            dic["catalogs"] = catalogs;
             localStorage.CourseData = JSON.stringify(dic);
             
 
@@ -849,6 +907,10 @@ define(function(require, exports, module) {
             var length = $(".lesson").length;
             var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
             delete dic[lessonNum];  //删除当前课节数据
+
+            var catalogs = dic["catalogs"]?dic["catalogs"]:[];
+            catalogs.splice(parseInt(lessonNum)-1, 1);    //删除此课节对应的目录描述
+            dic["catalogs"] = catalogs;
 
             for (var i = 1; i <= length; i++) {
                 var key = String(i);
@@ -872,7 +934,8 @@ define(function(require, exports, module) {
                     var str = "第"+parseInt(i+1)+"节";
                     var lessonHtml='<li class="unselect lesson">\
                                         <span data-lesson="'+parseInt(i+1)+'">'+str+'</span>\
-                                        <img src="../../statics/images/editCourse/reduce.png">\
+                                        <div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">\
+                                        <img class="edit" src="../../statics/images/editCourse/edit.png"></div>\
                                     </li>';
                     $(lessonHtml).appendTo(".lesson-list");
                 }
