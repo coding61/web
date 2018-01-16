@@ -181,6 +181,16 @@ function postDetail() {
 		if (result) {
 			zoneId=result.section.pk;
 			postUserName=result.userinfo.name;
+			// 装饰头像道具
+			for (var i = 0; i < result.userinfo.props.length; i++) {
+				if (result.userinfo.props[i].status == 1) { //已使用
+					if (result.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+						if (result.userinfo.props[i].exchange_product.category_detail.action == "avatar") { //头像道具
+							$('.header').addClass(result.userinfo.props[i].exchange_product.category_detail.style);
+						}
+					}
+				}
+			}
 			// $(".callbackToList").attr("href","bbsList.html?id="+zoneId);
 			$(".callbackToList").attr("href","bbsList.html");
 			$(".postStatus").text("[" + result.status_display + "]");
@@ -216,6 +226,16 @@ function postDetail() {
 			    $(this).html(this_fly.content(result.content));
 			    // digui($(this), result.content, new Date().getTime());
 			  });
+			// 装饰帖子背景道具
+			for (var i = 0; i < result.userinfo.props.length; i++) {
+				if (result.userinfo.props[i].status == 1) { //已使用
+					if (result.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+						if (result.userinfo.props[i].exchange_product.category_detail.action == "background") { //帖子道具
+							$('.post_content').addClass(result.userinfo.props[i].exchange_product.category_detail.style);
+						}
+					}
+				}
+			}
 			$("#jiedaCount").text(result.reply_count);
 			$(".replyCount").text((result.reply_count));
 			$(".browseTime").text(result.browse_count);
@@ -251,12 +271,12 @@ function postDetail() {
 				}
 			}
 			// 打赏帖子
-			// $(".detail-hits").append('<span onclick="dashang()" data-id="'+result.userinfo.owner+'" data-postPk="'+result.pk+'" class="dashang" style="cursor: pointer;">打赏</span>');
-			// if (result.play_reward.play_reward_number == 1) {
-			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "已打赏");
-			// } else if (result.play_reward.play_reward_number > 1) {
-			// 	$('.postDashang').html(result.play_reward.play_reward_pople[0] + "等人已打赏");
-			// }
+			$(".detail-hits").append('<span onclick="dashang()" data-id="'+result.userinfo.owner+'" data-postPk="'+result.pk+'" class="dashang" style="cursor: pointer;">打赏</span>');
+			if (result.play_reward.play_reward_number == 1) {
+				$('.postDashang').html(result.play_reward.play_reward_pople[0] + "已打赏");
+			} else if (result.play_reward.play_reward_number > 1) {
+				$('.postDashang').html(result.play_reward.play_reward_pople[0] + "等人已打赏");
+			}
 			
 			if (is_staff) {
 				if (result.isessence) {
@@ -292,20 +312,60 @@ function getReplys(page){
 		}
 		var _htm="";
 		$.each(result.results,function(k,v){
+			// if (v.userinfo.props.length != 0) {
+   //          	var tag = false;
+			//     // 装饰帖子背景道具
+			// 	for (var i = 0; i < v.userinfo.props.length; i++) {
+			// 		if (v.userinfo.props[i].status == 1) { //已使用
+			// 			if (v.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+			// 				if (v.userinfo.props[i].exchange_product.category_detail.name == "fourmbackcolor") { //帖子背景道具
+			// 					tag = true;
+			// 					_htm+='<li data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+' '+v.userinfo.props[i].exchange_product.category_detail.style+'">'
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// 	if (tag = false) {
+			// 		_htm+='<li data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+'">'
+			// 	}
+			// } else {
+			// 	_htm+='<li data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+'">'
+			// }
 			_htm+='<li data-id="'+v.pk+'" class="jieda-daan reply_'+v.pk+'">'
-				+'<div class="detail-about detail-about-reply">'
+			_htm+='<div class="detail-about detail-about-reply">'
 			  	+'<a class="jie-user" href="javascript:void(0)">'
-			    +' <img src="'+dealWithAvatar(v.userinfo.avatar)+'" alt=""><div class="managergrade">'
+			    +'<img src="'+dealWithAvatar(v.userinfo.avatar)+'" alt="" style="margin-top: 15px;margin-left: 15px;">';
+			    if (v.userinfo.props.length != 0) {
+			    	var tag = false;
+				    // 装饰头像道具
+					for (var i = 0; i < v.userinfo.props.length; i++) {
+						if (v.userinfo.props[i].status == 1) { //已使用
+							if (v.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+								if (v.userinfo.props[i].exchange_product.category_detail.action == "avatar") { //头像道具
+									tag = true;
+									_htm+='<div class="'+v.userinfo.props[i].exchange_product.category_detail.style+'" style="width:100px;height:100px;border-radius:100px;position: absolute;left: 0;top: 0;"></div>'
+								}
+							}
+						}
+					}
+					// if (tag = false) {
+					// 	_htm+='<div class="" style="width:70px;height:70px;border-radius:70px;position: absolute;left: 0;top: 0;"></div>'
+					// }
+				} else {
+					// _htm+='<div class="" style="width:70px;height:70px;border-radius:70px;position: absolute;left: 0;top: 0;"></div>'
+				}
+
+			    _htm+='<div class="managergrade">'
 			    if (v.userinfo.is_staff) {
 			   		_htm+='<span class="replyManager">管理员</span>';
 			    }
-			    _htm+='<span class="reGrade" style="width: 46px">'+v.userinfo.grade.current_name+'</span>'
+			    _htm+='<span class="reGrade" style="width: 100px">'+v.userinfo.grade.current_name+'</span>'
 			    if (v.userinfo.top_rank && v.userinfo.top_rank =='Top10') {
-					_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top50') {
-					_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 				} else if (v.userinfo.top_rank && v.userinfo.top_rank =='Top100') {
-					_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+					_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 				} else {
 					_htm+='</div>'
 				}
@@ -327,8 +387,8 @@ function getReplys(page){
 			+'</div>'
 			+'<div class="jieda-reply" style="text-align:right;">'
 			/* +' <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>'*/
-			_htm+='<span type="reply" class="question_reply" data-user-id="'+v.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复('+v.replymore.length+')</span>';
-			// +'<span onclick=dashangHuitie("'+v.userinfo.owner+'",'+v.pk+') data-id="'+v.userinfo.owner+'" data-postPk="'+v.pk+'" class="dashangHuitie">打赏</span>';
+			_htm+='<span type="reply" class="question_reply" data-user-id="'+v.userinfo.pk+'" data-id="'+v.pk+'"><i class="iconfont icon-svgmoban53"></i>回复('+v.replymore.length+')</span>'
+			+'<span onclick=dashangHuitie("'+v.userinfo.owner+'",'+v.pk+') data-id="'+v.userinfo.owner+'" data-postPk="'+v.pk+'" class="dashangHuitie">打赏</span>';
 			 /* +'<div class="jieda-admin">'*/
 			  /* +' <span type="edit">编辑</span>'*/
 			  if(localStorage.userName!=null&&(v.userinfo.name==localStorage.userName)){
@@ -343,36 +403,80 @@ function getReplys(page){
 	    	// 	}
 		    // }
 			/*  +'</div>'*/
-			// if (v.play_reward.play_reward_number == 1) {
-			// 	var dashang = v.play_reward.play_reward_pople[0] + "已打赏";
-			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
-			// } else if (v.play_reward.play_reward_number > 1) {
-			// 	var dashang = v.play_reward.play_reward_pople[0] + "等人已打赏"
-			// 	_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
-			// }
+			if (v.play_reward.play_reward_number == 1) {
+				var dashang = v.play_reward.play_reward_pople[0] + "已打赏";
+				_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			} else if (v.play_reward.play_reward_number > 1) {
+				var dashang = v.play_reward.play_reward_pople[0] + "等人已打赏"
+				_htm+='<div style="text-align: left; color: #999">'+dashang+'</div>'
+			}
 			_htm+='</div>'
 			+'<div class="reply_content">'
 			+'<ul jieda photos class="reply_mess">';
 			$.each(v.replymore,function(k1,v1){
-				_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'"><div class="detail-about detail-about-reply">'
+				// if (v1.userinfo.props.length != 0) {
+	   //          	var tag = false;
+				//     // 装饰帖子背景道具
+				// 	for (var i = 0; i < v1.userinfo.props.length; i++) {
+				// 		if (v1.userinfo.props[i].status == 1) { //已使用
+				// 			if (v1.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+				// 				if (v1.userinfo.props[i].exchange_product.category_detail.name == "fourmbackcolor") { //帖子背景道具
+				// 					tag = true;
+				// 					_htm+=' <li  class="jieda-daan replymore_'+v1.pk+' '+v1.userinfo.props[i].exchange_product.category_detail.style+'">'
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// 	if (tag = false) {
+				// 		_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'">'
+				// 	}
+				// } else {
+				// 	_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'">'
+				// }
+				_htm+=' <li  class="jieda-daan replymore_'+v1.pk+'">'
+				_htm+='<div class="detail-about detail-about-reply">'
 		            +'<a class="jie-user" href="javascript:void(0)">'
-		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt=""><div class="managergrade">'
+		            +'<img src="'+dealWithAvatar(v1.userinfo.avatar)+'" alt="" style="margin-top: 15px;margin-left: 15px;">';
+
+		            if (v1.userinfo.props.length != 0) {
+		            	var tag = false;
+					    // 装饰头像道具
+						for (var i = 0; i < v1.userinfo.props.length; i++) {
+							if (v1.userinfo.props[i].status == 1) { //已使用
+								if (v1.userinfo.props[i].exchange_product.product_type == 1) { //虚拟物品
+									if (v1.userinfo.props[i].exchange_product.category_detail.action == "avatar") { //头像道具
+										tag = true;
+										_htm+='<div class="'+v1.userinfo.props[i].exchange_product.category_detail.style+'" style="width:100px;height:100px;border-radius:100px;position: absolute;left: 0;top: 0;"></div>'
+									}
+								}
+							}
+						}
+						// if (tag = false) {
+						// 	_htm+='<div class="" style="width:70px;height:70px;border-radius:70px;position: absolute;left: 0;top: 0;"></div>'
+						// }
+					} else {
+						// _htm+='<div class="" style="width:70px;height:70px;border-radius:70px;position: absolute;left: 0;top: 0;"></div>'
+					}
+
+		            // 判断道具
+		            // +'<div class="one_header" style="width:70px;height:70px;border-radius:70px;position: absolute;left: 0;top: 0;"></div>'
+		            _htm+='<div class="managergrade">'
 		            if (v1.userinfo.is_staff) {
 				   		_htm+='<span class="replyManager">管理员</span>';
 				    }
-		            _htm+='<span class="reGrade" style="width: 46px">'+v1.userinfo.grade.current_name+'</span>'
+		            _htm+='<span class="reGrade" style="width: 100px">'+v1.userinfo.grade.current_name+'</span>'
 		            if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top10') {
-						_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+						_htm+='<div class="top" style="background-image: url(img/top10.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top50') {
-						_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+						_htm+='<div class="top" style="background-image: url(img/top50.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 					} else if (v1.userinfo.top_rank && v1.userinfo.top_rank =='Top100') {
-						_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: -12px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
+						_htm+='<div class="top" style="background-image: url(img/top100.png);width: 75px;height: 20px;margin-left: 10px;background-size: contain;background-position: 50% 50%;background-repeat: no-repeat;"></div></div>'
 					} else {
 						_htm+='</div>'
 					}
 		            _htm+=' <cite><i class="reply_name">'+v1.userinfo.name+'</i></cite>'
 		            +' </a>'
-		            +' <div class="detail-hits reply_time" style="left: 80px">'
+		            +' <div class="detail-hits reply_time">'
 		            +'<span class="liveTime"  title="'+dealWithTime(v1.create_time)+'">'+dealWithTime(v1.create_time)+'</span>'
 		            +' </div>'
 					+'</div>'

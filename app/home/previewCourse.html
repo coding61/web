@@ -69,7 +69,8 @@
 			</div>
 			<!-- 练习区 -->
 			<div class="right-view">
-				<img src="../../statics/images/icon.png" alt="">
+				<!-- <img src="../../statics/images/icon.png" alt=""> -->
+				<iframe src="monkeyAnimation.html" frameborder="0"></iframe>
 			</div>
 		</div>
 		
@@ -84,14 +85,14 @@
 		
 		<!-- 第一种（带链接的题<文字+图片>） -->
 		<script type="text/html" id="message-link-problem-template">
-			<div class="message link{{if item.animate}} left-animation{{/if}}" data-link="{{item.link}}"{{if item.tag}} data-tag="{{item.tag}}" data-msg="{{item.message}}"{{/if}}> 
+			<div class="message link{{if animate}} left-animation{{/if}}" data-link="{{item.link}}"{{if item.tag}} data-tag="{{item.tag}}" data-msg="{{item.message}}"{{/if}}>
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
                 <div class="msg-view-parent">
                     <div class="msg-view">
-                        <div class="link-text"> 
+                        <div class="link-text">
                         	<div class="link-content-imgs">
                         		{{if item.message}}
-	                        		<span class="link-content">{{item.message}}<br/></span>
+	                        		<span class="link-content">{{TheMessage item.message}}<br/></span>
 	                        	{{/if}}
 	                        	{{if item.imgs && item.imgs.length}}
                      			<div class="link-imgs">
@@ -101,7 +102,7 @@
                      			</div>
                      			{{/if}}
                         	</div>
-                 
+
                             <span style="color: rgb(84, 180,225);">{{item.link}}</span>
                         </div>
                         <img class="arrow" src="../../statics/images/arrow.png" alt="">
@@ -109,10 +110,10 @@
                 </div>
             </div>
 		</script>
-		
+
 		<!-- 第二种（选择题<题目：文字+图片，选项：文字+图片>） -->
 		<script type="text/html" id="message-choice-problem-template">
-			<div class="message text{{if item.animate}} left-animation{{/if}}"> 
+			<div class="message text{{if animate}} left-animation{{/if}}">
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
                 <div class="msg-view-parent">
                     <div class="msg-view">
@@ -120,7 +121,7 @@
                     		<!-- 选择题的题目 -->
                     		<div class="problem-content-imgs">
                     			{{if item.message}}
-	                        		<span class="problem-content">{{item.message}}</span> 
+	                        		<span class="problem-content">{{TheMessage item.message}}</span>
                         		{{/if}}
                         		{{if item.imgs && item.imgs.length}}
                         		<div class="problem-imgs">
@@ -130,7 +131,7 @@
                         		</div>
                         		{{/if}}
                         	</div>
-			
+
                         	<!-- 选择题下面的4个选项 -->
                         	<div class="options">
                         		{{each item.options}}
@@ -138,7 +139,7 @@
                             		<span class="order-letter">{{$value.content}}</span>
                             		<div class="option-content-imgs">
                             			{{if $value.message}}
-	                            			<span class="option-content">{{$value.message}}</span> 
+	                            			<span class="option-content">{{TheMessage $value.message}}</span>
                             			{{/if}}
                             			{{if $value.imgs && $value.imgs.length}}
 	                                		<div class="option-imgs">
@@ -152,7 +153,7 @@
                         		{{/each}}
                         	</div>
                     	</div>
-              
+
                     </div>
                 </div>
             </div>
@@ -160,11 +161,11 @@
 
 		<!-- 第三种（纯文本消息） -->
 		<script type="text/html" id="message-text-template">
-			<div class="message text{{if item.animate}} left-animation{{/if}}"> 
+			<div class="message text{{if animate}} left-animation{{/if}}">
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
                 <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
-                        <span class="content">{{item.message}}</span> 
+                        <span class="content">{{TheMessage(item.message)}}</span>
                     </div>
                     {{if item.audio}}
 		                <img class="audio" src="../../statics/images/audio.png"/>
@@ -188,13 +189,13 @@
 
 		<!-- 第五种(链接消息) -->
 		<script type="text/html" id="message-link-template">
-			<div class="message link{{if item.animate}} left-animation{{/if}}" data-link="{{item.link}}"> 
+			<div class="message link{{if animate}} left-animation{{/if}}" data-link="{{item.link}}">
 				<img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
 				<div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
 					<div class="msg-view">
-						<div class="link-text"> 
-							<span class="link-content">{{item.message}}<br/></span>
-							<span style="color: rgb(84, 180,225);">{{item.link}}</span>
+						<div class="link-text">
+							<span class="link-content">{{TheMessage item.message}}<br/></span>
+							<span style="color: rgb(84, 180,225);">{{linkText}}</span>
 						</div>
 						<img class="arrow" src="../../statics/images/arrow.png" alt="">
 					</div>
@@ -204,10 +205,11 @@
 				</div>
 			</div>
 		</script>
-		
+
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script type="text/javascript" src="../../libs/jquery.imageloader.js"></script>
 	<script>
 		var base = location.href.split("/app/")[0];
 		seajs.config({
@@ -226,4 +228,3 @@
 	</script>
 
 </html>
-

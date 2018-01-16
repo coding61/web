@@ -447,6 +447,10 @@ $(document).ready(function () {
     $('.link6').click(function() {
         Util.adjustCodeEditorsOnline();
     })
+    // 儿童性教育
+    $('.link7').click(function() {
+        window.open("../../child_sexual_education/index.html");
+    })
     // 编辑器点击事件
     $(".editors .editor").unbind('click').click(function(){
         var url = ""

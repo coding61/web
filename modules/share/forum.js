@@ -9,9 +9,37 @@ function initDetail(){
 	})
 	postDetail();
 }
+
+function getProps(arr) {
+	var dict = {'head': null, 'background': null};
+	if (arr.length == 0) { return dict; }
+	for (var i = 0; i < arr.length; i++) {
+		if (arr[i].action == 'background' && arr[i].status == 1) {
+			if (arr[i].exchange_product.category_detail.desc) {
+				dict.background = arr[i].exchange_product.category_detail.desc;
+			}
+		} else if (arr[i].action == 'avatar' && arr[i].status == 1) {
+			if (arr[i].exchange_product.image) {
+				dict.head = arr[i].exchange_product.image;
+			}
+		}
+	}
+	return dict;
+}
+
 function postDetail() {
 	myAjaxInShare(basePath+"/forum/posts/"+postPk+"/","get",null,function(result) {
 		if (result) {
+
+			var head = getProps(result.userinfo.props).head,
+				background = getProps(result.userinfo.props).background;
+			if (head) {
+				$('.head-bg').css({"background-image": "url(" + head + ")"});
+			}
+			if (background) {
+				$('.userinfo').css({"background-color": background});
+			}
+
 			$(".forum-status").text("[" + result.status_display + "]");
 			if (result.status_display == '未解决') {
 				$(".forum-status").css({"color": 'red'});
@@ -59,10 +87,18 @@ function getReplys(page){
 		var _htm="";
 		// 改的要死了
 		$.each(result.results,function(k,v){
+
+			var head = getProps(v.userinfo.props).head,
+				background = getProps(v.userinfo.props).background;
+			head = head ? '"background-image: url(' + head + ')"' : "";
+			background = background ? background : '#fff';
+
 			_htm+='<li data-id="'+v.pk+'" class="reply-item">'
-				+'<div class="reply-userinfo">'
+				+'<div class="reply-userinfo" style="background-color: ' + background + '">'
 				+	'<div class="reply-left-view">'
-				+		'<img class="reply-head" src=' + dealWithAvatar(v.userinfo.avatar) + '>'
+				+ 		'<div class="reply-head-bg" style=' + head + '>'
+				+			'<img class="reply-head" src=' + dealWithAvatar(v.userinfo.avatar) + '>'
+				+ 		'</div>'
 				+		'<div class="reply-grade">' + v.userinfo.grade.current_name + '</div>'
 			    +	'</div>'
 				+	'<div class="reply-right-view">'

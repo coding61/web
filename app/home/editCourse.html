@@ -11,6 +11,7 @@
 		<link rel="icon" href="../../statics/images/favicon.ico">
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
 		<link type="text/css" rel="stylesheet" href="../../statics/css/home/editCourse.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/home/editCourseForProblem.css" />
 	</head>
 
 	<body>
@@ -22,6 +23,10 @@
 				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
 			</div>
 		</div>
+        <div>
+        <audio paused controls id="audioView" width="100%" height="100%" style="display:none"></audio>
+        <p id="upload-status" style="display: none;"></p>
+        </div>
 		
 		<div class="header-tips">
 			<div class="left-tips">
@@ -50,11 +55,11 @@
 				<!-- 课程节数输入框 -->
 				<div class="lesson-input-view">
 					<div class="lesson-input-header">
-						<span class="type">课程节数</span>
+						<span class="type">课程节数目录</span>
 						<img src="../../statics/images/close.png" style="cursor: pointer;">
 					</div>
 					<div class="lesson-input">
-						<input type="text" placeholder="节数字(课程的最终的节下标必须要连续)" />
+						<input type="text" placeholder="节目录描述" />
 						<span class="lesson-submit">确认</span>
 					</div>
 				</div>
@@ -84,6 +89,13 @@
 						<li class="text-msg" data-tag="text">文本</li>
 						<li class="link-text-msg" data-tag="link-text">链接文本</li>
 						<li class="msg-action-text" data-tag="action">按钮文本</li>
+						<li class="problem-msg" data-tag="problem">选择题</li>
+					</ul>
+
+					<!-- 声音的选择，本地音频/录制音频 -->
+					<ul class="audio-types">
+						<li class="audio-record-msg" data-tag="record">录制音频</li>
+						<li class="audio-local-msg" data-tag="local">本地音频</li>
 					</ul>
 
 					<!-- 不同类型消息的输入 -->
@@ -92,16 +104,130 @@
 							<span class="type">文本</span>
 							<img src="../../statics/images/close.png" style="cursor: pointer;">
 						</div>
+
 						<div class="input-view">
 							<input type="text" placeholder="链接文本的链接地址" />
+							<div id="audio-record-view">
+								<div id="audio-record">
+									<button id="audio-record-start">开始录制</button>
+									<button id="audio-record-stop" disabled>停止录制</button>
+								</div>
+								
+
+							</div>
+							<pre id="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;display: none;"></pre>
 							<div id="upload-container">
 								<span id="uploadImg">上传图片</span>
+								<span id="uploadAudio">上传音频</span>
 							</div>
 							<textarea placeholder="文本消息的内容"></textarea>
 							<span class="input-submit">确认</span>
 						</div>
 					</div>
+
+					<!-- 选择题相关，程序媛选择题/自适应选择题 -->
+					<ul class="problem-types">
+						<li class="problem-girl-msg" data-tag="girl">程序媛选择题</li>
+						<li class="problem-adapt-msg" data-tag="adapt">自适应选择题</li>
+					</ul>
+
 					
+					<!-- 选择题(输入) -->
+					<div class="problem-question-view problem-view">
+						<div class="problem-header">
+							<span class="type">程序媛选择题</span>
+							<img src="../../statics/images/close.png" style="cursor: pointer;">
+						</div>
+						<!-- 选择题(程序媛) -->
+						<div class="problem-girl-content-view">
+							<div class="question-view">
+								<label>问题</label>
+								<textarea class="reset" placeholder="问题描述(必填)"></textarea>
+							</div>
+							<div class="action-view">
+								<label>action按钮</label>
+								<i class="action-add"></i>
+								<div class="action-input-view" style="display: none;">
+									<input class="reset" style="width: 80px;" type="text" placeholder="A(必填)" />
+									<button class="uploadPhoto" id="action-add-submit">ok</button>
+								</div>
+								<textarea class="reset" placeholder='[{"type": "text","content": "A"}](必填)'></textarea>
+							</div>
+							<div class="right-answer-choose">
+								<label for="right-answe">正确答案:</label>
+								<input class="reset" id="right-answer" type="text" placeholder="A(必填)">
+							</div>
+							<div class="wrongAnswerMsgView">
+								<label for="">答错会话消息组</label>
+								<textarea placeholder="答错会话消息列表">[{"message":"答错了","action":"下一条"}]</textarea>
+							</div>
+							<div class="rightAnswerMsgView">
+								<label for="">答对会话消息组</label>
+								<textarea placeholder="答对会话消息列表">[{"message":"答对了","action":"下一条"}]</textarea>
+							</div>
+
+							<button class="problem-submit submit">确定</button>
+						</div>
+						<!-- 选择题(自适应) -->
+						<div class="problem-adapt-content-view">
+							<div class="question-view ui-bottom-dot-line">
+								<label>问题题目<文字/图片必填其一></label>
+								<label class="subTitle">题目文字描述</label>
+								<textarea class="reset" name="text" placeholder="文字描述"></textarea>
+								<label class="subTitle">题目图片组描述</label>
+								<pre id="log1" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
+								<div id="upload-container" style="display: block;">
+									<span id="uploadQuestionPhoto" class="uploadPhoto">上传图片</span>
+								</div>
+								<textarea class="reset" name="photos" placeholder='["https://www.baidu/2.jpg"]'></textarea>
+							</div>
+							<div class="options-view ui-bottom-dot-line">
+								<label for="">问题选项组</label>
+								<i class="option-add"></i>
+								<textarea class="reset" placeholder='[{"content": "A","message": "表达式1 and 表达式2是当两个表达式都为真时为真","imgs": []}]'></textarea>
+							</div>
+							<div class="action-view ui-bottom-dot-line">
+								<label>action按钮</label>
+								<!-- <i class="action-add"></i> -->
+								<textarea class="reset" placeholder='[{"type": "text","content": "A"}]'></textarea>
+							</div>
+							<div class="right-answer-choose ui-bottom-dot-line">
+								<label for="right-answe">正确答案:</label>
+								<input class="reset" id="right-answer" type="text" placeholder="A(必填)">
+							</div>
+							<div class="wrongAnswerMsgView ui-bottom-dot-line">
+								<label for="">答错会话消息组</label>
+								<textarea placeholder="答错会话消息列表">[{"message":"答错了","action":"下一条"}]</textarea>
+							</div>
+							<div class="rightAnswerMsgView ui-bottom-dot-line">
+								<label for="">答对会话消息组</label>
+								<textarea placeholder="答对会话消息列表">[{"message":"答对了","action":"下一条"}]</textarea>
+							</div>
+
+							<button class="problem-submit submit">确定</button>
+						</div>
+					</div>
+					
+					<!-- 选项(输入) -->
+					<div class="problem-option-view problem-view">
+						<div class="problem-header">
+							<span class="type">问题选项</span>
+							<img src="../../statics/images/close.png" style="cursor: pointer;">
+						</div>
+						<div class="option-input-view">
+							<label for="" class="subTitle">选项编码</label>
+							<input class="reset" type="text" placeholder="A(必填)">
+							<label class="subTitle">选项文字描述</label>
+							<textarea class="reset" name="text" placeholder="文字描述"></textarea>
+							<label class="subTitle">选项图片组描述</label>
+							<pre id="log2" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
+							<div id="upload-container" style="display: block;">
+								<span id="uploadOptionPhoto" class="uploadPhoto">上传图片</span>
+							</div>
+							<textarea class="reset" name="photos" placeholder='["https://www.baidu/2.jpg"]'></textarea>
+							<button class="option-submit submit">确定</button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!-- 练习区 -->
@@ -130,9 +256,9 @@
 		
 		<!-- 第一种（带链接的题<文字+图片>） -->
 		<script type="text/html" id="message-link-problem-template">
-			<div class="message link{{if item.animate}} left-animation{{/if}}" data-link="{{item.link}}"> 
+			<div class="message link" data-link="{{item.link}}" data-index="{{index}}"> 
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
-                <div class="msg-view-parent">
+                <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
                         <div class="link-text"> 
                         	<div class="link-content-imgs">
@@ -152,15 +278,21 @@
                         </div>
                         <img class="arrow" src="../../statics/images/arrow.png" alt="">
                     </div>
+                    <div class="add-reduce-view">
+                    	<img class="left-add" src="../../statics/images/editCourse/add1.png">
+                    	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
+                    	<img class="audio" src="../../statics/images/audio.png"/>
+                        {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
+                    </div>
                 </div>
             </div>
 		</script>
 		
 		<!-- 第二种（选择题<题目：文字+图片，选项：文字+图片>） -->
 		<script type="text/html" id="message-choice-problem-template">
-			<div class="message text{{if item.animate}} left-animation{{/if}}"> 
+			<div class="message text" data-index="{{index}}"> 
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
-                <div class="msg-view-parent">
+                <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
                     	<div class="problem-options">
                     		<!-- 选择题的题目 -->
@@ -184,7 +316,7 @@
                             		<span class="order-letter">{{$value.content}}</span>
                             		<div class="option-content-imgs">
                             			{{if $value.message}}
-	                            			<span class="option-content">{{$value.message}}</span> 
+	                            			<span class="option-content">{{TheMessage $value.message}}</span> 
                             			{{/if}}
                             			{{if $value.imgs && $value.imgs.length}}
 	                                		<div class="option-imgs">
@@ -200,6 +332,12 @@
                     	</div>
               
                     </div>
+                    <div class="add-reduce-view">
+                    	<img class="left-add" src="../../statics/images/editCourse/add1.png">
+                    	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
+                    	<img class="audio" src="../../statics/images/audio.png"/>
+                        {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
+                    </div>
                 </div>
             </div>
 		</script>
@@ -209,14 +347,15 @@
 			<div class="message text" data-index="{{index}}"> 
                 <!-- <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" /> -->
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg">
-                <div class="msg-view-parent">
+                <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
                         <span class="content">{{item.message}}</span> 
-                        
                     </div>
                     <div class="add-reduce-view">
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
+                        <img class="audio" src="../../statics/images/audio.png"/>
+                        {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
                 </div>
             </div>
@@ -245,7 +384,7 @@
 			<div class="message link" data-link="{{item.link}}" data-index="{{index}}"> 
 				<!-- <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" /> -->
 				<img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg">
-				<div class="msg-view-parent">
+				<div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
 					<div class="msg-view">
 						<div class="link-text"> 
 							<span class="link-content">{{item.message}}<br/></span>
@@ -257,6 +396,8 @@
 					<div class="add-reduce-view">
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
+                    	<img class="audio" src="../../statics/images/audio.png"/>
+                    	{{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
 				</div>
 			</div>
@@ -266,16 +407,19 @@
 		<script type="text/html" id="answer-text-template">
 			<div class="answer" data-index="{{index}}">
                 <div class="msg-view">
-                    <span class="content">{{item.action}}</span>
+                    <span class="content">{{if typeof item.action=="string"}}{{item.action}}{{else}}{{each item.action}}{{$value.content}}{{/each}}{{/if}}</span>
                 </div>
                 <!-- <img class="avatar reduce" src="../../statics/images/editCourse/reduce.png" /> -->
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg">
             </div>
 		</script>
-		
-        
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../libs/socket.io-1.4.5.js"></script>
+    <script type="text/javascript" src="../../libs/easyrtc/easyrtc.js"></script>
+    <script type="text/javascript" src="../../libs/easyrtc/labs/easyrtc_recorder.js"></script>
+    <script type="text/javascript" src="../../libs/easyrtc/labs/easyrtc_rates.js"></script>
+    <script type="text/javascript" src="../../libs/audio_record.js"></script>
 	<script type="text/javascript" src="../../libs/sea.js"></script>
 	<!-- <script type="text/javascript" src="../../libs/upload/plupload/moxie.js"></script> -->
 	<!-- <script type="text/javascript" src="../../libs/upload/plupload/moxie.min.js"></script> -->
@@ -284,6 +428,7 @@
 	<!-- <script type="text/javascript" src="../../libs/upload/qiniu/qiniu.js"></script> -->
 	<script type="text/javascript" src="../../libs/upload/qiniu/qiniu.min.js"></script>
 	<script type="text/javascript" src="../../libs/files/FileSaver.js"></script>
+	<script type="text/javascript" src="../../modules/home/qiniuForUpload.js"></script>
 
 	<script>
 		var base = location.href.split("/app/")[0];

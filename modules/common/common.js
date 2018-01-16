@@ -289,7 +289,7 @@ define(function(require, exports, module) {
 		playSouns.queue = [];
 		playSouns.queueLength = 0;
 
-		if($("body").find("audio").length <= 0){
+		if($("body").find("audio#audioPlay").length <= 0){
 			var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
 			$( "body" ).append( strAudio );
 			var audio = document.getElementById( "audioPlay");
@@ -316,7 +316,7 @@ define(function(require, exports, module) {
 		if (playSouns.status) {
 			if (!playSouns.inited) {
 				playSouns.inited = true;
-				if($("body").find("audio").length <= 0){
+				if($("body").find("audio#audioPlay").length <= 0){
 					var strAudio = "<audio id='audioPlay' src='"+url+"' hidden='true'>";
 					$( "body" ).append( strAudio );
 
