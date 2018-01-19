@@ -5,13 +5,13 @@ $(document).ready(function () {
 //	============================= Preloader =============================
 
 	
-	$(window).on("load", function () {
+	// $(window).on("load", function () {
 		
-        $(".preloader").fadeOut("slow", function () {
-            $(this).remove();
-        });
+ //        $(".preloader").fadeOut("slow", function () {
+ //            $(this).remove();
+ //        });
 		
-	});
+	// });
     
 
 //	============================= Single page Nav =============================

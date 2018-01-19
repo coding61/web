@@ -403,7 +403,7 @@ button:active,
 
 /* -====================== Preloader ======================-*/
 
-.preloader {
+/*.preloader {
 	position: fixed;
     top: 0;
     left: 0;
@@ -426,7 +426,7 @@ button:active,
     display: block;
     margin: auto;
     margin-top: -45px;	
-}
+}*/
 
 
 /* -====================== Shortcode ======================-*/
