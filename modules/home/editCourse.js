@@ -995,7 +995,7 @@ define(function(require, exports, module) {
                 alert("消息组合格式有问题!");
                 return;
             }
-        },
+        }
     }
     Course.init();
 
@@ -1010,207 +1010,125 @@ define(function(require, exports, module) {
         }
     });
     
-    QiniuForUpload();
+    QiniuForUpload();   
 
-    /*
-    // uploadImg（图片）
-    var filename = ''    //选择的文件的名字
-    var uploader = Qiniu.uploader({
-        runtimes: 'HTML5,flash,html4',                  //上传模式,依次退化
-        browse_button: 'uploadImg',                     //上传选择的点选按钮，**必需**
-        //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
-        //uptoken : 'xxxxxxxxxxxxxx',
-        //save_key: true,        // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
-        domain: 'https://static1.bcjiaoyu.com',         //bucket 域名，下载资源时用到，**必需**
-        uptoken_func: function() {
-            $.ajax({
-                async: false,
-                type: "POST",
-                url:Common.domain+"/upload/token/",
-                headers: {
-                    Authorization: "Token "+ "361e62b004a69a4610acf9f3a5b6f95eaabca3b"
-                },
-                data: {
-                    filename: filename,
-                },
-                dataType: "json",
-                success: function(json) {
-                  upToken = json.token;
-                  upkey = json.key;
-                }
-              });
-              return upToken;
-        },
-        container: 'upload-container',                     //上传区域DOM ID，默认是browser_button的父元素，
-        max_file_size: '100mb',                            //最大文件体积限制
-        flash_swf_url: 'libs/upload/plupload/Moxie.swf',   //引入flash,相对路径
-        max_retries: 3,                                    //上传失败最大重试次数
-        get_new_uptoken: true,                             //设置上传文件的时候是否每次都重新获取新的token
-        dragdrop: true,                                    //开启可拖曳上传
-        // get_new_uptoken: false,                 
-        drop_element: 'upload-container',                  //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-        chunk_size: '4mb',                                 //分块上传时，每片的体积
-        multi_selection: false,                            //单个文件上传
-        auto_start: true,                                  //选择文件后自动上传，若关闭需要自己绑定事件触发上传
-        filters : {
-            max_file_size : '100mb',
-            prevent_duplicates: true,
-            // Specify what files to browse for
-            mime_types: [
-                {title : "Image files", extensions : "jpg,gif,png,jpeg"},
-            ]
-        },
-        init: {
-               'FilesAdded': function(up, files) {
-                    plupload.each(files, function(file) {
-                        filename = file.name;
-                    });
-               },
-               'BeforeUpload': function(up, file) {
-                    // console.log(file);
-                    // console.log(file);
-                    //alert('e');
-                    // 每个文件上传前,处理相关的事情
-                    __log("上传处理中...")
-               },
-               'UploadProgress': function(up, file) {
-                    // console.log(file);
-                    // 每个文件上传时,处理相关的事情
-                    // $('.yes-btn').html('<img src="img/zone/loading.gif" style="height:20px;"/>').css('background','#e6e6e6');
-                    __log("上传中...")
-               },
-               'FileUploaded': function(up, file, info) {
-                    // console.log(file);
-                    // console.log(info);
-                    // $('.yes-btn').html('确认').css('background','#009688');
-                    var json = JSON.parse(info.response);
-                    // console.log(json.private_url);
-                    // console.log(json);
-                    $(".input-view textarea").val(json.private_url);
-                    __log("上传完成")
-               },
-               'Error': function(up, err, errTip) {
-                    // Common.dialog("上传失败");
-                    __log("上传失败")
-                    // var $progressNumed = $(".progressNum .progressNumed").eq(0);
-                    //     $progressNumed.html($progressNumed.html() - 0 + 1);
-                    //     console.log(up);
-                    //     console.log(err);
-                    //     console.log(errTip);
-               },
-               'UploadComplete': function() {
-                    //队列文件处理完毕后,处理相关的事情
-               },
-               'Key': function(up, file) {
-                    var key = upkey;
-                    return key;
-                },
-          }
-      });
-
-    // uploadAudio (音频)
-    var filename = ''    //选择的文件的名字
-    var uploader = Qiniu.uploader({
-        runtimes: 'HTML5,flash,html4',                  //上传模式,依次退化
-        browse_button: 'uploadAudio',                     //上传选择的点选按钮，**必需**
-        //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
-        //uptoken : 'xxxxxxxxxxxxxx',
-        //save_key: true,        // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
-        domain: 'https://static1.bcjiaoyu.com',         //bucket 域名，下载资源时用到，**必需**
-        uptoken_func: function() {
-            $.ajax({
-                async: false,
-                type: "POST",
-                url:Common.domain+"/upload/token/",
-                headers: {
-                    Authorization: "Token "+ "361e62b004a69a4610acf9f3a5b6f95eaabca3b"
-                },
-                data: {
-                    filename: filename,
-                },
-                dataType: "json",
-                success: function(json) {
-                  upToken = json.token;
-                  upkey = json.key;
-                }
-              });
-              return upToken;
-        },
-        container: 'upload-container',                     //上传区域DOM ID，默认是browser_button的父元素，
-        max_file_size: '100mb',                            //最大文件体积限制
-        flash_swf_url: 'libs/upload/plupload/Moxie.swf',   //引入flash,相对路径
-        max_retries: 3,                                    //上传失败最大重试次数
-        get_new_uptoken: true,                             //设置上传文件的时候是否每次都重新获取新的token
-        dragdrop: true,                                    //开启可拖曳上传
-        // get_new_uptoken: false,                 
-        drop_element: 'upload-container',                  //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-        chunk_size: '4mb',                                 //分块上传时，每片的体积
-        multi_selection: false,                            //单个文件上传
-        auto_start: true,                                  //选择文件后自动上传，若关闭需要自己绑定事件触发上传
-        filters : {
-            max_file_size : '100mb',
-            prevent_duplicates: true,
-            // Specify what files to browse for
-            mime_types: [
-                {title : "audio files", extensions : "mp3,wav"},
-            ]
-        },
-        init: {
-               'FilesAdded': function(up, files) {
-                    plupload.each(files, function(file) {
-                        filename = file.name;
-                    });
-               },
-               'BeforeUpload': function(up, file) {
-                    // console.log(file);
-                    // console.log(file);
-                    //alert('e');
-                    // 每个文件上传前,处理相关的事情
-                    __log("上传处理中...")
-               },
-               'UploadProgress': function(up, file) {
-                    // console.log(file);
-                    // 每个文件上传时,处理相关的事情
-                    // $('.yes-btn').html('<img src="img/zone/loading.gif" style="height:20px;"/>').css('background','#e6e6e6');
-                    __log("上传中...")
-               },
-               'FileUploaded': function(up, file, info) {
-                    // console.log(file);
-                    // console.log(info);
-                    // $('.yes-btn').html('确认').css('background','#009688');
-                    var json = JSON.parse(info.response);
-                    // console.log(json.private_url);
-                    // console.log(json);
-                    $(".input-view textarea").val(json.private_url);
-                    __log("上传完成")
-               },
-               'Error': function(up, err, errTip) {
-                    __log("上传失败")
-                    // Common.dialog("上传失败");
-                    // var $progressNumed = $(".progressNum .progressNumed").eq(0);
-                    //     $progressNumed.html($progressNumed.html() - 0 + 1);
-                    //     console.log(up);
-                    //     console.log(err);
-                    //     console.log(errTip);
-               },
-               'UploadComplete': function() {
-                    //队列文件处理完毕后,处理相关的事情
-               },
-               'Key': function(up, file) {
-                    var key = upkey;
-                    return key;
-                },
-          }
-      });
-
-    function __log(e, data) {
-        if (log.innerHTML) {
-            log.innerHTML += "\n" + e + " " + (data || '');
-        }else{
-            log.innerHTML += e + " " + (data || '');
-        }
-        $("#log").animate({scrollTop:$("#log")[0].scrollHeight}, 20);
-    }
-    */
     
+    var KeyBoard = {
+        init:function(){
+            //键盘操作
+            document.addEventListener("keydown", function(event){
+                var e = event || window.event;
+            　　 var k = e.keyCode || e.which;
+                console.log("keyCode:",k);
+                console.log("courseIndex:",Course.index);
+
+                if ($(".lesson-input-view").css('display') == "flex") {
+                    return;
+                }
+                if ($(".message-types").css('display') == "flex") {
+                    return;
+                }
+                if ($(".audio-types").css('display') == "flex") {
+                    return;
+                }
+                if ($(".message-input-view").css('display') == "flex") {
+                    return;
+                }
+                if ($(".problem-types").css('display') == "flex") {
+                    return;
+                }
+                if ($(".problem-view").css('display') == "flex") {
+                    return;
+                }
+                if (!$(".lesson").length) {
+                    Common.dialog("请先添加一个小节");
+                    return;
+                } 
+                Course.index = -1;            //键盘快捷键操作，只能在消息末尾追加消息
+                KeyBoard.dealKeyCode(k);
+
+            　　 return false;
+            })
+        },
+        dealKeyCode:function(k){
+            switch(k) {
+        　　　　 case 65:
+                    //文本(A)
+                    KeyBoard.clickEvent("text", "文本")
+            　　　　break;
+        　　　　 case 66:
+                    //按钮文本(B)
+                    KeyBoard.clickEvent("action", "按钮文本")
+            　　　　break;
+                case 80:
+                    //图片(P)
+                    KeyBoard.clickEvent("photo", "图片")
+            　　　　break;
+        　　　　 case 76:
+                    //链接文本(L)
+                    KeyBoard.clickEvent("link-text", "链接文本")
+            　　　　break;
+                case 81:
+                    //习题程序媛(Q)
+                    KeyBoard.clickEvent("girl", "程序媛选择题")
+            　　　　break;
+        　　　　 case 84:
+                    //习题自适应(T)
+                    KeyBoard.clickEvent("adapt", "自适应选择题")
+            　　　　break;
+        　　 }
+        },
+        clickEvent:function(tag, tagHtml){
+            var tag = tag;
+            var tagHtml = tagHtml;
+            if (tag == "action" && !$(".message").length) {
+                Common.dialog("请先输入一条消息");
+                return;
+            }
+            //增加习题判断
+            var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+            var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+            var dic = {};       //当前消息
+            var originIndex = parseInt(Course.index);
+
+            //当前消息加动作按钮
+            if (originIndex == -1) {
+                //最后一条消息添加 action
+                dic = array[array.length - 1];
+            }else{
+                // 当前消息添加 action
+                dic = array[originIndex];
+            }
+            if (tag == "action" && dic.exercises == true) {
+                Common.dialog("这是习题，无法添加 action 文本");
+                return;
+            }
+            if (tag == "girl" || tag == "adapt") {
+                // 习题的话
+                KeyBoard.clickProblemEvent(tag, tagHtml);
+            }else{
+                Course.openInputView(tag, tagHtml);
+            }
+            $(".message-types").css({display:'none'});
+        },
+        clickProblemEvent:function(tag, tagHtml){
+            var tag = tag,
+                tagHtml = tagHtml;
+
+            $(".problem-question-view").css({display:'flex'})
+            $(".problem-question-view .problem-header .type").html(tagHtml);
+
+            if (tag == "adapt") {
+                //打开自适应题框
+                $(".problem-girl-content-view").hide();
+                $(".problem-adapt-content-view").show();
+            }else{
+                //打开程序媛题框
+                $(".problem-girl-content-view").show();
+                $(".problem-adapt-content-view").hide();
+            }
+            $(".problem-types").css({display:'none'});
+        }
+    }
+    KeyBoard.init();
 });
