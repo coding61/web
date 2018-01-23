@@ -1,6 +1,6 @@
 /* -====================== google fonts ======================-*/
 
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400|Poppins:400,500,600,700|Raleway:300,400,500,600,700|Sofia');
+/*@import url('https://fonts.googleapis.com/css?family=Lato:300,400|Poppins:400,500,600,700|Raleway:300,400,500,600,700|Sofia');*/
 
 /*
 * Decades Responsive App Landing Page;
@@ -403,7 +403,7 @@ button:active,
 
 /* -====================== Preloader ======================-*/
 
-.preloader {
+/*.preloader {
 	position: fixed;
     top: 0;
     left: 0;
@@ -426,7 +426,7 @@ button:active,
     display: block;
     margin: auto;
     margin-top: -45px;	
-}
+}*/
 
 
 /* -====================== Shortcode ======================-*/

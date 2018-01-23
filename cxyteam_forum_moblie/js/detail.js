@@ -153,28 +153,28 @@ function getReplys(page){
 }
 function changePostStatus(status) {
 	$.ajax({
-	        url: basePath+"/forum/posts/"+postId+"/",
-	        type: "patch",
-	        headers: {
-	            Authorization: 'Token ' + token
-	        },
-	        data:{"status":status},
-	        success: function(result) {
-				if(result){
-					setTimeout("window.location.reload()",100);
-				}else{
-					layer.msg("标记未成功");
-				}
-			},
-	        error:function(XMLHttpRequest){
-	        	
-	        	if(XMLHttpRequest.status==403){
-	        		layer.msg("请求异常");
-	        	}else{
-	        		layer.msg("请求异常")
-	        	}
-	        }
-	    });	
+        url: basePath+"/forum/posts/"+postId+"/",
+        type: "patch",
+        headers: {
+            Authorization: 'Token ' + token
+        },
+        data:{"status":status},
+        success: function(result) {
+			if(result){
+				setTimeout("window.location.reload()",100);
+			}else{
+				layer.msg("标记未成功");
+			}
+		},
+        error:function(XMLHttpRequest){
+        	
+        	if(XMLHttpRequest.status==403){
+        		layer.msg("请求异常");
+        	}else{
+        		layer.msg("请求异常")
+        	}
+        }
+	});	
 }
 $(document).on('click', '.solved', function(event) {
 	event.preventDefault();
