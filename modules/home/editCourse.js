@@ -100,6 +100,8 @@ define(function(require, exports, module) {
                 $("#log").show();
             }
             $(".message-input-view").css({display:'flex'});
+
+            KeyBoard.inputTextareaFoucus(tag);
         },
         openAudioInputView:function(tag, tagHtml){
             $(".msg-header .type").html(tagHtml);
@@ -1014,14 +1016,14 @@ define(function(require, exports, module) {
 
     
     var KeyBoard = {
+        key:false,
         init:function(){
             //键盘操作
             document.addEventListener("keydown", function(event){
+                // console.log("keydown:",event);
                 var e = event || window.event;
             　　 var k = e.keyCode || e.which;
-                console.log("keyCode:",k);
-                console.log("courseIndex:",Course.index);
-
+                
                 if ($(".lesson-input-view").css('display') == "flex") {
                     return;
                 }
@@ -1044,11 +1046,33 @@ define(function(require, exports, module) {
                     Common.dialog("请先添加一个小节");
                     return;
                 } 
+                // 键盘按键触发弹框
+                console.log("keyCode:",k);
+                console.log("courseIndex:",Course.index);
+
+                KeyBoard.key = false;
                 Course.index = -1;            //键盘快捷键操作，只能在消息末尾追加消息
                 KeyBoard.dealKeyCode(k);
-
-            　　 return false;
             })
+        
+            // document.addEventListener("keyup", function(event){
+            //     var e = event || window.event;
+            // 　　 var k = e.keyCode || e.which;
+            //     // console.log("keyup:",event);
+            //     if(!KeyBoard.key){
+            //         $(".message-input-view textarea").focus();
+            //         KeyBoard.key = true;
+            //         var values = $(".message-input-view textarea").val();
+            //         $(".message-input-view textarea").val(values.substr(0, values.length - 1))
+            //         if (k == 80) {
+            //             $("#uploadImg").click();
+            //         }
+            //     }else{
+            //         // $(".message-input-view textarea").blur(function(){
+            //         //     KeyBoard.key = true
+            //         // });
+            //     }
+            // })
         },
         dealKeyCode:function(k){
             switch(k) {
@@ -1128,6 +1152,22 @@ define(function(require, exports, module) {
                 $(".problem-adapt-content-view").hide();
             }
             $(".problem-types").css({display:'none'});
+        },
+        inputTextareaFoucus:function(tag){
+            var tags = ["text", "action", "photo", "link-text"]
+            if (tags.indexOf(tag) > -1) {
+                console.log("聚焦");
+                // $(".message-input-view textarea").focus();  //这种要配合 keyup 使用,否则按键字母会出现在输入框中
+                setTimeout(function(){
+                    $(".message-input-view textarea").focus(); //延迟聚焦，输入框不会出现按键内容
+                    if(tag == "photo"){
+                        $("#uploadImg").click();
+                    }
+                }, 500)
+                
+            }else{
+                console.log("无法聚焦");
+            }
         }
     }
     KeyBoard.init();
