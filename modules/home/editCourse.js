@@ -1022,8 +1022,13 @@ define(function(require, exports, module) {
             document.addEventListener("keydown", function(event){
                 // console.log("keydown:",event);
                 var e = event || window.event;
-            　　 var k = e.keyCode || e.which;
+                var k = e.keyCode || e.which;
                 
+                if(e.keyCode == 13 && e.ctrlKey){
+                    console.log("按了组合键");
+                    KeyBoard.ctrlEnterKeyPress();
+                    return
+                }
                 if ($(".lesson-input-view").css('display') == "flex") {
                     return;
                 }
@@ -1046,13 +1051,16 @@ define(function(require, exports, module) {
                     Common.dialog("请先添加一个小节");
                     return;
                 } 
-                // 键盘按键触发弹框
-                console.log("keyCode:",k);
-                console.log("courseIndex:",Course.index);
+                
+                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84){
+                    // 键盘按键触发弹框
+                    console.log("keyCode:",k);
+                    console.log("courseIndex:",Course.index);
 
-                KeyBoard.key = false;
-                Course.index = -1;            //键盘快捷键操作，只能在消息末尾追加消息
-                KeyBoard.dealKeyCode(k);
+                    KeyBoard.key = false;
+                    Course.index = -1;            //键盘快捷键操作，只能在消息末尾追加消息
+                    KeyBoard.dealKeyCode(k);
+                } 
             })
         
             // document.addEventListener("keyup", function(event){
@@ -1168,7 +1176,33 @@ define(function(require, exports, module) {
             }else{
                 console.log("无法聚焦");
             }
-        }
+        },
+        ctrlEnterKeyPress:function(){
+            if($(".problem-option-view").css('display') == 'flex'){
+                // 自适应选项确定
+                console.log("自适应选项确定---复合键");
+                $(".option-submit").click();
+                return;
+            }
+            if($(".problem-question-view").css('display') == 'flex'){
+                // 程序媛选择题，自适应选择题确定
+                console.log("程序媛选择题，自适应选择题确定---复合键")
+                if($(".problem-girl-content-view").css('display') == 'block'){
+                    // 程序媛
+                    $(".problem-girl-content-view .problem-submit").click();
+                }else if ($(".problem-adapt-content-view").css('display') == 'block'){
+                    // 自适应
+                    $(".problem-adapt-content-view .problem-submit").click();
+                }
+                return;
+            }
+            if($(".message-input-view").css('display') == "flex"){
+                // 文本、图片、链接文本、按钮、音频，输入框中的确定按钮
+                console.log("文本、图片、链接文本、按钮、音频，输入框中的确定按钮---复合键")
+                $(".input-view .input-submit").click();
+                return;
+            }
+        },
     }
     KeyBoard.init();
 });
