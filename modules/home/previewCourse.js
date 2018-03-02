@@ -82,7 +82,7 @@ define(function(require, exports, module) {
             }
             if (item.audio) {
                 var url = item.audio;
-                Common.playMessageSoun1(url);
+                // Common.playMessageSoun1(url);
             }
             if(item.tag){
                 $('.lazy-img').imageloader();
@@ -292,11 +292,12 @@ define(function(require, exports, module) {
         loadClickMessage:function(actionText, exercise){
             // 本课程继续学
             // 人工提问
+            var avatar = localStorage.avatar?localStorage.avatar:"https://static1.bcjiaoyu.com/binshu.jpg"
             var answerHtml ='<div class="answer"> \
                                 <div class="msg-view">\
                                     <span class="content">'+actionText+'</span> \
                                 </div>\
-                                <img class="avatar" src="'+localStorage.avatar+'" />\
+                                <img class="avatar" src="'+avatar+'" />\
                             </div>';
             $(answerHtml).appendTo(".messages");
             
