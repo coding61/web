@@ -2278,12 +2278,12 @@ footer {
 .code-online-editors .editors .editor:hover{
     color: rgb(84, 180,225);
 }
-#team .container .onerow,.tworow {
+#team .container .row {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-#team .container .lastrow {
+/*#team .container .lastrow {
     display: flex;
     align-items: center;
-}
+}*/
