@@ -472,18 +472,18 @@ $(document).ready(function () {
         $(".code-online-editors").css({display:'none'})
     })
     // 点击媒体跳转链接
-    $('.col-md-3').click(function() {
-        var tag = $(this).attr("data-pk");
-        if (tag == "0") {
-            window.open("https://www.jiemodui.com/N/82450.html");
-        } else if (tag == "1") {
-            window.open("http://zqb.cyol.com/html/2017-10/31/nw.D110000zgqnb_20171031_2-12.htm");
-        } else if (tag == "2") {
-            window.open("http://www.cankaoxiaoxi.com/china/20170809/2218051.shtml");
-        } else if (tag == "3") {
-            window.open("https://www.shine.cn/archive/feature/people/Program-breaking-the-glass-ceiling-for-girls/shdaily.shtml");
-        } 
-    })
+    // $('.col-md-3').click(function() {
+    //     var tag = $(this).attr("data-pk");
+    //     if (tag == "0") {
+    //         window.open("https://www.jiemodui.com/N/82450.html");
+    //     } else if (tag == "1") {
+    //         window.open("http://zqb.cyol.com/html/2017-10/31/nw.D110000zgqnb_20171031_2-12.htm");
+    //     } else if (tag == "2") {
+    //         window.open("http://www.cankaoxiaoxi.com/china/20170809/2218051.shtml");
+    //     } else if (tag == "3") {
+    //         window.open("https://www.shine.cn/archive/feature/people/Program-breaking-the-glass-ceiling-for-girls/shdaily.shtml");
+    //     } 
+    // })
     
 });
 
