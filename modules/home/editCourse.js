@@ -1265,7 +1265,15 @@ define(function(require, exports, module) {
 
     //通过服务器向七牛存储大段文本的 HTML 文件
     function storeHtmlText(content, callback){
-        var content = content.replace(/\n/g, "<br/>");
+        var content = content;
+        if (content.match(/<[a-zA-Z]+>/g)) {
+        }else{
+            content = content.replace(/\r\n/g, "<br/>");
+            content = content.replace(/\n/g, "<br/>");
+            content = content.replace(/\ /g, "&nbsp"); //替换 空格
+            content = content.replace(/\t/g, "&nbsp&nbsp&nbsp&nbsp");
+        }
+
         var html = '<!DOCTYPE html><html><head><meta charset="utf-8" /></head><body><p>'+content+'</p></body></html>'
         $.ajax({
             type:"post",
