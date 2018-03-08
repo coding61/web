@@ -1277,7 +1277,7 @@ define(function(require, exports, module) {
         var html = '<!DOCTYPE html><html><head><meta charset="utf-8" /></head><body><p>'+content+'</p></body></html>'
         $.ajax({
             type:"post",
-            url:"https://app.bcjiaoyu.com/server/upload/html_file/",
+            url:"/server/upload/html_file/",
             data:{
                 html:html,
             },
