@@ -590,61 +590,61 @@ var RongWebIMWidget;
                     var userinfo = new RongIMLib.UserInfo(providerdata.currentUserInfo.userId, providerdata.currentUserInfo.name, providerdata.currentUserInfo.portraitUri);
                     msg.user = userinfo;
                     // ************************发送消息 更新本地用户信息*******************//
-                    if ($scope.conversation.targetType == 1) {
-                        var id = $scope.conversation.targetId;
-                        if ($scope.conversation.targetId.indexOf("+") != -1) {
-                            id = "%2b" + id.substr(1)
-                        }
-                        $.ajax({
-                            async: false,
-                            url: "/program_girl/userinfo/username_userinfo/?username=" + id,
-                        }).success(function(rep){
-                            // console.log(rep);
-                            if (localStorage.userlist) {
-                                var userlist = JSON.parse(localStorage.userlist);
-                                for (var i = 0; i < userlist.result.length; i++) {
-                                    if (userlist.result[i].id == $scope.conversation.targetId) {
-                                        userlist.result[i].name = rep.name;
-                                        userlist.result[i].portraitUri = rep.avatar;
-                                        localStorage.userlist = JSON.stringify(userlist);
-                                    }
-                                }
-                            } else {
-                                var userlist = {"result":[]};
-                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name, "portraitUri": rep.avatar};
-                                userlist.result.push(userJson); //存用户信息
-                                localStorage.userlist = JSON.stringify(userlist);
-                            }
-                        }).error(function(err) {
+                    // if ($scope.conversation.targetType == 1) {
+                    //     var id = $scope.conversation.targetId;
+                    //     if ($scope.conversation.targetId.indexOf("+") != -1) {
+                    //         id = "%2b" + id.substr(1)
+                    //     }
+                    //     $.ajax({
+                    //         async: false,
+                    //         url: "/program_girl/userinfo/username_userinfo/?username=" + id,
+                    //     }).success(function(rep){
+                    //         // console.log(rep);
+                    //         if (localStorage.userlist) {
+                    //             var userlist = JSON.parse(localStorage.userlist);
+                    //             for (var i = 0; i < userlist.result.length; i++) {
+                    //                 if (userlist.result[i].id == $scope.conversation.targetId) {
+                    //                     userlist.result[i].name = rep.name;
+                    //                     userlist.result[i].portraitUri = rep.avatar;
+                    //                     localStorage.userlist = JSON.stringify(userlist);
+                    //                 }
+                    //             }
+                    //         } else {
+                    //             var userlist = {"result":[]};
+                    //             var userJson = {"id": $scope.conversation.targetId,"name": rep.name, "portraitUri": rep.avatar};
+                    //             userlist.result.push(userJson); //存用户信息
+                    //             localStorage.userlist = JSON.stringify(userlist);
+                    //         }
+                    //     }).error(function(err) {
 
-                        })
-                    } else if ($scope.conversation.targetType == 3) {
-                        $.ajax({
-                            async: false,
-                            url: "/program_girl/club/club_detail/" + $scope.conversation.targetId + "/",
-                            headers: {
-                                'Authorization': "Token " + localStorage.token
-                            }
-                        }).success(function(rep){
-                            // console.log(rep);
-                            if (localStorage.userlist) {
-                                var userlist = JSON.parse(localStorage.userlist);
-                                for (var i = 0; i < userlist.result.length; i++) {
-                                    if (userlist.result[i].id == $scope.conversation.targetId) {
-                                        userlist.result[i].name = rep.name;
-                                        localStorage.userlist = JSON.stringify(userlist);
-                                    }
-                                }
-                            } else {
-                                var userlist = {"result":[]};
-                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name};
-                                userlist.result.push(userJson); //存用户信息
-                                localStorage.userlist = JSON.stringify(userlist);
-                            }
-                        }).error(function(err) {
+                    //     })
+                    // } else if ($scope.conversation.targetType == 3) {
+                    //     $.ajax({
+                    //         async: false,
+                    //         url: "/program_girl/club/club_detail/" + $scope.conversation.targetId + "/",
+                    //         headers: {
+                    //             'Authorization': "Token " + localStorage.token
+                    //         }
+                    //     }).success(function(rep){
+                    //         // console.log(rep);
+                    //         if (localStorage.userlist) {
+                    //             var userlist = JSON.parse(localStorage.userlist);
+                    //             for (var i = 0; i < userlist.result.length; i++) {
+                    //                 if (userlist.result[i].id == $scope.conversation.targetId) {
+                    //                     userlist.result[i].name = rep.name;
+                    //                     localStorage.userlist = JSON.stringify(userlist);
+                    //                 }
+                    //             }
+                    //         } else {
+                    //             var userlist = {"result":[]};
+                    //             var userJson = {"id": $scope.conversation.targetId,"name": rep.name};
+                    //             userlist.result.push(userJson); //存用户信息
+                    //             localStorage.userlist = JSON.stringify(userlist);
+                    //         }
+                    //     }).error(function(err) {
 
-                        })
-                    }
+                    //     })
+                    // }
                     // ************************发送消息 更新本地用户信息*******************//
                     try {
                         RongIMLib.RongIMClient.getInstance().sendMessage(+$scope.conversation.targetType, $scope.conversation.targetId, msg, {
@@ -684,61 +684,61 @@ var RongWebIMWidget;
                     var im = RongIMLib.ImageMessage.obtain(content, imageUrl);
                     var content = _this.packDisplaySendMessage(im, RongWebIMWidget.MessageType.ImageMessage);
                     // ************************发送消息 更新本地用户信息*******************//
-                    if ($scope.conversation.targetType == 1) {
-                        var id = $scope.conversation.targetId;
-                        if ($scope.conversation.targetId.indexOf("+") != -1) {
-                            id = "%2b" + id.substr(1)
-                        }
-                        $.ajax({
-                            async: false,
-                            url: "/program_girl/userinfo/username_userinfo/?username=" + id,
-                        }).success(function(rep){
-                            // console.log(rep);
-                            if (localStorage.userlist) {
-                                var userlist = JSON.parse(localStorage.userlist);
-                                for (var i = 0; i < userlist.result.length; i++) {
-                                    if (userlist.result[i].id == $scope.conversation.targetId) {
-                                        userlist.result[i].name = rep.name;
-                                        userlist.result[i].portraitUri = rep.avatar;
-                                        localStorage.userlist = JSON.stringify(userlist);
-                                    }
-                                }
-                            } else {
-                                var userlist = {"result":[]};
-                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name, "portraitUri": rep.avatar};
-                                userlist.result.push(userJson); //存用户信息
-                                localStorage.userlist = JSON.stringify(userlist);
-                            }
-                        }).error(function(err) {
+                    // if ($scope.conversation.targetType == 1) {
+                    //     var id = $scope.conversation.targetId;
+                    //     if ($scope.conversation.targetId.indexOf("+") != -1) {
+                    //         id = "%2b" + id.substr(1)
+                    //     }
+                    //     $.ajax({
+                    //         async: false,
+                    //         url: "/program_girl/userinfo/username_userinfo/?username=" + id,
+                    //     }).success(function(rep){
+                    //         // console.log(rep);
+                    //         if (localStorage.userlist) {
+                    //             var userlist = JSON.parse(localStorage.userlist);
+                    //             for (var i = 0; i < userlist.result.length; i++) {
+                    //                 if (userlist.result[i].id == $scope.conversation.targetId) {
+                    //                     userlist.result[i].name = rep.name;
+                    //                     userlist.result[i].portraitUri = rep.avatar;
+                    //                     localStorage.userlist = JSON.stringify(userlist);
+                    //                 }
+                    //             }
+                    //         } else {
+                    //             var userlist = {"result":[]};
+                    //             var userJson = {"id": $scope.conversation.targetId,"name": rep.name, "portraitUri": rep.avatar};
+                    //             userlist.result.push(userJson); //存用户信息
+                    //             localStorage.userlist = JSON.stringify(userlist);
+                    //         }
+                    //     }).error(function(err) {
 
-                        })
-                    } else if ($scope.conversation.targetType == 3) {
-                        $.ajax({
-                            async: false,
-                            url: "/program_girl/club/club_detail/" + $scope.conversation.targetId + "/",
-                            headers: {
-                                'Authorization': "Token " + localStorage.token
-                            }
-                        }).success(function(rep){
-                            // console.log(rep);
-                            if (localStorage.userlist) {
-                                var userlist = JSON.parse(localStorage.userlist);
-                                for (var i = 0; i < userlist.result.length; i++) {
-                                    if (userlist.result[i].id == $scope.conversation.targetId) {
-                                        userlist.result[i].name = rep.name;
-                                        localStorage.userlist = JSON.stringify(userlist);
-                                    }
-                                }
-                            } else {
-                                var userlist = {"result":[]};
-                                var userJson = {"id": $scope.conversation.targetId,"name": rep.name};
-                                userlist.result.push(userJson); //存用户信息
-                                localStorage.userlist = JSON.stringify(userlist);
-                            }
-                        }).error(function(err) {
+                    //     })
+                    // } else if ($scope.conversation.targetType == 3) {
+                    //     $.ajax({
+                    //         async: false,
+                    //         url: "/program_girl/club/club_detail/" + $scope.conversation.targetId + "/",
+                    //         headers: {
+                    //             'Authorization': "Token " + localStorage.token
+                    //         }
+                    //     }).success(function(rep){
+                    //         // console.log(rep);
+                    //         if (localStorage.userlist) {
+                    //             var userlist = JSON.parse(localStorage.userlist);
+                    //             for (var i = 0; i < userlist.result.length; i++) {
+                    //                 if (userlist.result[i].id == $scope.conversation.targetId) {
+                    //                     userlist.result[i].name = rep.name;
+                    //                     localStorage.userlist = JSON.stringify(userlist);
+                    //                 }
+                    //             }
+                    //         } else {
+                    //             var userlist = {"result":[]};
+                    //             var userJson = {"id": $scope.conversation.targetId,"name": rep.name};
+                    //             userlist.result.push(userJson); //存用户信息
+                    //             localStorage.userlist = JSON.stringify(userlist);
+                    //         }
+                    //     }).error(function(err) {
 
-                        })
-                    }
+                    //     })
+                    // }
                     // ************************发送消息 更新本地用户信息*******************//
                     RongIMLib.RongIMClient.getInstance()
                         .sendMessage($scope.conversation.targetType, $scope.conversation.targetId, im, {
