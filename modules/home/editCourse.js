@@ -226,6 +226,31 @@ define(function(require, exports, module) {
                 $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
             }
         },
+        refreshCourseData:function(totalDic, array){
+            totalDic[Course.lesson] = array;
+            localStorage.CourseData = JSON.stringify(totalDic);
+
+            // localStorage.CourseMessageData = JSON.stringify(array);
+            
+            Course.load();  //1.刷新会话列表
+
+            // 2:刷新页面
+            // Course.refreshAddMessage(tag);
+            
+            // 隐藏输入框
+            $(".message-input-view").css({display:'none'});
+            $(".input-view textarea").val("");
+            $(".input-view input").val("");
+            $("#log").html("");
+
+            // 滚动到最底部
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            
+            window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+            // jsonCourse.window.setEditorValue();                   // 传递值，
+
+            Course.clickDeleteEvent();
+        },
         clickEvent:function(){
             //---------------------------中间的消息列表的公共处理事件
             // console.log(1);
@@ -361,6 +386,8 @@ define(function(require, exports, module) {
                                 //当前消息之后
                                 array.splice(originIndex+1, 0, dic);
                             }
+                            
+                            Course.refreshCourseData(totalDic, array);
                         }else{
                             Common.dialog("请求失败");
                         }
