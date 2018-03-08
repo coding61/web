@@ -98,6 +98,13 @@ define(function(require, exports, module) {
 
                 $("#audio-record-view").hide();
                 $("#log").show();
+            }else if(tag == "manytext"){
+                // 大段文本
+                $(".input-view textarea").attr({placeholder:"大段文本内容"});
+                $(".input-view input").hide();
+                $(".input-view #upload-container").hide();
+                $("#audio-record-view").hide();
+                $("#log").hide();
             }
             $(".message-input-view").css({display:'flex'});
 
@@ -339,6 +346,25 @@ define(function(require, exports, module) {
                         //当前消息之后
                         array.splice(originIndex+1, 0, dic);
                     }
+                }else if(tag == "manytext"){
+                    // 新增大段文本
+                    // 向服务器存储该文本内容，然后存链接文本
+                    var content = $(".input-view textarea").val();
+                    storeHtmlText(content, function(link){
+                        if (link) {
+                            dic["message"] = "点击阅读大段文本";
+                            dic["link"] = link;
+                            if (originIndex == -1) {
+                                //最后一条消息
+                                array.push(dic);
+                            }else{
+                                //当前消息之后
+                                array.splice(originIndex+1, 0, dic);
+                            }
+                        }else{
+                            Common.dialog("请求失败");
+                        }
+                    })
                 }
                 
                 totalDic[Course.lesson] = array;
@@ -1051,8 +1077,8 @@ define(function(require, exports, module) {
                     Common.dialog("请先添加一个小节");
                     return;
                 } 
-                
-                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84){
+                console.log(k);
+                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77){
                     // 键盘按键触发弹框
                     console.log("keyCode:",k);
                     console.log("courseIndex:",Course.index);
@@ -1107,6 +1133,10 @@ define(function(require, exports, module) {
         　　　　 case 84:
                     //习题自适应(T)
                     KeyBoard.clickEvent("adapt", "自适应选择题")
+            　　　　break;
+                case 77:
+                    //大段文本(M)
+                    KeyBoard.clickEvent("manytext", "大段文本")
             　　　　break;
         　　 }
         },
@@ -1205,4 +1235,39 @@ define(function(require, exports, module) {
         },
     }
     KeyBoard.init();
+
+    //通过服务器向七牛存储大段文本的 HTML 文件
+    function storeHtmlText(content, callback){
+        var content = content.replace(/\n/g, "<br/>");
+        var html = '<!DOCTYPE html><html><head><meta charset="utf-8" /></head><body><p>'+content+'</p></body></html>'
+        $.ajax({
+            type:"post",
+            url:"https://app.bcjiaoyu.com/server/upload/html_file/",
+            data:{
+                html:html,
+            },
+            success:function(json){
+                if (json.hasOwnProperty("url")) {
+                    var link = json.url;
+                    callback(link);
+                }else{
+                    callback('');
+                }
+            },
+            error:function(xhr, textStatus){
+                Common.hideLoading();
+                if (textStatus == "timeout") {
+                    Common.dialog("请求超时");
+                    return;
+                }
+                if (xhr.status == 400 || xhr.status == 403) {
+                    Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                    return;
+                }else{
+                    Common.dialog('服务器繁忙');
+                    return;
+                }
+            }
+        })
+    }
 });
