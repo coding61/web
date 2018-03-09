@@ -43,6 +43,10 @@ window.RongDemo = {
                 // if (targetId.indexOf("+") != -1) {
                 //     id = "%2b" + id.substr(1)
                 // }
+                if (targetId.indexOf("+") == -1) {
+                } else {
+                    targetId = "%2b" + targetId.split("+")[1];
+                }
                 // 根据id获取用户信息
                 $.ajax({
                     async: false,
