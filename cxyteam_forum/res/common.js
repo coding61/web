@@ -24,7 +24,6 @@ window.RongDemo = {
                     }
                     // 根据id获取用户信息
                     $.ajax({
-                        async: false,
                         url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
                     }).success(function(rep){
                         // console.log(rep);
@@ -43,7 +42,6 @@ window.RongDemo = {
                 }
                 // 根据id获取用户信息
                 $.ajax({
-                    async: false,
                     url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
                 }).success(function(rep){
                     // console.log(rep);
@@ -71,7 +69,6 @@ window.RongDemo = {
                     obj.onSuccess({name: user.name, id: user.id});
                 } else {
                     $.ajax({
-                        async: false,
                         url: basePath + "/club/club_detail/" + targetId + "/",
                         headers: {
                             'Authorization': "Token " + localStorage.token
@@ -89,7 +86,6 @@ window.RongDemo = {
             } else {
                 var userlist = {"result":[]};
                 $.ajax({
-                    async: false,
                     url: basePath + "/club/club_detail/" + targetId + "/",
                     headers: {
                         'Authorization': "Token " + localStorage.token
