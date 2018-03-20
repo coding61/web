@@ -254,6 +254,39 @@ define(function(require, exports, module) {
         clickEvent:function(){
             //---------------------------中间的消息列表的公共处理事件
             // console.log(1);
+            // 本节打卡信息添加
+            $(".chat .add .record").unbind('click').click(function(){
+                Common.bcAlert("您是否确定本小节课程数据已编写完毕？", function(){
+                    // 提交内容
+                    var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                    var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+
+                    // var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                    var dic = {};       //当前消息
+                    var originIndex = parseInt(Course.index);
+
+                    dic["message"] = "打卡炫耀下"
+                    dic["action"] = "打卡炫耀下"
+                    dic["record"] = true
+                    if (originIndex == -1) {
+                        //最后一条消息
+                        array.push(dic);
+                    }else{
+                        //当前消息之后
+                        array.splice(originIndex+1, 0, dic);
+                    }
+
+                    totalDic[Course.lesson] = array;
+                    localStorage.CourseData = JSON.stringify(totalDic);
+                    
+                    Course.load();  //1.刷新会话列表
+
+                    // 滚动到最底部
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                    
+                    window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+                })
+            })
             // 清空数据重来
             $(".chat .add .reset").unbind('click').click(function(){
                 // 重置整个课程数据为空
