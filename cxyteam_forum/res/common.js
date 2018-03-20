@@ -19,14 +19,12 @@ window.RongDemo = {
                 if (user) {
                     obj.onSuccess({name: user.name, id: user.id, portraitUri: user.portraitUri});
                 } else {
-                    var id = targetId;
                     if (targetId.indexOf("+") != -1) {
-                        id = "%2b" + id.substr(1)
+                        targetId = "%2b" + targetId.split("+")[1];
                     }
                     // 根据id获取用户信息
                     $.ajax({
-                        async: false,
-                        url: basePath + "/userinfo/username_userinfo/?username=" + id,
+                        url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
                     }).success(function(rep){
                         // console.log(rep);
                         var userJson = {"id": targetId,"name": rep.name, "portraitUri": rep.avatar};
@@ -39,17 +37,14 @@ window.RongDemo = {
                 }
             } else {
                 var userlist = {"result":[]};
-                var id = targetId;
                 if (targetId.indexOf("+") != -1) {
-                    id = "%2b" + id.substr(1)
+                    targetId = "%2b" + targetId.split("+")[1];
                 }
                 // 根据id获取用户信息
                 $.ajax({
-                    async: false,
-                    url: basePath + "/userinfo/username_userinfo/?username=" + id,
+                    url: basePath + "/userinfo/username_userinfo/?username=" + targetId,
                 }).success(function(rep){
                     // console.log(rep);
-                    
                     var userJson = {"id": targetId,"name": rep.name, "portraitUri": rep.avatar};
                     userlist.result.push(userJson); //存用户信息
                     localStorage.userlist = JSON.stringify(userlist);
@@ -74,7 +69,6 @@ window.RongDemo = {
                     obj.onSuccess({name: user.name, id: user.id});
                 } else {
                     $.ajax({
-                        async: false,
                         url: basePath + "/club/club_detail/" + targetId + "/",
                         headers: {
                             'Authorization': "Token " + localStorage.token
@@ -92,7 +86,6 @@ window.RongDemo = {
             } else {
                 var userlist = {"result":[]};
                 $.ajax({
-                    async: false,
                     url: basePath + "/club/club_detail/" + targetId + "/",
                     headers: {
                         'Authorization': "Token " + localStorage.token
