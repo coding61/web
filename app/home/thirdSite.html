@@ -25,7 +25,9 @@
 				//var args = ls.match(/[a-zA-Z0-9]+=[^&]+&|[a-zA-Z0-9]+=[^&]+$/g);
 			}
 			var url = decodeURIComponent(getQueryString("url"));
-			location.href = url
+			if (url) {
+				location.href = url
+			}
 		</script>
 	</body>
 </html>
