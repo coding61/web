@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>三方页</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function getQueryString(key) {
+				var ls = location.search;
+				//var reg = eval("new RegExp('[a-zA-Z0-9]+=[^&]+&|[a-zA-Z0-9]+=[^&]+$','g')");
+				var reg = eval("new RegExp('[\?&]+(" + key + ")=[^&]+&|[\?&]+(" + key + ")=[^&]+$')");
+				var args = ls.match(reg);
+				if (args) {
+					return args[0].split("=")[1].replace(/&$/, "");
+				} else {
+					console.log(key + "不存在");
+					return null;
+				}
+				//var args = ls.match(/[a-zA-Z0-9]+=[^&]+&|[a-zA-Z0-9]+=[^&]+$/g);
+			}
+			var url = decodeURIComponent(getQueryString("url"));
+			location.href = url
+		</script>
+	</body>
+</html>
+
