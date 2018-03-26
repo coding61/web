@@ -10,6 +10,7 @@
 	</head>
 
 	<body>
+		<iframe src="" frameborder="0" style="background-color: red;"></iframe>
 		<script type="text/javascript">
 			function getQueryString(key) {
 				var ls = location.search;
@@ -25,8 +26,10 @@
 				//var args = ls.match(/[a-zA-Z0-9]+=[^&]+&|[a-zA-Z0-9]+=[^&]+$/g);
 			}
 			var url = decodeURIComponent(getQueryString("url"));
+			console.log(url);
 			if (url) {
-				location.href = url
+				// location.href = url
+				$("iframe").attr({src:url});
 			}
 		</script>
 	</body>
