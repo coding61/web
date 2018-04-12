@@ -453,6 +453,8 @@ $(document).ready(function () {
     }
     // $(".phone-invite-shadow-view").show();
     function getArticles(page) {
+
+        showWaitingLoading();
         // 判断有无token
         if (localStorage.token) {
             var j = {"Authorization": "Token " + localStorage.token};
@@ -468,6 +470,7 @@ $(document).ready(function () {
             type: "get",
             headers: j,
             success:function(json){
+                hideWaitingLoading();
                 var html = template("message-template", json.results);
                 $('.message').append(html);
                 
@@ -475,6 +478,9 @@ $(document).ready(function () {
                 circle.initScroll();
             },
             error:function(xhr, textStatus){
+                console.log(xhr);
+                console.log(textStatus);
+                hideWaitingLoading();
             }
         })
     }
@@ -499,8 +505,7 @@ $(document).ready(function () {
             };
         }
     }
-
-    
+ 
     // 点赞/取消点赞
     $(document).on("click", ".heart", function() {
         var pk = $(this).attr("data-pk");
@@ -598,6 +603,49 @@ $(document).ready(function () {
             "overflow": "auto"
         });
     }
+
+    function showWaitingLoading (c) {
+        var waitingHtml = '<div class="waitloading"><img src="../../statics/images/loading.gif"/></div>';
+
+        var height = null;
+        if (c) {
+            height = $(c).height();
+            $(c).append(waitingHtml);
+        }else{
+            height = $(window).height();
+            $(waitingHtml).appendTo("body");
+        }
+
+        if (c) {
+            $(".waitloading").css({
+                "width":"60px",
+                "height":"60px",
+                "position":"relative",
+                "margin":"auto",
+                "padding-top": (height - 60 )/2 + "px",
+                "padding-bottom": (height - 60)/2 + "px"
+            });
+        }else{
+            $(".waitloading").css({
+                "width":"60px",
+                "height":"60px",
+                "position": "fixed",
+                "top": (height - 60) / 2 + "px",
+                left: "calc(50% - 30px)"
+            });
+        }
+    }
+
+    function hideWaitingLoading () {
+        //设置延迟2秒
+        // setTimeout(function(){
+            $(".waitloading").remove();
+            // location.href = "aichashuo://loadcomplete";
+        // }, 10);
+    }
+
+
+
     // ---------------------4.帮助方法
     var Util = {
         currentCountryCode:"+86",
