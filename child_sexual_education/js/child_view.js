@@ -453,7 +453,7 @@ $(document).ready(function () {
     }
     // $(".phone-invite-shadow-view").show();
     function getArticles(page) {
-        
+
         showWaitingLoading();
         // 判断有无token
         if (localStorage.token) {
@@ -478,6 +478,9 @@ $(document).ready(function () {
                 circle.initScroll();
             },
             error:function(xhr, textStatus){
+                console.log(xhr);
+                console.log(textStatus);
+                hideWaitingLoading();
             }
         })
     }
