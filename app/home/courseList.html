@@ -104,13 +104,13 @@
         		{{each}}
 	        	<div class="course{{if $value.isopen == true}} open{{else}} unopen{{/if}}" data-category="{{$value.pk}}" data-status="{{$value.learn_extent.status}}" data-course-index={{$value.learn_extent.last_lesson}} data-course-total={{$value.total_lesson}}>
 	        		{{if $value.learn_extent.status == "finish"}}
-		                <img class="status" src="../../statics/images/course/icon1-1.png" style="top: 50px;height: 28px;"/>
+		                <img class="status" src="../../statics/images/course/icon1-1.png" style="top: 40%;width:48px;height: 18px;"/>
 		            {{else if $value.learn_extent.status == "processing"}}
-		            	<img class="status" src="../../statics/images/course/icon2-1.png" style="top: 50px;height: 28px;"/>
+		            	<img class="status" src="../../statics/images/course/icon2-1.png" style="top: 40%;width:48px;height: 18px;"/>
 		            {{else}}
 		            {{/if}}
 		            {{if $value.isopen == false}}
-		            	<img class="status" src="../../statics/images/course/icon3-1.png" style="top: 50px;height: 28px;"/> 
+		            	<img class="status" src="../../statics/images/course/icon3-1.png" style="top: 40%;width:48px;height: 18px;"/> 
 		            {{/if}}
 	                <h3>{{$value.name}}</h3>
 	                <div class="avatar">
