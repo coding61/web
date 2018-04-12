@@ -453,6 +453,7 @@ $(document).ready(function () {
     }
     // $(".phone-invite-shadow-view").show();
     function getArticles(page) {
+        
         showWaitingLoading();
         // 判断有无token
         if (localStorage.token) {
