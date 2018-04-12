@@ -453,6 +453,7 @@ $(document).ready(function () {
     }
     // $(".phone-invite-shadow-view").show();
     function getArticles(page) {
+        showLoading();
         // 判断有无token
         if (localStorage.token) {
             var j = {"Authorization": "Token " + localStorage.token};
@@ -468,6 +469,7 @@ $(document).ready(function () {
             type: "get",
             headers: j,
             success:function(json){
+                hideLoading();
                 var html = template("message-template", json.results);
                 $('.message').append(html);
                 
