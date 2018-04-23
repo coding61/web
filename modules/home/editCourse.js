@@ -71,7 +71,7 @@ define(function(require, exports, module) {
                 $("#log").hide();
             }else if (tag == "action") {
                 //action 文本
-                $(".input-view textarea").attr({placeholder:"回复按钮上的文字"})
+                $(".input-view textarea").attr({placeholder:"回复按钮上的文字(最多10个字符)"})
                 $(".input-view input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
@@ -360,6 +360,10 @@ define(function(require, exports, module) {
                 var tag = $(".msg-header .type").attr("tag");
                 if (tag == "action") {
                     //当前消息加动作按钮
+                    if ($(".input-view textarea").val().length > 10) {
+                        Common.dialog("按钮文本最多只能有10个字符");
+                        return;
+                    }
                     if (originIndex == -1) {
                         //最后一条消息添加 action
                         dic = array[array.length - 1];
