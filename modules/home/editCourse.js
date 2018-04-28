@@ -57,7 +57,7 @@ define(function(require, exports, module) {
                 $("#log").show();
             }else if (tag == "text") {
                 //纯文本
-                $(".input-view textarea").attr({placeholder:"文本消息内容"});
+                $(".input-view textarea").attr({placeholder:"文本消息内容(最多50个字符)"});
                 $(".input-view input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
@@ -158,7 +158,8 @@ define(function(require, exports, module) {
             }
             
             // 滚动到最底部
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+            // $(".messages").css({scrollTop:$(".messages")[0].scrollHeight+"px"});
 
             // 点击事件
             Course.clickEvent();
@@ -168,7 +169,7 @@ define(function(require, exports, module) {
                     return;
                 }
                 Course.showContentInView(arr, i+1);
-            }, 10)
+            }, 0)
         },
         refreshAddMessage:function(tag){
             // 当前元素后面的元素 index+1
@@ -244,7 +245,7 @@ define(function(require, exports, module) {
             $("#log").html("");
 
             // 滚动到最底部
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
             
             window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
             // jsonCourse.window.setEditorValue();                   // 传递值，
@@ -282,7 +283,7 @@ define(function(require, exports, module) {
                     Course.load();  //1.刷新会话列表
 
                     // 滚动到最底部
-                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
                     
                     window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
                 })
@@ -389,6 +390,10 @@ define(function(require, exports, module) {
                     }
                 }else if (tag == "text"){
                     //新增文本
+                    if ($(".input-view textarea").val().length > 50) {
+                        Common.dialog("文本最多只能有50个字符");
+                        return;
+                    }
                     dic["message"] = $(".input-view textarea").val();
                     if (originIndex == -1) {
                         //最后一条消息
@@ -448,7 +453,7 @@ define(function(require, exports, module) {
                 $("#log").html("");
 
                 // 滚动到最底部
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
                 
                 window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
                 // jsonCourse.window.setEditorValue();                   // 传递值，
@@ -615,7 +620,7 @@ define(function(require, exports, module) {
                 $("#log2").html("");
 
                 // // 滚动到最底部
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
                 
                 window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
 
