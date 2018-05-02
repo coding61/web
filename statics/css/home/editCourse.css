@@ -1897,6 +1897,12 @@ li.lesson img{
     display: inline-block;
     margin-left: 5px;
 }
+li.lesson .arrowImgs{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 30px;
+}
 /***********课节输入框*/
 .lesson-input-view{
     position: absolute;

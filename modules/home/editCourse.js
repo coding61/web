@@ -757,6 +757,7 @@ define(function(require, exports, module) {
             })
 
         },
+        // ----------------------------初始化课程小节 相关方法
         initLessonData:function(){
             
             var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
@@ -780,6 +781,7 @@ define(function(require, exports, module) {
                 lessonHtml += '<span data-lesson="'+key+'">'+str+'</span>'
                                 +'<div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">'
                                 +'<img class="edit" src="../../statics/images/editCourse/edit.png"></div>'
+                                +'<div class="arrowImgs"><img class="arrow-down" src="../../statics/images/editCourse/arrow-down.png"><img class="arrow-up" src="../../statics/images/editCourse/arrow-up.png"></div>'
                             +'</li>';
                 $(lessonHtml).appendTo(".lesson-list");
 
@@ -794,7 +796,6 @@ define(function(require, exports, module) {
                     window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
                 }
             }
-
 
             Course.clickLessonEvent();
 
@@ -914,7 +915,8 @@ define(function(require, exports, module) {
                 })
             })
             */
-
+            
+            // 节点击事件
             $(".lesson").unbind('click').click(function(e){
                 e.stopPropagation();
                 Course.lesson = $(this).children("span").attr("data-lesson");
@@ -948,7 +950,107 @@ define(function(require, exports, module) {
                 $(".lesson-input input").val(title);
                 
             })
+            // 节上移
+            $(".lesson img.arrow-up").unbind('click').click(function(e){
+                e.stopPropagation();
+                var parent = $(this).parents(".lesson");
+                console.log($(".lesson").index(parent));
+                var index = $(".lesson").index(parent);
+                if (index === 0) {
+                    Common.dialog("已经是第一节了，无法再继续上调");
+                    return
+                }
+                
+                var prevLesson = parent.prev();
+                var prevLessonIndex = prevLesson.children("span").attr("data-lesson"),
+                    currentLessonIndex = parent.children("span").attr("data-lesson");
+
+                // --------2.改变存储数据
+                var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                // 1.改变节数据
+                var tempDic = dic[prevLessonIndex];
+                dic[prevLessonIndex] = dic[currentLessonIndex];
+                dic[currentLessonIndex] = tempDic;
+                // 2.改变目录(交换两者位置)
+                var x = currentLessonIndex,
+                    y = prevLessonIndex,
+                    arr = dic["catalogs"]?dic["catalogs"]:[];
+                arr.splice(x - 1, 1, ...arr.splice(y - 1, 1, arr[x - 1]))
+                dic["catalogs"] = arr;
+                // 3.改变存储的课程数据
+                localStorage.CourseData = JSON.stringify(dic);
+                
+
+                // --------3.改变右侧 iframe
+                // 通知右边的iframe 改变代码内容
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+
+                if (parent.hasClass("select")) {
+                    // 当前 lesson 是否处于选中状态
+                    $(".lesson").removeClass("select").addClass("unselect");
+                    prevLesson.removeClass("unselect").addClass("select");
+                }else if (prevLesson.hasClass("select")) {
+                    // 前一个 lesson 是否处于选中状态
+                    $(".lesson").removeClass("select").addClass("unselect");
+                    parent.removeClass("unselect").addClass("select");
+                }
+
+                var msg = "第" + parseInt(index+1)+"节数据和第" + parseInt(index)+ "数据交换位置成功";
+                Common.dialog(msg);
+            
+            })
+            // 节下移
+            $(".lesson img.arrow-down").unbind('click').click(function(e){
+                e.stopPropagation();
+                var parent = $(this).parents(".lesson");
+                console.log($(".lesson").index(parent));
+                var index = $(".lesson").index(parent);
+                if (index === $(".lesson").length - 1) {
+                    Common.dialog("已经是最后一节了，无法再继续下调");
+                    return
+                }
+                var nextLesson = parent.next();
+                var nextLessonIndex = nextLesson.children("span").attr("data-lesson"),
+                    currentLessonIndex = parent.children("span").attr("data-lesson");
+
+                // --------2.改变存储数据
+                var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                // 1.改变节数据
+                var tempDic = dic[nextLessonIndex];
+                dic[nextLessonIndex] = dic[currentLessonIndex];
+                dic[currentLessonIndex] = tempDic;
+                // 2.改变目录(交换两者位置)
+                var x = currentLessonIndex,
+                    y = nextLessonIndex,
+                    arr = dic["catalogs"]?dic["catalogs"]:[];
+                arr.splice(x - 1, 1, ...arr.splice(y - 1, 1, arr[x - 1]))
+                dic["catalogs"] = arr;
+                // 3.改变存储的课程数据
+                localStorage.CourseData = JSON.stringify(dic);
+                
+
+                // --------3.改变右侧 iframe
+                // 通知右边的iframe 改变代码内容
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+
+                if (parent.hasClass("select")) {
+                    // 当前 lesson 是否处于选中状态
+                    $(".lesson").removeClass("select").addClass("unselect");
+                    nextLesson.removeClass("unselect").addClass("select");
+                }else if (nextLesson.hasClass("select")) {
+                    // 前一个 lesson 是否处于选中状态
+                    $(".lesson").removeClass("select").addClass("unselect");
+                    parent.removeClass("unselect").addClass("select");
+                }
+                
+                var msg = "第" + parseInt(index+1)+"节数据和第" + parseInt(index+2)+ "数据交换位置成功";
+                Common.dialog(msg);
+            })
         },
+        
+        // 删除小节（已废弃）
         deleteLesson:function(this_){
             var lessonNum = this_.parents(".lesson").children("span").html();
             var dic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
@@ -994,6 +1096,7 @@ define(function(require, exports, module) {
             lessonHtml += '<span data-lesson="'+parseInt(count+1)+'">'+str+'</span>'
                         +'<div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">'
                         +'<img class="edit" src="../../statics/images/editCourse/edit.png"><div>'
+                        +'<div class="arrowImgs"><img class="arrow-down" src="../../statics/images/editCourse/arrow-down.png"><img class="arrow-up" src="../../statics/images/editCourse/arrow-up.png"></div>'
                         +'</li>';
             $(lessonHtml).appendTo(".lesson-list");
             Course.clickDeleteLessonEvent();
@@ -1052,6 +1155,7 @@ define(function(require, exports, module) {
                                         <span data-lesson="'+parseInt(i+1)+'">'+str+'</span>\
                                         <div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">\
                                         <img class="edit" src="../../statics/images/editCourse/edit.png"></div>\
+                                        <div class="arrowImgs"><img class="arrow-down" src="../../statics/images/editCourse/arrow-down.png"><img class="arrow-up" src="../../statics/images/editCourse/arrow-up.png"></div>\
                                     </li>';
                     $(lessonHtml).appendTo(".lesson-list");
                 }
@@ -1070,7 +1174,9 @@ define(function(require, exports, module) {
             // 通知右边的iframe 改变代码内容
             window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
         },
+        
 
+        // ----------------------------帮助方法
         setImgHeight:function(url){
             // 给消息中的图片设高
             // 给图片设高
@@ -1107,9 +1213,11 @@ define(function(require, exports, module) {
         }
     });
     
+    // 上传操作
     QiniuForUpload();   
 
     
+    // 键盘监听操作
     var KeyBoard = {
         key:false,
         init:function(){
@@ -1305,6 +1413,7 @@ define(function(require, exports, module) {
     }
     KeyBoard.init();
 
+
     //通过服务器向七牛存储大段文本的 HTML 文件
     function storeHtmlText(content, callback){
         var content = content;
@@ -1347,4 +1456,5 @@ define(function(require, exports, module) {
             }
         })
     }
+
 });
