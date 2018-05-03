@@ -189,6 +189,9 @@ define(function(require, exports, module) {
                         $(".course-detail-catalogs-shadow-view").show();
                         $(".course-detail-view .top-view .avatar").attr({src:data.images});
                         $(".course-detail-view .top-view h3").html(data.name);
+                        var version = data.my_version?data.my_version:data.version;
+                        version = "版本:"+String(version);
+                        $(".course-detail-view .top-view .version").html(version);
                         $(".course-detail-view .top-view .total-grow .number").html(data.total_experience);
                         $(".course-detail-view .top-view .total-zuan .number").html(data.total_diamond);
                         $(".course-detail-view .desc-view span").html(data.content);

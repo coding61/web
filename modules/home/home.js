@@ -999,6 +999,17 @@ define(function(require, exports, module) {
                 $(".helps-view").hide();
                 Util.openRightIframe("courseList");   //打开选择课程
             })
+            // 快进模式
+            $(".helps-view .fast-mode").unbind('click').click(function(){
+                $(".helps-view").hide();
+                var url = location.href + "?wt=1&mt=2";
+                // history.replaceState(null, "快进模式", url);
+                history.pushState({}, "页面标题", url);
+
+                Util.waitTime = Common.getQueryString("wt")?10:1000;
+                Util.messageTime = Common.getQueryString("mt")?20:2000;
+
+            })
             //查看学习成果
             $(".helps-view .look-learn-result").unbind('click').click(function(){
                 // location.href = "learnResult.html?course=" + localStorage.currentCourse;

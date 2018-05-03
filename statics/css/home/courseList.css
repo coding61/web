@@ -321,6 +321,12 @@ body{
     height: 20px;
     line-height: 20px;
 }
+.course-detail-view .top-view .version{
+    /*position: absolute;
+    top: 0;
+    left: 20px;*/
+    color: rgb(134,134,134);
+}
 .course-detail-view .top-view .numbers{
     position: absolute;
     right: 20px;
