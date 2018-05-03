@@ -651,7 +651,16 @@ define(function(require, exports, module) {
                     $(".code-result-shadow-view").show();
                 }
             }, false);
-
+            
+            // 快进模式按钮图片判断
+            if (Common.getQueryString("wt") && Common.getQueryString("mt")) {
+                //  取消快进
+                var src = "../../statics/images/icon-select.png";
+            }else{
+                // 快进
+                var src = "../../statics/images/icon-unselect.png";
+            }
+            $(".helps-view .fast-mode img").attr({src:src});
         },
         load:function(){
 
@@ -1000,9 +1009,20 @@ define(function(require, exports, module) {
                 Util.openRightIframe("courseList");   //打开选择课程
             })
             // 快进模式
-            $(".helps-view .fast-mode").unbind('click').click(function(){
+            $(".helps-view .fast-mode img").unbind('click').click(function(){
+                var src = "../../statics/images/icon-unselect.png";
+                if (Common.getQueryString("wt") && Common.getQueryString("mt")) {
+                    //  取消快进
+                    var url = location.href.split("?")[0]
+                    var src = "../../statics/images/icon-unselect.png";
+                }else{
+                    // 快进
+                    var url = location.href.split("?")[0]
+                    url = url + "?wt=1&mt=2";
+                    var src = "../../statics/images/icon-select.png";
+                }
+                $(this).attr({src:src});
                 $(".helps-view").hide();
-                var url = location.href + "?wt=1&mt=2";
                 // history.replaceState(null, "快进模式", url);
                 history.pushState({}, "页面标题", url);
 
