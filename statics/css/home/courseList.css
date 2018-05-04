@@ -158,7 +158,9 @@ body{
     justify-content: center;
 }
 .course .avatar img{
-    width: 60%;
+    /*width: 60%;*/
+    max-height: 100%;
+    max-width: 60%;
 }
 .course .desc{
    height: 50px;
