@@ -1009,7 +1009,7 @@ define(function(require, exports, module) {
                 Util.openRightIframe("courseList");   //打开选择课程
             })
             // 快进模式
-            $(".helps-view .fast-mode img").unbind('click').click(function(){
+            $(".helps-view .fast-mode").unbind('click').click(function(){
                 var src = "../../statics/images/icon-unselect.png";
                 if (Common.getQueryString("wt") && Common.getQueryString("mt")) {
                     //  取消快进
@@ -1021,7 +1021,7 @@ define(function(require, exports, module) {
                     url = url + "?wt=1&mt=2";
                     var src = "../../statics/images/icon-select.png";
                 }
-                $(this).attr({src:src});
+                $(this).children("img").attr({src:src});
                 $(".helps-view").hide();
                 // history.replaceState(null, "快进模式", url);
                 history.pushState({}, "页面标题", url);
