@@ -128,3 +128,34 @@ ul.problem-types li{
     font-size: 13px;
     margin-bottom: 10px;
 }
+
+
+/*编程题*/
+.editorView{
+    display: none;
+}
+.editorType{
+    display: flex;;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.codeEditor1,
+.codeEditor{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.codeEditor1 .radio,
+.codeEditor .radio{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+.codeEditor1>span,
+.codeEditor>span{
+    font-size: 13px;
+}

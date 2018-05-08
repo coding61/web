@@ -55,6 +55,7 @@ define(function(require, exports, module) {
 
                 $("#audio-record-view").hide();
                 $("#log").show();
+                $(".editorView").hide();
             }else if (tag == "text") {
                 //纯文本
                 $(".input-view textarea").attr({placeholder:"文本消息内容(最多50个字符)"});
@@ -62,6 +63,7 @@ define(function(require, exports, module) {
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
+                $(".editorView").show();
             }else if (tag == "link-text") {
                 //链接文本
                 $(".input-view textarea").attr({placeholder:"链接消息内容"});
@@ -69,6 +71,7 @@ define(function(require, exports, module) {
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
+                $(".editorView").hide();
             }else if (tag == "action") {
                 //action 文本
                 $(".input-view textarea").attr({placeholder:"回复按钮上的文字(最多10个字符)"})
@@ -76,6 +79,7 @@ define(function(require, exports, module) {
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
+                $(".editorView").hide();
             }else if (tag == "record") {
                 //录制音频
                 $(".input-view textarea").attr({placeholder:"消息音频地址"});
@@ -87,6 +91,7 @@ define(function(require, exports, module) {
 
                 $("#audio-record-view").show();
                 $("#log").show();
+                $(".editorView").hide();
             }else if (tag == "local") {
                 //本地音频
                 $(".input-view textarea").attr({placeholder:"消息音频地址"});
@@ -98,6 +103,7 @@ define(function(require, exports, module) {
 
                 $("#audio-record-view").hide();
                 $("#log").show();
+                $(".editorView").hide();
             }else if(tag == "manytext"){
                 // 大段文本
                 $(".input-view textarea").attr({placeholder:"大段文本内容"});
@@ -105,6 +111,7 @@ define(function(require, exports, module) {
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
+                $(".editorView").hide();
             }
             $(".message-input-view").css({display:'flex'});
 
@@ -348,6 +355,27 @@ define(function(require, exports, module) {
                 $(".audio-input-view").css({display:"none"});
             })
 
+            //是否是编程题点击事件
+            $(".isCodeQuestion").unbind('click').click(function(){
+                if ($(".isCodeQuestion img").attr("src") === "../../statics/images/icon-unselect.png") {
+                    // 变成选中
+                    $(".isCodeQuestion img").attr({src:"../../statics/images/icon-select.png"});
+                }else if ($(".isCodeQuestion img").attr("src") === "../../statics/images/icon-select.png") {
+                    // 变成未选中
+                    $(".isCodeQuestion img").attr({src:"../../statics/images/icon-unselect.png"});
+                }
+            })
+            // 编程题的类型选择
+            $(".codeEditor").unbind('click').click(function(){
+                if ($(this).hasClass("select")) {
+                    return;
+                }
+                $(".codeEditor").removeClass("select");
+                $(".codeEditor img").attr({src:"../../statics/images/icon-unselect.png"});
+                $(this).addClass("select");
+                $(this).find("img").attr({src:"../../statics/images/icon-select.png"})
+            })
+
             // 确认添加内容
             $(".input-view .input-submit").unbind('click').click(function(){
                 // 提交内容
@@ -395,6 +423,16 @@ define(function(require, exports, module) {
                         return;
                     }
                     dic["message"] = $(".input-view textarea").val();
+                    if ($(".isCodeQuestion img").attr("src") === "../../statics/images/icon-unselect.png") {
+                        // 不是编程题
+                    }else if ($(".isCodeQuestion img").attr("src") === "../../statics/images/icon-select.png") {
+                        // 是编程题
+                        var editorType = $(".codeEditor.select").attr("data-type");
+                        dic["codeQuestion"] = true;
+                        dic["typeEditor"] = editorType;
+                        dic["uuid"] = Course.getudid();
+                    }
+                    // 判断是否要添加编程题
                     if (originIndex == -1) {
                         //最后一条消息
                         array.push(dic);
@@ -1198,6 +1236,16 @@ define(function(require, exports, module) {
                 alert("消息组合格式有问题!");
                 return;
             }
+        },
+        
+        getudid:function() {
+            var d = new Date().getTime();
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = (d + Math.random()*16)%16 | 0;
+                d = Math.floor(d/16);
+                return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+            });
+            return uuid;
         }
     }
     Course.init();
