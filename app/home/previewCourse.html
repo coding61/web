@@ -43,7 +43,7 @@
 						<div class="actions">
 							
 						</div>
-						<!-- <img class="help" src="../../statics/images/help2.png" alt=""> -->
+						<img class="help" src="../../statics/images/help2.png" alt="">
 					</div>
 					
 					<!-- 悬浮帮助按钮 -->
@@ -69,8 +69,15 @@
 			</div>
 			<!-- 练习区 -->
 			<div class="right-view">
-				<!-- <img src="../../statics/images/icon.png" alt=""> -->
-				<iframe src="monkeyAnimation.html" frameborder="0"></iframe>
+				<img src="../../statics/images/icon.png" alt="">
+				<!-- <iframe src="monkeyAnimation.html" frameborder="0"></iframe> -->
+				<div class="iframe-scroll thirdSite">
+					<div class="close">
+						<span class="newopen" style="margin-left: 10px;cursor: pointer;">在新窗口中打开</span>
+						<img src="../../statics/images/close.png">
+					</div>
+					<iframe class="thirdSite" id="thirdSite" name="thirdSite" src="" frameborder="0"></iframe>
+				</div>
 			</div>
 		</div>
 		
@@ -165,7 +172,14 @@
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
                 <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
-                        <span class="content">{{TheMessage(item.message)}}</span>
+                        {{if item.codeQuestion}}
+	                    	<div class="link-text">                        
+	                    		<span class="link-content">{{TheMessage item.message}}</span>
+	                    		<span class="codeEditor" data-content="{{item.message}}" data-type="{{item.typeEditor}}" data-udid="{{item.udid}}" style="display: block;color: rgb(84, 180,225);cursor: pointer;">{{if item.typeEditor=="cpp"}}打开C++编辑器{{else if item.typeEditor=="c"}}打开C语言编辑器{{else if item.typeEditor=="python"}}打开Python 编辑器{{else if item.typeEditor=="java"}}打开Java编辑器{{/if}}</span>
+	                    	</div>
+                    	{{else}}
+                    		<span class="content">{{TheMessage item.message}}</span>
+                        {{/if}}
                     </div>
                     {{if item.audio}}
 		                <img class="audio" src="../../statics/images/audio.png"/>

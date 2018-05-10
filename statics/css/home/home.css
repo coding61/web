@@ -896,12 +896,38 @@ li.catalog.unselect{
 
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    display: none;
+    display: none;  
+}
+.main-view .right-view .iframe{
+    width: 100%;
+    height: calc(100% - 35px);
+    overflow: auto;
+}
+.main-view .right-view .iframe>iframe{
+    width: 100%;
+    height: 100%;
 }
 .main-view .right-view iframe{
-	width: 100%;
-	height: 100%;
-	/*display: none;*/
+    width: 100%;
+    /*height: 100%;*/
+    overflow: auto;
+    height: calc(100% - 35px);
+    /*display: none;*/
+}
+.main-view .right-view .close{
+    height: 35px;
+    background: #ddd;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.main-view .right-view .close>img{
+    position: absolute;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    top: 10px;
 }
 
 /*钻石效果*/

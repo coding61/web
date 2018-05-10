@@ -990,6 +990,20 @@ define(function(require, exports, module) {
                 }
             })
 
+            // 打开编辑器的编程题文本
+            $(".codeEditor").unbind('click').click(function(){
+                var type = $(this).attr("data-type"),
+                    udid = $(this).attr("data-udid"),
+                    message = $(this).attr("data-content");
+                var dic = {
+                    message:message,
+                    udid:udid
+                }
+                var url = "codeCompileRN.html?lang=" + type + "&udid=" + udid + "&message=" + encodeURIComponent(message);
+                $("#thirdSite").attr({src:url});
+                Util.openRightIframe("thirdSite");
+            })
+
             Page.clickEventTotal();
         },
         clickEventTotal:function(){
@@ -3152,31 +3166,54 @@ define(function(require, exports, module) {
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
 				// $(".right-view .iframe-scroll.activity").hide();
+                $(".right-view .iframe-scroll.thirdSite").hide();
             }else if (tag == "courseList") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").show();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
 				$(".right-view .iframe-scroll.activity").hide();
+                $(".right-view .iframe-scroll.thirdSite").hide();
             }else if (tag == "codeEdit") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").show();
                 $(".right-view .iframe-scroll.codeCompile").hide();
 				$(".right-view .iframe-scroll.activity").hide();
+                $(".right-view .iframe-scroll.thirdSite").hide();
             }else if (tag == "codeCompile") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").show();
 				$(".right-view .iframe-scroll.activity").hide();
+                $(".right-view .iframe-scroll.thirdSite").hide();
             }else if (tag == "activity") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
 				$(".right-view .iframe-scroll.activity").show();
+                $(".right-view .iframe-scroll.thirdSite").hide();
+            }else if(tag == "thirdSite"){
+                $(".right-view>img").hide();
+                $(".right-view .iframe-scroll.courseList").hide();
+                $(".right-view .iframe-scroll.codeEdit").hide();
+                $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view .iframe-scroll.activity").hide();
+                $(".right-view .iframe-scroll.thirdSite").show();
             }
+
+            //关闭右边工作区的 iframe
+            $(".iframe-scroll .close>img").unbind('click').click(function(){
+                Util.openRightIframe("img");
+            })
+
+            // 在窗口中打开右边的 iframe
+            $(".iframe-scroll .close>.newopen").unbind('click').click(function(){
+                var url = $(this).parents(".iframe-scroll").children("iframe").attr("src");
+                window.open(url);
+            })
         },
         openLink:function(link){
             var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';

@@ -24,12 +24,18 @@ define(function(require, exports, module) {
             Page.load();
         },
         load:function(){
+            // 默认加载第一节的数据
+
             Page.index = 0;
             Page.data = Page.totalCourseData[Page.currentCourseIndex];
 
             // 开始加载数据
             Page.loadSepLine(Page.currentCourseIndex);
             Page.loadMessage(Page.data, Page.index, false);
+
+            // 更新目录
+            Util.courseCatalogsInit(Page.totalCourseData);   //更新目录
+            Util.courseProgressUI();                         //更新课程进度
             
             Common.addCopyRight();   //添加版权标识
         },
@@ -144,8 +150,13 @@ define(function(require, exports, module) {
                 $(this).attr({disabledImg:"true"});
                 
                 
-                // 普通 action 按钮点击事件
-                Util.actionClickEvent($(this));
+                if ($(this).hasClass("catalogBegin")) {
+                    // 点击目录更换数据
+                    Page.requestCourseNextLessonData();
+                }else{
+                    // 普通 action 按钮点击事件
+                    Util.actionClickEvent($(this));
+                }
             })
 
             // 选项按钮点击
@@ -170,16 +181,17 @@ define(function(require, exports, module) {
             $(".message.link").unbind('click').click(function(){
                 var link = $(this).attr("data-link");
                 if (link == "www.code.com") {
-                    Util.openRightIframe("codeEdit");   //打开编辑器
+                    var url = "codeEdit.html";
 
                 }else if (link.indexOf("www.compile.com") > -1){
                     var language = link.split("/")[1]
-                    // language = "python";
-                    window.frames["codeCompile"].postMessage(language, '*'); // 传递值，告知要获取课程信息
-                    Util.openRightIframe("codeCompile"); //打开编译器
+                    var url = "codeCompile.html?lang=" + language;
                 }else{
-                    window.open(link);
+                    var url = link;
                 }
+
+                $("#thirdSite").attr({src:url});
+                Util.openRightIframe("thirdSite");
             })
             // 文本消息点击
             $(".message.text").unbind('click').click(function(){
@@ -227,6 +239,20 @@ define(function(require, exports, module) {
                 }
             })
 
+            // 打开编辑器的编程题文本
+            $(".codeEditor").unbind('click').click(function(){
+                var type = $(this).attr("data-type"),
+                    udid = $(this).attr("data-udid"),
+                    message = $(this).attr("data-content");
+                var dic = {
+                    message:message,
+                    udid:udid
+                }
+                var url = "codeCompileRN.html?lang=" + type + "&udid=" + udid + "&message=" + encodeURIComponent(message);
+                $("#thirdSite").attr({src:url});
+                Util.openRightIframe("thirdSite");
+            })
+
             Page.clickEventTotal();
         },
         clickEventTotal:function(){
@@ -255,7 +281,7 @@ define(function(require, exports, module) {
                 // 隐藏目录列表
                 $(".course-menu-view").hide();
                 // 记录当前点击的目录的下标，和对象
-                Util.currentCatalogIndex = $(this).attr("data-index");
+                // Util.currentCatalogIndex = $(this).attr("data-index");
                 // 重新激活点击事件
                 Page.clickEvent();
 
@@ -372,6 +398,10 @@ define(function(require, exports, module) {
             // 开始加载数据
             Page.loadSepLine(Page.currentCourseIndex);                              //加载节分割线
             Page.loadMessage(Page.data, Page.index, false);  //加载节数据
+
+            // 更新目录
+            Util.courseCatalogsInit(Page.totalCourseData);   //更新目录
+            Util.courseProgressUI();                         //更新课程进度
         },
         
         loadSepLine:function(number){
@@ -1287,7 +1317,7 @@ define(function(require, exports, module) {
                 var catalogHtml = "";
                 console.log(response["catalogs"]);
                 for (var i = 0; i < response["catalogs"].length; i++) {
-                    if (i == parseInt(localStorage.currentCourseIndex)) {
+                    if (i+1 == parseInt(Page.currentCourseIndex)) {
                         // 当前课节被选中
                         response["catalogs"][i]["select"] = true
                     }else{
@@ -1395,9 +1425,9 @@ define(function(require, exports, module) {
         courseProgressUI:function(){
             // 更新课程进度，
             //1.有默认课程，数据的时候，加载 2.选择课程的时候加载
-            if (localStorage.currentCourse) {
-                var total = parseInt(localStorage.currentCourseTotal);
-                var studyN = parseInt(localStorage.currentCourseIndex);
+            if (Page.totalCourseData) {
+                var total = parseInt(Page.totalCourseData["catalogs"].length);
+                var studyN = parseInt(Page.currentCourseIndex-1);
                 var unStudyN = total - studyN;
 
                 var studyHtml = "";
@@ -1492,22 +1522,43 @@ define(function(require, exports, module) {
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view .iframe-scroll.thirdSite").hide();
             }else if (tag == "courseList") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").show();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view .iframe-scroll.thirdSite").hide();
             }else if (tag == "codeEdit") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").show();
                 $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view .iframe-scroll.thirdSite").hide();
             }else if (tag == "codeCompile") {
                 $(".right-view>img").hide();
                 $(".right-view .iframe-scroll.courseList").hide();
                 $(".right-view .iframe-scroll.codeEdit").hide();
                 $(".right-view .iframe-scroll.codeCompile").show();
+                $(".right-view .iframe-scroll.thirdSite").hide();
+            }else if(tag == "thirdSite"){
+                $(".right-view>img").hide();
+                $(".right-view .iframe-scroll.courseList").hide();
+                $(".right-view .iframe-scroll.codeEdit").hide();
+                $(".right-view .iframe-scroll.codeCompile").hide();
+                $(".right-view .iframe-scroll.thirdSite").show();
             }
+
+            //关闭右边工作区的 iframe
+            $(".iframe-scroll .close>img").unbind('click').click(function(){
+                Util.openRightIframe("img");
+            })
+
+            // 在窗口中打开右边的 iframe
+            $(".iframe-scroll .close>.newopen").unbind('click').click(function(){
+                var url = $(this).parents(".iframe-scroll").children("iframe").attr("src");
+                window.open(url);
+            })
         },
         openLink:function(link){
             var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';

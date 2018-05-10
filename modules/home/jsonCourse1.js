@@ -46,7 +46,7 @@ $(document).ready(function() {
         },
         clickEvent:function(){
             $(".preview").click(function(){
-                window.open("previewCourse.html");
+                window.open("previewCourse.html?wt=1&mt=2");
             })
         }
     };

@@ -235,13 +235,29 @@
 			<div class="right-view">
 				<img src="../../statics/images/icon.png" alt="">
 				<div class="iframe-scroll codeEdit">
+					<div class="close">
+						<img src="../../statics/images/close.png">
+					</div>
 					<iframe class="codeEdit" id="codeEdit" name="codeEdit" src="codeEdit.html?v=2.5" frameborder="0"></iframe>
 				</div>
 				<div class="iframe-scroll courseList">
+					<div class="close">
+						<img src="../../statics/images/close.png">
+					</div>
 					<iframe class="courseList" id="courseList" name="courseList" src="courseList.html?v=2.5" frameborder="0"></iframe>
 				</div>
 				<div class="iframe-scroll codeCompile">
+					<div class="close">
+						<img src="../../statics/images/close.png">
+					</div>
 					<iframe class="codeCompile" id="codeCompile" name="codeCompile" src="codeCompile.html" frameborder="0"></iframe>
+				</div>
+				<div class="iframe-scroll thirdSite">
+					<div class="close">
+						<span class="newopen" style="margin-left: 10px;cursor: pointer;">在新窗口中打开</span>
+						<img src="../../statics/images/close.png">
+					</div>
+					<iframe class="thirdSite" id="thirdSite" name="thirdSite" src="" frameborder="0"></iframe>
 				</div>
 				<!-- <div class="iframe-scroll activity">
 					<iframe class="activity" id="activity" name="activity" src="activity.html" frameborder="0"></iframe>
@@ -652,7 +668,14 @@
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
                 <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
-                        <span class="content">{{TheMessage item.message}}</span>
+                        {{if item.codeQuestion}}
+	                    	<div class="link-text">                        
+	                    		<span class="link-content">{{TheMessage item.message}}</span>
+	                    		<span class="codeEditor" data-content="{{item.message}}" data-type="{{item.typeEditor}}" data-udid="{{item.udid}}" style="display: block;color: rgb(84, 180,225);cursor: pointer;">{{if item.typeEditor=="cpp"}}打开C++编辑器{{else if item.typeEditor=="c"}}打开C语言编辑器{{else if item.typeEditor=="python"}}打开Python 编辑器{{else if item.typeEditor=="java"}}打开Java编辑器{{/if}}</span>
+	                    	</div>
+                    	{{else}}
+                    		<span class="content">{{TheMessage item.message}}</span>
+                        {{/if}}
                     </div>
                     {{if item.audio}}
 		                <img class="audio" src="../../statics/images/audio.png"/>
