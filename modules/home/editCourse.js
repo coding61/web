@@ -183,7 +183,7 @@ define(function(require, exports, module) {
             }
             
             // 滚动到最底部
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+            // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
             // $(".messages").css({scrollTop:$(".messages")[0].scrollHeight+"px"});
 
             // 点击事件
@@ -270,7 +270,7 @@ define(function(require, exports, module) {
             $("#log").html("");
 
             // 滚动到最底部
-            $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+            // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
             
             window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
             // jsonCourse.window.setEditorValue();                   // 传递值，
@@ -308,7 +308,7 @@ define(function(require, exports, module) {
                     Course.load();  //1.刷新会话列表
 
                     // 滚动到最底部
-                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+                    // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
                     
                     window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
                 })
@@ -523,7 +523,7 @@ define(function(require, exports, module) {
                 $(".codeEditor").removeClass("select");
 
                 // 滚动到最底部
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+                // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
                 
                 window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
                 // jsonCourse.window.setEditorValue();                   // 传递值，
@@ -690,7 +690,7 @@ define(function(require, exports, module) {
                 $("#log2").html("");
 
                 // // 滚动到最底部
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+                // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
                 
                 window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
 
@@ -843,8 +843,10 @@ define(function(require, exports, module) {
 
             //消息录音类型
             $(".message .audio").unbind('click').click(function(){
-                $(".audio-types").css({display:'flex'});
+                // $(".audio-types").css({display:'flex'});
                 Course.index = $(this).parents(".message").attr("data-index");
+
+                Course.openInputView("record", "录制音频");
             })
             //播放音频
             $(".message .audio-play").unbind('click').click(function(){
