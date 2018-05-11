@@ -9,6 +9,8 @@ define(function(require, exports, module) {
         lesson:1,  //当前所选的课节下标
         catalogLesson:1,  //当前编辑的课节目录的下标
         editSubmitMessage:false,   //是否是编辑消息的提交还是添加消息的提交, 默认是添加小
+        submitBtn:"add",           //add(新增消息), sub(删除消息), edit(编辑消息), audio(录制音频)
+        chatRefresh:true,          //中间会话列表是否刷新, 添加、删除刷新， 编辑、录音不刷新
         init:function(){
 
             Course.load();              //加载中间的会话列表
@@ -282,6 +284,7 @@ define(function(require, exports, module) {
             // console.log(1);
             // 本节打卡信息添加
             $(".chat .add .record").unbind('click').click(function(){
+                Course.chatRefresh = true;
                 Common.bcAlert("您是否确定本小节课程数据已编写完毕？", function(){
                     // 提交内容
                     var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
@@ -316,6 +319,7 @@ define(function(require, exports, module) {
             // 清空数据重来
             $(".chat .add .reset").unbind('click').click(function(){
                 // 重置整个课程数据为空
+                Course.chatRefresh = true;
                 Common.bcAlert("当前课程是否已完全编辑完？您保存好数据了吗？是否要开始一个新课程？", function(){
                     var totalDic = {};
                     localStorage.CourseData = JSON.stringify(totalDic);
@@ -506,7 +510,22 @@ define(function(require, exports, module) {
 
                 // localStorage.CourseMessageData = JSON.stringify(array);
                 
-                Course.load();  //1.刷新会话列表
+                if (Course.chatRefresh) {
+                    //1.刷新会话列表
+                    Course.load();  
+                }else{
+                    // 2.更新当前会话, 音频，或者文本
+                    if (Course.editSubmitMessage === true) {
+                        // 编程题编辑提交
+                        $(".message[data-index="+Course.index+"]").find(".content").html(dic.message)
+                    }else{
+                        // 音频编辑提交
+                        var html = '<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">'
+                        $(".message[data-index="+Course.index+"]").find(".add-reduce-view").append(html);
+                        $(".message[data-index="+Course.index+"]").find(".msg-view-parent").attr({"data-audio-url":dic["audio"]});
+                    }
+                }
+                
 
                 // 2:刷新页面
                 // Course.refreshAddMessage(tag);
@@ -783,6 +802,8 @@ define(function(require, exports, module) {
             //---------------------------消息的处理事件(追加消息，删除消息，添加音频)
             // 删除消息内容
             $(".message .reduce").unbind('click').click(function(){
+                Course.chatRefresh = true;
+
                 var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
                 var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
 
@@ -809,12 +830,14 @@ define(function(require, exports, module) {
 
             // 消息后面添加消息
             $(".message .left-add").unbind('click').click(function(){
+                Course.chatRefresh = true;
                 $(".message-types").css({display:'flex'});
                 Course.index = $(this).parents(".message").attr("data-index");
             })
 
             // 消息编辑
             $(".message .edit").unbind('click').click(function(){
+                Course.chatRefresh = false;
                 // 打开编程习题文本框
                 Course.openInputView("text", "文本", "edit");
                 Course.index = $(this).parents(".message").attr("data-index");
@@ -843,6 +866,7 @@ define(function(require, exports, module) {
 
             //消息录音类型
             $(".message .audio").unbind('click').click(function(){
+                Course.chatRefresh = false;
                 // $(".audio-types").css({display:'flex'});
                 Course.index = $(this).parents(".message").attr("data-index");
 
