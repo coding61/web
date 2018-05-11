@@ -110,8 +110,10 @@ window.onload = function(text) {
             // var url = "https://www.cxy61.com" + JSON.parse(fName).url
             var domain = "https://www.cxy61.com";
             if (location.host.indexOf("bcjiaoyu.com") > -1) {
-                domain = "https://app.bcjiaoyu.com"
-            }else{
+                domain = "https://app.bcjiaoyu.com";
+            }else if(location.host.indexOf("develop.cxy61.com") > -1){
+                domain = "https://app.bcjiaoyu.com";
+            } else{
                 domain = "https://www.cxy61.com";
             }
             var url = domain + JSON.parse(fName).url

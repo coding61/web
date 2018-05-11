@@ -102,7 +102,7 @@
 					</ul>
 
 					<!-- 不同类型消息的输入 -->
-					<div class="message-input-view">
+					<!-- <div class="message-input-view">
 						<div class="msg-header">
 							<span class="type">文本</span>
 							<img src="../../statics/images/close.png" style="cursor: pointer;">
@@ -151,7 +151,7 @@
 							</div>
 							<span class="input-submit">确认</span>
 						</div>
-					</div>
+					</div> -->
 
 					<!-- 选择题相关，程序媛选择题/自适应选择题 -->
 					<ul class="problem-types">
@@ -160,14 +160,15 @@
 					</ul>
 
 					
+					
 					<!-- 选择题(输入) -->
-					<div class="problem-question-view problem-view">
+					<!-- <div class="problem-question-view problem-view">
 						<div class="problem-header">
 							<span class="type">程序媛选择题</span>
 							<img src="../../statics/images/close.png" style="cursor: pointer;">
-						</div>
+						</div> -->
 						<!-- 选择题(程序媛) -->
-						<div class="problem-girl-content-view">
+						<!-- <div class="problem-girl-content-view">
 							<div class="question-view">
 								<label>问题</label>
 								<textarea class="reset" placeholder="问题描述(必填)"></textarea>
@@ -195,9 +196,9 @@
 							</div>
 
 							<button class="problem-submit submit">确定</button>
-						</div>
+						</div> -->
 						<!-- 选择题(自适应) -->
-						<div class="problem-adapt-content-view">
+						<!-- <div class="problem-adapt-content-view">
 							<div class="question-view ui-bottom-dot-line">
 								<label>问题题目<文字/图片必填其一></label>
 								<label class="subTitle">题目文字描述</label>
@@ -216,7 +217,6 @@
 							</div>
 							<div class="action-view ui-bottom-dot-line">
 								<label>action按钮</label>
-								<!-- <i class="action-add"></i> -->
 								<textarea class="reset" placeholder='[{"type": "text","content": "A"}]'></textarea>
 							</div>
 							<div class="right-answer-choose ui-bottom-dot-line">
@@ -234,10 +234,10 @@
 
 							<button class="problem-submit submit">确定</button>
 						</div>
-					</div>
+					</div> -->
 					
 					<!-- 选项(输入) -->
-					<div class="problem-option-view problem-view">
+					<!-- <div class="problem-option-view problem-view">
 						<div class="problem-header">
 							<span class="type">问题选项</span>
 							<img src="../../statics/images/close.png" style="cursor: pointer;">
@@ -255,13 +255,162 @@
 							<textarea class="reset" name="photos" placeholder='["https://www.baidu/2.jpg"]'></textarea>
 							<button class="option-submit submit">确定</button>
 						</div>
-					</div>
+					</div> -->
+
 				</div>
 			</div>
 			<!-- 练习区 -->
 			<div class="right-view">
-				<img src="../../statics/images/icon.png" alt="">
+				<!-- <img src="../../statics/images/icon.png" alt=""> -->
 				<iframe class="jsonCourse" id="jsonCourse" name="jsonCourse" src="jsonCourse.html" frameborder="0"></iframe>
+
+				<!-- 不同类型消息的输入 -->
+				<div class="message-input-view">
+					<div class="msg-header">
+						<span class="type">文本</span>
+						<img src="../../statics/images/close.png" style="cursor: pointer;">
+					</div>
+
+					<div class="input-view">
+						<input type="text" placeholder="链接文本的链接地址" />
+						<div id="audio-record-view">
+							<div id="audio-record">
+								<button id="audio-record-start">开始录制</button>
+								<button id="audio-record-stop" disabled>停止录制</button>
+							</div>
+							
+
+						</div>
+						<pre id="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;display: none;"></pre>
+						<div id="upload-container">
+							<span id="uploadImg">上传图片</span>
+							<span id="uploadAudio">上传音频</span>
+						</div>
+						<textarea placeholder="文本消息的内容"></textarea>
+
+						<div class="editorView">
+						<div class="isCodeQuestion codeEditor1">
+							<img class="radio" src="../../statics/images/icon-unselect.png">
+							<span>编程题</span>
+						</div>
+						<div class="editorType">
+							<div class="codeEditor select" data-type="c">
+								<img class="radio" src="../../statics/images/icon-select.png">
+								<span>C语言</span>
+							</div>
+							<div class="codeEditor" data-type="cpp">
+								<img class="radio" src="../../statics/images/icon-unselect.png">
+								<span>C++</span>
+							</div>
+							<div class="codeEditor" data-type="python">
+								<img class="radio" src="../../statics/images/icon-unselect.png">
+								<span>Python</span>
+							</div>
+							<div class="codeEditor" data-type="java">
+								<img class="radio" src="../../statics/images/icon-unselect.png">
+								<span>Java</span>
+							</div>
+						</div>
+						</div>
+						<span class="input-submit">确认</span>
+					</div>
+				</div>
+
+				<!-- 选择题(输入) -->
+				<div class="problem-question-view problem-view">
+					<div class="problem-header">
+						<span class="type">程序媛选择题</span>
+						<img src="../../statics/images/close.png" style="cursor: pointer;">
+					</div>
+					<!-- 选择题(程序媛) -->
+					<div class="problem-girl-content-view">
+						<div class="question-view">
+							<label>问题</label>
+							<textarea class="reset" placeholder="问题描述(必填)"></textarea>
+						</div>
+						<div class="action-view">
+							<label>action按钮</label>
+							<i class="action-add"></i>
+							<div class="action-input-view" style="display: none;">
+								<input class="reset" style="width: 80px;" type="text" placeholder="A(必填)" />
+								<button class="uploadPhoto" id="action-add-submit">ok</button>
+							</div>
+							<textarea class="reset" placeholder='[{"type": "text","content": "A"}](必填)'></textarea>
+						</div>
+						<div class="right-answer-choose">
+							<label for="right-answe">正确答案:</label>
+							<input class="reset" id="right-answer" type="text" placeholder="A(必填)">
+						</div>
+						<div class="wrongAnswerMsgView">
+							<label for="">答错会话消息组</label>
+							<textarea placeholder="答错会话消息列表">[{"message":"答错了","action":"下一条"}]</textarea>
+						</div>
+						<div class="rightAnswerMsgView">
+							<label for="">答对会话消息组</label>
+							<textarea placeholder="答对会话消息列表">[{"message":"答对了","action":"下一条"}]</textarea>
+						</div>
+
+						<button class="problem-submit submit">确定</button>
+					</div>
+					<!-- 选择题(自适应) -->
+					<div class="problem-adapt-content-view">
+						<div class="question-view ui-bottom-dot-line">
+							<label>问题题目<文字/图片必填其一></label>
+							<label class="subTitle">题目文字描述</label>
+							<textarea class="reset" name="text" placeholder="文字描述"></textarea>
+							<label class="subTitle">题目图片组描述</label>
+							<pre id="log1" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
+							<div id="upload-container" style="display: block;">
+								<span id="uploadQuestionPhoto" class="uploadPhoto">上传图片</span>
+							</div>
+							<textarea class="reset" name="photos" placeholder='["https://www.baidu/2.jpg"]'></textarea>
+						</div>
+						<div class="options-view ui-bottom-dot-line">
+							<label for="">问题选项组</label>
+							<i class="option-add"></i>
+							<textarea class="reset" placeholder='[{"content": "A","message": "表达式1 and 表达式2是当两个表达式都为真时为真","imgs": []}]'></textarea>
+						</div>
+						<div class="action-view ui-bottom-dot-line">
+							<label>action按钮</label>
+							<textarea class="reset" placeholder='[{"type": "text","content": "A"}]'></textarea>
+						</div>
+						<div class="right-answer-choose ui-bottom-dot-line">
+							<label for="right-answe">正确答案:</label>
+							<input class="reset" id="right-answer" type="text" placeholder="A(必填)">
+						</div>
+						<div class="wrongAnswerMsgView ui-bottom-dot-line">
+							<label for="">答错会话消息组</label>
+							<textarea placeholder="答错会话消息列表">[{"message":"答错了","action":"下一条"}]</textarea>
+						</div>
+						<div class="rightAnswerMsgView ui-bottom-dot-line">
+							<label for="">答对会话消息组</label>
+							<textarea placeholder="答对会话消息列表">[{"message":"答对了","action":"下一条"}]</textarea>
+						</div>
+
+						<button class="problem-submit submit">确定</button>
+					</div>
+				</div>
+				
+				<!-- 选项(输入) -->
+				<div class="problem-option-view problem-view">
+					<div class="problem-header">
+						<span class="type">问题选项</span>
+						<img src="../../statics/images/close.png" style="cursor: pointer;">
+					</div>
+					<div class="option-input-view">
+						<label for="" class="subTitle">选项编码</label>
+						<input class="reset" type="text" placeholder="A(必填)">
+						<label class="subTitle">选项文字描述</label>
+						<textarea class="reset" name="text" placeholder="文字描述"></textarea>
+						<label class="subTitle">选项图片组描述</label>
+						<pre id="log2" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
+						<div id="upload-container" style="display: block;">
+							<span id="uploadOptionPhoto" class="uploadPhoto">上传图片</span>
+						</div>
+						<textarea class="reset" name="photos" placeholder='["https://www.baidu/2.jpg"]'></textarea>
+						<button class="option-submit submit">确定</button>
+					</div>
+				</div>
 			</div>
 		</div>
 		

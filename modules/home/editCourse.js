@@ -5,19 +5,20 @@ define(function(require, exports, module) {
     ArtTemplate.config("escape", false);
 
     var Course = {
-        index:-1,  //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
-        lesson:1,  //当前所选的课节下标
-        catalogLesson:1,  //当前编辑的课节目录的下标
-        editSubmitMessage:false,   //是否是编辑消息的提交还是添加消息的提交, 默认是添加小
-        submitBtn:"add",           //add(新增消息), sub(删除消息), edit(编辑消息), audio(录制音频)
-        chatRefresh:true,          //中间会话列表是否刷新, 添加、删除刷新， 编辑、录音不刷新
-        init:function(){
+        index:-1,                    //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
+        lesson:1,                    //当前所选的课节下标
+        catalogLesson:1,             //当前编辑的课节目录的下标
+        editSubmitMessage:false,     //是否是编辑消息的提交还是添加消息的提交, 默认是添加小
+        submitBtn:"add",             //add(新增消息), sub(删除消息), edit(编辑消息), audio(录制音频)
+        chatRefresh:true,            //中间会话列表是否刷新, 添加、删除刷新， 编辑、录音不刷新
 
+        // 1.页面初始化
+        init:function(){
             Course.load();              //加载中间的会话列表
             $(".lesson-list").html("");
             Course.initLessonData();    //加载课程节数据
-
         },
+        // 2.加载会话列表
         load:function(){
             console.log("lesson", Course.lesson); 
             $(".messages").html("");
@@ -40,6 +41,7 @@ define(function(require, exports, module) {
             }
             Course.clickEvent();
         },
+        // 3.打开编辑输入框, 添加消息、添加音频、编辑消息
         openInputView:function(tag, tagHtml, isEdit){
             if (isEdit && isEdit === "edit") {
                 Course.editSubmitMessage = true;   //编辑消息
