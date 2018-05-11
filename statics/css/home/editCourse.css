@@ -1826,6 +1826,11 @@ ul.audio-types li{
     height: 25px;
     margin-right: 10px;
 }
+.edit{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
 .lessons{
     width: 80px;
     background: red;

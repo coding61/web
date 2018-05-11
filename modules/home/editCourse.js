@@ -8,6 +8,7 @@ define(function(require, exports, module) {
         index:-1,  //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
         lesson:1,  //当前所选的课节下标
         catalogLesson:1,  //当前编辑的课节目录的下标
+        editSubmitMessage:false,   //是否是编辑消息的提交还是添加消息的提交, 默认是添加小
         init:function(){
 
             Course.load();              //加载中间的会话列表
@@ -37,7 +38,12 @@ define(function(require, exports, module) {
             }
             Course.clickEvent();
         },
-        openInputView:function(tag, tagHtml){
+        openInputView:function(tag, tagHtml, isEdit){
+            if (isEdit && isEdit === "edit") {
+                Course.editSubmitMessage = true;   //编辑消息
+            }else{
+                Course.editSubmitMessage = false;  //添加消息
+            }
             if (tag=="problem") {
                 $(".problem-types").css({display:'flex'});
                 return;
@@ -113,6 +119,18 @@ define(function(require, exports, module) {
                 $("#log").hide();
                 $(".editorView").hide();
             }
+
+            // 每次打开输入框清空
+            $(".input-view textarea").val("");
+            $(".input-view input").val("");
+            $("#log").html("");
+
+            // 编程题置为初始
+            $(".isCodeQuestion img").attr({src:"../../statics/images/icon-unselect.png"});
+            $(".codeEditor.select img").attr({src:"../../statics/images/icon-unselect.png"});
+            $(".codeEditor").removeClass("select");
+
+
             $(".message-input-view").css({display:'flex'});
 
             KeyBoard.inputTextareaFoucus(tag);
@@ -430,15 +448,24 @@ define(function(require, exports, module) {
                         var editorType = $(".codeEditor.select").attr("data-type");
                         dic["codeQuestion"] = true;
                         dic["typeEditor"] = editorType;
-                        dic["uuid"] = Course.getudid();
+                        dic["udid"] = Course.getudid();
                     }
-                    // 判断是否要添加编程题
-                    if (originIndex == -1) {
-                        //最后一条消息
-                        array.push(dic);
+                    if (Course.editSubmitMessage == true) {
+                        // 编辑
+                        array[originIndex]["message"] = dic.message;
+                        array[originIndex]["codeQuestion"] = dic.codeQuestion;
+                        array[originIndex]["typeEditor"] = dic.typeEditor;
+                        array[originIndex]["udid"] = dic.udid;
                     }else{
-                        //当前消息之后
-                        array.splice(originIndex+1, 0, dic);
+                        // 添加
+                        // 判断是否要添加编程题
+                        if (originIndex == -1) {
+                            //最后一条消息
+                            array.push(dic);
+                        }else{
+                            //当前消息之后
+                            array.splice(originIndex+1, 0, dic);
+                        }
                     }
                 }else if (tag == "link-text") {
                     //新增链接文本
@@ -489,6 +516,11 @@ define(function(require, exports, module) {
                 $(".input-view textarea").val("");
                 $(".input-view input").val("");
                 $("#log").html("");
+
+                // 编程题置为初始
+                $(".isCodeQuestion img").attr({src:"../../statics/images/icon-unselect.png"});
+                $(".codeEditor.select img").attr({src:"../../statics/images/icon-unselect.png"});
+                $(".codeEditor").removeClass("select");
 
                 // 滚动到最底部
                 $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
@@ -779,6 +811,34 @@ define(function(require, exports, module) {
             $(".message .left-add").unbind('click').click(function(){
                 $(".message-types").css({display:'flex'});
                 Course.index = $(this).parents(".message").attr("data-index");
+            })
+
+            // 消息编辑
+            $(".message .edit").unbind('click').click(function(){
+                // 打开编程习题文本框
+                Course.openInputView("text", "文本", "edit");
+                Course.index = $(this).parents(".message").attr("data-index");
+
+                var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+                var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+                
+                var index = parseInt(Course.index);
+                var dic = array[index];       //当前消息
+                console.log(dic);
+                $(".message-input-view textarea").val(dic.message);
+                if (dic.udid) {
+                    $(".isCodeQuestion img").attr({src:"../../statics/images/icon-select.png"});
+                }else{
+                    $(".isCodeQuestion img").attr({src:"../../statics/images/icon-unselect.png"});
+                }
+                $(".codeEditor.select img").attr({src:"../../statics/images/icon-unselect.png"});
+                $(".codeEditor").removeClass("select");
+                if (dic.typeEditor) {
+                    // console.log(dic.typeEditor);
+                    $(".codeEditor[data-type="+dic.typeEditor+"]").addClass("select");
+                    $(".codeEditor[data-type="+dic.typeEditor+"] img").attr({src:"../../statics/images/icon-select.png"});
+                }
+
             })
 
             //消息录音类型
