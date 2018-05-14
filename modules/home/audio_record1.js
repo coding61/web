@@ -74,7 +74,9 @@ define(function(require, exports, module) {
                 webrtcRecorder = easyrtc.recordToBlob(easyrtc.getLocalStream(), uploadBlob);
                 // __log("录制中...");
                 // Common.dialog("录制中...")
-                console.log(webrtcRecorder);
+                // console.log(webrtcRecorder);
+                var lastAudioIndex = audioId.getAttribute("data-lastAudioIndex");
+                __log($(".message[data-index="+lastAudioIndex+"]").find(".log"), "录音中...");
             }
         }
 
@@ -112,10 +114,10 @@ define(function(require, exports, module) {
                 var url = domain + JSON.parse(fName).url;
 
                 courseCallBack(url);
-                __log("上传成功");
+                // __log("上传成功");
                 
             }, function() {
-                __log("上传失败");
+                // __log("上传失败");
                 courseCallBack(null)
             });
 
@@ -129,20 +131,31 @@ define(function(require, exports, module) {
                     } else if (request.status == 400 && errorCallback) {
                         errorCallback();
                     } else {
-                        __log("上传中...");
+                        // __log("上传中...");
+                        var lastAudioIndex = audioId.getAttribute("data-lastAudioIndex");
+                        __log($(".message[data-index="+lastAudioIndex+"]").find(".log"), "上传中...");
                     }
                 };
                 request.open('POST', url);
                 request.send(data);
             }
         }
-        function __log(e, data) {
-            if (log.innerHTML) {
-                log.innerHTML += "\n" + e + " " + (data || '');
+        function __log(this_, e, data) {
+            // if (log.innerHTML) {
+            //     log.innerHTML += "\n" + e + " " + (data || '');
+            // }else{
+            //     log.innerHTML += e + " " + (data || '');
+            // }
+            // $("#log").animate({scrollTop:$("#log")[0].scrollHeight}, 20);
+
+            if (this_.html()) {
+                var a = this_.html() + "\n" + e + " " + (data || '');
+                this_.html(a);
             }else{
-                log.innerHTML += e + " " + (data || '');
+                var a = this_.html() + e + " " + (data || '');
+                this_.html(a);
             }
-            $("#log").animate({scrollTop:$("#log")[0].scrollHeight}, 20);
+            this_.animate({scrollTop:this_[0].scrollHeight}, 20);
         }
         var Loading = {
             init:function(parent){

@@ -6,15 +6,17 @@ define(function(require, exports, module) {
 
     Audio.init(function(url){
         if (!url) {
-            Common.dialog("上传失败", Course.lastAudioIndex);
+            // Common.dialog("上传失败", Course.lastAudioIndex);
+            __log($(".message[data-index="+Course.lastAudioIndex+"]").find(".log"), "上传录音失败");
             return;
         }
         var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
         var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
         // var originIndex = parseInt(Course.index);
         var originIndex = parseInt(Course.lastAudioIndex);
-        console.log(Course.lastAudioIndex, Course.currentAudioIndex);
+        // console.log(Course.lastAudioIndex, Course.currentAudioIndex);
         console.log("录音上传成功:", Course.lastAudioIndex)
+        __log($(".message[data-index="+Course.lastAudioIndex+"]").find(".log"), "上传录音成功");
 
         dic = array[originIndex];
         dic["audio"] = url;
@@ -66,7 +68,14 @@ define(function(require, exports, module) {
         var audioId = document.getElementById('audioView');
         if (Course.currentAudioIndex != Course.lastAudioIndex) {
             Course.lastAudioIndex = Course.currentAudioIndex;
+
             console.log("开始录音:", Course.lastAudioIndex);
+            __log($(".message[data-index="+Course.lastAudioIndex+"]").find(".log"), "开始录音");
+
+            $(".message[data-index="+Course.lastAudioIndex+"]").find(".audioRecord").removeClass("audio-record-start").addClass("audio-record-stop");
+            $(".message[data-index="+Course.lastAudioIndex+"]").find(".audioRecord").attr({src:"../../statics/images/editCourse/stop.png"})
+            
+            audioId.setAttribute("data-lastAudioIndex", Course.lastAudioIndex);
             audioId.play();
         }
     });
@@ -946,7 +955,54 @@ define(function(require, exports, module) {
                 }
             })
 
+            // 录音
+            $(".audioRecord").unbind('click').click(function(){
+                Course.chatRefresh = false;
+                Course.index = $(this).parents(".message").attr("data-index");
+                var audioId = document.getElementById('audioView');
+                Course.currentAudioIndex = Course.index;
+                if ($(this).hasClass("audio-record-start")) {
+                    if (!Course.lastAudioIndex) {
+                        Course.lastAudioIndex = Course.index;
+
+                        audioId.setAttribute("data-lastAudioIndex", Course.currentAudioIndex);
+                        audioId.play();
+
+                        console.log("开始录音:", Course.currentAudioIndex)
+                        __log($(".message[data-index="+Course.currentAudioIndex+"]").find(".log"), "开始录音");
+
+                        $(this).removeClass("audio-record-start").addClass("audio-record-stop");
+                        $(this).attr({src:"../../statics/images/editCourse/stop.png"})
+                    }else if (Course.currentAudioIndex != Course.lastAudioIndex) {
+                        audioId.pause();
+
+                        console.log("停止录音:", Course.lastAudioIndex)
+                        __log($(".message[data-index="+Course.lastAudioIndex+"]").find(".log"), "停止录音");
+
+                        $(".message[data-index="+Course.lastAudioIndex+"]").find(".audioRecord").removeClass("audio-record-stop").addClass("audio-record-start");
+                        $(".message[data-index="+Course.lastAudioIndex+"]").find(".audioRecord").attr({src:"../../statics/images/editCourse/start.png"})
+                    }else{
+                        audioId.setAttribute("data-lastAudioIndex", Course.currentAudioIndex);
+                        audioId.play();
+
+                        console.log("开始录音1:", Course.currentAudioIndex)
+                        __log($(".message[data-index="+Course.currentAudioIndex+"]").find(".log"), "开始录音");
+
+                        $(this).removeClass("audio-record-start").addClass("audio-record-stop");
+                        $(this).attr({src:"../../statics/images/editCourse/stop.png"})
+                    }
+                }else{
+                    audioId.pause();
+
+                    console.log("停止录音:", Course.currentAudioIndex);
+                    __log($(".message[data-index="+Course.currentAudioIndex+"]").find(".log"), "停止录音");
+
+                    $(".message[data-index="+Course.currentAudioIndex+"]").find(".audioRecord").removeClass("audio-record-stop").addClass("audio-record-start");
+                    $(".message[data-index="+Course.currentAudioIndex+"]").find(".audioRecord").attr({src:"../../statics/images/editCourse/start.png"})
+                }
+            })
             
+            /*
             // 开始录音
             $(".audio-record-start").unbind('click').click(function(){
                 Course.chatRefresh = false;
@@ -974,6 +1030,7 @@ define(function(require, exports, module) {
                 audioId.pause();
                 console.log("停止录音:", Course.currentAudioIndex)
             })
+            */
 
         },
         // ----------------------------初始化课程小节 相关方法
@@ -1686,4 +1743,14 @@ define(function(require, exports, module) {
         })
     }
 
+    function __log(this_, e, data) {
+        if (this_.html()) {
+            var a = this_.html() + "\n" + e + " " + (data || '');
+            this_.html(a);
+        }else{
+            var a = this_.html() + e + " " + (data || '');
+            this_.html(a);
+        }
+        this_.animate({scrollTop:this_[0].scrollHeight}, 20);
+    }
 });

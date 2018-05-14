@@ -25,7 +25,7 @@
 			</div>
 		</div>
         <div>
-        <audio paused controls id="audioView" width="100%" height="100%" style="display:none"></audio>
+        <audio paused controls id="audioView" width="100%" height="100%" style="display:none" data-lastAudioIndex=""></audio>
         <p id="upload-status" style="display: none;"></p>
         </div>
 		
@@ -458,12 +458,13 @@
                     <div class="add-reduce-view">
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
-                    	<img class="audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" />
+                    	<img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
+                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                     	<!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                         {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                         
                     </div>
+                    <pre class="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
                 </div>
             </div>
 		</script>
@@ -515,11 +516,12 @@
                     <div class="add-reduce-view">
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
-                    	<img class="audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" />
+                    	<img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
+                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                     	<!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                         {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
+                    <pre class="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
                 </div>
             </div>
 		</script>
@@ -537,11 +539,12 @@
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
                         <img class="edit" src="../../statics/images/editCourse/edit.png"/>
-                        <img class="audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" />
+                        <img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
+                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                         <!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                         {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
+                    <pre class="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
                 </div>
             </div>
 		</script>
@@ -581,11 +584,12 @@
 					<div class="add-reduce-view">
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
-                    	<img class="audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" />
+                    	<img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
+                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                     	<!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                     	{{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
+                    <pre class="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
 				</div>
 			</div>
 		</script>
