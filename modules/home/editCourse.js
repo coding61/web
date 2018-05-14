@@ -2,6 +2,74 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
+    var Audio = require('home/audio_record1.js');
+
+    Audio.init(function(url){
+        if (!url) {
+            Common.dialog("上传失败", Course.lastAudioIndex);
+            return;
+        }
+        var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+        var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
+        // var originIndex = parseInt(Course.index);
+        var originIndex = parseInt(Course.lastAudioIndex);
+        console.log(Course.lastAudioIndex, Course.currentAudioIndex);
+        console.log("录音上传成功:", Course.lastAudioIndex)
+
+        dic = array[originIndex];
+        dic["audio"] = url;
+
+        totalDic[Course.lesson] = array;
+        localStorage.CourseData = JSON.stringify(totalDic);
+
+        // localStorage.CourseMessageData = JSON.stringify(array);
+        
+        if (Course.chatRefresh) {
+            //1.刷新会话列表
+            Course.load();  
+        }else{
+            // 2.更新当前会话, 音频，或者文本
+            if (Course.editSubmitMessage === true) {
+                // 编程题编辑提交
+                $(".message[data-index="+Course.lastAudioIndex+"]").find(".content").html(dic.message)
+            }else{
+                // 音频编辑提交
+                $(".message[data-index="+Course.lastAudioIndex+"]").find(".audio-play").remove();
+                var html = '<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">'
+                $(".message[data-index="+Course.lastAudioIndex+"]").find(".add-reduce-view").append(html);
+                $(".message[data-index="+Course.lastAudioIndex+"]").find(".msg-view-parent").attr({"data-audio-url":dic["audio"]});
+            }
+        }
+        
+
+        // 2:刷新页面
+        // Course.refreshAddMessage(tag);
+        
+        // 隐藏输入框
+        $(".message-input-view").css({display:'none'});
+        $(".input-view textarea").val("");
+        $(".input-view input").val("");
+        $("#log").html("");
+
+        // 编程题置为初始
+        $(".isCodeQuestion img").attr({src:"../../statics/images/icon-unselect.png"});
+        $(".codeEditor.select img").attr({src:"../../statics/images/icon-unselect.png"});
+        $(".codeEditor").removeClass("select");
+
+        // 滚动到最底部
+        // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+        
+        window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
+
+        Course.clickDeleteEvent();
+
+        var audioId = document.getElementById('audioView');
+        if (Course.currentAudioIndex != Course.lastAudioIndex) {
+            Course.lastAudioIndex = Course.currentAudioIndex;
+            console.log("开始录音:", Course.lastAudioIndex);
+            audioId.play();
+        }
+    });
     ArtTemplate.config("escape", false);
 
     var Course = {
@@ -11,6 +79,8 @@ define(function(require, exports, module) {
         editSubmitMessage:false,     //是否是编辑消息的提交还是添加消息的提交, 默认是添加小
         submitBtn:"add",             //add(新增消息), sub(删除消息), edit(编辑消息), audio(录制音频)
         chatRefresh:true,            //中间会话列表是否刷新, 添加、删除刷新， 编辑、录音不刷新
+        currentAudioIndex:null,
+        lastAudioIndex:null,
 
         // 1.页面初始化
         init:function(){
@@ -139,16 +209,7 @@ define(function(require, exports, module) {
 
             KeyBoard.inputTextareaFoucus(tag);
         },
-        openAudioInputView:function(tag, tagHtml){
-            $(".msg-header .type").html(tagHtml);
-            $(".msg-header .type").attr({tag:tag});
-            if (tag == "record") {
-                
-            }else if (tag == "local") {
-                
-            }
-            $(".audio-input-view").css({display:'flex'});
-        },
+        // 4.将一节的数据展示到页面上
         showContentInView:function(arr, i){
             var item = arr[i];
             var questionHtml = "",
@@ -200,6 +261,8 @@ define(function(require, exports, module) {
                 Course.showContentInView(arr, i+1);
             }, 0)
         },
+
+        // 5.添加新的消息时，刷新页面
         refreshAddMessage:function(tag){
             // 当前元素后面的元素 index+1
             var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];
@@ -240,9 +303,8 @@ define(function(require, exports, module) {
                     }
                 }
             }
-
-
         },
+        // 6.减少消息时，刷新页面
         refreshReduceMessage:function(){
             // 当前元素删除
             $(".message[data-index="+Course.index+"]").remove();
@@ -256,6 +318,8 @@ define(function(require, exports, module) {
                 $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
             }
         },
+
+        // 7.添加消息，确定添加内容时，(1)更改数据(2)刷新会话(3)所有回到初始
         refreshCourseData:function(totalDic, array){
             totalDic[Course.lesson] = array;
             localStorage.CourseData = JSON.stringify(totalDic);
@@ -281,10 +345,10 @@ define(function(require, exports, module) {
 
             Course.clickDeleteEvent();
         },
+        // 8.中间会话的各种弹框的点击事件、左下角的添加、打卡、重置
         clickEvent:function(){
             //---------------------------中间的消息列表的公共处理事件
-            // console.log(1);
-            // 本节打卡信息添加
+            // 打卡按钮点击事件
             $(".chat .add .record").unbind('click').click(function(){
                 Course.chatRefresh = true;
                 Common.bcAlert("您是否确定本小节课程数据已编写完毕？", function(){
@@ -318,7 +382,8 @@ define(function(require, exports, module) {
                     window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
                 })
             })
-            // 清空数据重来
+
+            // 重置按钮的点击事件
             $(".chat .add .reset").unbind('click').click(function(){
                 // 重置整个课程数据为空
                 Course.chatRefresh = true;
@@ -329,9 +394,9 @@ define(function(require, exports, module) {
                     Course.init();  //刷新页面
                     window.frames["jsonCourse"].postMessage('json', '*'); // 传递值，
                 })
-                
             })
-            // 打开类型选择框
+
+            // 左下角添加按钮的点击事件
             $(".chat .add .left-add").unbind('click').click(function(){
                 Course.index = -1;
                 if (!$(".lesson").length) {
@@ -341,7 +406,7 @@ define(function(require, exports, module) {
                 $(".message-types").css({display:'flex'});
             })
             
-            // 打开消息输入框
+            // 各消息类型的点击事件
             $(".message-types li").unbind('click').click(function(){
                 var tag = $(this).attr("data-tag");
                 var tagHtml = $(this).html();
@@ -370,16 +435,15 @@ define(function(require, exports, module) {
 
                 Course.openInputView(tag, tagHtml);
                 $(".message-types").css({display:'none'});
-
             })
-            
-            // 关闭消息输入框
+    
+            // 关闭消息添加窗口的点击事件
             $(".msg-header img").unbind('click').click(function(){
                 $(".message-input-view").css({display:"none"});
                 $(".audio-input-view").css({display:"none"});
             })
 
-            //是否是编程题点击事件
+            //是否是编程题的点击事件
             $(".isCodeQuestion").unbind('click').click(function(){
                 if ($(".isCodeQuestion img").attr("src") === "../../statics/images/icon-unselect.png") {
                     // 变成选中
@@ -389,7 +453,7 @@ define(function(require, exports, module) {
                     $(".isCodeQuestion img").attr({src:"../../statics/images/icon-unselect.png"});
                 }
             })
-            // 编程题的类型选择
+            // 编程题的类型的点击事件
             $(".codeEditor").unbind('click').click(function(){
                 if ($(this).hasClass("select")) {
                     return;
@@ -400,7 +464,7 @@ define(function(require, exports, module) {
                 $(this).find("img").attr({src:"../../statics/images/icon-select.png"})
             })
 
-            // 确认添加内容
+            // 确认添加消息的点击事件(不包括选择题)
             $(".input-view .input-submit").unbind('click').click(function(){
                 // 提交内容
                 var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
@@ -550,10 +614,9 @@ define(function(require, exports, module) {
                 // jsonCourse.window.setEditorValue();                   // 传递值，
 
                 Course.clickDeleteEvent();
-
             })
             
-            // 导出课程数据
+            // 导出课程数据的点击事件(废弃)
             $("#export").unbind('click').click(function(){
                 // var content = localStorage.CourseMessageData;
                 // var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
@@ -563,8 +626,9 @@ define(function(require, exports, module) {
                 saveAs(blob, "course.json");//saveAs(blob,filename)
             })
 
+
             //-------------音频相关
-            //音频类型点击
+            //音频类型的点击事件(废弃) (现只有录制音频项)
             $(".audio-types li").unbind('click').click(function(){
                 var tag = $(this).attr("data-tag");
                 var tagHtml = $(this).html();
@@ -573,22 +637,22 @@ define(function(require, exports, module) {
                     // Utils.audioInit();
                 }
                 Course.openInputView(tag, tagHtml);                
-                // Course.openAudioInputView(tag, tagHtml);
                 $(".audio-types").css({display:'none'});
             })
-            //开始录制
+            //开始录制(废弃)(录音相关文件在 libs/audio_record.js 文件中)
             $("#audio-record-start").unbind('click').click(function(){
                 //2.开始录制
                 // Utils.startRecord($(this));
             })
-            //结束录制
+            //结束录制(废弃)(录音相关文件在 libs/audio_record.js 文件中)
             $("#audio-record-stop").unbind('click').click(function(){
                 //3.结束录制
                 // Utils.stopRecord($(this));
             })
 
+
             // ---------------选择题相关
-             // 打开选择题种类选择框
+             // 打开选择题种类选择框(将废弃)(现只有自适应题)
             $(".problem-types li").unbind('click').click(function(){
                 var tag = $(this).attr("data-tag"),
                     tagHtml = $(this).html();
@@ -607,11 +671,11 @@ define(function(require, exports, module) {
                 }
                 $(".problem-types").css({display:'none'});
             })
-            // 关闭选择题填写窗口
+            // 关闭消息添加窗口的点击事件(选择题)
             $(".problem-header img").unbind('click').click(function(){
                 $(this).parent().parent().css({display:'none'});
             })
-            // 确认添加选择题
+            // 确认添加消息的点击事件(选择题)
             $(".problem-submit").unbind('click').click(function(){
                 // 提交内容
                 var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
@@ -880,6 +944,35 @@ define(function(require, exports, module) {
                 if (url) {
                     Common.playMessageSoun2(url);  //播放音频
                 }
+            })
+
+            
+            // 开始录音
+            $(".audio-record-start").unbind('click').click(function(){
+                Course.chatRefresh = false;
+                Course.index = $(this).parents(".message").attr("data-index");
+                var audioId = document.getElementById('audioView');
+                Course.currentAudioIndex = Course.index;
+                if (!Course.lastAudioIndex) {
+                    Course.lastAudioIndex = Course.index;
+                    audioId.play();
+                    console.log("开始录音:", Course.currentAudioIndex)
+                }else if (Course.currentAudioIndex != Course.lastAudioIndex) {
+                    audioId.pause();
+                    console.log("停止录音:", Course.lastAudioIndex)
+                }else{
+                    audioId.play();
+                     console.log("开始录音:", Course.currentAudioIndex)
+                }
+                
+            })
+            // 停止录音
+            $(".audio-record-stop").unbind('click').click(function(){
+                Course.index = $(this).parents(".message").attr("data-index");
+                Course.currentAudioIndex = Course.index;
+                var audioId = document.getElementById('audioView');
+                audioId.pause();
+                console.log("停止录音:", Course.currentAudioIndex)
             })
 
         },
@@ -1221,7 +1314,7 @@ define(function(require, exports, module) {
             }
             lessonHtml += '<span data-lesson="'+parseInt(count+1)+'">'+str+'</span>'
                         +'<div class="imgs"><img class="delete" src="../../statics/images/editCourse/reduce.png">'
-                        +'<img class="edit" src="../../statics/images/editCourse/edit.png"><div>'
+                        +'<img class="edit" src="../../statics/images/editCourse/edit.png"></div>'
                         +'<div class="arrowImgs"><img class="arrow-down" src="../../statics/images/editCourse/arrow-down.png"><img class="arrow-up" src="../../statics/images/editCourse/arrow-up.png"></div>'
                         +'</li>';
             $(lessonHtml).appendTo(".lesson-list");
