@@ -89,6 +89,20 @@ define(function(require, exports, module) {
 
         /* 上传音频到服务器 */
         function uploadBlob(blob) {
+            var lastAudioIndex = audioId.getAttribute("data-lastAudioIndex");
+            var lesson = audioId.getAttribute("data-lesson");
+            var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
+            var array = totalDic[lesson]?totalDic[lesson]:[];
+            var item = array[lastAudioIndex];
+            var sha1Item = sha1(item.message);
+            var langid = $(".audioLang>input").val();
+            var number = $(".audioTeacherNum>input").val();
+
+            console.log("md5:", sha1(item.message))
+            console.log($(".audioTeacherNum>input").val());
+            console.log($(".audioLang>input").val());
+
+
             var fileType = 'audio';
             var fileName = 'audio.mp3';
 
@@ -98,6 +112,12 @@ define(function(require, exports, module) {
             formData.append(fileType + '-blob', blob);
             formData.append('lesson-pk', lesson);
             formData.append('record-type', 'lesson');
+
+            formData.append('lang-id', langid);
+            formData.append('sha1-code', sha1Item);
+            formData.append('number', number);
+
+            console.log("md5:", sha1Item, "langid:", langid, "number:", number);
 
             xhr('/program_girl/upload/upload_media/', formData, function (fName) {
                 console.log(Date() + " fName: " + fName);
@@ -113,12 +133,12 @@ define(function(require, exports, module) {
                 }
                 var url = domain + JSON.parse(fName).url;
 
-                courseCallBack(url);
+                courseCallBack(url, sha1Item);
                 // __log("上传成功");
                 
             }, function() {
                 // __log("上传失败");
-                courseCallBack(null)
+                courseCallBack(null, null)
             });
 
             function xhr(url, data, callback, errorCallback) {

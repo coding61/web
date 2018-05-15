@@ -2,9 +2,11 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
+    
+    
     var Audio = require('home/audio_record1.js');
-
-    Audio.init(function(url){
+    // 连续录音
+    Audio.init(function(url, sha1Item){
         if (!url) {
             // Common.dialog("上传失败", Course.lastAudioIndex);
             __log($(".message[data-index="+Course.lastAudioIndex+"]").find(".log"), "上传录音失败");
@@ -20,6 +22,7 @@ define(function(require, exports, module) {
 
         dic = array[originIndex];
         dic["audio"] = url;
+        dic["sha1Code"] = sha1Item;
 
         totalDic[Course.lesson] = array;
         localStorage.CourseData = JSON.stringify(totalDic);
@@ -76,9 +79,11 @@ define(function(require, exports, module) {
             $(".message[data-index="+Course.lastAudioIndex+"]").find(".audioRecord").attr({src:"../../statics/images/editCourse/stop.png"})
             
             audioId.setAttribute("data-lastAudioIndex", Course.lastAudioIndex);
+            audioId.setAttribute("data-lesson", Course.lesson);
             audioId.play();
         }
     });
+
     ArtTemplate.config("escape", false);
 
     var Course = {
@@ -135,8 +140,8 @@ define(function(require, exports, module) {
             $(".msg-header .type").attr({tag:tag});
             if (tag == "photo") {
                 //图片消息
-                $(".input-view textarea").attr({placeholder:"图片消息地址"});
-                $(".input-view input").hide();
+                $(".input-view>textarea").attr({placeholder:"图片消息地址"});
+                $(".input-view>input").hide();
                 $(".input-view #upload-container").show();
 
                 $(".input-view #upload-container #uploadAudio").hide();
@@ -147,32 +152,32 @@ define(function(require, exports, module) {
                 $(".editorView").hide();
             }else if (tag == "text") {
                 //纯文本
-                $(".input-view textarea").attr({placeholder:"文本消息内容(最多50个字符)"});
-                $(".input-view input").hide();
+                $(".input-view>textarea").attr({placeholder:"文本消息内容(最多50个字符)"});
+                $(".input-view>input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
                 $(".editorView").show();
             }else if (tag == "link-text") {
                 //链接文本
-                $(".input-view textarea").attr({placeholder:"链接消息内容"});
-                $(".input-view input").show();
+                $(".input-view>textarea").attr({placeholder:"链接消息内容"});
+                $(".input-view>input").show();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
                 $(".editorView").hide();
             }else if (tag == "action") {
                 //action 文本
-                $(".input-view textarea").attr({placeholder:"回复按钮上的文字(最多10个字符)"})
-                $(".input-view input").hide();
+                $(".input-view>textarea").attr({placeholder:"回复按钮上的文字(最多10个字符)"})
+                $(".input-view>input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
                 $(".editorView").hide();
             }else if (tag == "record") {
                 //录制音频
-                $(".input-view textarea").attr({placeholder:"消息音频地址"});
-                $(".input-view input").hide();
+                $(".input-view>textarea").attr({placeholder:"消息音频地址"});
+                $(".input-view>input").hide();
                 $(".input-view #upload-container").show();
 
                 $(".input-view #upload-container #uploadAudio").hide();
@@ -183,8 +188,8 @@ define(function(require, exports, module) {
                 $(".editorView").hide();
             }else if (tag == "local") {
                 //本地音频
-                $(".input-view textarea").attr({placeholder:"消息音频地址"});
-                $(".input-view input").hide();
+                $(".input-view>textarea").attr({placeholder:"消息音频地址"});
+                $(".input-view>input").hide();
                 $(".input-view #upload-container").show();
 
                 $(".input-view #upload-container #uploadAudio").css({display:'inline-block'});
@@ -195,8 +200,8 @@ define(function(require, exports, module) {
                 $(".editorView").hide();
             }else if(tag == "manytext"){
                 // 大段文本
-                $(".input-view textarea").attr({placeholder:"大段文本内容"});
-                $(".input-view input").hide();
+                $(".input-view>textarea").attr({placeholder:"大段文本内容"});
+                $(".input-view>input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
                 $("#log").hide();
@@ -204,15 +209,14 @@ define(function(require, exports, module) {
             }
 
             // 每次打开输入框清空
-            $(".input-view textarea").val("");
-            $(".input-view input").val("");
+            $(".input-view>textarea").val("");
+            $(".input-view>input").val("");
             $("#log").html("");
 
             // 编程题置为初始
             $(".isCodeQuestion img").attr({src:"../../statics/images/icon-unselect.png"});
             $(".codeEditor.select img").attr({src:"../../statics/images/icon-unselect.png"});
             $(".codeEditor").removeClass("select");
-
 
             $(".message-input-view").css({display:'flex'});
 
@@ -939,7 +943,7 @@ define(function(require, exports, module) {
 
             })
 
-            //消息录音类型
+            //消息录音类型(单个录音，有弹框)
             $(".message .audio").unbind('click').click(function(){
                 Course.chatRefresh = false;
                 // $(".audio-types").css({display:'flex'});
@@ -955,8 +959,12 @@ define(function(require, exports, module) {
                 }
             })
 
-            // 录音
+            // 录音(连续录音，没有弹框)
             $(".audioRecord").unbind('click').click(function(){
+                if ($(".audioTeacherNum>input").val()=="" || $(".audioLang>input").val() == "") {
+                    Common.dialog("请填写录音师编号和语种");
+                    return;
+                }
                 Course.chatRefresh = false;
                 Course.index = $(this).parents(".message").attr("data-index");
                 var audioId = document.getElementById('audioView');
@@ -966,6 +974,7 @@ define(function(require, exports, module) {
                         Course.lastAudioIndex = Course.index;
 
                         audioId.setAttribute("data-lastAudioIndex", Course.currentAudioIndex);
+                        audioId.setAttribute("data-lesson", Course.lesson);
                         audioId.play();
 
                         console.log("开始录音:", Course.currentAudioIndex)
@@ -983,6 +992,7 @@ define(function(require, exports, module) {
                         $(".message[data-index="+Course.lastAudioIndex+"]").find(".audioRecord").attr({src:"../../statics/images/editCourse/start.png"})
                     }else{
                         audioId.setAttribute("data-lastAudioIndex", Course.currentAudioIndex);
+                        audioId.setAttribute("data-lesson", Course.lesson);
                         audioId.play();
 
                         console.log("开始录音1:", Course.currentAudioIndex)
@@ -1001,36 +1011,6 @@ define(function(require, exports, module) {
                     $(".message[data-index="+Course.currentAudioIndex+"]").find(".audioRecord").attr({src:"../../statics/images/editCourse/start.png"})
                 }
             })
-            
-            /*
-            // 开始录音
-            $(".audio-record-start").unbind('click').click(function(){
-                Course.chatRefresh = false;
-                Course.index = $(this).parents(".message").attr("data-index");
-                var audioId = document.getElementById('audioView');
-                Course.currentAudioIndex = Course.index;
-                if (!Course.lastAudioIndex) {
-                    Course.lastAudioIndex = Course.index;
-                    audioId.play();
-                    console.log("开始录音:", Course.currentAudioIndex)
-                }else if (Course.currentAudioIndex != Course.lastAudioIndex) {
-                    audioId.pause();
-                    console.log("停止录音:", Course.lastAudioIndex)
-                }else{
-                    audioId.play();
-                     console.log("开始录音:", Course.currentAudioIndex)
-                }
-                
-            })
-            // 停止录音
-            $(".audio-record-stop").unbind('click').click(function(){
-                Course.index = $(this).parents(".message").attr("data-index");
-                Course.currentAudioIndex = Course.index;
-                var audioId = document.getElementById('audioView');
-                audioId.pause();
-                console.log("停止录音:", Course.currentAudioIndex)
-            })
-            */
 
         },
         // ----------------------------初始化课程小节 相关方法
@@ -1518,28 +1498,30 @@ define(function(require, exports, module) {
                     KeyBoard.ctrlEnterKeyPress();
                     return
                 }
-                if ($(".lesson-input-view").css('display') == "flex") {
-                    return;
+                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77){
+                    if ($(".lesson-input-view").css('display') == "flex") {
+                        return;
+                    }
+                    if ($(".message-types").css('display') == "flex") {
+                        return;
+                    }
+                    if ($(".audio-types").css('display') == "flex") {
+                        return;
+                    }
+                    if ($(".message-input-view").css('display') == "flex") {
+                        return;
+                    }
+                    if ($(".problem-types").css('display') == "flex") {
+                        return;
+                    }
+                    if ($(".problem-view").css('display') == "flex") {
+                        return;
+                    }
+                    if (!$(".lesson").length) {
+                        Common.dialog("请先添加一个小节");
+                        return;
+                    } 
                 }
-                if ($(".message-types").css('display') == "flex") {
-                    return;
-                }
-                if ($(".audio-types").css('display') == "flex") {
-                    return;
-                }
-                if ($(".message-input-view").css('display') == "flex") {
-                    return;
-                }
-                if ($(".problem-types").css('display') == "flex") {
-                    return;
-                }
-                if ($(".problem-view").css('display') == "flex") {
-                    return;
-                }
-                if (!$(".lesson").length) {
-                    Common.dialog("请先添加一个小节");
-                    return;
-                } 
                 console.log(k);
                 if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77){
                     // 键盘按键触发弹框

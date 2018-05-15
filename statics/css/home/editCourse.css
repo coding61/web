@@ -293,7 +293,7 @@ body{
 	margin:1% 2%;
 	height: 100%;
     height: calc(96% - 50px);
-    height: calc(96% - 50px - 30px);
+    height: calc(96% - 50px - 30px - 40px);
 	/*background-color: red;*/
 }
 .main-view .left-view{
@@ -1728,7 +1728,7 @@ ul.audio-types li{
     text-align: center;
     border-radius: 0 0 2px 2px;
 }
-.message-input-view .input-view input{
+.message-input-view .input-view input.input{
     border: solid 1px #e1e1e1;
     max-height: 60px;
     min-height: 25px;
@@ -1738,7 +1738,7 @@ ul.audio-types li{
     margin-bottom: 8px;
     font-size: 13px;
 }
-.message-input-view .input-view textarea{
+.message-input-view .input-view textarea.textarea{
     border: solid 1px #e1e1e1;
     max-height: 180px;
     min-height: 50px;
@@ -1792,6 +1792,30 @@ ul.audio-types li{
     /*color: #333;*/
     border: solid 1px #e1e1e1;
     font-size: 13px;
+}
+.audioTeacherAndLangView{
+    display: flex;
+    height: 40px;
+    align-items: center;
+    margin-left: 3%;
+}
+.audio-input{
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 3%;
+}
+.audio-input>label{
+    margin-right: 10px;
+    text-align: left;
+    /*width: 70px;*/
+}
+.audio-input>input{
+    width: 100px;
+    height: calc(100% - 15px);
+    padding: 0;
+    margin: 0;
 }
 
 #export{

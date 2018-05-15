@@ -37,6 +37,19 @@
 			
 			<span class="right-tips">生成的数据。编辑完成后，请将数据自行保存，发给公众号cxy-61审核。</span>
 		</div>
+
+		<!-- 录音师 -->
+		<div class="audioTeacherAndLangView">
+			<div class="audioTeacherNum audio-input">
+				<label for="">录音师编号:</label>
+				<input type="text">
+			</div>
+			<div class="audioLang audio-input">
+				<label for="">录音语种缩写:</label>
+				<input type="text">
+			</div>
+		</div>
+		
 		<div class="main-view">
 			<div class="left-view">
 				<!-- 课程节数区 -->
@@ -272,13 +285,12 @@
 					</div>
 
 					<div class="input-view">
-						<input type="text" placeholder="链接文本的链接地址" />
+						<input class="input" type="text" placeholder="链接文本的链接地址" />
 						<div id="audio-record-view">
 							<div id="audio-record">
 								<button id="audio-record-start">开始录制</button>
 								<button id="audio-record-stop" disabled>停止录制</button>
 							</div>
-							
 
 						</div>
 						<pre id="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;display: none;"></pre>
@@ -286,31 +298,31 @@
 							<span id="uploadImg">上传图片</span>
 							<span id="uploadAudio">上传音频</span>
 						</div>
-						<textarea placeholder="文本消息的内容"></textarea>
+						<textarea class="textarea" placeholder="文本消息的内容"></textarea>
 
 						<div class="editorView">
-						<div class="isCodeQuestion codeEditor1">
-							<img class="radio" src="../../statics/images/icon-unselect.png">
-							<span>编程题</span>
-						</div>
-						<div class="editorType">
-							<div class="codeEditor select" data-type="c">
-								<img class="radio" src="../../statics/images/icon-select.png">
-								<span>C语言</span>
-							</div>
-							<div class="codeEditor" data-type="cpp">
+							<div class="isCodeQuestion codeEditor1">
 								<img class="radio" src="../../statics/images/icon-unselect.png">
-								<span>C++</span>
+								<span>编程题</span>
 							</div>
-							<div class="codeEditor" data-type="python">
-								<img class="radio" src="../../statics/images/icon-unselect.png">
-								<span>Python</span>
+							<div class="editorType">
+								<div class="codeEditor select" data-type="c">
+									<img class="radio" src="../../statics/images/icon-select.png">
+									<span>C语言</span>
+								</div>
+								<div class="codeEditor" data-type="cpp">
+									<img class="radio" src="../../statics/images/icon-unselect.png">
+									<span>C++</span>
+								</div>
+								<div class="codeEditor" data-type="python">
+									<img class="radio" src="../../statics/images/icon-unselect.png">
+									<span>Python</span>
+								</div>
+								<div class="codeEditor" data-type="java">
+									<img class="radio" src="../../statics/images/icon-unselect.png">
+									<span>Java</span>
+								</div>
 							</div>
-							<div class="codeEditor" data-type="java">
-								<img class="radio" src="../../statics/images/icon-unselect.png">
-								<span>Java</span>
-							</div>
-						</div>
 						</div>
 						<span class="input-submit">确认</span>
 					</div>
@@ -459,7 +471,6 @@
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
                     	<img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                     	<!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                         {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                         
@@ -517,7 +528,6 @@
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
                     	<img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                     	<!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                         {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
@@ -540,7 +550,6 @@
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
                         <img class="edit" src="../../statics/images/editCourse/edit.png"/>
                         <img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                         <!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                         {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
@@ -585,7 +594,6 @@
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">
                     	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
                     	<img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png">
-                    	<!-- <img class="audio-record-stop" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/stop.png" /> -->
                     	<!-- <img class="audio" src="../../statics/images/audio.png"/> -->
                     	{{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}}
                     </div>
@@ -620,6 +628,8 @@
 	<script type="text/javascript" src="../../libs/upload/qiniu/qiniu.min.js"></script>
 	<script type="text/javascript" src="../../libs/files/FileSaver.js"></script>
 	<script type="text/javascript" src="../../modules/home/qiniuForUpload.js"></script>
+	<script type="text/javascript" src="../../libs/md5/md5.js"></script>
+	<script type="text/javascript" src="../../libs/md5/sha1.js"></script>
 
 	<script>
 		var base = location.href.split("/app/")[0];
