@@ -81,6 +81,8 @@ define(function(require, exports, module) {
             audioId.setAttribute("data-lastAudioIndex", Course.lastAudioIndex);
             audioId.setAttribute("data-lesson", Course.lesson);
             audioId.play();
+        }else{
+            Course.lastAudioIndex = null;   //点的本身停止的录音，将上一条置空
         }
     });
 
@@ -970,6 +972,7 @@ define(function(require, exports, module) {
                 Course.index = $(this).parents(".message").attr("data-index");
                 var audioId = document.getElementById('audioView');
                 Course.currentAudioIndex = Course.index;
+                // console.log(Course.currentAudioIndex, Course.lastAudioIndex);
                 if ($(this).hasClass("audio-record-start")) {
                     if (!Course.lastAudioIndex) {
                         Course.lastAudioIndex = Course.index;
