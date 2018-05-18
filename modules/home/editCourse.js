@@ -955,6 +955,7 @@ define(function(require, exports, module) {
             $(".message .audio-play").unbind('click').click(function(){
                 var url = $(this).parents('.msg-view-parent').attr("data-audio-url");
                 if (url) {
+                    url += "?v="+ Course.getRandomNum();
                     Common.playMessageSoun2(url);  //播放音频
                 }
             })
@@ -1464,6 +1465,19 @@ define(function(require, exports, module) {
                 return (c=='x' ? r : (r&0x3|0x8)).toString(16);
             });
             return uuid;
+        },
+        getRandomNum:function(){
+            //获取一个随机数
+            var min = 0x1;
+            var max = 0xffffffff;
+            function getInstanceId() {                                      
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return (Math.floor(Math.random() * (max - min + 1)) + min).toString(16);
+            }  
+
+            var lesson = getInstanceId();
+            return lesson;
         }
     }
     Course.init();
