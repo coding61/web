@@ -581,15 +581,18 @@ define(function(require, exports, module) {
                         dic["action"] = $(".input-view textarea").val();
                     }
                     isAdd = false;
+                    Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if(tag == "record" || tag == "local"){
                     //当前消息加音频
                     dic = array[originIndex];
                     dic["audio"] = $(".input-view textarea").val();
                     isAdd = false;
+                    Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "photo") {
                     //新增图片
                     dic["img"] = $(".input-view textarea").val();
                     isAdd = true;
+                    Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "text"){
                     //新增文本
                     if ($(".input-view textarea").val().length > 50) {
@@ -617,11 +620,13 @@ define(function(require, exports, module) {
                         // 添加, 新增文本
                         isAdd = true
                     }
+                    Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "link-text") {
                     //新增链接文本
                     dic["message"] = $(".input-view textarea").val();
                     dic["link"] = $(".input-view input").val();
                     isAdd = true;
+                    Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if(tag == "manytext"){
                     // 新增大段文本
                     // 向服务器存储该文本内容，然后存链接文本
@@ -666,7 +671,6 @@ define(function(require, exports, module) {
                     })
                 }
                 
-                Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
             })
             
             // 导出课程数据的点击事件(废弃)

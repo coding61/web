@@ -181,20 +181,43 @@ define(function(require, exports, module) {
             $(".option").unbind('click').click(function(){
                 // 当前 message，
                 var item = Page.data[Page.index];
-                // 选项点击
-                if ($(this).hasClass("unselect")) {
-                    //  选中，将选项放到数组中
-                    $(this).removeClass("unselect").addClass("select");
-                    Page.options.push($(this).html()); 
-                }else if ($(this).hasClass("select")) {
-                    // 取消选中
-                    $(this).removeClass("select").addClass("unselect");
-                    Page.options.splice(Page.options.indexOf($(this).html()), 1);
-                }else{
-
-                }
                 if (item.type === "blankProblem") {
-                }else{
+                    // 填空题
+                    if ($(".bpDetailDesc .option.blank").length) {
+                        var content = $(this).html(),
+                            index = $(this).attr("data-index");
+                        Page.options.push(content); 
+                        $(".bpDetailDesc .option.blank").eq(0).html(content);
+                        $(".bpDetailDesc .option.blank").eq(0).attr({"data-index":index});
+                        $(".bpDetailDesc .option.blank").eq(0).addClass("exist").removeClass("blank");
+                        $(this).html("");
+                        $(this).addClass("blank");
+
+                        // 填空题选项复原
+                        $(".bpDetailDesc .option.exist").unbind('click').click(function(){
+                            var content = $(this).html(),
+                                index = $(this).attr("data-index");
+                            Page.options.splice(Page.options.indexOf(content), 1);
+                            $(".actions .option[data-index="+index+"]").html(content);
+                            $(".actions .option[data-index="+index+"]").removeClass("blank");
+                            $(this).html("");
+                            $(this).addClass("blank").removeClass("exist");
+                        })
+                    }
+
+                } else{
+                    // 选择题
+                    if ($(this).hasClass("unselect")) {
+                        //  选中，将选项放到数组中
+                        $(this).removeClass("unselect").addClass("select");
+                        Page.options.push($(this).html()); 
+                    }else if ($(this).hasClass("select")) {
+                        // 取消选中
+                        $(this).removeClass("select").addClass("unselect");
+                        Page.options.splice(Page.options.indexOf($(this).html()), 1);
+                    }else{
+
+                    }
                     Page.options.sort();
                 }
                 console.log(Page.options);
@@ -1601,7 +1624,7 @@ define(function(require, exports, module) {
                     var optionHtml = "";
                     for (var j = 0; j < item.action.length; j++) {
                         var option = item.action[j];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
+                        optionHtml += '<span class="option unselect" data-index="'+j+'">'+option.content+'</span>'
                     }
                     actionHtml += optionHtml
                     actionHtml += '<span class="btn-wx-auth exercise">ok</span>';

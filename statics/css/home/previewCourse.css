@@ -633,7 +633,12 @@ body{
     line-height: 35px;
     margin-right: 5px;
 }
-
+.blankProblem .bpDetailDesc .option.yourAnswer{
+    color: red;
+}
+.blankProblem .bpDetailDesc .option.exist{
+    color: red;
+}
 
 .main-view .left-view .chat .message .arrow{
 	height: 15px;
