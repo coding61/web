@@ -461,7 +461,7 @@ body{
 
     padding-bottom: 0;
     /*background: red;*/
-    height: calc(100% - 100px);
+    /*height: calc(100% - 100px);*/
 }
 .main-view .left-view .chat .messages .loadAgoMore,
 .main-view .left-view .chat .messages .loadAgoNoMore{
@@ -696,8 +696,8 @@ body{
 .main-view .left-view .btns .actions{
     /*background: yellow;*/
     color: white;
-    height: 30px;
-    line-height: 30px;
+    /*height: 30px;
+    line-height: 30px;*/
     width: 93.5%;
     display: flex;
     justify-content: flex-end;
@@ -705,8 +705,10 @@ body{
     margin-bottom: 15px;
     margin-top: 8px;
 
-    height: 40px;
-    line-height: 40px;
+    /*height: 40px;
+    line-height: 40px;*/
+
+    flex-wrap: wrap;
 }
 .main-view .left-view .btns .actions .option{
     height: 30px;
@@ -718,9 +720,11 @@ body{
     display: inline-block;
     margin-left: 5px;
 
-    height: 40px;
-    line-height: 40px;
+    /*height: 40px;
+    line-height: 40px;*/
     cursor: pointer;
+    margin-bottom: 5px;
+
 }
 .main-view .left-view .btns .actions .option.unselect{
     color: rgb(250, 80, 131);
@@ -743,8 +747,8 @@ body{
     margin-left: 5px;
     cursor: pointer;
 
-    height: 40px;
-    line-height: 40px;
+    /*height: 40px;
+    line-height: 40px;*/
     overflow: hidden;
 }
 .main-view .left-view .btns .help{

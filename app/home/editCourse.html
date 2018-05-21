@@ -21,7 +21,7 @@
 				<img class="logo1" style="height: 30px;" src="../../statics/images/logo2.png" />
 				<div class="right-line"></div>
 				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
-				<div style="color: white;position: absolute;right: 0;line-height: 30px;">快捷键:A(文本),B(按钮文本),P(图片),L(链接文本),<!-- Q(程序媛选择题), -->T(自适应选择题),M(大段文本)</div>
+				<div style="color: white;position: absolute;right: 0;line-height: 30px;">快捷键:A(文本),B(按钮文本),P(图片),L(链接文本),<!-- Q(程序媛选择题), -->T(自适应选择题),M(大段文本),D(大段代码文本), C(填空题)</div>
 			</div>
 		</div>
         <div>
@@ -103,9 +103,11 @@
 						<li class="photo-msg" data-tag="photo">图片</li>
 						<li class="text-msg" data-tag="text">文本</li>
 						<li class="manytext-msg" data-tag="manytext">大段文本</li>
+						<li class="manyCode-msg" data-tag="manyCode">大段代码文本</li>
 						<li class="link-text-msg" data-tag="link-text">链接文本</li>
 						<li class="msg-action-text" data-tag="action">按钮文本</li>
 						<li class="problem-msg" data-tag="problem">选择题</li>
+						<li class="blank-problem-msg" data-tag="blank">填空题</li>
 					</ul>
 
 					<!-- 声音的选择，本地音频/录制音频 -->
@@ -336,6 +338,10 @@
 					</div>
 					<!-- 选择题(程序媛) -->
 					<div class="problem-girl-content-view">
+						<div class="isHideView ui-bottom-dot-line">
+							<img class="radio" src="../../statics/images/icon-unselect.png">
+							<span>该题是否在教程中隐藏</span>
+						</div>
 						<div class="question-view">
 							<label>问题</label>
 							<textarea class="reset" placeholder="问题描述(必填)"></textarea>
@@ -366,6 +372,10 @@
 					</div>
 					<!-- 选择题(自适应) -->
 					<div class="problem-adapt-content-view">
+						<div class="isHideView ui-bottom-dot-line">
+							<img class="radio" src="../../statics/images/icon-unselect.png">
+							<span>该题是否在教程中隐藏</span>
+						</div>
 						<div class="question-view ui-bottom-dot-line">
 							<label>问题题目<文字/图片必填其一></label>
 							<label class="subTitle">题目文字描述</label>
@@ -421,6 +431,70 @@
 						</div>
 						<textarea class="reset" name="photos" placeholder='["https://www.baidu/2.jpg"]'></textarea>
 						<button class="option-submit submit">确定</button>
+					</div>
+				</div>
+
+				<!-- 填空题(输入) -->
+				<div class="problem-blank-view problem-view">
+					<div class="problem-header">
+						<span class="type">填空题</span>
+						<img src="../../statics/images/close.png" style="cursor: pointer;">
+					</div>
+					
+					<div class="problem-blank-content-view">
+						<div class="isHideView ui-bottom-dot-line">
+							<img class="radio" src="../../statics/images/icon-unselect.png">
+							<span>该题是否在教程中隐藏</span>
+						</div>
+						<div class="question-view ui-bottom-dot-line">
+							<label>填空题的题目</label>
+							<label class="subTitle">题干</label>
+							<textarea class="reset" name="text" placeholder="文字描述(必填)"></textarea>
+							<label class="subTitle">详情描述</label>
+							<i class="option-add blank"></i>
+							<div class="detailDesc-input-view" style="display: none;">
+								<input class="reset" style="width: 80px;" type="text" placeholder="已知选项块(必填)" />
+								<button class="uploadPhoto" id="detailDesc-add-blank">ok</button>
+							</div>
+							<textarea class="reset" placeholder='["I", "", "a", "boy"](必填)' name="detailDesc"></textarea>
+						</div>
+						<div class="options-view ui-bottom-dot-line">
+							<label for="">填空题的选项</label>
+							<i class="option-add blank"></i>
+							<div class="option-input-view" style="display: none;">
+								<input class="reset" style="width: 80px;" type="text" placeholder="选项内容(必填)" />
+								<button class="uploadPhoto" id="option-add-blank">ok</button>
+							</div>
+							<textarea class="reset" placeholder='[{"message": "I"}, {"message":"am"}](必填)'></textarea>
+						</div>
+						<div class="action-view ui-bottom-dot-line">
+							<label>action按钮</label>
+							<textarea class="reset" placeholder='[{"type": "text","content": "am"}](必填)'></textarea>
+						</div>
+						<div class="right-answer-choose ui-bottom-dot-line">
+							<label for="right-answer">正确答案:</label>
+							<div class="answer-options">
+								<script type="text/html" id="answer-options-template">
+									{{each}}
+									<div class="answer-option">
+										<img class="radio" src="../../statics/images/icon-unselect.png">
+										<span>{{$value.content}}</span>
+									</div>
+									{{/each}}
+								</script>
+							</div>
+							<input class="reset" id="right-answer" type="text" placeholder='["am", "I"](必填)'>
+						</div>
+						<div class="wrongAnswerMsgView ui-bottom-dot-line">
+							<label for="">答错会话消息组</label>
+							<textarea placeholder="答错会话消息列表">[{"message":"答错了","action":"下一条"}]</textarea>
+						</div>
+						<div class="rightAnswerMsgView ui-bottom-dot-line">
+							<label for="">答对会话消息组</label>
+							<textarea placeholder="答对会话消息列表">[{"message":"答对了","action":"下一条"}]</textarea>
+						</div>
+
+						<button class="blank-problem-submit submit">确定</button>
 					</div>
 				</div>
 			</div>
@@ -600,6 +674,33 @@
                     <pre class="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre>
 				</div>
 			</div>
+		</script>
+
+		<!-- 第六种(填空题) -->
+		<script type="text/html" id="message-blankProblem-template">
+			<div class="message text{{if animate}} left-animation{{/if}}">
+                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+                <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
+                    <div class="msg-view">
+                    	<div class="blankProblem">
+                    		<span class="bpDesc">{{item.message}}</span>
+                    		<div class="bpDetailDesc">
+                    			{{each item.detailMessage}}
+                    			{{if $value}}
+                    				<span class="option">{{$value}}</span>
+                    			{{else}}
+                    				<span class="blank option"></span>
+                    			{{/if}}
+                    			{{/each}}
+                    		</div>
+                    	</div>
+           
+                    </div>
+                    {{if item.audio}}
+		                <img class="audio" src="../../statics/images/audio.png"/>
+	                {{/if}}
+                </div>
+            </div>
 		</script>
 
 		<!-- 第六种（用户回复） -->

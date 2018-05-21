@@ -220,6 +220,33 @@
 			</div>
 		</script>
 
+		<!-- 第六种(填空题) -->
+		<script type="text/html" id="message-blankProblem-template">
+			<div class="message text{{if animate}} left-animation{{/if}}">
+                <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
+                <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
+                    <div class="msg-view">
+                    	<div class="blankProblem">
+                    		<span class="bpDesc">{{item.message}}</span>
+                    		<div class="bpDetailDesc">
+                    			{{each item.detailMessage}}
+                    			{{if $value}}
+                    				<span class="option">{{$value}}</span>
+                    			{{else}}
+                    				<span class="blank option"></span>
+                    			{{/if}}
+                    			{{/each}}
+                    		</div>
+                    	</div>
+           
+                    </div>
+                    {{if item.audio}}
+		                <img class="audio" src="../../statics/images/audio.png"/>
+	                {{/if}}
+                </div>
+            </div>
+		</script>
+		
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="../../libs/sea.js"></script>

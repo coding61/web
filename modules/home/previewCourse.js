@@ -45,7 +45,12 @@ define(function(require, exports, module) {
 
             var questionHtml = null;
             // 1.普通消息
-            if(item.tag){
+            if (item.type === "blankProblem") {
+                // 填空题
+                var itemDic = {animate:true, item:item}
+                questionHtml = ArtTemplate("message-blankProblem-template", itemDic);
+            }
+            else if(item.tag){
                 // 1.1带 tag 的自适应题
                 if(item.link){
                     var itemDic = {animate:true, item:item}
@@ -139,6 +144,19 @@ define(function(require, exports, module) {
             }
         },
         clickEvent:function(){
+            // 根据 action 的高度设置 messages 的底部偏移量
+            setTimeout(function(){
+                var height = $(".btns").height();
+                console.log(height);
+                if (height > 100) {
+                    $(".messages").css({"margin-bottom":height+"px"});
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                }else{
+                    $(".messages").css({"margin-bottom":"100px"});
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                }
+            }, 1000)
+
             // 动作按钮点击
             $(".btn-wx-auth").unbind('click').click(function(){
 
@@ -161,6 +179,8 @@ define(function(require, exports, module) {
 
             // 选项按钮点击
             $(".option").unbind('click').click(function(){
+                // 当前 message，
+                var item = Page.data[Page.index];
                 // 选项点击
                 if ($(this).hasClass("unselect")) {
                     //  选中，将选项放到数组中
@@ -173,7 +193,10 @@ define(function(require, exports, module) {
                 }else{
 
                 }
-                Page.options.sort();
+                if (item.type === "blankProblem") {
+                }else{
+                    Page.options.sort();
+                }
                 console.log(Page.options);
             })
             

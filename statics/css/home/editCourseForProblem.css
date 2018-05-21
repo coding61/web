@@ -130,7 +130,7 @@ ul.problem-types li{
 }
 
 
-/*编程题*/
+/****************************编程题*/
 .editorView{
     display: none;
 }
@@ -158,4 +158,49 @@ ul.problem-types li{
 .codeEditor1>span,
 .codeEditor>span{
     font-size: 13px;
+}
+
+
+/**************************填空题*/
+.problem-blank-content-view{
+    width: 70%;
+    height: 80%;
+    background: white;
+    padding: 8px;
+    border-radius: 0 0 2px 2px;
+    overflow: scroll;
+}
+
+/**************************题是否隐藏*/
+.isHideView{
+    display: flex;
+    align-items: center;
+    color: gray;
+    padding-bottom: 5px;
+}
+.isHideView img{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px; 
+}
+.isHideView span{
+
+}
+
+/*****************正确答案选项列表*/
+.answer-options{
+    display: flex;
+    flex-wrap: wrap;
+}
+.answer-option{
+    display: flex;
+    align-items: center;
+    color: gray;
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+.answer-option img.radio{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px; 
 }

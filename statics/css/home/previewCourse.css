@@ -554,7 +554,8 @@ body{
 }
 .main-view .left-view .chat .message.text .content,
 .main-view .left-view .chat .message .link-text,
-.main-view .left-view .chat .message .problem-options{
+.main-view .left-view .chat .message .problem-options,
+.main-view .left-view .chat .message .blankProblem{
 	background-color: white;
 	padding: 10px 15px;
 
@@ -578,7 +579,7 @@ body{
     max-width: 100%;
     /*border: solid 1px red;*/
 }
-/*问题选项*/
+/***************选择题的问题选项*/
 .problem-options .problem-content{
 
 }
@@ -609,6 +610,28 @@ body{
 }
 .options .option .option-content-imgs{
     flex: 1;
+}
+
+/********************填空题*/
+.blankProblem .bpDesc{
+
+}
+.blankProblem .bpDetailDesc{
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.blankProblem .bpDetailDesc .option{
+    background-color: #eee;
+    margin-bottom: 5px;
+    display: inline-block;
+    border-radius: 2px;
+    color: orange;
+    height: 35px;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 35px;
+    margin-right: 5px;
 }
 
 
