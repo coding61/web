@@ -774,6 +774,9 @@ define(function(require, exports, module) {
                     dic["answer"] = answer3;
                     dic["wrong"] = wrong3;
                     dic["correct"] = right3;
+                    if ($(".problem-adapt-content-view .isHideView>img").hasClass("select")) {
+                        dic["isHide"] = true
+                    }
 
                 }else if ($(this).parent().hasClass("problem-girl-content-view")) {
                     //程序媛
@@ -801,6 +804,9 @@ define(function(require, exports, module) {
                     dic["answer"] = answer1;
                     dic["wrong"] = wrong1;
                     dic["correct"] = right1;
+                    if ($(".problem-girl-content-view .isHideView>img").hasClass("select")) {
+                        dic["isHide"] = true
+                    }
                 }
 
                 Course.updateLocalStorageData(totalDic, array, dic, originIndex, true);
@@ -1028,7 +1034,7 @@ define(function(require, exports, module) {
                 dic["exercises"] = true;
                 dic["wrong"] = wrong;
                 dic["correct"] = right;
-                if ($(".isHideView>img").hasClass("select")) {
+                if ($(".problem-blank-content-view .isHideView>img").hasClass("select")) {
                     dic["isHide"] = true
                 }
                 // console.log(dic)
