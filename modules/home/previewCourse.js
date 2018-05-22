@@ -187,28 +187,30 @@ define(function(require, exports, module) {
                 var item = Page.data[Page.index];
                 if (item.type === "blankProblem") {
                     // 填空题
-                    if ($(".bpDetailDesc .option.blank").length) {
+                    if ($(".message").last().find(".bpDetailDesc").find(".bpoption.blank").length && !$(this).hasClass("blank")) {
                         var content = $(this).html(),
                             index = $(this).attr("data-index");
                         Page.options.push(content); 
-                        $(".bpDetailDesc .option.blank").eq(0).html(content);
-                        $(".bpDetailDesc .option.blank").eq(0).attr({"data-index":index});
-                        $(".bpDetailDesc .option.blank").eq(0).addClass("exist").removeClass("blank");
+                        var eles = $(".message").last().find(".bpDetailDesc").find(".bpoption.blank").eq(0);
+                        eles.html(content);
+                        eles.attr({"data-index":index});
+                        eles.addClass("exist").removeClass("blank");
                         $(this).html("");
                         $(this).addClass("blank");
 
                         // 填空题选项复原
-                        $(".bpDetailDesc .option.exist").unbind('click').click(function(){
-                            var content = $(this).html(),
-                                index = $(this).attr("data-index");
-                            Page.options.splice(Page.options.indexOf(content), 1);
-                            $(".actions .option[data-index="+index+"]").html(content);
-                            $(".actions .option[data-index="+index+"]").removeClass("blank");
-                            $(this).html("");
-                            $(this).addClass("blank").removeClass("exist");
+                        $(".message").last().find(".bpDetailDesc").find(".bpoption.exist").unbind('click').click(function(){
+                            if ($(this).hasClass("exist")) {
+                                var content = $(this).html(),
+                                    index = $(this).attr("data-index");
+                                Page.options.splice(Page.options.indexOf(content), 1);
+                                $(".actions .option[data-index="+index+"]").html(content);
+                                $(".actions .option[data-index="+index+"]").removeClass("blank");
+                                $(this).html("");
+                                $(this).addClass("blank").removeClass("exist");
+                            }
                         })
                     }
-
                 }else if(item.type === "sequenceProblem"){
                     // 顺序题
                     $(".sequences").sortable();

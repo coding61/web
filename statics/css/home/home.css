@@ -623,7 +623,7 @@ body{
     display: flex;
     flex-wrap: wrap;
 }
-.blankProblem .bpDetailDesc .option{
+.blankProblem .bpDetailDesc .bpoption{
     background-color: #eee;
     margin-bottom: 5px;
     display: inline-block;
@@ -635,10 +635,10 @@ body{
     line-height: 35px;
     margin-right: 5px;
 }
-.blankProblem .bpDetailDesc .option.yourAnswer{
+.blankProblem .bpDetailDesc .bpoption.yourAnswer{
     color: red;
 }
-.blankProblem .bpDetailDesc .option.exist{
+.blankProblem .bpDetailDesc .bpoption.exist{
     color: red;
 }
 
