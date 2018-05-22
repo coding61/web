@@ -3,7 +3,6 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
     
-    
     var Audio = require('home/audio_record1.js');
     // 连续录音
     Audio.init(function(url, sha1Item){
@@ -138,12 +137,39 @@ define(function(require, exports, module) {
             // 习题是否隐藏
             $(".isHideView>img").removeClass("select");
             $(".isHideView>img").attr({src:"../../statics/images/icon-unselect.png"})
-            if (tag == "problem") {
-                $(".problem-types").css({display:'flex'});
+            if (tag == "problem" || tag == "adapt") {
+                // 自适应题
+                // $(".problem-types").css({display:'flex'});
+                $(".problem-question-view").css({display:'flex'})
+                $(".problem-question-view .problem-header .type").html(tagHtml);
+
+                //打开自适应题框
+                $(".problem-girl-content-view").hide();
+                $(".problem-adapt-content-view").show();
+                
+                $(".problem-adapt-content-view").removeClass("sequence");
+                $(".problem-adapt-content-view .options-view textarea").attr({placeholder:'[{"content": "A","message": "1+1=2","imgs": []}]'});
+                $(".problem-adapt-content-view .action-view textarea").attr({placeholder:'[{"type": "text","content": "A"}]'});
+                $(".problem-adapt-content-view .right-answer-choose input").attr({placeholder:'A(必填)'});
+                $(".problem-option-view .option-input-view input").attr({placeholder:"A(必填)"});
                 return;
-            }
-            if (tag === "blank") {
+            }else if (tag === "blank") {
+                // 填空题
                 $(".problem-blank-view").css({display:'flex'})
+                return;
+            }else if (tag === "sequence") {
+                $(".problem-question-view").css({display:'flex'})
+                $(".problem-question-view .problem-header .type").html(tagHtml);
+
+                //打开自适应题框(顺序提)
+                $(".problem-girl-content-view").hide();
+                $(".problem-adapt-content-view").show();
+                
+                $(".problem-adapt-content-view").addClass("sequence");
+                $(".problem-adapt-content-view .options-view textarea").attr({placeholder:'[{"content": "1","message": "打开冰箱","imgs": []}]'});
+                $(".problem-adapt-content-view .action-view textarea").attr({placeholder:'[{"type": "text","content": "1"}]'});
+                $(".problem-adapt-content-view .right-answer-choose input").attr({placeholder:'[1,2,3](必填)'});
+                $(".problem-option-view .option-input-view input").attr({placeholder:"1(必填)"});
                 return;
             }
             $(".msg-header .type").html(tagHtml);
@@ -769,13 +795,19 @@ define(function(require, exports, module) {
                         alert("数据格式有问题!");
                         return;
                     }
+                    if ($(".problem-adapt-content-view").hasClass("sequence")) {
+                        dic["type"] = "sequenceProblem";
+                        dic["answer"] = JSON.parse(answer3);
+                    }else{
+                        dic["type"] = "adaptProblem";
+                        dic["answer"] = answer3;
+                    }
                     dic["tag"] = "1";
                     dic["exercises"] = true;
                     dic["message"] = msg3;
                     dic["imgs"] = photo3;
                     dic["options"] = options3;
                     dic["action"] = action3;
-                    dic["answer"] = answer3;
                     dic["wrong"] = wrong3;
                     dic["correct"] = right3;
                     if ($(".problem-adapt-content-view .isHideView>img").hasClass("select")) {
@@ -863,7 +895,16 @@ define(function(require, exports, module) {
                 dic1["content"] = content2
                 actions2.push(dic1)
                 $(".problem-adapt-content-view .action-view textarea").val(JSON.stringify(actions2))
-
+                
+                // 顺序题
+                if ($(".problem-adapt-content-view").hasClass("sequence")) {
+                    // right-answer 正确答案选项列表
+                    var html = ArtTemplate("problem-answer-options-template", actions2);
+                    $(".problem-adapt-content-view .answer-options").html(html);
+                    // right-answer 选择
+                    rightAnswer();
+                }
+                
                 $(".problem-option-view").css({display:'none'});
                 // https://static1.bcjiaoyu.com/0854865591cb522edde1cdb8bdc0b752_k.gif-120x120
             })
@@ -962,8 +1003,20 @@ define(function(require, exports, module) {
                 var html = ArtTemplate("answer-options-template", actionBlank);
                 $(".answer-options").html(html);
                 // right-answer 选择
+                rightAnswer();
+
+                $(this).parent().prev().show();
+                $(this).parent().hide();
+            })
+
+            function rightAnswer(){
+                // right-answer 选择
                 $(".answer-option").unbind('click').click(function(){
-                    var answer = $(".problem-blank-content-view .right-answer-choose input").val();
+                    if ($(this).parents(".problem-adapt-content-view").length) {
+                        var answer = $(".problem-adapt-content-view .right-answer-choose input").val();
+                    }else{
+                        var answer = $(".problem-blank-content-view .right-answer-choose input").val();
+                    }
                     try {
                         answer = answer?JSON.parse(answer):[]
                     }
@@ -984,12 +1037,13 @@ define(function(require, exports, module) {
                         $(this).children("img").addClass("select");
                         $(this).children("img").attr({src:"../../statics/images/icon-select.png"})
                     }
-                    $(".problem-blank-content-view .right-answer-choose input").val(JSON.stringify(answer));
+                    if ($(this).parents(".problem-adapt-content-view").length) {
+                        $(".problem-adapt-content-view .right-answer-choose input").val(JSON.stringify(answer));
+                    }else{
+                        $(".problem-blank-content-view .right-answer-choose input").val(JSON.stringify(answer));
+                    }
                 })
-
-                $(this).parent().prev().show();
-                $(this).parent().hide();
-            })
+            }
 
             // 添加填空题submit
             $(".blank-problem-submit").unbind('click').click(function(){
@@ -1028,7 +1082,7 @@ define(function(require, exports, module) {
                     alert("数据格式有问题!");
                     return;
                 }
-                
+                dic["tag"] = "1";
                 dic["type"] = "blankProblem";
                 dic["message"] = msg;
                 dic["detailMessage"] = detailMsg;
@@ -1696,7 +1750,7 @@ define(function(require, exports, module) {
                     KeyBoard.ctrlEnterKeyPress();
                     return
                 }
-                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67){
+                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67 || k==83){
                     if ($(".lesson-input-view").css('display') == "flex") {
                         return;
                     }
@@ -1724,7 +1778,7 @@ define(function(require, exports, module) {
                     } 
                 }
                 console.log(k);
-                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67){
+                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67 || k==83){
                     // 键盘按键触发弹框
                     console.log("keyCode:",k);
                     console.log("courseIndex:",Course.index);
@@ -1792,6 +1846,11 @@ define(function(require, exports, module) {
                 case 67:
                     // 填空题(C)
                     KeyBoard.clickEvent("blank", "填空题")
+                    break;
+                case 83:
+                    // 顺序题(S)
+                    KeyBoard.clickEvent("sequence", "顺序题");
+                    break;
         　　 }
         },
         clickEvent:function(tag, tagHtml){
@@ -1819,9 +1878,10 @@ define(function(require, exports, module) {
                 Common.dialog("这是习题，无法添加 action 文本");
                 return;
             }
-            if (tag == "girl" || tag == "adapt" || tag == "blank") {
+            if (tag == "girl" || tag == "adapt" || tag == "blank" || tag == "sequence") {
                 // 选择题、填空题
-                KeyBoard.clickProblemEvent(tag, tagHtml);
+                // KeyBoard.clickProblemEvent(tag, tagHtml);
+                Course.openInputView(tag, tagHtml);
             }else{
                 Course.openInputView(tag, tagHtml);
             }

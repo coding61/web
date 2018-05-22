@@ -21,7 +21,7 @@
 				<img class="logo1" style="height: 30px;" src="../../statics/images/logo2.png" />
 				<div class="right-line"></div>
 				<img class="logo2" style="height: 30px;" src="../../statics/images/logo1.png"/>
-				<div style="color: white;position: absolute;right: 0;line-height: 30px;">快捷键:A(文本),B(按钮文本),P(图片),L(链接文本),<!-- Q(程序媛选择题), -->T(自适应选择题),M(大段文本),D(大段代码文本), C(填空题)</div>
+				<div style="color: white;position: absolute;right: 0;line-height: 30px;">快捷键:A(文本),B(按钮文本),P(图片),L(链接文本),<!-- Q(程序媛选择题), -->T(自适应选择题),M(大段文本),D(大段代码文本), C(填空题),S(顺序题)</div>
 			</div>
 		</div>
         <div>
@@ -108,6 +108,7 @@
 						<li class="msg-action-text" data-tag="action">按钮文本</li>
 						<li class="problem-msg" data-tag="problem">选择题</li>
 						<li class="blank-problem-msg" data-tag="blank">填空题</li>
+						<li class="sequence-msg" data-tag="sequence">顺序题</li>
 					</ul>
 
 					<!-- 声音的选择，本地音频/录制音频 -->
@@ -390,7 +391,7 @@
 						<div class="options-view ui-bottom-dot-line">
 							<label for="">问题选项组</label>
 							<i class="option-add"></i>
-							<textarea class="reset" placeholder='[{"content": "A","message": "表达式1 and 表达式2是当两个表达式都为真时为真","imgs": []}]'></textarea>
+							<textarea class="reset" placeholder='[{"content": "A","message": "1+1=2","imgs": []}]'></textarea>
 						</div>
 						<div class="action-view ui-bottom-dot-line">
 							<label>action按钮</label>
@@ -398,6 +399,16 @@
 						</div>
 						<div class="right-answer-choose ui-bottom-dot-line">
 							<label for="right-answe">正确答案:</label>
+							<div class="answer-options">
+								<script type="text/html" id="problem-answer-options-template">
+									{{each}}
+									<div class="answer-option">
+										<img class="radio" src="../../statics/images/icon-unselect.png">
+										<span>{{$value.content}}</span>
+									</div>
+									{{/each}}
+								</script>
+							</div>
 							<input class="reset" id="right-answer" type="text" placeholder="A(必填)">
 						</div>
 						<div class="wrongAnswerMsgView ui-bottom-dot-line">
@@ -582,7 +593,7 @@
                             		<span class="order-letter">{{$value.content}}</span>
                             		<div class="option-content-imgs">
                             			{{if $value.message}}
-	                            			<span class="option-content">{{TheMessage $value.message}}</span> 
+	                            			<span class="option-content">{{$value.message}}</span> 
                             			{{/if}}
                             			{{if $value.imgs && $value.imgs.length}}
 	                                		<div class="option-imgs">

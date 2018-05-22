@@ -206,7 +206,12 @@ define(function(require, exports, module) {
                 }else{
                     // 左侧消息
                     // 1.普通消息
-                    if(item.tag){
+                    if (item.type === "blankProblem") {
+                        // 填空题
+                        var itemDic = {animate:true, item:item}
+                        questionHtml = ArtTemplate("message-blankProblem-template", itemDic);
+                    }
+                    else if(item.tag){
                         // 1.1带 tag 的自适应题    
                         if(item.link){
                             var itemDic = {animate:false, item:item}
@@ -692,7 +697,12 @@ define(function(require, exports, module) {
 
             var questionHtml = null;
             // 1.普通消息
-            if(item.tag){
+            if (item.type === "blankProblem") {
+                // 填空题
+                var itemDic = {animate:true, item:item}
+                questionHtml = ArtTemplate("message-blankProblem-template", itemDic);
+            }
+            else if(item.tag){
                 // 1.1带 tag 的自适应题
                 if(item.link){
                     var itemDic = {animate:true, item:item}
@@ -805,6 +815,23 @@ define(function(require, exports, module) {
             //自适应题中图片懒加载
             $('.lazy-img').imageloader();
 
+            // 根据 action 的高度设置 messages 的底部偏移量
+            setTimeout(function(){
+                var height = $(".btns").height();
+                console.log(height);
+                if (height > 100) {
+                    $(".messages").css({"margin-bottom":height+"px"});
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                }else{
+                    $(".messages").css({"margin-bottom":"100px"});
+                    $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
+                }
+            }, 1000);
+
+            // 顺序题
+            $(".sequences").sortable();
+            $(".sequence.option").css({cursor: "move"});
+
             // 动作按钮点击
             $(".btn-wx-auth").unbind('click').click(function(){
 
@@ -895,19 +922,49 @@ define(function(require, exports, module) {
             })
             // 选项按钮点击
             $(".option").unbind('click').click(function(){
-                // 选项点击
-                if ($(this).hasClass("unselect")) {
-                    //  选中，将选项放到数组中
-                    $(this).removeClass("unselect").addClass("select");
-                    Page.options.push($(this).html());
-                }else if ($(this).hasClass("select")) {
-                    // 取消选中
-                    $(this).removeClass("select").addClass("unselect");
-                    Page.options.splice(Page.options.indexOf($(this).html()), 1);
-                }else{
+                var item = Page.data[Page.index];
+                if (item.type === "blankProblem") {
+                    // 填空题
+                    if ($(".bpDetailDesc .option.blank").length) {
+                        var content = $(this).html(),
+                            index = $(this).attr("data-index");
+                        Page.options.push(content); 
+                        $(".bpDetailDesc .option.blank").eq(0).html(content);
+                        $(".bpDetailDesc .option.blank").eq(0).attr({"data-index":index});
+                        $(".bpDetailDesc .option.blank").eq(0).addClass("exist").removeClass("blank");
+                        $(this).html("");
+                        $(this).addClass("blank");
 
+                        // 填空题选项复原
+                        $(".bpDetailDesc .option.exist").unbind('click').click(function(){
+                            var content = $(this).html(),
+                                index = $(this).attr("data-index");
+                            Page.options.splice(Page.options.indexOf(content), 1);
+                            $(".actions .option[data-index="+index+"]").html(content);
+                            $(".actions .option[data-index="+index+"]").removeClass("blank");
+                            $(this).html("");
+                            $(this).addClass("blank").removeClass("exist");
+                        })
+                    }
+
+                }else if(item.type === "sequenceProblem"){
+                    // 顺序题
+                    $(".sequences").sortable();
+                } else{
+                    // 选择题
+                    if ($(this).hasClass("unselect")) {
+                        //  选中，将选项放到数组中
+                        $(this).removeClass("unselect").addClass("select");
+                        Page.options.push($(this).html()); 
+                    }else if ($(this).hasClass("select")) {
+                        // 取消选中
+                        $(this).removeClass("select").addClass("unselect");
+                        Page.options.splice(Page.options.indexOf($(this).html()), 1);
+                    }else{
+
+                    }
+                    Page.options.sort();
                 }
-                Page.options.sort();
                 console.log(Page.options);
             })
 
@@ -1495,7 +1552,12 @@ define(function(require, exports, module) {
             var item = Page.data[Page.index];
             if (exercise == true) {
                 // 点了习题提交按钮， 选择答对/答错数组
-                if (item.answer != actionText) {
+                if (item.type === "blankProblem" || item.type === "sequenceProblem") {
+                    var answer = item.answer.join(",");
+                }else{
+                    var answer = item.answer;
+                }
+                if (answer != actionText) {
                     // 错误答案
                     Page.optionData = item.wrong;
                     Page.optionIndex = 0;
@@ -3128,7 +3190,17 @@ define(function(require, exports, module) {
         },
         actionClickEvent:function(this_){
             // 普通 action 按钮点击事件
-            if (this_.hasClass("exercise")) {
+            if (this_.hasClass("sequence")) {
+                // 顺序题
+                $(".actions .option").each(function(item, i){
+                    var content = $(this).html();
+                    Page.options.push(content);
+                })
+                var msg = Page.options.join(',');
+                Page.options = [];
+                Page.loadClickMessage(msg, true);   //true 代表点了习题提交答案的按钮
+            }
+            else if (this_.hasClass("exercise")) {
                 // 点了习题的，提交答案的按钮
                 if (!Page.options || !Page.options.length) {
                     Common.dialog("请选择一个选项");
@@ -3227,13 +3299,23 @@ define(function(require, exports, module) {
                 // 新闻
                 actionHtml = '<span class="btn-wx-auth bottom-animation notNews">暂时不看</span>\
                             <span class="btn-wx-auth bottom-animation nextNews">下一条</span>';
+            }else if(item.type === "sequenceProblem"){
+                // 顺序题
+                var optionHtml = "<div class='sequences'>";
+                for (var j = 0; j < item.action.length; j++) {
+                    var option = item.action[j];
+                    optionHtml += '<span class="option sequence unselect" data-index="'+j+'">'+option.content+'</span>'
+                }
+                optionHtml += "</div>"
+                actionHtml += optionHtml
+                actionHtml += '<span class="btn-wx-auth exercise sequence">ok</span>';
             }else if (item.action) {
                 if (item.exercises == true) {
                     // 如果是选择题，（多按钮）
                     var optionHtml = "";
                     for (var j = 0; j < item.action.length; j++) {
                         var option = item.action[j];
-                        optionHtml += '<span class="option unselect">'+option.content+'</span>'
+                        optionHtml += '<span class="option unselect" data-index="'+j+'">'+option.content+'</span>'
                     }
                     actionHtml += optionHtml
                     actionHtml += '<span class="btn-wx-auth exercise">ok</span>';
