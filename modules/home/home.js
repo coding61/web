@@ -238,7 +238,7 @@ define(function(require, exports, module) {
                     }
                 }
             }
-
+            
             $(".loading-chat").remove();
             $(questionHtml).appendTo(".messages");
             $(answerHtml).appendTo(".messages");
@@ -388,7 +388,12 @@ define(function(require, exports, module) {
                 }else{
                     // 左侧消息
                     // 1.普通消息
-                    if(item.tag){
+                    if (item.type === "blankProblem") {
+                        // 填空题
+                        var itemDic = {animate:true, item:item}
+                        questionHtml = ArtTemplate("message-blankProblem-template", itemDic);
+                    }
+                    else if(item.tag){
                         // 1.1带 tag 的自适应题
                         if(item.link){
                             var itemDic = {animate:false, item:item}
@@ -696,6 +701,7 @@ define(function(require, exports, module) {
             var imgI = "i_"+ChatStroage.numbers;
 
             var questionHtml = null;
+            if (!item.isHide) {
             // 1.普通消息
             if (item.type === "blankProblem") {
                 // 填空题
@@ -781,8 +787,9 @@ define(function(require, exports, module) {
                 }
                 Util.storeData();
             }
+            }
 
-            if (item.action || item.hasAction) {
+            if (item.action && !item.isHide || item.hasAction) {
                 console.log(i);
                 return;
             } else{
