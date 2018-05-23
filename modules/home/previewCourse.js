@@ -44,6 +44,7 @@ define(function(require, exports, module) {
             var imgI = "i_"+Page.numbers;
 
             var questionHtml = null;
+            if (!item.isHide) {
             // 1.普通消息
             if (item.type === "blankProblem") {
                 // 填空题
@@ -113,8 +114,9 @@ define(function(require, exports, module) {
                 Page.index = i;
             }
             // Util.storeData();
+            }
             
-            if (item.action) {
+            if (item.action && !item.isHide) {
                 console.log(i);
                 return;
             } else{
