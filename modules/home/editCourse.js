@@ -796,6 +796,10 @@ define(function(require, exports, module) {
                         return;
                     }
                     if ($(".problem-adapt-content-view").hasClass("sequence")) {
+                        if (JSON.parse(answer3).length != action3.length) {
+                            Common.dialog("顺序题答案个数要与选项个数保持一致");
+                            return;
+                        }
                         dic["type"] = "sequenceProblem";
                         dic["answer"] = JSON.parse(answer3);
                     }else{
