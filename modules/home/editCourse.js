@@ -458,8 +458,10 @@ define(function(require, exports, module) {
             $(".problem-blank-content-view .options-view textarea").val("");
             $(".problem-blank-content-view .action-view textarea").val("");
             $(".problem-blank-content-view .right-answer-choose input").val("");
-            $(".problem-blank-content-view .wrongAnswerMsgView textarea").val("");
-            $(".problem-blank-content-view .rightAnswerMsgView textarea").val("");
+            // $(".problem-blank-content-view .wrongAnswerMsgView textarea").val("");
+            // $(".problem-blank-content-view .rightAnswerMsgView textarea").val("");
+
+            $(".answer-options").html("");
 
 
             // 习题是否隐藏(选择题/填空题)
