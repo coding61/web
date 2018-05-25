@@ -928,7 +928,7 @@ define(function(require, exports, module) {
 
             })
             // 选项按钮点击
-            $(".option").unbind('click').click(function(){
+            $(".actions .option").unbind('click').click(function(){
                 var item = Page.data[Page.index];
                 if (item.type === "blankProblem") {
                     // 填空题
