@@ -189,7 +189,7 @@ define(function(require, exports, module) {
                 $(".isCodeQuestion").hide();
             }else if (tag == "text") {
                 //纯文本
-                $(".input-view>textarea").attr({placeholder:"文本消息内容(最多50个字符)"});
+                $(".input-view>textarea").attr({placeholder:"文本消息内容"});
                 $(".input-view>input").hide();
                 $(".input-view #upload-container").hide();
                 $("#audio-record-view").hide();
@@ -623,10 +623,15 @@ define(function(require, exports, module) {
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "text"){
                     //新增文本
-                    if ($(".input-view textarea").val().length > 50) {
-                        Common.dialog("文本最多只能有50个字符");
+                    if ($(".input-view textarea").val() === ""){
+                        Common.dialog("请输入一些内容");
                         return;
                     }
+                    // if ($(".input-view textarea").val().length > 50) {
+                    //     Common.dialog("文本最多只能有50个字符");
+                    //     return;
+                    // }
+
                     dic["message"] = $(".input-view textarea").val();
                     if ($(".isCodeQuestion img").attr("src") === "../../statics/images/icon-unselect.png") {
                         // 不是编程题
