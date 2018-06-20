@@ -137,6 +137,8 @@ define(function(require, exports, module) {
             // 习题是否隐藏
             $(".isHideView>img").removeClass("select");
             $(".isHideView>img").attr({src:"../../statics/images/icon-unselect.png"})
+            $(".choiceType>img").removeClass("select");
+            $(".choiceType>img").attr({src:"../../statics/images/icon-unselect.png"})
             if (tag == "problem" || tag == "adapt") {
                 // 自适应题
                 // $(".problem-types").css({display:'flex'});
@@ -152,6 +154,8 @@ define(function(require, exports, module) {
                 $(".problem-adapt-content-view .action-view textarea").attr({placeholder:'[{"type": "text","content": "A"}]'});
                 $(".problem-adapt-content-view .right-answer-choose input").attr({placeholder:'A(必填)'});
                 $(".problem-option-view .option-input-view input").attr({placeholder:"A(必填)"});
+                
+                $(".problem-adapt-content-view .choiceType").css({display:'flex'});
                 return;
             }else if (tag === "blank") {
                 // 填空题
@@ -170,6 +174,8 @@ define(function(require, exports, module) {
                 $(".problem-adapt-content-view .action-view textarea").attr({placeholder:'[{"type": "text","content": "1"}]'});
                 $(".problem-adapt-content-view .right-answer-choose input").attr({placeholder:'[1,2,3](必填)'});
                 $(".problem-option-view .option-input-view input").attr({placeholder:"1(必填)"});
+
+                $(".problem-adapt-content-view .choiceType").css({display:'none'});
                 return;
             }
             $(".msg-header .type").html(tagHtml);
@@ -824,6 +830,13 @@ define(function(require, exports, module) {
                     if ($(".problem-adapt-content-view .isHideView>img").hasClass("select")) {
                         dic["isHide"] = true
                     }
+                    if ($(".problem-adapt-content-view").hasClass("sequence")) {
+                        
+                    }else{
+                        if ($(".problem-adapt-content-view .choiceType>img").hasClass("select")) {
+                            dic["choiceType"] = "single";
+                        }
+                    }
 
                 }else if ($(this).parent().hasClass("problem-girl-content-view")) {
                     //程序媛
@@ -853,6 +866,9 @@ define(function(require, exports, module) {
                     dic["correct"] = right1;
                     if ($(".problem-girl-content-view .isHideView>img").hasClass("select")) {
                         dic["isHide"] = true
+                    }
+                    if ($(".problem-adapt-content-view .choiceType>img").hasClass("select")) {
+                        dic["choiceType"] = "single";
                     }
                 }
 
@@ -1112,6 +1128,17 @@ define(function(require, exports, module) {
 
             // -------------------是否隐藏习题
             $(".isHideView>img").unbind('click').click(function(){
+                if ($(this).hasClass("select")) {
+                    // 取消选中
+                    $(this).removeClass("select");
+                    $(this).attr({src:"../../statics/images/icon-unselect.png"})
+                }else{
+                    // 选中
+                    $(this).addClass("select");
+                    $(this).attr({src:"../../statics/images/icon-select.png"})
+                }
+            })
+            $(".choiceType>img").unbind('click').click(function(){
                 if ($(this).hasClass("select")) {
                     // 取消选中
                     $(this).removeClass("select");

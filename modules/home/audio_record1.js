@@ -104,7 +104,7 @@ define(function(require, exports, module) {
 
 
             var fileType = 'audio';
-            var fileName = 'audio.mp3';
+            var fileName = 'audio.wav';
 
             var formData = new FormData();
             formData.append('file-type', fileType);

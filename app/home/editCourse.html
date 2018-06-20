@@ -339,9 +339,16 @@
 					</div>
 					<!-- 选择题(程序媛) -->
 					<div class="problem-girl-content-view">
-						<div class="isHideView ui-bottom-dot-line">
-							<img class="radio" src="../../statics/images/icon-unselect.png">
-							<span>该题是否在教程中隐藏</span>
+						<div class="ui-bottom-dot-line" style="display: flex;justify-content: space-between;flex-direction: row;">
+							<div class="isHideView">
+								<img class="radio" src="../../statics/images/icon-unselect.png">
+								<span>该题是否在教程中隐藏</span>
+							</div>
+
+							<div class="choiceType" style="display: flex;justify-content: center;align-items: center;margin-left: 30px;color: gray;padding-bottom: 5px;">
+								<img style="width: 20px;height: 20px;margin-right: 5px;" class="radio single" src="../../statics/images/icon-unselect.png">
+								<span>单选题</span>
+							</div>
 						</div>
 						<div class="question-view">
 							<label>问题</label>
@@ -373,10 +380,18 @@
 					</div>
 					<!-- 选择题(自适应) -->
 					<div class="problem-adapt-content-view">
-						<div class="isHideView ui-bottom-dot-line">
-							<img class="radio" src="../../statics/images/icon-unselect.png">
-							<span>该题是否在教程中隐藏</span>
+						<div class="ui-bottom-dot-line" style="display: flex;justify-content: space-between;flex-direction: row;">
+							<div class="isHideView">
+								<img class="radio" src="../../statics/images/icon-unselect.png">
+								<span>该题是否在教程中隐藏</span>
+							</div>
+
+							<div class="choiceType" style="display: flex;justify-content: center;align-items: center;margin-left: 30px;color: gray;padding-bottom: 5px;">
+								<img style="width: 20px;height: 20px;margin-right: 5px;" class="radio single" src="../../statics/images/icon-unselect.png">
+								<span>单选题</span>
+							</div>
 						</div>
+
 						<div class="question-view ui-bottom-dot-line">
 							<label>问题题目<文字/图片必填其一></label>
 							<label class="subTitle">题目文字描述</label>
@@ -707,9 +722,15 @@
                     	</div>
            
                     </div>
-                    {{if item.audio}}
-		                <img class="audio" src="../../statics/images/audio.png"/>
-	                {{/if}}
+                    <div class="add-reduce-view">
+                    	<img class="left-add" src="../../statics/images/editCourse/add1.png">
+                    	<img class="reduce" src="../../statics/images/editCourse/reduce.png" />
+                    	<!-- <img class="audioRecord audio-record-start" style="width: 25px;height: 25px;margin-right: 10px;" src="../../statics/images/editCourse/start.png"> -->
+                    	<!-- <img class="audio" src="../../statics/images/audio.png"/> -->
+                    	<!-- {{if item.audio}}<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">{{/if}} -->
+                    </div>
+                     <!-- <pre class="log" style="font-size: 12px;text-align: left;max-height: 40px;overflow-y: auto;margin-bottom: 10px;"></pre> -->
+               
                 </div>
             </div>
 		</script>

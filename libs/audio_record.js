@@ -95,7 +95,7 @@ window.onload = function(text) {
     /* 上传音频到服务器 */
     function uploadBlob(blob) {
         var fileType = 'audio';
-        var fileName = 'audio.mp3';
+        var fileName = 'audio.wav';
 
         var formData = new FormData();
         formData.append('file-type', fileType);
