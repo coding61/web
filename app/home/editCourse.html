@@ -704,7 +704,7 @@
 
 		<!-- 第六种(填空题) -->
 		<script type="text/html" id="message-blankProblem-template">
-			<div class="message text{{if animate}} left-animation{{/if}}">
+			<div class="message text{{if animate}} left-animation{{/if}}" data-index="{{index}}">
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
                 <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
