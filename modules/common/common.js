@@ -1138,12 +1138,40 @@ define(function(require, exports, module) {
 		}
 	};
 
-	// 统计页面浏览量
+	// 统计页面浏览量,百度
 	var _hmt = _hmt || [];
 	var hm = document.createElement("script");
-	hm.src = "https://hm.baidu.com/hm.js?0e1f2afd2def9daf664e5504d146965a";
-	var s = document.getElementsByTagName("script")[0];
-	s.parentNode.insertBefore(hm, s);
+	hm.src = "https://hm.baidu.com/hm.js?1c135c86d786538f5533cbf9835d47bb";
+	var s = document.getElementsByTagName("script")[0]; 
+	var isExist = false
+	for (var i = 0; i < document.getElementsByTagName("script").length; i++) {
+		if (document.getElementsByTagName("script")[i].src === "https://hm.baidu.com/hm.js?1c135c86d786538f5533cbf9835d47bb"){
+			isExist = true;
+		}
+	}
+	if (!isExist) {
+		s.parentNode.insertBefore(hm, s);
+	}
+	
+	var a1 = '<script src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>';
+	var a2 = '<script>\
+			  	window.dataLayer = window.dataLayer || [];\
+			  	function gtag(){dataLayer.push(arguments);}\
+			  	gtag("js", new Date());\
+			  	gtag("config", "UA-121322429-1");\
+			  </script>';
+
+	var parser1 = new DOMParser();
+	var doc1 = parser1.parseFromString(a1, "text/xml");
+	var node1 = doc1.getElementsByTagName('script')[0];
+	
+	var parser2 = new DOMParser();
+	var doc2 = parser2.parseFromString(a2, "text/xml");
+	var node2 = doc2.getElementsByTagName('script')[0];
+
+	var headTag = document.getElementsByTagName("head")[0];
+	headTag.insertBefore(node2, headTag.firstChild);
+	headTag.insertBefore(node1, headTag.firstChild);
 
 
 	(function() {
