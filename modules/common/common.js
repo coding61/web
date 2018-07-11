@@ -1153,25 +1153,25 @@ define(function(require, exports, module) {
 		s.parentNode.insertBefore(hm, s);
 	}
 	
-	var a1 = '<script src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>';
-	var a2 = '<script>\
-			  	window.dataLayer = window.dataLayer || [];\
-			  	function gtag(){dataLayer.push(arguments);}\
-			  	gtag("js", new Date());\
-			  	gtag("config", "UA-121322429-1");\
-			  </script>';
+	// var a1 = '<script src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>';
+	// var a2 = '<script>\
+	// 		  	window.dataLayer = window.dataLayer || [];\
+	// 		  	function gtag(){dataLayer.push(arguments);}\
+	// 		  	gtag("js", new Date());\
+	// 		  	gtag("config", "UA-121322429-1");\
+	// 		  </script>';
 
-	var parser1 = new DOMParser();
-	var doc1 = parser1.parseFromString(a1, "text/xml");
-	var node1 = doc1.getElementsByTagName('script')[0];
+	// var parser1 = new DOMParser();
+	// var doc1 = parser1.parseFromString(a1, "text/xml");
+	// var node1 = doc1.getElementsByTagName('script')[0];
 	
-	var parser2 = new DOMParser();
-	var doc2 = parser2.parseFromString(a2, "text/xml");
-	var node2 = doc2.getElementsByTagName('script')[0];
+	// var parser2 = new DOMParser();
+	// var doc2 = parser2.parseFromString(a2, "text/xml");
+	// var node2 = doc2.getElementsByTagName('script')[0];
 
-	var headTag = document.getElementsByTagName("head")[0];
-	headTag.insertBefore(node2, headTag.firstChild);
-	headTag.insertBefore(node1, headTag.firstChild);
+	// var headTag = document.getElementsByTagName("head")[0];
+	// headTag.insertBefore(node2, headTag.firstChild);
+	// headTag.insertBefore(node1, headTag.firstChild);
 
 
 	(function() {
