@@ -180,7 +180,21 @@ define(function(require, exports, module) {
             }
             $(".msg-header .type").html(tagHtml);
             $(".msg-header .type").attr({tag:tag});
-            if (tag == "photo") {
+            if (tag == "video") {
+                //视频消息
+                $(".input-view>textarea").attr({placeholder:"视频缩略图地址"});
+                $(".input-view>input").attr({placeholder:"视频链接地址"});
+                $(".input-view #upload-container").show();
+
+                $(".input-view #upload-container #uploadAudio").hide();
+                $(".input-view #upload-container #uploadImg").css({display:'inline-block'});
+
+                $("#audio-record-view").hide();
+                $("#log").show();
+                $(".editorView").hide();
+                $(".isCodeQuestion").hide();
+            }
+            else if (tag == "photo") {
                 //图片消息
                 $(".input-view>textarea").attr({placeholder:"图片消息地址"});
                 $(".input-view>input").hide();
@@ -625,6 +639,16 @@ define(function(require, exports, module) {
                 }else if (tag == "photo") {
                     //新增图片
                     dic["img"] = $(".input-view textarea").val();
+                    isAdd = true;
+                    Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
+                }else if(tag == "video"){
+                    // 新增视频
+                    if ($(".input-view textarea").val() == "" || $(".input-view input").val() == "") {
+                        Common.dialog("视频缩略图，链接不能为空");
+                        return;
+                    }
+                    dic["img"] = $(".input-view textarea").val();
+                    dic["video"] = $(".input-view input").val();
                     isAdd = true;
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "text"){
@@ -1788,7 +1812,7 @@ define(function(require, exports, module) {
                     KeyBoard.ctrlEnterKeyPress();
                     return
                 }
-                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67 || k==83){
+                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67 || k==83 || k==86){
                     if ($(".lesson-input-view").css('display') == "flex") {
                         return;
                     }
@@ -1816,7 +1840,7 @@ define(function(require, exports, module) {
                     } 
                 }
                 console.log(k);
-                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67 || k==83){
+                if(k == 65 || k==66 || k==80 || k==76 || k==81 || k==84 || k==77 || k==68 || k==67 || k==83 || k==86){
                     // 键盘按键触发弹框
                     console.log("keyCode:",k);
                     console.log("courseIndex:",Course.index);
@@ -1861,7 +1885,11 @@ define(function(require, exports, module) {
                     //图片(P)
                     KeyBoard.clickEvent("photo", "图片")
             　　　　break;
-        　　　　 case 76:
+                case 86:
+                    //视频(V)
+                    KeyBoard.clickEvent("video", "视频")
+            　　　　break;
+        　　　　  case 76:
                     //链接文本(L)
                     KeyBoard.clickEvent("link-text", "链接文本")
             　　　　break;
@@ -1954,7 +1982,7 @@ define(function(require, exports, module) {
             $(".problem-types").css({display:'none'});
         },
         inputTextareaFoucus:function(tag){
-            var tags = ["text", "action", "photo", "link-text"]
+            var tags = ["text", "action", "photo", "video", "link-text"]
             if (tags.indexOf(tag) > -1) {
                 console.log("聚焦");
                 // $(".message-input-view textarea").focus();  //这种要配合 keyup 使用,否则按键字母会出现在输入框中

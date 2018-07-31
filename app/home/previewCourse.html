@@ -197,7 +197,7 @@
 
 		<!-- 第四种(纯图片消息) -->
 		<script type="text/html" id="message-img-template">
-			<div class="message img">
+			<div class="message img" {{if item.video}}data-video="{{item.video}}"{{/if}}>
 	            <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg" />
 	            <div class="msg-view-parent">
 	                <div class="msg-view">

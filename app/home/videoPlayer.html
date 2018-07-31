@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+		<script>
+		  	window.dataLayer = window.dataLayer || [];
+		  	function gtag(){dataLayer.push(arguments);}
+		  	gtag("js", new Date());
+		  	gtag("config", "UA-121322429-1");
+	   </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>视频播放器</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+
+		<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	</head>
+	<body style="margin: 0px;width: 100%;height: 100%;">
+		<video controls="controls" autoplay="false">
+			您的浏览器不支持 video 标签。
+		</video>
+		<script type="text/javascript">
+			function getQueryString(key){
+				var ls = location.search;
+				//var reg = eval("new RegExp('[a-zA-Z0-9]+=[^&]+&|[a-zA-Z0-9]+=[^&]+$','g')");
+				var reg = eval("new RegExp('[\?&]+(" + key + ")=[^&]+&|[\?&]+(" + key + ")=[^&]+$')");
+				var args = ls.match(reg);
+				if (args) {
+					return args[0].split("=")[1].replace(/&$/, "");
+				} else {
+					console.log(key + "不存在");
+					return null;
+				}
+			}
+			window.onload=function(){
+				$("video").attr({width:$(window).width()})
+				$("video").attr({height:$(window).height()})
+				// console.log(getQueryString("videoUrl"));
+				var videoUrl = decodeURIComponent(getQueryString("videoUrl"));
+				$("video").attr({src:videoUrl});
+				$("video").attr({autoplay:true})
+			}
+		</script>
+	</body>
+
+</html>

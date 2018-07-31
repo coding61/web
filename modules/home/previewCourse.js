@@ -255,6 +255,14 @@ define(function(require, exports, module) {
             })
             // 图片消息点击
             $(".message.img").unbind('click').click(function(){
+                var video = $(this).attr("data-video");
+                if (video && video != "") {
+                    var link = "videoPlayer.html?videoUrl=" + encodeURIComponent(video);
+                    $("#thirdSite").attr({src:link});
+                    Util.openRightIframe("thirdSite");
+                    return;
+                }
+
                 var url = $(this).find('img.msg').attr('src');
                 $(".imgmsg img").attr({src:url});
                 $(".imgmsg-shadow-view").show();
