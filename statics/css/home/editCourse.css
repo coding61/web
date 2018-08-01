@@ -1789,6 +1789,7 @@ ul.audio-types li{
     display: none;
 }
 #upload-container #uploadAudio,
+#upload-container #uploadVideo,
 #upload-container #uploadImg{
     background: #eee;
     padding: 5px 8px;

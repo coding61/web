@@ -185,9 +185,10 @@ define(function(require, exports, module) {
                 $(".input-view>textarea").attr({placeholder:"视频缩略图地址"});
                 $(".input-view>input").attr({placeholder:"视频链接地址"});
                 $(".input-view #upload-container").show();
-
+                
                 $(".input-view #upload-container #uploadAudio").hide();
                 $(".input-view #upload-container #uploadImg").css({display:'inline-block'});
+                $(".input-view #upload-container #uploadVideo").css({display:'inline-block'});
 
                 $("#audio-record-view").hide();
                 $("#log").show();
@@ -202,6 +203,7 @@ define(function(require, exports, module) {
 
                 $(".input-view #upload-container #uploadAudio").hide();
                 $(".input-view #upload-container #uploadImg").css({display:'inline-block'});
+                $(".input-view #upload-container #uploadVideo").hide();
 
                 $("#audio-record-view").hide();
                 $("#log").show();
