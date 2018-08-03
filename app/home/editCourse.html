@@ -652,7 +652,7 @@
                 <img class="avatar" src="https://static1.bcjiaoyu.com/binshu.jpg">
                 <div class="msg-view-parent"{{if item.audio}} data-audio-url="{{item.audio}}"{{/if}}>
                     <div class="msg-view">
-                        <span class="content">{{item.message}}</span> 
+                        <span class="content">{{item.message | TheMessage}}</span> 
                     </div>
                     <div class="add-reduce-view">
                     	<img class="left-add" src="../../statics/images/editCourse/add1.png">

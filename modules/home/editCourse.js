@@ -2,8 +2,22 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js?v=1.1');
     var Utils = require('common/utils.js');
-    
+    ArtTemplate.config("escape", false);
     var Audio = require('home/audio_record1.js');
+
+    //模板帮助方法 
+    ArtTemplate.helper('TheMessage', function(message){
+        message = "" + message;
+        try {
+           // var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+           var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/\n/g, "<br/>");
+           return msg
+        }
+        catch(err){
+            return message;
+        }
+    });
+
     // 连续录音
     Audio.init(function(url, sha1Item){
         if (!url) {
@@ -85,14 +99,12 @@ define(function(require, exports, module) {
         }
     });
 
-    ArtTemplate.config("escape", false);
-
     var Course = {
         index:-1,                    //当前点的那个消息后面的加号、或者减号, 默认-1,点了底部的加号
         lesson:1,                    //当前所选的课节下标
         catalogLesson:1,             //当前编辑的课节目录的下标
         editSubmitMessage:false,     //是否是编辑消息的提交还是添加消息的提交, 默认是添加小
-        submitBtn:"add",             //add(新增消息), sub(删除消息), edit(编辑消息), audio(录制音频)
+        submitBtn:"add",             //add(新增消息), sub(删除消息), edit(编辑消息), audio(录制音频), action(消息按钮文本)
         chatRefresh:true,            //中间会话列表是否刷新, 添加、删除刷新， 编辑、录音不刷新
         currentAudioIndex:null,
         lastAudioIndex:null,
@@ -309,7 +321,7 @@ define(function(require, exports, module) {
             }
             else if(item.tag){
                 // 1.自适应习题
-                item.message = Course.formatString(item.message);
+                // item.message = Course.formatString(item.message);
                 questionHtml = ArtTemplate("message-choice-problem-template", itemDic);
             }else if (item.link) {
                 // 2.1是链接消息
@@ -319,15 +331,16 @@ define(function(require, exports, module) {
                 questionHtml = ArtTemplate("message-img-template", itemDic);
             }else{
                 // 2.3是文本消息
-                item.message = Course.formatString(item.message);
+                // item.message = Course.formatString(item.message);
                 questionHtml = ArtTemplate("message-text-template", itemDic);
             }
 
             if (item.action) {
                 answerHtml = ArtTemplate("answer-text-template", itemDic);
             }
-            $(questionHtml).appendTo(".messages");
-            $(answerHtml).appendTo(".messages");
+
+            $(".messages").append(questionHtml);
+            $(".messages").append(answerHtml);
             
             if (item.img) {
                 try {
@@ -354,60 +367,103 @@ define(function(require, exports, module) {
         },
 
         // 5.添加新的消息时，刷新页面
-        refreshAddMessage:function(tag){
-            // 当前元素后面的元素 index+1
-            var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];
-            var originIndex = Course.index == -1 ? parseInt(array.length-2):parseInt(Course.index)
-            for (var i = originIndex+1; i < array.length-1; i++) {
-                // 更改当前元素后面所有的 data-index, +1
-                $(".message[data-index="+i+"]").attr({"data-index":parseInt(i+1)});
-                $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i+1)});
-            }
-
-            // 当前元素的处理
-            if (tag == "action") {
-                // 当前元素后添加一个 action 用户回复消息
-                var dic1 = {index:originIndex, item:array[originIndex]};
-                var answerHtml = ArtTemplate("answer-text-template", dic1);
-                $(".message[data-index="+originIndex+"]").after(answerHtml);
-
-            }else{
-                // 当前元素后面追加一个消息
-                var dic1 = {index:originIndex+1, item:array[originIndex+1]};
-                var questionHtml = ""
-                if (tag == "text") {
-
-                    questionHtml = ArtTemplate("message-text-template", dic1);
-                }else if (tag == "photo") {
-                    questionHtml = ArtTemplate("message-img-template", dic1)
-                }else if (tag == "link-text") {
-                    questionHtml = ArtTemplate("message-link-template", dic1);
+        refreshAddMessage:function(tag, originIndex, array){
+            if (tag === "action") {
+                if (originIndex === -1) {
+                    // 判断是否是操作最后一条消息
+                    originIndex = array.length - 1;
                 }
-                $(".message[data-index="+originIndex+"]").after(questionHtml);
+                // 给当前消息加回复文本
+                if ($(".answer[data-index="+originIndex+"]").length >0) {
+                    // 更改回复文本
+                    console.log("debug:当前消息回复更改文本");
+                    $(".answer[data-index="+originIndex+"]").find(".content").html(Course.formatString(array[originIndex].action));
+                }else{
+                    // 追加回复文本
+                    console.log("debug:当前消息追加回复文本");
+                    var dic = {"index":originIndex, "item":array[originIndex]}
+                    var answerHtml = ArtTemplate("answer-text-template", dic);
+                    $(".message[data-index="+originIndex+"]").after(answerHtml);
+                }
+            }else if (tag === "add"){
+                if (originIndex === -1) {
+                    // 判断是否是操作最后一条消息, 因为此时数据源已经增加了一条新数据，页面还没开始渲染最新的一条，所以页面展示的最后一条数据下标是-2.
+                    originIndex = array.length - 2;
+                }
+                // 新增消息
+                console.log("debug:当前消息追加新消息");
+                // 将当前元素的后面的所有消息 index都加1，然后再在当前元素后插入一条新数据
+                var nextAll = $(".message[data-index="+originIndex+"]").nextAll();
+                for (var i = 0; i < nextAll.length; i++) {
+                    var index = parseInt($(nextAll[i]).attr("data-index"));
+                    if (index === originIndex) {
+                        // 当前消息的按钮文本不做处理
+                    }else{
+                        // 之后的消息 index+1
+                        $(nextAll[i]).attr({"data-index":index+1});
+                    }
+                }
 
-                if (array[originIndex].img) {
+                var dic = {"index":originIndex+1, "item":array[originIndex+1]};
+                var questionHtml = "";
+                var item = array[originIndex+1];
+                if (item.type === "blankProblem") {
+                    // 填空题
+                    questionHtml = ArtTemplate("message-blankProblem-template", dic);
+                }else if(item.tag){
+                    // 1.自适应习题
+                    // item.message = Course.formatString(item.message);
+                    questionHtml = ArtTemplate("message-choice-problem-template", dic);
+                }else if (item.link) {
+                    // 2.1是链接消息
+                    questionHtml = ArtTemplate("message-link-template", dic);
+                }else if(item.img){
+                    // 2.2是图片消息
+                    questionHtml = ArtTemplate("message-img-template", dic);
+                }else{
+                    // 2.3是文本消息
+                    // item.message = Course.formatString(item.message);
+                    questionHtml = ArtTemplate("message-text-template", dic);
+                }
+                if ($(".answer[data-index="+originIndex+"]").length > 0) {
+                    $(".answer[data-index="+originIndex+"]").after(questionHtml);
+                }else{
+                    $(".message[data-index="+originIndex+"]").after(questionHtml);
+                }
+
+                if (item.img) {
                     try {
-                        Course.setImgHeight(array[originIndex].img);
+                        Course.setImgHeight(item.img);
                     }
                     catch(err){
-                         Common.dialog("图片格式不合法");
+                        console.log("图片格式不合法");
                     }
                 }
+                // 点击事件
+                Course.clickEvent();
+            }else if (tag === "sub") {
+                // 删除消息
             }
+
         },
         // 6.减少消息时，刷新页面
-        refreshReduceMessage:function(){
-            // 当前元素删除
-            $(".message[data-index="+Course.index+"]").remove();
-            $(".answer[data-index="+Course.index+"]").remove();
-
-            // 当前元素后面的元素 index-1
-            var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];
-            for (var i = Course.index+1; i < array.length+1; i++) {
-                // 更改当前元素后面所有的 data-index, +1
-                $(".message[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
-                $(".answer[data-index="+i+"]").attr({"data-index":parseInt(i-1)});
+        refreshReduceMessage:function(originIndex){            
+            var currentEleMsg = $(".message[data-index="+originIndex+"]");
+            var currentEleAns = $(".answer[data-index="+originIndex+"]");
+            var currentEle = currentEleMsg;
+            if ($(".answer[data-index="+originIndex+"]").length > 0) {
+                currentEle = $(".answer[data-index="+originIndex+"]");
+                currentEleAns = currentEle;
             }
+            
+            var nextAll = currentEle.nextAll();
+            for (var i = 0; i < nextAll.length; i++) {
+                var index = parseInt($(nextAll[i]).attr("data-index"));
+                $(nextAll[i]).attr({"data-index": index-1});
+            }
+            
+            currentEleMsg.remove();
+            currentEleAns.remove();
         },
 
         // 7.添加消息，确定添加内容时，(1)更改数据(2)刷新会话(3)所有回到初始
@@ -436,22 +492,26 @@ define(function(require, exports, module) {
             // ----------------------------------------1.更改缓存数据
             totalDic[Course.lesson] = array;
             localStorage.CourseData = JSON.stringify(totalDic);
+            
 
             // ----------------------------------------2.刷新页面
-            if (Course.chatRefresh) {
-                //1.刷新会话列表(新增/删除)
-                Course.load();  
-            }else{
-                // 2.更新当前会话, 音频，或者文本
-                if (Course.editSubmitMessage === true) {
-                    // 编程题编辑提交
-                    $(".message[data-index="+Course.index+"]").find(".content").html(dic.message)
-                }else{
-                    // 音频编辑提交
-                    var html = '<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">'
-                    $(".message[data-index="+Course.index+"]").find(".add-reduce-view").append(html);
-                    $(".message[data-index="+Course.index+"]").find(".msg-view-parent").attr({"data-audio-url":dic["audio"]});
-                }
+            console.log("debug:当前消息所属功能（add、sub、action、edit、audio）:", Course.submitBtn);
+            if (Course.submitBtn === "action") {
+                // 当前消息添加回复文本
+                // Course.load()
+                Course.refreshAddMessage("action", originIndex, array);
+            }else if (Course.submitBtn === "add") {
+                // 新增一条消息
+                // Course.load();
+                Course.refreshAddMessage("add", originIndex, array);
+            }else if (Course.submitBtn === "edit") {
+                // 编辑一条消息（文本消息）
+                $(".message[data-index="+Course.index+"]").find(".content").html(Course.formatString(dic.message))
+            }else if (Course.submitBtn === "audio") {
+                // 给消息添加音频
+                var html = '<img class="audio-play" style="width: 25px;margin-left: 10px;" src="../../statics/images/audioPlay.png">'
+                $(".message[data-index="+Course.index+"]").find(".add-reduce-view").append(html);
+                $(".message[data-index="+Course.index+"]").find(".msg-view-parent").attr({"data-audio-url":dic["audio"]});
             }
 
             // ----------------------------------------3.所有输入框置为初始
@@ -492,7 +552,7 @@ define(function(require, exports, module) {
             
             if (isAdd) {
                 // 滚动到最底部
-                $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
+                // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 0);
             }
             
             // ----------------------------------------4.更改编辑器数据源
@@ -506,6 +566,7 @@ define(function(require, exports, module) {
             // 打卡按钮点击事件
             $(".chat .add .record").unbind('click').click(function(){
                 Course.chatRefresh = true;
+                Course.submitBtn = "add";
                 Common.bcAlert("您是否确定本小节课程数据已编写完毕？", function(){
                     // 提交内容
                     var totalDic = Course.getLocalStorageData()[0],
@@ -631,17 +692,20 @@ define(function(require, exports, module) {
                         dic["action"] = $(".input-view textarea").val();
                     }
                     isAdd = false;
+                    Course.submitBtn = "action";
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if(tag == "record" || tag == "local"){
                     //当前消息加音频
                     dic = array[originIndex];
                     dic["audio"] = $(".input-view textarea").val();
                     isAdd = false;
+                    Course.submitBtn = "audio";
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "photo") {
                     //新增图片
                     dic["img"] = $(".input-view textarea").val();
                     isAdd = true;
+                    Course.submitBtn = "add";
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if(tag == "video"){
                     // 新增视频
@@ -652,6 +716,7 @@ define(function(require, exports, module) {
                     dic["img"] = $(".input-view textarea").val();
                     dic["video"] = $(".input-view input").val();
                     isAdd = true;
+                    Course.submitBtn = "add";
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "text"){
                     //新增文本
@@ -681,9 +746,11 @@ define(function(require, exports, module) {
                         array[originIndex]["typeEditor"] = dic.typeEditor;
                         array[originIndex]["udid"] = dic.udid;
                         isAdd = false;
+                        Course.submitBtn = "edit";
                     }else{
                         // 添加, 新增文本
-                        isAdd = true
+                        isAdd = true;
+                        Course.submitBtn = "add";
                     }
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if (tag == "link-text") {
@@ -691,6 +758,7 @@ define(function(require, exports, module) {
                     dic["message"] = $(".input-view textarea").val();
                     dic["link"] = $(".input-view input").val();
                     isAdd = true;
+                    Course.submitBtn = "add";
                     Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                 }else if(tag == "manytext"){
                     // 新增大段文本
@@ -705,6 +773,7 @@ define(function(require, exports, module) {
                             dic["message"] = "点击阅读大段文本";
                             dic["link"] = link;
                             isAdd = true;
+                            Course.submitBtn = "add";
                             Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                         }else{
                             Common.dialog("请求失败");
@@ -729,6 +798,7 @@ define(function(require, exports, module) {
                             dic["link"] = link;
                             dic["typeEditor"] = editorType;
                             isAdd = true;
+                            Course.submitBtn = "add";
                             Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
                         }else{
                             Common.dialog("请求失败");
@@ -897,8 +967,9 @@ define(function(require, exports, module) {
                         dic["choiceType"] = "single";
                     }
                 }
-
-                Course.updateLocalStorageData(totalDic, array, dic, originIndex, true);
+                var isAdd = true;
+                Course.submitBtn = "add";
+                Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
             })
 
             // 打开选择题option的输入框（自适应选择题）
@@ -1149,7 +1220,9 @@ define(function(require, exports, module) {
                     dic["isHide"] = true
                 }
                 // console.log(dic)
-                Course.updateLocalStorageData(totalDic, array, dic, originIndex, true);
+                var isAdd = true;
+                Course.submitBtn = "add";
+                Course.updateLocalStorageData(totalDic, array, dic, originIndex, isAdd);
             })
 
             // -------------------是否隐藏习题
@@ -1183,11 +1256,12 @@ define(function(require, exports, module) {
             // 删除消息内容
             $(".message .reduce").unbind('click').click(function(){
                 Course.chatRefresh = true;
-                
+                Course.submitBtn = "sub";
+
+                // ----------------------------------------1.更改缓存数据
                 var totalDic = localStorage.CourseData?JSON.parse(localStorage.CourseData):{};
                 var array = totalDic[Course.lesson]?totalDic[Course.lesson]:[];
-
-                // var array = localStorage.CourseMessageData?JSON.parse(localStorage.CourseMessageData):[];     //存放所有消息
+                
                 Course.index = $(this).parents(".message").attr("data-index");
 
                 var index = Course.index;
@@ -1196,16 +1270,16 @@ define(function(require, exports, module) {
 
                 totalDic[Course.lesson] = array;
                 localStorage.CourseData = JSON.stringify(totalDic);
+                
 
-                // localStorage.CourseMessageData = JSON.stringify(array);
+                // ----------------------------------------1.更改编辑器数据源
+                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值
                 
                 // 方法1:刷新页面
-                Course.load();
+                // Course.load();
 
-                // 方法2:刷新页面
-                // Course.refreshReduceMessage();
-                
-                window.frames["jsonCourse"].postMessage('json', '*'); // 传递值
+                // 方法2:删除消息
+                Course.refreshReduceMessage(index);
             })
 
             // 消息后面添加消息
@@ -1748,9 +1822,11 @@ define(function(require, exports, module) {
             })
         },
         formatString:function(message){
+            message = "" + message;
             // 方法1，捕获异常
             try {
-               var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+               // var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+              var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/\n/g, "<br/>");
                return msg
             }
             catch(err){
@@ -1783,17 +1859,6 @@ define(function(require, exports, module) {
         }
     }
     Course.init();
-
-    //模板帮助方法 
-    ArtTemplate.helper('TheMessage', function(message){
-        try {
-           var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
-           return msg
-        }
-        catch(err){
-            return message;
-        }
-    });
     
     // 上传操作
     QiniuForUpload();   
