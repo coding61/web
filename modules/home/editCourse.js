@@ -390,18 +390,22 @@ define(function(require, exports, module) {
                     // 判断是否是操作最后一条消息, 因为此时数据源已经增加了一条新数据，页面还没开始渲染最新的一条，所以页面展示的最后一条数据下标是-2.
                     originIndex = array.length - 2;
                 }
-                // 新增消息
-                console.log("debug:当前消息追加新消息");
-                // 将当前元素的后面的所有消息 index都加1，然后再在当前元素后插入一条新数据
-                var nextAll = $(".message[data-index="+originIndex+"]").nextAll();
-                for (var i = 0; i < nextAll.length; i++) {
-                    var index = parseInt($(nextAll[i]).attr("data-index"));
-                    if (index === originIndex) {
-                        // 当前消息的按钮文本不做处理
-                    }else{
-                        // 之后的消息 index+1
-                        $(nextAll[i]).attr({"data-index":index+1});
+                if (array.length != 1) {
+                    // 新增消息
+                    console.log("debug:当前消息追加新消息");
+                    // 将当前元素的后面的所有消息 index都加1，然后再在当前元素后插入一条新数据
+                    var nextAll = $(".message[data-index="+originIndex+"]").nextAll();
+                    for (var i = 0; i < nextAll.length; i++) {
+                        var index = parseInt($(nextAll[i]).attr("data-index"));
+                        if (index === originIndex) {
+                            // 当前消息的按钮文本不做处理
+                        }else{
+                            // 之后的消息 index+1
+                            $(nextAll[i]).attr({"data-index":index+1});
+                        }
                     }
+                }else{
+                    console.log("debug:第一条消息");
                 }
 
                 var dic = {"index":originIndex+1, "item":array[originIndex+1]};
@@ -425,10 +429,15 @@ define(function(require, exports, module) {
                     // item.message = Course.formatString(item.message);
                     questionHtml = ArtTemplate("message-text-template", dic);
                 }
-                if ($(".answer[data-index="+originIndex+"]").length > 0) {
-                    $(".answer[data-index="+originIndex+"]").after(questionHtml);
+                
+                if (array.length != 1) {
+                    if ($(".answer[data-index="+originIndex+"]").length > 0) {
+                        $(".answer[data-index="+originIndex+"]").after(questionHtml);
+                    }else{
+                        $(".message[data-index="+originIndex+"]").after(questionHtml);
+                    }
                 }else{
-                    $(".message[data-index="+originIndex+"]").after(questionHtml);
+                    $(".messages").append(questionHtml);
                 }
 
                 if (item.img) {
