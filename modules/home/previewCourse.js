@@ -4,6 +4,20 @@ define(function(require, exports, module) {
     var Utils = require('common/utils.js');
     ArtTemplate.config("escape", false);
     
+    //模板帮助方法 
+    ArtTemplate.helper('TheMessage', function(message){
+        message = "" + message;
+        try {
+           // var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
+            var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/\n/g, "<br/>");
+           return msg
+        }
+        catch(err){
+            console.log(error);
+            return message;
+        }
+    });
+
     // ---------------------------3.正常请求数据
     var Page = {
         index:0,     //接受实时数据的下标
@@ -1705,18 +1719,6 @@ define(function(require, exports, module) {
             // $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     }
-    //模板帮助方法 
-    ArtTemplate.helper('TheMessage', function(message){
-        try {
-           var msg = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>")
-           console.log(msg);
-           return msg
-        }
-        catch(err){
-            console.log(error);
-            return message;
-        }
-    });
     Page.init();
 
 });
