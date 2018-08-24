@@ -2,7 +2,7 @@
 var demo = angular.module("demo", ["RongWebIMWidget"]);
 var setSelf = true;
 demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebIMWidget, $http) {
-    var basePath="/program_girl";
+    var basePath="//app.cxy61.com/program_girl";
     $scope.targetType = 1; //1：私聊 更多会话类型查看http://www.rongcloud.cn/docs/api/js/global.html#ConversationType
     // $scope.targetId = 'opSbp1JARhmzgmez9yObTt9aSybs2';
     // myAjax(basePath+"/im/user_get_token/","get",null,function(result) {

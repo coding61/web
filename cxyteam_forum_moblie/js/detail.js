@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var basePath="/program_girl";
+	var basePath="//app.cxy61.com/program_girl";
 	var toUserId=0;
 	var replyId=0;
 	var replyPage = 1;

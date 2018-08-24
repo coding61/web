@@ -64,7 +64,7 @@ define(function(require, exports, module) {
             console.log(value);
             $.ajax({
                 type:"post",
-                url:  "/compile/",
+                url:  Common.compileDomain + '/',
                 data:JSON.stringify({
                     code:value,
                     language:Page.language

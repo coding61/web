@@ -1,5 +1,5 @@
 function QiniuForUpload(){
-    var domain = "/program_girl";
+    var domain = "//app.cxy61.com/program_girl";
 
 	// uploadImg（图片）
     var filename1 = ''    //选择的文件的名字

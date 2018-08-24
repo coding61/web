@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var domain = "/program_girl";
+    var domain = "//app.cxy61.com/program_girl";
     var htmlEditor, jsEditor, csEditor;
     var Page = {
         init:function(){

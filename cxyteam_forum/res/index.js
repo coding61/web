@@ -5,7 +5,7 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", function($scope, WebI
     $scope.targetType = 1; //1：私聊 更多会话类型查看http://www.rongcloud.cn/docs/api/js/global.html#ConversationType
     $scope.targetId = 'bb';
 
-    var basePath="/program_girl";
+    var basePath="//app.cxy61.com/program_girl";
 
     $http({
         url: basePath + "/im/user_get_token/",

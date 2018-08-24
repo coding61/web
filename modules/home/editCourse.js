@@ -1,9 +1,10 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js?v=1.1');
-    var Utils = require('common/utils.js');
-    ArtTemplate.config("escape", false);
-    var Audio = require('home/audio_record1.js');
+	var Utils = require('common/utils.js');
+	ArtTemplate.config("escape", false);
+	var Audio = require('home/audio_record1.js');
+        var serverDomain = '//app.cxy61.com/server'
 
     //模板帮助方法 
     ArtTemplate.helper('TheMessage', function(message){
@@ -2117,7 +2118,7 @@ define(function(require, exports, module) {
         var html = '<!DOCTYPE html><html><head><meta charset="utf-8" /></head><body><p>'+content+'</p></body></html>'
         $.ajax({
             type:"post",
-            url:"/server/upload/html_file/",
+            url:serverDomain + "/upload/html_file/",
             data:{
                 html:html,
             },

@@ -1,6 +1,6 @@
 $(document).ready(function () {
-
     "use strict";
+    var basePath = '//app.cxy61.com/program_girl';
 
 //	============================= Preloader =============================
 
@@ -466,7 +466,7 @@ $(document).ready(function () {
         }
         // 获取文章
         $.ajax({
-            url: "/program_girl/child/articles/?show_type=show_child&page=" + page,
+            url: basePath + "/child/articles/?show_type=show_child&page=" + page,
             type: "get",
             headers: j,
             success:function(json){
@@ -512,7 +512,7 @@ $(document).ready(function () {
         var img = $(this);
         if (localStorage.token) {
             $.ajax({
-                url: "/program_girl/child/like/?article=" + pk,
+                url: basePath + "/child/like/?article=" + pk,
                 type: "get",
                 headers: {
                     Authorization: "Token " + localStorage.token
@@ -678,7 +678,7 @@ $(document).ready(function () {
                 // Common.isLogin(function(token){
                     $.ajax({
                         type:"get",
-                        url: "/program_girl" + url,
+                        url: basePath + url,
                         data:{
                             telephone:phone
                         },
@@ -759,7 +759,7 @@ $(document).ready(function () {
             Common.isLogin(function(token){
                 $.ajax({
                     type:"post",
-                    url: "/program_girl/userinfo/bind_telephone/",
+                    url: basePath + "/userinfo/bind_telephone/",
                     data:{
                         telephone:phone,
                         password:password,
@@ -817,7 +817,7 @@ $(document).ready(function () {
             // Common.isLogin(function(token){
                 $.ajax({
                     type:"post",
-                    url: "/program_girl/userinfo/telephone_signup/",
+                    url: basePath + "/userinfo/telephone_signup/",
                     data:{
                         telephone:phone,
                         password:password,
@@ -900,7 +900,7 @@ $(document).ready(function () {
             // Common.isLogin(function(token){
                 $.ajax({
                     type:"put",
-                    url: "/program_girl/userinfo/reset_password/",
+                    url: basePath + "/userinfo/reset_password/",
                     data:{
                         telephone:phone,
                         password:password,
@@ -984,7 +984,7 @@ $(document).ready(function () {
             showLoading();
             $.ajax({
                 type:"post",
-                url: "/program_girl"+ url,
+                url: basePath + url,
                 data:data,
                 success:function(json){
                     console.log(json);

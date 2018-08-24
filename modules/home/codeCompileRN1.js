@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    var domain = "/program_girl";
+    var domain = "//app.cxy61.com/program_girl";
+    var compileDomain = "//app.cxy61.com/compile";
     var htmlEditor;
     var editModes = {
         c:{mode:{name:"text/x-csrc"}, language:7},
@@ -94,7 +95,7 @@ $(document).ready(function() {
             console.log(value);
             $.ajax({
                 type:"post",
-                url: "/compile/",
+                url: compileDomain + "/",
                 data:JSON.stringify({
                     code:value,
                     language:Page.language
