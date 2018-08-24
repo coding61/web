@@ -196,7 +196,7 @@ define(function(require, exports, module) {
                     }else{
                         str = "https://app.cxy61.com";
                     }
-                    var url = str+"/program_girl"+"/userinfo/exercises/"+json.pk+"/"
+                    var url = str+"/program_girl/"+"/userinfo/exercises/"+json.pk+"/"
                     $(".code-result-shadow-view iframe").attr({src:url})
                     $(".code-result-shadow-view").show();
                     
