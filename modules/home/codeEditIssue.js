@@ -132,7 +132,7 @@ define(function(require, exports, module) {
                 timeout:6000,
                 success:function(json){
                     console.log(json);
-                    var url =  Common.domain +"userinfo/exercises/"+json.pk+"/";
+                    var url =  Common.domain + "/userinfo/exercises/"+json.pk+"/";
                     // console.log(url);
 
                     // $(".run-result iframe").attr({src:url});
