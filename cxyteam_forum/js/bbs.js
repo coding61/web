@@ -2,7 +2,7 @@
 // setCookie("username","15007065503");
 // setCookie("nickname","豆平");
 // setCookie("password","15007065503");
-var basePath="/program_girl";
+var basePath="//app.cxy61.com/program_girl";
 var rankingHadClick = false;
 bbsZone();
 // 进到程序媛计划

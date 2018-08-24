@@ -5,7 +5,7 @@
 window.RongDemo = {
     common: function (WebIMWidget, config, $scope) {
         WebIMWidget.init(config);
-        var basePath="/program_girl";
+        var basePath="//app.cxy61.com/program_girl";
         
         WebIMWidget.setUserInfoProvider(function(targetId, obj) { 
             if (localStorage.userlist) {

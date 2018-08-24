@@ -1,4 +1,4 @@
-var basePath="/program_girl";
+var basePath="//app.cxy61.com/program_girl";
 var postPk=getQueryString("pk");
 var replyPage = 1;
 

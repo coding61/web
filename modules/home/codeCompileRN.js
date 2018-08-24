@@ -155,7 +155,7 @@ define(function(require, exports, module) {
             console.log("语言", Page.language);
             $.ajax({
                 type:"post",
-                url: "/compile/",
+                url: Common.compileDomain + '/',
                 data:JSON.stringify({
                     code:value,
                     language:Page.language

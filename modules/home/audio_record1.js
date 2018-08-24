@@ -29,7 +29,7 @@ define(function(require, exports, module) {
         var audioId = document.getElementById('audioView');
         
 
-        easyrtc.setSocketUrl(location.origin, null);
+        easyrtc.setSocketUrl('https://app.cxy61.com', null);
         function rtcInit() {
             data = {
                 audioSendBitrate:10,
@@ -119,7 +119,7 @@ define(function(require, exports, module) {
 
             console.log("md5:", sha1Item, "langid:", langid, "number:", number);
 
-            xhr('/program_girl/upload/upload_media/', formData, function (fName) {
+            xhr(Common.domain + '/upload/upload_media/', formData, function (fName) {
                 console.log(Date() + " fName: " + fName);
                 // console.log(JSON.parse(fName).url);
                 // var url = "https://www.cxy61.com" + JSON.parse(fName).url

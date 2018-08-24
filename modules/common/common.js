@@ -4,9 +4,9 @@ define(function(require, exports, module) {
 	exports.Token = null;
 	exports.username = null;
 
-	exports.domain = "/";
-	// exports.domain = "https://childhood.haorenao.cn/";
-	exports.domain = "/program_girl";
+	exports.domain = "//app.cxy61.com/program_girl";
+        exports.serverDomain = "//app.cxy61.com/server";
+        exports.compileDomain = "//app.cxy61.com/compile";
 
 	// exports.domain = "https://app.bcjiaoyu.com/program_girl"
 	exports.authWXSiteLogin = function(url){

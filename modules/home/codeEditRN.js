@@ -192,9 +192,9 @@ define(function(require, exports, module) {
                     if (location.host.indexOf("bcjiaoyu.com") > -1) {
                         str = "https://app.bcjiaoyu.com"
                     }else if (location.host.indexOf("cxy61.com") > -1) {
-                        str = "https://www.cxy61.com";
+                        str = "https://app.cxy61.com";
                     }else{
-                        str = "https://www.cxy61.com";
+                        str = "https://app.cxy61.com";
                     }
                     var url = str+"/program_girl"+"/userinfo/exercises/"+json.pk+"/"
                     $(".code-result-shadow-view iframe").attr({src:url})

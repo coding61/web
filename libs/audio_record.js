@@ -96,6 +96,7 @@ window.onload = function(text) {
     function uploadBlob(blob) {
         var fileType = 'audio';
         var fileName = 'audio.wav';
+	var basePath = '//app.cxy61.com/program_girl';
 
         var formData = new FormData();
         formData.append('file-type', fileType);
@@ -104,7 +105,7 @@ window.onload = function(text) {
         formData.append('lesson-pk', lesson);
         formData.append('record-type', 'lesson');
 
-        xhr('/program_girl/upload/upload_media/', formData, function (fName) {
+        xhr(basePath + '/upload/upload_media/', formData, function (fName) {
             console.log(Date() + " fName: " + fName);
             // console.log(JSON.parse(fName).url);
             // var url = "https://www.cxy61.com" + JSON.parse(fName).url

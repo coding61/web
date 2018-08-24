@@ -1,4 +1,4 @@
-var basePath="/program_girl";
+var basePath="//app.cxy61.com/program_girl";
 var userId=1;
 var userName=getCookie("userName");
 var zonePk = getQueryString("pk");

@@ -1,5 +1,5 @@
 //var token="f398c224a8a052bb9ba5fe278acb1128043bfd8e";
-var basePath="/program_girl";
+var basePath="//app.cxy61.com/program_girl";
 var postId=getQueryString("id");
 var postPk=getQueryString("current_article_pk");
 var teacherPk=getQueryString("current_master_pk");

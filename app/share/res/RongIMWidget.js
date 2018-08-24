@@ -1,4 +1,5 @@
 var RongWebIMWidget;
+var basePath = '//app.cxy61.com/program_girl';
 (function (RongWebIMWidget) {
     var conversation;
     (function (conversation) {
@@ -597,7 +598,7 @@ var RongWebIMWidget;
                                     if ($scope.conversation.targetType == 3) {
                                         $.ajax({
                                             type: "put",
-                                            url: "/program_girl/club/club_last_reply_time_update/" + retMessage.targetId + "/",
+                                            url: basePath + "/club/club_last_reply_time_update/" + retMessage.targetId + "/",
                                             headers: {
                                                 'Authorization': "Token " + localStorage.token
                                             },
@@ -634,7 +635,7 @@ var RongWebIMWidget;
                                 if ($scope.conversation.targetType == 3) {
                                     $.ajax({
                                         type: "put",
-                                        url: "/program_girl/club/club_last_reply_time_update/" + retMessage.targetId + "/",
+                                        url: basePath + "/club/club_last_reply_time_update/" + retMessage.targetId + "/",
                                         headers: {
                                             'Authorization': "Token " + localStorage.token
                                         },
@@ -715,7 +716,7 @@ var RongWebIMWidget;
                             $.ajax({
                                 async: false,
                                 type: "POST",
-                                url:"/program_girl/upload/token/",
+                                url: basePath + "/upload/token/",
                                 headers: {
                                     Authorization: "Token "+ localStorage.token
                                 },
