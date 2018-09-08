@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>排行榜</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/team/teamList.css" />
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<div class="input-div">
+				<img src="../../statics/images/team-search.png" alt="">
+				<input class="search-team" type="text" placeholder="请输入您要搜索的团队">
+			</div>
+			<span class="search-btn">搜索</span>
+		</div>
+
+		<div class="main-view">
+			<ul class="team-list">
+				
+			</ul>
+			<script type="text/hmtl" id="team-list-1-template">
+				{{each results}}
+				<li>
+					<div class="team-ranking">
+						{{if $index == 0}}
+						<img src="../../statics/images/team-fir.png" alt="">
+						{{else if $index == 1}}
+						<img src="../../statics/images/team-sec.png" alt="">
+						{{else if $index == 2}}
+						<img src="../../statics/images/team-thi.png" alt="">
+						{{/if}}
+						<p>{{$index + 1}}</p>
+					</div>
+					<div class="team-detail" data-pk="{{$value.pk}}" data-name="{{$value.name}}">
+						<p>{{$value.name}}</p>
+						<pre>
+							{{$value.announcement}}
+						</pre>
+					</div>
+					<div class="team-zan" data-pk="{{$value.pk}}" data-page="{{pages}}">
+						<p>{{$value.likes}}</p>
+						{{if $value.islike}}
+						<img src="../../statics/images/team-zan-p.png" alt="">
+						{{else}}
+						<img src="../../statics/images/team-zan-w.png" alt="">
+						{{/if}}
+					</div>
+				</li>
+				{{/each}}
+			</script>
+			<script type="text/hmtl" id="team-list-2-template">
+				{{each results}}
+				<li data-pk="{{$value.pk}}" data-name="{{$value.name}}">
+					<div class="team-ranking">
+						<p>{{(pages - 1) * 10 + $index + 1}}</p>
+					</div>
+					<div class="team-detail" data-pk="{{$value.pk}}" data-name="{{$value.name}}">
+						<p>{{$value.name}}</p>
+						<pre>
+							{{$value.announcement}}
+						</pre>
+					</div>
+					<div class="team-zan" data-pk="{{$value.pk}}" data-page="{{pages}}">
+						<p>{{$value.likes}}</p>
+						{{if $value.islike}}
+						<img src="../../statics/images/team-zan-p.png" alt="">
+						{{else}}
+						<img src="../../statics/images/team-zan-w.png" alt="">
+						{{/if}}
+					</div>
+				</li>
+				{{/each}}
+			</script>
+			<div class="team-search" style="display: none;">
+			</div>
+			<script type="text/html" id="search-template">
+				{{each}}
+				<div class="search-div" data-pk="{{$value.pk}}" data-name="{{$value.name}}">
+					<div class="team-search-name">
+						{{$value.name}}
+					</div><div class="team-search-detail">
+						<pre>
+							{{$value.announcement}}
+						</pre>
+					</div>
+				</div>
+				{{/each}}
+			</script>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"team": base + "/modules/team",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("team/teamList.js");
+	</script>
+
+</html>
+

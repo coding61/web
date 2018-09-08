@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>创建团队</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.3" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/team/createTeam.css?v=1.3" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/375) + 'px';  
+        </script>  
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<span>创建团队</span>
+		</div>
+
+		<div class="main-view">
+			<div class="menu">
+				<div class="avatar">
+					<span>头像</span>
+					<span class="select">选择<br/>头像</span>
+				</div>
+				<div class="name">
+					<span>团队名称</span>
+					<input autofocus="true" type="text" placeholder="请输入少于10个字符" />
+				</div>
+				<div class="intro">
+					<span>团队介绍</span>
+					<textarea placeholder="请介绍一下你的团队"></textarea>
+				</div>
+			</div>
+			
+		</div>
+		<div class="create"><span>创建团队</span></div>
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"team": base + "/modules/team",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("team/createTeam.js?v=1.3");
+	</script>
+
+</html>
+

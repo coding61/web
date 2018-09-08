@@ -1,0 +1,124 @@
+body{
+	background-color: #f3f1f2;
+}
+.header{
+	padding: 10px;
+	background-color: #f3f1f2;
+}
+.header .input-div{
+	display: inline-block;
+    padding: 5px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    width: -webkit-calc(100% - 60px);
+    width: -moz-calc(100% - 60px);
+    width: -o-calc(100% - 60px);
+    width: calc(100% - 60px);
+    background-color: #fefefe;
+}
+.header .input-div img{
+    float: left;
+    width: 20px;
+    margin: 2px;
+}
+.header .input-div .search-team{
+	border: none;
+    background: none;
+    line-height: 24px;
+    text-align: center;
+    width: -webkit-calc(100% - 25px);
+    width: -moz-calc(100% - 25px);
+    width: -o-calc(100% - 25px);
+    width: calc(100% - 25px);
+}
+.header .search-btn{
+    font-size: 16px;
+    color: #ff6b95;
+    display: inline-block;
+    float: right;
+    line-height: 36px;
+    width: 40px;
+    text-align: center;
+}
+.main-view{
+	background-color: #fefefe;
+}
+.main-view ul li{
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+.main-view .team-ranking{
+	display: inline-block;
+	width: 80px;
+}
+.main-view .team-ranking img{
+    display: block;
+    width: 26px;
+    margin: 10px auto;
+}
+.main-view .team-ranking p{
+	text-align: center;
+}
+.main-view .team-detail{
+	display: inline-block;
+	width: -webkit-calc(100% - 170px);
+	width: -moz-calc(100% - 170px);
+	width: -o-calc(100% - 170px);
+	width: calc(100% - 170px);
+	font-size: 14px;
+	color: #888;
+}
+.main-view .team-detail pre{
+	white-space: normal;
+}
+.main-view .team-detail p{
+	font-size: 16px;
+	color: #333;
+	margin: 5px 0;
+}
+.main-view .team-zan{
+	display: inline-block;
+	width: 80px;
+}
+.main-view .team-zan img{
+	width: 22px;
+	display: block;
+	margin: 5px auto;
+}
+.main-view .team-zan p{
+	text-align: center;
+}
+.team-search{
+    font-size: 16px;
+}
+.team-search .search-div{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f3f1f2;
+}
+.team-search .search-div > div{
+    display: inline-block;
+    padding: 25px 10px;
+}
+.team-search .team-search-name{
+    width: 120px;
+}
+.team-search .team-search-detail{
+    width: -webkit-calc(100% - 160px);
+    width: -moz-calc(100% - 160px);
+    width: -o-calc(100% - 160px);
+    width: calc(100% - 160px);
+}
+.team-search .team-search-detail pre{
+    white-space: normal;
+    line-height: 20px;
+    color: #444;
+    font-size: 15px;
+}
+.none-search-team{
+    text-align: center;
+    padding: 10px;
+    color: #888;
+}

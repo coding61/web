@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>我的团队</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.6" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/team/myTeam.css?v=1.6" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/375) + 'px';  
+        </script>  
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<span class="title">我的团队</span>
+			<!-- <span class="quit leader">解散</span> -->
+			<!-- <img src="" alt=""> -->
+		</div>
+		<!-- 加载动画 -->
+		<div class="wait-loading">
+			<img class="loading-img" src="../../statics/images/load.gif" alt="">
+			<span class="loading-span">正在努力加载中...</span>
+		</div>
+
+		<div class="shadow-view">
+			<img src="../../statics/images/share.png" alt="">
+		</div>
+		
+		<div class="body-view">
+
+		</div>
+		
+		<script type="text/hmtl" id="main-view-template">
+			<div class="main-view">
+				<div class="team">
+					<div class="zan-view">
+						<span>{{likes}}</span>
+						<i class="zan{{if islike}} select{{else}} unselect{{/if}}"></i>
+						<!-- <img class="zan select" src="../../statics/images/zan-select.png" alt="">
+						<img class="zan unselect" src="../../statics/images/zan-unselect.png"> -->
+					</div>
+					{{if leader == true}}
+					<img class="edit-icon leader" src="../../statics/images/edit.png" alt="" />
+					<img class="end-icon leader editing" src="../../statics/images/end.png" alt="">
+					{{/if}}
+					<div class="avatar">
+						<img src="../../statics/images/11.jpg" alt="" />
+						<span>{{name}}</span>
+						{{if leader == true}}
+							<input class="leader editing" type="text" value='{{name}}' />
+						{{/if}}
+					</div>
+
+					<div class="intro">
+						<span class="text">{{announcement}}</span>
+						{{if leader == true}}
+							<textarea class="leader editing">{{announcement}}</textarea>
+						{{/if}}
+					</div>
+				</div>
+				<div class="members-view">
+					<span>团队成员</span>
+					<label style="font-size: 0.14rem;float: right;color: #7F7F7F; display: none;">
+						还差<span style="color: #FF6B95;">{{freeNum}}</span>人即可获取邀请码
+					</label>
+					<div class="members">
+						{{each group_member}}
+							{{if $value}}
+								<div class="member" data-pk="{{$value.pk}}" data-remark="{{if $value.owner.remark}}{{$value.owner.remark}}{{else}}暂无备注{{/if}}">
+									<span class="position">{{if $value.leader == true}}队长{{/if}}</span>
+									{{if $value.leader == false}}
+										<!-- <img class="delete-icon leader" src="../../statics/images/delete.png" alt="" /> -->
+									{{/if}}
+									<div class="avatar">
+										<img src="{{$value.owner.avatar}}" alt="" />
+									</div>
+									<span class="name">{{$value.owner.name}}</span>
+									
+									{{if $value.currentUser == $value.owner.pk}}
+										<span class="edit-bz">修改备注</span>
+									{{else}}
+										<span class="look-bz">查看备注</span>
+									{{/if}}
+								</div>
+							{{else}}
+									<div class="member" data-pk="-1">
+										<span class="position"></span>
+										<div class="default-avatar">
+											<img src="../../statics/images/default-avatar.png" alt="" />
+										</div>
+										<span class="name">待加入</span>
+									</div>
+							{{/if}}
+						{{/each}}
+					</div>
+				</div>
+
+				{{if inTeam == true && isManyuan == true}}
+					<label style="color: #FF6B95;font-size: 0.14rem;">组队成功，快去领取您的课程~</label>
+				{{else}}
+					<label style="color: #7F7F7F;font-size: 0.14rem;">提示：团队满4人后可以领取价值<span style="color: #FF6B95;">200元</span>课程</label>
+				{{/if}}
+			</div>
+			{{if inTeam == true}}
+				{{if isManyuan == true}}
+					<div class="action-red action receive-course"><span>领取课程</span></div>
+				{{else}}
+					<div class="action-red action share"><span>邀请好友加入</span></div>
+				{{/if}}
+			{{else}}
+				{{if isManyuan == true}}
+					<div class="action-gray action unjoin"><span>已满员</span></div>
+				{{else}}
+					<div class="action-red action join"><span>申请加入</span></div>
+				{{/if}}
+			{{/if}}
+
+		</script>
+		<div class="bz-shadow-view">
+			<div class="bz">
+				<div class="close">
+					<img src="../../statics/images/close.png">
+				</div>
+				<div class="bz-content">
+					<div class="content">
+						<span class="item1">我的手机号：15201052252 微信号：1846208953 大家一起来学习，共同进步</span>
+						<textarea placeholder="在此输入您的备注" autofocus="true" class="item">我的手机号：15201052252<br/>微信号：1846208953<br/>大家一起来学习，共同进步</textarea>
+					</div>
+					<span class="confirm item">确定</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"team": base + "/modules/team",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("team/myTeam.js?v=1.6");
+	</script>
+
+</html>
+
