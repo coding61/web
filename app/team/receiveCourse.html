@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>团队</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.5" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/team/receiveCourse.css?v=1.5" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/375) + 'px';  
+        </script>  
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<span>领取课程</span>
+		</div>
+		
+		<div class="main-view">
+			<p class="label1">请在下列四门课中选择一门课程领取</p>
+			<div class="courses">
+				<div class="course">
+					<div class="avatar">
+						<img src="" alt="">
+					</div>
+					<span>Python L1-L10</span>
+				</div>
+				<div class="course">
+					<div class="avatar">
+						<img src="" alt="">
+					</div>
+					<span>Python L1-L10</span>
+				</div>
+				<div class="course">
+					<div class="avatar">
+						<img src="" alt="">
+					</div>
+					<span>Python L1-L10</span>
+				</div>
+				<div class="course">
+					<div class="avatar">
+						<img src="" alt="">
+					</div>
+					<span>Python L1-L10</span>
+				</div>
+			</div>
+
+			<div>
+				<p class="label2">绑定手机号领取免费课程</p>
+				<div class="phone-view">
+					<input class="phone" type="text" placeholder="请输入手机号">
+				</div>
+				<div class="verify-view">
+					<input class="verify" type="text" placeholder="请输入验证码">
+					<span class="verify-text">获取验证码</span>
+				</div>
+				<div class="receive">立即领取</div>
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"team": base + "/modules/team",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("team/receiveCourse.js?v=1.5");
+	</script>
+
+</html>
+

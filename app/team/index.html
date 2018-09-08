@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>团队</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.5" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/team/index.css?v=1.5" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/375) + 'px';  
+        </script>  
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<span>团队</span>
+		</div>
+
+		<div class="main-view">
+			<div class="create"><span>创建你的团队</span></div>
+			<div class="join"><span>随机分配团队</span></div>
+			<div class="my"><span>我的团队</span></div>
+			<div class="idCode"><span>我的身份识别码</span></div>
+			<div class="inviteCode"><span>我的邀请码及密码</span></div>
+
+		</div>
+		<!-- 邀请码密码 -->
+		<div class="inviteCode-shadow">
+			<div class="inviteCode-view">
+				<!-- <span class="title">我的邀请码、密码</span> -->
+				<div class="username">
+					<span class="text">邀请码:</span>
+					<span class="user" style="color: lightblue;">42148932851982</span>
+				</div>
+				<div class="password">
+					<span class="text">密码:</span>
+					<span class="pass" style="color: lightblue;">4325124</span>
+				</div>
+				<div class="link">请前往 <span style="color: lightblue; padding-left: 0.05rem;padding-right: 0.05rem;">girl.cxy61.com</span>学习</div>
+				<!-- <div class="btn cancel">取消</div>
+				<div class="btn copy">复制</div>
+				<div class="clear"></div> -->
+			</div>
+		</div>
+		<!-- 我的身份识别码 -->
+		<div class="idCode-shadow">
+			<div class="idCode-view">
+				<span>我的身份识别码</span>
+				<textarea type="text" readonly="text" rows="2"></textarea>
+				<!-- <input type="text" readonly="text" value="11234321232131231231432fdfs"></input> -->
+				<div class="btn cancel">取消</div>
+				<div class="btn copy">复制</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+
+		<div class="wait-loading">
+			<img class="loading-img" src="../../statics/images/load.gif" alt="">
+			<span class="loading-span">正在匹配中...</span>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"team": base + "/modules/team",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("team/index.js?v=1.5");
+	</script>
+
+</html>
+

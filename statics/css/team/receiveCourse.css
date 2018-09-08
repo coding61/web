@@ -1,0 +1,35 @@
+html{
+	height: 100%;
+}
+body{
+	width: 100%;
+	height: 100%;
+	background:#f2f1f1;
+
+	font-size: 0.15rem;
+}
+.header{
+	background: #ff6b95;
+	width: 100%;
+	height: 0.50rem;
+	font-size: 0.20rem;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main-view{margin-left:0.15rem; margin-top: 0.15rem;margin-bottom: 0.35rem; background-color: #F3F3F3;}
+.label1{color: #585858;font-size: 0.16rem;}
+.courses{margin-top: 0.15rem; margin-bottom: 0.15rem; display: flex; flex-wrap: wrap;}
+.course{background-color: white;border: solid 0.01rem #C9C9C9;width: calc((100% - 0.35rem) / 2);margin-right: 0.15rem; margin-bottom: 0.15rem; color: #383838;font-size: 0.15rem; display: flex;flex-direction: column;justify-content: center;align-items: center; padding-top: 0.20rem;padding-bottom: 0.20rem;}
+.couse.select{color: white; background-color: #FF6B95}
+.course .avatar{width: 70%;height: 0.50rem; background-color: red; margin-bottom: 0.15rem;}
+.course .avatar img{max-width: 100%;max-height: 100%;}
+.label2{color: #585858; font-size: 0.16rem;}
+.phone-view{margin-top: 0.15rem;background: white;border: solid 0.01rem #C9C9C9;height: 0.40rem;border-radius: 0.03rem;margin-right: 0.15rem;display: flex;align-items: center;padding-left: 0.10rem;padding-right: 0.10rem;}
+input.phone{width: 100%; height: 100%; border: none;}
+.verify-view{margin-top: 0.15rem;background: white;border: solid 0.01rem #C9C9C9;height: 0.40rem;border-radius: 0.03rem;margin-right: 0.15rem;display: flex;align-items: center;padding-left: 0.10rem;padding-right: 0.10rem;}
+input.verify{flex: 1; height: 100%;border: none;margin-right: 0.10rem;}
+.verify-text{color: #377EF0;font-size: 0.14rem;}
+.receive{width: calc(100% - 0.15rem);height: 0.45rem;background: #FF6B95;color: white;border-radius: 0.15rem;margin-top: 0.30rem;margin-right: 0.15rem;display: flex;justify-content: center;align-items: center;}
