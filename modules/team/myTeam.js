@@ -3,7 +3,15 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js');
     ArtTemplate.config("escape", false);
     // var WXConfig = require('common/WXJSSDK.js');
-
+    
+    // 分享
+    var WXShare = require('team/wxshare.js');
+    var title = "邀请你加入我的团队",
+        desc = "程序媛组队第二期，和我一起学编程领100奖学金。",
+        link = location.href,
+        imgUrl = "https://resource.bcgame-face2face.haorenao.cn/lg1024.png";
+    WXShare.SetShareData(title, desc, link, imgUrl);
+    
     var pk = Common.getQueryString("pk")?Common.getQueryString("pk"):null,
         name = decodeURIComponent(Common.getQueryString("name"))?decodeURIComponent(Common.getQueryString("name")):"",
         code = Common.getQueryString('code')?Common.getQueryString('code'):'',
