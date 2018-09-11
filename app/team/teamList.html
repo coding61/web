@@ -53,7 +53,7 @@
 							{{$value.announcement}}
 						</pre>
 					</div>
-					<div class="team-zan" data-pk="{{$value.pk}}" data-page="{{pages}}">
+					<div class="team-zan{{if $value.islike}} select{{/if}}" data-pk="{{$value.pk}}" data-page="{{pages}}">
 						<p>{{$value.likes}}</p>
 						{{if $value.islike}}
 						<img src="../../statics/images/team-zan-p.png" alt="">
