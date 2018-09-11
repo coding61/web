@@ -2,8 +2,8 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
     
-    var CREATE_TEAM_URL = "https://www.cxy61.com/cxyteam/app/team/createTeam.html";
-    var INDEX_URL = "https://www.cxy61.com/cxyteam/app/team/index.html";
+    var CREATE_TEAM_URL = "https://www.cxy61.com/girl/app/team/createTeam.html";
+    var INDEX_URL = "https://www.cxy61.com/girl/app/team/index.html";
     var batch_type = 2;   //第二批组队, 创建队伍，获取队伍加此字段
 
     var Page = {

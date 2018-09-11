@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
 
-    var INDEX_URL = "https://www.cxy61.com/cxyteam/app/team/index.html";
+    var INDEX_URL = "https://www.cxy61.com/girl/app/team/index.html";
 
 	var Page = {
 		countryCode:"+86",

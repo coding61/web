@@ -9,9 +9,9 @@ define(function(require, exports, module) {
         code = Common.getQueryString('code')?Common.getQueryString('code'):'',
         flag = Common.getQueryString("flag")?Common.getQueryString("flag"):'';
 
-    var MY_TEAM_URL = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+pk + "&name=" +name;
-    var MY_TEAM_URL1 = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
-    var MY_TEAM_URL_ZAN = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + pk + "&name=" + name + "&flag=" + flag;
+    var MY_TEAM_URL = 'https://www.cxy61.com/girl/app/team/myTeam.html?pk='+pk + "&name=" +name;
+    var MY_TEAM_URL1 = 'https://www.cxy61.com/girl/app/team/myTeam.html';
+    var MY_TEAM_URL_ZAN = 'https://www.cxy61.com/girl/app/team/myTeam.html?pk=' + pk + "&name=" + name + "&flag=" + flag;
     var batch_type = 2;     //第二批组队, 创建队伍，获取队伍加此字段
 
     var Page = {
