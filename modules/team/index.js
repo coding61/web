@@ -40,7 +40,6 @@ define(function(require, exports, module) {
                         // 随机匹配进入我的团队页
                         $(".wait-loading").show();
                         Team.joinRandomTeam();
-                        // Team.joinUnknownTeam();
                     }else{
                         // 先微信授权登录
                         // 微信网页授权
@@ -145,7 +144,6 @@ define(function(require, exports, module) {
                         // 随机
                         $(".wait-loading").show();
                         Team.joinRandomTeam();
-                        // Team.joinUnknownTeam();
                     }
 
                     Page.idCodeClickEvent();
@@ -182,39 +180,14 @@ define(function(require, exports, module) {
                         // 隐藏动画,并跳转
                         Team.setValue("myTeam", false);
                         $(".wait-loading").hide();
-                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
+                        if (json.pk) {
+                            location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
+                        }else{
+                            Common.dialog("还没有一支属于您的团队，先去创建吧。");
+                        }
                     },
                     error:function(xhr, textStatus){
                         Team.setValue("myTeam", false);
-                        Team.failDealEvent(xhr, textStatus);
-                    }
-                })
-            })
-        },
-        // 随机组队请求（废弃）
-        joinUnknownTeam:function(){
-            Common.isLogin(function(token){
-                if (token == "null") {
-                    var redirectUri = INDEX_URL;
-                    Common.authWXPageLogin(redirectUri);
-                    return;
-                }
-                $.ajax({
-                    type:"get",
-                    url:Common.domain + "/userinfo/random_join_group/?batch_type=" + batch_type,
-                    headers:{
-                        Authorization:"Token " + token
-                    },
-                    timeout:6000,
-                    success:function(json){
-                        Team.setValue("joinTeam", false);
-                        $(".wait-loading").hide();
-
-                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name) + "&v=1.5";
-                       
-                    },
-                    error:function(xhr, textStatus){
-                        Team.setValue("joinTeam", false);
                         Team.failDealEvent(xhr, textStatus);
                     }
                 })

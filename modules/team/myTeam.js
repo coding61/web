@@ -326,39 +326,13 @@ define(function(require, exports, module) {
                         Team.adjustData(json);
                     },
                     error:function(xhr, textStatus){
-                        Team.failDealEvent(xhr, textStatus);
-                    }
-                })
-            })
-        },
-        // 获取团队信息(token)(这个接口在这里并没有用到)
-        load:function(){
-            Common.isLogin(function(token){
-                if (token == "null") {
-                    var redirectUri = MY_TEAM_URL1;
-                    Common.authWXPageLogin(redirectUri);
-                    return;
-                }
-                $.ajax({
-                    type:'get',
-                    url: Common.domain + "/userinfo/mygroup/?batch_type=" + batch_type,
-                    headers:{
-                        Authorization:"Token " + token
-                    },
-                    timeout:6000,
-                    success:function(json){
-                        // console.log(json);
-                        Team.data = json;
-                        Team.adjustData(json);
-                    },
-                    error:function(xhr, textStatus){
-                        Team.failDealEvent(xhr, textStatus, MY_TEAM_URL1);
+                        Team.failDealEvent(xhr, textStatus, "team");
                     }
                 })
             })
         },
         // 请求失败处理方法
-        failDealEvent:function(xhr, textStatus, my_team_url){
+        failDealEvent:function(xhr, textStatus, tag, my_team_url){
             Common.hideLoading();
             $(".wait-loading").hide();
             if (textStatus == "timeout") {
@@ -373,7 +347,12 @@ define(function(require, exports, module) {
                 Common.authWXPageLogin(redirectUri);
                 return
             }else if(xhr.status == 404){
-                Common.dialog("未找到");
+                if (tag == "team") {
+                    var msg = "还没有一支属于您的团队，先去创建吧。";
+                }else{
+                    var msg = "未找到";
+                }
+                Common.dialog(msg);
                 return;
             }else if (xhr.status == 400 || xhr.status == 403) {
                 if (JSON.parse(xhr.responseText).name) {
@@ -510,7 +489,7 @@ define(function(require, exports, module) {
                         Common.dialog('修改成功');
                     },
                     error:function(xhr, textStatus){
-                        Team.failDealEvent(xhr, textStatus);
+                        Team.failDealEvent(xhr, textStatus, "team");
                     }
                 })
             })
@@ -537,7 +516,7 @@ define(function(require, exports, module) {
                         Common.dialog('您没有团队');
                     },
                     error:function(xhr, textStatus){
-                        Team.failDealEvent(xhr, textStatus);
+                        Team.failDealEvent(xhr, textStatus, "team");
                     }
                 })
             })
@@ -576,7 +555,7 @@ define(function(require, exports, module) {
                         
                     },
                     error:function(xhr, textStatus){
-                        Team.failDealEvent(xhr, textStatus);
+                        Team.failDealEvent(xhr, textStatus, "team");
                     }
                 })
             })
@@ -607,7 +586,7 @@ define(function(require, exports, module) {
                         $(".action span").html('邀请好友加入');
                     },
                     error:function(xhr, textStatus){
-                        Team.failDealEvent(xhr, textStatus);
+                        Team.failDealEvent(xhr, textStatus, "team");
                     }
                 })
             })
@@ -635,7 +614,7 @@ define(function(require, exports, module) {
                         this_.removeClass("unselect").addClass("select");
                     },
                     error:function(xhr, textStatus){
-                        Team.failDealEvent(xhr, textStatus, MY_TEAM_URL_ZAN);
+                        Team.failDealEvent(xhr, textStatus, "team", MY_TEAM_URL_ZAN);
                     }
                 });
             })
@@ -678,20 +657,12 @@ define(function(require, exports, module) {
                 timeout:6000,
                 success:function(json){
                     Team.isReceiveCourse = true;
-                    
-                    if (Team.pk) {
-                        Team.loadShareTeam();   
-                    }else{
-                        Team.load();
-                    }
+                    Team.loadShareTeam();  
                 },
                 error:function(xhr, textStatus){
                     Team.isReceiveCourse = false;
-                    if (Team.pk) {
-                        Team.loadShareTeam();   
-                    }else{
-                        Team.load();
-                    }
+                    Team.loadShareTeam();
+
                     // Team.failDealEvent(xhr, textStatus);
                 }
             })
