@@ -19,11 +19,49 @@ body{
 	align-items: center;
 }
 
-.main-view{margin:0.30rem 0.15rem; background-color: #F3F3F3; display: flex; align-items: center; flex-direction: column;}
-.avatar{width: 0.50rem; height: 0.50rem; background-color: red;margin-bottom: 0.18rem;}
+.main-view{margin:0.30rem 0.15rem; background-color: #F3F3F3; display: flex; align-items: center; flex-direction: column; display: none;}
+.avatar{width: 0.50rem; height: 0.50rem; margin-bottom: 0.18rem;}
 .avatar img{max-width: 100%; max-height: 100%;}
 .title{color: #383838; font-size: 0.16rem;margin-bottom: 0.30rem;}
 .label1{color: #585858; font-size: 0.18rem; margin-bottom: 0.25rem;}
 .label2{color: #585858; font-size: 0.16rem; margin-bottom: 0.25rem;}
 .label3{color: #585858; font-size: 0.16rem; margin-bottom: 0.25rem;}
 
+
+/* 加载动画*/
+.wait-loading{
+	width: 100%;
+	height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10001;
+    /*display: none;*/
+}
+.loading-img{
+	position: absolute;
+    top: 0.50rem;
+    width: 70%;
+    /*display: none;*/
+    z-index: 100002;
+    left: 15%;
+}
+.loading-span{
+	/*position: absolute;
+    z-index: 100002;
+    color: white;
+    width: 100%;
+    text-align: center;
+    display: none;*/
+
+    position: fixed;
+    z-index: 100002;
+    color: white;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+}

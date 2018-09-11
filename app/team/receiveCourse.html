@@ -34,35 +34,15 @@
 		<div class="main-view">
 			<p class="label1">请在下列四门课中选择一门课程领取</p>
 			<div class="courses">
-				<div class="course">
-					<div class="avatar">
-						<img src="" alt="">
-					</div>
-					<span>Python L1-L10</span>
-				</div>
-				<div class="course">
-					<div class="avatar">
-						<img src="" alt="">
-					</div>
-					<span>Python L1-L10</span>
-				</div>
-				<div class="course">
-					<div class="avatar">
-						<img src="" alt="">
-					</div>
-					<span>Python L1-L10</span>
-				</div>
-				<div class="course">
-					<div class="avatar">
-						<img src="" alt="">
-					</div>
-					<span>Python L1-L10</span>
-				</div>
 			</div>
 
 			<div>
 				<p class="label2">绑定手机号领取免费课程</p>
 				<div class="phone-view">
+					<div class="country-code">
+						<span>+86</span>
+						<img src="../../statics/images/team/arrow.png" alt="">
+					</div>
 					<input class="phone" type="text" placeholder="请输入手机号">
 				</div>
 				<div class="verify-view">
@@ -71,8 +51,41 @@
 				</div>
 				<div class="receive">立即领取</div>
 			</div>
+
+			<div class="country-options-view">
+				<img class="close" src="../../statics/images/team/close.png" alt="">
+				<ul class="country-options">
+					
+				</ul>
+			</div>
 		</div>
-		
+
+		<script type="text/hmtl" id="course-list-template">
+			{{each}}
+			<div class="course" data-pk="{{$value.pk}}">
+				<div class="avatar">
+					<img src="{{$value.images}}" alt="">
+				</div>
+				<span>{{$value.name}}</span>
+			</div>
+			{{/each}}
+		</script>
+
+		<!-- 全球各个国家电话代码 -->
+		<script type="text/html" id="country-option-template">
+			{{each}}
+				<li class="country-option{{if $value.code==+86}} select{{/if}}" data-code="{{$value.code}}">
+					<span class="codeCty">{{$value.code}}</span>
+					<span class="country">{{$value.country}}</span>
+				</li>
+			{{/each}}
+		</script>
+		<!-- 等待动画 -->
+		<div class="wait-loading">
+			<img class="loading-img" src="../../statics/images/load.gif" alt="">
+			<span class="loading-span">正在努力加载中...</span>
+		</div>
+
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="../../libs/sea.js"></script>

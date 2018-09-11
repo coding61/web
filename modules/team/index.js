@@ -4,6 +4,7 @@ define(function(require, exports, module) {
     
     var CREATE_TEAM_URL = "https://www.cxy61.com/cxyteam/app/team/createTeam.html";
     var INDEX_URL = "https://www.cxy61.com/cxyteam/app/team/index.html";
+    var batch_type = 2;   //第二批组队, 创建队伍，获取队伍加此字段
 
     var Page = {
         token:null,
@@ -171,7 +172,7 @@ define(function(require, exports, module) {
                 }
                 $.ajax({
                     type:'get',
-                    url: Common.domain + "/userinfo/mygroup/",
+                    url: Common.domain + "/userinfo/mygroup/?batch_type=" + batch_type,
                     headers:{
                         Authorization:"Token " + token
                     },
@@ -181,7 +182,7 @@ define(function(require, exports, module) {
                         // 隐藏动画,并跳转
                         Team.setValue("myTeam", false);
                         $(".wait-loading").hide();
-                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name)+"&v=1.5";
+                        location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
                     },
                     error:function(xhr, textStatus){
                         Team.setValue("myTeam", false);
@@ -200,7 +201,7 @@ define(function(require, exports, module) {
                 }
                 $.ajax({
                     type:"get",
-                    url:Common.domain + "/userinfo/random_join_group/",
+                    url:Common.domain + "/userinfo/random_join_group/?batch_type=" + batch_type,
                     headers:{
                         Authorization:"Token " + token
                     },
@@ -230,15 +231,18 @@ define(function(require, exports, module) {
                 }
                 $.ajax({
                     type:"post",
-                    url:Common.domain + "/userinfo/rabdom_member/",
+                    url:Common.domain + "/userinfo/random_group/",
                     headers:{
                         Authorization:"Token " + token
+                    },
+                    data:{
+                        "batch_type":batch_type
                     },
                     timeout:6000,
                     success:function(json){
                         Team.setValue("joinTeam", false);
                         $(".wait-loading").hide();
-                        Common.dialog("随机组队登记成功，请过会来查看组队结果");
+                        // Common.dialog("随机组队登记成功，请过会来查看组队结果");
                         // location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
                        
                     },
@@ -332,10 +336,20 @@ define(function(require, exports, module) {
             }
         },
         getValue:function(key){
+            var value = null;
             if (window.localStorage) {
-                return localStorage[key]?JSON.parse(localStorage[key]):localStorage[key];
+                value = localStorage[key];
+            }else{
+                value = $.cookie(key);
             }
-            return $.cookie(key)?JSON.parse($.cookie(key)):$.cookie(key);
+            
+            try{
+                value = JSON.parse(value)
+            }
+            catch(error){
+                value = value
+            }
+            return value;
         }
     }
     Page.init();

@@ -12,6 +12,7 @@ define(function(require, exports, module) {
     var MY_TEAM_URL = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk='+pk + "&name=" +name;
     var MY_TEAM_URL1 = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html';
     var MY_TEAM_URL_ZAN = 'https://www.cxy61.com/cxyteam/app/home/myTeam.html?pk=' + pk + "&name=" + name + "&flag=" + flag;
+    var batch_type = 2;     //第二批组队, 创建队伍，获取队伍加此字段
 
     var Page = {
         name:null,
@@ -98,6 +99,7 @@ define(function(require, exports, module) {
             
             // 底部按钮点击
             $(".action").click(function(){
+                if ($(this).hasClass("action-gray")) return;
                 if ($(this).hasClass('share')) {
                     // 邀请分享
                     $(".shadow-view").show();
@@ -216,6 +218,7 @@ define(function(require, exports, module) {
         name:decodeURIComponent(Common.getQueryString("name")),
         currentUser:null,  //当前用户的 pk
         data:null, //小组数据
+        isReceiveCourse:null, //是否领取过课程
         code:Common.getQueryString('code'),
         flag:Common.getQueryString("flag"),
         init:function(){
@@ -230,8 +233,9 @@ define(function(require, exports, module) {
                 Team.getToken();
             }else{
                 //加载团队信息
-                // Team.loadInfo(); 
-
+                Team.loadInfo(); 
+                
+                /*
                 Team.currentUser = 1;
                 var json1 = {
                     likes:5,
@@ -259,6 +263,7 @@ define(function(require, exports, module) {
                 var json = json1;
                 Team.data = json;
                 Team.adjustData(json);
+                */
             }
         },
         // 获取 token 请求
@@ -295,13 +300,10 @@ define(function(require, exports, module) {
                     },
                     timeout:6000,
                     success:function(json){
+                        Team.setValue("userinfo", JSON.stringify(json));
                         Team.currentUser = json.pk;
                         
-                        if (Team.pk) {
-                            Team.loadShareTeam();   
-                        }else{
-                            Team.load();
-                        }
+                        Team.dependReceiveCourse(json.owner);
                     },
                     error:function(xhr, textStatus){
                         Team.failDealEvent(xhr, textStatus);
@@ -329,7 +331,7 @@ define(function(require, exports, module) {
                 })
             })
         },
-        // 获取团队信息(token)
+        // 获取团队信息(token)(这个接口在这里并没有用到)
         load:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
@@ -339,7 +341,7 @@ define(function(require, exports, module) {
                 }
                 $.ajax({
                     type:'get',
-                    url: Common.domain + "/userinfo/mygroup/",
+                    url: Common.domain + "/userinfo/mygroup/?batch_type=" + batch_type,
                     headers:{
                         Authorization:"Token " + token
                     },
@@ -427,7 +429,8 @@ define(function(require, exports, module) {
             }
 
             var dic = json;
-
+            
+            dic["isReceiveCourse"] = Team.isReceiveCourse;
             dic['leader'] = leader;
             dic['inTeam'] = inTeam;
             dic['isManyuan'] = isManyuan;
@@ -665,6 +668,32 @@ define(function(require, exports, module) {
                         Team.failDealEvent(xhr, textStatus);
                     }
                 })
+            })
+        },
+        // 判断是否已经领取课程了
+        dependReceiveCourse:function(owner){
+            $.ajax({
+                type:"get",
+                url:Common.face2faceDomain + "/course/group_course_record/?program_girl_owner=" + owner,
+                timeout:6000,
+                success:function(json){
+                    Team.isReceiveCourse = true;
+                    
+                    if (Team.pk) {
+                        Team.loadShareTeam();   
+                    }else{
+                        Team.load();
+                    }
+                },
+                error:function(xhr, textStatus){
+                    Team.isReceiveCourse = false;
+                    if (Team.pk) {
+                        Team.loadShareTeam();   
+                    }else{
+                        Team.load();
+                    }
+                    // Team.failDealEvent(xhr, textStatus);
+                }
             })
         },
 

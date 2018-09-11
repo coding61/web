@@ -3,13 +3,14 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js');
 
 	var TEAM_LIST_URL = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+    var batch_type = 2;   //第二批组队, 创建队伍，获取队伍加此字段
 
 	var Page = {
 		token: null,
 		code:Common.getQueryString('code'),
 		init: function(){
 			var this_ = this;
-			/*
+			
 			//授权登录验证
 			Common.isLogin(function(token){
 				if (token == "null") {
@@ -28,9 +29,9 @@ define(function(require, exports, module) {
 					Page.clickEvent();
 				}
 			})
-			*/
-			Team.getTeamList(Page.token, 1);
-			Page.clickEvent();
+			
+			// Team.getTeamList(Page.token, 1);
+			// Page.clickEvent();
 		},
 		clickEvent:function(){
 			//team 点击事件
@@ -174,6 +175,7 @@ define(function(require, exports, module) {
 		},
 		// 获取团队列表
 		getTeamList: function(token, page){
+			/*
 			var dic = {
 				"name":"活动名称",
 				"announcement":"活动介绍-----附件案件发积分积分卡上课了防静电撒附近点击放大卡萨反馈了放假啊是放进阿萨德科技",
@@ -205,10 +207,10 @@ define(function(require, exports, module) {
 			
 			Team.allowScroll = true;
 			
-			/*
+			*/
 			$.ajax({
 				type: 'get',
-				url: Common.domain + '/userinfo/groups/ranking/',
+				url: Common.domain + '/userinfo/groups/ranking/?batch_type=' + batch_type,
 				headers: {
 					Authorization: 'Token ' + token,
 					'Content-Type': 'application/json'
@@ -241,10 +243,10 @@ define(function(require, exports, module) {
 	                Team.failDealEvent(xhr, textStatus);
 				}
 			})
-			*/
 		},
 		// 搜索结果团队列表
 		getSearchTeam: function(token, page, search){
+			/*
 			var dic = {
 				"name":"活动名称",
 				"announcement":"活动介绍-----附件案件发积分积分卡上课了防静电撒附近点击放大卡萨反馈了放假啊是放进阿萨德科技",
@@ -274,7 +276,7 @@ define(function(require, exports, module) {
 				Team.page_search += 1;
 			}
 			Team.allowScroll_search = true;
-			/*
+			*/
 			$.ajax({
 				type: 'get',
 				url: Common.domain + '/userinfo/groups/ranking/search/',
@@ -307,7 +309,6 @@ define(function(require, exports, module) {
 					Team.failDealEvent(xhr, textStatus);
 				}
 			})
-			*/
 		},
 		// 点赞
 		likeTeam: function(pk, event){
@@ -389,10 +390,20 @@ define(function(require, exports, module) {
             }
         },
         getValue:function(key){
+        	var value = null;
             if (window.localStorage) {
-                return localStorage[key]?JSON.parse(localStorage[key]):localStorage[key];
+            	value = localStorage[key];
+            }else{
+				value = $.cookie(key);
             }
-            return $.cookie(key)?JSON.parse($.cookie(key)):$.cookie(key);
+            
+            try{
+            	value = JSON.parse(value)
+            }
+            catch(error){
+            	value = value
+            }
+            return value;
         }
 	}
 

@@ -3,6 +3,7 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js');
     
     var CREATE_TEAM_URL = "https://www.cxy61.com/cxyteam/app/team/createTeam.html";
+    var batch_type = 2;     //第二批组队, 创建队伍，获取队伍加此字段
 
     var Page = {
         code:Common.getQueryString('code'),
@@ -43,8 +44,9 @@ define(function(require, exports, module) {
                         Authorization: "Token " + token
                     },
                     data:{
-                        name:$(".name input").val(),
-                        announcement:$(".intro textarea").val()
+                        "name":$(".name input").val(),
+                        "announcement":$(".intro textarea").val(),
+                        "batch_type":2
                     },
                     dataType:"json",
                     timeout:6000,
@@ -158,10 +160,20 @@ define(function(require, exports, module) {
             }
         },
         getValue:function(key){
+            var value = null;
             if (window.localStorage) {
-                return localStorage[key]?JSON.parse(localStorage[key]):localStorage[key];
+                value = localStorage[key];
+            }else{
+                value = $.cookie(key);
             }
-            return $.cookie(key)?JSON.parse($.cookie(key)):$.cookie(key);
+            
+            try{
+                value = JSON.parse(value)
+            }
+            catch(error){
+                value = value
+            }
+            return value;
         }
     };
 

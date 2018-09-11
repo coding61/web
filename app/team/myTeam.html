@@ -29,7 +29,7 @@
 		<!-- 导航栏 -->
 		<div class="header">
 			<span class="title">我的团队</span>
-			<!-- <span class="quit leader">解散</span> -->
+			<span class="quit leader">解散</span>
 			<!-- <img src="" alt=""> -->
 		</div>
 		<!-- 加载动画 -->
@@ -119,7 +119,7 @@
 			</div>
 			{{if inTeam == true}}
 				{{if isManyuan == true}}
-					<div class="action-red action receive-course"><span>领取课程</span></div>
+					<div class="{{if isReceiveCourse == true}}action-gray{{else}}action-red{{/if}} action receive-course"><span>领取课程</span></div>
 				{{else}}
 					<div class="action-red action share"><span>邀请好友加入</span></div>
 				{{/if}}
