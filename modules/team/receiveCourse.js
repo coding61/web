@@ -125,6 +125,18 @@ define(function(require, exports, module) {
                 phone = Page.countryCode + phone
                 // phone = encodeURI(phone)
             }
+            var time = 60;
+            Page.timer = setInterval(function(){
+                --time;
+                if (time > 0) {
+                	$(".verify-view .verify-text").html(time+'s后重试');
+                }else{
+                	$(".verify-view .verify-text").html('获取验证码');
+                    clearInterval(Page.timer);
+                    Page.timer = null;
+                }
+            },1000);
+            
 			$.ajax({
 				type: 'get',
 				url: Common.face2faceDomain + '/userinfo/login_request/?username=' + phone,
@@ -132,17 +144,7 @@ define(function(require, exports, module) {
 				timeout:6000,
 				success: function(json){
 					if (json.status == 0) {
-                        var time = 60;
-                        Page.timer = setInterval(function(){
-                            --time;
-                            if (time > 0) {
-                            	$(".verify-view .verify-text").html(time+'s后重试');
-                            }else{
-                            	$(".verify-view .verify-text").html('获取验证码');
-                                clearInterval(Page.timer);
-                                Page.timer = null;
-                            }
-                        },1000);
+                    
                     }else if (json.detail || json.message) {
                         Common.dialog(json.detail || json.message);
                     }

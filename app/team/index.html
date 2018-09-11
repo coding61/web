@@ -13,7 +13,7 @@
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="0" />
-		<title>程序媛</title>
+		<title>程序媛组队</title>
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.5" />
 		<link type="text/css" rel="stylesheet" href="../../statics/css/team/index.css?v=1.5" />
 
@@ -26,7 +26,7 @@
 
 	<body>
 		<div style="display: none;">
-			<img src="" alt="">
+			<img src="../../statics/images/team/logo180.png" alt="">
 		</div>
 		<!-- 导航栏 -->
 		<div class="header">
@@ -76,6 +76,19 @@
 			<span class="loading-span">正在匹配中...</span>
 		</div>
 		
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script type="text/javascript">
+			wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+			    wx.updateAppMessageShareData({ 
+			        title: '程序媛组队', // 分享标题
+			        desc: '程序媛组队',          // 分享描述
+			        link: 'https://www.cxy61.com/girl/app/team/index.html',          // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			        imgUrl: '',        // 分享图标
+				}, function(res) { 
+					//这里是回调函数 
+				}); 
+			});
+		</script>
 	</body>
 	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="../../libs/sea.js"></script>
