@@ -1,10 +1,18 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-    
+    var WXShare = require('team/wxshare.js');
+
     var CREATE_TEAM_URL = "https://www.cxy61.com/girl/app/team/createTeam.html";
     var INDEX_URL = "https://www.cxy61.com/girl/app/team/index.html";
     var batch_type = 2;   //第二批组队, 创建队伍，获取队伍加此字段
+
+    // 分享
+    var title = "程序媛组队",
+        desc = "程序媛组队第二期，和我一起学编程领100奖学金。",
+        link = location.href,
+        imgUrl = "https://resource.bcgame-face2face.haorenao.cn/lg1024.png";
+    WXShare.SetShareData(title, desc, link, imgUrl);
 
     var Page = {
         token:null,

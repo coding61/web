@@ -11,6 +11,7 @@ define(function(require, exports, module) {
     
  	// exports.domain = "/program_girl";
  	// exports.face2faceDomain = '/program_face2face';
+ 	// exports.serverDomain = "/server";
 
 	// exports.domain = "https://app.bcjiaoyu.com/program_girl"
 	exports.authWXSiteLogin = function(url){
