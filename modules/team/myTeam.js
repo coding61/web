@@ -513,7 +513,7 @@ define(function(require, exports, module) {
                         $(".body-view").html(null)
                         $(".quit").remove();
 
-                        Common.dialog('您没有团队');
+                        Common.dialog('还没有一支属于您的团队，先去创建吧。');
                     },
                     error:function(xhr, textStatus){
                         Team.failDealEvent(xhr, textStatus, "team");

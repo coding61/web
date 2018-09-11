@@ -59,6 +59,7 @@ define(function(require, exports, module) {
                 Common.isLogin(function(token){
                     if (token != "null") {
                         //获取我的团队信息 pk, 进到我的团队页
+                        console.log("debug:获取我的团队信息");
                         Team.load();
                     }else{
                         // 先微信授权登录
@@ -122,6 +123,7 @@ define(function(require, exports, module) {
             Team.joinTeam = Team.getValue("joinTeam");
 
             if (Team.code) {
+                console.log("debug:拉取授权");
                 Team.getToken();
             }
         },
@@ -138,10 +140,11 @@ define(function(require, exports, module) {
                     Team.setValue("token", json.token);   //存储 token
                     if (Team.myTeam == true) {
                         // 我的团队
+                        console.log("debug:获取我的团队信息");
                         Team.load();
                     }else if(Team.joinTeam == true){
-                        
                         // 随机
+                        console.log("debug:随机组队");
                         $(".wait-loading").show();
                         Team.joinRandomTeam();
                     }
@@ -176,6 +179,7 @@ define(function(require, exports, module) {
                     },
                     timeout:6000,
                     success:function(json){
+                        console.log("debug:获取我的团队信息(success)");
                         // console.log(json);
                         // 隐藏动画,并跳转
                         Team.setValue("myTeam", false);
@@ -187,8 +191,9 @@ define(function(require, exports, module) {
                         }
                     },
                     error:function(xhr, textStatus){
+                        console.log("debug:获取我的团队信息(failure)");
                         Team.setValue("myTeam", false);
-                        Team.failDealEvent(xhr, textStatus);
+                        Team.failDealEvent(xhr, textStatus, "team");
                     }
                 })
             })
@@ -213,13 +218,14 @@ define(function(require, exports, module) {
                     },
                     timeout:6000,
                     success:function(json){
+                        console.log("debug:随机组队(success)");
                         Team.setValue("joinTeam", false);
                         $(".wait-loading").hide();
                         // Common.dialog("随机组队登记成功，请过会来查看组队结果");
                         // location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
-                       
                     },
                     error:function(xhr, textStatus){
+                        console.log("debug:随机组队(failure)");
                         Team.setValue("joinTeam", false);
                         Team.failDealEvent(xhr, textStatus);
                     }
@@ -261,7 +267,7 @@ define(function(require, exports, module) {
                 })
             })
         },
-        failDealEvent:function(xhr, textStatus){
+        failDealEvent:function(xhr, textStatus, tag){
             Common.hideLoading();
             $(".wait-loading").hide();
             if (textStatus == "timeout") {
@@ -276,7 +282,12 @@ define(function(require, exports, module) {
                 Common.authWXPageLogin(redirectUri);
                 return
             }else if(xhr.status == 404){
-                Common.dialog("未找到");
+                if (tag == "team") {
+                    var msg = "还没有一支属于您的团队，先去创建吧。";
+                }else{
+                    var msg = "未找到";
+                }
+                Common.dialog(msg);
                 return;
             }else if (xhr.status == 400 || xhr.status == 403) {
                 var msg = JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail;
