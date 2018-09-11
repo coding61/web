@@ -43,15 +43,18 @@ define(function(require, exports, module) {
 		},
 		clickEvent:function(){
 			//team 点击事件
-			$('.team-list li').unbind('click').click(function(){
+			$('.team-list li').unbind('click').click(function(e){
+				e.stopPropagation();
 				var pk = $(this).find(".team-detail").attr("data-pk"),
 					name = $(this).find(".team-detail").attr("data-name");
 				location.href = 'myTeam.html?pk=' + pk + '&name=' + name + '&flag=list';
 			})
 			
 			//点赞
-			$('.team-list li .team-zan').unbind('click').click(function(){
+			$('.team-list li .team-zan').unbind('click').click(function(e){
+				e.stopPropagation();
 				var pk = $(this).attr("data-pk");
+				if ($(this).hasClass("select")) return;
 				Team.likeTeam(pk, $(this));
 			})
 
