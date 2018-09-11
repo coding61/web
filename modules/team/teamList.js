@@ -246,6 +246,8 @@ define(function(require, exports, module) {
             			}
 					}
 					Team.allowScroll = true;
+
+					Page.clickEvent();
 				},
 				error: function(xhr, textStatus){
 	                Team.failDealEvent(xhr, textStatus);
@@ -287,7 +289,7 @@ define(function(require, exports, module) {
 			*/
 			$.ajax({
 				type: 'get',
-				url: Common.domain + '/userinfo/groups/ranking/search/',
+				url: Common.domain + '/userinfo/groups/ranking/search/?batch_type=' + batch_type,
 				headers: {
 					Authorization: 'Token ' + token,
 					'Content-Type': 'json/application'
@@ -312,6 +314,7 @@ define(function(require, exports, module) {
 						}
 					}
 					Team.allowScroll_search = true;
+					Page.clickEvent();
 				},
 				error: function(xhr, textStatus){
 					Team.failDealEvent(xhr, textStatus);
