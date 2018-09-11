@@ -222,7 +222,11 @@ define(function(require, exports, module) {
                         Team.setValue("joinTeam", false);
                         $(".wait-loading").hide();
                         // Common.dialog("随机组队登记成功，请过会来查看组队结果");
-                        // location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
+                        if (json.pk) {
+                            location.href = "myTeam.html?pk=" + json.pk + "&name=" + encodeURIComponent(json.name);
+                        }else{
+                            Common.dialog("组队失败");
+                        }
                     },
                     error:function(xhr, textStatus){
                         console.log("debug:随机组队(failure)");
