@@ -5,8 +5,12 @@ define(function(require, exports, module) {
 	exports.username = null;
 
 	exports.domain = "//app.cxy61.com/program_girl";
-        exports.serverDomain = "//app.cxy61.com/server";
-        exports.compileDomain = "//app.cxy61.com/compile";
+    exports.serverDomain = "//app.cxy61.com/server";
+    exports.compileDomain = "//app.cxy61.com/compile";
+    exports.face2faceDomain = "//app.cxy61.com/program_face2face";
+    
+ 	// exports.domain = "/program_girl";
+ 	// exports.face2faceDomain = '/program_face2face';
 
 	// exports.domain = "https://app.bcjiaoyu.com/program_girl"
 	exports.authWXSiteLogin = function(url){
