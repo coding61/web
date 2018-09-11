@@ -12,6 +12,8 @@ define(function(require, exports, module) {
         imgUrl = "https://resource.bcgame-face2face.haorenao.cn/lg1024.png";
     WXShare.SetShareData(title, desc, link, imgUrl);
     
+    $(".header").hide();
+    
     var pk = Common.getQueryString("pk")?Common.getQueryString("pk"):null,
         name = decodeURIComponent(Common.getQueryString("name"))?decodeURIComponent(Common.getQueryString("name")):"",
         code = Common.getQueryString('code')?Common.getQueryString('code'):'',

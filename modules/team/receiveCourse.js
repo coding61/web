@@ -10,6 +10,8 @@ define(function(require, exports, module) {
         imgUrl = "https://resource.bcgame-face2face.haorenao.cn/lg1024.png";
     WXShare.SetShareData(title, desc, link, imgUrl);
     
+    $(".header").hide();
+    
     var INDEX_URL = "https://www.cxy61.com/girl/app/team/index.html";
 
 	var Page = {
