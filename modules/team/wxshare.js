@@ -11,7 +11,7 @@ define(function(require, exports, module) {
             },
             success: function (json) {
                 console.log(json);
-                ConfigShare(json, title, desc, url, imgUrl);
+                // ConfigShare(json, title, desc, url, imgUrl);
             },
             fail: function (xhr, textStatus) {
             }
