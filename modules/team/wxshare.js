@@ -24,10 +24,11 @@ define(function(require, exports, module) {
           timestamp: json.timestamp,       // 必填，生成签名的时间戳
           nonceStr: json.nonceStr,         // 必填，生成签名的随机串
           signature: json.signature,       // 必填，签名，见附录1
-          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData', 'onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
 
         wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+            /*
             // 朋友
             wx.updateAppMessageShareData({ 
                 title: title,         // 分享标题
@@ -46,6 +47,7 @@ define(function(require, exports, module) {
             }, function(res) { 
                 //这里是回调函数
             });
+            */
             
             // 朋友圈(即将废弃)
             wx.onMenuShareTimeline({
@@ -56,7 +58,7 @@ define(function(require, exports, module) {
                     // 用户点击了分享后执行的回调函数
                 }
             });
-            
+
             // 朋友(即将废弃)
             wx.onMenuShareAppMessage({
                 title: title,        // 分享标题
