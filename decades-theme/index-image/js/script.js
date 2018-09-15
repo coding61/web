@@ -415,6 +415,7 @@ $(document).ready(function () {
     // 点击顶部链接
     // 开始学习
     $('.link1').click(function() {
+        window.event.returnValue=false;
         location.href = "../../app/home/home.html";
     })
     // 开始学习蓝色按钮
