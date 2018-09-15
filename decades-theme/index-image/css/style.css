@@ -911,7 +911,8 @@ ul.main-nav-inner {
     background-color: transparent;
     overflow: hidden;
     position: relative;
-    padding: 200px 0;
+    /*padding: 200px 0;*/
+    padding: 200px 0 70px 0;
 }
 
 .particle-bg {
@@ -962,7 +963,8 @@ ul.main-nav-inner {
 .mockup img {
 	display: block;
 	/*max-width: 100%;*/
-    max-width: 70%;
+    /*max-width: 70%;*/
+    width: 100%;
 	height: auto;
 }
 
@@ -1784,6 +1786,11 @@ footer {
 }
 
 /* -====================== Media queries ======================-*/
+@media (min-width: 1201px) {
+    .mockup-text {
+        text-align: right;
+    }
+}
 
 @media (max-width: 1200px) {
 	
@@ -1791,7 +1798,9 @@ footer {
         padding-top: 120px;
         padding-bottom: 120px;
     }
-	
+	.mockup-text {
+        text-align: right;
+    }
 }
 @media (min-width: 992px) and (max-width: 1024px) {
 	
@@ -1799,7 +1808,9 @@ footer {
         padding-top: 120px;
         padding-bottom: 120px;
     }
-	
+	.mockup-text {
+        text-align: right;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -2072,7 +2083,8 @@ footer {
 	
     .intro {
         padding-top: 150px;
-        padding-bottom: 150px;
+        /*padding-bottom: 150px;*/
+        padding-bottom: 70px;
         text-align: center;
     }
 	
@@ -2097,7 +2109,7 @@ footer {
     }
 	
     .mockup-front {
-        max-width: 70%!important;
+        /*max-width: 70%!important;*/
         margin: 0 10%;
     }
 	
