@@ -865,7 +865,8 @@ ul.main-nav-inner {
     color: #fff;
     display: block;
     /*font-size: 12px;*/
-    font-size: 24px;
+    /*font-size: 24px;*/
+    font-size: 18px;
     font-weight: 600;
     line-height: 90px;
     text-transform: uppercase;
@@ -892,7 +893,8 @@ ul.main-nav-inner {
 
 .header.stuck .main-nav-inner li a {
     /*color: #afafaf;*/
-    color: black;
+    /*color: black;*/
+    color: #919191;
     line-height: 70px;
 }
 
