@@ -492,7 +492,8 @@ button:active,
 
 .mb-25 {
     margin-top: 0;
-    margin-bottom: 25px;
+    /*margin-bottom: 25px;*/
+    margin-bottom: 12px;
 }
 
 .mb-30 {
@@ -881,7 +882,8 @@ ul.main-nav-inner {
 /* -====================== Header Stuck ======================-*/
 
 .header.stuck {
-    background-color: rgba(255, 255, 255, 0.96);
+    /*background-color: rgba(255, 255, 255, 0.96);*/
+    background-color: #ff809e;
     position: fixed;
     height: 70px;
 }
@@ -894,13 +896,14 @@ ul.main-nav-inner {
 .header.stuck .main-nav-inner li a {
     /*color: #afafaf;*/
     /*color: black;*/
-    color: #919191;
+    color: #fff;
     line-height: 70px;
 }
 
 .header.stuck .main-nav-inner li a:hover,
 .header.stuck .main-nav-inner li a.current {
-    color: #333;
+    /*color: #333;*/
+    color: #d55472;
 }
 
 .header.stuck .mobile-menu {
@@ -2062,7 +2065,8 @@ footer {
 	
     .header.stuck {
         height: 60px;
-        background-color: #fff
+        /*background-color: #fff;*/
+        background-color: #ff809e;
     }
 	
     .header.stuck .logo a {
@@ -2080,7 +2084,8 @@ footer {
     }
 	
     .header.stuck .mobile-menu a {
-        color: #606060;
+        /*color: #606060;*/
+        color: #fff;
     }
 	
     .intro {
