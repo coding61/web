@@ -584,6 +584,9 @@ define(function(require, exports, module) {
                     },
                     timeout:6000,
                     success:function(json){
+                        Team.loadShareTeam();    //服务器返回数据不及时，需要重新请求信息
+
+                        /*//为了防止有数据遗留更新
                         this_.parents(".member").children(".look-bz").remove();
                         this_.parents('.member').children('.avatar').children('img').attr({src:'../../statics/images/default-avatar.png'});
                         this_.parents('.member').children('.avatar').removeClass('avatar').addClass('default-avatar');
@@ -592,6 +595,7 @@ define(function(require, exports, module) {
 
                         $(".action").removeClass("unjoin").addClass('share');
                         $(".action span").html('邀请好友加入');
+                        */
                     },
                     error:function(xhr, textStatus){
                         Team.failDealEvent(xhr, textStatus, "team");
