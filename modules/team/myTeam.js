@@ -589,6 +589,7 @@ define(function(require, exports, module) {
                         this_.parents('.member').children('.avatar').removeClass('avatar').addClass('default-avatar');
                         this_.parents('.member').children('.name').html('待加入')
                         this_.parents('.member').children('.delete-icon').remove();
+                        this_.parents(".member").children(".look-bz").remove();
 
                         $(".action").removeClass("unjoin").addClass('share');
                         $(".action span").html('邀请好友加入');
