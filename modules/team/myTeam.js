@@ -584,12 +584,11 @@ define(function(require, exports, module) {
                     },
                     timeout:6000,
                     success:function(json){
-
+                        this_.parents(".member").children(".look-bz").remove();
                         this_.parents('.member').children('.avatar').children('img').attr({src:'../../statics/images/default-avatar.png'});
                         this_.parents('.member').children('.avatar').removeClass('avatar').addClass('default-avatar');
                         this_.parents('.member').children('.name').html('待加入')
                         this_.parents('.member').children('.delete-icon').remove();
-                        this_.parents(".member").children(".look-bz").remove();
 
                         $(".action").removeClass("unjoin").addClass('share');
                         $(".action span").html('邀请好友加入');
