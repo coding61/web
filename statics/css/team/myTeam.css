@@ -208,7 +208,7 @@ body{
     width: 0.18rem;
     /*right: 20%;*/
     /*margin-left: 25%;*/
-    top: -7%;
+    top: 0.2rem;
 
     left: calc(80% - 0.18rem);
 }
