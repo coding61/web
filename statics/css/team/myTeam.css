@@ -18,6 +18,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    display: none;
 }
 .header .quit{
 	position: absolute;

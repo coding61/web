@@ -17,6 +17,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    display: none;
 }
 
 .main-view{margin-left:0.15rem; margin-top: 0.15rem;margin-bottom: 0.35rem; background-color: #F3F3F3; display: none;}

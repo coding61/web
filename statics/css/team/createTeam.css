@@ -20,6 +20,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    display: none;
 }
 .main-view{
 	margin:3% 0;
