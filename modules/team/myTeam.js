@@ -356,7 +356,7 @@ define(function(require, exports, module) {
                 return
             }else if(xhr.status == 404){
                 if (tag == "team") {
-                    var msg = "还没有一支属于您的团队，先去创建吧。";
+                    var msg = "未找到此团队信息";
                 }else{
                     var msg = "未找到";
                 }
@@ -545,10 +545,10 @@ define(function(require, exports, module) {
                     },
                     timeout:6000,
                     success:function(json){
-                        Common.dialog('加入成功');
+                        // Common.dialog('加入成功');
                         // this_.removeClass('join').addClass('unjoin');
-
-                        Team.adjustData(json);
+                        Team.loadShareTeam();    //服务器返回数据不及时，需要重新请求信息
+                        // Team.adjustData(json);
 
                         /*
                         var parent =  $(".default-avatar").eq(0).parent();
