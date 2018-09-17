@@ -86,7 +86,7 @@
 								<div class="member" data-pk="{{$value.pk}}" data-remark="{{if $value.owner.remark}}{{$value.owner.remark}}{{else}}暂无备注{{/if}}">
 									<span class="position">{{if $value.leader == true}}队长{{/if}}</span>
 									{{if $value.leader == false}}
-										<!-- <img class="delete-icon leader" src="../../statics/images/delete.png" alt="" /> -->
+										<img class="delete-icon leader" src="../../statics/images/delete.png" alt="" />
 									{{/if}}
 									<div class="avatar">
 										<img src="{{$value.owner.avatar}}" alt="" />
