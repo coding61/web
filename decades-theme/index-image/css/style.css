@@ -492,7 +492,8 @@ button:active,
 
 .mb-25 {
     margin-top: 0;
-    margin-bottom: 25px;
+    /*margin-bottom: 25px;*/
+    margin-bottom: 12px;
 }
 
 .mb-30 {
@@ -865,7 +866,8 @@ ul.main-nav-inner {
     color: #fff;
     display: block;
     /*font-size: 12px;*/
-    font-size: 24px;
+    /*font-size: 24px;*/
+    font-size: 18px;
     font-weight: 600;
     line-height: 90px;
     text-transform: uppercase;
@@ -880,7 +882,8 @@ ul.main-nav-inner {
 /* -====================== Header Stuck ======================-*/
 
 .header.stuck {
-    background-color: rgba(255, 255, 255, 0.96);
+    /*background-color: rgba(255, 255, 255, 0.96);*/
+    background-color: #ff809e;
     position: fixed;
     height: 70px;
 }
@@ -892,13 +895,15 @@ ul.main-nav-inner {
 
 .header.stuck .main-nav-inner li a {
     /*color: #afafaf;*/
-    color: black;
+    /*color: black;*/
+    color: #fff;
     line-height: 70px;
 }
 
 .header.stuck .main-nav-inner li a:hover,
 .header.stuck .main-nav-inner li a.current {
-    color: #333;
+    /*color: #333;*/
+    color: #d55472;
 }
 
 .header.stuck .mobile-menu {
@@ -911,7 +916,8 @@ ul.main-nav-inner {
     background-color: transparent;
     overflow: hidden;
     position: relative;
-    padding: 200px 0;
+    /*padding: 200px 0;*/
+    padding: 200px 0 70px 0;
 }
 
 .particle-bg {
@@ -962,7 +968,8 @@ ul.main-nav-inner {
 .mockup img {
 	display: block;
 	/*max-width: 100%;*/
-    max-width: 70%;
+    /*max-width: 70%;*/
+    width: 100%;
 	height: auto;
 }
 
@@ -1784,6 +1791,11 @@ footer {
 }
 
 /* -====================== Media queries ======================-*/
+@media (min-width: 1201px) {
+    .mockup-text {
+        text-align: right;
+    }
+}
 
 @media (max-width: 1200px) {
 	
@@ -1791,7 +1803,9 @@ footer {
         padding-top: 120px;
         padding-bottom: 120px;
     }
-	
+	.mockup-text {
+        text-align: right;
+    }
 }
 @media (min-width: 992px) and (max-width: 1024px) {
 	
@@ -1799,7 +1813,9 @@ footer {
         padding-top: 120px;
         padding-bottom: 120px;
     }
-	
+	.mockup-text {
+        text-align: right;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -2049,7 +2065,8 @@ footer {
 	
     .header.stuck {
         height: 60px;
-        background-color: #fff
+        /*background-color: #fff;*/
+        background-color: #ff809e;
     }
 	
     .header.stuck .logo a {
@@ -2067,12 +2084,14 @@ footer {
     }
 	
     .header.stuck .mobile-menu a {
-        color: #606060;
+        /*color: #606060;*/
+        color: #fff;
     }
 	
     .intro {
         padding-top: 150px;
-        padding-bottom: 150px;
+        /*padding-bottom: 150px;*/
+        padding-bottom: 70px;
         text-align: center;
     }
 	
@@ -2097,7 +2116,7 @@ footer {
     }
 	
     .mockup-front {
-        max-width: 70%!important;
+        /*max-width: 70%!important;*/
         margin: 0 10%;
     }
 	
