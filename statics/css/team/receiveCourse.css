@@ -7,6 +7,8 @@ body{
 	background:#f2f1f1;
 
 	font-size: 0.15rem;
+    display: flex;
+    flex-direction: column;
 }
 .header{
 	background: #ff6b95;
@@ -20,7 +22,7 @@ body{
     display: none;
 }
 
-.main-view{margin-left:0.15rem; margin-top: 0.15rem;margin-bottom: 0.35rem; background-color: #F3F3F3; display: none;}
+.main-view{flex:1; margin-left:0.15rem; margin-top: 0.15rem;margin-bottom: 0.35rem; background-color: #F3F3F3; display: none;}
 .label1{color: #585858;font-size: 0.16rem;}
 .courses{margin-top: 0.15rem; margin-bottom: 0.15rem; display: flex; flex-wrap: wrap; min-height: 3rem;}
 .course{background-color: white;border: solid 0.01rem #C9C9C9;width: calc((100% - 0.35rem) / 2);margin-right: 0.15rem; margin-bottom: 0.15rem; color: #383838;font-size: 0.15rem; display: flex;flex-direction: column;justify-content: center;align-items: center; padding-top: 0.20rem;padding-bottom: 0.20rem;}

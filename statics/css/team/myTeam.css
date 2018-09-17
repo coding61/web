@@ -7,6 +7,8 @@ body{
 	background-color:#f2f1f1;
 
 	font-size: 0.15rem;
+    display: flex;
+    flex-direction: column;
 }
 .header{
 	background: #ff6b95;
@@ -42,6 +44,7 @@ body{
     margin-bottom: 0.20rem;
     margin-left: 0.17rem;
     margin-right: 0.17rem;
+    flex: 1;
 }
 .main-view .team{
 	background: white;

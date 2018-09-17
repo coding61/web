@@ -7,6 +7,8 @@ body{
 	background:#f2f1f1;
 
 	font-size: 0.15rem;
+    display: flex;
+    flex-direction: column;
 }
 .header{
 	background: #ff6b95;
@@ -20,7 +22,7 @@ body{
     display: none;
 }
 
-.main-view{margin:0.30rem 0.15rem; background-color: #F3F3F3; display: flex; align-items: center; flex-direction: column; display: none;}
+.main-view{flex:1;margin:0.30rem 0.15rem; background-color: #F3F3F3; display: flex; align-items: center; flex-direction: column; display: none;}
 .avatar{width: 0.50rem; height: 0.50rem; margin-bottom: 0.18rem;}
 .avatar img{max-width: 100%; max-height: 100%;}
 .title{color: #383838; font-size: 0.16rem;margin-bottom: 0.30rem;}

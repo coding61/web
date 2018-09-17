@@ -9,6 +9,9 @@ body{
 	font-size: 0.15rem;
     position: relative;
     min-height:100%;
+
+    display: flex;
+    flex-direction: column;
 }
 .header{
 	background: #ff6b95;
@@ -25,6 +28,7 @@ body{
 .main-view{
 	margin:3% 0;
 	color: #585858;
+    flex: 1;
 }
 .main-view .menu{
 	background: white;

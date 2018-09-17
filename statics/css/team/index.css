@@ -7,6 +7,9 @@ body{
 	background:#f2f1f1;
 
 	font-size: 0.15rem;
+
+    display: flex;
+    flex-direction: column;
 }
 .header{
 	background: #ff6b95;
@@ -22,6 +25,7 @@ body{
 }
 .main-view{
 	margin: 10% 5%;
+    flex: 1;
 }
 .main-view .create,
 .main-view .join{
