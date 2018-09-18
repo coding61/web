@@ -2894,11 +2894,11 @@ define(function(require, exports, module) {
         },
         getVeriCode:function(this_){
             // 获取验证码
-            var username = this_.find(".username").children("input").val(),
-            vericode = this_.find(".password").children("input").val();
-            console.dir(this_);
-            console.log(username);
-            console.log(vericode);
+            var username = this_.find(".username").children("input").val();
+            if (Util.currentCountryCode != "+86") {
+                username = Util.currentCountryCode + username
+                // phone = encodeURI(phone)
+            }
             if(username == ""){
                 Common.dialog("请输入账号");
                 return;
