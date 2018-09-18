@@ -201,10 +201,10 @@ define(function(require, exports, module) {
 		},
 		// 注册
 		receiveCourseRegister:function(phone, pk){
-			if (Page.countryCode != "+86") {
-                phone = Page.countryCode + phone
-                // phone = encodeURIComponent(phone)
-            }
+			// if (Page.countryCode != "+86") {
+   //              phone = Page.countryCode + phone
+   //              // phone = encodeURIComponent(phone)
+   //          }
 			$.ajax({
 				type: 'post',
 				url: Common.domain + '/userinfo/register_or_login/',
