@@ -10,17 +10,10 @@ define(function(require, exports, module) {
         init:function(){
             $.ajax({
                 type:'get',
-                url:"../../modules/common/data.json",
+                url:Common.domain + "/userinfo/code_login_request/",
                 success:function(json){
-                    // console.log(json);
-                    Page.index = 0;
-                    if(Default.olduser == true){
-                        Page.data = json.default;
-                    }else{
-                        Page.data = json.default;
-                    }
-
-                    Default.load(Page.data, Page.index);
+                    console.log(json);
+                    
                 },
                 error:function(xhr, textStatus){
                     console.log('error');
@@ -1335,8 +1328,14 @@ define(function(require, exports, module) {
                     }
                 })
             })
-
-
+            /**
+             *  通过获取手机验证码登录
+             */
+           
+            $(".yzm-account-view .get-code").unbind('click').click(function(){
+                // 获取手机验证码
+                Mananger.getVeriCode($(".yzm-account-view"));
+            })
             // ---------------------------------------------II:新的登录
             // --------------------------------1.绑定手机
             //打开绑定窗口
@@ -1369,10 +1368,16 @@ define(function(require, exports, module) {
                 if ($(this).hasClass("phone")){
                     $(".phone-account-view").css({display:"flex"})
                     $(".invite-account-view").css({display:"none"})
+                    $(".yzm-account-view").css({display:"none"})
 
+                }else if ($(this).hasClass("yzm")) {
+                    $(".yzm-account-view").css({display:"flex"})
+                    $(".invite-account-view").css({display:"none"})
+                    $(".phone-account-view").css({display:"none"})
                 }else if ($(this).hasClass("invite")) {
                     $(".invite-account-view").css({display:"flex"})
                     $(".phone-account-view").css({display:"none"})
+                    $(".yzm-account-view").css({display:"none"})
                 }
             })
 
@@ -1384,7 +1389,10 @@ define(function(require, exports, module) {
                 // 邀请码登录
                 Mananger.goLogin($(".invite-account-view"));
             })
-
+            $(".yzm-account-view .login-btn").unbind('click').click(function(){
+                // 验证码登录
+                Mananger.goLogin($(".yzm-account-view"));
+            })
             $(".phone-invite-view .go-reg").unbind('click').click(function(){
                 // 打开手机注册窗口
                 $(".phone-reg-shadow-view").show();
@@ -2639,12 +2647,17 @@ define(function(require, exports, module) {
             // 登录
             var username = this_.find(".username").children("input").val(),
                 password = this_.find(".password").children("input").val();
+                vericode = this_.find(".password").children("input").val();
             if(username == ""){
                 Common.dialog("请输入账号");
                 return;
             }
             if(password == ""){
                 Common.dialog("请输入密码");
+                return;
+            }
+            if(vericode == ""){
+                Common.dialog("请输入验证码");
                 return;
             }
             var url = "",
@@ -2668,6 +2681,15 @@ define(function(require, exports, module) {
                     password:password
                 }
 
+            }else if(this_.attr("data-tag") == "yzm"){
+                if (Util.currentCountryCode != "+86") {
+                    username = Util.currentCountryCode + username
+                }
+                url = "/userinfo/vcode_login/"
+                data = {
+                    telephone:username,
+                    verification_code:vericode
+                }
             }
 
             Common.showLoading();
@@ -2868,6 +2890,66 @@ define(function(require, exports, module) {
                 $(".btn-wx-auth").attr({disabledImg:false});
                 Common.dialog("课程还未开放，敬请期待");
                 $(".loading-chat").remove();
+            }
+        },
+        getVeriCode:function(this_){
+            // 获取验证码
+            var username = this_.find(".username").children("input").val(),
+            vericode = this_.find(".password").children("input").val();
+            console.dir(this_);
+            console.log(username);
+            console.log(vericode);
+            if(username == ""){
+                Common.dialog("请输入账号");
+                return;
+            }
+            if (this_.attr("data-tag") == "yzm") {
+                url = "/userinfo/code_login_request/"
+                $.ajax({
+                    type:'get',
+                    url: Common.domain + url,
+                    data:{
+                        telephone:username
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        if (json.status == 0) {
+                            var time = 60;
+                            Mananger.timer = setInterval(function(){
+                                --time;
+                                if (time > 0) {
+                                    this_.find(".get-code").html(time+'s后重试');
+                                }else{
+                                    this_.find(".get-code").html("获取验证码");
+                                    clearInterval(Mananger.timer);
+                                    Mananger.timer = null;
+                                }
+                            },1000);
+                        }else if (json.detail) {
+                            Common.dialog(json.detail);
+                        }else if (json.message) {
+                            Common.dialog(json.message);
+                        }
+                    },
+                    error:function(xhr, textStatus){
+                        if (textStatus == "timeout") {
+                            Common.dialog("请求超时");
+                            return;
+                        }
+
+                        if (xhr.status == 404) {
+                            // Common.dialog("您没有团队");
+                            return;
+                        }else if (xhr.status == 400 || xhr.status == 403) {
+                            Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                            return;
+                        }else{
+                            Common.dialog('服务器繁忙');
+                            return;
+                        }
+                        console.log(textStatus);
+                    }
+                }) 
             }
         }
     }
