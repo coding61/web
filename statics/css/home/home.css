@@ -1328,6 +1328,15 @@ li.catalog.unselect{
     padding: 5px;
     width: calc(100% - 70px);
 }
+.ui-login-input-view .get-code{
+    cursor:pointer;
+    text-align: center;
+    color:#5B5B5B;
+    height: calc(100% - 12px);
+    border:solid 1px #b7b7b7;
+    padding: 5px;
+    width: calc(100% - 90px);
+}
 .account-view .username>input{
 }
 .account-view .password>input{
@@ -1368,6 +1377,9 @@ li.catalog.unselect{
     cursor: pointer;
 }
 .phone-invite-view .phone-account-view{
+    display:none;
+}
+.phone-invite-view .yzm-account-view{
     display:none;
 }
 .phone-invite-view .invite-account-view{
@@ -1879,6 +1891,9 @@ li.catalog.unselect{
 .phone-invite-view .phone-account-view .username{
     position: relative;
 }
+.yzm-account-view .ui-login-input-view{
+    position: relative;
+}
 .country-options{
     position: absolute;
     background: white;
@@ -1892,6 +1907,9 @@ li.catalog.unselect{
     height: 200px;
     width: 150px;
     display: none;
+}
+.yzm-country-options{
+    left:0px;
 }
 .country-option{
     height: 40px;
