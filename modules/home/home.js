@@ -2904,7 +2904,7 @@ define(function(require, exports, module) {
                 return;
             }
             if (this_.attr("data-tag") == "yzm") {
-                url = "/userinfo/code_login_request/"
+                url = "/userinfo/vcode_login_request/"
                 $.ajax({
                     type:'get',
                     url: Common.domain + url,
