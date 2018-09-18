@@ -131,7 +131,8 @@ define(function(require, exports, module) {
 		getVerifyCode:function(phone){
 			if (Page.countryCode != "+86") {
                 phone = Page.countryCode + phone
-                // phone = encodeURI(phone)
+                phone = encodeURIComponent(phone)
+                console.log(phone);
             }
             var time = 60;
             Page.timer = setInterval(function(){
@@ -166,7 +167,7 @@ define(function(require, exports, module) {
 		receiveCourse:function(phone, code, pk){
 			if (Page.countryCode != "+86") {
                 phone = Page.countryCode + phone
-                phone = encodeURI(phone)
+                // phone = encodeURIComponent(phone)
             }
 			$.ajax({
 				type: 'post',
@@ -202,7 +203,7 @@ define(function(require, exports, module) {
 		receiveCourseRegister:function(phone, pk){
 			if (Page.countryCode != "+86") {
                 phone = Page.countryCode + phone
-                phone = encodeURI(phone)
+                // phone = encodeURIComponent(phone)
             }
 			$.ajax({
 				type: 'post',
