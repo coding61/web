@@ -113,6 +113,20 @@ define(function(require, exports, module) {
                 }
                 Page.createTeam();
             })
+
+            // 获取视图原始高度
+            let screenHeight = document.body.offsetHeight   
+            // 为window绑定resize事件
+            window.onresize = function () {
+                let nowHeight = document.body.offsetHeight
+                if (nowHeight < screenHeight) {
+                    // 将底部弹起的按钮隐藏（可使用给按钮添加相应消失类）
+                    $(".create").hide();
+                } else {
+                    // 将按钮正常显示（可使用给按钮移除相应消失类）
+                    $(".create").show();
+                }
+            }
         },
         // 请求失败处理方法
         failDealEvent:function(xhr, textStatus){
