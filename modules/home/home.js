@@ -10,10 +10,15 @@ define(function(require, exports, module) {
         init:function(){
             $.ajax({
                 type:'get',
-                url:Common.domain + "/userinfo/code_login_request/",
+                url:"../../modules/common/data.json",
                 success:function(json){
-                    console.log(json);
-                    
+                    Page.index = 0;
+                    if(Default.olduser == true){
+                        Page.data = json.default;
+                    }else{
+                        Page.data = json.default;
+                    }
+                    Default.load(Page.data, Page.index);
                 },
                 error:function(xhr, textStatus){
                     console.log('error');
