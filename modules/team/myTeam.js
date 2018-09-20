@@ -243,15 +243,17 @@ define(function(require, exports, module) {
                     // 当 token 有值时, 防止用户在授权完成后，页面依然保留 code 的情况下，刷新页面，导致 openid 失败.
                     // 此处，更改页面的地址，同时加载团队信息
                     var newUrl = location.href.split('?')[0] + "?pk=" + pk + "&name=" + name;
+                    var dic = {pk:pk, name:name};
                     if (flag) {
                         newUrl += "&flag="
                         newUrl += flag;
+                        dic["flag"] = flag;
                     }
                     console.log("debug:刷新页面，页面含参数 code，token 有值，页面新地址:", newUrl);
-                    // history.replaceState({pk:Team.pk}, null, '?pk=' + Team.pk);
-                    window.location.replace(newUrl);
+                    history.replaceState(dic, null, newUrl);
 
-                    // Team.loadInfo();
+                    // window.location.replace(newUrl);
+                    Team.loadInfo();
                 }else{
                     // 当 token 没有值时，授权
                     console.log("debug:刷新页面，页面含参数 code，token 无值，进行授权");
