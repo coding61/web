@@ -238,8 +238,28 @@ define(function(require, exports, module) {
             $(".wait-loading").show();     
 
             if (Team.code) {
-                Team.getToken();
+                var token = Team.getValue("token");
+                if (token != undefined) {
+                    // 当 token 有值时, 防止用户在授权完成后，页面依然保留 code 的情况下，刷新页面，导致 openid 失败.
+                    // 此处，更改页面的地址，同时加载团队信息
+                    var newUrl = location.href.split('?')[0] + "?pk=" + pk + "&name=" + name;
+                    if (flag) {
+                        newUrl += "&flag="
+                        newUrl += flag;
+                    }
+                    console.log("debug:刷新页面，页面含参数 code，token 有值，页面新地址:", newUrl);
+                    // history.replaceState({pk:Team.pk}, null, '?pk=' + Team.pk);
+                    window.location.replace(newUrl);
+
+                    // Team.loadInfo();
+                }else{
+                    // 当 token 没有值时，授权
+                    console.log("debug:刷新页面，页面含参数 code，token 无值，进行授权");
+                    Team.getToken();
+                }
+                
             }else{
+                console.log("debug:刷新页面，页面不含参数 code，请求团队信息, token 为空授权，非空请求信息");
                 //加载团队信息
                 Team.loadInfo(); 
                 
@@ -689,6 +709,22 @@ define(function(require, exports, module) {
                 $.cookie(key, value, {path:"/"});
             }
         },
+        getValue:function(key){
+            var value = null;
+            if (window.localStorage) {
+                value = localStorage[key];
+            }else{
+                value = $.cookie(key);
+            }
+            
+            try{
+                value = JSON.parse(value)
+            }
+            catch(error){
+                value = value
+            }
+            return value;
+        }
     }
 
     Page.init();
