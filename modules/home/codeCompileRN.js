@@ -1,6 +1,11 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
+
+    var udid = Common.getQueryString("udid");
+    var message = decodeURIComponent(Common.getQueryString("message"));
+    //console.log(studentOwner,classRoomId)
+
     var signs = [
         "[",
         "]",
@@ -38,7 +43,7 @@ define(function(require, exports, module) {
     ]
     var htmlEditor;
     var editModes = {
-        c:{mode:{name:"text/x-csrc"}, language:16},
+        c:{mode:{name:"text/x-csrc"}, language:7},
         oc:{mode:{name:"text/x-objectivec"}, language:12},
         java:{mode:{name:"text/x-java"}, language:8},
         cpp:{mode:{name:"text/x-c++src"}, language:7},
@@ -94,7 +99,14 @@ define(function(require, exports, module) {
             $(".html-edit .tag").html(str);
 
             Page.language = editModes[Common.getQueryString("lang")].language;
-            console.log(Page.language);
+            Page.hideBottomResultView();
+
+            if (udid) {
+                $(".go-qa").show();
+                console.log(message);
+            }else{
+                $(".go-qa").hide();
+            }
         },
         configEdit:function(){
             htmlEditor = CodeMirror.fromTextArea(document.getElementById("html-code"), {
@@ -116,43 +128,47 @@ define(function(require, exports, module) {
             });
 
             if (Page.lang == "python") {
+                if(localStorage["PythonCode"]){
+                    htmlEditor.setValue(localStorage["PythonCode"]);
+                }else{
                 htmlEditor.setValue("#!encoding: utf-8");
             }
+            }else if(Page.lang == "c"){
+                if(localStorage["CCode"]){
+                    htmlEditor.setValue(localStorage["CCode"]);
+                }
+            }else if(Page.lang == "oc"){
+                if(localStorage["OCCode"]){
+                    htmlEditor.setValue(localStorage["OCCode"]);
+                }  
+            }else if(Page.lang == "cpp"){
+                if(localStorage["CPPCode"]){
+                    htmlEditor.setValue(localStorage["CPPCode"]);
+                }
+            }
 
-            // htmlEditor.on('keypress', function() { 
-            //     htmlEditor.showHint(); //满足自动触发自动联想功能 
-            // });
-            // Page.addListen();
-            
-            // htmlEditor.on("change", function(Editor, changes){
-            //     // console.log(Editor.getValue());
-            //     var mode = htmlEditor.getOption("mode")["name"];
-            //     var editValue = Editor.getValue();
-            //     // console.log(mode, editValue);
-            //     if (mode == "text/x-cython") {
-            //         //python
-            //         if(editValue.indexOf("input")>-1 || editValue.indexOf("raw_input") > -1){
-            //             Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
-            //         }
-            //     }else if (mode == "text/x-csrc"){
-            //         //c
-            //         if(editValue.indexOf("scanf")>-1){
-            //             Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
-            //         }
-            //     }
-            // })
-            
-            // console.log(htmlEditor.getOption("mode"));
-            // var mode = htmlEditor.getOption("mode")["name"];
-            // if (mode == "text/x-cython" || mode == "text/x-csrc") {
-            //     //python, c
-            //     Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
-            // }
+            htmlEditor.on("change", function(Editor, changes){
+                var currentMode = htmlEditor.getOption("mode").name;
+                //htmlEditor.lastLine()
+                if (currentMode == "text/x-csrc") {
+                    //存 c
+                    localStorage["CCode"] = Editor.getValue();
+                    //console.log(Editor.getValue())
+                }else if (currentMode == "text/x-objectivec"){
+                    //存 oc
+                    localStorage["OCCode"] = Editor.getValue();
+                }else if (currentMode == "text/x-c++src"){
+                    //存 cpp
+                    localStorage["CPPCode"] = Editor.getValue();
+                }else if (currentMode == "text/x-cython"){
+                    //存 Python
+                    localStorage["PythonCode"] = Editor.getValue();
+                }
+            })
         },
         load:function(value){
-
-            console.log(value);
-            console.log("语言", Page.language);
+            //console.log(value);
+            //console.log("语言", Page.language);
             $.ajax({
                 type:"post",
                 url: Common.compileDomain + '/',
@@ -164,21 +180,18 @@ define(function(require, exports, module) {
                 timeout:6000,
                 success:function(json){
                     Common.hideLoading();
-                    console.log(json);
+                    // if (json.errors) {
+                    //     var str = json.errors;
+                    // }else{
+                    //     var str = json.output;
+                    // }
 
-                    if (json.errors) {
-                        var str = json.errors;
-                    }else{
-                        var str = json.output;
-                    }
+                    var str = json.output + "\n" + json.errors;
                     str = str.replace(/\r\n/g, "<br/>");
                     str = str.replace(/\n/g, "<br/>");
                     str = str.replace(/\ /g, "&nbsp"); //替换 空格
                     str = str.replace(/\t/g, "&nbsp&nbsp&nbsp&nbsp");
                     $(".compile-result .content").html(str);
-                    // console.log(url);
-
-                    // $(".run-result iframe").attr({src:url});
                 },
                 error:function(xhr, textStatus){
                     Common.hideLoading();
@@ -190,7 +203,7 @@ define(function(require, exports, module) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else{
-                        Common.dialog('服务器繁忙');
+                        Common.dialog('服务器繁忙11');
                         return;
                     }
                     $(".compile-result .content").html("运行失败");
@@ -198,19 +211,159 @@ define(function(require, exports, module) {
                 }
             })
         },
+        fetchAddForum:function(code){
+            var dic = {
+              types:"2",
+              section: String(13),
+              title:message,
+              content:code,
+              udid:udid
+            }
+
+            var content = "问题描述:\n##############\n练习:" + message + "代码:\n-------\n[pre]\n" + code + "\n[/pre]\n-------\n##############\n"
+            var codeQuestionForForum = {
+                content:content,
+                udid:udid,
+            }
+            localStorage.codeQuestionForForum = JSON.stringify(codeQuestionForForum);
+            Common.hideLoading();
+            if (location.host.indexOf("develop.cxy61.com")> -1 || location.host.indexOf("app.bcjiaoyu.com") > -1) {
+                var url = "https://app.bcjiaoyu.com/cxyteam_forum/add.html?pk=13";
+            }else{
+                var url = "https://www.cxy61.com/cxyteam_forum/add.html?pk=13";
+            }
+            window.open(url);
+            // Common.isLogin(function(token){
+            //     if (token) {
+            //         $.ajax({
+            //             type:'post',
+            //             url: Common.domain + "/forum/posts_create/",
+            //             data:JSON.stringify(dic),
+            //             contentType:"application/json",
+            //             headers:{
+            //                 Authorization:"Token " + token
+            //             },
+            //             success:function(json){
+            //                 Common.hideLoading();
+            //                 Common.dialog("提交成功");
+            //             },
+            //             error:function(xhr, textStatus){
+            //                 Common.hideLoading();
+            //                 if (textStatus == "timeout") {
+            //                     Common.dialog("请求超时");
+            //                     return;
+            //                 }
+            //                 if (xhr.status == 403 || xhr.status == 400) {
+            //                     Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+            //                     return;
+            //                 }else{
+            //                     Common.dialog('服务器繁忙');
+            //                     return;
+            //                 }
+            //             }
+            //         })
+            //     }
+            // })
+        },
         clickEvent:function(){
-            $(".result .run").click(function(){
+            function compileResult(e){
+                $(".inputHeader input").val("");
+                console.log(e.data);
+                var data = JSON.parse(e.data);
+                if (data.code) {
+                    htmlEditor.setValue(data.code);
+                    return;
+                }else{
+                    var str;
+                    if ($(".compile-result .content").html() == "运行结果加载中...") {
+                        str=""
+                    }else{
+                        str = $(".compile-result .content").html();
+                        str = str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/<br\/>/g, "\n").replace(/<br>/g, "\n");
+                        // console.log("str1", str);
+                    }
+                    if (data.output) {
+                        str += data.output
+                    }
+                    if (data.errors) {
+                        str += data.errors
+                    }
+                    str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/\n/g, "<br/>");
+                    $(".compile-result .content").html(str);
+                    Common.hideLoading();
+                }
+            }
+
+            // 发送按钮
+            $(".sendInput").click(function(){
+                if ($(".inputHeader input").val() == "") {
+                    Common.dialog("请输入一些内容");
+                    return
+                }
+                WebSocketData.sendStdin($(".inputHeader input").val(), Page.lang, (e)=>{
+                    compileResult(e);
+                });
+            })
+            // 运行按钮
+            $(".run").click(function(){
                 if (htmlEditor.getValue() == "") {
                     Common.dialog("请输入一些代码，再运行");
                     return
                 }
-                Page.dependInput();
+                Page.openBottomResultView();
+                $(".resultHeader .resultAction").attr({src:"../../statics/images/codeCompileRN/arrow-down.png"});
+                $(".resultHeader .resultAction").removeClass("show");
+
                 Common.showLoading();
                 $(".compile-result .content").html("运行结果加载中...");
-                Page.load(htmlEditor.getValue());
+                // Page.load(htmlEditor.getValue());
+                WebSocketData.formatCode(htmlEditor.getValue(), Page.lang, (e)=>{
+                    compileResult(e);
+                    var data = JSON.parse(e.data);
+                    WebSocketData.sendCode(data.code, Page.lang, (e)=>{
+                        compileResult(e);
+                    });
+                });
+                
+            })
+            $(".resultHeader .resultAction").unbind('click').click(function(){
+                if ($(this).hasClass("show")) {
+                    console.log("打开底部输出")
+                    Page.openBottomResultView();
+                    $(".resultHeader .resultAction").attr({src:"../../statics/images/codeCompileRN/arrow-down.png"});
+                    $(this).removeClass("show");
+                }else{
+                    console.log("隐藏底部输出");
+                    Page.hideBottomResultView();
+                    $(".resultHeader .resultAction").attr({src:"../../statics/images/codeCompileRN/arrow-up.png"});
+                    $(this).addClass("show");
+                }
+            })
+            
+            $(".header-tag .close").unbind('click').click(function(){
+                window.parent.postMessage("closeRightIframe", '*');
+            })
+            
+            // 去提问
+            $(".go-qa").unbind('click').click(function(){
+                if (htmlEditor.getValue() == "") {
+                    Common.dialog("请输入一些代码，再提问");
+                    return
+                }
+                Common.showLoading();
+                var code = htmlEditor.getValue();
+                Page.fetchAddForum(code);
             })
 
             Page.punctuationRelatedMethod();
+        },
+        hideBottomResultView:function(){
+            $(".edits .compile-result").css({height:'41px'});
+            // $(".edits .html-edit").css({height:'calc(100% - 41px)'});
+        },
+        openBottomResultView:function(){
+            $(".edits .compile-result").css({height:'50%'});
+            // $(".edits .html-edit").css({height:'50%'});
         },
         punctuationRelatedMethod:function(){
             Page.punctuationsInit();
@@ -252,26 +405,10 @@ define(function(require, exports, module) {
 
             var top = ($(window).height() - pvH) / 2
 
-            $(".punctuation-view").css({
-                left:left+ "px",
-                top:top + "px"
-            })
-        },
-        dependInput:function(){
-            var mode = htmlEditor.getOption("mode")["name"];
-            var editValue = htmlEditor.getValue();
-            // console.log(mode, editValue);
-            if (mode == "text/x-cython") {
-                //python
-                if(editValue.indexOf("input")>-1 || editValue.indexOf("raw_input") > -1){
-                    Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
-                }
-            }else if (mode == "text/x-csrc"){
-                //c
-                if(editValue.indexOf("scanf")>-1){
-                    Common.dialog("程序媛编辑器不支持scanf, raw_input, input这类输入操作，建议使用repl编辑器哈！");
-                }
-            }
+            // $(".punctuation-view").css({
+            //     left:left+ "px",
+            //     top:top + "px"
+            // })
         }
 
     };

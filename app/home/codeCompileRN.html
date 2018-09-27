@@ -50,13 +50,22 @@
 	    <script src="../../libs/codeMirror/addon/indent-fold.js"></script>
 	    <!-- <script src="../../libs/codeMirror/addon/comment-fold.js"></script> -->
 
-	   <script src="../../libs/codeMirror/mode/clike.js"></script>
-	   <script src="../../libs/codeMirror/mode/python.js"></script>
-
-
+	    <script src="../../libs/codeMirror/mode/clike.js"></script>
+	    <script src="../../libs/codeMirror/mode/python.js"></script>
+		
+		<script type="text/javascript" src="../../modules/home/codeCompileRNForWebSocketData.js"></script>
 
 	    <style type="text/css">
 		    .CodeMirror {height: calc(100% - 41px);}
+		    .CodeMirror.CodeMirror-wrap{
+		    	background-color: rgb(30,33,39);
+	    	    background-image: url(../../statics/images/codeCompileRN/bg.png);
+			    background-repeat: no-repeat;
+			    background-size: 50%;
+			    background-position: center;
+		    }
+		    .CodeMirror-activeline-background.CodeMirror-linebackground {background-color: rgb(21,24,33);}
+		    .CodeMirror-scroll .CodeMirror-gutters{background-color: transparent;}
 			.CodeMirror-cursors .CodeMirror-cursor{
 		    	border-left: 2px solid rgb(0, 92,254);
 		    }
@@ -67,15 +76,38 @@
 	<body>
 		<div class="edits">
 			<div class="html-edit">
-				<div class="header-tag">
-					<span class="tag">在线编译器</span>
-					<span class="insert-pun">插入标点符号</span>
+				<div style="background-color: rgb(18, 59, 146);">
+					<div class="header-tag">
+						<span class="tag">在线编译器</span>
+						<div class="rightView">
+							<span class="run" style="margin-right:20px;">运行<img src="../../statics/images/codeCompileRN/run.png" alt=""></span>
+							<!-- <img class="close" src="../../statics/images/codeCompileRN/close.png"> -->
+						</div>
+					</div>
 				</div>
 				
 				<textarea class="edit" id="html-code"></textarea>
 			</div>
+
+			<!-- <div class="inputHeader">
+				<div class="inputView">
+					<span class="tag">输入：</span>
+					<input type="text">
+				</div>
+				<span class="sendInput">发送</span>
+			</div> -->
+			
 			<div class="compile-result">
-				<span class="tag">运行结果</span>
+				<div class="resultHeader">
+					<span class="tag">运行结果:</span>
+					<div style="display: flex;justify-content: center;align-items: center;">
+						<span class="go-qa">去提问</span>
+						<span class="insert-pun">插入标点符号</span>
+					</div>
+					
+					<img class="resultAction show" src="../../statics/images/codeCompileRN/arrow-up.png" alt="">
+					<!-- <span class="resultAction">显示</span> -->
+				</div>
 				<span class="content"></span>
 			</div>
 		</div>
@@ -89,9 +121,9 @@
 			</div>
 		</div>
 		
-		<div class="result">
+		<!-- <div class="result">
 			<span class="run">运行</span>
-		</div>
+		</div> -->
 		<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
 
 		<!-- <script type="text/javascript" src="../../libs/mloading/jquery.mloading.js"></script> -->

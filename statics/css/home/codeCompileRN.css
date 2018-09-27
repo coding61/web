@@ -1,3 +1,7 @@
+/*
+    #369ffb 蓝色
+    #ff6b95 粉色
+*/
 *{
     font-family: monospace;
 }
@@ -8,52 +12,104 @@ body{
 	width: 100%;
 	height: 100%;
 	background:rgb(78, 79, 80);
+
+    display: flex;
+    flex-direction: column;
 }
 .edits{
-	width: 95%;
-	height: 50%;
-
 	display: inline-flex;
 	justify-content: space-between;
 
+    /*width: 95%;
 	margin-left: 2.5%;
-	margin-right: 2.5%;
+	margin-right: 2.5%;*/
 
     font-size: 16px;
 
-    height: 90%;
-    height: calc(100% - 45px);
+    /*height: calc(100% - 45px);*/
     flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    flex: 1;
 }
 .edits .html-edit{
 	height: 98%;
-	background: rgb(55, 56, 57);
+	background: rgb(30, 33, 39);
     width: 100%;
     height: 50%;
+    flex: 1;
 }
 .edits .compile-result{
     height: 98%;
-    background: rgb(55, 56, 57);
+    background: rgb(46, 48, 42);
     width: calc(50% - 10px);
     color: white;
     width: 100%;
     height: 50%;
+    height: 41px;
+    overflow: hidden;
 }
 .edits .html-edit .header-tag{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 5%;
-    padding-right: 5%;
-    border-bottom: solid 1px rgb(85, 86, 87);
+    border-bottom: solid 1px rgb(18, 59, 146);
     color: white;
     height: 40px;
+    margin-left: 25px;
+    padding-left: 20px;
+    background-color: rgb(27,29,36);
 }
-.edits .html-edit .header-tag .insert-pun{
+.edits .html-edit .header-tag .rightView{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.edits .html-edit .header-tag .rightView .close{
+    width: 15px;
+    margin-left: 30px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+/*去提问*/
+.edits .html-edit .header-tag .go-qa{
     background: rgb(78, 79, 80);
     border-radius: 5px;
     padding: 5px 8px;
+    margin-right: 10px;
+    display: none;
+    cursor: pointer;
 }
+/*插入标点符号*/
+.edits .html-edit .header-tag .insert-pun{
+    background: rgb(78, 79, 80);
+    border-radius: 5px;
+    /*padding: 5px 8px;*/
+    padding: 5px;
+    font-size: 14px;
+}
+.go-qa,
+.insert-pun{
+    /*background: rgb(78, 79, 80);*/
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 3px;
+    display: none;
+    /*border: solid 1px rgb(162,163,160);
+    color: rgb(162,163,160);*/
+    border: solid 1px white;
+    color: white;
+}
+.go-qa{
+}
+.insert-pun{
+    display: block;
+}
+
 .edits .html-edit .tag{
 	/*display: inline-block;
 	height: 30px;
@@ -63,26 +119,67 @@ body{
 	width: 95%;
 	padding-left: 5%;*/
 }
+.edits .inputHeader{
+    background: rgb(55, 56, 57);
+    display: flex;
+    flex-direction: row;
+    /*height: 30px;*/
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px rgb(85, 86, 87);
+    color: white;
+    padding: 0 5%;
+    height: 40px;
+}
+.edits .inputHeader .sendInput{
+    background: rgb(78, 79, 80);
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+.edits .compile-result .resultHeader{
+    display: flex;
+    flex-direction: row;
+    /*height: 30px;*/
+    justify-content: space-between;
+    align-items: center;
+    border-top: solid 1px #fffffc;
+    color: white;
+    /*padding: 0 5%;*/
+    padding: 0 25px;
+    height: 40px;
+}
+.edits .compile-result .resultHeader .resultAction{
+    /*background: rgb(78, 79, 80);
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin: 5px 0;*/
+    cursor: pointer;
+
+    width: 20px;
+}
+
 .edits .compile-result .tag{
-    display: inline-block;
+    /*display: inline-block;
     height: 30px;
     line-height: 30px;
     border-bottom: solid 1px rgb(85, 86, 87);
     color: white;
     width: 95%;
-    padding-left: 5%;
+    padding-left: 5%;*/
 }
 .edits .compile-result .content{
-    background: #272822;
+    background: rgb(27,29,36);
     padding: 10px;
     width: calc(100% - 20px);
     display: inline-block;
     overflow: auto;
-    height: calc(100% - 51px);
+    /*height: calc(100% - 51px);*/
+    height: calc(100% - 61px);
 }
 .edits .html-edit .edit{
 	width: 94%;
-    height: none;
     border: none;
     background: transparent;
     padding: 3%;
@@ -94,7 +191,17 @@ body{
 }
 
 .edits .run{
-	background: rgb(78, 79, 80);
+	/*background: rgb(78, 79, 80);*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.edits .run img{
+    width: 15px;
+    margin-left: 5px;
 }
 .result{
 	width: 100%;
@@ -144,6 +251,9 @@ body{
     z-index: 1000;
     /*flex-wrap: wrap;*/
     display: none;
+    left: 15%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 .punctuation-view .close{
     height: 35px;
@@ -175,7 +285,7 @@ body{
     display: inline-block;
     margin: 10px;
 
-    background: rgb(250, 80, 131); */
+    background: #369ffb;
     color: white; 
     font-size: 17px;
 }
