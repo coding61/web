@@ -2989,10 +2989,12 @@ define(function(require, exports, module) {
                             var lis="";
                             
                             for(var i=0 ; i<json.results.length;i++){
+                                var time=json.results[i].create_time;
+                                var timeStr=time.replace(/T/,' ')
                                 if(json.results[i].amount>0){
                                     json.results[i].amount='+'+json.results[i].amount
                                 }
-                                lis+= '<li class="record-lis'+i+'"><span class="record-date">'+json.results[i].create_time+'</span><span class="record-content">'+json.results[i].record_type+'</span><span class="record-amount">'+json.results[i].amount+'</span></li><i class="bottom-line"></i>';
+                                lis+= '<li class="record-lis'+i+'"><span class="record-date">'+timeStr+'</span><span class="record-content">'+json.results[i].record_type+'</span><span class="record-amount">'+json.results[i].amount+'</span></li><i class="bottom-line"></i>';
                             }
                             $('.record-uls').html(lis);
                             $('.scholarship-amount').html(Mananger.balance.toFixed(2));
