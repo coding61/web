@@ -667,7 +667,7 @@ define(function(require, exports, module) {
             }else{
                 // 快进
                 $(".helps-view .fast-mode img").css({display:'none'})
-            }
+            };
         },
         load:function(){
 
@@ -1276,6 +1276,15 @@ define(function(require, exports, module) {
             $(".header .edit-course").unbind('click').click(function(){
                 window.open("editCourse.html");
             })
+            //我的奖学金
+            $(".scholar-ship").unbind('click').click(function(){
+                $(".scholarship").css({display:'block'});
+                Mananger.getRecord(1,'init');
+            })
+            //奖学金记录弹框关闭
+            $(".scholarship-cls").unbind('click').click(function(){
+                $(".scholarship").css({display:'none'});
+            })
             // 编辑器点击事件
             $(".editors .editor").unbind('click').click(function(){
                 var url = ""
@@ -1702,11 +1711,11 @@ define(function(require, exports, module) {
             $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight}, 50);
         }
     };
-
     var Mananger = {
         phone:"",
         code:"",
         password:"",
+        balance:"",
         chooseAvatar:"https://static1.bcjiaoyu.com/avatars/1.png",
         timer:null,
         login:function(){
@@ -1770,6 +1779,7 @@ define(function(require, exports, module) {
                         Authorization:"Token " + token
                     },
                     success:function(json){
+                        Mananger.balance=json.balance;
                         Common.hideLoading();
                         $(".phone-invite-shadow-view").hide();
                         // $(".login-shadow-view").hide();
@@ -2956,7 +2966,66 @@ define(function(require, exports, module) {
                     }
                 }) 
             }
-        }
+        },
+        // -----获取奖学金记录jia------
+        getRecord:function(page,type){
+            Common.isLogin(function(token){
+                url = "/asset/record/"
+                $.ajax({
+                    type:'get',
+                    url: Common.domain + url,
+                    headers:{
+                        Authorization:"Token " + token
+                    },
+                    data:{
+                        page:page,
+                        page_size:5
+                    },
+                    timeout:6000,
+                    success:function(json){
+                        if(json.count===0){
+                            $('.scholarship-bottom').html('您还没有奖学金记录');
+                        }else if(json.count>0){
+                            var lis="";
+                            
+                            for(var i=0 ; i<json.results.length;i++){
+                                if(json.results[i].amount>0){
+                                    json.results[i].amount='+'+json.results[i].amount
+                                }
+                                lis+= '<li class="record-lis'+i+'"><span class="record-date">'+json.results[i].create_time+'</span><span class="record-content">'+json.results[i].record_type+'</span><span class="record-amount">'+json.results[i].amount+'</span></li><i class="bottom-line"></i>';
+                            }
+                            $('.record-uls').html(lis);
+                            $('.scholarship-amount').html(Mananger.balance.toFixed(2));
+                            if(type==='init'){
+                                var a= Math.ceil(parseInt(json.count)/5);
+                                Mananger.loadpage(a);
+                                
+                            }
+                        }  
+                    },
+                    error:function(xhr, textStatus){
+                        console.log(textStatus);
+                    }
+                }) 
+            })
+        },
+        // 分页
+        loadpage:function(totalPages) {
+            $('#pagination').jqPaginator({
+                totalPages: totalPages,//总页数
+                visiblePages: 1,//列表显示页数
+                currentPage: 1,//当前页
+                prev: '<li class="prev pages"><a href="javascript:;"><i class="arrow arrow2"></i>&lt;</a></li>',
+                next: '<li class="next pages"><a href="javascript:;">&gt;<i class="arrow arrow3"></i></a></li>',
+                page: '<li class="page .scholarship-page pages"><a href="javascript:;">{{page}}</a></li>',
+                onPageChange:function(num, type) {
+                    if (type !== 'init') {
+                        Mananger.getRecord(num, type);
+                    }
+                }
+            });
+        },
+        
     }
     // ---------------------4.帮助方法
     var Util = {

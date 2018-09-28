@@ -2247,3 +2247,141 @@ li.catalog.unselect{
    -ms-animation-fill-mode: forwards;
    -moz-animation-fill-mode: forwards;
 }
+/* 我的奖学金 */
+.scholarship{
+    display:none;
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100001;
+    overflow: hidden;
+}
+.scholarship-div{
+    display:flex;
+    position: relative;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    background:rgba(255,255,255,1);
+    border-radius:10px;
+    position: absolute;
+    left:36%;
+    top:80px;
+    width:45%;
+}
+ .scholarship-cls{
+    display: inline-block;
+    width:18px;
+    height:18px;
+    padding-top:10px;
+    padding-left:94%;
+    cursor: pointer;
+}
+.reward-money{
+    display:flex;
+    width:100%;
+    flex-direction: row;
+    justify-content:center;
+    color:#363636;
+}
+.scholarship-amount{
+    width:100%;
+    text-align: center;
+    line-height: 54px;
+    font-size:54px;
+}
+.scholarship-yuan{
+    font-size:20px;
+}
+.scholarship-content{
+    color:#636363;
+    font-size:16px;
+    font-weight: 500;
+    padding-bottom:40px;
+}
+.scholarship-detail{
+    width:96%;
+    height:40px;
+    font-size:14px;
+    color:#5A5A5A;
+    background:rgba(234,234,234,1);
+    padding-left:4%;
+    line-height:40px;
+}
+.scholarship-record{
+    margin-bottom:20px;
+    width:100%;
+    height:244px;
+}
+.scholarship-record ul li{
+    width:100%;
+    height:40px;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 40px;
+}
+.record-date{
+    width:186px;
+    height:16px;
+    padding-left: 4%;
+    font-size:16px;
+    font-family:PingFang-SC-Medium;
+    font-weight:500;
+    color:rgba(145,145,145,1);
+}
+.record-content{
+    width:115px;
+    height:16px;
+    font-size:16px;
+    font-family:PingFang-SC-Medium;
+    font-weight:500;
+    color:rgba(75,75,75,1);
+}
+.record-amount{
+    padding-right: 4%;
+    width:70px;
+    height:18px;
+    line-height:40px;
+    font-size:18px;
+    font-family:PingFang-SC-Heavy;
+    font-weight:800;
+    color:rgba(255,96,138,1);
+}
+.bottom-line{
+    display: inline-block;
+    width: 100%;
+    height: 1px;
+    vertical-align: bottom;
+    background-color: #B7B7B7;
+    opacity: .5;
+    position: relative;
+    top: -1px;
+}
+.scholarship-bottom{
+   margin-bottom:20px; 
+}
+#pagination{
+    display:flex;
+    flex-direction: row;
+}
+.pages{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    line-height:20px;
+    text-align: center;
+    color:#CCCCCC;
+    cursor: pointer;
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(204,204,204,1);
+}
+.scholarship-page ,page{
+    background:rgba(249,70,120,1);
+}
+
