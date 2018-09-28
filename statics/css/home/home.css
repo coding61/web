@@ -2298,11 +2298,11 @@ li.catalog.unselect{
 .scholarship-yuan{
     font-size:20px;
 }
-.scholarship-content{
+.scholarship-content,.scholarship-data{
     color:#636363;
     font-size:16px;
     font-weight: 500;
-    padding-bottom:40px;
+    padding-bottom:10px;
 }
 .scholarship-detail{
     width:96%;
