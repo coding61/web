@@ -35,6 +35,7 @@
 			<span class="mobile-app center-view item">手机 APP</span>
 			<span class="code-online center-view item">在线编程</span>
 			<span class="edit-course center-view item">创作课程</span>
+			<span class="scholar-ship center-view item">我的奖学金</span>
 			<div class="right-view">
 				<!-- <span class="luntan item">学习论坛</span> -->
 				<span class="msg" style="display: none;"><img src="../../statics/images/avatar.png"/>获取了2颗钻石</span>
@@ -271,7 +272,31 @@
 				</div> -->
 			</div>
 		</div>
-
+		<!-- 奖学金记录弹框 -->
+		<div class="scholarship">
+			<div class="scholarship-div">
+				<img class="scholarship-cls" src="../../statics/images/cls.png"/>
+				<div class="reward-money">
+					<div class="scholarship-amount"><span class="scholarship-yuan">元</span></div>
+				</div>
+				<p class="scholarship-content">奖学金提现请到微信公众服务号“橙旭园儿童编程”进行提取</p>
+				<p class="scholarship-data">领取功能于2018年11月17日开放</p>
+				<div class="scholarship-detail">奖学金明细</div>
+				<div class="scholarship-record">
+					<ul class="record-uls">
+						<!-- <li class="record-lis">
+							<span class="record-date">2017年10月1日 15:53:20</span>
+							<span class="record-content">奖学金</span>
+							<span class="record-amount">+2.13</span>
+						</li>
+						<i class="bottom-line"></i>			 -->
+					</ul>
+				</div>
+				<div class="scholarship-bottom">
+					<ul class="pagination" id="pagination"></ul>		
+				</div>
+			</div>
+		</div>
 		<!-- 寻找帮助 -->
 		<div class="find-help-shadow-view">
 			<div class="find-help-view">
@@ -783,6 +808,7 @@
 	<script type="text/javascript" src="../../libs/sea.js"></script>
 	<script type="text/javascript" src="../../libs/jquery.imageloader.js"></script>
 	<script type="text/javascript" src="../../libs/dragable/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../libs/jqPaginator.min.js"></script>
 	<script>
 		var base = location.href.split("/app/")[0];
 		seajs.config({
