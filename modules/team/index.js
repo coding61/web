@@ -131,8 +131,12 @@ define(function(require, exports, module) {
             Team.joinTeam = Team.getValue("joinTeam");
 
             if (Team.code) {
+                // 没有 token，那就正常授权，存储批次
+                console.log("debug:没有 token，那就正常授权，存储批次");
                 console.log("debug:拉取授权");
                 Team.getToken();
+            }else{
+               Team.batchDeal(); 
             }
         },
         // 获取 token 请求
@@ -145,7 +149,8 @@ define(function(require, exports, module) {
                 },
                 timeout:6000,
                 success:function(json){
-                    Team.setValue("token", json.token);   //存储 token
+                    Team.setValue("batch_type", batch_type);   //存储批次
+                    Team.setValue("token", json.token);        //存储 token
                     if (Team.myTeam == true) {
                         // 我的团队
                         console.log("debug:获取我的团队信息");
@@ -315,6 +320,24 @@ define(function(require, exports, module) {
         },
 
         // ---------帮助方法
+        // 关于批次处理
+        batchDeal:function(){
+            if(Team.getValue("token")){
+                console.log("debug:有 token 的情况,判断是第二批还是第一批的用户");
+                // 有 token 的情况,判断是第二批还是第一批的用户
+                if(parseInt(Team.getValue("batch_type")) == batch_type){
+                    // 第二批用户，不做处理
+                    console.log("debug:第二批用户，不做处理");
+                }else{
+                    // 非第二批用户，移除 token,让其重新授权
+                    console.log("debug:非第二批用户，移除 token,让其重新授权");
+                    Team.reomveValue("token");
+                }
+            }else{
+                // 没有 token，不做处理
+                console.log("debug:没有 token，不做处理");
+            }
+        },
         setValue:function(key, value){
             if (window.localStorage) {
                 localStorage[key] = value;

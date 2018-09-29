@@ -18,6 +18,8 @@ define(function(require, exports, module) {
         init:function(){
             if (Page.code) {
                 Page.load();   //登录,根据 code 获取 token
+            }else{
+                Page.batchDeal();
             }
             Page.clickEvent();
         },
@@ -32,6 +34,7 @@ define(function(require, exports, module) {
                 timeout:6000,
                 success:function(json){
                     Page.setValue("token", json.token);
+                    Page.setValue("batch_type", batch_type);
                 },
                 error:function(xhr, textStatus){
                     Page.failDealEvent(xhr, textStatus);
@@ -165,6 +168,24 @@ define(function(require, exports, module) {
 
 
         // ---------帮助方法
+        // 关于批次处理
+        batchDeal:function(){
+            if(Team.getValue("token")){
+                console.log("debug:有 token 的情况,判断是第二批还是第一批的用户");
+                // 有 token 的情况,判断是第二批还是第一批的用户
+                if(parseInt(Team.getValue("batch_type")) == batch_type){
+                    // 第二批用户，不做处理
+                    console.log("debug:第二批用户，不做处理");
+                }else{
+                    // 非第二批用户，移除 token,让其重新授权
+                    console.log("debug:非第二批用户，移除 token,让其重新授权");
+                    Team.reomveValue("token");
+                }
+            }else{
+                // 没有 token，不做处理
+                console.log("debug:没有 token，不做处理");
+            }
+        },
         setValue:function(key, value){
             if (window.localStorage) {
                 localStorage[key] = value;

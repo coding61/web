@@ -261,9 +261,18 @@ define(function(require, exports, module) {
                 }
                 
             }else{
-                console.log("debug:刷新页面，页面不含参数 code，请求团队信息, token 为空授权，非空请求信息");
-                //加载团队信息
-                Team.loadInfo(); 
+                Team.batchDeal(function(isAuth){
+                    if(isAuth == "auth"){
+                        // 发起授权
+                        var redirectUri = MY_TEAM_URL;
+                        Common.authWXPageLogin(redirectUri);
+                    }else{
+                        // 加载团队信息
+                        console.log("debug:刷新页面，页面不含参数 code，请求团队信息, token 为空授权，非空请求信息");
+                        //加载团队信息
+                        Team.loadInfo();
+                    }
+                });
                 
                 /*
                 Team.currentUser = 1;
@@ -306,6 +315,7 @@ define(function(require, exports, module) {
                 },
                 timeout:6000,
                 success:function(json){
+                    Team.setValue("batch_type", batch_type);
                     Team.setValue("token", json.token);
                     Team.loadInfo();
                 },
@@ -704,11 +714,46 @@ define(function(require, exports, module) {
 
 
         // ---------帮助方法
+        batchDeal:function(callback){
+            if(Team.getValue("token")){
+                console.log("debug:有 token 的情况,判断是第二批还是第一批的用户");
+                // 有 token 的情况,判断是第二批还是第一批的用户
+                if(parseInt(Team.getValue("batch_type")) == batch_type){
+                    // 第二批用户，不做处理
+                    console.log("debug:第二批用户，不做处理");
+                    if(callback){
+                        callback("noauth");
+                    }
+                }else{
+                    // 非第二批用户，移除 token,让其重新授权
+                    console.log("debug:非第二批用户，移除 token,让其重新授权");
+                    Team.reomveValue("token");
+                    if(callback){
+                        callback("auth");
+                    }
+                }
+            }else{
+                // 没有 token，不做处理,授权
+                console.log("debug:没有 token，不做处理");
+                if(callback){
+                    callback("auth");
+                }
+            }
+        },
         setValue:function(key, value){
             if (window.localStorage) {
                 localStorage[key] = value;
             }else{
                 $.cookie(key, value, {path:"/"});
+            }
+        },
+        reomveValue:function(key){
+            if(window.localStorage){
+                localStorage.removeItem(key);
+            }else{
+                $.cookie(key, null, {
+                    path: "/"
+                });
             }
         },
         getValue:function(key){

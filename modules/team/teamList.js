@@ -32,9 +32,16 @@ define(function(require, exports, module) {
 					}
 				}else{
 					//已经授权，请求数据
-					Page.token = Team.getValue("token");
-					Team.getTeamList(Page.token, 1);
-					Page.clickEvent();
+					Team.batchDeal(function(isAuth){
+						if(isAuth == "auth"){
+							var redirectUri = TEAM_LIST_URL;
+							Common.authWXPageLogin(redirectUri);
+						}else{
+							Page.token = Team.getValue("token");
+							Team.getTeamList(Page.token, 1);
+							Page.clickEvent();
+						}
+					});
 				}
 			})
 			
@@ -174,6 +181,7 @@ define(function(require, exports, module) {
 	            },
 	            timeout:6000,
 	            success:function(json){
+					Team.setValue("batch_type", batch_type);
 	                Team.setValue("token", json.token);
 					
 					Page.token = json.token;
@@ -387,6 +395,33 @@ define(function(require, exports, module) {
 
 
 		// ---------帮助方法
+		// 关于批次处理
+        batchDeal:function(callback){
+            if(Team.getValue("token")){
+                console.log("debug:有 token 的情况,判断是第二批还是第一批的用户");
+                // 有 token 的情况,判断是第二批还是第一批的用户
+                if(parseInt(Team.getValue("batch_type")) == batch_type){
+                    // 第二批用户，不做处理
+					console.log("debug:第二批用户，不做处理");
+					if(callback){
+						callback("noauth");
+					}
+                }else{
+                    // 非第二批用户，移除 token,让其重新授权
+                    console.log("debug:非第二批用户，移除 token,让其重新授权");
+					Team.reomveValue("token");
+					if(callback){
+						callback("auth");
+					}
+                }
+            }else{
+                // 没有 token，不做处理
+				console.log("debug:没有 token，不做处理");
+				if(callback){
+					callback("auth");
+				}
+            }
+        },
         setValue:function(key, value){
             if (window.localStorage) {
                 localStorage[key] = value;
