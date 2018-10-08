@@ -15,8 +15,10 @@ define(function(require, exports, module) {
 	var Page = {
 		countryCode:"+86",
 		owner:null,
+		token:null,
 		init:function(){
 			Page.owner = Page.getValue("userinfo")["owner"];
+			Page.token = Page.getValue("token");
 			Page.getCountryCode();
 			Page.courseList();
 		},
@@ -208,6 +210,9 @@ define(function(require, exports, module) {
 			$.ajax({
 				type: 'post',
 				url: Common.domain + '/userinfo/register_or_login/',
+				headers:{
+					Authorization:"Token " + Page.token
+				},
 				data:{
 					"username": phone,
 				},
