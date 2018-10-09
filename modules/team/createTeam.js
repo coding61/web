@@ -19,7 +19,14 @@ define(function(require, exports, module) {
             if (Page.code) {
                 Page.load();   //登录,根据 code 获取 token
             }else{
-                Page.batchDeal();
+                Page.batchDeal(function(isAuth){
+                    if(isAuth == "auth"){
+                        var redirectUri = CREATE_TEAM_URL;
+                        Common.authWXPageLogin(redirectUri);
+                    }else{
+                        // 不做处理
+                    }
+                });
             }
             Page.clickEvent();
         },
@@ -57,7 +64,7 @@ define(function(require, exports, module) {
                     data:{
                         "name":$(".name input").val(),
                         "announcement":$(".intro textarea").val(),
-                        "batch_type":2
+                        "batch_type":batch_type
                     },
                     dataType:"json",
                     timeout:6000,
@@ -169,21 +176,30 @@ define(function(require, exports, module) {
 
         // ---------帮助方法
         // 关于批次处理
-        batchDeal:function(){
-            if(Team.getValue("token")){
+        batchDeal:function(callback){
+            if(Page.getValue("token")){
                 console.log("debug:有 token 的情况,判断是第二批还是第一批的用户");
                 // 有 token 的情况,判断是第二批还是第一批的用户
-                if(parseInt(Team.getValue("batch_type")) == batch_type){
+                if(parseInt(Page.getValue("batch_type")) == batch_type){
                     // 第二批用户，不做处理
                     console.log("debug:第二批用户，不做处理");
+                    if(callback){
+                        callback("noauth");
+                    }
                 }else{
                     // 非第二批用户，移除 token,让其重新授权
                     console.log("debug:非第二批用户，移除 token,让其重新授权");
-                    Team.reomveValue("token");
+                    Page.reomveValue("token");
+                    if(callback){
+                        callback("auth");
+                    }
                 }
             }else{
                 // 没有 token，不做处理
                 console.log("debug:没有 token，不做处理");
+                if(callback){
+                    callback("auth");
+                }
             }
         },
         setValue:function(key, value){
