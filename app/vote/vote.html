@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>活动投票</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/vote/vote.css?v=1.0" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/375) + 'px';  
+        </script>
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+	</head>
+
+	<body>
+
+		<div class="main-view">
+			<div class="topView">
+				<div>
+					<h2>投票选择</h2>
+					<h2>支持的线下活动方式</h2>
+					<p>所有参与投票用户均可获得线下活动优先参与权</p>
+				</div>
+				<img src="../../../statics/images/vote/topImg.png" />
+			</div>
+			<div class="options">
+			</div>
+
+			<div>
+				<p class="label2">每位用户仅可投票一次，请绑定手机号完成投票；若您已在程序媛注册，请您绑定注册时使用手机号。</p>
+				<div class="phone-view">
+					<div class="country-code">
+						<span>+86</span>
+						<img src="../../statics/images/team/arrow.png" alt="">
+					</div>
+					<input class="phone" type="text" placeholder="请输入手机号">
+				</div>
+				<div class="verify-view">
+					<input class="verify" type="text" placeholder="请输入验证码">
+					<span class="verify-text">获取验证码</span>
+				</div>
+				<div class="receive">提交</div>
+			</div>
+
+			<div class="country-options-view">
+				<img class="close" src="../../statics/images/team/close.png" alt="">
+				<ul class="country-options">
+					
+				</ul>
+			</div>
+		</div>
+
+		<script type="text/hmtl" id="option-list-template">
+			{{each}}
+			<div class="course" data-pk="{{$value.pk}}">
+				<div class="avatar">
+					<img src="{{$value.images}}" alt="">
+				</div>
+				<span>{{$value.name}}</span>
+			</div>
+			{{/each}}
+		</script>
+
+		<!-- 全球各个国家电话代码 -->
+		<script type="text/html" id="country-option-template">
+			{{each}}
+				<li class="country-option{{if $value.code==+86}} select{{/if}}" data-code="{{$value.code}}">
+					<span class="codeCty">{{$value.code}}</span>
+					<span class="country">{{$value.country}}</span>
+				</li>
+			{{/each}}
+		</script>
+		<!-- 等待动画 -->
+		<!-- <div class="wait-loading">
+			<img class="loading-img" src="../../statics/images/load.gif" alt="">
+			<span class="loading-span">正在努力加载中...</span>
+		</div> -->
+
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"vote": base + "/modules/vote",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("vote/vote.js?v=1.0");
+	</script>
+
+</html>
+
