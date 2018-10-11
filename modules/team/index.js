@@ -93,6 +93,19 @@ define(function(require, exports, module) {
                 })
             })
 
+            // 邀请码点击事件
+            $(".bindPhoneAgain").click(function(){
+                Common.isLogin(function(token){
+                    if (token == "null") {
+                        var redirectUri = INDEX_URL;
+                        Common.authWXPageLogin(redirectUri);
+                        return;
+                    }else{
+                        location.href = "bindPhone.html";
+                    }
+                })
+            })
+
             Page.idCodeClickEvent();
         },
         //身份识别码相关点击事件

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>程序媛组队</title>
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/team/bindPhone.css" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/375) + 'px';  
+        </script> 
+    	<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script> 
+	</head>
+
+	<body>
+		<!-- 导航栏 -->
+		<div class="header">
+			<span>程序媛</span>
+		</div>
+        <div class="main-view">
+            <div class="avatar">
+                <img src="../../statics/images/team/icon.png" alt="">
+            </div>
+            <div class="label1">接部分用户反馈，同时参与了程序媛计划第一季和第二季，程序媛官网暂未更新第二季组队队员信息。</div>
+            <div class="label2">同步更新方法如下：提交参与第二季组队时使用的账号，即可在官网查看第二季队员信息，感谢大家的支持与配合。</div>
+            <div class="item-view">
+                <div class="title">请填写您参与程序媛二期组队时使用的手机号</div>
+                <div class="phone-view">
+					<div class="country-code">
+						<span>+86</span>
+						<img src="../../statics/images/team/arrow.png" alt="">
+					</div>
+					<input class="phone" type="text" placeholder="请输入您的手机号">
+				</div>
+				<div class="verify-view">
+					<input class="verify" type="text" placeholder="请输入验证码">
+					<span class="verify-text">获取验证码</span>
+				</div>
+            </div>
+        </div>
+        <div class="footer submit">
+            <span>提交</span>
+        </div>
+        <div class="country-options-view">
+            <img class="close" src="../../statics/images/team/close.png" alt="">
+            <ul class="country-options">
+                
+            </ul>
+        </div>
+        <!-- 全球各个国家电话代码 -->
+		<script type="text/html" id="country-option-template">
+			{{each}}
+				<li class="country-option{{if $value.code==+86}} select{{/if}}" data-code="{{$value.code}}">
+					<span class="codeCty">{{$value.code}}</span>
+					<span class="country">{{$value.country}}</span>
+				</li>
+			{{/each}}
+		</script>
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"team": base + "/modules/team",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("team/bindPhone.js");
+	</script>
+
+</html>
+
