@@ -14,8 +14,8 @@ define(function(require, exports, module) {
     var code = Common.getQueryString('code');
 	var Page = {
 		countryCode:"+86",
-		owner:null,
 		token:null,
+		questionPk: null,
 		init:function(){
 			Page.getCountryCode();
 			Common.isLogin(function(token){
@@ -144,12 +144,16 @@ define(function(require, exports, module) {
 					timeout:6000,
 					success: function(json){
 						var arr = json.results;
-
-						var html = ArtTemplate("option-list-template", arr);
-						$(".options").html(html);
-						
-						Page.clickEvent();
-						$(".main-view").show();
+						if (arr.length > 0) {
+							Page.questionPk = arr[0].pk;
+							var html = ArtTemplate("option-list-template", arr[0].answer);
+							$(".options").html(html);
+							
+							Page.clickEvent();
+							$(".main-view").show();
+						} else {
+							Common.dialog("未找到题目");
+						}
 					},
 					error: function(xhr, textStatus){
 						Page.failDealEvent(xhr, textStatus);
