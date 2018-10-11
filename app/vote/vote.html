@@ -66,11 +66,8 @@
 
 		<script type="text/hmtl" id="option-list-template">
 			{{each}}
-			<div class="course" data-pk="{{$value.pk}}">
-				<div class="avatar">
-					<img src="{{$value.images}}" alt="">
-				</div>
-				<span>{{$value.name}}</span>
+			<div class="option" data-pk="{{$value.pk}}">
+				<span>{{$value.option}}.{{$value.answner}}</span>
 			</div>
 			{{/each}}
 		</script>

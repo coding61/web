@@ -121,24 +121,40 @@ define(function(require, exports, module) {
         },
 		// 获取题目选项
 		optionList:function(){
-			$.ajax({
-				type: 'get',
-				url: Common.domain + '/userinfo/questions/',
-				dataType: 'json',
-				timeout:6000,
-				success: function(json){
-					var arr = json.results;
+			Common.isLogin(function(token){
+                if (token == "null") {
+                	if (code) {
+	            		Page.getToken();
+	            	} else {
+	            		// 先微信授权登录
+		                // 微信网页授权
+		                var redirectUri = INDEX_URL;
+		                Common.authWXPageLogin(redirectUri);
+		                return;
+	            	}
+                }
+				$.ajax({
+					type: 'get',
+					url: Common.domain + '/userinfo/questions/',
+					headers: {
+						'Authorization': 'Token ' + token,
+						'Content-Type': 'application/json'
+					},
+					dataType: 'json',
+					timeout:6000,
+					success: function(json){
+						var arr = json.results;
 
-					var html = ArtTemplate("course-list-template", arr);
-					$(".courses").html(html);
-					
-					Page.clickEvent();
-					// $(".wait-loading").hide();
-					$(".main-view").show();
-				},
-				error: function(xhr, textStatus){
-					Page.failDealEvent(xhr, textStatus);
-				}
+						var html = ArtTemplate("option-list-template", arr);
+						$(".options").html(html);
+						
+						Page.clickEvent();
+						$(".main-view").show();
+					},
+					error: function(xhr, textStatus){
+						Page.failDealEvent(xhr, textStatus);
+					}
+				})
 			})
 		},
 		// 获取验证码
@@ -258,7 +274,7 @@ define(function(require, exports, module) {
             })
         },
 		// 请求失败处理方法
-        failDealEvent:function(xhr, textStatus, my_team_url){
+        failDealEvent:function(xhr, textStatus, vote_result_url){
             Common.hideLoading();
             // $(".wait-loading").hide();
             if (textStatus == "timeout") {
@@ -269,7 +285,7 @@ define(function(require, exports, module) {
                 // token 失效, 重新授权
                 // 先微信授权登录
                 // 微信网页授权
-                var redirectUri = my_team_url?my_team_url:INDEX_URL;
+                var redirectUri = vote_result_url?vote_result_url:INDEX_URL;
                 Common.authWXPageLogin(redirectUri);
                 return
             }else if(xhr.status == 404){
