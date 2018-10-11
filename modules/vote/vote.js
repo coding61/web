@@ -11,26 +11,26 @@ define(function(require, exports, module) {
     WXShare.SetShareData(title, desc, link, imgUrl);
 
     var INDEX_URL = "https://www.cxy61.com/girl/app/vote/vote.html";
-
+    var code = Common.getQueryString('code');
 	var Page = {
 		countryCode:"+86",
 		owner:null,
 		token:null,
 		init:function(){
-			var token = Page.getValue("token");
-			if (token) {
-
-			}
+			Page.getCountryCode();
 			Common.isLogin(function(token){
 	            if (token != "null") {
 	                //获取题目选项
 	                Page.optionList();
-	                Page.getCountryCode();
 	            }else{
-	                // 先微信授权登录
-	                // 微信网页授权
-	                var redirectUri = INDEX_URL;
-	                Common.authWXPageLogin(redirectUri);
+	            	if (code) {
+	            		Page.getToken();
+	            	} else {
+	            		// 先微信授权登录
+		                // 微信网页授权
+		                var redirectUri = INDEX_URL;
+		                Common.authWXPageLogin(redirectUri);
+	            	}
 	            }
 	        })  
 			
@@ -239,6 +239,24 @@ define(function(require, exports, module) {
 				}
 			})
 		},
+		// 获取 token 请求
+        getToken:function(){
+            $.ajax({
+                type:'post',
+                url:Common.domain + "/userinfo/code_login/",
+                data:{
+                    code: code
+                },
+                timeout:6000,
+                success:function(json){
+                    Page.setValue("token", json.token);
+                    Page.optionList();
+                },
+                error:function(xhr, textStatus){
+                    Page.failDealEvent(xhr, textStatus);
+                }
+            })
+        },
 		// 请求失败处理方法
         failDealEvent:function(xhr, textStatus, my_team_url){
             Common.hideLoading();
