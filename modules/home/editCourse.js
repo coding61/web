@@ -3,8 +3,9 @@ define(function(require, exports, module) {
 	var Common = require('common/common.js?v=1.1');
 	var Utils = require('common/utils.js');
 	ArtTemplate.config("escape", false);
-	var Audio = require('home/audio_record1.js');
-        var serverDomain = '//app.cxy61.com/server'
+    var Audio = require('home/audio_record1.js');
+    
+    var serverDomain = '//app.cxy61.com/server'
 
     //模板帮助方法 
     ArtTemplate.helper('TheMessage', function(message){

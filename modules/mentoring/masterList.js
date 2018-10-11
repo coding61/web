@@ -76,7 +76,7 @@ define(function(require, exports, module) {
 
             // logo 点击打开一个网站
             $(".header .logo2").unbind('click').click(function(){
-                window.open("https://www.cxy61.com");
+                window.open("https://www.coding61.com");
             })
             $('.header .logo1').unbind('click').click(function(){
                 window.open('../../app/home/home.html');

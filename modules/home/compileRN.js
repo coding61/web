@@ -19,11 +19,7 @@ define(function(require, exports, module) {
                 window.open(link, '_blank', params);
             })
             $(".main-view .edit").click(function(){
-                if (location.host == "develop.cxy61.com:8001") {
-                    var link = "http://"+location.host+"/app/home/codeCompileRN.html?lang=" + Page.lang;
-                }else{
-                    var link = "https://" + location.host + "/girl/app/home/codeCompileRN.html?lang=" + Page.lang;
-                }
+                var link = "../home/codeCompileRN.html?lang=" + Page.lang;
                 location.href = link;
             })
         }

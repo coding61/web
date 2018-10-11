@@ -20,7 +20,7 @@ $(document).ready(function() {
 // 打开儿童编程窗口
 $(document).ready(function() {
 	$('.navWai .logo2').click(function() {
-		window.open("https://www.cxy61.com");
+		window.open("https://www.coding61.com");
 	})
 })
 $(document).on("click",".jie-add1",function() {

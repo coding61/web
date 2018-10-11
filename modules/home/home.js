@@ -991,8 +991,6 @@ define(function(require, exports, module) {
                 }else{
                     // window.open(link);
                     // 打开消息链接窗口
-                    // $(".message-link-shadow-view .message-link #message-link-iframe").attr({src:"http://develop.cxy61.com:8001/s/course1/game7/2.html"});
-                    // $(".message-link-shadow-view").show();
                     if (linkType) {
                         //进行编辑器的选择
                         Util.link = link;
@@ -1108,17 +1106,6 @@ define(function(require, exports, module) {
             })
             //查看学习成果
             $(".helps-view .look-learn-result").unbind('click').click(function(){
-                // location.href = "learnResult.html?course=" + localStorage.currentCourse;
-                // 打开学习成果窗口
-                // if(location.host == "develop.cxy61.com:8001"){
-                //     var url = "https://develop.cxy61.com:8001/app/home/learnResult.html?course=" + localStorage.currentCourse;
-                // }else if(location.host == "app.bcjiaoyu.com"){
-                //     var url = "https://app.bcjiaoyu.com/girl/app/home/learnResult.html?course=" + localStorage.currentCourse;
-                // }else if(location.host == "www.cxy61.com"){
-                //     var url = "https://www.cxy61.com/girl/app/home/learnResult.html?course=" + localStorage.currentCourse;
-                // }else{
-                //     var url = "https://app.bcjiaoyu.com/girl/app/home/learnResult.html?course=" + localStorage.currentCourse;
-                // }
                 var url = "learnResult.html?course=" + localStorage.currentCourse;
                 $("#third-site-iframe").attr({src:url});
                 $(".third-site-shadow-view").show();
@@ -1197,7 +1184,7 @@ define(function(require, exports, module) {
 
             // logo 点击打开一个网站
             $(".header .logo2").unbind('click').click(function(){
-                window.open("https://www.cxy61.com");
+                window.open("https://www.coding61.com");
             })
 
             // 鼠标划过用户头像
@@ -1233,12 +1220,7 @@ define(function(require, exports, module) {
             // 程序媛编译器
             $(".compile-view .edit").unbind('click').click(function(){
                 var type = Util.linkType.split("www.compile.com/")[1];
-                if (location.host == "develop.cxy61.com:8001") {
-                    var url = "http://"+location.host+"/app/home/codeCompileRN.html?lang="
-                }else{
-                    var url = "https://"+location.host+"/girl/app/home/codeCompileRN.html?lang="
-                }
-                url = url + type;
+                url = "../home/codeCompileRN.html?lang=" + type;
 
                 var link = url;
                 var params = 'resizable=no, scrollbars=auto, location=no, titlebar=no,';
@@ -1287,21 +1269,16 @@ define(function(require, exports, module) {
             })
             // 编辑器点击事件
             $(".editors .editor").unbind('click').click(function(){
-                var url = ""
-                if (location.host == "develop.cxy61.com:8001") {
-                    url = "http://"+location.host + "/app"
-                }else{
-                    url = "https://"+location.host + "/girl/app"
-                }
-                if ($(this).hasClass("html")) {
-                    url = url + "/home/codeEditRN.html"
-                }else if ($(this).hasClass("c")) {
-                    url = url + "/home/compileRN.html?lang=c"
-                }else if ($(this).hasClass("python")) {
-                    url = url + "/home/compileRN.html?lang=python"
-                }else if ($(this).hasClass("java")) {
-                    url = url + "/home/compileRN.html?lang=java"
-                }
+               var url = ""
+               if ($(this).hasClass("html")) {
+                   url = "../home/codeEditRN.html"
+               }else if ($(this).hasClass("c")) {
+                   url = "../home/compileRN.html?lang=c"
+               }else if ($(this).hasClass("python")) {
+                   url = "../home/compileRN.html?lang=python"
+               }else if ($(this).hasClass("java")) {
+                   url = "../home/compileRN.html?lang=java"
+               }
                 Util.openLink(url)
                 $(".code-online-editors").css({display:'none'})
             })

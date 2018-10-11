@@ -2,6 +2,8 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
 
+	var TEAM_LIST_URL = 'https://www.coding61.com/girl/app/home/teamList.html';
+
 	var Page = {
 		isScroll: true,
 		token: null,
@@ -17,7 +19,7 @@ define(function(require, exports, module) {
 						getToken(Common.getQueryString('code'))
 					} else {
 						// 微信网页授权
-						var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+						var redirectUri = TEAM_LIST_URL;
 						Common.authWXLogin(redirectUri);
 					}
 				}else{
@@ -27,7 +29,7 @@ define(function(require, exports, module) {
 					//团队中心
 					$('.team-list').on('click', 'li .team-detail', function(){
 						var this_ = $(this);
-						location.href = '/cxyteam/app/home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
+						location.href = '../home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
 					})
 					
 					//点赞
@@ -85,7 +87,7 @@ define(function(require, exports, module) {
 	                    return;
 	                }else if(xhr.status == 401){
 	                	// 微信网页授权
-						var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+						var redirectUri = TEAM_LIST_URL;
 						Common.authWXLogin(redirectUri);
 	                } else {
 	                    Common.dialog('服务器繁忙');
@@ -106,7 +108,7 @@ define(function(require, exports, module) {
 			//myTeam
 			$('.team-search').on('click', '.search-div', function(){
 				var this_ = $(this);
-				location.href = '/cxyteam/app/home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
+				location.href = '../home/myTeam.html?pk=' + this_.attr('data-pk') + '&name=' + this_.attr('data-name') + '&flag=list'
 			});
 
 			//搜索
@@ -173,7 +175,7 @@ define(function(require, exports, module) {
 	                    return;
 	                }else if(xhr.status == 401){
 	                	// 微信网页授权
-						var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+						var redirectUri = TEAM_LIST_URL;
 						Common.authWXLogin(redirectUri);
 	                } else {
 	                    Common.dialog('服务器繁忙');
@@ -256,7 +258,7 @@ define(function(require, exports, module) {
                     return;
                 }else if(xhr.status == 401){
                 	// 微信网页授权
-					var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
+					var redirectUri = TEAM_LIST_URL;
 					Common.authWXLogin(redirectUri);
 	            }else {
                     Common.dialog('服务器繁忙');
@@ -300,11 +302,7 @@ define(function(require, exports, module) {
                     return;
                 }else if (xhr.status == 401) {
                     var redirectUri = null;
-                    if (Team.pk) {
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html?pk=' + Team.pk + "&name=" + Team.name;
-                    }else{
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/teamList.html';
-                    }
+                    redirectUri = TEAM_LIST_URL;
                     Common.authWXLogin(redirectUri);
                     return;
                 }else{

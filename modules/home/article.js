@@ -185,7 +185,7 @@ function gradeAnimate(){
 };
 // logo 点击打开一个网站
 $(".header .logo2").unbind('click').click(function(){
-    window.open("https://www.cxy61.com");
+    window.open("https://www.coding61.com");
 })
 // 消息音频播放
 $(".msg-view-parent .audio").unbind('click').click(function(){

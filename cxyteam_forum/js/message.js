@@ -10,7 +10,7 @@ $('.logo1').click(function() {
 })
 // 打开儿童编程窗口
 $('.logo2').click(function() {
-	window.open("https://www.cxy61.com");
+	window.open("https://www.coding61.com");
 })
 // 一键已读消息
 $('.hadRead').click(function() {
