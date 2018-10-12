@@ -1,6 +1,13 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
-	var Common = require('common/common.js');
+    var Common = require('common/common.js');
+    
+    // 配置页面域名
+    var TEST_DOMAIN = "https://app.bcjiaoyu.com";
+    var SERVER_DOMAIN = "https://app.cxy61.com";
+    var DEPEND_DOMAIN_TEST = "app.bcjiaoyu.com";
+    var DEPEND_DOMAIN_LOCAL = "develop.cxy61.com";
+
     var htmlEditor, jsEditor, csEditor;
     var Page = {
         init:function(){
@@ -132,7 +139,11 @@ define(function(require, exports, module) {
                 timeout:6000,
                 success:function(json){
                     console.log(json);
-                    var url =  "https://app.cxy61.com/program_girl"+"/userinfo/exercises/"+json.pk+"/"
+                    var str = SERVER_DOMAIN;
+                    if (location.host.indexOf(DEPEND_DOMAIN_TEST) > -1 || location.host.indexOf(DEPEND_DOMAIN_LOCAL) > -1) {
+                        str = TEST_DOMAIN;
+                    }
+                    var url = str + "/program_girl/userinfo/exercises/"+json.pk+"/"
                     // console.log(url);
 
                     // $(".run-result iframe").attr({src:url});

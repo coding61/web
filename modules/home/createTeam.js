@@ -1,6 +1,8 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
-	var Common = require('common/common.js');
+    var Common = require('common/common.js');
+    
+    var CREATE_TEAM_URL = "https://www.coding61.com/girl/app/home/createTeam.html";
 
     var Page = {
         code:Common.getQueryString('code'),
@@ -38,7 +40,7 @@ define(function(require, exports, module) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else if (xhr.status == 401) {
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';
+                        var redirectUri = CREATE_TEAM_URL;
                         Common.authWXLogin(redirectUri);
                         return;
                     }else{
@@ -52,7 +54,7 @@ define(function(require, exports, module) {
         createTeam:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';
+                    var redirectUri = CREATE_TEAM_URL;
                     Common.authWXLogin(redirectUri);
                     return;
                 }
@@ -87,7 +89,7 @@ define(function(require, exports, module) {
                             }
                             return;
                         }else if (xhr.status == 401) {
-                            var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html';
+                            var redirectUri = CREATE_TEAM_URL;
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{

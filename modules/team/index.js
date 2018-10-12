@@ -10,8 +10,8 @@ define(function(require, exports, module) {
         imgUrl = "https://resource.bcgame-face2face.haorenao.cn/lg1024.png";
     WXShare.SetShareData(title, desc, link, imgUrl);
 
-    var CREATE_TEAM_URL = "https://www.cxy61.com/girl/app/team/createTeam.html";
-    var INDEX_URL = "https://www.cxy61.com/girl/app/team/index.html";
+    var CREATE_TEAM_URL = "https://www.coding61.com/girl/app/team/createTeam.html";
+    var INDEX_URL = "https://www.coding61.com/girl/app/team/index.html";
     var batch_type = 2;   //第二批组队, 创建队伍，获取队伍加此字段
 
     var Page = {

@@ -2,6 +2,12 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
 
+    // 配置页面域名
+    var NORMAL_DOMAIN = "https://www.coding61.com";
+    var TEST_DOMAIN = "https://app.bcjiaoyu.com";
+    var DEPEND_DOMAIN_TEST = "app.bcjiaoyu.com";
+    var DEPEND_DOMAIN_LOCAL = "develop.cxy61.com";
+
     var udid = Common.getQueryString("udid");
     var message = decodeURIComponent(Common.getQueryString("message"));
     //console.log(studentOwner,classRoomId)
@@ -227,10 +233,10 @@ define(function(require, exports, module) {
             }
             localStorage.codeQuestionForForum = JSON.stringify(codeQuestionForForum);
             Common.hideLoading();
-            if (location.host.indexOf("develop.cxy61.com")> -1 || location.host.indexOf("app.bcjiaoyu.com") > -1) {
-                var url = "https://app.bcjiaoyu.com/cxyteam_forum/add.html?pk=13";
+            if (location.host.indexOf(DEPEND_DOMAIN_LOCAL)> -1 || location.host.indexOf(DEPEND_DOMAIN_TEST) > -1) {
+                var url = TEST_DOMAIN + "/cxyteam_forum/add.html?pk=13";
             }else{
-                var url = "https://www.cxy61.com/cxyteam_forum/add.html?pk=13";
+                var url = NORMAL_DOMAIN + "/cxyteam_forum/add.html?pk=13";
             }
             window.open(url);
             // Common.isLogin(function(token){

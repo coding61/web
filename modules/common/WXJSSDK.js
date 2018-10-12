@@ -46,7 +46,7 @@ define(function(require, exports, module) {
 		          ]
 		      });
 		}
-		exports.getToken(noncestr,'https://www.cxy61.com/cxyteam/app/home/myTeam.html', null);
+		exports.getToken(noncestr,'https://www.coding61.com/cxyteam/app/home/myTeam.html', null);
 	}
 	exports.getToken = function(noncestr, url, fx){
 		console.log(noncestr+ "---111");

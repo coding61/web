@@ -1,5 +1,12 @@
 $(document).ready(function() {
+    // 配置页面域名
+    var SERVER_DOMAIN = "https://app.cxy61.com";
+    var TEST_DOMAIN = "https://app.bcjiaoyu.com";
+    var DEPEND_DOMAIN_TEST = "app.bcjiaoyu.com";
+    var DEPEND_DOMAIN_LOCAL = "develop.cxy61.com";
+
     var domain = "//app.cxy61.com/program_girl";
+
     var htmlEditor, jsEditor, csEditor;
     var Page = {
         init:function(){
@@ -142,15 +149,11 @@ $(document).ready(function() {
                     console.log(json);
                     // alert(json.pk)
                     // $(".run-result iframe").attr({src:url});
-                    var str = "https://app.bcjiaoyu.com"
-                    if (location.host.indexOf("bcjiaoyu.com") > -1) {
-                        str = "https://app.bcjiaoyu.com"
-                    }else if (location.host.indexOf("cxy61.com") > -1) {
-                        str = "https://www.cxy61.com";
-                    }else{
-                        str = "https://www.cxy61.com";
+                    var str = SERVER_DOMAIN;
+                    if (location.host.indexOf(DEPEND_DOMAIN_TEST) > -1 || location.host.indexOf(DEPEND_DOMAIN_LOCAL) > -1) {
+                        str = TEST_DOMAIN;
                     }
-                    var url = str+"/program_girl"+"/userinfo/exercises/"+json.pk+"/"
+                    var url = str+"/program_girl/userinfo/exercises/"+json.pk+"/"
                     $(".code-result-shadow-view iframe").attr({src:url})
                     $(".code-result-shadow-view").show();
                     

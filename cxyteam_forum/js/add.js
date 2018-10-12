@@ -18,7 +18,7 @@ $('.logo1').click(function() {
 })
 // 打开儿童编程窗口
 $('.logo2').click(function() {
-	window.open("https://www.cxy61.com");
+	window.open("https://www.coding61.com");
 })
 // 返回论坛
 $('.jie-add1').click(function() {

@@ -455,19 +455,14 @@ $(document).ready(function () {
     // 编辑器点击事件
     $(".editors .editor").unbind('click').click(function(){
         var url = ""
-        if (location.host == "develop.cxy61.com:8001") {
-            url = "http://"+location.host + "/app"
-        }else{
-            url = "https://"+location.host + "/girl/app"
-        }
         if ($(this).hasClass("html")) {
-            url = url + "/home/codeEditRN.html"
+            url = "../../app/home/codeEditRN.html"
         }else if ($(this).hasClass("c")) {
-            url = url + "/home/compileRN.html?lang=c"
+            url = "../../app/home/compileRN.html?lang=c"
         }else if ($(this).hasClass("python")) {
-            url = url + "/home/compileRN.html?lang=python"
+            url = "../../app/home/compileRN.html?lang=python"
         }else if ($(this).hasClass("java")) {
-            url = url + "/home/compileRN.html?lang=java"
+            url = "../../app/home/compileRN.html?lang=java"
         }
         Util.openLink(url)
         $(".code-online-editors").css({display:'none'})

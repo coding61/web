@@ -2,6 +2,9 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
 
+    var CREATE_TEAM_URL = "https://www.coding61.com/gril/app/home/createTeam.html";
+    var INDEX_URL = "https://www.coding61.com/girl/app/home/index.html";
+    
     var Page = {
         token:null,
         init:function(){
@@ -34,7 +37,7 @@ define(function(require, exports, module) {
                     }else{
                         // 先微信授权登录
                         // 微信网页授权
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/createTeam.html?v=1.3';
+                        var redirectUri = CREATE_TEAM_URL;
                         Common.authWXLogin(redirectUri);
                     }
                 })
@@ -64,7 +67,7 @@ define(function(require, exports, module) {
                     }else{
                          // 先微信授权登录
                         // 微信网页授权
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        var redirectUri = INDEX_URL;
                         Common.authWXLogin(redirectUri);
                     }
                 })
@@ -93,7 +96,7 @@ define(function(require, exports, module) {
                     }else{
                         // 先微信授权登录
                         // 微信网页授权
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        var redirectUri = INDEX_URL;
                         Common.authWXLogin(redirectUri);
                     }
                 })                
@@ -175,7 +178,7 @@ define(function(require, exports, module) {
                         return;
                     }else if (xhr.status == 401) {
                         var redirectUri = null;
-                        redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        redirectUri = INDEX_URL;
                         Common.authWXLogin(redirectUri);
                         return;
                     }else{
@@ -190,7 +193,7 @@ define(function(require, exports, module) {
             Common.isLogin(function(token){
                 if (token == "null") {
                     var redirectUri = null;
-                    redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                    redirectUri = INDEX_URL;
                     Common.authWXLogin(redirectUri);
                     return;
                 }
@@ -223,7 +226,7 @@ define(function(require, exports, module) {
                             return;
                         }else if (xhr.status == 401) {
                             var redirectUri = null;
-                            redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                            redirectUri = INDEX_URL;
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{
@@ -238,7 +241,7 @@ define(function(require, exports, module) {
         joinUnknownTeam:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                    var redirectUri = INDEX_URL;
                     Common.authWXLogin(redirectUri);
                     return;
                 }
@@ -269,7 +272,7 @@ define(function(require, exports, module) {
                             // token 失效, 重新授权
                             // 先微信授权登录
                             // 微信网页授权
-                            var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                            var redirectUri = INDEX_URL;
                             Common.authWXLogin(redirectUri);
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
@@ -288,7 +291,7 @@ define(function(require, exports, module) {
             // 加入随机队列
              Common.isLogin(function(token){
                 if (token == "null") {
-                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                    var redirectUri = INDEX_URL;
                     Common.authWXLogin(redirectUri);
                     return;
                 }
@@ -319,7 +322,7 @@ define(function(require, exports, module) {
                             // token 失效, 重新授权
                             // 先微信授权登录
                             // 微信网页授权
-                            var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                            var redirectUri = INDEX_URL;
                             Common.authWXLogin(redirectUri);
                             return;
                         }else if (xhr.status == 400 || xhr.status == 403) {
@@ -363,7 +366,7 @@ define(function(require, exports, module) {
                         $(".idCode-view textarea").val("");
                         $(".idCode-shadow").hide();
                         
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        var redirectUri = INDEX_URL;
                         Common.authWXLogin(redirectUri);
                         return;
                     }else{
@@ -382,7 +385,7 @@ define(function(require, exports, module) {
             $(".inviteCode").click(function(){
                 Common.isLogin(function(token){
                     if (token == "null") {
-                        var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                        var redirectUri = INDEX_URL;
                         Common.authWXLogin(redirectUri);
                         return;
                     }else{
@@ -396,7 +399,7 @@ define(function(require, exports, module) {
         getInfo:function(){
             Common.isLogin(function(token){
                 if (token == "null") {
-                    var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                    var redirectUri = INDEX_URL;
                     Common.authWXLogin(redirectUri);
                     return;
                 }
@@ -432,7 +435,7 @@ define(function(require, exports, module) {
                             Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                             return;
                         }else if (xhr.status == 401) {
-                            var redirectUri = 'https://www.cxy61.com/cxyteam/app/home/index.html';
+                            var redirectUri = INDEX_URL;
                             Common.authWXLogin(redirectUri);
                             return;
                         }else{

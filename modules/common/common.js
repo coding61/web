@@ -36,7 +36,7 @@ define(function(require, exports, module) {
 		// 先微信授权登录
         // 微信网页授权(老的服务号)
         var appId = 'wx58e15a667d09d70f',
-            redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
+            redirectUri = "https://www.coding61.com/mobile/html/wechatHB.html?v=1.0.7",
             scope = 'snsapi_userinfo';
 
         redirectUri = url;
@@ -48,7 +48,7 @@ define(function(require, exports, module) {
 	exports.authWXPageLogin = function(url){
         // 微信网页授权, 服务号(新的账号)
         var appId = 'wxdb060736fc592312',
-            redirectUri = "https://www.cxy61.com/mobile/html/wechatHB.html?v=1.0.7",
+            redirectUri = "https://www.coding61.com/mobile/html/wechatHB.html?v=1.0.7",
             scope = 'snsapi_userinfo';
 
         redirectUri = url;

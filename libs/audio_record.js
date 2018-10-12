@@ -1,4 +1,11 @@
 window.onload = function(text) {
+
+    // 配置页面域名
+    var NORMAL_DOMAIN = "https://www.coding61.com";
+    var TEST_DOMAIN = "https://app.bcjiaoyu.com";
+    var DEPEND_DOMAIN_TEST = "app.bcjiaoyu.com";
+    var DEPEND_DOMAIN_LOCAL = "develop.cxy61.com";
+
     function GetCookie(sName) {
         var aCookie = document.cookie.split("; ");
         for (var i = 0; i < aCookie.length; i++) {
@@ -96,7 +103,7 @@ window.onload = function(text) {
     function uploadBlob(blob) {
         var fileType = 'audio';
         var fileName = 'audio.wav';
-	var basePath = '//app.cxy61.com/program_girl';
+        var basePath = '//app.cxy61.com/program_girl';
 
         var formData = new FormData();
         formData.append('file-type', fileType);
@@ -108,14 +115,10 @@ window.onload = function(text) {
         xhr(basePath + '/upload/upload_media/', formData, function (fName) {
             console.log(Date() + " fName: " + fName);
             // console.log(JSON.parse(fName).url);
-            // var url = "https://www.cxy61.com" + JSON.parse(fName).url
-            var domain = "https://www.cxy61.com";
-            if (location.host.indexOf("bcjiaoyu.com") > -1) {
-                domain = "https://app.bcjiaoyu.com";
-            }else if(location.host.indexOf("develop.cxy61.com") > -1){
-                domain = "https://app.bcjiaoyu.com";
-            } else{
-                domain = "https://www.cxy61.com";
+            // var url = NORMAL_DOMAIN + JSON.parse(fName).url
+            var domain = NORMAL_DOMAIN;
+            if (location.host.indexOf(DEPEND_DOMAIN_TEST) > -1 || location.host.indexOf(DEPEND_DOMAIN_LOCAL) > -1) {
+                domain = TEST_DOMAIN;
             }
             var url = domain + JSON.parse(fName).url
             $(".input-view textarea").val(url);
