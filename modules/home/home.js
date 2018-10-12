@@ -2207,7 +2207,7 @@ define(function(require, exports, module) {
             Common.isLogin(function(token){
                 $.ajax({
                     type:'get',
-                    url: Common.domain + "/userinfo/mygroup/",
+                    url: Common.domain + "/userinfo/mygroup/?batch_type=2",
                     headers:{
                         Authorization:"Token " + token
                     },

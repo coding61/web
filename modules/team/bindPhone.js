@@ -140,6 +140,7 @@ define(function(require, exports, module) {
 				dataType: 'json',
 				timeout:6000,
 				success: function(json){
+                    Common.dialog("绑定成功");
                     Page.receiveCourseRegister(phone);
 				},
 				error: function(xhr, textStatus){
