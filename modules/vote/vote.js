@@ -18,6 +18,7 @@ define(function(require, exports, module) {
 		questionPk: null,
 		init:function(){
 			Page.getCountryCode();
+		
 			Common.isLogin(function(token){
 	            if (token != "null") {
 	                //获取题目选项
@@ -33,6 +34,7 @@ define(function(require, exports, module) {
 	            	}
 	            }
 	        })  
+	       
 			
 		},
 		clickEvent:function(){

@@ -16,7 +16,7 @@
 		<title>活动投票</title>
 
 		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.0" />
-		<link type="text/css" rel="stylesheet" href="../../statics/css/vote/vote.css?v=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/vote/vote.css?v=1.0.1" />
 
 		<script>  
             var fontSize = 100;  
@@ -31,30 +31,30 @@
 		<div class="main-view">
 			<div class="topView">
 				<div>
-					<h2>投票选择</h2>
-					<h2>支持的线下活动方式</h2>
-					<p>所有参与投票用户均可获得线下活动优先参与权</p>
+					<h2 style="color: #FA5083">投票选择</h2>
+					<h2 style="color: #FA5083; margin-top: 5px;">支持的线下活动方式</h2>
+					<p style="color: #FB6893; margin-top: 20px; line-height: 24px;">所有参与投票用户均可获得线下活动优先参与权</p>
 				</div>
-				<img src="../../../statics/images/vote/topImg.png" />
+				<img style="width: 40%" src="../../statics/images/vote/topImg.png" />
 			</div>
 			<div class="options">
 			</div>
 
-			<div>
+			<div class="inputView">
 				<p class="label2">每位用户仅可投票一次，请绑定手机号完成投票；若您已在程序媛注册，请您绑定注册时使用手机号。</p>
 				<div class="phone-view">
 					<div class="country-code">
 						<span>+86</span>
 						<img src="../../statics/images/team/arrow.png" alt="">
 					</div>
-					<input class="phone" type="text" placeholder="请输入手机号">
+					<input class="phone" type="text" placeholder="请输入您的手机号">
 				</div>
 				<div class="verify-view">
 					<input class="verify" type="text" placeholder="请输入验证码">
 					<span class="verify-text">获取验证码</span>
 				</div>
-				<div class="receive">提交</div>
 			</div>
+			<div class="receive">提交</div>
 
 			<div class="country-options-view">
 				<img class="close" src="../../statics/images/team/close.png" alt="">
@@ -67,7 +67,8 @@
 		<script type="text/hmtl" id="option-list-template">
 			{{each}}
 			<div class="option" data-pk="{{$value.pk}}">
-				<span>{{$value.option}}.{{$value.answner}}</span>
+				<span class="select"></span>
+				<span>{{$value.option}}.{{$value.answer}}</span>
 			</div>
 			{{/each}}
 		</script>
