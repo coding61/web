@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "UA-121322429-1");
+    </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>活动投票</title>
+
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css?v=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../statics/css/vote/voteResult.css?v=1.0.1" />
+
+		<script>  
+            var fontSize = 100;  
+            var elm = document.documentElement;  
+                elm.style.fontSize = fontSize * (elm.clientWidth/375) + 'px';  
+        </script>
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+	</head>
+
+	<body>
+
+		<div class="main-view">
+			<div class="topView">
+				<img style="width: 40%" src="../../statics/images/vote/voted.png" />
+				<h2 style="color: #FA5083;margin-top: 15px;">已投票</h2>
+				<p style="color: #FB6893; margin-top: 5px;">期待与您在线下见面</p>
+			</div>
+			<div class="options">
+			</div>
+		</div>
+
+		<script type="text/hmtl" id="option-list-template">
+			{{each}}
+			<div class="option" data-pk="{{$value.pk}}">
+				<div>
+					<span>{{$value.answer}}</span>
+					<span>{{$value.number}}票</span>
+				</div>
+				<div class="total">
+					<div class="proportion"></div>
+				</div>
+			</div>
+			{{/each}}
+		</script>
+
+
+	</body>
+	<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../libs/sea.js"></script>
+	<script>
+		var base = location.href.split("/app/")[0];
+		seajs.config({
+				paths: {
+					"vote": base + "/modules/vote",
+					"libs": base + "/libs",
+					"common": base + "/modules/common"
+				},
+				alias: {
+					"template": "libs/template.js",
+					"common": "common/common.js"
+				}
+			})
+			// 加载入口模块
+		seajs.use("vote/voteResult.js?v=1.0");
+	</script>
+
+</html>
+
