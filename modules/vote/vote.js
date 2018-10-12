@@ -24,8 +24,6 @@ define(function(require, exports, module) {
 	            	Page.token = token;
 	            	// 查看是否已经投票
 	            	Page.getVoteInfo();
-	                //获取题目选项
-	                // Page.optionList();
 	            }else{
 	            	if (code) {
 	            		Page.getToken();
@@ -124,8 +122,10 @@ define(function(require, exports, module) {
 					if (json.survey["1"]) {
 						console.log(1);
 						// 投票过，跳转投票结果页
+						location.href = 'voteResult.html'
 						
 					} else {
+						//获取题目选项
 						Page.optionList();	
 					}			
 				},
@@ -153,46 +153,31 @@ define(function(require, exports, module) {
         },
 		// 获取题目选项
 		optionList:function(){
-			Common.isLogin(function(token){
-                if (token == "null") {
-                	if (code) {
-	            		Page.getToken();
-	            	} else {
-	            		// 先微信授权登录
-		                // 微信网页授权
-		                var redirectUri = INDEX_URL;
-		                Common.authWXPageLogin(redirectUri);
-		                return;
-	            	}
-                } else {
-                	Page.token = token;
-                }
-				$.ajax({
-					type: 'get',
-					url: Common.domain + '/userinfo/questions/',
-					headers: {
-						'Authorization': 'Token ' + token,
-						'Content-Type': 'application/json'
-					},
-					dataType: 'json',
-					timeout:6000,
-					success: function(json){
-						var arr = json.results;
-						if (arr.length > 0) {
-							Page.questionPk = arr[0].pk;
-							var html = ArtTemplate("option-list-template", arr[0].answer);
-							$(".options").html(html);
-							
-							Page.clickEvent();
-							$(".main-view").show();
-						} else {
-							Common.dialog("未找到题目");
-						}
-					},
-					error: function(xhr, textStatus){
-						Page.failDealEvent(xhr, textStatus);
+			$.ajax({
+				type: 'get',
+				url: Common.domain + '/userinfo/questions/',
+				headers: {
+					'Authorization': 'Token ' + Page.token,
+					'Content-Type': 'application/json'
+				},
+				dataType: 'json',
+				timeout:6000,
+				success: function(json){
+					var arr = json.results;
+					if (arr.length > 0) {
+						Page.questionPk = arr[0].pk;
+						var html = ArtTemplate("option-list-template", arr[0].answer);
+						$(".options").html(html);
+						
+						Page.clickEvent();
+						$(".main-view").show();
+					} else {
+						Common.dialog("未找到题目");
 					}
-				})
+				},
+				error: function(xhr, textStatus){
+					Page.failDealEvent(xhr, textStatus);
+				}
 			})
 		},
 		// 获取验证码
@@ -213,7 +198,6 @@ define(function(require, exports, module) {
                     Page.timer = null;
                 }
             },1000);
-            
 			$.ajax({
 				type: 'get',
 				url: Common.domain + '/userinfo/bind_new_openid_request/?telephone=' + phone,
