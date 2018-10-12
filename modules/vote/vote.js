@@ -49,8 +49,9 @@ define(function(require, exports, module) {
 					Page.answerPk = null;
 				}else{
 					// 选中
-					$(this).children('.select').removeClass("active");
+					$('.select').removeClass("active");
 					$(this).children('.select').addClass("active");
+					$('.options').children().css({"color": "#5B5B5B"});
 					$(this).css({"color": "#FA5083"});
 					Page.answerPk = pk;
 				}
@@ -120,8 +121,13 @@ define(function(require, exports, module) {
 				timeout:6000,
 				success: function(json){
 					console.log(json);
-					// if (json.survey) {}	
-					Page.optionList();				
+					if (json.survey["1"]) {
+						console.log(1);
+						// 投票过，跳转投票结果页
+						
+					} else {
+						Page.optionList();	
+					}			
 				},
 				error: function(xhr, textStatus){
 					Page.failDealEvent(xhr, textStatus);
@@ -245,7 +251,7 @@ define(function(require, exports, module) {
 					"answer":Page.answerPk
 				}),
 				headers: {
-					'Authorization': 'Token ' + token,
+					'Authorization': 'Token ' + Page.token,
 					'Content-Type': 'application/json'
 				},
 				dataType: 'json',
