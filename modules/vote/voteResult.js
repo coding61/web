@@ -10,8 +10,10 @@ define(function(require, exports, module) {
         imgUrl = "https://resource.bcgame-face2face.haorenao.cn/lg1024.png";
     WXShare.SetShareData(title, desc, link, imgUrl);
 
-    var INDEX_URL = "https://www.cxy61.com/girl/app/vote/voteResult.html";
     var pk = Common.getQueryString('pk');
+    var code = Common.getQueryString('code');
+    var INDEX_URL = "https://www.cxy61.com/girl/app/vote/voteResult.html?pk=" + pk;
+    
 	var Page = {
 		token:null,
 		init:function(){
