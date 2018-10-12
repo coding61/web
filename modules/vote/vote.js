@@ -122,8 +122,7 @@ define(function(require, exports, module) {
 					if (json.survey["1"]) {
 						console.log(1);
 						// 投票过，跳转投票结果页
-						location.href = 'voteResult.html?pk=' + Page.questionPk;
-						
+						location.href = 'voteResult.html?pk=1';
 					} else {
 						//获取题目选项
 						Page.optionList();	
@@ -241,14 +240,8 @@ define(function(require, exports, module) {
 				timeout:6000,
 				success: function(json){
 					console.log(json);
-					// if (json.token) {
-					// 	Page.setValue("face2face_token", json.token);
-					// }
-					// if (json.message == "领取成功") {
-					// 	Page.receiveCourseRegister(phone, pk);
-					// }else{
-					// 	Common.dialog(json.message);
-					// }
+					// 投票成功，跳转投票结果页
+					location.href = 'voteResult.html?pk=' + Page.questionPk;
 				},
 				error: function(xhr, textStatus){
 					Page.failDealEvent(xhr, textStatus);
