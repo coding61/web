@@ -25,18 +25,18 @@ body{
 
 .main-view{flex:1; margin-bottom: 0.35rem; background-color: #fff; }
 .inputView{
-    padding: 20px 15px;
+    padding: 10px 15px 40px 15px;
     color: #5B5B5B;
 }
-.inputView .label2{color: #585858; font-size: 0.14rem;}
+.inputView .label2{color: #585858; font-size: 0.14rem;line-height: 20px;}
 .phone-view{margin-top: 0.15rem;background: white;border: solid 0.005rem #C9C9C9;height: 0.40rem;border-radius: 0.03rem;margin-right: 0.15rem;display: flex;align-items: center;padding-right: 0.10rem;}
 .country-code{height:100%; background-color: #F7F7F7; padding-left: 0.05rem; padding-right: 0.05rem;font-size: 0.16rem; color: #6D6D6D; display: flex;justify-content: space-around;align-items: center;}
 .country-code img{width: 0.15rem; height:0.08rem; margin-left: 0.10rem;}
-input.phone{flex: 1; height: 100%; border: none; padding-left: 0.10rem;}
+input.phone{flex: 1; height: 100%; border: none; padding-left: 0.10rem;font-size: 0.16rem;}
 .verify-view{margin-top: 0.15rem;background: white;border: solid 0.01rem #C9C9C9;height: 0.40rem;border-radius: 0.03rem;margin-right: 0.15rem;display: flex;align-items: center;padding-left: 0.10rem;padding-right: 0.10rem;}
-input.verify{flex: 1; height: 100%;border: none;margin-right: 0.10rem;}
+input.verify{flex: 1; height: 100%;border: none;margin-right: 0.10rem;font-size: 0.16rem;}
 .verify-text{color: #2C9EF9;font-size: 0.14rem;}
-.receive{
+.submit{
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -101,4 +101,29 @@ input.verify{flex: 1; height: 100%;border: none;margin-right: 0.10rem;}
     justify-content: center;
     align-items: center;
     padding: 20px 15px;
+}
+.options {
+    padding: 20px 15px 0 15px;
+    color: #5B5B5B;
+}
+.options .option {
+    padding: 12px;
+    background-color: #F7F7F7;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.options .option .select {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border: solid 1px #BFBFBF;
+    border-radius: 50%;
+}
+.options .option .active {
+    background-color: #FA5083;
+    border: none;
+    border-radius: 50%;
 }

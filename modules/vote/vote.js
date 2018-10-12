@@ -16,13 +16,16 @@ define(function(require, exports, module) {
 		countryCode:"+86",
 		token:null,
 		questionPk: null,
+		answerPk: null,
 		init:function(){
 			Page.getCountryCode();
-		
 			Common.isLogin(function(token){
 	            if (token != "null") {
+	            	Page.token = token;
+	            	// 查看是否已经投票
+	            	Page.getVoteInfo();
 	                //获取题目选项
-	                Page.optionList();
+	                // Page.optionList();
 	            }else{
 	            	if (code) {
 	            		Page.getToken();
@@ -33,21 +36,23 @@ define(function(require, exports, module) {
 		                Common.authWXPageLogin(redirectUri);
 	            	}
 	            }
-	        })  
-	       
-			
+	        })
 		},
 		clickEvent:function(){
 			// 课程点击事件
-			$(".course").unbind('click').click(function(){
+			$(".option").unbind('click').click(function(){
 				var pk = $(this).attr("data-pk");
-				if ($(this).hasClass("select")) {
+				if ($(this).children('.select').hasClass("active")) {
 					// 取消选中
-					$(this).removeClass("select");
+					$(this).children('.select').removeClass("active");
+					$(this).css({"color": "#5B5B5B"});
+					Page.answerPk = null;
 				}else{
 					// 选中
-					$(".course").removeClass("select");
-					$(this).addClass("select");
+					$(this).children('.select').removeClass("active");
+					$(this).children('.select').addClass("active");
+					$(this).css({"color": "#FA5083"});
+					Page.answerPk = pk;
 				}
 			})
 
@@ -63,8 +68,8 @@ define(function(require, exports, module) {
 				}
 			})
 
-			// 领取点击事件
-			$(".receive").unbind('click').click(function(){
+			// 提交点击事件
+			$(".submit").unbind('click').click(function(){
 				var phone = $(".phone-view input").val(),
 					verify = $(".verify-view input").val();
 
@@ -76,12 +81,11 @@ define(function(require, exports, module) {
 					Common.dialog("请输入验证码");
 					return
 				}
-				if (!$(".course.select").length) {
-					Common.dialog("请选择一个课程");
+				if (!Page.answerPk) {
+					Common.dialog("请选择一个选项");
 					return
 				}
-				var pk = $(".course.select").attr("data-pk");
-				Page.receiveCourse(phone, verify, pk);
+				Page.submitRequest(phone, verify);
 			})
 
 			// ----------------------------国家电话代码
@@ -103,6 +107,26 @@ define(function(require, exports, module) {
             $(".close").unbind('click').click(function(){
             	$(".country-options-view").hide();
             })
+		},
+		getVoteInfo: function() {
+			$.ajax({
+				type: 'get',
+				url: Common.domain + '/userinfo/whoami/',
+				headers: {
+					'Authorization': 'Token ' + token,
+					'Content-Type': 'application/json'
+				},
+				dataType: 'json',
+				timeout:6000,
+				success: function(json){
+					console.log(json);
+					// if (json.survey) {}	
+					Page.optionList();				
+				},
+				error: function(xhr, textStatus){
+					Page.failDealEvent(xhr, textStatus);
+				}
+			})
 		},
 		// 国家代码
 		getCountryCode:function(){
@@ -134,6 +158,8 @@ define(function(require, exports, module) {
 		                Common.authWXPageLogin(redirectUri);
 		                return;
 	            	}
+                } else {
+                	Page.token = token;
                 }
 				$.ajax({
 					type: 'get',
@@ -184,12 +210,16 @@ define(function(require, exports, module) {
             
 			$.ajax({
 				type: 'get',
-				url: Common.face2faceDomain + '/userinfo/login_request/?username=' + phone,
+				url: Common.domain + '/userinfo/bind_new_openid_request/?telephone=' + phone,
+				headers: {
+					'Authorization': 'Token ' + Page.token,
+					'Content-Type': 'application/json'
+				},
 				dataType: 'json',
 				timeout:6000,
 				success: function(json){
 					if (json.status == 0) {
-                    
+                    	
                     }else if (json.detail || json.message) {
                         Common.dialog(json.detail || json.message);
                     }
@@ -199,36 +229,37 @@ define(function(require, exports, module) {
 				}
 			})
 		},
-		// 立即领取
-		receiveCourse:function(phone, code, pk){
+		// 提交请求
+		submitRequest:function(phone, code){
 			if (Page.countryCode != "+86") {
                 phone = Page.countryCode + phone
                 // phone = encodeURIComponent(phone)
             }
 			$.ajax({
 				type: 'post',
-				url: Common.face2faceDomain + '/userinfo/login_verifycode/',
+				url: Common.domain + '/userinfo/bind_new_openid/',
 				data:JSON.stringify({
-					"username": phone,
+					"telephone": phone,
 					"verification_code": code,
-					"userinfo": {},
-					"group_course_pk": pk,
-					"program_girl_owner":Page.owner
+					"question": Page.questionPk,
+					"answer":Page.answerPk
 				}),
 				headers: {
+					'Authorization': 'Token ' + token,
 					'Content-Type': 'application/json'
 				},
 				dataType: 'json',
 				timeout:6000,
 				success: function(json){
-					if (json.token) {
-						Page.setValue("face2face_token", json.token);
-					}
-					if (json.message == "领取成功") {
-						Page.receiveCourseRegister(phone, pk);
-					}else{
-						Common.dialog(json.message);
-					}
+					console.log(json);
+					// if (json.token) {
+					// 	Page.setValue("face2face_token", json.token);
+					// }
+					// if (json.message == "领取成功") {
+					// 	Page.receiveCourseRegister(phone, pk);
+					// }else{
+					// 	Common.dialog(json.message);
+					// }
 				},
 				error: function(xhr, textStatus){
 					Page.failDealEvent(xhr, textStatus);
@@ -272,7 +303,7 @@ define(function(require, exports, module) {
                 timeout:6000,
                 success:function(json){
                     Page.setValue("token", json.token);
-                    Page.optionList();
+                    Page.getVoteInfo();
                 },
                 error:function(xhr, textStatus){
                     Page.failDealEvent(xhr, textStatus);
@@ -280,7 +311,7 @@ define(function(require, exports, module) {
             })
         },
 		// 请求失败处理方法
-        failDealEvent:function(xhr, textStatus, vote_result_url){
+        failDealEvent:function(xhr, textStatus){
             Common.hideLoading();
             // $(".wait-loading").hide();
             if (textStatus == "timeout") {
@@ -291,21 +322,21 @@ define(function(require, exports, module) {
                 // token 失效, 重新授权
                 // 先微信授权登录
                 // 微信网页授权
-                var redirectUri = vote_result_url?vote_result_url:INDEX_URL;
+                var redirectUri = INDEX_URL;
                 Common.authWXPageLogin(redirectUri);
                 return
             }else if(xhr.status == 404){
                 Common.dialog("未找到");
                 return;
             }else if (xhr.status == 400 || xhr.status == 403) {
-                if (JSON.parse(xhr.responseText).name) {
-                    Common.dialog('团队名称已被占用');
-                }else{
+                // if (JSON.parse(xhr.responseText).name) {
+                //     Common.dialog('团队名称已被占用');
+                // }else{
                     var msg = JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail;
-                    if (msg == "已经注册过的用户") return;
+                    // if (msg == "已经注册过的用户") return;
                     Common.dialog(msg);
-                }
-                return;
+                // }
+                // return;
             }else if(xhr.status == 0){
                 Common.dialog("网络未连接，请检查网络后重试。");
                 return;
