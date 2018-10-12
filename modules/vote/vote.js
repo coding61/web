@@ -114,7 +114,7 @@ define(function(require, exports, module) {
 				type: 'get',
 				url: Common.domain + '/userinfo/whoami/',
 				headers: {
-					'Authorization': 'Token ' + token,
+					'Authorization': 'Token ' + Page.token,
 					'Content-Type': 'application/json'
 				},
 				dataType: 'json',
