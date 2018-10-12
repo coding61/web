@@ -41,12 +41,12 @@
 		<script type="text/hmtl" id="option-list-template">
 			{{each}}
 			<div class="option" data-pk="{{$value.pk}}">
-				<div>
+				<div class="dataView">
 					<span>{{$value.answer}}</span>
 					<span>{{$value.number}}票</span>
 				</div>
 				<div class="total">
-					<div class="proportion"></div>
+					<div class="proportion" style="width: {{$value.proportion}}%"></div>
 				</div>
 			</div>
 			{{/each}}
