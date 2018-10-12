@@ -122,7 +122,7 @@ define(function(require, exports, module) {
 					if (json.survey["1"]) {
 						console.log(1);
 						// 投票过，跳转投票结果页
-						location.href = 'voteResult.html'
+						location.href = 'voteResult.html?pk=' + Page.questionPk;
 						
 					} else {
 						//获取题目选项
@@ -168,7 +168,6 @@ define(function(require, exports, module) {
 						Page.questionPk = arr[0].pk;
 						var html = ArtTemplate("option-list-template", arr[0].answer);
 						$(".options").html(html);
-						
 						Page.clickEvent();
 						$(".main-view").show();
 					} else {

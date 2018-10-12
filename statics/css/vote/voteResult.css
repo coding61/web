@@ -23,7 +23,7 @@ body{
     display: none;
 }
 
-.main-view{flex:1; margin-bottom: 0.35rem; background-color: #fff; }
+.main-view{flex:1; margin-bottom: 0.35rem; background-color: #fff; display: none;}
 
 .topView {
     background-color: #FFEAF0;
