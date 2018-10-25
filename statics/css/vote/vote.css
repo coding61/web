@@ -25,7 +25,7 @@ body{
 
 .main-view{flex:1; margin-bottom: 0.35rem; background-color: #fff; display: none;}
 .inputView{
-    padding: 10px 15px 40px 15px;
+    padding: 10px 15px 55px 15px;
     color: #5B5B5B;
 }
 .inputView .label2{color: #585858; font-size: 0.14rem;line-height: 20px;}
