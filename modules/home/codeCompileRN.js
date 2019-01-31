@@ -191,8 +191,11 @@ define(function(require, exports, module) {
                     // }else{
                     //     var str = json.output;
                     // }
-
-                    var str = json.output + "\n" + json.errors;
+                
+                    var str = json.output + "\n";
+                    if (json.errors) {
+                        str = str + "出错信息：" + json.errors;
+                    }
                     str = str.replace(/\r\n/g, "<br/>");
                     str = str.replace(/\n/g, "<br/>");
                     str = str.replace(/\ /g, "&nbsp"); //替换 空格
@@ -203,13 +206,16 @@ define(function(require, exports, module) {
                     Common.hideLoading();
                     if (textStatus == "timeout") {
                         Common.dialog("请求超时, 请稍后重试");
+                        $(".compile-result .content").html("请求超时, 请稍后重试");
                         return;
                     }
                     if (xhr.status == 400 || xhr.status == 403) {
                         Common.dialog(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
+                        $(".compile-result .content").html(JSON.parse(xhr.responseText).message||JSON.parse(xhr.responseText).detail);
                         return;
                     }else{
-                        Common.dialog('服务器繁忙11');
+                        Common.dialog('服务器繁忙');
+                        $(".compile-result .content").html("服务器繁忙");
                         return;
                     }
                     $(".compile-result .content").html("运行失败");
@@ -322,7 +328,8 @@ define(function(require, exports, module) {
 
                 Common.showLoading();
                 $(".compile-result .content").html("运行结果加载中...");
-                // Page.load(htmlEditor.getValue());
+                Page.load(htmlEditor.getValue());
+                /*
                 WebSocketData.formatCode(htmlEditor.getValue(), Page.lang, (e)=>{
                     compileResult(e);
                     var data = JSON.parse(e.data);
@@ -330,6 +337,7 @@ define(function(require, exports, module) {
                         compileResult(e);
                     });
                 });
+                */
                 
             })
             $(".resultHeader .resultAction").unbind('click').click(function(){
