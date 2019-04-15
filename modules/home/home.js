@@ -1269,16 +1269,18 @@ define(function(require, exports, module) {
             })
             // 编辑器点击事件
             $(".editors .editor").unbind('click').click(function(){
-               var url = ""
-               if ($(this).hasClass("html")) {
-                   url = "../home/codeEditRN.html"
-               }else if ($(this).hasClass("c")) {
-                   url = "../home/compileRN.html?lang=c"
-               }else if ($(this).hasClass("python")) {
-                   url = "../home/compileRN.html?lang=python"
-               }else if ($(this).hasClass("java")) {
-                   url = "../home/compileRN.html?lang=java"
-               }
+                var url = ""
+                if ($(this).hasClass("html")) {
+                    url = "../home/codeEditRN.html"
+                }else if ($(this).hasClass("c")) {
+                    url = "../home/compileRN.html?lang=c"
+                }else if ($(this).hasClass("python")) {
+                    url = "../home/compileRN.html?lang=python"
+                }else if ($(this).hasClass("python2")) {
+                    url = "../home/compileRN.html?lang=python2"
+                }else if ($(this).hasClass("java")) {
+                    url = "../home/compileRN.html?lang=java"
+                }
                 Util.openLink(url)
                 $(".code-online-editors").css({display:'none'})
             })
