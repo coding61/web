@@ -53,7 +53,8 @@ define(function(require, exports, module) {
         oc:{mode:{name:"text/x-objectivec"}, language:12},
         java:{mode:{name:"text/x-java"}, language:8},
         cpp:{mode:{name:"text/x-c++src"}, language:7},
-        python:{mode:{name: "text/x-cython", version: 2, singleLineStringErrors: false}, language:0}
+        python:{mode:{name: "python", version: 3, singleLineStringErrors: false}, language:0},
+        python2:{mode:{name: "python", version: 2, singleLineStringErrors: false}, language:17}
     }
     var Page = {
         lang:Common.getQueryString("lang"),
@@ -137,8 +138,14 @@ define(function(require, exports, module) {
                 if(localStorage["PythonCode"]){
                     htmlEditor.setValue(localStorage["PythonCode"]);
                 }else{
-                htmlEditor.setValue("#!encoding: utf-8");
-            }
+                    htmlEditor.setValue("#!encoding: utf-8");
+                }
+            }else if(Page.lang == "python2"){
+                if(localStorage["PythonCode2"]){
+                    htmlEditor.setValue(localStorage["PythonCode2"]);
+                }else{
+                    htmlEditor.setValue("#!encoding: utf-8");
+                }
             }else if(Page.lang == "c"){
                 if(localStorage["CCode"]){
                     htmlEditor.setValue(localStorage["CCode"]);
@@ -154,7 +161,8 @@ define(function(require, exports, module) {
             }
 
             htmlEditor.on("change", function(Editor, changes){
-                var currentMode = htmlEditor.getOption("mode").name;
+                var mode = htmlEditor.getOption("mode");
+                var currentMode = mode.name;
                 //htmlEditor.lastLine()
                 if (currentMode == "text/x-csrc") {
                     //存 c
@@ -166,9 +174,13 @@ define(function(require, exports, module) {
                 }else if (currentMode == "text/x-c++src"){
                     //存 cpp
                     localStorage["CPPCode"] = Editor.getValue();
-                }else if (currentMode == "text/x-cython"){
+                }else if (currentMode == "python"){
                     //存 Python
-                    localStorage["PythonCode"] = Editor.getValue();
+                    if(mode.version == 3){
+                        localStorage["PythonCode"] = Editor.getValue();
+                    }else{
+                        localStorage["PythonCode2"] = Editor.getValue();
+                    }
                 }
             })
         },
@@ -291,7 +303,7 @@ define(function(require, exports, module) {
                         str=""
                     }else{
                         str = $(".compile-result .content").html();
-                        str = str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/<br\/>/g, "\n").replace(/<br>/g, "\n");
+                        str = str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/<br\/>/g, "\n").replace(/<br>/g, "\n").replace(/&nbsp;/g, " ");
                         // console.log("str1", str);
                     }
                     if (data.output) {
@@ -300,7 +312,7 @@ define(function(require, exports, module) {
                     if (data.errors) {
                         str += data.errors
                     }
-                    str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/\n/g, "<br/>");
+                    str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
                     $(".compile-result .content").html(str);
                     Common.hideLoading();
                 }
@@ -312,7 +324,7 @@ define(function(require, exports, module) {
                     Common.dialog("请输入一些内容");
                     return
                 }
-                WebSocketData.sendStdin($(".inputHeader input").val(), Page.lang, (e)=>{
+                WebSocketData.sendStdin($(".inputHeader input").val(), Page.lang, function(e){
                     compileResult(e);
                 });
             })
@@ -328,16 +340,14 @@ define(function(require, exports, module) {
 
                 Common.showLoading();
                 $(".compile-result .content").html("运行结果加载中...");
-                Page.load(htmlEditor.getValue());
-                /*
-                WebSocketData.formatCode(htmlEditor.getValue(), Page.lang, (e)=>{
+                // Page.load(htmlEditor.getValue());
+                WebSocketData.formatCode(htmlEditor.getValue(), Page.lang, function(e){
                     compileResult(e);
                     var data = JSON.parse(e.data);
-                    WebSocketData.sendCode(data.code, Page.lang, (e)=>{
+                    WebSocketData.sendCode(data.code, Page.lang, function(e){
                         compileResult(e);
                     });
                 });
-                */
                 
             })
             $(".resultHeader .resultAction").unbind('click').click(function(){
@@ -376,7 +386,7 @@ define(function(require, exports, module) {
             // $(".edits .html-edit").css({height:'calc(100% - 41px)'});
         },
         openBottomResultView:function(){
-            $(".edits .compile-result").css({height:'50%'});
+            $(".edits .compile-result").css({height:'calc(50% - 40px)'});
             // $(".edits .html-edit").css({height:'50%'});
         },
         punctuationRelatedMethod:function(){

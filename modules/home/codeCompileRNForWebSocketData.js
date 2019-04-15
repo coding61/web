@@ -1,54 +1,5 @@
-let webSocketInit = (callback) => {
-    if ('WebSocket' in window) {
-        if (WebSocketData.ws) {
-            WebSocketData.ws.close();
-            WebSocketData.ws = null;
-        }
-        let ws = new WebSocket('wss://app.cxy61.com/compile2/');
-        WebSocketData.ws = ws;
-
-        ws.onopen = () => {
-            
-        };
-
-        ws.onmessage = (e) => {
-            if (callback) {
-                callback(e);
-            }
-        };
-
-        ws.onclose = () => {
-            WebSocketData.ws = null;
-        };
-
-        // WebSocketData.sendCode = (codeValue, lang) => {
-        //     let codeData = {
-        //         type: 0,
-        //         code: codeValue,
-        //         language: LanguageList[lang]["lang"]
-        //     }
-        //     console.log(codeData);
-        //     WebSocketData.ws.send(JSON.stringify(codeData));
-        // };
-
-        // WebSocketData.sendStdin = (inputValue, lang) => {
-        //     let val = inputValue;
-        //     val = val.trimEnd('\n');
-        //     val += "\n";
-        //     let stdinData = {
-        //         type: 1,
-        //         stdin: val, 
-        //         language: LanguageList[lang]["lang"]
-        //     }
-        //     console.log(stdinData);
-        //     WebSocketData.ws.send(JSON.stringify(stdinData));
-        // };
-    } else {
-        alert('WebSocket NOT supported by your Browser!');
-    }
-};
-
-let LanguageList = {
+var LanguageList = {
+    "python2":{lang:17, name:"python2"},
     "python":{lang:0, name:"python3"},
     "ruby":{lang:1, name:"ruby"},
     "clojure":{lang:2, name:"clojure"},
@@ -68,7 +19,7 @@ let LanguageList = {
     "c":{lang:16, name:"C"}
 }
 
-let WebSocketData = {
+var WebSocketData = {
     number:0,
     // init: webSocketInit,
     init:function(OpenCallBack, Messagecallback){
@@ -81,18 +32,19 @@ let WebSocketData = {
                   console.error(error);
                 }
             }
-            let ws = new WebSocket('wss://app.cxy61.com/compile2/');
+            
+            var ws = new WebSocket('wss://app.coding61.com/compile2/');
             WebSocketData.ws = ws;
 
-            ws.onopen = () => {
+            ws.onopen = function(){
                 $(".sendInput").css("pointer-events", "auto");
                 console.log("正在连接 socket")
                 if (OpenCallBack) {
                     OpenCallBack();
                 }
-            };
+            }
 
-            ws.onmessage = (e) => {
+            ws.onmessage = function(e){
                 var data = JSON.parse(e.data);
                 if (data.output) {
                     WebSocketData.number = WebSocketData.number + 1;
@@ -111,7 +63,7 @@ let WebSocketData = {
                 }
             };
 
-            ws.onclose = () => {
+            ws.onclose = function() {
                 console.log("连接已断开，请重新点击运行");
                 // $(".sendInput").css("pointer-events", "none");
                 // alert("连接已断开，请重新点击运行")
@@ -133,8 +85,8 @@ let WebSocketData = {
         }
     },
     sendCode:function(codeValue, lang, callback){
-        WebSocketData.init(()=>{
-            let codeData = {
+        WebSocketData.init(function(){
+            var codeData = {
                 type: 0,
                 code: codeValue,
                 language: LanguageList[lang]["lang"]
@@ -144,8 +96,8 @@ let WebSocketData = {
         }, callback);
         
         // if (!WebSocketData.ws) {
-        //     WebSocketData.init(()=>{
-        //         let codeData = {
+        //     WebSocketData.init(function(){
+        //         var codeData = {
         //             type: 0,
         //             code: codeValue,
         //             language: LanguageList[lang]["lang"]
@@ -155,7 +107,7 @@ let WebSocketData = {
         //     }, callback);
         // }else{
         //     WebSocketData.ws.close();
-        //     let codeData = {
+        //     var codeData = {
         //         type: 0,
         //         code: codeValue,
         //         language: LanguageList[lang]["lang"]
@@ -166,11 +118,11 @@ let WebSocketData = {
     },
     sendStdin:function(inputValue, lang, callback){
         if (!WebSocketData.ws) {
-            WebSocketData.init(()=>{
-                let val = inputValue;
+            WebSocketData.init(function(){
+                var val = inputValue;
                 val = val.trimEnd('\n');
                 val += "\n";
-                let stdinData = {
+                var stdinData = {
                     type: 1,
                     stdin: val, 
                     language: LanguageList[lang]["lang"]
@@ -179,10 +131,10 @@ let WebSocketData = {
                 WebSocketData.ws.send(JSON.stringify(stdinData));
             }, callback);
         }else{
-            let val = inputValue;
+            var val = inputValue;
             val = val.trimEnd('\n');
             val += "\n";
-            let stdinData = {
+            var stdinData = {
                 type: 1,
                 stdin: val, 
                 language: LanguageList[lang]["lang"]
@@ -197,8 +149,8 @@ let WebSocketData = {
         }
     },
     formatCode:function(codeValue, lang, callback){
-        WebSocketData.init(()=>{
-            let codeData = {
+        WebSocketData.init(function(){
+            var codeData = {
                 type: 3,
                 code: codeValue,
                 language: LanguageList[lang]["lang"]
