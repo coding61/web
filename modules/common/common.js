@@ -342,14 +342,14 @@ define(function(require, exports, module) {
 						setTimeout(function(){
 							if (playSouns.status == false) {
 								playSouns.status = true;
-							    console.log(1111);
+							    // console.log(1111);
 								playSouns.queue.shift();
 								playSouns.queueLength = playSouns.queue.length;
 								if (playSouns.queue.length > 0) {
 									audioPlay();
 								}
 							}else{
-								console.log(2222)
+								// console.log(2222)
 							}
 
 						}, 0)
@@ -360,7 +360,7 @@ define(function(require, exports, module) {
 			audioPlay();
 
 			function audioPlay(){
-				console.log(playSouns.queue);
+				// console.log(playSouns.queue);
 				playSouns.status = false;
 				var audio = document.getElementById( "audioPlay");
 				$("#audioPlay").attr({"src":playSouns.queue[0]});
@@ -372,12 +372,12 @@ define(function(require, exports, module) {
 				function playPromiseFunc(playPromise){
 					if (playPromise !== undefined) {
 						playPromise.then(function(){
-							console.log($("#audioPlay").attr("src"));
-						    console.log('success');
+							// console.log($("#audioPlay").attr("src"));
+						    // console.log('success');
 						})
 						.catch(function(){
-							console.log($("#audioPlay").attr("src"));
-					        console.log('error');
+							// console.log($("#audioPlay").attr("src"));
+					        // console.log('error');
 					        audio.currentTime = 0;
 							var pp = audio.play();
 							playPromiseFunc(pp);

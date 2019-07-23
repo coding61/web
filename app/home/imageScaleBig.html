@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-121322429-1"></script>
+		<script>
+		  	window.dataLayer = window.dataLayer || [];
+		  	function gtag(){dataLayer.push(arguments);}
+		  	gtag("js", new Date());
+		  	gtag("config", "UA-121322429-1");
+	   </script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>图片放大器</title>
+		<link rel="icon" href="../../statics/images/favicon.ico">
+		<link type="text/css" rel="stylesheet" href="../../statics/css/common/common.css" />
+
+		<script type="text/javascript" src="../../libs/jquery-2.1.4.min.js"></script>
+		<style>
+		.imgmsg-shadow-view{
+		    height: 100%;
+		    background: rgba(0, 0, 0, 0.4);
+		    background-color: rgba(0, 0, 0, 0.6);
+		    width: 100%;
+		    position: fixed;
+		    left: 0;
+		    top: 0;
+		    z-index: 10001;
+		    /*display: none;*/
+		}
+		.imgmsg-shadow-view .imgmsg{
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    width: 100%;
+		    height: 100%;
+		}
+		.imgmsg-shadow-view .imgmsg .imgdiv{
+		    max-width: 100%;
+		    max-height: 100%;
+		    overflow: auto;
+		    text-align: center;
+		}
+		</style>
+	</head>
+	<body style="margin: 0px;width: 100%;height: 100%;">
+		<div class="imgmsg-shadow-view">
+        	<div class="imgmsg">
+        		<div class="imgdiv">
+		        	<img src="" alt="" />
+        		</div>
+        	</div>
+        </div>
+		<script type="text/javascript">
+			function getQueryString(key){
+				var ls = location.search;
+				//var reg = eval("new RegExp('[a-zA-Z0-9]+=[^&]+&|[a-zA-Z0-9]+=[^&]+$','g')");
+				var reg = eval("new RegExp('[\?&]+(" + key + ")=[^&]+&|[\?&]+(" + key + ")=[^&]+$')");
+				var args = ls.match(reg);
+				if (args) {
+					return args[0].split("=")[1].replace(/&$/, "");
+				} else {
+					console.log(key + "不存在");
+					return null;
+				}
+			}
+			window.onload=function(){
+				
+			}
+		</script>
+	</body>
+
+</html>

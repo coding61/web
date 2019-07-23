@@ -94,6 +94,7 @@ body{
     padding: 15px;
     width: 135px;
     display: none;
+    z-index: 10;
 }
 .qr-code-view img{
     width: 100px;

@@ -138,7 +138,7 @@ define(function(require, exports, module) {
                 if(localStorage["PythonCode"]){
                     htmlEditor.setValue(localStorage["PythonCode"]);
                 }else{
-                    htmlEditor.setValue("#!encoding: utf-8");
+                    // htmlEditor.setValue("#!encoding: utf-8");
                 }
             }else if(Page.lang == "python2"){
                 if(localStorage["PythonCode2"]){
