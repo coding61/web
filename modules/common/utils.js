@@ -2,6 +2,90 @@ define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
 
+    // 存储键值
+    exports.setValue = function(key, value){
+        if(typeof value != "string"){
+            // "a" --> ""a""
+            value = JSON.stringify(value);
+        }
+        if (window.localStorage) {
+            localStorage[key] = value;
+        }else{
+            $.cookie(key, value, {path:"/"});
+        }
+    }
+    // 移除键值
+    exports.removeValue = function(key){
+        if(window.localStorage){
+            localStorage.removeItem(key);
+        }else{
+            $.cookie(key, null, {
+                path: "/"
+            });
+        }
+    }
+    // 获取键值
+    exports.getValue = function(key){
+        var value = null;
+        if (window.localStorage) {
+            value = localStorage[key];
+        }else{
+            value = $.cookie(key);
+        }
+        
+        try{
+            value = JSON.parse(value)
+        }
+        catch(error){
+            value = value
+        }
+        return value;
+    }
+
+    //  定义存储到 LocalStorage 中的键值
+    exports.LSStrings = {
+        chatData:"chatData",                              //缓存数据
+        owner:"owner",                                    //用户账号
+        avatar:"avatar",                                  //头像
+        courseTag:"courseTag",                            //课程 tag
+        leadCourse:"leadCourse",                          //引导课程的pk
+        currentCourse:"currentCourse",                    //当前课程 pk
+        currentCourseIndex:"currentCourseIndex",          //当前课程的课节下标
+        currentCourseTotal:"currentCourseTotal",          //当前课程的总节数
+        currentCourseIsAdapt:"currentCourseIsAdapt",      //当前课程是否是自适应课程
+        currentCourseName:"currentCourseName",            //当前课程的名称
+        learnCourses:"learnCourses",                      //已学课程的 pk 组
+        oldCourse:"oldCourse",                            //上一次课程的 pk                        
+        currentExper:"currentExper",                      //经验值
+        currentGrade:"currentGrade",                      //等级
+        currentZuan:"currentZuan",                        //钻石
+        data:"data",                                      //数据源
+        index:"index",                                    //数据源 item 下标
+        optionData:"optionData",                          //选项数据源
+        optionIndex:"optionIndex",                        //选项下标
+        optionDataAnswer:"optionDataAnswer",              //选项答对还是答错了
+        token:"token",                                    //用户 token
+        userInfo:"userInfo",                              //记录用户信息
+
+        CourseMessageData:"CourseMessageData",            //编辑课程数据
+        CourseData:"CourseData",                          //编辑课程数据
+        htmlCode:"htmlCode",                              //html存储
+        jsCode:"jsCode",                                  //js 存储
+        CCode:"CCode",                                    //C 存储
+        OCCode:"OCCode",                                  //OC 存储
+        CPPCode:"CPPCode",                                //CPP 存储
+        PythonCode:"PythonCode",                          //Python 存储
+        PythonCode2:"PythonCode2",                        //Python2 存储
+
+        showMonkey:"showMonkey",                          //是否显示 monkey
+        isDoExercise:"isDoExercise",                      //是否是刷题训练
+        doExerciseIndex:"doExerciseIndex",                //刷题训练的课节下标
+
+        learnKPoints:"learnKPoints",                      //记录学生本节课已学知识点
+        learnHomework:"learnHomework",                    //记录学生本节课作业列表
+        DailyReviewDate:"DailyReviewDate",                //记录每日复习的日期，一天提醒一次
+    }
+
     var chnNumChar = ["零","一","二","三","四","五","六","七","八","九"];
     var chnUnitSection = ["","万","亿","万亿","亿亿"];
     var chnUnitChar = ["","十","百","千"];

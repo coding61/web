@@ -127,7 +127,7 @@ define(function(require, exports, module) {
                 var dic = {"category":category, courses:categoryCourses};
                 array.push(dic);
             }
-            console.log(array);
+            // console.log(array);
 
             var html = ArtTemplate("courses-template", array);
             $(".courses").html(html);
