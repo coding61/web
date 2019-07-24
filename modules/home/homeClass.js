@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-    var Utils = require('common/utils.js');
+    var Utils = require('common/utils.js?v=1.1');
     ArtTemplate.config("escape", false);
 
     var HomeRequest = require('home/HomeRequest.js?v=1.1');
