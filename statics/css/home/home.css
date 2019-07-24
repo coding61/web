@@ -1629,6 +1629,7 @@ li.catalog.unselect{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    flex: 1;
 }
 .choose-avatar-view .avatar{
     width: 25%;
