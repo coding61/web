@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
     var Common = require('common/common.js');    
-    var Utils = require('common/utils.js');
+    var Utils = require('common/utils.js?v=1.1');
     var ArtTemplate = require("libs/template.js");
     ArtTemplate.config("escape", false);
     

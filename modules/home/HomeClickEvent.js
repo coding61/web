@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
     var Common = require('common/common.js');
-    var Utils = require('common/utils.js');
+    var Utils = require('common/utils.js?v=1.1');
 	
 	var HomeUtil = require('home/HomeUtil.js?v=1.1');
     HomeUtil = HomeUtil.Util;
