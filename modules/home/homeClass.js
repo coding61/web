@@ -1,16 +1,16 @@
 define(function(require, exports, module) {
 	var ArtTemplate = require("libs/template.js");
 	var Common = require('common/common.js');
-    var Utils = require('common/utils.js?v=1.1');
+    var Utils = require('common/utils.js?v=1.2');
     ArtTemplate.config("escape", false);
 
-    var HomeRequest = require('home/HomeRequest.js?v=1.1');
+    var HomeRequest = require('home/HomeRequest.js?v=1.2');
     HomeRequest = HomeRequest.Mananger;
 
-    var HomeUtil = require('home/HomeUtil.js?v=1.1');
+    var HomeUtil = require('home/HomeUtil.js?v=1.2');
     HomeUtil = HomeUtil.Util;
 
-    var HomeClickEvent = require("home/HomeClickEvent.js?v=1.1");
+    var HomeClickEvent = require("home/HomeClickEvent.js?v=1.2");
     HomeClickEvent = HomeClickEvent.HomeClickEvent;
 
     // ----------------------------------1.默认数据
