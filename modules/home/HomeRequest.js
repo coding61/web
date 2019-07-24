@@ -4,7 +4,7 @@ define(function(require, exports, module) {
     var ArtTemplate = require("libs/template.js");
     ArtTemplate.config("escape", false);
     
-    var HomeUtil = require('home/HomeUtil.js');
+    var HomeUtil = require('home/HomeUtil.js?v=1.1');
     HomeUtil = HomeUtil.Util;
 
     var Mananger = {

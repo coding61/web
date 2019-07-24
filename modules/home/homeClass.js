@@ -4,13 +4,13 @@ define(function(require, exports, module) {
     var Utils = require('common/utils.js');
     ArtTemplate.config("escape", false);
 
-    var HomeRequest = require('home/HomeRequest.js');
+    var HomeRequest = require('home/HomeRequest.js?v=1.1');
     HomeRequest = HomeRequest.Mananger;
 
-    var HomeUtil = require('home/HomeUtil.js');
+    var HomeUtil = require('home/HomeUtil.js?v=1.1');
     HomeUtil = HomeUtil.Util;
 
-    var HomeClickEvent = require("home/HomeClickEvent.js");
+    var HomeClickEvent = require("home/HomeClickEvent.js?v=1.1");
     HomeClickEvent = HomeClickEvent.HomeClickEvent;
 
     // ----------------------------------1.默认数据
