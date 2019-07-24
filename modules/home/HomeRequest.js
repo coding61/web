@@ -4,7 +4,7 @@ define(function(require, exports, module) {
     var ArtTemplate = require("libs/template.js");
     ArtTemplate.config("escape", false);
     
-    var HomeUtil = require('home/HomeUtil.js?v=1.1');
+    var HomeUtil = require('home/HomeUtil.js');
     HomeUtil = HomeUtil.Util;
 
     var Mananger = {
@@ -148,6 +148,7 @@ define(function(require, exports, module) {
             })
         },
         regPhone:function(phone, code, password, url, nickname, callback){
+            console.log(HomeUtil.phone, HomeUtil.code, HomeUtil.password);
             if (HomeUtil.currentCountryCode != "+86") {
                 phone = HomeUtil.currentCountryCode + phone
             }
@@ -175,7 +176,7 @@ define(function(require, exports, module) {
                             Utils.setValue(Utils.LSStrings.token, json.token);
                             $.cookie("Token", json.token, {path: "/"});
                             if (callback) {
-                                callback();
+                                callback(json);
                             }
                         }
                     },

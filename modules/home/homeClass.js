@@ -4,13 +4,13 @@ define(function(require, exports, module) {
     var Utils = require('common/utils.js');
     ArtTemplate.config("escape", false);
 
-    var HomeRequest = require('home/HomeRequest.js?v=1.1');
+    var HomeRequest = require('home/HomeRequest.js');
     HomeRequest = HomeRequest.Mananger;
 
-    var HomeUtil = require('home/HomeUtil.js??v=1.1');
+    var HomeUtil = require('home/HomeUtil.js');
     HomeUtil = HomeUtil.Util;
 
-    var HomeClickEvent = require("home/HomeClickEvent.js??v=1.1");
+    var HomeClickEvent = require("home/HomeClickEvent.js");
     HomeClickEvent = HomeClickEvent.HomeClickEvent;
 
     // ----------------------------------1.默认数据
@@ -1265,11 +1265,10 @@ define(function(require, exports, module) {
         },
         regPhone:function(phone, code, password, url, nickname){
             //注册手机
-            HomeRequest.regPhone(phone, code, password, url, nickname, function(){
-                if (json.token) {
-                    // Common.dialog("注册成功");
-                    Util.loginSuccessInit();
-                }
+            console.log(phone, code, password, url, nickname);
+            HomeRequest.regPhone(phone, code, password, url, nickname, function(json){
+                // Common.dialog("注册成功");
+                Util.loginSuccessInit();
             })
         },
         resetPassword:function(this_){

@@ -2,10 +2,10 @@ define(function(require, exports, module) {
     var Common = require('common/common.js');
     var Utils = require('common/utils.js');
 	
-	var HomeUtil = require('home/HomeUtil.js?v=1.1');
+	var HomeUtil = require('home/HomeUtil.js');
     HomeUtil = HomeUtil.Util;
 
-    var HomeRequest = require('home/HomeRequest.js?v=1.1');
+    var HomeRequest = require('home/HomeRequest.js');
     HomeRequest = HomeRequest.Mananger;
     
     var mouseXY = ()=> {
@@ -401,6 +401,9 @@ define(function(require, exports, module) {
 
                 var width = $(window).width();
                 $(".ui-choose-avatar-view").css({
+                    "width":width*0.35+"px"
+                })
+                $(".avatars-view").css({
                     "width":width*0.35+"px"
                 })
             })
