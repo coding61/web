@@ -165,7 +165,7 @@ define(function(require, exports, module) {
             Common.isLogin(function(token){
                 $.ajax({
                     type:"post",
-                    url:Common.domain + "/userinfo/signup/",
+                    url:Common.domain + "/userinfo/telephone_signup/",
                     data:JSON.stringify(dic),
                     contentType:"application/json",
                     timeout:6000,
