@@ -1,10 +1,10 @@
 define(function(require, exports, module) {
     var Common = require('common/common.js');    
-    var Utils = require('common/utils.js?v=1.1');
+    var Utils = require('common/utils.js?v=1.2');
     var ArtTemplate = require("libs/template.js");
     ArtTemplate.config("escape", false);
     
-    var HomeUtil = require('home/HomeUtil.js?v=1.1');
+    var HomeUtil = require('home/HomeUtil.js?v=1.2');
     HomeUtil = HomeUtil.Util;
 
     var Mananger = {

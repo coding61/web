@@ -1,11 +1,11 @@
 define(function(require, exports, module) {
     var Common = require('common/common.js');
-    var Utils = require('common/utils.js?v=1.1');
+    var Utils = require('common/utils.js?v=1.2');
 	
-	var HomeUtil = require('home/HomeUtil.js?v=1.1');
+	var HomeUtil = require('home/HomeUtil.js?v=1.2');
     HomeUtil = HomeUtil.Util;
 
-    var HomeRequest = require('home/HomeRequest.js?v=1.1');
+    var HomeRequest = require('home/HomeRequest.js?v=1.2');
     HomeRequest = HomeRequest.Mananger;
     
     var mouseXY = ()=> {

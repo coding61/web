@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
     var Common = require('common/common.js');
     var ArtTemplate = require("libs/template.js");
-    var Utils = require('common/utils.js?v=1.1');
+    var Utils = require('common/utils.js?v=1.2');
     
     var EmoticonImgs = {
         "error":[
