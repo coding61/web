@@ -176,7 +176,7 @@ define(function(require, exports, module) {
                             Utils.setValue(Utils.LSStrings.token, json.token);
                             $.cookie("Token", json.token, {path: "/"});
                             if (callback) {
-                                callback();
+                                callback(json);
                             }
                         }
                     },

@@ -1266,11 +1266,9 @@ define(function(require, exports, module) {
         regPhone:function(phone, code, password, url, nickname){
             //注册手机
             console.log(phone, code, password, url, nickname);
-            HomeRequest.regPhone(phone, code, password, url, nickname, function(){
-                if (json.token) {
-                    // Common.dialog("注册成功");
-                    Util.loginSuccessInit();
-                }
+            HomeRequest.regPhone(phone, code, password, url, nickname, function(json){
+                // Common.dialog("注册成功");
+                Util.loginSuccessInit();
             })
         },
         resetPassword:function(this_){
