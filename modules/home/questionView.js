@@ -232,13 +232,15 @@ $("body").append(blankTemplate);
 $("body").append(sequenceTemplate);
 
 
-var a = '<div class="question-shadow-view">\
-			<div class="question-close-view">关闭</div>\
-			<div class="question-exercise-view">\
-				<!-- 选择题、填空题、顺序题 -->\
-			</div>\
-			<div class="question-submit-view">提交</div>\
-		</div>'
+var a = `<div class="question-shadow-view">
+			<div class="question-wrapper">
+			<div class="question-close-view">关闭</div>
+			<div class="question-exercise-view">
+				<!-- 选择题、填空题、顺序题 -->
+			</div>
+			<div class="question-submit-view">提交</div>
+			</div>
+		</div>`
 
 var dic = { "message": "是否掌握编程基础", "options": [{ "message": "是", "content": "A" }, { "message": "否", "content": "B" }], "action": [{ "type": "text", "content": "A" }, { "type": "text", "content": "B" }], "answer": "A", "grade": "儿童编程基础" }
 var dic1 = { "type": "adaptProblem", "choiceType": "single", "message": "学习编程的目标是", "options": [{ "message": "编程基础5-8岁", "content": "A" }, { "message": "编程基础8-12岁", "content": "B" }, { "message": "NOIP", "content": "C" }, { "message": "前端", "content": "D" }, { "message": "服务器", "content": "E" }, { "message": "人工智能", "content": "G" }], "action": [{ "type": "text", "content": "A" }, { "type": "text", "content": "B" }, { "type": "text", "content": "C" }, { "type": "text", "content": "D" }, { "type": "text", "content": "E" }, { "type": "text", "content": "F" }] }
@@ -476,4 +478,4 @@ var QuestionView = {
 
 	}
 }
-// QuestionView.init(dic3, "exercise", []);
+// QuestionView.init(dic2, "exercise", []);

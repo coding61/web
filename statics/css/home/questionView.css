@@ -1,15 +1,16 @@
 /*习题弹层*/
-.question-shadow-view{position: absolute;left: 0;right: 0;top:0;width: 100%;height: 100%; min-height: 400px; background-color: rgba(255,255,255,0.99);display: flex; flex-direction: column;border-radius: 5px;z-index: 100001;}
+.question-shadow-view{position: absolute;left: 0;right: 0;top:0;width: 100%;height: 100%; background-color: rgba(255,255,255,0.99);border-radius: 5px;z-index: 100001;}
+.question-wrapper{display: flex; flex-direction: column; width:100%; height:100%;}
 .question-close-view{width: 68px;height: 30px;margin-left: calc(100% - 68px - 10px);background-color: #ffc200;border-radius: 20px;margin-top: 8px;margin-bottom: 8px;display: flex;justify-content: center;align-items: center;color: white;cursor: pointer;}
-.question-exercise-view{width: 100%;flex: 1;display: flex;}
+.question-exercise-view{width: 100%;flex: 1;display: flex;overflow: auto;}
 .question-submit-view{width: 90%;height: 35px;margin-left: 5%;border-radius: 23px;background-color: #ffc200;border-width: 1;border-color: #ffc200;margin-top: 8px;margin-bottom: 8px;display: flex;justify-content: center;align-items: center;color: white;display: none;cursor: pointer;}
 
 /*选择题*/
 .choice-problem-view{width: calc(100% - 30px);margin:10px 15px;flex:1; display: flex;flex-direction: column;}
-.choice-exercise-view{width: 100%; display: flex; flex-direction: column; flex: 1; overflow: scroll;margin-bottom: 10px;}
+.choice-exercise-view{width: 100%; display: flex; flex-direction: column; flex: 1; margin-bottom: 10px;}
 .choice-question-view{width: 100%;}
 .choice-question-view-title{color: #41403E;line-height: 30px;font-size: 15px;}
-.choice-question-view-imgs{display: flex;flex-direction: row;flex-wrap: wrap; overflow: auto;max-height: 200px;}
+.choice-question-view-imgs{display: flex;flex-direction: row;flex-wrap: wrap;}
 .choice-question-view-img{width: 90%;max-height: 150px;margin-top: 5px;margin-right: 5px;overflow: auto;}
 .choice-question-view-img img{max-width: 100%; max-height: 100%;}
 .choice-options{margin-top: 20px;}
@@ -19,13 +20,13 @@
 .choice-option-letter{margin-right: 5px;line-height: 25px;font-size: 15px;}
 .choice-option-view{display: flex;flex: 1;flex-direction: column;}
 .choice-option-view-title{line-height: 25px;font-size: 15px;}
-.choice-option-view-imgs{display: flex;flex-direction: row;flex-wrap: wrap;overflow: auto;max-height: 200px;}
+.choice-option-view-imgs{display: flex;flex-direction: row;flex-wrap: wrap;}
 .choice-option-view-img{width: 90%;max-height: 150px;margin-top: 5px;margin-right: 5px;overflow: auto;}
 .choice-option-view-img img{max-width: 100%; max-height: 100%;}
 
 /*填空题*/
 .blank-problem-view{width: 100%;display: flex;flex: 1;flex-direction: column;}
-.blank-exercise-view{display: flex;flex: 1;flex-direction: column; overflow: scroll;margin-bottom: 10px;}
+.blank-exercise-view{display: flex;flex: 1;flex-direction: column; margin-bottom: 10px;}
 .blank-question-view{margin-left: 15px;margin-right: 15px;}
 .blank-question-view-title{color: #41403E;line-height: 35px;}
 .blank-question-options{background-color: #EEEEEE;padding: 20px 15px;margin-top: 20px;display: flex;flex-direction: row;flex-wrap: wrap;}
@@ -42,11 +43,11 @@
 
 /*顺序题*/
 .sequence-problem-view{width: 100%;display: flex;flex: 1;flex-direction: column;}
-.sequence-exercise-view{display: flex;flex: 1;flex-direction: column; overflow: scroll;margin-bottom: 10px;}
+.sequence-exercise-view{display: flex;flex: 1;flex-direction: column; margin-bottom: 10px;}
 .sequence-question-view{margin-left: 15px;margin-right: 15px;margin-top: 15px;}
 .sequence-question-view-title{color: #41403e;line-height: 35px;font-size: 16px;}
 .sequence-question-view-number{width: 25px;height: 25px;background: #4c4c4c;border-radius: 12.5px;display: inline-block;color: white;text-align: center;margin-right: 5px;}
-.sequence-question-view-imgs{display: flex;flex-direction: row;flex-wrap: wrap;overflow: auto;max-height: 200px;}
+.sequence-question-view-imgs{display: flex;flex-direction: row;flex-wrap: wrap;max-height: 200px;}
 .sequence-question-view-img{width: 90%;max-height: 150px;margin-top: 5px;margin-right: 5px;overflow: auto;}
 .sequence-question-view-img img{max-width: 100%; max-height: 100%;}
 .sequence-question-options{margin-top: 20px;margin-bottom: 40px;min-height: 200px;display: flex;flex: 1;flex-direction: column;justify-content: center;}
@@ -55,7 +56,7 @@
 .sequence-question-option-chosen{background-color: #f8f8f8;}
 .sequence-question-option-view{display: flex;flex: 1;}
 .sequence-question-option-view-title{font-size: 16px;line-height: 25px;color: #41403e;}
-.sequence-question-option-imgs{flex-direction:row;flex-wrap:wrap;overflow: auto;max-height: 200px;}
+.sequence-question-option-imgs{flex-direction:row;flex-wrap:wrap;max-height: 200px;}
 .sequence-question-option-img{width: 90%;max-height: 150px;margin-top: 5px;margin-right: 5px;overflow: auto;}
 .sequence-question-option-img img{max-width: 100%; max-height: 100%;}
 .sequence-question-option-move{width: 30px;height: 30px;}
